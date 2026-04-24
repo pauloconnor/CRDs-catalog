@@ -5444,6 +5444,10 @@ ec2.services.k8s.aws:
     filename: ec2.services.k8s.aws/vpcendpointserviceconfiguration_v1alpha1.json
     kind: VPCEndpointServiceConfiguration
     name: vpcendpointserviceconfiguration_v1alpha1
+  - apiVersion: ec2.services.k8s.aws/v1alpha1
+    filename: ec2.services.k8s.aws/managedprefixlist_v1alpha1.json
+    kind: ManagedPrefixList
+    name: managedprefixlist_v1alpha1
 ecr.services.k8s.aws:
   - apiVersion: ecr.services.k8s.aws/v1alpha1
     filename: ecr.services.k8s.aws/repository_v1alpha1.json
