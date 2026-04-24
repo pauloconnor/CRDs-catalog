@@ -13229,6 +13229,10 @@ services.k8s.aws:
     filename: services.k8s.aws/adoptedresource_v1alpha1.json
     kind: AdoptedResource
     name: adoptedresource_v1alpha1
+  - apiVersion: services.k8s.aws/v1alpha1
+    filename: services.k8s.aws/iamroleselector_v1alpha1.json
+    kind: IAMRoleSelector
+    name: iamroleselector_v1alpha1
 serviceusage.cnrm.cloud.google.com:
   - apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
     filename: serviceusage.cnrm.cloud.google.com/service_v1beta1.json
