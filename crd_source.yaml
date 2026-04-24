@@ -151,7 +151,7 @@ sources:
     changelog: "https://github.com/aws-controllers-k8s/kinesis-controller/releases"
 
   - url: "https://github.com/aws-controllers-k8s/kms-controller"
-    tag: ""
+    tag: "v1.2.3"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/aws-controllers-k8s/kms-controller/releases"
 
