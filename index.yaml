@@ -5375,6 +5375,10 @@ eks.services.k8s.aws:
     filename: eks.services.k8s.aws/identityproviderconfig_v1alpha1.json
     kind: IdentityProviderConfig
     name: identityproviderconfig_v1alpha1
+  - apiVersion: eks.services.k8s.aws/v1alpha1
+    filename: eks.services.k8s.aws/capability_v1alpha1.json
+    kind: Capability
+    name: capability_v1alpha1
 elasticache.aws.m.upbound.io:
   - apiVersion: elasticache.aws.m.upbound.io/v1beta1
     filename: elasticache.aws.m.upbound.io/parametergroup_v1beta1.json

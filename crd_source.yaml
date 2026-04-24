@@ -116,7 +116,7 @@ sources:
     changelog: "https://github.com/aws-controllers-k8s/ecr-controller/releases"
 
   - url: "https://github.com/aws-controllers-k8s/eks-controller"
-    tag: ""
+    tag: "v1.12.2"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/aws-controllers-k8s/eks-controller/releases"
 
