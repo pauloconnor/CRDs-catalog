@@ -1016,7 +1016,7 @@ sources:
     changelog: "https://github.com/metal3-io/baremetal-operator/releases"
 
   - url: "https://github.com/metallb/metallb"
-    tag: ""
+    tag: "v0.15.3"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/metallb/metallb/releases"
 

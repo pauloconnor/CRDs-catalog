@@ -9599,6 +9599,18 @@ metallb.io:
     filename: metallb.io/bgppeer_v1beta2.json
     kind: BGPPeer
     name: bgppeer_v1beta2
+  - apiVersion: metallb.io/v1beta1
+    filename: metallb.io/servicebgpstatus_v1beta1.json
+    kind: ServiceBGPStatus
+    name: servicebgpstatus_v1beta1
+  - apiVersion: metallb.io/v1beta1
+    filename: metallb.io/servicel2status_v1beta1.json
+    kind: ServiceL2Status
+    name: servicel2status_v1beta1
+  - apiVersion: metallb.io/v1beta1
+    filename: metallb.io/configurationstate_v1beta1.json
+    kind: ConfigurationState
+    name: configurationstate_v1beta1
 metastore.cnrm.cloud.google.com:
   - apiVersion: metastore.cnrm.cloud.google.com/v1beta1
     filename: metastore.cnrm.cloud.google.com/metastorebackup_v1beta1.json
