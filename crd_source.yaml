@@ -686,7 +686,7 @@ sources:
     changelog: "https://github.com/ansible/awx-operator/releases"
 
   - url: "https://github.com/cloudnative-pg/cloudnative-pg"
-    tag: ""
+    tag: "v1.29.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/cloudnative-pg/cloudnative-pg/releases"
 
