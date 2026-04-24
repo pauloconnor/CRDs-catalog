@@ -896,7 +896,7 @@ sources:
     changelog: "https://github.com/isindir/sops-secrets-operator/releases"
 
   - url: "https://github.com/jaegertracing/jaeger-operator"
-    tag: ""
+    tag: "v1.65.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/jaegertracing/jaeger-operator/releases"
 
