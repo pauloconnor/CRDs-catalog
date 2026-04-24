@@ -56,7 +56,7 @@ sources:
   # Each service has its own controller repo at config/crd/bases
   # ---------------------------------------------------------------------------
   - url: "https://github.com/aws-controllers-k8s/acm-controller"
-    tag: ""
+    tag: "v1.3.6"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/aws-controllers-k8s/acm-controller/releases"
 
