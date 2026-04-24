@@ -185,6 +185,32 @@
         "createBucketConfiguration": {
           "description": "The configuration information for the bucket.",
           "properties": {
+            "bucket": {
+              "description": "Specifies the information about the bucket that will be created. For more\ninformation about directory buckets, see Directory buckets (https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-buckets-overview.html)\nin the Amazon S3 User Guide.\n\nThis functionality is only supported by directory buckets.",
+              "properties": {
+                "dataRedundancy": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
+            "location": {
+              "description": "Specifies the location where the bucket will be created.\n\nFor directory buckets, the location type is Availability Zone or Local Zone.\nFor more information about directory buckets, see Directory buckets (https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-buckets-overview.html)\nin the Amazon S3 User Guide.\n\nThis functionality is only supported by directory buckets.",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
             "locationConstraint": {
               "type": "string"
             }
@@ -197,7 +223,7 @@
           "properties": {
             "rules": {
               "items": {
-                "description": "Specifies the default server-side encryption configuration.\n\n  - General purpose buckets - If you're specifying a customer managed KMS\n    key, we recommend using a fully qualified KMS key ARN. If you use a KMS\n    key alias instead, then KMS resolves the key within the requester\u2019s\n    account. This behavior can result in data that's encrypted with a KMS\n    key that belongs to the requester, and not the bucket owner.\n\n  - Directory buckets - When you specify an KMS customer managed key (https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#customer-cmk)\n    for encryption in your directory bucket, only use the key ID or key ARN.\n    The key alias format of the KMS key isn't supported.",
+                "description": "Specifies the default server-side encryption configuration.\n\n   * General purpose buckets - If you're specifying a customer managed KMS\n   key, we recommend using a fully qualified KMS key ARN. If you use a KMS\n   key alias instead, then KMS resolves the key within the requester\u2019s\n   account. This behavior can result in data that's encrypted with a KMS\n   key that belongs to the requester, and not the bucket owner.\n\n   * Directory buckets - When you specify an KMS customer managed key (https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#customer-cmk)\n   for encryption in your directory bucket, only use the key ID or key ARN.\n   The key alias format of the KMS key isn't supported.",
                 "properties": {
                   "applyServerSideEncryptionByDefault": {
                     "description": "Describes the default server-side encryption to apply to new objects in the\nbucket. If a PUT Object request doesn't specify any server-side encryption,\nthis default encryption will be applied. For more information, see PutBucketEncryption\n(https://docs.aws.amazon.com/AmazonS3/latest/API/RESTBucketPUTencryption.html).\n\n   * General purpose buckets - If you don't specify a customer managed key\n   at configuration, Amazon S3 automatically creates an Amazon Web Services\n   KMS key (aws/s3) in your Amazon Web Services account the first time that\n   you add an object encrypted with SSE-KMS to a bucket. By default, Amazon\n   S3 uses this KMS key for SSE-KMS.\n\n   * Directory buckets - Your SSE-KMS configuration can only support 1 customer\n   managed key (https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#customer-cmk)\n   per directory bucket for the lifetime of the bucket. The Amazon Web Services\n   managed key (https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-cmk)\n   (aws/s3) isn't supported.\n\n   * Directory buckets - For directory buckets, there are only two supported\n   options for server-side encryption: SSE-S3 and SSE-KMS.",
