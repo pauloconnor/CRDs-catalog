@@ -141,7 +141,7 @@ sources:
     changelog: "https://github.com/aws-controllers-k8s/iam-controller/releases"
 
   - url: "https://github.com/aws-controllers-k8s/kafka-controller"
-    tag: ""
+    tag: "v1.5.1"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/aws-controllers-k8s/kafka-controller/releases"
 
