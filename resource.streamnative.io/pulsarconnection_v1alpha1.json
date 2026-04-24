@@ -46,6 +46,10 @@
                 "key": {
                   "description": "Key is either the client secret or the path to a JSON credentials file.\nFor confidential clients, this would be the client secret.\nFor public clients using JWT authentication, this would be the path to the JSON credentials file.",
                   "properties": {
+                    "file": {
+                      "description": "File points to a local file path whose contents will be used as the value.\nThis is useful when running the operator locally without creating Kubernetes secrets.",
+                      "type": "string"
+                    },
                     "secretRef": {
                       "description": "SecretKeyRef indicates a secret name and key",
                       "properties": {
@@ -84,9 +88,30 @@
               "type": "object",
               "additionalProperties": false
             },
+            "tls": {
+              "description": "PulsarAuthenticationTLS indicates the parameters which are need by pulsar TLS Authentication",
+              "properties": {
+                "clientCertificateKeyPath": {
+                  "type": "string"
+                },
+                "clientCertificatePath": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "clientCertificateKeyPath",
+                "clientCertificatePath"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            },
             "token": {
               "description": "Token specifies the configuration for token-based authentication.\nThis can be either a direct token value or a reference to a secret containing the token.\nIf using a secret, the token should be stored under the specified key in the secret.",
               "properties": {
+                "file": {
+                  "description": "File points to a local file path whose contents will be used as the value.\nThis is useful when running the operator locally without creating Kubernetes secrets.",
+                  "type": "string"
+                },
                 "secretRef": {
                   "description": "SecretKeyRef indicates a secret name and key",
                   "properties": {
@@ -131,6 +156,18 @@
         },
         "clusterName": {
           "description": "ClusterName specifies the name of the local Pulsar cluster.\nWhen setting up Geo-Replication between Pulsar instances, this should be enabled to identify the cluster.",
+          "type": "string"
+        },
+        "tlsAllowInsecureConnection": {
+          "description": "TLSAllowInsecureConnection indicates whether to allow insecure connection to the broker.",
+          "type": "boolean"
+        },
+        "tlsEnableHostnameVerification": {
+          "description": "TLSEnableHostnameVerification indicates whether to verify the hostname of the broker.\nOnly used when using secure urls.",
+          "type": "boolean"
+        },
+        "tlsTrustCertsFilePath": {
+          "description": "TLSTrustCertsFilePath Path for the TLS certificate used to validate the broker endpoint when using TLS.",
           "type": "string"
         }
       },

@@ -15,6 +15,20 @@
     "spec": {
       "description": "FeatureFlagSourceSpec defines the desired state of FeatureFlagSource",
       "properties": {
+        "contextValues": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "ContextValues are static key-value pairs added to the flagd evaluation context",
+          "type": "object"
+        },
+        "cors": {
+          "description": "CORS defines the allowed CORS origins for the flagd OFREP endpoint",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "debugLogging": {
           "description": "DebugLogging defines whether to enable --debug flag of flagd sidecar. Default false (disabled).",
           "type": "boolean"
@@ -161,6 +175,13 @@
           "description": "Evaluator sets an evaluator, defaults to 'json'",
           "type": "string"
         },
+        "headerToContextMappings": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "HeaderToContextMappings map HTTP header names to evaluation context keys",
+          "type": "object"
+        },
         "logFormat": {
           "default": "json",
           "description": "LogFormat allows for the sidecar log format to be overridden, defaults to 'json'",
@@ -169,6 +190,12 @@
         "managementPort": {
           "default": 8014,
           "description": "ManagemetPort defines the port to serve management on, defaults to 8014",
+          "format": "int32",
+          "type": "integer"
+        },
+        "ofrepPort": {
+          "default": 8016,
+          "description": "OFREPPort defines the port for the OFREP service, defaults to 8016",
           "format": "int32",
           "type": "integer"
         },

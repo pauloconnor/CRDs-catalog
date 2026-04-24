@@ -57,13 +57,13 @@
           "type": "string"
         },
         "server": {
+          "default": "https://api.streamnative.cloud",
           "description": "Server is the URL of the API server",
           "type": "string"
         }
       },
       "required": [
-        "auth",
-        "server"
+        "auth"
       ],
       "type": "object",
       "additionalProperties": false

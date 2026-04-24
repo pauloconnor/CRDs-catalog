@@ -1,0 +1,367 @@
+{
+  "description": "ApplicationLayer is the Schema for the applicationlayers API",
+  "properties": {
+    "apiVersion": {
+      "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+      "type": "string"
+    },
+    "kind": {
+      "description": "Kind is a string value representing the REST resource this object represents.\nServers may infer this from the endpoint the client submits requests to.\nCannot be updated.\nIn CamelCase.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object"
+    },
+    "spec": {
+      "description": "ApplicationLayerSpec defines the desired state of ApplicationLayer",
+      "properties": {
+        "applicationLayerPolicy": {
+          "description": "Application Layer Policy controls whether or not ALP enforcement is enabled for the cluster.\nWhen enabled, NetworkPolicies with HTTP Match rules may be defined to opt-in workloads for traffic enforcement on the application layer.",
+          "enum": [
+            "Enabled",
+            "Disabled"
+          ],
+          "type": "string"
+        },
+        "envoy": {
+          "description": "User-configurable settings for the Envoy proxy.",
+          "properties": {
+            "useRemoteAddress": {
+              "default": false,
+              "description": "If set to true, the Envoy connection manager will use the real remote address\nof the client connection when determining internal versus external origin and\nmanipulating various headers.",
+              "type": "boolean"
+            },
+            "xffNumTrustedHops": {
+              "default": 0,
+              "description": "The number of additional ingress proxy hops from the right side of the\nx-forwarded-for HTTP header to trust when determining the origin client\u2019s\nIP address. 0 is permitted, but >=1 is the typical setting.",
+              "format": "int32",
+              "maximum": 2147483647,
+              "minimum": 0,
+              "type": "integer"
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
+        "l7LogCollectorDaemonSet": {
+          "description": "L7LogCollectorDaemonSet configures the L7LogCollector DaemonSet.",
+          "properties": {
+            "spec": {
+              "description": "Spec is the specification of the L7LogCollector DaemonSet.",
+              "properties": {
+                "template": {
+                  "description": "Template describes the L7LogCollector DaemonSet pod that will be created.",
+                  "properties": {
+                    "spec": {
+                      "description": "Spec is the L7LogCollector DaemonSet's PodSpec.",
+                      "properties": {
+                        "containers": {
+                          "description": "Containers is a list of L7LogCollector DaemonSet containers.\nIf specified, this overrides the specified L7LogCollector DaemonSet containers.\nIf omitted, the L7LogCollector DaemonSet will use its default values for its containers.",
+                          "items": {
+                            "description": "L7LogCollectorDaemonSetContainer is a L7LogCollector DaemonSet container.",
+                            "properties": {
+                              "name": {
+                                "description": "Name is an enum which identifies the L7LogCollector DaemonSet container by name.\nSupported values are: l7-collector, envoy-proxy, dikastes",
+                                "enum": [
+                                  "l7-collector",
+                                  "envoy-proxy",
+                                  "dikastes"
+                                ],
+                                "type": "string"
+                              },
+                              "resources": {
+                                "description": "Resources allows customization of limits and requests for compute resources such as cpu and memory.\nIf specified, this overrides the named L7LogCollector DaemonSet container's resources.\nIf omitted, the L7LogCollector DaemonSet will use its default value for this container's resources.",
+                                "properties": {
+                                  "claims": {
+                                    "description": "Claims lists the names of resources, defined in spec.resourceClaims,\nthat are used by this container.\nThis is an alpha field and requires enabling the\nDynamicResourceAllocation feature gate.\nThis field is immutable. It can only be set for containers.",
+                                    "items": {
+                                      "description": "ResourceClaim references one entry in PodSpec.ResourceClaims.",
+                                      "properties": {
+                                        "name": {
+                                          "description": "Name must match the name of one entry in pod.spec.resourceClaims of\nthe Pod where this field is used. It makes that resource available\ninside a container.",
+                                          "type": "string"
+                                        },
+                                        "request": {
+                                          "description": "Request is the name chosen for a request in the referenced claim.\nIf empty, everything from the claim is made available, otherwise\nonly the result of this request.",
+                                          "type": "string"
+                                        }
+                                      },
+                                      "required": [
+                                        "name"
+                                      ],
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    },
+                                    "type": "array",
+                                    "x-kubernetes-list-map-keys": [
+                                      "name"
+                                    ],
+                                    "x-kubernetes-list-type": "map"
+                                  },
+                                  "limits": {
+                                    "additionalProperties": {
+                                      "anyOf": [
+                                        {
+                                          "type": "integer"
+                                        },
+                                        {
+                                          "type": "string"
+                                        }
+                                      ],
+                                      "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                                      "x-kubernetes-int-or-string": true
+                                    },
+                                    "description": "Limits describes the maximum amount of compute resources allowed.\nMore info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/",
+                                    "type": "object"
+                                  },
+                                  "requests": {
+                                    "additionalProperties": {
+                                      "anyOf": [
+                                        {
+                                          "type": "integer"
+                                        },
+                                        {
+                                          "type": "string"
+                                        }
+                                      ],
+                                      "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                                      "x-kubernetes-int-or-string": true
+                                    },
+                                    "description": "Requests describes the minimum amount of compute resources required.\nIf Requests is omitted for a container, it defaults to Limits if that is explicitly specified,\notherwise to an implementation-defined value. Requests cannot exceed Limits.\nMore info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/",
+                                    "type": "object"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              }
+                            },
+                            "required": [
+                              "name"
+                            ],
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "type": "array"
+                        },
+                        "initContainers": {
+                          "description": "InitContainers is a list of L7LogCollector DaemonSet init containers.\nIf specified, this overrides the specified L7LogCollector DaemonSet init containers.\nIf omitted, the L7LogCollector DaemonSet will use its default values for its init containers.",
+                          "items": {
+                            "description": "L7LogCollectorDaemonSetInitContainer is a L7LogCollector DaemonSet init container.",
+                            "properties": {
+                              "name": {
+                                "description": "Name is an enum which identifies the L7LogCollector DaemonSet init container by name.",
+                                "type": "string"
+                              },
+                              "resources": {
+                                "description": "Resources allows customization of limits and requests for compute resources such as cpu and memory.\nIf specified, this overrides the named L7LogCollector DaemonSet init container's resources.\nIf omitted, the L7LogCollector DaemonSet will use its default value for this init container's resources.",
+                                "properties": {
+                                  "claims": {
+                                    "description": "Claims lists the names of resources, defined in spec.resourceClaims,\nthat are used by this container.\nThis is an alpha field and requires enabling the\nDynamicResourceAllocation feature gate.\nThis field is immutable. It can only be set for containers.",
+                                    "items": {
+                                      "description": "ResourceClaim references one entry in PodSpec.ResourceClaims.",
+                                      "properties": {
+                                        "name": {
+                                          "description": "Name must match the name of one entry in pod.spec.resourceClaims of\nthe Pod where this field is used. It makes that resource available\ninside a container.",
+                                          "type": "string"
+                                        },
+                                        "request": {
+                                          "description": "Request is the name chosen for a request in the referenced claim.\nIf empty, everything from the claim is made available, otherwise\nonly the result of this request.",
+                                          "type": "string"
+                                        }
+                                      },
+                                      "required": [
+                                        "name"
+                                      ],
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    },
+                                    "type": "array",
+                                    "x-kubernetes-list-map-keys": [
+                                      "name"
+                                    ],
+                                    "x-kubernetes-list-type": "map"
+                                  },
+                                  "limits": {
+                                    "additionalProperties": {
+                                      "anyOf": [
+                                        {
+                                          "type": "integer"
+                                        },
+                                        {
+                                          "type": "string"
+                                        }
+                                      ],
+                                      "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                                      "x-kubernetes-int-or-string": true
+                                    },
+                                    "description": "Limits describes the maximum amount of compute resources allowed.\nMore info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/",
+                                    "type": "object"
+                                  },
+                                  "requests": {
+                                    "additionalProperties": {
+                                      "anyOf": [
+                                        {
+                                          "type": "integer"
+                                        },
+                                        {
+                                          "type": "string"
+                                        }
+                                      ],
+                                      "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                                      "x-kubernetes-int-or-string": true
+                                    },
+                                    "description": "Requests describes the minimum amount of compute resources required.\nIf Requests is omitted for a container, it defaults to Limits if that is explicitly specified,\notherwise to an implementation-defined value. Requests cannot exceed Limits.\nMore info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/",
+                                    "type": "object"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              }
+                            },
+                            "required": [
+                              "name"
+                            ],
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
+        "logCollection": {
+          "description": "Specification for application layer (L7) log collection.",
+          "properties": {
+            "collectLogs": {
+              "description": "This setting enables or disable log collection.\nAllowed values are Enabled or Disabled.",
+              "enum": [
+                "Enabled",
+                "Disabled"
+              ],
+              "type": "string"
+            },
+            "logIntervalSeconds": {
+              "description": "Interval in seconds for sending L7 log information for processing.\nDefault: 5 sec",
+              "format": "int64",
+              "type": "integer"
+            },
+            "logRequestsPerInterval": {
+              "description": "Maximum number of unique L7 logs that are sent LogIntervalSeconds.\nAdjust this to limit the number of L7 logs sent per LogIntervalSeconds\nto felix for further processing, use negative number to ignore limits.\nDefault: -1",
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
+        "sidecarInjection": {
+          "description": "SidecarInjection controls whether or not sidecar injection is enabled for the cluster.\nWhen enabled, pods with the label\n\"applicationlayer.projectcalico.org/sidecar\"=\"true\" will have their L7 functionality\nsuch as WAF and ALP implemented using an injected sidecar instead of a per-host proxy.\nThe per-host proxy will continue to be used for pods without this label.",
+          "enum": [
+            "Enabled",
+            "Disabled"
+          ],
+          "type": "string"
+        },
+        "webApplicationFirewall": {
+          "description": "WebApplicationFirewall controls whether or not ModSecurity enforcement is enabled for the cluster.\nWhen enabled, Services may opt-in to having ingress traffic examed by ModSecurity.",
+          "enum": [
+            "Enabled",
+            "Disabled"
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "additionalProperties": false
+    },
+    "status": {
+      "description": "ApplicationLayerStatus defines the observed state of ApplicationLayer",
+      "properties": {
+        "conditions": {
+          "description": "Conditions represents the latest observed set of conditions for the component. A component may be one or more of\nReady, Progressing, Degraded or other customer types.",
+          "items": {
+            "description": "Condition contains details for one aspect of the current state of this API Resource.",
+            "properties": {
+              "lastTransitionTime": {
+                "description": "lastTransitionTime is the last time the condition transitioned from one status to another.\nThis should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.",
+                "format": "date-time",
+                "type": "string"
+              },
+              "message": {
+                "description": "message is a human readable message indicating details about the transition.\nThis may be an empty string.",
+                "maxLength": 32768,
+                "type": "string"
+              },
+              "observedGeneration": {
+                "description": "observedGeneration represents the .metadata.generation that the condition was set based upon.\nFor instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date\nwith respect to the current state of the instance.",
+                "format": "int64",
+                "minimum": 0,
+                "type": "integer"
+              },
+              "reason": {
+                "description": "reason contains a programmatic identifier indicating the reason for the condition's last transition.\nProducers of specific condition types may define expected values and meanings for this field,\nand whether the values are considered a guaranteed API.\nThe value should be a CamelCase string.\nThis field may not be empty.",
+                "maxLength": 1024,
+                "minLength": 1,
+                "pattern": "^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$",
+                "type": "string"
+              },
+              "status": {
+                "description": "status of the condition, one of True, False, Unknown.",
+                "enum": [
+                  "True",
+                  "False",
+                  "Unknown"
+                ],
+                "type": "string"
+              },
+              "type": {
+                "description": "type of condition in CamelCase or in foo.example.com/CamelCase.",
+                "maxLength": 316,
+                "pattern": "^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "lastTransitionTime",
+              "message",
+              "reason",
+              "status",
+              "type"
+            ],
+            "type": "object",
+            "additionalProperties": false
+          },
+          "type": "array"
+        },
+        "sidecarWebhook": {
+          "description": "SidecarWebhook provides the state of sidecar injection mutatinwebhookconfiguration",
+          "enum": [
+            "Enabled",
+            "Disabled"
+          ],
+          "type": "string"
+        },
+        "state": {
+          "description": "State provides user-readable status.",
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  "type": "object"
+}

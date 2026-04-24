@@ -117,6 +117,11 @@
           "maxLength": 128,
           "type": "string"
         },
+        "powered": {
+          "default": true,
+          "description": "Determines the power state of the service. When `true` (default), the service is running.\nWhen `false`, the service is powered off.\nFor more information please see [Aiven documentation](https://aiven.io/docs/platform/concepts/service-power-cycle).\nNote that:\n- When set to `false` the annotation `controllers.aiven.io/instance-is-running` is also set to `false`.\n- Services cannot be created in a powered off state. The value is ignored during creation.\n- It is highly recommended to not run dependent resources when the service is powered off.\n  Creating a new resource or updating an existing resource that depends on a powered off service will result in an error.\n  Existing resources will need to be manually recreated after the service is powered on.\n- Existing secrets will not be updated or removed when the service is powered off.\n- For Kafka services with backups: Topic configuration, schemas and connectors are all backed up, but not the data in topics. All topic data is lost on power off.\n- For Kafka services without backups: Topic configurations including all topic data is lost on power off.",
+          "type": "boolean"
+        },
         "project": {
           "description": "Identifies the project this resource belongs to",
           "maxLength": 63,
@@ -265,7 +270,7 @@
             },
             "binlog_retention_period": {
               "description": "The minimum amount of time in seconds to keep binlog entries before deletion. This may be extended for services that require binlog entries for longer than the default for example if using the MySQL Debezium Kafka connector.",
-              "maximum": 86400,
+              "maximum": 9007199254740991,
               "minimum": 600,
               "type": "integer"
             },
@@ -291,7 +296,7 @@
                 "type": "object",
                 "additionalProperties": false
               },
-              "maxItems": 1024,
+              "maxItems": 8000,
               "type": "array"
             },
             "migration": {
@@ -302,6 +307,14 @@
                   "maxLength": 63,
                   "type": "string"
                 },
+                "dump_tool": {
+                  "description": "Experimental! Tool to use for database dump and restore during migration. Default: mysqldump",
+                  "enum": [
+                    "mydumper",
+                    "mysqldump"
+                  ],
+                  "type": "string"
+                },
                 "host": {
                   "description": "Hostname or IP address of the server where to migrate data from",
                   "maxLength": 255,
@@ -309,6 +322,11 @@
                 },
                 "ignore_dbs": {
                   "description": "Comma-separated list of databases, which should be ignored during migration (supported by MySQL and PostgreSQL only at the moment)",
+                  "maxLength": 2048,
+                  "type": "string"
+                },
+                "ignore_roles": {
+                  "description": "Comma-separated list of database roles, which should be ignored during migration (supported by PostgreSQL only at the moment)",
                   "maxLength": 2048,
                   "type": "string"
                 },
@@ -330,6 +348,10 @@
                   "maximum": 65535,
                   "minimum": 1,
                   "type": "integer"
+                },
+                "reestablish_replication": {
+                  "description": "Skip dump-restore part and start replication",
+                  "type": "boolean"
                 },
                 "ssl": {
                   "description": "The server where to migrate data from is secured with SSL",
@@ -407,7 +429,7 @@
                 },
                 "innodb_log_buffer_size": {
                   "description": "The size in bytes of the buffer that InnoDB uses to write to the log files on disk.",
-                  "maximum": 4294967295,
+                  "maximum": 4294967296,
                   "minimum": 1048576,
                   "type": "integer"
                 },
@@ -452,13 +474,23 @@
                 "internal_tmp_mem_storage_engine": {
                   "description": "The storage engine for in-memory internal temporary tables.",
                   "enum": [
-                    "TempTable",
-                    "MEMORY"
+                    "MEMORY",
+                    "TempTable"
+                  ],
+                  "type": "string"
+                },
+                "log_output": {
+                  "description": "The slow log output destination when slow_query_log is ON. To enable MySQL AI Insights, choose INSIGHTS. To use MySQL AI Insights and the mysql.slow_log table at the same time, choose INSIGHTS,TABLE. To only use the mysql.slow_log table, choose TABLE. To silence slow logs, choose NONE.",
+                  "enum": [
+                    "INSIGHTS",
+                    "INSIGHTS,TABLE",
+                    "NONE",
+                    "TABLE"
                   ],
                   "type": "string"
                 },
                 "long_query_time": {
-                  "description": "The slow_query_logs work as SQL statements that take more than long_query_time seconds to execute. Default is 10s",
+                  "description": "The slow_query_logs work as SQL statements that take more than long_query_time seconds to execute.",
                   "maximum": 3600,
                   "minimum": 0,
                   "type": "number"
@@ -494,7 +526,7 @@
                   "type": "integer"
                 },
                 "slow_query_log": {
-                  "description": "Slow query log enables capturing of slow queries. Setting slow_query_log to false also truncates the mysql.slow_log table. Default is off",
+                  "description": "Slow query log enables capturing of slow queries. Setting slow_query_log to false also truncates the mysql.slow_log table.",
                   "type": "boolean"
                 },
                 "sort_buffer_size": {
@@ -529,11 +561,27 @@
               "type": "object",
               "additionalProperties": false
             },
-            "mysql_version": {
-              "description": "MySQL major version",
-              "enum": [
-                "8"
+            "mysql_incremental_backup": {
+              "description": "MySQL incremental backup configuration",
+              "properties": {
+                "enabled": {
+                  "description": "Enable periodic incremental backups. When enabled, full_backup_week_schedule must be set. Incremental backups only store changes since the last backup, making them faster and more storage-efficient than full backups. This is particularly useful for large databases where daily full backups would be too time-consuming or expensive.",
+                  "type": "boolean"
+                },
+                "full_backup_week_schedule": {
+                  "description": "Comma-separated list of days of the week when full backups should be created. Valid values: mon, tue, wed, thu, fri, sat, sun",
+                  "pattern": "^[a-z]+(,[a-z]+)*$",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "enabled"
               ],
+              "type": "object",
+              "additionalProperties": false
+            },
+            "mysql_version": {
+              "description": "Available versions: `8`. Newer versions may also be available.\nMySQL major version",
               "type": "string"
             },
             "private_access": {
@@ -660,7 +708,7 @@
         "conditions": {
           "description": "Conditions represent the latest available observations of a service state",
           "items": {
-            "description": "Condition contains details for one aspect of the current state of this API Resource.\n---\nThis struct is intended for direct use as an array at the field path .status.conditions.  For example,\n\n\n\ttype FooStatus struct{\n\t    // Represents the observations of a foo's current state.\n\t    // Known .status.conditions.type are: \"Available\", \"Progressing\", and \"Degraded\"\n\t    // +patchMergeKey=type\n\t    // +patchStrategy=merge\n\t    // +listType=map\n\t    // +listMapKey=type\n\t    Conditions []metav1.Condition `json:\"conditions,omitempty\" patchStrategy:\"merge\" patchMergeKey:\"type\" protobuf:\"bytes,1,rep,name=conditions\"`\n\n\n\t    // other fields\n\t}",
+            "description": "Condition contains details for one aspect of the current state of this API Resource.",
             "properties": {
               "lastTransitionTime": {
                 "description": "lastTransitionTime is the last time the condition transitioned from one status to another.\nThis should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.",
@@ -695,7 +743,7 @@
                 "type": "string"
               },
               "type": {
-                "description": "type of condition in CamelCase or in foo.example.com/CamelCase.\n---\nMany .condition.type values are consistent across resources like Available, but because arbitrary conditions can be\nuseful (see .node.status.conditions), the ability to deconflict is important.\nThe regex it matches is (dns1123SubdomainFmt/)?(qualifiedNameFmt)",
+                "description": "type of condition in CamelCase or in foo.example.com/CamelCase.",
                 "maxLength": 316,
                 "pattern": "^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$",
                 "type": "string"

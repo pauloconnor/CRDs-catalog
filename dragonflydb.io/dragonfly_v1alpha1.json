@@ -3851,6 +3851,10 @@
           "type": "object",
           "additionalProperties": false
         },
+        "enableReplicationReadinessGate": {
+          "description": "(Optional) When enabled, adds a custom readiness gate to pods that prevents\nthem from being considered Ready until replication is fully synced.\nProtects against data loss during external node drains.\nWARNING: Enabling this on an existing cluster will trigger a rolling update.",
+          "type": "boolean"
+        },
         "env": {
           "description": "(Optional) Env variables to add to the Dragonfly pods.",
           "items": {
@@ -5335,6 +5339,11 @@
           "format": "int32",
           "type": "integer"
         },
+        "networkPolicyEnabled": {
+          "default": true,
+          "description": "(Optional) Whether to create a NetworkPolicy for this Dragonfly instance.\nThe NetworkPolicy restricts admin port access to operator and peer pods only.\nDefaults to true.",
+          "type": "boolean"
+        },
         "nodeSelector": {
           "additionalProperties": {
             "type": "string"
@@ -5359,6 +5368,43 @@
             }
           },
           "type": "object",
+          "additionalProperties": false
+        },
+        "pdb": {
+          "description": "(Optional) Dragonfly Pod Disruption Budget configuration",
+          "properties": {
+            "maxUnavailable": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "string"
+                }
+              ],
+              "description": "(Optional) Maximum number of Dragonfly pods that can be unavailable during voluntary disruptions.\nAccepts an absolute number (e.g. \"1\") or a percentage of total pods (e.g. \"25%\").\nCannot be used together with MinAvailable; only one of maxUnavailable or minAvailable should be set.",
+              "x-kubernetes-int-or-string": true
+            },
+            "minAvailable": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "string"
+                }
+              ],
+              "description": "(Optional) Minimum number of Dragonfly pods that must be available during voluntary disruptions.\nAccepts an absolute number (e.g. \"1\") or a percentage of total pods (e.g. \"25%\").\nCannot be used together with MaxUnavailable; only one of minAvailable or maxUnavailable should be set.",
+              "x-kubernetes-int-or-string": true
+            }
+          },
+          "type": "object",
+          "x-kubernetes-validations": [
+            {
+              "message": "minAvailable and maxUnavailable cannot be both set",
+              "rule": "!(has(self.minAvailable) && has(self.maxUnavailable))"
+            }
+          ],
           "additionalProperties": false
         },
         "podSecurityContext": {
@@ -5644,6 +5690,10 @@
             "enableOnMasterOnly": {
               "description": "(Optional) Enable snapshot on master only",
               "type": "boolean"
+            },
+            "existingPersistentVolumeClaimName": {
+              "description": "(Optional) Name of an existing PVC to use for Dragonfly snapshots",
+              "type": "string"
             },
             "persistentVolumeClaimSpec": {
               "description": "(Optional) Dragonfly PVC spec",

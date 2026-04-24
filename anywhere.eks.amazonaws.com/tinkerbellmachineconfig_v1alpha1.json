@@ -2,11 +2,11 @@
   "description": "TinkerbellMachineConfig is the Schema for the tinkerbellmachineconfigs API.",
   "properties": {
     "apiVersion": {
-      "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+      "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
       "type": "string"
     },
     "kind": {
-      "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+      "description": "Kind is a string value representing the REST resource this object represents.\nServers may infer this from the endpoint the client submits requests to.\nCannot be updated.\nIn CamelCase.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
       "type": "string"
     },
     "metadata": {
@@ -15,14 +15,407 @@
     "spec": {
       "description": "TinkerbellMachineConfigSpec defines the desired state of TinkerbellMachineConfig.",
       "properties": {
+        "hardwareAffinity": {
+          "description": "HardwareAffinity allows advanced hardware selection using required\nand preferred affinity terms. Mutually exclusive with HardwareSelector.",
+          "properties": {
+            "preferred": {
+              "description": "Preferred are the preferred hardware affinity terms. Hardware matching\nthese terms are preferred according to the weights provided.",
+              "items": {
+                "description": "WeightedHardwareAffinityTerm is a HardwareAffinityTerm with an associated weight.",
+                "properties": {
+                  "hardwareAffinityTerm": {
+                    "description": "HardwareAffinityTerm is the term associated with the weight.",
+                    "properties": {
+                      "labelSelector": {
+                        "description": "LabelSelector is used to select hardware by labels.",
+                        "properties": {
+                          "matchExpressions": {
+                            "description": "matchExpressions is a list of label selector requirements. The requirements are ANDed.",
+                            "items": {
+                              "description": "A label selector requirement is a selector that contains values, a key, and an operator that\nrelates the key and values.",
+                              "properties": {
+                                "key": {
+                                  "description": "key is the label key that the selector applies to.",
+                                  "type": "string"
+                                },
+                                "operator": {
+                                  "description": "operator represents a key's relationship to a set of values.\nValid operators are In, NotIn, Exists and DoesNotExist.",
+                                  "type": "string"
+                                },
+                                "values": {
+                                  "description": "values is an array of string values. If the operator is In or NotIn,\nthe values array must be non-empty. If the operator is Exists or DoesNotExist,\nthe values array must be empty. This array is replaced during a strategic\nmerge patch.",
+                                  "items": {
+                                    "type": "string"
+                                  },
+                                  "type": "array",
+                                  "x-kubernetes-list-type": "atomic"
+                                }
+                              },
+                              "required": [
+                                "key",
+                                "operator"
+                              ],
+                              "type": "object",
+                              "additionalProperties": false
+                            },
+                            "type": "array",
+                            "x-kubernetes-list-type": "atomic"
+                          },
+                          "matchLabels": {
+                            "additionalProperties": {
+                              "type": "string"
+                            },
+                            "description": "matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels\nmap is equivalent to an element of matchExpressions, whose key field is \"key\", the\noperator is \"In\", and the values array contains only \"value\". The requirements are ANDed.",
+                            "type": "object"
+                          }
+                        },
+                        "type": "object",
+                        "x-kubernetes-map-type": "atomic",
+                        "additionalProperties": false
+                      }
+                    },
+                    "required": [
+                      "labelSelector"
+                    ],
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "weight": {
+                    "description": "Weight associated with matching the corresponding term, in range 1-100.",
+                    "format": "int32",
+                    "maximum": 100,
+                    "minimum": 1,
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "hardwareAffinityTerm",
+                  "weight"
+                ],
+                "type": "object",
+                "additionalProperties": false
+              },
+              "type": "array"
+            },
+            "required": {
+              "description": "Required are the required hardware affinity terms. The terms are OR'd\ntogether - hardware must match at least one term to be considered.\nAt least one required term must be specified.",
+              "items": {
+                "description": "HardwareAffinityTerm defines a single hardware affinity term.",
+                "properties": {
+                  "labelSelector": {
+                    "description": "LabelSelector is used to select hardware by labels.",
+                    "properties": {
+                      "matchExpressions": {
+                        "description": "matchExpressions is a list of label selector requirements. The requirements are ANDed.",
+                        "items": {
+                          "description": "A label selector requirement is a selector that contains values, a key, and an operator that\nrelates the key and values.",
+                          "properties": {
+                            "key": {
+                              "description": "key is the label key that the selector applies to.",
+                              "type": "string"
+                            },
+                            "operator": {
+                              "description": "operator represents a key's relationship to a set of values.\nValid operators are In, NotIn, Exists and DoesNotExist.",
+                              "type": "string"
+                            },
+                            "values": {
+                              "description": "values is an array of string values. If the operator is In or NotIn,\nthe values array must be non-empty. If the operator is Exists or DoesNotExist,\nthe values array must be empty. This array is replaced during a strategic\nmerge patch.",
+                              "items": {
+                                "type": "string"
+                              },
+                              "type": "array",
+                              "x-kubernetes-list-type": "atomic"
+                            }
+                          },
+                          "required": [
+                            "key",
+                            "operator"
+                          ],
+                          "type": "object",
+                          "additionalProperties": false
+                        },
+                        "type": "array",
+                        "x-kubernetes-list-type": "atomic"
+                      },
+                      "matchLabels": {
+                        "additionalProperties": {
+                          "type": "string"
+                        },
+                        "description": "matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels\nmap is equivalent to an element of matchExpressions, whose key field is \"key\", the\noperator is \"In\", and the values array contains only \"value\". The requirements are ANDed.",
+                        "type": "object"
+                      }
+                    },
+                    "type": "object",
+                    "x-kubernetes-map-type": "atomic",
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "labelSelector"
+                ],
+                "type": "object",
+                "additionalProperties": false
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "required"
+          ],
+          "type": "object",
+          "additionalProperties": false
+        },
         "hardwareSelector": {
           "additionalProperties": {
             "type": "string"
           },
-          "description": "HardwareSelector models a simple key-value selector used in Tinkerbell provisioning.",
+          "description": "HardwareSelector is a simple key-value selector for hardware.\nUse this for straightforward single-label hardware selection.\nMutually exclusive with HardwareAffinity.",
           "type": "object"
         },
+        "hostOSConfiguration": {
+          "description": "HostOSConfiguration defines the configuration settings on the host OS.",
+          "properties": {
+            "bottlerocketConfiguration": {
+              "description": "BottlerocketConfiguration defines the Bottlerocket configuration on the host OS.\nThese settings only take effect when the `osFamily` is bottlerocket.",
+              "properties": {
+                "boot": {
+                  "description": "Boot defines the boot settings for bottlerocket.",
+                  "properties": {
+                    "bootKernelParameters": {
+                      "additionalProperties": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "kernel": {
+                  "description": "Kernel defines the kernel settings for bottlerocket.",
+                  "properties": {
+                    "sysctlSettings": {
+                      "additionalProperties": {
+                        "type": "string"
+                      },
+                      "description": "SysctlSettings defines the kernel sysctl settings to set for bottlerocket nodes.",
+                      "type": "object"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "kubernetes": {
+                  "description": "Kubernetes defines the Kubernetes settings on the host OS.",
+                  "properties": {
+                    "allowedUnsafeSysctls": {
+                      "description": "AllowedUnsafeSysctls defines the list of unsafe sysctls that can be set on a node.",
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "clusterDNSIPs": {
+                      "description": "ClusterDNSIPs defines IP addresses of the DNS servers.",
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "clusterDomain": {
+                      "description": "ClusterDomain defines the DNS domain for the cluster, allowing all Kubernetes-run containers\nto search this domain before the host\u2019s search domains",
+                      "type": "string"
+                    },
+                    "containerLogMaxFiles": {
+                      "description": "ContainerLogMaxFiles specifies the maximum number of container log\nfiles that can be present for a container",
+                      "type": "integer"
+                    },
+                    "containerLogMaxSize": {
+                      "description": "ContainerLogMaxSize is a quantity defining the maximum size of\nthe container log file before it is rotated",
+                      "type": "string"
+                    },
+                    "cpuCFSQuota": {
+                      "description": "CPUCFSQuota enables CPU CFS quota enforcement for containers that specify CPU limits",
+                      "type": "boolean"
+                    },
+                    "cpuManagerPolicy": {
+                      "description": "CPUManagerPolicy is the name of the policy to use.",
+                      "type": "string"
+                    },
+                    "cpuManagerPolicyOptions": {
+                      "additionalProperties": {
+                        "type": "string"
+                      },
+                      "description": "CPUManagerPolicyOptions is a set of key=value which allows to set extra options to\nfine tune the behaviour of the cpu manager policies",
+                      "type": "object"
+                    },
+                    "cpuManagerReconcilePeriod": {
+                      "description": "CPUManagerReconcilePeriod is the reconciliation period for the CPU Manager.",
+                      "type": "string"
+                    },
+                    "eventBurst": {
+                      "description": "EventBurst is the maximum size of a burst of event creations.",
+                      "type": "integer"
+                    },
+                    "eventRecordQPS": {
+                      "description": "EventRecordQPS is the maximum event creations per second.",
+                      "type": "integer"
+                    },
+                    "evictionHard": {
+                      "additionalProperties": {
+                        "type": "string"
+                      },
+                      "description": "EvictionHard is a map of signal names to quantities that defines hard eviction thresholds.",
+                      "type": "object"
+                    },
+                    "evictionMaxPodGracePeriod": {
+                      "description": "EvictionMaxPodGracePeriod is the maximum allowed grace period (in seconds) to use\nwhen terminating pods in response to a soft eviction threshold being met.",
+                      "type": "integer"
+                    },
+                    "evictionSoft": {
+                      "additionalProperties": {
+                        "type": "string"
+                      },
+                      "description": "EvictionSoft is a map of signal names to quantities that defines soft eviction thresholds.",
+                      "type": "object"
+                    },
+                    "evictionSoftGracePeriod": {
+                      "additionalProperties": {
+                        "type": "string"
+                      },
+                      "description": "EvictionSoftGracePeriod is a map of signal names to quantities that defines grace periods\nfor each soft eviction signal.",
+                      "type": "object"
+                    },
+                    "imageGCHighThresholdPercent": {
+                      "description": "ImageGCHighThresholdPercent is the percent of disk usage after which image garbage\ncollection is always run.",
+                      "type": "integer"
+                    },
+                    "imageGCLowThresholdPercent": {
+                      "description": "ImageGCLowThresholdPercent is the percent of disk usage before which image garbage collection is never run.",
+                      "type": "integer"
+                    },
+                    "kubeAPIBurst": {
+                      "description": "KubeAPIBurst  is the burst to allow while talking with kubernetes API server.",
+                      "type": "integer"
+                    },
+                    "kubeAPIQPS": {
+                      "description": "KubeAPIQPS is the QPS to use while talking with kubernetes apiserver.",
+                      "type": "integer"
+                    },
+                    "kubeReserved": {
+                      "additionalProperties": {
+                        "type": "string"
+                      },
+                      "description": "KubeReserved is a set of ResourceName=ResourceQuantity pairs that describe resources\nreserved for kubernetes system components",
+                      "type": "object"
+                    },
+                    "maxPods": {
+                      "description": "MaxPods defines the maximum number of pods that can run on a node.",
+                      "type": "integer"
+                    },
+                    "memoryManagerPolicy": {
+                      "description": "MemoryManagerPolicy is the name of the policy to use by memory manager.",
+                      "type": "string"
+                    },
+                    "podPidsLimit": {
+                      "description": "PodPidsLimit is the maximum number of PIDs in any pod.",
+                      "format": "int64",
+                      "type": "integer"
+                    },
+                    "providerID": {
+                      "description": "ProviderID sets the unique ID of the instance that an external provider.",
+                      "type": "string"
+                    },
+                    "registryBurst": {
+                      "description": "RegistryBurst is the maximum size of bursty pulls.",
+                      "type": "integer"
+                    },
+                    "registryPullQPS": {
+                      "description": "RegistryPullQPS is the limit of registry pulls per second.",
+                      "type": "integer"
+                    },
+                    "shutdownGracePeriod": {
+                      "description": "ShutdownGracePeriod specifies the total duration that the node should delay\nthe shutdown and total grace period for pod termination during a node shutdown.",
+                      "type": "string"
+                    },
+                    "shutdownGracePeriodCriticalPods": {
+                      "description": "ShutdownGracePeriodCriticalPods specifies the duration used to terminate\ncritical pods during a node shutdown.",
+                      "type": "string"
+                    },
+                    "systemReserved": {
+                      "additionalProperties": {
+                        "type": "string"
+                      },
+                      "description": "SystemReserved is a set of ResourceName=ResourceQuantity pairs that describe\nresources reserved for non-kubernetes components.",
+                      "type": "object"
+                    },
+                    "topologyManagerPolicy": {
+                      "description": "TopologyManagerPolicy is the name of the topology manager policy to use.",
+                      "type": "string"
+                    },
+                    "topologyManagerScope": {
+                      "description": "TopologyManagerScope represents the scope of topology hint generation\nthat topology manager requests and hint providers generate.",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
+            "certBundles": {
+              "items": {
+                "description": "Cert defines additional trusted cert bundles on the host OS.",
+                "properties": {
+                  "data": {
+                    "description": "Data defines the cert bundle data.",
+                    "type": "string"
+                  },
+                  "name": {
+                    "description": "Name defines the cert bundle name.",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "data",
+                  "name"
+                ],
+                "type": "object",
+                "additionalProperties": false
+              },
+              "type": "array"
+            },
+            "ntpConfiguration": {
+              "description": "NTPConfiguration defines the NTP configuration on the host OS.",
+              "properties": {
+                "servers": {
+                  "description": "Servers defines a list of NTP servers to be configured on the host OS.",
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "servers"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
         "osFamily": {
+          "type": "string"
+        },
+        "osImageURL": {
+          "description": "OSImageURL can be used to override the default OS image path to pull from a local server.\nOSImageURL is a URL to the OS image used during provisioning. It must include\nthe Kubernetes version(s). For example, a URL used for Kubernetes 1.27 could\nbe http://localhost:8080/ubuntu-2204-1.27.tgz",
           "type": "string"
         },
         "templateRef": {
@@ -62,7 +455,6 @@
         }
       },
       "required": [
-        "hardwareSelector",
         "osFamily"
       ],
       "type": "object",

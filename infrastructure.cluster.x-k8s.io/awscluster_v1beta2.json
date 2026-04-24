@@ -26,7 +26,7 @@
           "description": "Bastion contains options to configure the bastion host.",
           "properties": {
             "allowedCIDRBlocks": {
-              "description": "AllowedCIDRBlocks is a list of CIDR blocks allowed to access the bastion host.\nThey are set as ingress rules for the Bastion host's Security Group (defaults to 0.0.0.0/0).",
+              "description": "AllowedCIDRBlocks is a list of CIDR blocks allowed to access the bastion host.\nThey are set as ingress rules for the Bastion host's Security Group (defaults to 0.0.0.0/0).\nIf the cluster has IPv6 enabled, defaults to ::/0 and 0.0.0.0/0.",
               "items": {
                 "type": "string"
               },
@@ -56,11 +56,12 @@
           "description": "ControlPlaneEndpoint represents the endpoint used to communicate with the control plane.",
           "properties": {
             "host": {
-              "description": "The hostname on which the API server is serving.",
+              "description": "host is the hostname on which the API server is serving.",
+              "maxLength": 512,
               "type": "string"
             },
             "port": {
-              "description": "The port on which the API server is serving.",
+              "description": "port is the port on which the API server is serving.",
               "format": "int32",
               "type": "integer"
             }
@@ -146,6 +147,14 @@
                       "TCP"
                     ],
                     "type": "string"
+                  },
+                  "targetGroupIPType": {
+                    "description": "TargetGroupIPType sets the IP address type for the target group.\nValid values are ipv4 and ipv6. If not specified, defaults to ipv4 unless\nthe VPC has IPv6 enabled, in which case it defaults to ipv6.\nThis field cannot be set if LoadBalancerType is classic or disabled.",
+                    "enum": [
+                      "ipv4",
+                      "ipv6"
+                    ],
+                    "type": "string"
                   }
                 },
                 "required": [
@@ -168,7 +177,7 @@
               "type": "array"
             },
             "crossZoneLoadBalancing": {
-              "description": "CrossZoneLoadBalancing enables the classic ELB cross availability zone balancing.\n\n\nWith cross-zone load balancing, each load balancer node for your Classic Load Balancer\ndistributes requests evenly across the registered instances in all enabled Availability Zones.\nIf cross-zone load balancing is disabled, each load balancer node distributes requests evenly across\nthe registered instances in its Availability Zone only.\n\n\nDefaults to false.",
+              "description": "CrossZoneLoadBalancing enables the classic ELB cross availability zone balancing.\n\nWith cross-zone load balancing, each load balancer node for your Classic Load Balancer\ndistributes requests evenly across the registered instances in all enabled Availability Zones.\nIf cross-zone load balancing is disabled, each load balancer node distributes requests evenly across\nthe registered instances in its Availability Zone only.\n\nDefaults to false.",
               "type": "boolean"
             },
             "disableHostsRewrite": {
@@ -344,6 +353,14 @@
                 "type": "string"
               },
               "type": "array"
+            },
+            "targetGroupIPType": {
+              "description": "TargetGroupIPType sets the IP address type for the target group.\nValid values are ipv4 and ipv6. If not specified, defaults to ipv4 unless\nthe VPC has IPv6 enabled, in which case it defaults to ipv6.\nThis applies to the API server target group.\nThis field cannot be set if LoadBalancerType is classic or disabled.",
+              "enum": [
+                "ipv4",
+                "ipv6"
+              ],
+              "type": "string"
             }
           },
           "type": "object",
@@ -474,6 +491,91 @@
               },
               "type": "array"
             },
+            "additionalNodeIngressRules": {
+              "description": "AdditionalNodeIngressRules is an optional set of ingress rules to add to every node",
+              "items": {
+                "description": "IngressRule defines an AWS ingress rule for security groups.",
+                "properties": {
+                  "cidrBlocks": {
+                    "description": "List of CIDR blocks to allow access from. Cannot be specified with SourceSecurityGroupID.",
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "description": {
+                    "description": "Description provides extended information about the ingress rule.",
+                    "type": "string"
+                  },
+                  "fromPort": {
+                    "description": "FromPort is the start of port range.",
+                    "format": "int64",
+                    "type": "integer"
+                  },
+                  "ipv6CidrBlocks": {
+                    "description": "List of IPv6 CIDR blocks to allow access from. Cannot be specified with SourceSecurityGroupID.",
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "natGatewaysIPsSource": {
+                    "description": "NatGatewaysIPsSource use the NAT gateways IPs as the source for the ingress rule.",
+                    "type": "boolean"
+                  },
+                  "protocol": {
+                    "description": "Protocol is the protocol for the ingress rule. Accepted values are \"-1\" (all), \"4\" (IP in IP),\"tcp\", \"udp\", \"icmp\", and \"58\" (ICMPv6), \"50\" (ESP).",
+                    "enum": [
+                      "-1",
+                      "4",
+                      "tcp",
+                      "udp",
+                      "icmp",
+                      "58",
+                      "50"
+                    ],
+                    "type": "string"
+                  },
+                  "sourceSecurityGroupIds": {
+                    "description": "The security group id to allow access from. Cannot be specified with CidrBlocks.",
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "sourceSecurityGroupRoles": {
+                    "description": "The security group role to allow access from. Cannot be specified with CidrBlocks.\nThe field will be combined with source security group IDs if specified.",
+                    "items": {
+                      "description": "SecurityGroupRole defines the unique role of a security group.",
+                      "enum": [
+                        "bastion",
+                        "node",
+                        "controlplane",
+                        "apiserver-lb",
+                        "lb",
+                        "node-eks-additional"
+                      ],
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "toPort": {
+                    "description": "ToPort is the end of port range.",
+                    "format": "int64",
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "description",
+                  "fromPort",
+                  "protocol",
+                  "toPort"
+                ],
+                "type": "object",
+                "additionalProperties": false
+              },
+              "type": "array"
+            },
             "cni": {
               "description": "CNI configuration",
               "properties": {
@@ -513,6 +615,13 @@
               "type": "object",
               "additionalProperties": false
             },
+            "nodePortIngressRuleCidrBlocks": {
+              "description": "NodePortIngressRuleCidrBlocks is an optional set of CIDR blocks to allow traffic to nodes' NodePort services.\nIf none are specified here, all IPs are allowed to connect.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
             "securityGroupOverrides": {
               "additionalProperties": {
                 "type": "string"
@@ -534,15 +643,15 @@
                     "type": "string"
                   },
                   "id": {
-                    "description": "ID defines a unique identifier to reference this resource.\nIf you're bringing your subnet, set the AWS subnet-id here, it must start with `subnet-`.\n\n\nWhen the VPC is managed by CAPA, and you'd like the provider to create a subnet for you,\nthe id can be set to any placeholder value that does not start with `subnet-`;\nupon creation, the subnet AWS identifier will be populated in the `ResourceID` field and\nthe `id` field is going to be used as the subnet name. If you specify a tag\ncalled `Name`, it takes precedence.",
+                    "description": "ID defines a unique identifier to reference this resource.\nIf you're bringing your subnet, set the AWS subnet-id here, it must start with `subnet-`.\n\nWhen the VPC is managed by CAPA, and you'd like the provider to create a subnet for you,\nthe id can be set to any placeholder value that does not start with `subnet-`;\nupon creation, the subnet AWS identifier will be populated in the `ResourceID` field and\nthe `id` field is going to be used as the subnet name. If you specify a tag\ncalled `Name`, it takes precedence.",
                     "type": "string"
                   },
                   "ipv6CidrBlock": {
-                    "description": "IPv6CidrBlock is the IPv6 CIDR block to be used when the provider creates a managed VPC.\nA subnet can have an IPv4 and an IPv6 address.\nIPv6 is only supported in managed clusters, this field cannot be set on AWSCluster object.",
+                    "description": "IPv6CidrBlock is the IPv6 CIDR block to be used when the provider creates a managed VPC.\nA subnet can have an IPv4 and an IPv6 address.",
                     "type": "string"
                   },
                   "isIpv6": {
-                    "description": "IsIPv6 defines the subnet as an IPv6 subnet. A subnet is IPv6 when it is associated with a VPC that has IPv6 enabled.\nIPv6 is only supported in managed clusters, this field cannot be set on AWSCluster object.",
+                    "description": "IsIPv6 defines the subnet as an IPv6 subnet. A subnet is IPv6 when it is associated with an IPv6 CIDR.",
                     "type": "boolean"
                   },
                   "isPublic": {
@@ -554,7 +663,7 @@
                     "type": "string"
                   },
                   "parentZoneName": {
-                    "description": "ParentZoneName is the zone name where the current subnet's zone is tied when\nthe zone is a Local Zone.\n\n\nThe subnets in Local Zone or Wavelength Zone locations consume the ParentZoneName\nto select the correct private route table to egress traffic to the internet.",
+                    "description": "ParentZoneName is the zone name where the current subnet's zone is tied when\nthe zone is a Local Zone.\n\nThe subnets in Local Zone or Wavelength Zone locations consume the ParentZoneName\nto select the correct private route table to egress traffic to the internet.",
                     "type": "string"
                   },
                   "resourceID": {
@@ -573,7 +682,7 @@
                     "type": "object"
                   },
                   "zoneType": {
-                    "description": "ZoneType defines the type of the zone where the subnet is created.\n\n\nThe valid values are availability-zone, local-zone, and wavelength-zone.\n\n\nSubnet with zone type availability-zone (regular) is always selected to create cluster\nresources, like Load Balancers, NAT Gateways, Contol Plane nodes, etc.\n\n\nSubnet with zone type local-zone or wavelength-zone is not eligible to automatically create\nregular cluster resources.\n\n\nThe public subnet in availability-zone or local-zone is associated with regular public\nroute table with default route entry to a Internet Gateway.\n\n\nThe public subnet in wavelength-zone is associated with a carrier public\nroute table with default route entry to a Carrier Gateway.\n\n\nThe private subnet in the availability-zone is associated with a private route table with\nthe default route entry to a NAT Gateway created in that zone.\n\n\nThe private subnet in the local-zone or wavelength-zone is associated with a private route table with\nthe default route entry re-using the NAT Gateway in the Region (preferred from the\nparent zone, the zone type availability-zone in the region, or first table available).",
+                    "description": "ZoneType defines the type of the zone where the subnet is created.\n\nThe valid values are availability-zone, local-zone, and wavelength-zone.\n\nSubnet with zone type availability-zone (regular) is always selected to create cluster\nresources, like Load Balancers, NAT Gateways, Contol Plane nodes, etc.\n\nSubnet with zone type local-zone or wavelength-zone is not eligible to automatically create\nregular cluster resources.\n\nThe public subnet in availability-zone or local-zone is associated with regular public\nroute table with default route entry to a Internet Gateway.\n\nThe public subnet in wavelength-zone is associated with a carrier public\nroute table with default route entry to a Carrier Gateway.\n\nThe private subnet in the availability-zone is associated with a private route table with\nthe default route entry to a NAT Gateway created in that zone.\n\nThe private subnet in the local-zone or wavelength-zone is associated with a private route table with\nthe default route entry re-using the NAT Gateway in the Region (preferred from the\nparent zone, the zone type availability-zone in the region, or first table available).",
                     "enum": [
                       "availability-zone",
                       "local-zone",
@@ -635,7 +744,7 @@
                       "type": "string"
                     },
                     "publicIpv4PoolFallbackOrder": {
-                      "description": "PublicIpv4PoolFallBackOrder defines the fallback action when the Public IPv4 Pool has been exhausted,\nno more IPv4 address available in the pool.\n\n\nWhen set to 'amazon-pool', the controller check if the pool has available IPv4 address, when pool has reached the\nIPv4 limit, the address will be claimed from Amazon-pool (default).\n\n\nWhen set to 'none', the controller will fail the Elastic IP allocation when the publicIpv4Pool is exhausted.",
+                      "description": "PublicIpv4PoolFallBackOrder defines the fallback action when the Public IPv4 Pool has been exhausted,\nno more IPv4 address available in the pool.\n\nWhen set to 'amazon-pool', the controller check if the pool has available IPv4 address, when pool has reached the\nIPv4 limit, the address will be claimed from Amazon-pool (default).\n\nWhen set to 'none', the controller will fail the Elastic IP allocation when the publicIpv4Pool is exhausted.",
                       "enum": [
                         "amazon-pool",
                         "none"
@@ -653,7 +762,7 @@
                   "additionalProperties": false
                 },
                 "emptyRoutesDefaultVPCSecurityGroup": {
-                  "description": "EmptyRoutesDefaultVPCSecurityGroup specifies whether the default VPC security group ingress\nand egress rules should be removed.\n\n\nBy default, when creating a VPC, AWS creates a security group called `default` with ingress and egress\nrules that allow traffic from anywhere. The group could be used as a potential surface attack and\nit's generally suggested that the group rules are removed or modified appropriately.\n\n\nNOTE: This only applies when the VPC is managed by the Cluster API AWS controller.",
+                  "description": "EmptyRoutesDefaultVPCSecurityGroup specifies whether the default VPC security group ingress\nand egress rules should be removed.\n\nBy default, when creating a VPC, AWS creates a security group called `default` with ingress and egress\nrules that allow traffic from anywhere. The group could be used as a potential surface attack and\nit's generally suggested that the group rules are removed or modified appropriately.\n\nNOTE: This only applies when the VPC is managed by the Cluster API AWS controller.",
                   "type": "boolean"
                 },
                 "id": {
@@ -676,7 +785,7 @@
                       "type": "string"
                     },
                     "netmaskLength": {
-                      "description": "The netmask length of the IPv4 CIDR you want to allocate to VPC from\nan Amazon VPC IP Address Manager (IPAM) pool.\nDefaults to /16 for IPv4 if not specified.",
+                      "description": "The netmask length of the IPv4 CIDR you want to allocate to VPC from\nan Amazon VPC IP Address Manager (IPAM) pool.\nDefaults to /16 for IPv4 if not specified.\nDefaults to /56 for IPv6 if not specified.",
                       "format": "int64",
                       "type": "integer"
                     }
@@ -685,7 +794,7 @@
                   "additionalProperties": false
                 },
                 "ipv6": {
-                  "description": "IPv6 contains ipv6 specific settings for the network. Supported only in managed clusters.\nThis field cannot be set on AWSCluster object.",
+                  "description": "IPv6 contains ipv6 specific settings for the network.",
                   "properties": {
                     "cidrBlock": {
                       "description": "CidrBlock is the CIDR block provided by Amazon when VPC has enabled IPv6.\nMutually exclusive with IPAMPool.",
@@ -707,7 +816,7 @@
                           "type": "string"
                         },
                         "netmaskLength": {
-                          "description": "The netmask length of the IPv4 CIDR you want to allocate to VPC from\nan Amazon VPC IP Address Manager (IPAM) pool.\nDefaults to /16 for IPv4 if not specified.",
+                          "description": "The netmask length of the IPv4 CIDR you want to allocate to VPC from\nan Amazon VPC IP Address Manager (IPAM) pool.\nDefaults to /16 for IPv4 if not specified.\nDefaults to /56 for IPv6 if not specified.",
                           "format": "int64",
                           "type": "integer"
                         }
@@ -730,6 +839,25 @@
                     "resource-name"
                   ],
                   "type": "string"
+                },
+                "secondaryCidrBlocks": {
+                  "description": "SecondaryCidrBlocks are additional CIDR blocks to be associated when the provider creates a managed VPC.\nDefaults to none. Mutually exclusive with IPAMPool. This makes sense to use if, for example, you want to use\na separate IP range for pods (e.g. Cilium ENI mode).",
+                  "items": {
+                    "description": "VpcCidrBlock defines the CIDR block and settings to associate with the managed VPC. Currently, only IPv4 is supported.",
+                    "properties": {
+                      "ipv4CidrBlock": {
+                        "description": "IPv4CidrBlock is the IPv4 CIDR block to associate with the managed VPC.",
+                        "minLength": 1,
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "ipv4CidrBlock"
+                    ],
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "type": "array"
                 },
                 "subnetSchema": {
                   "default": "PreferPrivate",
@@ -789,7 +917,7 @@
               "type": "array"
             },
             "presignedURLDuration": {
-              "description": "PresignedURLDuration defines the duration for which presigned URLs are valid.\n\n\nThis is used to generate presigned URLs for S3 Bucket objects, which are used by\ncontrol-plane and worker nodes to fetch bootstrap data.\n\n\nWhen enabled, the IAM instance profiles specified are not used.",
+              "description": "PresignedURLDuration defines the duration for which presigned URLs are valid.\n\nThis is used to generate presigned URLs for S3 Bucket objects, which are used by\ncontrol-plane and worker nodes to fetch bootstrap data.\n\nWhen enabled, the IAM instance profiles specified are not used.",
               "type": "string"
             }
           },
@@ -800,7 +928,7 @@
           "additionalProperties": false
         },
         "secondaryControlPlaneLoadBalancer": {
-          "description": "SecondaryControlPlaneLoadBalancer is an additional load balancer that can be used for the control plane.\n\n\nAn example use case is to have a separate internal load balancer for internal traffic,\nand a separate external load balancer for external traffic.",
+          "description": "SecondaryControlPlaneLoadBalancer is an additional load balancer that can be used for the control plane.\n\nAn example use case is to have a separate internal load balancer for internal traffic,\nand a separate external load balancer for external traffic.",
           "properties": {
             "additionalListeners": {
               "description": "AdditionalListeners sets the additional listeners for the control plane load balancer.\nThis is only applicable to Network Load Balancer (NLB) types for the time being.",
@@ -873,6 +1001,14 @@
                       "TCP"
                     ],
                     "type": "string"
+                  },
+                  "targetGroupIPType": {
+                    "description": "TargetGroupIPType sets the IP address type for the target group.\nValid values are ipv4 and ipv6. If not specified, defaults to ipv4 unless\nthe VPC has IPv6 enabled, in which case it defaults to ipv6.\nThis field cannot be set if LoadBalancerType is classic or disabled.",
+                    "enum": [
+                      "ipv4",
+                      "ipv6"
+                    ],
+                    "type": "string"
                   }
                 },
                 "required": [
@@ -895,7 +1031,7 @@
               "type": "array"
             },
             "crossZoneLoadBalancing": {
-              "description": "CrossZoneLoadBalancing enables the classic ELB cross availability zone balancing.\n\n\nWith cross-zone load balancing, each load balancer node for your Classic Load Balancer\ndistributes requests evenly across the registered instances in all enabled Availability Zones.\nIf cross-zone load balancing is disabled, each load balancer node distributes requests evenly across\nthe registered instances in its Availability Zone only.\n\n\nDefaults to false.",
+              "description": "CrossZoneLoadBalancing enables the classic ELB cross availability zone balancing.\n\nWith cross-zone load balancing, each load balancer node for your Classic Load Balancer\ndistributes requests evenly across the registered instances in all enabled Availability Zones.\nIf cross-zone load balancing is disabled, each load balancer node distributes requests evenly across\nthe registered instances in its Availability Zone only.\n\nDefaults to false.",
               "type": "boolean"
             },
             "disableHostsRewrite": {
@@ -1071,6 +1207,14 @@
                 "type": "string"
               },
               "type": "array"
+            },
+            "targetGroupIPType": {
+              "description": "TargetGroupIPType sets the IP address type for the target group.\nValid values are ipv4 and ipv6. If not specified, defaults to ipv4 unless\nthe VPC has IPv6 enabled, in which case it defaults to ipv6.\nThis applies to the API server target group.\nThis field cannot be set if LoadBalancerType is classic or disabled.",
+              "enum": [
+                "ipv4",
+                "ipv6"
+              ],
+              "type": "string"
             }
           },
           "type": "object",
@@ -1096,11 +1240,20 @@
                 "description": "MachineAddress contains information for the node's address.",
                 "properties": {
                   "address": {
-                    "description": "The machine address.",
+                    "description": "address is the machine address.",
+                    "maxLength": 256,
+                    "minLength": 1,
                     "type": "string"
                   },
                   "type": {
-                    "description": "Machine address type, one of Hostname, ExternalIP, InternalIP, ExternalDNS or InternalDNS.",
+                    "description": "type is the machine address type, one of Hostname, ExternalIP, InternalIP, ExternalDNS or InternalDNS.",
+                    "enum": [
+                      "Hostname",
+                      "ExternalIP",
+                      "InternalIP",
+                      "ExternalDNS",
+                      "InternalDNS"
+                    ],
                     "type": "string"
                   }
                 },
@@ -1113,6 +1266,10 @@
               },
               "type": "array"
             },
+            "assignPrimaryIPv6": {
+              "description": "AssignPrimaryIPv6 specifies whether to enable assigning a primary IPv6 address to the primary network Interface.",
+              "type": "string"
+            },
             "availabilityZone": {
               "description": "Availability zone of instance",
               "type": "string"
@@ -1121,6 +1278,66 @@
               "description": "CapacityReservationID specifies the target Capacity Reservation into which the instance should be launched.",
               "type": "string"
             },
+            "capacityReservationPreference": {
+              "allOf": [
+                {
+                  "enum": [
+                    "",
+                    "None",
+                    "CapacityReservationsOnly",
+                    "Open"
+                  ]
+                },
+                {
+                  "enum": [
+                    "",
+                    "None",
+                    "CapacityReservationsOnly",
+                    "Open"
+                  ]
+                }
+              ],
+              "description": "CapacityReservationPreference specifies the preference for use of Capacity Reservations by the instance. Valid values include:\n\"Open\": The instance may make use of open Capacity Reservations that match its AZ and InstanceType\n\"None\": The instance may not make use of any Capacity Reservations. This is to conserve open reservations for desired workloads\n\"CapacityReservationsOnly\": The instance will only run if matched or targeted to a Capacity Reservation. Note that this is incompatible with a MarketType of `Spot`",
+              "type": "string"
+            },
+            "cpuOptions": {
+              "description": "CPUOptions defines CPU-related settings for the instance, including the confidential computing policy.\nWhen omitted, this means no opinion and the AWS platform is left to choose a reasonable default.",
+              "minProperties": 1,
+              "properties": {
+                "confidentialCompute": {
+                  "description": "ConfidentialCompute specifies whether confidential computing should be enabled for the instance,\nand, if so, which confidential computing technology to use.\nValid values are: Disabled, AMDEncryptedVirtualizationNestedPaging\nWhen set to Disabled, confidential computing will be disabled for the instance.\nWhen set to AMDEncryptedVirtualizationNestedPaging, AMD SEV-SNP will be used as the confidential computing technology for the instance.\nIn this case, ensure the following conditions are met:\n1) The selected instance type supports AMD SEV-SNP.\n2) The selected AWS region supports AMD SEV-SNP.\n3) The selected AMI supports AMD SEV-SNP.\nMore details can be checked at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/sev-snp.html\nWhen omitted, this means no opinion and the AWS platform is left to choose a reasonable default,\nwhich is subject to change without notice. The current default is Disabled.",
+                  "enum": [
+                    "Disabled",
+                    "AMDEncryptedVirtualizationNestedPaging"
+                  ],
+                  "type": "string"
+                },
+                "nestedVirtualization": {
+                  "description": "NestedVirtualization specifies whether to enable nested virtualization on the instance.\nNested virtualization is supported on C8i, M8i, and R8i instance types.\nValid values are: enabled, disabled",
+                  "enum": [
+                    "enabled",
+                    "disabled"
+                  ],
+                  "type": "string"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
+            "dynamicHostAllocation": {
+              "description": "DynamicHostAllocation enables automatic allocation of dedicated hosts.\nThis field is mutually exclusive with HostID.",
+              "properties": {
+                "tags": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "description": "Tags to apply to the allocated dedicated host.",
+                  "type": "object"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
             "ebsOptimized": {
               "description": "Indicates whether the instance is optimized for Amazon EBS I/O.",
               "type": "boolean"
@@ -1128,6 +1345,18 @@
             "enaSupport": {
               "description": "Specifies whether enhanced networking with ENA is enabled.",
               "type": "boolean"
+            },
+            "hostAffinity": {
+              "description": "HostAffinity specifies the dedicated host affinity setting for the instance.\nWhen HostAffinity is set to \"host\", an instance started onto a specific host always restarts on the same host if stopped:\n- If HostID is set, the instance launches on the specific host and must return to that same host after any stop/start (Targeted & Pinned).\n- If HostID is not set, the instance gets launched on any available and must returns to the same host after any stop/start (Auto-placed & Pinned).\nWhen HostAffinity is set to \"default\" (the default value), the instance (when restarted) can return on any available host:\n- If HostID is set, the instance launches on the specified host now, but (when restarted) can return to any available hosts (Targeted & Flexible).\n- If HostID is not set, the instance launches on any available host now, and (when restarted) can return to any available hosts (Auto-placed & Flexible).",
+              "enum": [
+                "default",
+                "host"
+              ],
+              "type": "string"
+            },
+            "hostID": {
+              "description": "HostID specifies the dedicated host on which the instance should be started.",
+              "type": "string"
             },
             "iamProfile": {
               "description": "The name of the IAM instance profile associated with the instance, if applicable.",
@@ -1145,7 +1374,16 @@
               "properties": {
                 "httpEndpoint": {
                   "default": "enabled",
-                  "description": "Enables or disables the HTTP metadata endpoint on your instances.\n\n\nIf you specify a value of disabled, you cannot access your instance metadata.\n\n\nDefault: enabled",
+                  "description": "Enables or disables the HTTP metadata endpoint on your instances.\n\nIf you specify a value of disabled, you cannot access your instance metadata.\n\nDefault: enabled",
+                  "enum": [
+                    "enabled",
+                    "disabled"
+                  ],
+                  "type": "string"
+                },
+                "httpProtocolIpv6": {
+                  "default": "disabled",
+                  "description": "Enables or disables the IPv6 endpoint for the instance metadata service.\nThis applies only if you enabled the HTTP metadata endpoint.\n\nDefault: disabled",
                   "enum": [
                     "enabled",
                     "disabled"
@@ -1154,7 +1392,7 @@
                 },
                 "httpPutResponseHopLimit": {
                   "default": 1,
-                  "description": "The desired HTTP PUT response hop limit for instance metadata requests. The\nlarger the number, the further instance metadata requests can travel.\n\n\nDefault: 1",
+                  "description": "The desired HTTP PUT response hop limit for instance metadata requests. The\nlarger the number, the further instance metadata requests can travel.\n\nDefault: 1",
                   "format": "int64",
                   "maximum": 64,
                   "minimum": 1,
@@ -1162,7 +1400,7 @@
                 },
                 "httpTokens": {
                   "default": "optional",
-                  "description": "The state of token usage for your instance metadata requests.\n\n\nIf the state is optional, you can choose to retrieve instance metadata with\nor without a session token on your request. If you retrieve the IAM role\ncredentials without a token, the version 1.0 role credentials are returned.\nIf you retrieve the IAM role credentials using a valid session token, the\nversion 2.0 role credentials are returned.\n\n\nIf the state is required, you must send a session token with any instance\nmetadata retrieval requests. In this state, retrieving the IAM role credentials\nalways returns the version 2.0 credentials; the version 1.0 credentials are\nnot available.\n\n\nDefault: optional",
+                  "description": "The state of token usage for your instance metadata requests.\n\nIf the state is optional, you can choose to retrieve instance metadata with\nor without a session token on your request. If you retrieve the IAM role\ncredentials without a token, the version 1.0 role credentials are returned.\nIf you retrieve the IAM role credentials using a valid session token, the\nversion 2.0 role credentials are returned.\n\nIf the state is required, you must send a session token with any instance\nmetadata retrieval requests. In this state, retrieving the IAM role credentials\nalways returns the version 2.0 credentials; the version 1.0 credentials are\nnot available.\n\nDefault: optional",
                   "enum": [
                     "optional",
                     "required"
@@ -1171,7 +1409,7 @@
                 },
                 "instanceMetadataTags": {
                   "default": "disabled",
-                  "description": "Set to enabled to allow access to instance tags from the instance metadata.\nSet to disabled to turn off access to instance tags from the instance metadata.\nFor more information, see Work with instance tags using the instance metadata\n(https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html#work-with-tags-in-IMDS).\n\n\nDefault: disabled",
+                  "description": "Set to enabled to allow access to instance tags from the instance metadata.\nSet to disabled to turn off access to instance tags from the instance metadata.\nFor more information, see Work with instance tags using the instance metadata\n(https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html#work-with-tags-in-IMDS).\n\nDefault: disabled",
                   "enum": [
                     "enabled",
                     "disabled"
@@ -1184,6 +1422,23 @@
             },
             "instanceState": {
               "description": "The current state of the instance.",
+              "type": "string"
+            },
+            "ipv6Address": {
+              "description": "The IPv6 address assigned to the instance.",
+              "type": "string"
+            },
+            "marketType": {
+              "description": "MarketType specifies the type of market for the EC2 instance. Valid values include:\n\"OnDemand\" (default): The instance runs as a standard OnDemand instance.\n\"Spot\": The instance runs as a Spot instance. When SpotMarketOptions is provided, the marketType defaults to \"Spot\".\n\"CapacityBlock\": The instance utilizes pre-purchased compute capacity (capacity blocks) with AWS Capacity Reservations.\n If this value is selected, CapacityReservationID must be specified to identify the target reservation.\nIf marketType is not specified and spotMarketOptions is provided, the marketType defaults to \"Spot\".",
+              "enum": [
+                "OnDemand",
+                "Spot",
+                "CapacityBlock"
+              ],
+              "type": "string"
+            },
+            "networkInterfaceType": {
+              "description": "NetworkInterfaceType is the interface type of the primary network Interface.",
               "type": "string"
             },
             "networkInterfaces": {
@@ -1392,28 +1647,35 @@
             "description": "Condition defines an observation of a Cluster API resource operational state.",
             "properties": {
               "lastTransitionTime": {
-                "description": "Last time the condition transitioned from one status to another.\nThis should be when the underlying condition changed. If that is not known, then using the time when\nthe API field changed is acceptable.",
+                "description": "lastTransitionTime is the last time the condition transitioned from one status to another.\nThis should be when the underlying condition changed. If that is not known, then using the time when\nthe API field changed is acceptable.",
                 "format": "date-time",
                 "type": "string"
               },
               "message": {
-                "description": "A human readable message indicating details about the transition.\nThis field may be empty.",
+                "description": "message is a human readable message indicating details about the transition.\nThis field may be empty.",
+                "maxLength": 10240,
+                "minLength": 1,
                 "type": "string"
               },
               "reason": {
-                "description": "The reason for the condition's last transition in CamelCase.\nThe specific API may choose whether or not this field is considered a guaranteed API.\nThis field may not be empty.",
+                "description": "reason is the reason for the condition's last transition in CamelCase.\nThe specific API may choose whether or not this field is considered a guaranteed API.\nThis field may be empty.",
+                "maxLength": 256,
+                "minLength": 1,
                 "type": "string"
               },
               "severity": {
-                "description": "Severity provides an explicit classification of Reason code, so the users or machines can immediately\nunderstand the current situation and act accordingly.\nThe Severity field MUST be set only when Status=False.",
+                "description": "severity provides an explicit classification of Reason code, so the users or machines can immediately\nunderstand the current situation and act accordingly.\nThe Severity field MUST be set only when Status=False.",
+                "maxLength": 32,
                 "type": "string"
               },
               "status": {
-                "description": "Status of the condition, one of True, False, Unknown.",
+                "description": "status of the condition, one of True, False, Unknown.",
                 "type": "string"
               },
               "type": {
-                "description": "Type of condition in CamelCase or in foo.example.com/CamelCase.\nMany .condition.type values are consistent across resources like Available, but because arbitrary conditions\ncan be useful (see .node.status.conditions), the ability to deconflict is important.",
+                "description": "type of condition in CamelCase or in foo.example.com/CamelCase.\nMany .condition.type values are consistent across resources like Available, but because arbitrary conditions\ncan be useful (see .node.status.conditions), the ability to deconflict is important.",
+                "maxLength": 256,
+                "minLength": 1,
                 "type": "string"
               }
             },
@@ -1435,11 +1697,11 @@
                 "additionalProperties": {
                   "type": "string"
                 },
-                "description": "Attributes is a free form map of attributes an infrastructure provider might use or require.",
+                "description": "attributes is a free form map of attributes an infrastructure provider might use or require.",
                 "type": "object"
               },
               "controlPlane": {
-                "description": "ControlPlane determines if this failure domain is suitable for use by control plane machines.",
+                "description": "controlPlane determines if this failure domain is suitable for use by control plane machines.",
                 "type": "boolean"
               }
             },
@@ -1509,6 +1771,10 @@
                       "targetGroup": {
                         "description": "TargetGroupSpec specifies target group settings for a given listener.\nThis is created first, and the ARN is then passed to the listener.",
                         "properties": {
+                          "ipType": {
+                            "description": "IPType is the IP address type for the target group.",
+                            "type": "string"
+                          },
                           "name": {
                             "description": "Name of the TargetGroup. Must be unique over the same group of listeners.",
                             "maxLength": 32,
@@ -1654,6 +1920,15 @@
                     "additionalProperties": false
                   },
                   "type": "array"
+                },
+                "loadBalancerIPAddressType": {
+                  "description": "LoadBalancerIPAddressType specifies the IP address type for the load balancer.",
+                  "enum": [
+                    "ipv4",
+                    "dualstack",
+                    "dualstack-without-public-ipv4"
+                  ],
+                  "type": "string"
                 },
                 "loadBalancerType": {
                   "description": "LoadBalancerType sets the type for a load balancer. The default type is classic.",
@@ -1762,6 +2037,10 @@
                       "targetGroup": {
                         "description": "TargetGroupSpec specifies target group settings for a given listener.\nThis is created first, and the ARN is then passed to the listener.",
                         "properties": {
+                          "ipType": {
+                            "description": "IPType is the IP address type for the target group.",
+                            "type": "string"
+                          },
                           "name": {
                             "description": "Name of the TargetGroup. Must be unique over the same group of listeners.",
                             "maxLength": 32,
@@ -1907,6 +2186,15 @@
                     "additionalProperties": false
                   },
                   "type": "array"
+                },
+                "loadBalancerIPAddressType": {
+                  "description": "LoadBalancerIPAddressType specifies the IP address type for the load balancer.",
+                  "enum": [
+                    "ipv4",
+                    "dualstack",
+                    "dualstack-without-public-ipv4"
+                  ],
+                  "type": "string"
                 },
                 "loadBalancerType": {
                   "description": "LoadBalancerType sets the type for a load balancer. The default type is classic.",

@@ -117,6 +117,11 @@
           "maxLength": 128,
           "type": "string"
         },
+        "powered": {
+          "default": true,
+          "description": "Determines the power state of the service. When `true` (default), the service is running.\nWhen `false`, the service is powered off.\nFor more information please see [Aiven documentation](https://aiven.io/docs/platform/concepts/service-power-cycle).\nNote that:\n- When set to `false` the annotation `controllers.aiven.io/instance-is-running` is also set to `false`.\n- Services cannot be created in a powered off state. The value is ignored during creation.\n- It is highly recommended to not run dependent resources when the service is powered off.\n  Creating a new resource or updating an existing resource that depends on a powered off service will result in an error.\n  Existing resources will need to be manually recreated after the service is powered on.\n- Existing secrets will not be updated or removed when the service is powered off.\n- For Kafka services with backups: Topic configuration, schemas and connectors are all backed up, but not the data in topics. All topic data is lost on power off.\n- For Kafka services without backups: Topic configurations including all topic data is lost on power off.",
+          "type": "boolean"
+        },
         "project": {
           "description": "Identifies the project this resource belongs to",
           "maxLength": 63,
@@ -219,7 +224,7 @@
           "description": "Cassandra specific user configuration options",
           "properties": {
             "additional_backup_regions": {
-              "description": "Deprecated. Additional Cloud Regions for Backup Replication",
+              "description": "Additional Cloud Regions for Backup Replication",
               "items": {
                 "type": "string"
               },
@@ -257,17 +262,25 @@
                   "description": "Name of the datacenter to which nodes of this service belong. Can be set only when creating the service.",
                   "maxLength": 128,
                   "type": "string"
+                },
+                "read_request_timeout_in_ms": {
+                  "description": "How long the coordinator waits for read operations to complete before timing it out. 5 seconds by default.",
+                  "maximum": 10000,
+                  "minimum": 1000,
+                  "type": "integer"
+                },
+                "write_request_timeout_in_ms": {
+                  "description": "How long the coordinator waits for write requests to complete with at least one node in the local datacenter. 2 seconds by default.",
+                  "maximum": 10000,
+                  "minimum": 1000,
+                  "type": "integer"
                 }
               },
               "type": "object",
               "additionalProperties": false
             },
             "cassandra_version": {
-              "description": "Cassandra version",
-              "enum": [
-                "4",
-                "4.1"
-              ],
+              "description": "Available versions: `4.1`. Newer versions may also be available.\nCassandra version. Deprecated values: `4.1`",
               "pattern": "^[0-9]+(\\.[0-9]+)?$",
               "type": "string"
             },
@@ -293,7 +306,7 @@
                 "type": "object",
                 "additionalProperties": false
               },
-              "maxItems": 1024,
+              "maxItems": 8000,
               "type": "array"
             },
             "migrate_sstableloader": {
@@ -384,7 +397,7 @@
         "conditions": {
           "description": "Conditions represent the latest available observations of a service state",
           "items": {
-            "description": "Condition contains details for one aspect of the current state of this API Resource.\n---\nThis struct is intended for direct use as an array at the field path .status.conditions.  For example,\n\n\n\ttype FooStatus struct{\n\t    // Represents the observations of a foo's current state.\n\t    // Known .status.conditions.type are: \"Available\", \"Progressing\", and \"Degraded\"\n\t    // +patchMergeKey=type\n\t    // +patchStrategy=merge\n\t    // +listType=map\n\t    // +listMapKey=type\n\t    Conditions []metav1.Condition `json:\"conditions,omitempty\" patchStrategy:\"merge\" patchMergeKey:\"type\" protobuf:\"bytes,1,rep,name=conditions\"`\n\n\n\t    // other fields\n\t}",
+            "description": "Condition contains details for one aspect of the current state of this API Resource.",
             "properties": {
               "lastTransitionTime": {
                 "description": "lastTransitionTime is the last time the condition transitioned from one status to another.\nThis should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.",
@@ -419,7 +432,7 @@
                 "type": "string"
               },
               "type": {
-                "description": "type of condition in CamelCase or in foo.example.com/CamelCase.\n---\nMany .condition.type values are consistent across resources like Available, but because arbitrary conditions can be\nuseful (see .node.status.conditions), the ability to deconflict is important.\nThe regex it matches is (dns1123SubdomainFmt/)?(qualifiedNameFmt)",
+                "description": "type of condition in CamelCase or in foo.example.com/CamelCase.",
                 "maxLength": 316,
                 "pattern": "^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$",
                 "type": "string"

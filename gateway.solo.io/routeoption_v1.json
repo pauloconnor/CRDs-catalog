@@ -17,6 +17,504 @@
         },
         "options": {
           "properties": {
+            "ai": {
+              "properties": {
+                "defaults": {
+                  "items": {
+                    "properties": {
+                      "field": {
+                        "type": "string"
+                      },
+                      "override": {
+                        "type": "boolean"
+                      },
+                      "value": {
+                        "x-kubernetes-preserve-unknown-fields": true
+                      }
+                    },
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "type": "array"
+                },
+                "promptEnrichment": {
+                  "properties": {
+                    "append": {
+                      "items": {
+                        "properties": {
+                          "content": {
+                            "type": "string"
+                          },
+                          "role": {
+                            "type": "string"
+                          }
+                        },
+                        "type": "object",
+                        "additionalProperties": false
+                      },
+                      "type": "array"
+                    },
+                    "prepend": {
+                      "items": {
+                        "properties": {
+                          "content": {
+                            "type": "string"
+                          },
+                          "role": {
+                            "type": "string"
+                          }
+                        },
+                        "type": "object",
+                        "additionalProperties": false
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "promptGuard": {
+                  "properties": {
+                    "request": {
+                      "properties": {
+                        "customResponse": {
+                          "properties": {
+                            "message": {
+                              "type": "string"
+                            },
+                            "statusCode": {
+                              "maximum": 4294967295,
+                              "minimum": 0,
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        },
+                        "moderation": {
+                          "properties": {
+                            "openai": {
+                              "properties": {
+                                "authToken": {
+                                  "properties": {
+                                    "inline": {
+                                      "type": "string"
+                                    },
+                                    "passthrough": {
+                                      "type": "object"
+                                    },
+                                    "secretRef": {
+                                      "properties": {
+                                        "name": {
+                                          "type": "string"
+                                        },
+                                        "namespace": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                },
+                                "model": {
+                                  "type": "string"
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        },
+                        "regex": {
+                          "properties": {
+                            "action": {
+                              "type": "string",
+                              "x-kubernetes-int-or-string": true
+                            },
+                            "builtins": {
+                              "items": {
+                                "type": "string",
+                                "x-kubernetes-int-or-string": true
+                              },
+                              "type": "array"
+                            },
+                            "matches": {
+                              "items": {
+                                "properties": {
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "pattern": {
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              },
+                              "type": "array"
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        },
+                        "webhook": {
+                          "properties": {
+                            "forwardHeaders": {
+                              "items": {
+                                "properties": {
+                                  "key": {
+                                    "type": "string"
+                                  },
+                                  "matchType": {
+                                    "type": "string",
+                                    "x-kubernetes-int-or-string": true
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              },
+                              "type": "array"
+                            },
+                            "host": {
+                              "type": "string"
+                            },
+                            "port": {
+                              "maximum": 4294967295,
+                              "minimum": 0,
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "response": {
+                      "properties": {
+                        "regex": {
+                          "properties": {
+                            "action": {
+                              "type": "string",
+                              "x-kubernetes-int-or-string": true
+                            },
+                            "builtins": {
+                              "items": {
+                                "type": "string",
+                                "x-kubernetes-int-or-string": true
+                              },
+                              "type": "array"
+                            },
+                            "matches": {
+                              "items": {
+                                "properties": {
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "pattern": {
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              },
+                              "type": "array"
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        },
+                        "webhook": {
+                          "properties": {
+                            "forwardHeaders": {
+                              "items": {
+                                "properties": {
+                                  "key": {
+                                    "type": "string"
+                                  },
+                                  "matchType": {
+                                    "type": "string",
+                                    "x-kubernetes-int-or-string": true
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              },
+                              "type": "array"
+                            },
+                            "host": {
+                              "type": "string"
+                            },
+                            "port": {
+                              "maximum": 4294967295,
+                              "minimum": 0,
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "rag": {
+                  "properties": {
+                    "datastore": {
+                      "properties": {
+                        "postgres": {
+                          "properties": {
+                            "collectionName": {
+                              "type": "string"
+                            },
+                            "connectionString": {
+                              "type": "string"
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "embedding": {
+                      "properties": {
+                        "azureOpenai": {
+                          "properties": {
+                            "apiVersion": {
+                              "type": "string"
+                            },
+                            "authToken": {
+                              "properties": {
+                                "inline": {
+                                  "type": "string"
+                                },
+                                "passthrough": {
+                                  "type": "object"
+                                },
+                                "secretRef": {
+                                  "properties": {
+                                    "name": {
+                                      "type": "string"
+                                    },
+                                    "namespace": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            },
+                            "deploymentName": {
+                              "type": "string"
+                            },
+                            "endpoint": {
+                              "type": "string"
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        },
+                        "openai": {
+                          "properties": {
+                            "authToken": {
+                              "properties": {
+                                "inline": {
+                                  "type": "string"
+                                },
+                                "passthrough": {
+                                  "type": "object"
+                                },
+                                "secretRef": {
+                                  "properties": {
+                                    "name": {
+                                      "type": "string"
+                                    },
+                                    "namespace": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "promptTemplate": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "routeType": {
+                  "type": "string",
+                  "x-kubernetes-int-or-string": true
+                },
+                "semanticCache": {
+                  "properties": {
+                    "datastore": {
+                      "properties": {
+                        "redis": {
+                          "properties": {
+                            "connectionString": {
+                              "type": "string"
+                            },
+                            "scoreThreshold": {
+                              "type": "number"
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        },
+                        "weaviate": {
+                          "properties": {
+                            "grpcPort": {
+                              "maximum": 4294967295,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "host": {
+                              "type": "string"
+                            },
+                            "httpPort": {
+                              "maximum": 4294967295,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            "insecure": {
+                              "type": "boolean"
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "distanceThreshold": {
+                      "type": "number"
+                    },
+                    "embedding": {
+                      "properties": {
+                        "azureOpenai": {
+                          "properties": {
+                            "apiVersion": {
+                              "type": "string"
+                            },
+                            "authToken": {
+                              "properties": {
+                                "inline": {
+                                  "type": "string"
+                                },
+                                "passthrough": {
+                                  "type": "object"
+                                },
+                                "secretRef": {
+                                  "properties": {
+                                    "name": {
+                                      "type": "string"
+                                    },
+                                    "namespace": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            },
+                            "deploymentName": {
+                              "type": "string"
+                            },
+                            "endpoint": {
+                              "type": "string"
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        },
+                        "openai": {
+                          "properties": {
+                            "authToken": {
+                              "properties": {
+                                "inline": {
+                                  "type": "string"
+                                },
+                                "passthrough": {
+                                  "type": "object"
+                                },
+                                "secretRef": {
+                                  "properties": {
+                                    "name": {
+                                      "type": "string"
+                                    },
+                                    "namespace": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "mode": {
+                      "type": "string",
+                      "x-kubernetes-int-or-string": true
+                    },
+                    "ttl": {
+                      "maximum": 4294967295,
+                      "minimum": 0,
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
+            "appendXForwardedHost": {
+              "nullable": true,
+              "type": "boolean"
+            },
             "autoHostRewrite": {
               "nullable": true,
               "type": "boolean"
@@ -140,7 +638,8 @@
                           "x-kubernetes-int-or-string": true
                         },
                         "numerator": {
-                          "format": "int32",
+                          "maximum": 4294967295,
+                          "minimum": 0,
                           "type": "integer"
                         }
                       },
@@ -163,7 +662,8 @@
                           "x-kubernetes-int-or-string": true
                         },
                         "numerator": {
-                          "format": "int32",
+                          "maximum": 4294967295,
+                          "minimum": 0,
                           "type": "integer"
                         }
                       },
@@ -220,7 +720,8 @@
                                   "type": "string"
                                 },
                                 "subgroup": {
-                                  "format": "int32",
+                                  "maximum": 4294967295,
+                                  "minimum": 0,
                                   "type": "integer"
                                 }
                               },
@@ -281,6 +782,420 @@
               },
               "type": "object"
             },
+            "extProc": {
+              "properties": {
+                "disabled": {
+                  "nullable": true,
+                  "type": "boolean"
+                },
+                "overrides": {
+                  "properties": {
+                    "asyncMode": {
+                      "nullable": true,
+                      "type": "boolean"
+                    },
+                    "grpcService": {
+                      "properties": {
+                        "authority": {
+                          "nullable": true,
+                          "type": "string"
+                        },
+                        "extProcServerRef": {
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            },
+                            "namespace": {
+                              "type": "string"
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        },
+                        "initialMetadata": {
+                          "items": {
+                            "properties": {
+                              "key": {
+                                "type": "string"
+                              },
+                              "value": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "type": "array"
+                        },
+                        "retryPolicy": {
+                          "properties": {
+                            "numRetries": {
+                              "maximum": 4294967295,
+                              "minimum": 0,
+                              "nullable": true,
+                              "type": "integer"
+                            },
+                            "retryBackOff": {
+                              "properties": {
+                                "baseInterval": {
+                                  "type": "string"
+                                },
+                                "maxInterval": {
+                                  "type": "string"
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        },
+                        "timeout": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "metadataContextNamespaces": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "processingMode": {
+                      "properties": {
+                        "requestBodyMode": {
+                          "type": "string",
+                          "x-kubernetes-int-or-string": true
+                        },
+                        "requestHeaderMode": {
+                          "type": "string",
+                          "x-kubernetes-int-or-string": true
+                        },
+                        "requestTrailerMode": {
+                          "type": "string",
+                          "x-kubernetes-int-or-string": true
+                        },
+                        "responseBodyMode": {
+                          "type": "string",
+                          "x-kubernetes-int-or-string": true
+                        },
+                        "responseHeaderMode": {
+                          "type": "string",
+                          "x-kubernetes-int-or-string": true
+                        },
+                        "responseTrailerMode": {
+                          "type": "string",
+                          "x-kubernetes-int-or-string": true
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "requestAttributes": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "responseAttributes": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "typedMetadataContextNamespaces": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
+            "extProcEarly": {
+              "properties": {
+                "disabled": {
+                  "nullable": true,
+                  "type": "boolean"
+                },
+                "overrides": {
+                  "properties": {
+                    "asyncMode": {
+                      "nullable": true,
+                      "type": "boolean"
+                    },
+                    "grpcService": {
+                      "properties": {
+                        "authority": {
+                          "nullable": true,
+                          "type": "string"
+                        },
+                        "extProcServerRef": {
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            },
+                            "namespace": {
+                              "type": "string"
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        },
+                        "initialMetadata": {
+                          "items": {
+                            "properties": {
+                              "key": {
+                                "type": "string"
+                              },
+                              "value": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "type": "array"
+                        },
+                        "retryPolicy": {
+                          "properties": {
+                            "numRetries": {
+                              "maximum": 4294967295,
+                              "minimum": 0,
+                              "nullable": true,
+                              "type": "integer"
+                            },
+                            "retryBackOff": {
+                              "properties": {
+                                "baseInterval": {
+                                  "type": "string"
+                                },
+                                "maxInterval": {
+                                  "type": "string"
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        },
+                        "timeout": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "metadataContextNamespaces": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "processingMode": {
+                      "properties": {
+                        "requestBodyMode": {
+                          "type": "string",
+                          "x-kubernetes-int-or-string": true
+                        },
+                        "requestHeaderMode": {
+                          "type": "string",
+                          "x-kubernetes-int-or-string": true
+                        },
+                        "requestTrailerMode": {
+                          "type": "string",
+                          "x-kubernetes-int-or-string": true
+                        },
+                        "responseBodyMode": {
+                          "type": "string",
+                          "x-kubernetes-int-or-string": true
+                        },
+                        "responseHeaderMode": {
+                          "type": "string",
+                          "x-kubernetes-int-or-string": true
+                        },
+                        "responseTrailerMode": {
+                          "type": "string",
+                          "x-kubernetes-int-or-string": true
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "requestAttributes": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "responseAttributes": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "typedMetadataContextNamespaces": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
+            "extProcLate": {
+              "properties": {
+                "disabled": {
+                  "nullable": true,
+                  "type": "boolean"
+                },
+                "overrides": {
+                  "properties": {
+                    "asyncMode": {
+                      "nullable": true,
+                      "type": "boolean"
+                    },
+                    "grpcService": {
+                      "properties": {
+                        "authority": {
+                          "nullable": true,
+                          "type": "string"
+                        },
+                        "extProcServerRef": {
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            },
+                            "namespace": {
+                              "type": "string"
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        },
+                        "initialMetadata": {
+                          "items": {
+                            "properties": {
+                              "key": {
+                                "type": "string"
+                              },
+                              "value": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "type": "array"
+                        },
+                        "retryPolicy": {
+                          "properties": {
+                            "numRetries": {
+                              "maximum": 4294967295,
+                              "minimum": 0,
+                              "nullable": true,
+                              "type": "integer"
+                            },
+                            "retryBackOff": {
+                              "properties": {
+                                "baseInterval": {
+                                  "type": "string"
+                                },
+                                "maxInterval": {
+                                  "type": "string"
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        },
+                        "timeout": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "metadataContextNamespaces": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "processingMode": {
+                      "properties": {
+                        "requestBodyMode": {
+                          "type": "string",
+                          "x-kubernetes-int-or-string": true
+                        },
+                        "requestHeaderMode": {
+                          "type": "string",
+                          "x-kubernetes-int-or-string": true
+                        },
+                        "requestTrailerMode": {
+                          "type": "string",
+                          "x-kubernetes-int-or-string": true
+                        },
+                        "responseBodyMode": {
+                          "type": "string",
+                          "x-kubernetes-int-or-string": true
+                        },
+                        "responseHeaderMode": {
+                          "type": "string",
+                          "x-kubernetes-int-or-string": true
+                        },
+                        "responseTrailerMode": {
+                          "type": "string",
+                          "x-kubernetes-int-or-string": true
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "requestAttributes": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "responseAttributes": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "typedMetadataContextNamespaces": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
             "extauth": {
               "properties": {
                 "configRef": {
@@ -335,7 +1250,8 @@
                 "abort": {
                   "properties": {
                     "httpStatus": {
-                      "format": "int32",
+                      "maximum": 4294967295,
+                      "minimum": 0,
                       "type": "integer"
                     },
                     "percentage": {
@@ -444,10 +1360,325 @@
             "hostRewrite": {
               "type": "string"
             },
+            "hostRewriteHeader": {
+              "nullable": true,
+              "type": "string"
+            },
+            "hostRewritePathRegex": {
+              "properties": {
+                "pattern": {
+                  "properties": {
+                    "googleRe2": {
+                      "properties": {
+                        "maxProgramSize": {
+                          "maximum": 4294967295,
+                          "minimum": 0,
+                          "nullable": true,
+                          "type": "integer"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "regex": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "substitution": {
+                  "type": "string"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
+            "idleTimeout": {
+              "type": "string"
+            },
             "jwt": {
               "properties": {
                 "disable": {
                   "type": "boolean"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
+            "jwtProvidersStaged": {
+              "properties": {
+                "afterExtAuth": {
+                  "properties": {
+                    "allowMissingOrFailedJwt": {
+                      "type": "boolean"
+                    },
+                    "providers": {
+                      "additionalProperties": {
+                        "properties": {
+                          "attachFailedStatusToMetadata": {
+                            "type": "string"
+                          },
+                          "audiences": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          },
+                          "claimsToHeaders": {
+                            "items": {
+                              "properties": {
+                                "append": {
+                                  "type": "boolean"
+                                },
+                                "claim": {
+                                  "type": "string"
+                                },
+                                "header": {
+                                  "type": "string"
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            },
+                            "type": "array"
+                          },
+                          "clockSkewSeconds": {
+                            "maximum": 4294967295,
+                            "minimum": 0,
+                            "nullable": true,
+                            "type": "integer"
+                          },
+                          "issuer": {
+                            "type": "string"
+                          },
+                          "jwks": {
+                            "properties": {
+                              "local": {
+                                "properties": {
+                                  "key": {
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              },
+                              "remote": {
+                                "properties": {
+                                  "asyncFetch": {
+                                    "properties": {
+                                      "fastListener": {
+                                        "type": "boolean"
+                                      }
+                                    },
+                                    "type": "object",
+                                    "additionalProperties": false
+                                  },
+                                  "cacheDuration": {
+                                    "type": "string"
+                                  },
+                                  "upstreamRef": {
+                                    "properties": {
+                                      "name": {
+                                        "type": "string"
+                                      },
+                                      "namespace": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "type": "object",
+                                    "additionalProperties": false
+                                  },
+                                  "url": {
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "keepToken": {
+                            "type": "boolean"
+                          },
+                          "tokenSource": {
+                            "properties": {
+                              "headers": {
+                                "items": {
+                                  "properties": {
+                                    "header": {
+                                      "type": "string"
+                                    },
+                                    "prefix": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                },
+                                "type": "array"
+                              },
+                              "queryParams": {
+                                "items": {
+                                  "type": "string"
+                                },
+                                "type": "array"
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          }
+                        },
+                        "type": "object",
+                        "additionalProperties": false
+                      },
+                      "type": "object"
+                    },
+                    "validationPolicy": {
+                      "type": "string",
+                      "x-kubernetes-int-or-string": true
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "beforeExtAuth": {
+                  "properties": {
+                    "allowMissingOrFailedJwt": {
+                      "type": "boolean"
+                    },
+                    "providers": {
+                      "additionalProperties": {
+                        "properties": {
+                          "attachFailedStatusToMetadata": {
+                            "type": "string"
+                          },
+                          "audiences": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          },
+                          "claimsToHeaders": {
+                            "items": {
+                              "properties": {
+                                "append": {
+                                  "type": "boolean"
+                                },
+                                "claim": {
+                                  "type": "string"
+                                },
+                                "header": {
+                                  "type": "string"
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            },
+                            "type": "array"
+                          },
+                          "clockSkewSeconds": {
+                            "maximum": 4294967295,
+                            "minimum": 0,
+                            "nullable": true,
+                            "type": "integer"
+                          },
+                          "issuer": {
+                            "type": "string"
+                          },
+                          "jwks": {
+                            "properties": {
+                              "local": {
+                                "properties": {
+                                  "key": {
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              },
+                              "remote": {
+                                "properties": {
+                                  "asyncFetch": {
+                                    "properties": {
+                                      "fastListener": {
+                                        "type": "boolean"
+                                      }
+                                    },
+                                    "type": "object",
+                                    "additionalProperties": false
+                                  },
+                                  "cacheDuration": {
+                                    "type": "string"
+                                  },
+                                  "upstreamRef": {
+                                    "properties": {
+                                      "name": {
+                                        "type": "string"
+                                      },
+                                      "namespace": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "type": "object",
+                                    "additionalProperties": false
+                                  },
+                                  "url": {
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "keepToken": {
+                            "type": "boolean"
+                          },
+                          "tokenSource": {
+                            "properties": {
+                              "headers": {
+                                "items": {
+                                  "properties": {
+                                    "header": {
+                                      "type": "string"
+                                    },
+                                    "prefix": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                },
+                                "type": "array"
+                              },
+                              "queryParams": {
+                                "items": {
+                                  "type": "string"
+                                },
+                                "type": "array"
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          }
+                        },
+                        "type": "object",
+                        "additionalProperties": false
+                      },
+                      "type": "object"
+                    },
+                    "validationPolicy": {
+                      "type": "string",
+                      "x-kubernetes-int-or-string": true
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
                 }
               },
               "type": "object",
@@ -603,6 +1834,26 @@
                 "includeVhRateLimits": {
                   "type": "boolean"
                 },
+                "localRatelimit": {
+                  "properties": {
+                    "fillInterval": {
+                      "type": "string"
+                    },
+                    "maxTokens": {
+                      "maximum": 4294967295,
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "tokensPerFill": {
+                      "maximum": 4294967295,
+                      "minimum": 0,
+                      "nullable": true,
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
                 "rateLimits": {
                   "items": {
                     "properties": {
@@ -740,6 +1991,39 @@
                           "additionalProperties": false
                         },
                         "type": "array"
+                      },
+                      "limit": {
+                        "properties": {
+                          "dynamicMetadata": {
+                            "properties": {
+                              "metadataKey": {
+                                "properties": {
+                                  "key": {
+                                    "type": "string"
+                                  },
+                                  "path": {
+                                    "items": {
+                                      "properties": {
+                                        "key": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    },
+                                    "type": "array"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          }
+                        },
+                        "type": "object",
+                        "additionalProperties": false
                       },
                       "setActions": {
                         "items": {
@@ -891,7 +2175,8 @@
                 "anonymousLimits": {
                   "properties": {
                     "requestsPerUnit": {
-                      "format": "int32",
+                      "maximum": 4294967295,
+                      "minimum": 0,
                       "type": "integer"
                     },
                     "unit": {
@@ -905,7 +2190,8 @@
                 "authorizedLimits": {
                   "properties": {
                     "requestsPerUnit": {
-                      "format": "int32",
+                      "maximum": 4294967295,
+                      "minimum": 0,
                       "type": "integer"
                     },
                     "unit": {
@@ -924,6 +2210,26 @@
               "properties": {
                 "includeVhRateLimits": {
                   "type": "boolean"
+                },
+                "localRatelimit": {
+                  "properties": {
+                    "fillInterval": {
+                      "type": "string"
+                    },
+                    "maxTokens": {
+                      "maximum": 4294967295,
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "tokensPerFill": {
+                      "maximum": 4294967295,
+                      "minimum": 0,
+                      "nullable": true,
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
                 },
                 "rateLimits": {
                   "items": {
@@ -1062,6 +2368,39 @@
                           "additionalProperties": false
                         },
                         "type": "array"
+                      },
+                      "limit": {
+                        "properties": {
+                          "dynamicMetadata": {
+                            "properties": {
+                              "metadataKey": {
+                                "properties": {
+                                  "key": {
+                                    "type": "string"
+                                  },
+                                  "path": {
+                                    "items": {
+                                      "properties": {
+                                        "key": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    },
+                                    "type": "array"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          }
+                        },
+                        "type": "object",
+                        "additionalProperties": false
                       },
                       "setActions": {
                         "items": {
@@ -1213,6 +2552,26 @@
                 "includeVhRateLimits": {
                   "type": "boolean"
                 },
+                "localRatelimit": {
+                  "properties": {
+                    "fillInterval": {
+                      "type": "string"
+                    },
+                    "maxTokens": {
+                      "maximum": 4294967295,
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "tokensPerFill": {
+                      "maximum": 4294967295,
+                      "minimum": 0,
+                      "nullable": true,
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
                 "rateLimits": {
                   "items": {
                     "properties": {
@@ -1350,6 +2709,39 @@
                           "additionalProperties": false
                         },
                         "type": "array"
+                      },
+                      "limit": {
+                        "properties": {
+                          "dynamicMetadata": {
+                            "properties": {
+                              "metadataKey": {
+                                "properties": {
+                                  "key": {
+                                    "type": "string"
+                                  },
+                                  "path": {
+                                    "items": {
+                                      "properties": {
+                                        "key": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    },
+                                    "type": "array"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          }
+                        },
+                        "type": "object",
+                        "additionalProperties": false
                       },
                       "setActions": {
                         "items": {
@@ -1593,11 +2985,57 @@
             "retries": {
               "properties": {
                 "numRetries": {
-                  "format": "int32",
+                  "maximum": 4294967295,
+                  "minimum": 0,
                   "type": "integer"
                 },
                 "perTryTimeout": {
                   "type": "string"
+                },
+                "previousPriorities": {
+                  "properties": {
+                    "updateFrequency": {
+                      "maximum": 4294967295,
+                      "minimum": 0,
+                      "nullable": true,
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "rateLimitedRetryBackOff": {
+                  "properties": {
+                    "maxInterval": {
+                      "type": "string"
+                    },
+                    "resetHeaders": {
+                      "items": {
+                        "properties": {
+                          "format": {
+                            "type": "string",
+                            "x-kubernetes-int-or-string": true
+                          },
+                          "name": {
+                            "type": "string"
+                          }
+                        },
+                        "type": "object",
+                        "additionalProperties": false
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "retriableStatusCodes": {
+                  "items": {
+                    "maximum": 4294967295,
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "type": "array"
                 },
                 "retryBackOff": {
                   "properties": {
@@ -1655,6 +3093,9 @@
                                 "nullable": true,
                                 "type": "boolean"
                               },
+                              "connectMatcher": {
+                                "type": "object"
+                              },
                               "exact": {
                                 "type": "string"
                               },
@@ -1724,6 +3165,9 @@
                                 "type": "object",
                                 "additionalProperties": false
                               },
+                              "logRequestResponseInfo": {
+                                "type": "boolean"
+                              },
                               "transformationTemplate": {
                                 "properties": {
                                   "advancedTemplates": {
@@ -1741,6 +3185,9 @@
                                   "dynamicMetadataValues": {
                                     "items": {
                                       "properties": {
+                                        "jsonToProto": {
+                                          "type": "boolean"
+                                        },
                                         "key": {
                                           "type": "string"
                                         },
@@ -1762,6 +3209,10 @@
                                     },
                                     "type": "array"
                                   },
+                                  "escapeCharacters": {
+                                    "nullable": true,
+                                    "type": "boolean"
+                                  },
                                   "extractors": {
                                     "additionalProperties": {
                                       "properties": {
@@ -1772,11 +3223,20 @@
                                         "header": {
                                           "type": "string"
                                         },
+                                        "mode": {
+                                          "type": "string",
+                                          "x-kubernetes-int-or-string": true
+                                        },
                                         "regex": {
                                           "type": "string"
                                         },
+                                        "replacementText": {
+                                          "nullable": true,
+                                          "type": "string"
+                                        },
                                         "subgroup": {
-                                          "format": "int32",
+                                          "maximum": 4294967295,
+                                          "minimum": 0,
                                           "type": "integer"
                                         }
                                       },
@@ -1830,12 +3290,54 @@
                                   "mergeExtractorsToBody": {
                                     "type": "object"
                                   },
+                                  "mergeJsonKeys": {
+                                    "properties": {
+                                      "jsonKeys": {
+                                        "additionalProperties": {
+                                          "properties": {
+                                            "overrideEmpty": {
+                                              "type": "boolean"
+                                            },
+                                            "tmpl": {
+                                              "properties": {
+                                                "text": {
+                                                  "type": "string"
+                                                }
+                                              },
+                                              "type": "object",
+                                              "additionalProperties": false
+                                            }
+                                          },
+                                          "type": "object",
+                                          "additionalProperties": false
+                                        },
+                                        "type": "object"
+                                      }
+                                    },
+                                    "type": "object",
+                                    "additionalProperties": false
+                                  },
                                   "parseBodyBehavior": {
                                     "type": "string",
                                     "x-kubernetes-int-or-string": true
                                   },
                                   "passthrough": {
                                     "type": "object"
+                                  },
+                                  "spanTransformer": {
+                                    "properties": {
+                                      "name": {
+                                        "properties": {
+                                          "text": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "type": "object",
+                                        "additionalProperties": false
+                                      }
+                                    },
+                                    "type": "object",
+                                    "additionalProperties": false
                                   }
                                 },
                                 "type": "object",
@@ -1871,6 +3373,9 @@
                                 "type": "object",
                                 "additionalProperties": false
                               },
+                              "logRequestResponseInfo": {
+                                "type": "boolean"
+                              },
                               "transformationTemplate": {
                                 "properties": {
                                   "advancedTemplates": {
@@ -1888,6 +3393,9 @@
                                   "dynamicMetadataValues": {
                                     "items": {
                                       "properties": {
+                                        "jsonToProto": {
+                                          "type": "boolean"
+                                        },
                                         "key": {
                                           "type": "string"
                                         },
@@ -1909,6 +3417,10 @@
                                     },
                                     "type": "array"
                                   },
+                                  "escapeCharacters": {
+                                    "nullable": true,
+                                    "type": "boolean"
+                                  },
                                   "extractors": {
                                     "additionalProperties": {
                                       "properties": {
@@ -1919,11 +3431,20 @@
                                         "header": {
                                           "type": "string"
                                         },
+                                        "mode": {
+                                          "type": "string",
+                                          "x-kubernetes-int-or-string": true
+                                        },
                                         "regex": {
                                           "type": "string"
                                         },
+                                        "replacementText": {
+                                          "nullable": true,
+                                          "type": "string"
+                                        },
                                         "subgroup": {
-                                          "format": "int32",
+                                          "maximum": 4294967295,
+                                          "minimum": 0,
                                           "type": "integer"
                                         }
                                       },
@@ -1977,12 +3498,54 @@
                                   "mergeExtractorsToBody": {
                                     "type": "object"
                                   },
+                                  "mergeJsonKeys": {
+                                    "properties": {
+                                      "jsonKeys": {
+                                        "additionalProperties": {
+                                          "properties": {
+                                            "overrideEmpty": {
+                                              "type": "boolean"
+                                            },
+                                            "tmpl": {
+                                              "properties": {
+                                                "text": {
+                                                  "type": "string"
+                                                }
+                                              },
+                                              "type": "object",
+                                              "additionalProperties": false
+                                            }
+                                          },
+                                          "type": "object",
+                                          "additionalProperties": false
+                                        },
+                                        "type": "object"
+                                      }
+                                    },
+                                    "type": "object",
+                                    "additionalProperties": false
+                                  },
                                   "parseBodyBehavior": {
                                     "type": "string",
                                     "x-kubernetes-int-or-string": true
                                   },
                                   "passthrough": {
                                     "type": "object"
+                                  },
+                                  "spanTransformer": {
+                                    "properties": {
+                                      "name": {
+                                        "properties": {
+                                          "text": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "type": "object",
+                                        "additionalProperties": false
+                                      }
+                                    },
+                                    "type": "object",
+                                    "additionalProperties": false
                                   }
                                 },
                                 "type": "object",
@@ -2051,6 +3614,9 @@
                                 "type": "object",
                                 "additionalProperties": false
                               },
+                              "logRequestResponseInfo": {
+                                "type": "boolean"
+                              },
                               "transformationTemplate": {
                                 "properties": {
                                   "advancedTemplates": {
@@ -2068,6 +3634,9 @@
                                   "dynamicMetadataValues": {
                                     "items": {
                                       "properties": {
+                                        "jsonToProto": {
+                                          "type": "boolean"
+                                        },
                                         "key": {
                                           "type": "string"
                                         },
@@ -2089,6 +3658,10 @@
                                     },
                                     "type": "array"
                                   },
+                                  "escapeCharacters": {
+                                    "nullable": true,
+                                    "type": "boolean"
+                                  },
                                   "extractors": {
                                     "additionalProperties": {
                                       "properties": {
@@ -2099,11 +3672,20 @@
                                         "header": {
                                           "type": "string"
                                         },
+                                        "mode": {
+                                          "type": "string",
+                                          "x-kubernetes-int-or-string": true
+                                        },
                                         "regex": {
                                           "type": "string"
                                         },
+                                        "replacementText": {
+                                          "nullable": true,
+                                          "type": "string"
+                                        },
                                         "subgroup": {
-                                          "format": "int32",
+                                          "maximum": 4294967295,
+                                          "minimum": 0,
                                           "type": "integer"
                                         }
                                       },
@@ -2157,12 +3739,54 @@
                                   "mergeExtractorsToBody": {
                                     "type": "object"
                                   },
+                                  "mergeJsonKeys": {
+                                    "properties": {
+                                      "jsonKeys": {
+                                        "additionalProperties": {
+                                          "properties": {
+                                            "overrideEmpty": {
+                                              "type": "boolean"
+                                            },
+                                            "tmpl": {
+                                              "properties": {
+                                                "text": {
+                                                  "type": "string"
+                                                }
+                                              },
+                                              "type": "object",
+                                              "additionalProperties": false
+                                            }
+                                          },
+                                          "type": "object",
+                                          "additionalProperties": false
+                                        },
+                                        "type": "object"
+                                      }
+                                    },
+                                    "type": "object",
+                                    "additionalProperties": false
+                                  },
                                   "parseBodyBehavior": {
                                     "type": "string",
                                     "x-kubernetes-int-or-string": true
                                   },
                                   "passthrough": {
                                     "type": "object"
+                                  },
+                                  "spanTransformer": {
+                                    "properties": {
+                                      "name": {
+                                        "properties": {
+                                          "text": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "type": "object",
+                                        "additionalProperties": false
+                                      }
+                                    },
+                                    "type": "object",
+                                    "additionalProperties": false
                                   }
                                 },
                                 "type": "object",
@@ -2197,10 +3821,18 @@
                   "type": "object",
                   "additionalProperties": false
                 },
+                "escapeCharacters": {
+                  "nullable": true,
+                  "type": "boolean"
+                },
                 "inheritTransformation": {
                   "type": "boolean"
                 },
-                "regular": {
+                "logRequestResponseInfo": {
+                  "nullable": true,
+                  "type": "boolean"
+                },
+                "postRouting": {
                   "properties": {
                     "requestTransforms": {
                       "items": {
@@ -2213,6 +3845,9 @@
                               "caseSensitive": {
                                 "nullable": true,
                                 "type": "boolean"
+                              },
+                              "connectMatcher": {
+                                "type": "object"
                               },
                               "exact": {
                                 "type": "string"
@@ -2283,6 +3918,9 @@
                                 "type": "object",
                                 "additionalProperties": false
                               },
+                              "logRequestResponseInfo": {
+                                "type": "boolean"
+                              },
                               "transformationTemplate": {
                                 "properties": {
                                   "advancedTemplates": {
@@ -2300,6 +3938,9 @@
                                   "dynamicMetadataValues": {
                                     "items": {
                                       "properties": {
+                                        "jsonToProto": {
+                                          "type": "boolean"
+                                        },
                                         "key": {
                                           "type": "string"
                                         },
@@ -2321,6 +3962,10 @@
                                     },
                                     "type": "array"
                                   },
+                                  "escapeCharacters": {
+                                    "nullable": true,
+                                    "type": "boolean"
+                                  },
                                   "extractors": {
                                     "additionalProperties": {
                                       "properties": {
@@ -2331,11 +3976,20 @@
                                         "header": {
                                           "type": "string"
                                         },
+                                        "mode": {
+                                          "type": "string",
+                                          "x-kubernetes-int-or-string": true
+                                        },
                                         "regex": {
                                           "type": "string"
                                         },
+                                        "replacementText": {
+                                          "nullable": true,
+                                          "type": "string"
+                                        },
                                         "subgroup": {
-                                          "format": "int32",
+                                          "maximum": 4294967295,
+                                          "minimum": 0,
                                           "type": "integer"
                                         }
                                       },
@@ -2389,12 +4043,54 @@
                                   "mergeExtractorsToBody": {
                                     "type": "object"
                                   },
+                                  "mergeJsonKeys": {
+                                    "properties": {
+                                      "jsonKeys": {
+                                        "additionalProperties": {
+                                          "properties": {
+                                            "overrideEmpty": {
+                                              "type": "boolean"
+                                            },
+                                            "tmpl": {
+                                              "properties": {
+                                                "text": {
+                                                  "type": "string"
+                                                }
+                                              },
+                                              "type": "object",
+                                              "additionalProperties": false
+                                            }
+                                          },
+                                          "type": "object",
+                                          "additionalProperties": false
+                                        },
+                                        "type": "object"
+                                      }
+                                    },
+                                    "type": "object",
+                                    "additionalProperties": false
+                                  },
                                   "parseBodyBehavior": {
                                     "type": "string",
                                     "x-kubernetes-int-or-string": true
                                   },
                                   "passthrough": {
                                     "type": "object"
+                                  },
+                                  "spanTransformer": {
+                                    "properties": {
+                                      "name": {
+                                        "properties": {
+                                          "text": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "type": "object",
+                                        "additionalProperties": false
+                                      }
+                                    },
+                                    "type": "object",
+                                    "additionalProperties": false
                                   }
                                 },
                                 "type": "object",
@@ -2430,6 +4126,9 @@
                                 "type": "object",
                                 "additionalProperties": false
                               },
+                              "logRequestResponseInfo": {
+                                "type": "boolean"
+                              },
                               "transformationTemplate": {
                                 "properties": {
                                   "advancedTemplates": {
@@ -2447,6 +4146,9 @@
                                   "dynamicMetadataValues": {
                                     "items": {
                                       "properties": {
+                                        "jsonToProto": {
+                                          "type": "boolean"
+                                        },
                                         "key": {
                                           "type": "string"
                                         },
@@ -2468,6 +4170,10 @@
                                     },
                                     "type": "array"
                                   },
+                                  "escapeCharacters": {
+                                    "nullable": true,
+                                    "type": "boolean"
+                                  },
                                   "extractors": {
                                     "additionalProperties": {
                                       "properties": {
@@ -2478,11 +4184,20 @@
                                         "header": {
                                           "type": "string"
                                         },
+                                        "mode": {
+                                          "type": "string",
+                                          "x-kubernetes-int-or-string": true
+                                        },
                                         "regex": {
                                           "type": "string"
                                         },
+                                        "replacementText": {
+                                          "nullable": true,
+                                          "type": "string"
+                                        },
                                         "subgroup": {
-                                          "format": "int32",
+                                          "maximum": 4294967295,
+                                          "minimum": 0,
                                           "type": "integer"
                                         }
                                       },
@@ -2536,12 +4251,54 @@
                                   "mergeExtractorsToBody": {
                                     "type": "object"
                                   },
+                                  "mergeJsonKeys": {
+                                    "properties": {
+                                      "jsonKeys": {
+                                        "additionalProperties": {
+                                          "properties": {
+                                            "overrideEmpty": {
+                                              "type": "boolean"
+                                            },
+                                            "tmpl": {
+                                              "properties": {
+                                                "text": {
+                                                  "type": "string"
+                                                }
+                                              },
+                                              "type": "object",
+                                              "additionalProperties": false
+                                            }
+                                          },
+                                          "type": "object",
+                                          "additionalProperties": false
+                                        },
+                                        "type": "object"
+                                      }
+                                    },
+                                    "type": "object",
+                                    "additionalProperties": false
+                                  },
                                   "parseBodyBehavior": {
                                     "type": "string",
                                     "x-kubernetes-int-or-string": true
                                   },
                                   "passthrough": {
                                     "type": "object"
+                                  },
+                                  "spanTransformer": {
+                                    "properties": {
+                                      "name": {
+                                        "properties": {
+                                          "text": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "type": "object",
+                                        "additionalProperties": false
+                                      }
+                                    },
+                                    "type": "object",
+                                    "additionalProperties": false
                                   }
                                 },
                                 "type": "object",
@@ -2610,6 +4367,9 @@
                                 "type": "object",
                                 "additionalProperties": false
                               },
+                              "logRequestResponseInfo": {
+                                "type": "boolean"
+                              },
                               "transformationTemplate": {
                                 "properties": {
                                   "advancedTemplates": {
@@ -2627,6 +4387,9 @@
                                   "dynamicMetadataValues": {
                                     "items": {
                                       "properties": {
+                                        "jsonToProto": {
+                                          "type": "boolean"
+                                        },
                                         "key": {
                                           "type": "string"
                                         },
@@ -2648,6 +4411,10 @@
                                     },
                                     "type": "array"
                                   },
+                                  "escapeCharacters": {
+                                    "nullable": true,
+                                    "type": "boolean"
+                                  },
                                   "extractors": {
                                     "additionalProperties": {
                                       "properties": {
@@ -2658,11 +4425,20 @@
                                         "header": {
                                           "type": "string"
                                         },
+                                        "mode": {
+                                          "type": "string",
+                                          "x-kubernetes-int-or-string": true
+                                        },
                                         "regex": {
                                           "type": "string"
                                         },
+                                        "replacementText": {
+                                          "nullable": true,
+                                          "type": "string"
+                                        },
                                         "subgroup": {
-                                          "format": "int32",
+                                          "maximum": 4294967295,
+                                          "minimum": 0,
                                           "type": "integer"
                                         }
                                       },
@@ -2716,12 +4492,796 @@
                                   "mergeExtractorsToBody": {
                                     "type": "object"
                                   },
+                                  "mergeJsonKeys": {
+                                    "properties": {
+                                      "jsonKeys": {
+                                        "additionalProperties": {
+                                          "properties": {
+                                            "overrideEmpty": {
+                                              "type": "boolean"
+                                            },
+                                            "tmpl": {
+                                              "properties": {
+                                                "text": {
+                                                  "type": "string"
+                                                }
+                                              },
+                                              "type": "object",
+                                              "additionalProperties": false
+                                            }
+                                          },
+                                          "type": "object",
+                                          "additionalProperties": false
+                                        },
+                                        "type": "object"
+                                      }
+                                    },
+                                    "type": "object",
+                                    "additionalProperties": false
+                                  },
                                   "parseBodyBehavior": {
                                     "type": "string",
                                     "x-kubernetes-int-or-string": true
                                   },
                                   "passthrough": {
                                     "type": "object"
+                                  },
+                                  "spanTransformer": {
+                                    "properties": {
+                                      "name": {
+                                        "properties": {
+                                          "text": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "type": "object",
+                                        "additionalProperties": false
+                                      }
+                                    },
+                                    "type": "object",
+                                    "additionalProperties": false
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              },
+                              "xsltTransformation": {
+                                "properties": {
+                                  "nonXmlTransform": {
+                                    "type": "boolean"
+                                  },
+                                  "setContentType": {
+                                    "type": "string"
+                                  },
+                                  "xslt": {
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          }
+                        },
+                        "type": "object",
+                        "additionalProperties": false
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "regular": {
+                  "properties": {
+                    "requestTransforms": {
+                      "items": {
+                        "properties": {
+                          "clearRouteCache": {
+                            "type": "boolean"
+                          },
+                          "matcher": {
+                            "properties": {
+                              "caseSensitive": {
+                                "nullable": true,
+                                "type": "boolean"
+                              },
+                              "connectMatcher": {
+                                "type": "object"
+                              },
+                              "exact": {
+                                "type": "string"
+                              },
+                              "headers": {
+                                "items": {
+                                  "properties": {
+                                    "invertMatch": {
+                                      "type": "boolean"
+                                    },
+                                    "name": {
+                                      "type": "string"
+                                    },
+                                    "regex": {
+                                      "type": "boolean"
+                                    },
+                                    "value": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                },
+                                "type": "array"
+                              },
+                              "methods": {
+                                "items": {
+                                  "type": "string"
+                                },
+                                "type": "array"
+                              },
+                              "prefix": {
+                                "type": "string"
+                              },
+                              "queryParameters": {
+                                "items": {
+                                  "properties": {
+                                    "name": {
+                                      "type": "string"
+                                    },
+                                    "regex": {
+                                      "type": "boolean"
+                                    },
+                                    "value": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                },
+                                "type": "array"
+                              },
+                              "regex": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "requestTransformation": {
+                            "properties": {
+                              "headerBodyTransform": {
+                                "properties": {
+                                  "addRequestMetadata": {
+                                    "type": "boolean"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              },
+                              "logRequestResponseInfo": {
+                                "type": "boolean"
+                              },
+                              "transformationTemplate": {
+                                "properties": {
+                                  "advancedTemplates": {
+                                    "type": "boolean"
+                                  },
+                                  "body": {
+                                    "properties": {
+                                      "text": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "type": "object",
+                                    "additionalProperties": false
+                                  },
+                                  "dynamicMetadataValues": {
+                                    "items": {
+                                      "properties": {
+                                        "jsonToProto": {
+                                          "type": "boolean"
+                                        },
+                                        "key": {
+                                          "type": "string"
+                                        },
+                                        "metadataNamespace": {
+                                          "type": "string"
+                                        },
+                                        "value": {
+                                          "properties": {
+                                            "text": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "type": "object",
+                                          "additionalProperties": false
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    },
+                                    "type": "array"
+                                  },
+                                  "escapeCharacters": {
+                                    "nullable": true,
+                                    "type": "boolean"
+                                  },
+                                  "extractors": {
+                                    "additionalProperties": {
+                                      "properties": {
+                                        "body": {
+                                          "maxProperties": 0,
+                                          "type": "object"
+                                        },
+                                        "header": {
+                                          "type": "string"
+                                        },
+                                        "mode": {
+                                          "type": "string",
+                                          "x-kubernetes-int-or-string": true
+                                        },
+                                        "regex": {
+                                          "type": "string"
+                                        },
+                                        "replacementText": {
+                                          "nullable": true,
+                                          "type": "string"
+                                        },
+                                        "subgroup": {
+                                          "maximum": 4294967295,
+                                          "minimum": 0,
+                                          "type": "integer"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    },
+                                    "type": "object"
+                                  },
+                                  "headers": {
+                                    "additionalProperties": {
+                                      "properties": {
+                                        "text": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    },
+                                    "type": "object"
+                                  },
+                                  "headersToAppend": {
+                                    "items": {
+                                      "properties": {
+                                        "key": {
+                                          "type": "string"
+                                        },
+                                        "value": {
+                                          "properties": {
+                                            "text": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "type": "object",
+                                          "additionalProperties": false
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    },
+                                    "type": "array"
+                                  },
+                                  "headersToRemove": {
+                                    "items": {
+                                      "type": "string"
+                                    },
+                                    "type": "array"
+                                  },
+                                  "ignoreErrorOnParse": {
+                                    "type": "boolean"
+                                  },
+                                  "mergeExtractorsToBody": {
+                                    "type": "object"
+                                  },
+                                  "mergeJsonKeys": {
+                                    "properties": {
+                                      "jsonKeys": {
+                                        "additionalProperties": {
+                                          "properties": {
+                                            "overrideEmpty": {
+                                              "type": "boolean"
+                                            },
+                                            "tmpl": {
+                                              "properties": {
+                                                "text": {
+                                                  "type": "string"
+                                                }
+                                              },
+                                              "type": "object",
+                                              "additionalProperties": false
+                                            }
+                                          },
+                                          "type": "object",
+                                          "additionalProperties": false
+                                        },
+                                        "type": "object"
+                                      }
+                                    },
+                                    "type": "object",
+                                    "additionalProperties": false
+                                  },
+                                  "parseBodyBehavior": {
+                                    "type": "string",
+                                    "x-kubernetes-int-or-string": true
+                                  },
+                                  "passthrough": {
+                                    "type": "object"
+                                  },
+                                  "spanTransformer": {
+                                    "properties": {
+                                      "name": {
+                                        "properties": {
+                                          "text": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "type": "object",
+                                        "additionalProperties": false
+                                      }
+                                    },
+                                    "type": "object",
+                                    "additionalProperties": false
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              },
+                              "xsltTransformation": {
+                                "properties": {
+                                  "nonXmlTransform": {
+                                    "type": "boolean"
+                                  },
+                                  "setContentType": {
+                                    "type": "string"
+                                  },
+                                  "xslt": {
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "responseTransformation": {
+                            "properties": {
+                              "headerBodyTransform": {
+                                "properties": {
+                                  "addRequestMetadata": {
+                                    "type": "boolean"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              },
+                              "logRequestResponseInfo": {
+                                "type": "boolean"
+                              },
+                              "transformationTemplate": {
+                                "properties": {
+                                  "advancedTemplates": {
+                                    "type": "boolean"
+                                  },
+                                  "body": {
+                                    "properties": {
+                                      "text": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "type": "object",
+                                    "additionalProperties": false
+                                  },
+                                  "dynamicMetadataValues": {
+                                    "items": {
+                                      "properties": {
+                                        "jsonToProto": {
+                                          "type": "boolean"
+                                        },
+                                        "key": {
+                                          "type": "string"
+                                        },
+                                        "metadataNamespace": {
+                                          "type": "string"
+                                        },
+                                        "value": {
+                                          "properties": {
+                                            "text": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "type": "object",
+                                          "additionalProperties": false
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    },
+                                    "type": "array"
+                                  },
+                                  "escapeCharacters": {
+                                    "nullable": true,
+                                    "type": "boolean"
+                                  },
+                                  "extractors": {
+                                    "additionalProperties": {
+                                      "properties": {
+                                        "body": {
+                                          "maxProperties": 0,
+                                          "type": "object"
+                                        },
+                                        "header": {
+                                          "type": "string"
+                                        },
+                                        "mode": {
+                                          "type": "string",
+                                          "x-kubernetes-int-or-string": true
+                                        },
+                                        "regex": {
+                                          "type": "string"
+                                        },
+                                        "replacementText": {
+                                          "nullable": true,
+                                          "type": "string"
+                                        },
+                                        "subgroup": {
+                                          "maximum": 4294967295,
+                                          "minimum": 0,
+                                          "type": "integer"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    },
+                                    "type": "object"
+                                  },
+                                  "headers": {
+                                    "additionalProperties": {
+                                      "properties": {
+                                        "text": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    },
+                                    "type": "object"
+                                  },
+                                  "headersToAppend": {
+                                    "items": {
+                                      "properties": {
+                                        "key": {
+                                          "type": "string"
+                                        },
+                                        "value": {
+                                          "properties": {
+                                            "text": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "type": "object",
+                                          "additionalProperties": false
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    },
+                                    "type": "array"
+                                  },
+                                  "headersToRemove": {
+                                    "items": {
+                                      "type": "string"
+                                    },
+                                    "type": "array"
+                                  },
+                                  "ignoreErrorOnParse": {
+                                    "type": "boolean"
+                                  },
+                                  "mergeExtractorsToBody": {
+                                    "type": "object"
+                                  },
+                                  "mergeJsonKeys": {
+                                    "properties": {
+                                      "jsonKeys": {
+                                        "additionalProperties": {
+                                          "properties": {
+                                            "overrideEmpty": {
+                                              "type": "boolean"
+                                            },
+                                            "tmpl": {
+                                              "properties": {
+                                                "text": {
+                                                  "type": "string"
+                                                }
+                                              },
+                                              "type": "object",
+                                              "additionalProperties": false
+                                            }
+                                          },
+                                          "type": "object",
+                                          "additionalProperties": false
+                                        },
+                                        "type": "object"
+                                      }
+                                    },
+                                    "type": "object",
+                                    "additionalProperties": false
+                                  },
+                                  "parseBodyBehavior": {
+                                    "type": "string",
+                                    "x-kubernetes-int-or-string": true
+                                  },
+                                  "passthrough": {
+                                    "type": "object"
+                                  },
+                                  "spanTransformer": {
+                                    "properties": {
+                                      "name": {
+                                        "properties": {
+                                          "text": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "type": "object",
+                                        "additionalProperties": false
+                                      }
+                                    },
+                                    "type": "object",
+                                    "additionalProperties": false
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              },
+                              "xsltTransformation": {
+                                "properties": {
+                                  "nonXmlTransform": {
+                                    "type": "boolean"
+                                  },
+                                  "setContentType": {
+                                    "type": "string"
+                                  },
+                                  "xslt": {
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          }
+                        },
+                        "type": "object",
+                        "additionalProperties": false
+                      },
+                      "type": "array"
+                    },
+                    "responseTransforms": {
+                      "items": {
+                        "properties": {
+                          "matchers": {
+                            "items": {
+                              "properties": {
+                                "invertMatch": {
+                                  "type": "boolean"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "regex": {
+                                  "type": "boolean"
+                                },
+                                "value": {
+                                  "type": "string"
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            },
+                            "type": "array"
+                          },
+                          "responseCodeDetails": {
+                            "type": "string"
+                          },
+                          "responseTransformation": {
+                            "properties": {
+                              "headerBodyTransform": {
+                                "properties": {
+                                  "addRequestMetadata": {
+                                    "type": "boolean"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              },
+                              "logRequestResponseInfo": {
+                                "type": "boolean"
+                              },
+                              "transformationTemplate": {
+                                "properties": {
+                                  "advancedTemplates": {
+                                    "type": "boolean"
+                                  },
+                                  "body": {
+                                    "properties": {
+                                      "text": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "type": "object",
+                                    "additionalProperties": false
+                                  },
+                                  "dynamicMetadataValues": {
+                                    "items": {
+                                      "properties": {
+                                        "jsonToProto": {
+                                          "type": "boolean"
+                                        },
+                                        "key": {
+                                          "type": "string"
+                                        },
+                                        "metadataNamespace": {
+                                          "type": "string"
+                                        },
+                                        "value": {
+                                          "properties": {
+                                            "text": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "type": "object",
+                                          "additionalProperties": false
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    },
+                                    "type": "array"
+                                  },
+                                  "escapeCharacters": {
+                                    "nullable": true,
+                                    "type": "boolean"
+                                  },
+                                  "extractors": {
+                                    "additionalProperties": {
+                                      "properties": {
+                                        "body": {
+                                          "maxProperties": 0,
+                                          "type": "object"
+                                        },
+                                        "header": {
+                                          "type": "string"
+                                        },
+                                        "mode": {
+                                          "type": "string",
+                                          "x-kubernetes-int-or-string": true
+                                        },
+                                        "regex": {
+                                          "type": "string"
+                                        },
+                                        "replacementText": {
+                                          "nullable": true,
+                                          "type": "string"
+                                        },
+                                        "subgroup": {
+                                          "maximum": 4294967295,
+                                          "minimum": 0,
+                                          "type": "integer"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    },
+                                    "type": "object"
+                                  },
+                                  "headers": {
+                                    "additionalProperties": {
+                                      "properties": {
+                                        "text": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    },
+                                    "type": "object"
+                                  },
+                                  "headersToAppend": {
+                                    "items": {
+                                      "properties": {
+                                        "key": {
+                                          "type": "string"
+                                        },
+                                        "value": {
+                                          "properties": {
+                                            "text": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "type": "object",
+                                          "additionalProperties": false
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    },
+                                    "type": "array"
+                                  },
+                                  "headersToRemove": {
+                                    "items": {
+                                      "type": "string"
+                                    },
+                                    "type": "array"
+                                  },
+                                  "ignoreErrorOnParse": {
+                                    "type": "boolean"
+                                  },
+                                  "mergeExtractorsToBody": {
+                                    "type": "object"
+                                  },
+                                  "mergeJsonKeys": {
+                                    "properties": {
+                                      "jsonKeys": {
+                                        "additionalProperties": {
+                                          "properties": {
+                                            "overrideEmpty": {
+                                              "type": "boolean"
+                                            },
+                                            "tmpl": {
+                                              "properties": {
+                                                "text": {
+                                                  "type": "string"
+                                                }
+                                              },
+                                              "type": "object",
+                                              "additionalProperties": false
+                                            }
+                                          },
+                                          "type": "object",
+                                          "additionalProperties": false
+                                        },
+                                        "type": "object"
+                                      }
+                                    },
+                                    "type": "object",
+                                    "additionalProperties": false
+                                  },
+                                  "parseBodyBehavior": {
+                                    "type": "string",
+                                    "x-kubernetes-int-or-string": true
+                                  },
+                                  "passthrough": {
+                                    "type": "object"
+                                  },
+                                  "spanTransformer": {
+                                    "properties": {
+                                      "name": {
+                                        "properties": {
+                                          "text": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "type": "object",
+                                        "additionalProperties": false
+                                      }
+                                    },
+                                    "type": "object",
+                                    "additionalProperties": false
                                   }
                                 },
                                 "type": "object",
@@ -2810,6 +5370,9 @@
                       "type": "object",
                       "additionalProperties": false
                     },
+                    "logRequestResponseInfo": {
+                      "type": "boolean"
+                    },
                     "transformationTemplate": {
                       "properties": {
                         "advancedTemplates": {
@@ -2827,6 +5390,9 @@
                         "dynamicMetadataValues": {
                           "items": {
                             "properties": {
+                              "jsonToProto": {
+                                "type": "boolean"
+                              },
                               "key": {
                                 "type": "string"
                               },
@@ -2848,6 +5414,10 @@
                           },
                           "type": "array"
                         },
+                        "escapeCharacters": {
+                          "nullable": true,
+                          "type": "boolean"
+                        },
                         "extractors": {
                           "additionalProperties": {
                             "properties": {
@@ -2858,11 +5428,20 @@
                               "header": {
                                 "type": "string"
                               },
+                              "mode": {
+                                "type": "string",
+                                "x-kubernetes-int-or-string": true
+                              },
                               "regex": {
                                 "type": "string"
                               },
+                              "replacementText": {
+                                "nullable": true,
+                                "type": "string"
+                              },
                               "subgroup": {
-                                "format": "int32",
+                                "maximum": 4294967295,
+                                "minimum": 0,
                                 "type": "integer"
                               }
                             },
@@ -2916,12 +5495,54 @@
                         "mergeExtractorsToBody": {
                           "type": "object"
                         },
+                        "mergeJsonKeys": {
+                          "properties": {
+                            "jsonKeys": {
+                              "additionalProperties": {
+                                "properties": {
+                                  "overrideEmpty": {
+                                    "type": "boolean"
+                                  },
+                                  "tmpl": {
+                                    "properties": {
+                                      "text": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "type": "object",
+                                    "additionalProperties": false
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              },
+                              "type": "object"
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        },
                         "parseBodyBehavior": {
                           "type": "string",
                           "x-kubernetes-int-or-string": true
                         },
                         "passthrough": {
                           "type": "object"
+                        },
+                        "spanTransformer": {
+                          "properties": {
+                            "name": {
+                              "properties": {
+                                "text": {
+                                  "type": "string"
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
                         }
                       },
                       "type": "object",
@@ -2957,6 +5578,9 @@
                       "type": "object",
                       "additionalProperties": false
                     },
+                    "logRequestResponseInfo": {
+                      "type": "boolean"
+                    },
                     "transformationTemplate": {
                       "properties": {
                         "advancedTemplates": {
@@ -2974,6 +5598,9 @@
                         "dynamicMetadataValues": {
                           "items": {
                             "properties": {
+                              "jsonToProto": {
+                                "type": "boolean"
+                              },
                               "key": {
                                 "type": "string"
                               },
@@ -2995,6 +5622,10 @@
                           },
                           "type": "array"
                         },
+                        "escapeCharacters": {
+                          "nullable": true,
+                          "type": "boolean"
+                        },
                         "extractors": {
                           "additionalProperties": {
                             "properties": {
@@ -3005,11 +5636,20 @@
                               "header": {
                                 "type": "string"
                               },
+                              "mode": {
+                                "type": "string",
+                                "x-kubernetes-int-or-string": true
+                              },
                               "regex": {
                                 "type": "string"
                               },
+                              "replacementText": {
+                                "nullable": true,
+                                "type": "string"
+                              },
                               "subgroup": {
-                                "format": "int32",
+                                "maximum": 4294967295,
+                                "minimum": 0,
                                 "type": "integer"
                               }
                             },
@@ -3063,12 +5703,54 @@
                         "mergeExtractorsToBody": {
                           "type": "object"
                         },
+                        "mergeJsonKeys": {
+                          "properties": {
+                            "jsonKeys": {
+                              "additionalProperties": {
+                                "properties": {
+                                  "overrideEmpty": {
+                                    "type": "boolean"
+                                  },
+                                  "tmpl": {
+                                    "properties": {
+                                      "text": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "type": "object",
+                                    "additionalProperties": false
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              },
+                              "type": "object"
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        },
                         "parseBodyBehavior": {
                           "type": "string",
                           "x-kubernetes-int-or-string": true
                         },
                         "passthrough": {
                           "type": "object"
+                        },
+                        "spanTransformer": {
+                          "properties": {
+                            "name": {
+                              "properties": {
+                                "text": {
+                                  "type": "string"
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
                         }
                       },
                       "type": "object",
@@ -3100,6 +5782,26 @@
             "upgrades": {
               "items": {
                 "properties": {
+                  "connect": {
+                    "properties": {
+                      "enabled": {
+                        "nullable": true,
+                        "type": "boolean"
+                      }
+                    },
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "connectTerminate": {
+                    "properties": {
+                      "enabled": {
+                        "nullable": true,
+                        "type": "boolean"
+                      }
+                    },
+                    "type": "object",
+                    "additionalProperties": false
+                  },
                   "websocket": {
                     "properties": {
                       "enabled": {
@@ -3211,6 +5913,28 @@
           },
           "type": "object",
           "additionalProperties": false
+        },
+        "targetRefs": {
+          "items": {
+            "properties": {
+              "group": {
+                "type": "string"
+              },
+              "kind": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "namespace": {
+                "nullable": true,
+                "type": "string"
+              }
+            },
+            "type": "object",
+            "additionalProperties": false
+          },
+          "type": "array"
         }
       },
       "type": "object",

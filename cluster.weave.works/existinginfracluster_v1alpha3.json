@@ -1,0 +1,278 @@
+{
+  "description": "ExistingInfraCluster is the Schema for the existinginfraclusters API",
+  "properties": {
+    "apiVersion": {
+      "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+      "type": "string"
+    },
+    "kind": {
+      "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object"
+    },
+    "spec": {
+      "description": "ClusterSpec defines the desired state of ExistingInfraCluster",
+      "properties": {
+        "addons": {
+          "items": {
+            "description": "Addon describes an addon to install on the cluster.",
+            "properties": {
+              "deps": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "name": {
+                "type": "string"
+              },
+              "params": {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "type": "object",
+            "additionalProperties": false
+          },
+          "type": "array"
+        },
+        "apiServer": {
+          "properties": {
+            "additionalSANs": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "extraArguments": {
+              "items": {
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "value"
+                ],
+                "type": "object",
+                "additionalProperties": false
+              },
+              "type": "array"
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
+        "authenticationWebhook": {
+          "properties": {
+            "cacheTTL": {
+              "type": "string"
+            },
+            "secretFile": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "secretFile",
+            "url"
+          ],
+          "type": "object",
+          "additionalProperties": false
+        },
+        "authorizationWebhook": {
+          "properties": {
+            "cacheAuthorizedTTL": {
+              "type": "string"
+            },
+            "cacheUnauthorizedTTL": {
+              "type": "string"
+            },
+            "secretFile": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "secretFile",
+            "url"
+          ],
+          "type": "object",
+          "additionalProperties": false
+        },
+        "cloudProvider": {
+          "type": "string"
+        },
+        "cni": {
+          "type": "string"
+        },
+        "controlPlaneEndpoint": {
+          "type": "string"
+        },
+        "controlPlaneMachineCount": {
+          "type": "string"
+        },
+        "controllerImage": {
+          "type": "string"
+        },
+        "cri": {
+          "properties": {
+            "kind": {
+              "type": "string"
+            },
+            "package": {
+              "type": "string"
+            },
+            "version": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind",
+            "package",
+            "version"
+          ],
+          "type": "object",
+          "additionalProperties": false
+        },
+        "flavor": {
+          "description": "ClusterFlavor is used to define cluster override values and configuration",
+          "properties": {
+            "manifestURL": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "manifestURL",
+            "name"
+          ],
+          "type": "object",
+          "additionalProperties": false
+        },
+        "httpProxy": {
+          "type": "string"
+        },
+        "imageRepository": {
+          "type": "string"
+        },
+        "imageSuffix": {
+          "type": "string"
+        },
+        "kubeletArguments": {
+          "items": {
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "value"
+            ],
+            "type": "object",
+            "additionalProperties": false
+          },
+          "type": "array"
+        },
+        "kubernetesVersion": {
+          "type": "string"
+        },
+        "os": {
+          "properties": {
+            "files": {
+              "items": {
+                "properties": {
+                  "destination": {
+                    "type": "string"
+                  },
+                  "source": {
+                    "properties": {
+                      "configmap": {
+                        "type": "string"
+                      },
+                      "contents": {
+                        "type": "string"
+                      },
+                      "key": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "configmap",
+                      "key"
+                    ],
+                    "type": "object",
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "destination",
+                  "source"
+                ],
+                "type": "object",
+                "additionalProperties": false
+              },
+              "type": "array"
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
+        "sshKeyPath": {
+          "type": "string"
+        },
+        "user": {
+          "type": "string"
+        },
+        "workerMachineCount": {
+          "type": "string"
+        },
+        "workloadCluster": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "cni",
+        "cri",
+        "user"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    },
+    "status": {
+      "description": "ClusterStatus defines the observed state of ExistingInfraCluster",
+      "properties": {
+        "ready": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "ready"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  "type": "object"
+}

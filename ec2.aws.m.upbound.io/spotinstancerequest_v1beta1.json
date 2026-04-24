@@ -56,6 +56,9 @@
                 "coreCount": {
                   "type": "number"
                 },
+                "nestedVirtualization": {
+                  "type": "string"
+                },
                 "threadsPerCore": {
                   "type": "number"
                 }
@@ -355,6 +358,34 @@
               },
               "type": "object",
               "additionalProperties": false
+            },
+            "secondaryNetworkInterface": {
+              "items": {
+                "properties": {
+                  "deleteOnTermination": {
+                    "type": "boolean"
+                  },
+                  "deviceIndex": {
+                    "type": "number"
+                  },
+                  "interfaceType": {
+                    "type": "string"
+                  },
+                  "networkCardIndex": {
+                    "type": "number"
+                  },
+                  "privateIpAddressCount": {
+                    "type": "number"
+                  },
+                  "secondarySubnetId": {
+                    "description": "The Spot Instance Request ID.",
+                    "type": "string"
+                  }
+                },
+                "type": "object",
+                "additionalProperties": false
+              },
+              "type": "array"
             },
             "secondaryPrivateIps": {
               "items": {
@@ -660,6 +691,9 @@
                 "coreCount": {
                   "type": "number"
                 },
+                "nestedVirtualization": {
+                  "type": "string"
+                },
                 "threadsPerCore": {
                   "type": "number"
                 }
@@ -955,6 +989,34 @@
               },
               "type": "object",
               "additionalProperties": false
+            },
+            "secondaryNetworkInterface": {
+              "items": {
+                "properties": {
+                  "deleteOnTermination": {
+                    "type": "boolean"
+                  },
+                  "deviceIndex": {
+                    "type": "number"
+                  },
+                  "interfaceType": {
+                    "type": "string"
+                  },
+                  "networkCardIndex": {
+                    "type": "number"
+                  },
+                  "privateIpAddressCount": {
+                    "type": "number"
+                  },
+                  "secondarySubnetId": {
+                    "description": "The Spot Instance Request ID.",
+                    "type": "string"
+                  }
+                },
+                "type": "object",
+                "additionalProperties": false
+              },
+              "type": "array"
             },
             "secondaryPrivateIps": {
               "items": {
@@ -1325,6 +1387,9 @@
                 "coreCount": {
                   "type": "number"
                 },
+                "nestedVirtualization": {
+                  "type": "string"
+                },
                 "threadsPerCore": {
                   "type": "number"
                 }
@@ -1683,6 +1748,57 @@
               },
               "type": "object",
               "additionalProperties": false
+            },
+            "secondaryNetworkInterface": {
+              "items": {
+                "properties": {
+                  "deleteOnTermination": {
+                    "type": "boolean"
+                  },
+                  "deviceIndex": {
+                    "type": "number"
+                  },
+                  "interfaceType": {
+                    "type": "string"
+                  },
+                  "macAddress": {
+                    "type": "string"
+                  },
+                  "networkCardIndex": {
+                    "type": "number"
+                  },
+                  "privateIpAddressCount": {
+                    "type": "number"
+                  },
+                  "privateIpAddresses": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "secondaryInterfaceId": {
+                    "description": "The Spot Instance Request ID.",
+                    "type": "string"
+                  },
+                  "secondaryNetworkId": {
+                    "description": "The Spot Instance Request ID.",
+                    "type": "string"
+                  },
+                  "secondarySubnetId": {
+                    "description": "The Spot Instance Request ID.",
+                    "type": "string"
+                  },
+                  "sourceDestCheck": {
+                    "type": "boolean"
+                  },
+                  "status": {
+                    "type": "string"
+                  }
+                },
+                "type": "object",
+                "additionalProperties": false
+              },
+              "type": "array"
             },
             "secondaryPrivateIps": {
               "items": {

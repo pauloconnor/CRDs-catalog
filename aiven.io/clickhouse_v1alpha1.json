@@ -117,6 +117,11 @@
           "maxLength": 128,
           "type": "string"
         },
+        "powered": {
+          "default": true,
+          "description": "Determines the power state of the service. When `true` (default), the service is running.\nWhen `false`, the service is powered off.\nFor more information please see [Aiven documentation](https://aiven.io/docs/platform/concepts/service-power-cycle).\nNote that:\n- When set to `false` the annotation `controllers.aiven.io/instance-is-running` is also set to `false`.\n- Services cannot be created in a powered off state. The value is ignored during creation.\n- It is highly recommended to not run dependent resources when the service is powered off.\n  Creating a new resource or updating an existing resource that depends on a powered off service will result in an error.\n  Existing resources will need to be manually recreated after the service is powered on.\n- Existing secrets will not be updated or removed when the service is powered off.\n- For Kafka services with backups: Topic configuration, schemas and connectors are all backed up, but not the data in topics. All topic data is lost on power off.\n- For Kafka services without backups: Topic configurations including all topic data is lost on power off.",
+          "type": "boolean"
+        },
         "project": {
           "description": "Identifies the project this resource belongs to",
           "maxLength": 63,
@@ -226,6 +231,26 @@
               "maxItems": 1,
               "type": "array"
             },
+            "backup_hour": {
+              "description": "The hour of day (in UTC) when backup for the service is started. New backup is only started if previous backup has already completed.",
+              "maximum": 23,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "backup_minute": {
+              "description": "The minute of an hour when backup for the service is started. New backup is only started if previous backup has already completed.",
+              "maximum": 59,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "clickhouse_version": {
+              "description": "Available versions: `25.3`. Newer versions may also be available.\nClickHouse major version",
+              "type": "string"
+            },
+            "enable_ipv6": {
+              "description": "Register AAAA DNS records for the service, and allow IPv6 packets to service ports",
+              "type": "boolean"
+            },
             "ip_filter": {
               "description": "Allow incoming connections from CIDR address block, e.g. '10.20.0.0/16'",
               "items": {
@@ -248,7 +273,7 @@
                 "type": "object",
                 "additionalProperties": false
               },
-              "maxItems": 1024,
+              "maxItems": 8000,
               "type": "array"
             },
             "private_access": {
@@ -332,6 +357,12 @@
               "type": "object",
               "additionalProperties": false
             },
+            "recovery_basebackup_name": {
+              "description": "Name of the basebackup to restore in forked service",
+              "maxLength": 128,
+              "pattern": "^[a-zA-Z0-9-_:.+]+$",
+              "type": "string"
+            },
             "service_log": {
               "description": "Store logs for the service so that they are available in the HTTP API and console.",
               "type": "boolean"
@@ -351,6 +382,12 @@
             "static_ips": {
               "description": "Use static public IP addresses",
               "type": "boolean"
+            },
+            "tiered_storage_move_factor": {
+              "description": "The percentage of free disk space required on local storage before data is moved to object storage. A value of 0.2 means data is moved when local storage has less than 20% free space.",
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
             }
           },
           "type": "object",
@@ -376,7 +413,7 @@
         "conditions": {
           "description": "Conditions represent the latest available observations of a service state",
           "items": {
-            "description": "Condition contains details for one aspect of the current state of this API Resource.\n---\nThis struct is intended for direct use as an array at the field path .status.conditions.  For example,\n\n\n\ttype FooStatus struct{\n\t    // Represents the observations of a foo's current state.\n\t    // Known .status.conditions.type are: \"Available\", \"Progressing\", and \"Degraded\"\n\t    // +patchMergeKey=type\n\t    // +patchStrategy=merge\n\t    // +listType=map\n\t    // +listMapKey=type\n\t    Conditions []metav1.Condition `json:\"conditions,omitempty\" patchStrategy:\"merge\" patchMergeKey:\"type\" protobuf:\"bytes,1,rep,name=conditions\"`\n\n\n\t    // other fields\n\t}",
+            "description": "Condition contains details for one aspect of the current state of this API Resource.",
             "properties": {
               "lastTransitionTime": {
                 "description": "lastTransitionTime is the last time the condition transitioned from one status to another.\nThis should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.",
@@ -411,7 +448,7 @@
                 "type": "string"
               },
               "type": {
-                "description": "type of condition in CamelCase or in foo.example.com/CamelCase.\n---\nMany .condition.type values are consistent across resources like Available, but because arbitrary conditions can be\nuseful (see .node.status.conditions), the ability to deconflict is important.\nThe regex it matches is (dns1123SubdomainFmt/)?(qualifiedNameFmt)",
+                "description": "type of condition in CamelCase or in foo.example.com/CamelCase.",
                 "maxLength": 316,
                 "pattern": "^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$",
                 "type": "string"

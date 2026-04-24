@@ -106,9 +106,9 @@
           "type": "boolean"
         },
         "restoreSize": {
+          "type": "string",
           "description": "restoreSize represents the minimum size of volume required to create a volume\nfrom this snapshot.\nIn dynamic snapshot creation case, this field will be filled in by the\nsnapshot controller with the \"size_bytes\" value returned from CSI\n\"CreateSnapshot\" gRPC call.\nFor a pre-existing snapshot, this field will be filled with the \"size_bytes\"\nvalue returned from the CSI \"ListSnapshots\" gRPC call if the driver supports it.\nWhen restoring a volume from this snapshot, the size of the volume MUST NOT\nbe smaller than the restoreSize if it is specified, otherwise the restoration will fail.\nIf not specified, it indicates that the size is unknown.",
           "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
-          "type": "string",
           "x-kubernetes-int-or-string": true
         },
         "volumeGroupSnapshotName": {

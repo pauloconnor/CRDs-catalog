@@ -117,6 +117,11 @@
           "maxLength": 128,
           "type": "string"
         },
+        "powered": {
+          "default": true,
+          "description": "Determines the power state of the service. When `true` (default), the service is running.\nWhen `false`, the service is powered off.\nFor more information please see [Aiven documentation](https://aiven.io/docs/platform/concepts/service-power-cycle).\nNote that:\n- When set to `false` the annotation `controllers.aiven.io/instance-is-running` is also set to `false`.\n- Services cannot be created in a powered off state. The value is ignored during creation.\n- It is highly recommended to not run dependent resources when the service is powered off.\n  Creating a new resource or updating an existing resource that depends on a powered off service will result in an error.\n  Existing resources will need to be manually recreated after the service is powered on.\n- Existing secrets will not be updated or removed when the service is powered off.\n- For Kafka services with backups: Topic configuration, schemas and connectors are all backed up, but not the data in topics. All topic data is lost on power off.\n- For Kafka services without backups: Topic configurations including all topic data is lost on power off.",
+          "type": "boolean"
+        },
         "project": {
           "description": "Identifies the project this resource belongs to",
           "maxLength": 63,
@@ -257,11 +262,27 @@
               "minimum": 0,
               "type": "integer"
             },
+            "backup_interval_hours": {
+              "description": "Interval in hours between automatic backups. Minimum value is 3 hours. Must be a divisor of 24 (3, 4, 6, 8, 12, 24). (Applicable to ACU plans only)",
+              "maximum": 24,
+              "minimum": 3,
+              "type": "integer"
+            },
             "backup_minute": {
               "description": "The minute of an hour when backup for the service is started. New backup is only started if previous backup has already completed.",
               "maximum": 59,
               "minimum": 0,
               "type": "integer"
+            },
+            "backup_retention_days": {
+              "description": "Number of days to retain automatic backups. Backups older than this value will be automatically deleted. (Applicable to ACU plans only)",
+              "maximum": 30,
+              "minimum": 1,
+              "type": "integer"
+            },
+            "enable_ha_replica_dns": {
+              "description": "Creates a dedicated read-only DNS that automatically falls back to the primary if standby nodes are unavailable. It switches back when a standby recovers.",
+              "type": "boolean"
             },
             "enable_ipv6": {
               "description": "Register AAAA DNS records for the service, and allow IPv6 packets to service ports",
@@ -289,7 +310,7 @@
                 "type": "object",
                 "additionalProperties": false
               },
-              "maxItems": 1024,
+              "maxItems": 8000,
               "type": "array"
             },
             "migration": {
@@ -307,6 +328,11 @@
                 },
                 "ignore_dbs": {
                   "description": "Comma-separated list of databases, which should be ignored during migration (supported by MySQL and PostgreSQL only at the moment)",
+                  "maxLength": 2048,
+                  "type": "string"
+                },
+                "ignore_roles": {
+                  "description": "Comma-separated list of database roles, which should be ignored during migration (supported by PostgreSQL only at the moment)",
                   "maxLength": 2048,
                   "type": "string"
                 },
@@ -346,95 +372,101 @@
               "type": "object",
               "additionalProperties": false
             },
+            "node_count": {
+              "description": "Number of nodes for the service",
+              "maximum": 100,
+              "minimum": 1,
+              "type": "integer"
+            },
             "pg": {
               "description": "postgresql.conf configuration values",
               "properties": {
                 "autovacuum_analyze_scale_factor": {
-                  "description": "Specifies a fraction of the table size to add to autovacuum_analyze_threshold when deciding whether to trigger an ANALYZE. The default is 0.2 (20% of table size)",
+                  "description": "Specifies a fraction of the table size to add to autovacuum_analyze_threshold when deciding whether to trigger an ANALYZE (e.g. `0.2` for 20% of the table size). The default is `0.2`.",
                   "maximum": 1,
                   "minimum": 0,
                   "type": "number"
                 },
                 "autovacuum_analyze_threshold": {
-                  "description": "Specifies the minimum number of inserted, updated or deleted tuples needed to trigger an ANALYZE in any one table. The default is 50 tuples.",
+                  "description": "Specifies the minimum number of inserted, updated or deleted tuples needed to trigger an ANALYZE in any one table. The default is `50`.",
                   "maximum": 2147483647,
                   "minimum": 0,
                   "type": "integer"
                 },
                 "autovacuum_freeze_max_age": {
-                  "description": "Specifies the maximum age (in transactions) that a table's pg_class.relfrozenxid field can attain before a VACUUM operation is forced to prevent transaction ID wraparound within the table. Note that the system will launch autovacuum processes to prevent wraparound even when autovacuum is otherwise disabled. This parameter will cause the server to be restarted.",
+                  "description": "Specifies the maximum age (in transactions) that a table's pg_class.relfrozenxid field can attain before a VACUUM operation is forced to prevent transaction ID wraparound within the table. The system launches autovacuum processes to prevent wraparound even when autovacuum is otherwise disabled. Changing this parameter causes a service restart.",
                   "maximum": 1500000000,
                   "minimum": 200000000,
                   "type": "integer"
                 },
                 "autovacuum_max_workers": {
-                  "description": "Specifies the maximum number of autovacuum processes (other than the autovacuum launcher) that may be running at any one time. The default is three. This parameter can only be set at server start.",
+                  "description": "Specifies the maximum number of autovacuum processes (other than the autovacuum launcher) that may be running at any one time. The default is `3`. Changing this parameter causes a service restart.",
                   "maximum": 20,
                   "minimum": 1,
                   "type": "integer"
                 },
                 "autovacuum_naptime": {
-                  "description": "Specifies the minimum delay between autovacuum runs on any given database. The delay is measured in seconds, and the default is one minute",
+                  "description": "Specifies the minimum delay between autovacuum runs on any given database. The delay is measured in seconds. The default is `60`.",
                   "maximum": 86400,
                   "minimum": 1,
                   "type": "integer"
                 },
                 "autovacuum_vacuum_cost_delay": {
-                  "description": "Specifies the cost delay value that will be used in automatic VACUUM operations. If -1 is specified, the regular vacuum_cost_delay value will be used. The default value is 20 milliseconds",
+                  "description": "Specifies the cost delay value that will be used in automatic VACUUM operations. If `-1` is specified, the regular vacuum_cost_delay value will be used. The default is `2` (upstream default).",
                   "maximum": 100,
                   "minimum": -1,
                   "type": "integer"
                 },
                 "autovacuum_vacuum_cost_limit": {
-                  "description": "Specifies the cost limit value that will be used in automatic VACUUM operations. If -1 is specified (which is the default), the regular vacuum_cost_limit value will be used.",
+                  "description": "Specifies the cost limit value that will be used in automatic VACUUM operations. If `-1` is specified, the regular vacuum_cost_limit value will be used. The default is `-1` (upstream default).",
                   "maximum": 10000,
                   "minimum": -1,
                   "type": "integer"
                 },
                 "autovacuum_vacuum_scale_factor": {
-                  "description": "Specifies a fraction of the table size to add to autovacuum_vacuum_threshold when deciding whether to trigger a VACUUM. The default is 0.2 (20% of table size)",
+                  "description": "Specifies a fraction of the table size to add to autovacuum_vacuum_threshold when deciding whether to trigger a VACUUM (e.g. `0.2` for 20% of the table size). The default is `0.2`.",
                   "maximum": 1,
                   "minimum": 0,
                   "type": "number"
                 },
                 "autovacuum_vacuum_threshold": {
-                  "description": "Specifies the minimum number of updated or deleted tuples needed to trigger a VACUUM in any one table. The default is 50 tuples",
+                  "description": "Specifies the minimum number of updated or deleted tuples needed to trigger a VACUUM in any one table. The default is `50`.",
                   "maximum": 2147483647,
                   "minimum": 0,
                   "type": "integer"
                 },
                 "bgwriter_delay": {
-                  "description": "Specifies the delay between activity rounds for the background writer in milliseconds. Default is 200.",
+                  "description": "Specifies the delay between activity rounds for the background writer in milliseconds. The default is `200`.",
                   "maximum": 10000,
                   "minimum": 10,
                   "type": "integer"
                 },
                 "bgwriter_flush_after": {
-                  "description": "Whenever more than bgwriter_flush_after bytes have been written by the background writer, attempt to force the OS to issue these writes to the underlying storage. Specified in kilobytes, default is 512. Setting of 0 disables forced writeback.",
+                  "description": "Whenever more than bgwriter_flush_after bytes have been written by the background writer, attempt to force the OS to issue these writes to the underlying storage. Specified in kilobytes. Setting of 0 disables forced writeback. The default is `512`.",
                   "maximum": 2048,
                   "minimum": 0,
                   "type": "integer"
                 },
                 "bgwriter_lru_maxpages": {
-                  "description": "In each round, no more than this many buffers will be written by the background writer. Setting this to zero disables background writing. Default is 100.",
+                  "description": "In each round, no more than this many buffers will be written by the background writer. Setting this to zero disables background writing. The default is `100`.",
                   "maximum": 1073741823,
                   "minimum": 0,
                   "type": "integer"
                 },
                 "bgwriter_lru_multiplier": {
-                  "description": "The average recent need for new buffers is multiplied by bgwriter_lru_multiplier to arrive at an estimate of the number that will be needed during the next round, (up to bgwriter_lru_maxpages). 1.0 represents a \u201cjust in time\u201d policy of writing exactly the number of buffers predicted to be needed. Larger values provide some cushion against spikes in demand, while smaller values intentionally leave writes to be done by server processes. The default is 2.0.",
+                  "description": "The average recent need for new buffers is multiplied by bgwriter_lru_multiplier to arrive at an estimate of the number that will be needed during the next round, (up to bgwriter_lru_maxpages). 1.0 represents a \u201cjust in time\u201d policy of writing exactly the number of buffers predicted to be needed. Larger values provide some cushion against spikes in demand, while smaller values intentionally leave writes to be done by server processes. The default is `2.0`.",
                   "maximum": 10,
                   "minimum": 0,
                   "type": "number"
                 },
                 "deadlock_timeout": {
-                  "description": "This is the amount of time, in milliseconds, to wait on a lock before checking to see if there is a deadlock condition.",
+                  "description": "This is the amount of time, in milliseconds, to wait on a lock before checking to see if there is a deadlock condition. The default is `1000` (upstream default).",
                   "maximum": 1800000,
                   "minimum": 500,
                   "type": "integer"
                 },
                 "default_toast_compression": {
-                  "description": "Specifies the default TOAST compression method for values of compressible columns (the default is lz4).",
+                  "description": "Specifies the default TOAST compression method for values of compressible columns. The default is `lz4`. Only available for PostgreSQL 14+.",
                   "enum": [
                     "lz4",
                     "pglz"
@@ -447,12 +479,45 @@
                   "minimum": 0,
                   "type": "integer"
                 },
+                "io_combine_limit": {
+                  "description": "EXPERIMENTAL: Controls the largest I/O size in operations that combine I/O in 8kB units. Version 17 and up only.",
+                  "maximum": 32,
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "io_max_combine_limit": {
+                  "description": "EXPERIMENTAL: Controls the largest I/O size in operations that combine I/O in 8kB units, and silently limits the user-settable parameter io_combine_limit. Version 18 and up only. Changing this parameter causes a service restart.",
+                  "maximum": 128,
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "io_max_concurrency": {
+                  "description": "EXPERIMENTAL: Controls the maximum number of I/O operations that one process can execute simultaneously. Version 18 and up only. Changing this parameter causes a service restart.",
+                  "maximum": 1024,
+                  "minimum": -1,
+                  "type": "integer"
+                },
+                "io_method": {
+                  "description": "EXPERIMENTAL: Controls the maximum number of I/O operations that one process can execute simultaneously. Version 18 and up only. Changing this parameter causes a service restart.",
+                  "enum": [
+                    "io_uring",
+                    "sync",
+                    "worker"
+                  ],
+                  "type": "string"
+                },
+                "io_workers": {
+                  "description": "EXPERIMENTAL: Number of IO worker processes, for io_method=worker. Version 18 and up only. Changing this parameter causes a service restart.",
+                  "maximum": 32,
+                  "minimum": 1,
+                  "type": "integer"
+                },
                 "jit": {
                   "description": "Controls system-wide use of Just-in-Time Compilation (JIT).",
                   "type": "boolean"
                 },
                 "log_autovacuum_min_duration": {
-                  "description": "Causes each action executed by autovacuum to be logged if it ran for at least the specified number of milliseconds. Setting this to zero logs all autovacuum actions. Minus-one (the default) disables logging autovacuum actions.",
+                  "description": "Causes each action executed by autovacuum to be logged if it ran for at least the specified number of milliseconds. Setting this to zero logs all autovacuum actions. Minus-one disables logging autovacuum actions. The default is `1000`.",
                   "maximum": 2147483647,
                   "minimum": -1,
                   "type": "integer"
@@ -460,8 +525,8 @@
                 "log_error_verbosity": {
                   "description": "Controls the amount of detail written in the server log for each message that is logged.",
                   "enum": [
-                    "TERSE",
                     "DEFAULT",
+                    "TERSE",
                     "VERBOSE"
                   ],
                   "type": "string"
@@ -469,9 +534,10 @@
                 "log_line_prefix": {
                   "description": "Choose from one of the available log formats.",
                   "enum": [
-                    "'pid=%p,user=%u,db=%d,app=%a,client=%h '",
+                    "'%m [%p] %q[user=%u,db=%d,app=%a] '",
                     "'%t [%p]: [%l-1] user=%u,db=%d,app=%a,client=%h '",
-                    "'%m [%p] %q[user=%u,db=%d,app=%a] '"
+                    "'pid=%p,user=%u,db=%d,app=%a,client=%h '",
+                    "'pid=%p,user=%u,db=%d,app=%a,client=%h,txid=%x,qid=%Q '"
                   ],
                   "type": "string"
                 },
@@ -487,92 +553,112 @@
                   "minimum": -1,
                   "type": "integer"
                 },
+                "max_connections": {
+                  "description": "Sets the PostgreSQL maximum number of concurrent connections to the database server. This is a limited-release parameter. Contact your account team to confirm your eligibility. You cannot decrease this parameter value when set. For services with a read replica, first increase the read replica's value. After the change is applied to the replica, you can increase the primary service's value. Changing this parameter causes a service restart.",
+                  "maximum": 60000,
+                  "minimum": 25,
+                  "type": "integer"
+                },
                 "max_files_per_process": {
-                  "description": "PostgreSQL maximum number of files that can be open per process",
+                  "description": "PostgreSQL maximum number of files that can be open per process. The default is `1000` (upstream default). Changing this parameter causes a service restart.",
                   "maximum": 4096,
                   "minimum": 1000,
                   "type": "integer"
                 },
                 "max_locks_per_transaction": {
-                  "description": "PostgreSQL maximum locks per transaction",
+                  "description": "PostgreSQL maximum locks per transaction. Changing this parameter causes a service restart.",
                   "maximum": 6400,
                   "minimum": 64,
                   "type": "integer"
                 },
                 "max_logical_replication_workers": {
-                  "description": "PostgreSQL maximum logical replication workers (taken from the pool of max_parallel_workers)",
-                  "maximum": 64,
+                  "description": "PostgreSQL maximum logical replication workers (taken from the pool of max_parallel_workers). The default is `4` (upstream default). Changing this parameter causes a service restart.",
+                  "maximum": 256,
                   "minimum": 4,
                   "type": "integer"
                 },
                 "max_parallel_workers": {
-                  "description": "Sets the maximum number of workers that the system can support for parallel queries",
+                  "description": "Sets the maximum number of workers that the system can support for parallel queries. The default is `8` (upstream default).",
                   "maximum": 96,
                   "minimum": 0,
                   "type": "integer"
                 },
                 "max_parallel_workers_per_gather": {
-                  "description": "Sets the maximum number of workers that can be started by a single Gather or Gather Merge node",
+                  "description": "Sets the maximum number of workers that can be started by a single Gather or Gather Merge node. The default is `2` (upstream default).",
                   "maximum": 96,
                   "minimum": 0,
                   "type": "integer"
                 },
                 "max_pred_locks_per_transaction": {
-                  "description": "PostgreSQL maximum predicate locks per transaction",
+                  "description": "PostgreSQL maximum predicate locks per transaction. The default is `64` (upstream default). Changing this parameter causes a service restart.",
                   "maximum": 5120,
                   "minimum": 64,
                   "type": "integer"
                 },
                 "max_prepared_transactions": {
-                  "description": "PostgreSQL maximum prepared transactions",
+                  "description": "PostgreSQL maximum prepared transactions. The default is `0`. Changing this parameter causes a service restart.",
                   "maximum": 10000,
                   "minimum": 0,
                   "type": "integer"
                 },
                 "max_replication_slots": {
-                  "description": "PostgreSQL maximum replication slots",
-                  "maximum": 64,
+                  "description": "PostgreSQL maximum replication slots. The default is `20`. Changing this parameter causes a service restart.",
+                  "maximum": 256,
                   "minimum": 8,
                   "type": "integer"
                 },
                 "max_slot_wal_keep_size": {
-                  "description": "PostgreSQL maximum WAL size (MB) reserved for replication slots. Default is -1 (unlimited). wal_keep_size minimum WAL size setting takes precedence over this.",
+                  "description": "PostgreSQL maximum WAL size (MB) reserved for replication slots. If `-1` is specified, replication slots may retain an unlimited amount of WAL files. The default is `-1` (upstream default). wal_keep_size minimum WAL size setting takes precedence over this.",
                   "maximum": 2147483647,
                   "minimum": -1,
                   "type": "integer"
                 },
                 "max_stack_depth": {
-                  "description": "Maximum depth of the stack in bytes",
+                  "description": "Maximum depth of the stack in bytes. The default is `2097152` (upstream default).",
                   "maximum": 6291456,
                   "minimum": 2097152,
                   "type": "integer"
                 },
                 "max_standby_archive_delay": {
-                  "description": "Max standby archive delay in milliseconds",
+                  "description": "Max standby archive delay in milliseconds. The default is `30000` (upstream default).",
                   "maximum": 43200000,
                   "minimum": 1,
                   "type": "integer"
                 },
                 "max_standby_streaming_delay": {
-                  "description": "Max standby streaming delay in milliseconds",
+                  "description": "Max standby streaming delay in milliseconds. The default is `30000` (upstream default).",
                   "maximum": 43200000,
                   "minimum": 1,
                   "type": "integer"
                 },
+                "max_sync_workers_per_subscription": {
+                  "description": "Maximum number of synchronization workers per subscription. The default is `2`.",
+                  "maximum": 8,
+                  "minimum": 2,
+                  "type": "integer"
+                },
                 "max_wal_senders": {
-                  "description": "PostgreSQL maximum WAL senders",
-                  "maximum": 64,
+                  "description": "PostgreSQL maximum WAL senders. The default is `20`. Changing this parameter causes a service restart.",
+                  "maximum": 256,
                   "minimum": 20,
                   "type": "integer"
                 },
                 "max_worker_processes": {
-                  "description": "Sets the maximum number of background processes that the system can support",
-                  "maximum": 96,
+                  "description": "Sets the maximum number of background processes that the system can support. The default is `8`. Changing this parameter causes a service restart.",
+                  "maximum": 288,
                   "minimum": 8,
                   "type": "integer"
                 },
+                "password_encryption": {
+                  "description": "Chooses the algorithm for encrypting passwords.",
+                  "enum": [
+                    "md5",
+                    "scram-sha-256"
+                  ],
+                  "type": "string"
+                },
                 "pg_partman_bgw.interval": {
-                  "description": "Sets the time interval to run pg_partman's scheduled tasks",
+                  "description": "Sets the time interval in seconds to run pg_partman's scheduled tasks. The default is `3600`.",
                   "maximum": 604800,
                   "minimum": 3600,
                   "type": "integer"
@@ -584,21 +670,21 @@
                   "type": "string"
                 },
                 "pg_stat_monitor.pgsm_enable_query_plan": {
-                  "description": "Enables or disables query plan monitoring",
+                  "description": "Enables or disables query plan monitoring. Changing this parameter causes a service restart. Only available for PostgreSQL 13+.",
                   "type": "boolean"
                 },
                 "pg_stat_monitor.pgsm_max_buckets": {
-                  "description": "Sets the maximum number of buckets",
+                  "description": "Sets the maximum number of buckets. Changing this parameter causes a service restart. Only available for PostgreSQL 13+.",
                   "maximum": 10,
                   "minimum": 1,
                   "type": "integer"
                 },
                 "pg_stat_statements.track": {
-                  "description": "Controls which statements are counted. Specify top to track top-level statements (those issued directly by clients), all to also track nested statements (such as statements invoked within functions), or none to disable statement statistics collection. The default value is top.",
+                  "description": "Controls which statements are counted. Specify top to track top-level statements (those issued directly by clients), all to also track nested statements (such as statements invoked within functions), or none to disable statement statistics collection. The default is `top`.",
                   "enum": [
                     "all",
-                    "top",
-                    "none"
+                    "none",
+                    "top"
                   ],
                   "type": "string"
                 },
@@ -615,13 +701,13 @@
                   "type": "string"
                 },
                 "track_activity_query_size": {
-                  "description": "Specifies the number of bytes reserved to track the currently executing command for each active session.",
+                  "description": "Specifies the number of bytes reserved to track the currently executing command for each active session. Changing this parameter causes a service restart.",
                   "maximum": 10240,
                   "minimum": 1024,
                   "type": "integer"
                 },
                 "track_commit_timestamp": {
-                  "description": "Record commit time of transactions.",
+                  "description": "Record commit time of transactions. Changing this parameter causes a service restart.",
                   "enum": [
                     "off",
                     "on"
@@ -632,13 +718,13 @@
                   "description": "Enables tracking of function call counts and time used.",
                   "enum": [
                     "all",
-                    "pl",
-                    "none"
+                    "none",
+                    "pl"
                   ],
                   "type": "string"
                 },
                 "track_io_timing": {
-                  "description": "Enables timing of database I/O calls. This parameter is off by default, because it will repeatedly query the operating system for the current time, which may cause significant overhead on some platforms.",
+                  "description": "Enables timing of database I/O calls. The default is `off`. When on, it will repeatedly query the operating system for the current time, which may cause significant overhead on some platforms.",
                   "enum": [
                     "off",
                     "on"
@@ -650,7 +736,7 @@
                   "type": "integer"
                 },
                 "wal_writer_delay": {
-                  "description": "WAL flush interval in milliseconds. Note that setting this value to lower than the default 200ms may negatively impact performance",
+                  "description": "WAL flush interval in milliseconds. The default is `200`. Setting this parameter to a lower value may negatively impact performance.",
                   "maximum": 200,
                   "minimum": 10,
                   "type": "integer"
@@ -705,82 +791,86 @@
               ]
             },
             "pg_stat_monitor_enable": {
-              "description": "Enable the pg_stat_monitor extension. Enabling this extension will cause the cluster to be restarted.When this extension is enabled, pg_stat_statements results for utility commands are unreliable",
+              "description": "Enable the pg_stat_monitor extension. Changing this parameter causes a service restart. When this extension is enabled, pg_stat_statements results for utility commands are unreliable",
               "type": "boolean"
             },
             "pg_version": {
-              "description": "PostgreSQL major version",
-              "enum": [
-                "12",
-                "13",
-                "14",
-                "15",
-                "16"
-              ],
+              "description": "Available versions: `13`, `14`, `15`, `16`, `17`, `18`. Newer versions may also be available.\nPostgreSQL major version. Deprecated values: `13`",
               "type": "string"
             },
             "pgaudit": {
-              "description": "Deprecated. System-wide settings for the pgaudit extension",
+              "description": "System-wide settings for the pgaudit extension.",
               "properties": {
                 "feature_enabled": {
-                  "description": "Deprecated. Enable pgaudit extension. When enabled, pgaudit extension will be automatically installed.Otherwise, extension will be uninstalled but auditing configurations will be preserved.",
+                  "description": "Enable pgaudit extension. When enabled, pgaudit extension will be automatically installed.Otherwise, extension will be uninstalled but auditing configurations will be preserved.",
                   "type": "boolean"
                 },
                 "log": {
-                  "description": "Deprecated. Specifies which classes of statements will be logged by session audit logging.",
+                  "description": "Specifies which classes of statements will be logged by session audit logging.",
                   "items": {
                     "type": "string"
                   },
                   "type": "array"
                 },
                 "log_catalog": {
-                  "description": "Deprecated. Specifies that session logging should be enabled in the casewhere all relations in a statement are in pg_catalog.",
+                  "description": "Specifies that session logging should be enabled in the case where all relations in a statement are in pg_catalog.",
                   "type": "boolean"
                 },
                 "log_client": {
-                  "description": "Deprecated. Specifies whether log messages will be visible to a client process such as psql.",
+                  "description": "Specifies whether log messages will be visible to a client process such as psql.",
                   "type": "boolean"
                 },
                 "log_level": {
-                  "description": "Deprecated. Specifies the log level that will be used for log entries.",
+                  "description": "Specifies the log level that will be used for log entries.",
+                  "enum": [
+                    "debug1",
+                    "debug2",
+                    "debug3",
+                    "debug4",
+                    "debug5",
+                    "info",
+                    "log",
+                    "notice",
+                    "warning"
+                  ],
                   "type": "string"
                 },
                 "log_max_string_length": {
-                  "description": "Deprecated. Crop parameters representation and whole statements if they exceed this threshold. A (default) value of -1 disable the truncation.",
+                  "description": "Crop parameters representation and whole statements if they exceed this threshold. A (default) value of -1 disable the truncation.",
                   "maximum": 102400,
                   "minimum": -1,
                   "type": "integer"
                 },
                 "log_nested_statements": {
-                  "description": "Deprecated. This GUC allows to turn off logging nested statements, that is, statements that are executed as part of another ExecutorRun.",
+                  "description": "This GUC allows to turn off logging nested statements, that is, statements that are executed as part of another ExecutorRun.",
                   "type": "boolean"
                 },
                 "log_parameter": {
-                  "description": "Deprecated. Specifies that audit logging should include the parameters that were passed with the statement.",
+                  "description": "Specifies that audit logging should include the parameters that were passed with the statement.",
                   "type": "boolean"
                 },
                 "log_parameter_max_size": {
-                  "description": "Deprecated. Specifies that parameter values longer than this setting (in bytes) should not be logged, but replaced with <long param suppressed>.",
+                  "description": "Specifies that parameter values longer than this setting (in bytes) should not be logged, but replaced with <long param suppressed>.",
                   "type": "integer"
                 },
                 "log_relation": {
-                  "description": "Deprecated. Specifies whether session audit logging should create a separate log entry for each relation (TABLE, VIEW, etc.) referenced in a SELECT or DML statement.",
+                  "description": "Specifies whether session audit logging should create a separate log entry for each relation (TABLE, VIEW, etc.) referenced in a SELECT or DML statement.",
                   "type": "boolean"
                 },
                 "log_rows": {
-                  "description": "Deprecated. Specifies that audit logging should include the rows retrieved or affected by a statement. When enabled the rows field will be included after the parameter field.",
+                  "description": "Log Rows",
                   "type": "boolean"
                 },
                 "log_statement": {
-                  "description": "Deprecated. Specifies whether logging will include the statement text and parameters (if enabled).",
+                  "description": "Specifies whether logging will include the statement text and parameters (if enabled).",
                   "type": "boolean"
                 },
                 "log_statement_once": {
-                  "description": "Deprecated. Specifies whether logging will include the statement text and parameters with the first log entry for a statement/substatement combination or with every entry.",
+                  "description": "Specifies whether logging will include the statement text and parameters with the first log entry for a statement/substatement combination or with every entry.",
                   "type": "boolean"
                 },
                 "role": {
-                  "description": "Deprecated. Specifies the master role to use for object audit logging.",
+                  "description": "Specifies the master role to use for object audit logging.",
                   "maxLength": 64,
                   "pattern": "^[_A-Za-z0-9][-._A-Za-z0-9]{0,63}$",
                   "type": "string"
@@ -808,8 +898,8 @@
                   "description": "PGBouncer pool mode",
                   "enum": [
                     "session",
-                    "transaction",
-                    "statement"
+                    "statement",
+                    "transaction"
                   ],
                   "type": "string"
                 },
@@ -826,6 +916,12 @@
                   },
                   "maxItems": 32,
                   "type": "array"
+                },
+                "max_prepared_statements": {
+                  "description": "PgBouncer tracks protocol-level named prepared statements related commands sent by the client in transaction and statement pooling modes when max_prepared_statements is set to a non-zero value. Setting it to 0 disables prepared statements. max_prepared_statements defaults to 100, and its maximum is 3000.",
+                  "maximum": 3000,
+                  "minimum": 0,
+                  "type": "integer"
                 },
                 "min_pool_size": {
                   "description": "Add more server connections to pool if below this number. Improves behavior when usual load comes suddenly back after period of total inactivity. The value is effectively capped at the pool size.",
@@ -962,7 +1058,7 @@
               ]
             },
             "shared_buffers_percentage": {
-              "description": "Percentage of total RAM that the database server uses for shared memory buffers. Valid range is 20-60 (float), which corresponds to 20% - 60%. This setting adjusts the shared_buffers configuration value.",
+              "description": "Percentage of total RAM that the database server uses for shared memory buffers. Valid range is 20-60 (float), which corresponds to 20% - 60%. This setting adjusts the shared_buffers configuration value. Changing this parameter causes a service restart.",
               "maximum": 60,
               "minimum": 20,
               "type": "number"
@@ -974,8 +1070,8 @@
             "synchronous_replication": {
               "description": "Synchronous replication type. Note that the service plan also needs to support synchronous replication.",
               "enum": [
-                "quorum",
-                "off"
+                "off",
+                "quorum"
               ],
               "type": "string"
             },
@@ -983,7 +1079,7 @@
               "description": "System-wide settings for the timescaledb extension",
               "properties": {
                 "max_background_workers": {
-                  "description": "The number of background workers for timescaledb operations. You should configure this setting to the sum of your number of databases and the total number of concurrent background workers you want running at any given point in time.",
+                  "description": "The number of background workers for timescaledb operations. You should configure this setting to the sum of your number of databases and the total number of concurrent background workers you want running at any given point in time. Changing this parameter causes a service restart.",
                   "maximum": 4096,
                   "minimum": 1,
                   "type": "integer"
@@ -1001,7 +1097,7 @@
               "type": "string"
             },
             "work_mem": {
-              "description": "Sets the maximum amount of memory to be used by a query operation (such as a sort or hash table) before writing to temporary disk files, in MB. Default is 1MB + 0.075% of total RAM (up to 32MB).",
+              "description": "Sets the maximum amount of memory to be used by a query operation (such as a sort or hash table) before writing to temporary disk files, in MB. The default is 1MB + 0.075% of total RAM (up to 32MB).",
               "maximum": 1024,
               "minimum": 1,
               "type": "integer"
@@ -1030,7 +1126,7 @@
         "conditions": {
           "description": "Conditions represent the latest available observations of a service state",
           "items": {
-            "description": "Condition contains details for one aspect of the current state of this API Resource.\n---\nThis struct is intended for direct use as an array at the field path .status.conditions.  For example,\n\n\n\ttype FooStatus struct{\n\t    // Represents the observations of a foo's current state.\n\t    // Known .status.conditions.type are: \"Available\", \"Progressing\", and \"Degraded\"\n\t    // +patchMergeKey=type\n\t    // +patchStrategy=merge\n\t    // +listType=map\n\t    // +listMapKey=type\n\t    Conditions []metav1.Condition `json:\"conditions,omitempty\" patchStrategy:\"merge\" patchMergeKey:\"type\" protobuf:\"bytes,1,rep,name=conditions\"`\n\n\n\t    // other fields\n\t}",
+            "description": "Condition contains details for one aspect of the current state of this API Resource.",
             "properties": {
               "lastTransitionTime": {
                 "description": "lastTransitionTime is the last time the condition transitioned from one status to another.\nThis should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.",
@@ -1065,7 +1161,7 @@
                 "type": "string"
               },
               "type": {
-                "description": "type of condition in CamelCase or in foo.example.com/CamelCase.\n---\nMany .condition.type values are consistent across resources like Available, but because arbitrary conditions can be\nuseful (see .node.status.conditions), the ability to deconflict is important.\nThe regex it matches is (dns1123SubdomainFmt/)?(qualifiedNameFmt)",
+                "description": "type of condition in CamelCase or in foo.example.com/CamelCase.",
                 "maxLength": 316,
                 "pattern": "^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$",
                 "type": "string"

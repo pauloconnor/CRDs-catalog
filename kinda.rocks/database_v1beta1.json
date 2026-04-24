@@ -36,12 +36,33 @@
           "type": "boolean"
         },
         "credentials": {
-          "description": "Credentials should be used to setup everything relates to k8s secrets and configmaps\nTODO(@allanger): Field .spec.secretName should be moved here in the v1beta2 version",
+          "description": "Credentials should be used to setup everything relates to k8s secrets and configmaps",
           "properties": {
+            "metadata": {
+              "description": "Metadata defines additional metadata that should be applied to\nk8s resources created from credentials configuration.\n\nFor Database and DbUser, this metadata is applied to the Secret\nthat stores generated credentials.",
+              "properties": {
+                "extraAnnotations": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "description": "ExtraAnnotations will be merged into the annotations of the Secret\ncreated for the credentials. Existing annotations are preserved, and\nkeys from this map will overwrite annotations with the same key on\nthe Secret.",
+                  "type": "object"
+                },
+                "extraLabels": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "description": "ExtraLabels will be merged into the labels of the Secret created\nfor the credentials. Existing labels are preserved, and keys from\nthis map will overwrite labels with the same key on the Secret.",
+                  "type": "object"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
             "templates": {
               "description": "Templates to add custom entries to ConfigMaps and Secrets",
               "items": {
-                "description": "Tempaltes to add custom entries to ConfigMaps and Secrets",
+                "description": "Templates to add custom entries to ConfigMaps and Secrets",
                 "properties": {
                   "name": {
                     "type": "string"
@@ -69,6 +90,29 @@
         },
         "deletionProtected": {
           "type": "boolean"
+        },
+        "existingUser": {
+          "description": "If specified, DB Operator will try to use an existing user to assign permissions\nUser will not be removed, when a database is removed, but the permissions added by the\noperator will be cleaned up",
+          "type": "string"
+        },
+        "extraGrants": {
+          "items": {
+            "properties": {
+              "accessType": {
+                "type": "string"
+              },
+              "user": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "accessType",
+              "user"
+            ],
+            "type": "object",
+            "additionalProperties": false
+          },
+          "type": "array"
         },
         "instance": {
           "type": "string"
@@ -128,6 +172,25 @@
         },
         "engine": {
           "type": "string"
+        },
+        "extraGrants": {
+          "items": {
+            "properties": {
+              "accessType": {
+                "type": "string"
+              },
+              "user": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "accessType",
+              "user"
+            ],
+            "type": "object",
+            "additionalProperties": false
+          },
+          "type": "array"
         },
         "monitorUserSecret": {
           "type": "string"

@@ -20,7 +20,7 @@
           "items": {
             "type": "string"
           },
-          "maxItems": 10,
+          "maxItems": 20,
           "minItems": 1,
           "type": "array",
           "x-kubernetes-list-type": "set"

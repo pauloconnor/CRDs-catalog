@@ -1,5 +1,5 @@
 {
-  "description": "DatabaseClusterRestore is the Schema for the databaseclusterrestores API",
+  "description": "DatabaseClusterRestore is the Schema for the databaseclusterrestores API.",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -13,14 +13,16 @@
       "type": "object"
     },
     "spec": {
-      "description": "DatabaseClusterRestoreSpec defines the desired state of DatabaseClusterRestore",
+      "description": "DatabaseClusterRestoreSpec defines the desired state of DatabaseClusterRestore.",
       "properties": {
         "backupName": {
           "type": "string"
         },
         "backupSource": {
+          "description": "BackupSource represents settings of a source where to get a backup to run restoration.",
           "properties": {
             "azure": {
+              "description": "BackupStorageProviderSpec represents set of settings to configure cloud provider.",
               "properties": {
                 "bucket": {
                   "type": "string"
@@ -42,7 +44,7 @@
                   "type": "string"
                 },
                 "storageClass": {
-                  "description": "STANDARD, NEARLINE, COLDLINE, ARCHIVE for GCP Hot (Frequently accessed or modified data), Cool (Infrequently accessed or modified data), Archive (Rarely accessed or modified data) for Azure",
+                  "description": "STANDARD, NEARLINE, COLDLINE, ARCHIVE for GCP Hot (Frequently accessed or modified data), Cool (Infrequently accessed or modified data), Archive (Rarely accessed or modified data) for Azure.",
                   "type": "string"
                 }
               },
@@ -59,6 +61,7 @@
               "type": "string"
             },
             "s3": {
+              "description": "BackupStorageProviderSpec represents set of settings to configure cloud provider.",
               "properties": {
                 "bucket": {
                   "type": "string"
@@ -80,7 +83,7 @@
                   "type": "string"
                 },
                 "storageClass": {
-                  "description": "STANDARD, NEARLINE, COLDLINE, ARCHIVE for GCP Hot (Frequently accessed or modified data), Cool (Infrequently accessed or modified data), Archive (Rarely accessed or modified data) for Azure",
+                  "description": "STANDARD, NEARLINE, COLDLINE, ARCHIVE for GCP Hot (Frequently accessed or modified data), Cool (Infrequently accessed or modified data), Archive (Rarely accessed or modified data) for Azure.",
                   "type": "string"
                 }
               },
@@ -97,6 +100,7 @@
               "type": "string"
             },
             "storage_type": {
+              "description": "BackupStorageType represents backup storage type.",
               "type": "string"
             },
             "storageName": {
@@ -116,7 +120,7 @@
           "type": "string"
         },
         "databaseType": {
-          "description": "EngineType stands for the supported database engines. Right now it's only pxc and psmdb. However, it can be ps, pg and any other source",
+          "description": "EngineType stands for the supported database engines. Right now it's only pxc and psmdb. However, it can be ps, pg and any other source.",
           "type": "string"
         }
       },
@@ -128,7 +132,7 @@
       "additionalProperties": false
     },
     "status": {
-      "description": "DatabaseClusterRestoreStatus defines the observed state of DatabaseClusterRestore",
+      "description": "DatabaseClusterRestoreStatus defines the observed state of DatabaseClusterRestore.",
       "properties": {
         "completed": {
           "format": "date-time",
@@ -200,6 +204,7 @@
           "type": "string"
         },
         "state": {
+          "description": "RestoreState represents state of restoration.",
           "type": "string"
         },
         "storageName": {

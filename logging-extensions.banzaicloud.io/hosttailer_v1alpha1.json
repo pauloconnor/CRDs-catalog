@@ -571,35 +571,6 @@
           },
           "type": "array"
         },
-        "image": {
-          "properties": {
-            "imagePullSecrets": {
-              "items": {
-                "properties": {
-                  "name": {
-                    "default": "",
-                    "type": "string"
-                  }
-                },
-                "type": "object",
-                "x-kubernetes-map-type": "atomic",
-                "additionalProperties": false
-              },
-              "type": "array"
-            },
-            "pullPolicy": {
-              "type": "string"
-            },
-            "repository": {
-              "type": "string"
-            },
-            "tag": {
-              "type": "string"
-            }
-          },
-          "type": "object",
-          "additionalProperties": false
-        },
         "systemdTailers": {
           "items": {
             "properties": {
@@ -3951,6 +3922,41 @@
                                   "x-kubernetes-list-type": "atomic"
                                 }
                               },
+                              "type": "object",
+                              "additionalProperties": false
+                            },
+                            "podCertificate": {
+                              "properties": {
+                                "certificateChainPath": {
+                                  "type": "string"
+                                },
+                                "credentialBundlePath": {
+                                  "type": "string"
+                                },
+                                "keyPath": {
+                                  "type": "string"
+                                },
+                                "keyType": {
+                                  "type": "string"
+                                },
+                                "maxExpirationSeconds": {
+                                  "format": "int32",
+                                  "type": "integer"
+                                },
+                                "signerName": {
+                                  "type": "string"
+                                },
+                                "userAnnotations": {
+                                  "additionalProperties": {
+                                    "type": "string"
+                                  },
+                                  "type": "object"
+                                }
+                              },
+                              "required": [
+                                "keyType",
+                                "signerName"
+                              ],
                               "type": "object",
                               "additionalProperties": false
                             },

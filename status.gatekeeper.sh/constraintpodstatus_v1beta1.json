@@ -22,6 +22,33 @@
         "enforced": {
           "type": "boolean"
         },
+        "enforcementPointsStatus": {
+          "items": {
+            "description": "EnforcementPointStatus represents the status of a single enforcement point.",
+            "properties": {
+              "enforcementPoint": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "observedGeneration": {
+                "format": "int64",
+                "type": "integer"
+              },
+              "state": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "enforcementPoint",
+              "state"
+            ],
+            "type": "object",
+            "additionalProperties": false
+          },
+          "type": "array"
+        },
         "errors": {
           "items": {
             "description": "Error represents a single error caught while adding a constraint to engine.",

@@ -317,7 +317,6 @@
                     "additionalProperties": false
                   },
                   "weight": {
-                    "format": "int32",
                     "type": "integer"
                   }
                 },

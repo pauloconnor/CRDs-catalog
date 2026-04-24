@@ -24,11 +24,13 @@
                         "type": "string"
                       },
                       "commitAll": {
-                        "format": "int32",
+                        "maximum": 4294967295,
+                        "minimum": 0,
                         "type": "integer"
                       },
                       "commitMaster": {
-                        "format": "int32",
+                        "maximum": 4294967295,
+                        "minimum": 0,
                         "type": "integer"
                       },
                       "hostname": {
@@ -36,6 +38,12 @@
                       },
                       "keyPath": {
                         "type": "string"
+                      },
+                      "labelSelector": {
+                        "additionalProperties": {
+                          "type": "string"
+                        },
+                        "type": "object"
                       },
                       "namespace": {
                         "type": "string"
@@ -50,11 +58,13 @@
                       "readModeAp": {
                         "properties": {
                           "readModeApAll": {
-                            "format": "int32",
+                            "maximum": 4294967295,
+                            "minimum": 0,
                             "type": "integer"
                           },
                           "readModeApOne": {
-                            "format": "int32",
+                            "maximum": 4294967295,
+                            "minimum": 0,
                             "type": "integer"
                           }
                         },
@@ -64,19 +74,23 @@
                       "readModeSc": {
                         "properties": {
                           "readModeScAllowUnavailable": {
-                            "format": "int32",
+                            "maximum": 4294967295,
+                            "minimum": 0,
                             "type": "integer"
                           },
                           "readModeScLinearize": {
-                            "format": "int32",
+                            "maximum": 4294967295,
+                            "minimum": 0,
                             "type": "integer"
                           },
                           "readModeScReplica": {
-                            "format": "int32",
+                            "maximum": 4294967295,
+                            "minimum": 0,
                             "type": "integer"
                           },
                           "readModeScSession": {
-                            "format": "int32",
+                            "maximum": 4294967295,
+                            "minimum": 0,
                             "type": "integer"
                           }
                         },
@@ -93,19 +107,23 @@
                         "items": {
                           "properties": {
                             "curveP256": {
-                              "format": "int32",
+                              "maximum": 4294967295,
+                              "minimum": 0,
                               "type": "integer"
                             },
                             "curveP384": {
-                              "format": "int32",
+                              "maximum": 4294967295,
+                              "minimum": 0,
                               "type": "integer"
                             },
                             "curveP521": {
-                              "format": "int32",
+                              "maximum": 4294967295,
+                              "minimum": 0,
                               "type": "integer"
                             },
                             "x25519": {
-                              "format": "int32",
+                              "maximum": 4294967295,
+                              "minimum": 0,
                               "type": "integer"
                             }
                           },
@@ -135,6 +153,16 @@
                       "additionalProperties": false
                     },
                     "type": "array"
+                  },
+                  "digest": {
+                    "properties": {
+                      "algorithm": {
+                        "type": "string",
+                        "x-kubernetes-int-or-string": true
+                      }
+                    },
+                    "type": "object",
+                    "additionalProperties": false
                   },
                   "headerName": {
                     "type": "string"
@@ -169,6 +197,28 @@
                     },
                     "type": "object"
                   },
+                  "hmac": {
+                    "properties": {
+                      "algorithm": {
+                        "type": "string",
+                        "x-kubernetes-int-or-string": true
+                      },
+                      "sharedSecretRef": {
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "namespace": {
+                            "type": "string"
+                          }
+                        },
+                        "type": "object",
+                        "additionalProperties": false
+                      }
+                    },
+                    "type": "object",
+                    "additionalProperties": false
+                  },
                   "k8sSecretApikeyStorage": {
                     "properties": {
                       "apiKeySecretRefs": {
@@ -201,6 +251,27 @@
                       "type": "string"
                     },
                     "type": "object"
+                  },
+                  "match": {
+                    "properties": {
+                      "headers": {
+                        "items": {
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        },
+                        "type": "array"
+                      }
+                    },
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "skipMetadataValidation": {
+                    "type": "boolean"
                   }
                 },
                 "type": "object",
@@ -229,10 +300,79 @@
                     "type": "object",
                     "additionalProperties": false
                   },
+                  "encryption": {
+                    "properties": {
+                      "apr": {
+                        "type": "object"
+                      },
+                      "sha1": {
+                        "type": "object"
+                      }
+                    },
+                    "type": "object",
+                    "additionalProperties": false
+                  },
                   "realm": {
                     "type": "string"
+                  },
+                  "userList": {
+                    "properties": {
+                      "users": {
+                        "additionalProperties": {
+                          "properties": {
+                            "hashedPassword": {
+                              "type": "string"
+                            },
+                            "salt": {
+                              "type": "string"
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        },
+                        "type": "object"
+                      }
+                    },
+                    "type": "object",
+                    "additionalProperties": false
                   }
                 },
+                "type": "object",
+                "additionalProperties": false
+              },
+              "hmacAuth": {
+                "properties": {
+                  "parametersInHeaders": {
+                    "type": "object"
+                  },
+                  "secretRefs": {
+                    "properties": {
+                      "secretRefs": {
+                        "items": {
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            },
+                            "namespace": {
+                              "type": "string"
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        },
+                        "type": "array"
+                      }
+                    },
+                    "required": [
+                      "secretRefs"
+                    ],
+                    "type": "object",
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "secretRefs"
+                ],
                 "type": "object",
                 "additionalProperties": false
               },
@@ -303,6 +443,9 @@
                     "type": "string"
                   }
                 },
+                "required": [
+                  "address"
+                ],
                 "type": "object",
                 "additionalProperties": false
               },
@@ -349,6 +492,9 @@
                     "type": "array"
                   }
                 },
+                "required": [
+                  "appUrl"
+                ],
                 "type": "object",
                 "additionalProperties": false
               },
@@ -356,8 +502,83 @@
                 "properties": {
                   "accessTokenValidation": {
                     "properties": {
+                      "azure": {
+                        "properties": {
+                          "claimsCachingOptions": {
+                            "properties": {
+                              "db": {
+                                "format": "int32",
+                                "type": "integer"
+                              },
+                              "host": {
+                                "type": "string"
+                              },
+                              "poolSize": {
+                                "format": "int32",
+                                "type": "integer"
+                              },
+                              "socketType": {
+                                "type": "string",
+                                "x-kubernetes-int-or-string": true
+                              },
+                              "tlsCertMountPath": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "clientId": {
+                            "type": "string"
+                          },
+                          "clientSecret": {
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "namespace": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "tenantId": {
+                            "type": "string"
+                          }
+                        },
+                        "type": "object",
+                        "additionalProperties": false
+                      },
                       "cacheTimeout": {
                         "type": "string"
+                      },
+                      "claimsToHeaders": {
+                        "items": {
+                          "properties": {
+                            "append": {
+                              "type": "boolean"
+                            },
+                            "claim": {
+                              "type": "string"
+                            },
+                            "header": {
+                              "type": "string"
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        },
+                        "type": "array"
+                      },
+                      "default": {
+                        "type": "object"
+                      },
+                      "dynamicMetadataFromClaims": {
+                        "additionalProperties": {
+                          "type": "string"
+                        },
+                        "type": "object"
                       },
                       "introspection": {
                         "properties": {
@@ -376,6 +597,10 @@
                             "type": "object",
                             "additionalProperties": false
                           },
+                          "disableClientSecret": {
+                            "nullable": true,
+                            "type": "boolean"
+                          },
                           "introspectionUrl": {
                             "type": "string"
                           },
@@ -383,6 +608,9 @@
                             "type": "string"
                           }
                         },
+                        "required": [
+                          "introspectionUrl"
+                        ],
                         "type": "object",
                         "additionalProperties": false
                       },
@@ -400,6 +628,9 @@
                                 "type": "string"
                               }
                             },
+                            "required": [
+                              "inlineString"
+                            ],
                             "type": "object",
                             "additionalProperties": false
                           },
@@ -412,6 +643,9 @@
                                 "type": "string"
                               }
                             },
+                            "required": [
+                              "url"
+                            ],
                             "type": "object",
                             "additionalProperties": false
                           }
@@ -473,6 +707,10 @@
                         "type": "object",
                         "additionalProperties": false
                       },
+                      "disableClientSecret": {
+                        "nullable": true,
+                        "type": "boolean"
+                      },
                       "logoutPath": {
                         "type": "string"
                       },
@@ -487,6 +725,24 @@
                       },
                       "session": {
                         "properties": {
+                          "cipherConfig": {
+                            "properties": {
+                              "keyRef": {
+                                "properties": {
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "namespace": {
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
                           "cookie": {
                             "properties": {
                               "allowRefreshing": {
@@ -599,11 +855,42 @@
                         "type": "object"
                       }
                     },
+                    "required": [
+                      "clientId",
+                      "appUrl",
+                      "callbackPath",
+                      "authEndpoint",
+                      "tokenEndpoint"
+                    ],
                     "type": "object",
                     "additionalProperties": false
                   },
                   "oidcAuthorizationCode": {
                     "properties": {
+                      "accessToken": {
+                        "properties": {
+                          "claimsToHeaders": {
+                            "items": {
+                              "properties": {
+                                "append": {
+                                  "type": "boolean"
+                                },
+                                "claim": {
+                                  "type": "string"
+                                },
+                                "header": {
+                                  "type": "string"
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object",
+                        "additionalProperties": false
+                      },
                       "afterLogoutUrl": {
                         "type": "string"
                       },
@@ -625,8 +912,108 @@
                         "type": "object",
                         "additionalProperties": false
                       },
+                      "azure": {
+                        "properties": {
+                          "claimsCachingOptions": {
+                            "properties": {
+                              "db": {
+                                "format": "int32",
+                                "type": "integer"
+                              },
+                              "host": {
+                                "type": "string"
+                              },
+                              "poolSize": {
+                                "format": "int32",
+                                "type": "integer"
+                              },
+                              "socketType": {
+                                "type": "string",
+                                "x-kubernetes-int-or-string": true
+                              },
+                              "tlsCertMountPath": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "clientId": {
+                            "type": "string"
+                          },
+                          "clientSecret": {
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "namespace": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "tenantId": {
+                            "type": "string"
+                          }
+                        },
+                        "type": "object",
+                        "additionalProperties": false
+                      },
                       "callbackPath": {
                         "type": "string"
+                      },
+                      "clientAuthentication": {
+                        "properties": {
+                          "clientSecret": {
+                            "properties": {
+                              "clientSecretRef": {
+                                "properties": {
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "namespace": {
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              },
+                              "disableClientSecret": {
+                                "nullable": true,
+                                "type": "boolean"
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "privateKeyJwt": {
+                            "properties": {
+                              "signingKeyRef": {
+                                "properties": {
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "namespace": {
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              },
+                              "validFor": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "signingKeyRef"
+                            ],
+                            "type": "object",
+                            "additionalProperties": false
+                          }
+                        },
+                        "type": "object",
+                        "additionalProperties": false
                       },
                       "clientId": {
                         "type": "string"
@@ -642,6 +1029,13 @@
                         },
                         "type": "object",
                         "additionalProperties": false
+                      },
+                      "default": {
+                        "type": "object"
+                      },
+                      "disableClientSecret": {
+                        "nullable": true,
+                        "type": "boolean"
                       },
                       "discoveryOverride": {
                         "properties": {
@@ -703,11 +1097,26 @@
                       "discoveryPollInterval": {
                         "type": "string"
                       },
+                      "dynamicMetadataFromClaims": {
+                        "additionalProperties": {
+                          "type": "string"
+                        },
+                        "type": "object"
+                      },
                       "endSessionProperties": {
                         "properties": {
                           "methodType": {
                             "type": "string",
                             "x-kubernetes-int-or-string": true
+                          }
+                        },
+                        "type": "object",
+                        "additionalProperties": false
+                      },
+                      "frontChannelLogout": {
+                        "properties": {
+                          "path": {
+                            "type": "string"
                           }
                         },
                         "type": "object",
@@ -729,6 +1138,30 @@
                         "type": "object",
                         "additionalProperties": false
                       },
+                      "identityToken": {
+                        "properties": {
+                          "claimsToHeaders": {
+                            "items": {
+                              "properties": {
+                                "append": {
+                                  "type": "boolean"
+                                },
+                                "claim": {
+                                  "type": "string"
+                                },
+                                "header": {
+                                  "type": "string"
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object",
+                        "additionalProperties": false
+                      },
                       "issuerUrl": {
                         "type": "string"
                       },
@@ -739,7 +1172,8 @@
                             "type": "object"
                           },
                           "maxIdpReqPerPollingInterval": {
-                            "format": "int32",
+                            "maximum": 4294967295,
+                            "minimum": 0,
                             "type": "integer"
                           },
                           "never": {
@@ -764,6 +1198,24 @@
                       },
                       "session": {
                         "properties": {
+                          "cipherConfig": {
+                            "properties": {
+                              "keyRef": {
+                                "properties": {
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "namespace": {
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
                           "cookie": {
                             "properties": {
                               "allowRefreshing": {
@@ -876,6 +1328,12 @@
                         "type": "object"
                       }
                     },
+                    "required": [
+                      "clientId",
+                      "issuerUrl",
+                      "appUrl",
+                      "callbackPath"
+                    ],
                     "type": "object",
                     "additionalProperties": false
                   }
@@ -904,6 +1362,9 @@
                     "properties": {
                       "fastInputConversion": {
                         "type": "boolean"
+                      },
+                      "returnDecisionReason": {
+                        "type": "boolean"
                       }
                     },
                     "type": "object",
@@ -913,6 +1374,39 @@
                     "type": "string"
                   }
                 },
+                "required": [
+                  "query"
+                ],
+                "type": "object",
+                "additionalProperties": false
+              },
+              "opaServerAuth": {
+                "properties": {
+                  "options": {
+                    "properties": {
+                      "fastInputConversion": {
+                        "type": "boolean"
+                      },
+                      "returnDecisionReason": {
+                        "type": "boolean"
+                      }
+                    },
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "package": {
+                    "type": "string"
+                  },
+                  "ruleName": {
+                    "type": "string"
+                  },
+                  "serverAddr": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "package"
+                ],
                 "type": "object",
                 "additionalProperties": false
               },
@@ -932,8 +1426,67 @@
                       },
                       "connectionTimeout": {
                         "type": "string"
+                      },
+                      "retryPolicy": {
+                        "properties": {
+                          "numRetries": {
+                            "maximum": 4294967295,
+                            "minimum": 0,
+                            "nullable": true,
+                            "type": "integer"
+                          },
+                          "retryBackOff": {
+                            "properties": {
+                              "baseInterval": {
+                                "type": "string"
+                              },
+                              "maxInterval": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          }
+                        },
+                        "type": "object",
+                        "additionalProperties": false
+                      },
+                      "tlsConfig": {
+                        "properties": {
+                          "secretRef": {
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "namespace": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "sslParams": {
+                            "properties": {
+                              "maximumProtocolVersion": {
+                                "type": "string",
+                                "x-kubernetes-int-or-string": true
+                              },
+                              "minimumProtocolVersion": {
+                                "type": "string",
+                                "x-kubernetes-int-or-string": true
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          }
+                        },
+                        "type": "object",
+                        "additionalProperties": false
                       }
                     },
+                    "required": [
+                      "address"
+                    ],
                     "type": "object",
                     "additionalProperties": false
                   },
@@ -983,8 +1536,46 @@
                             },
                             "type": "array"
                           },
+                          "allowedUpstreamHeadersToOverwrite": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          },
                           "readStateFromResponse": {
                             "type": "boolean"
+                          }
+                        },
+                        "type": "object",
+                        "additionalProperties": false
+                      },
+                      "tlsConfig": {
+                        "properties": {
+                          "secretRef": {
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "namespace": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "sslParams": {
+                            "properties": {
+                              "maximumProtocolVersion": {
+                                "type": "string",
+                                "x-kubernetes-int-or-string": true
+                              },
+                              "minimumProtocolVersion": {
+                                "type": "string",
+                                "x-kubernetes-int-or-string": true
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
                           }
                         },
                         "type": "object",
@@ -994,6 +1585,9 @@
                         "type": "string"
                       }
                     },
+                    "required": [
+                      "url"
+                    ],
                     "type": "object",
                     "additionalProperties": false
                   }
@@ -1014,6 +1608,51 @@
                     "type": "string"
                   },
                   "pluginFileName": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "config"
+                ],
+                "type": "object",
+                "additionalProperties": false
+              },
+              "portalAuth": {
+                "properties": {
+                  "apiKeyHeader": {
+                    "type": "string"
+                  },
+                  "cacheDuration": {
+                    "type": "string"
+                  },
+                  "redisOptions": {
+                    "properties": {
+                      "db": {
+                        "format": "int32",
+                        "type": "integer"
+                      },
+                      "host": {
+                        "type": "string"
+                      },
+                      "poolSize": {
+                        "format": "int32",
+                        "type": "integer"
+                      },
+                      "socketType": {
+                        "type": "string",
+                        "x-kubernetes-int-or-string": true
+                      },
+                      "tlsCertMountPath": {
+                        "type": "string"
+                      }
+                    },
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "requestTimeout": {
+                    "type": "string"
+                  },
+                  "url": {
                     "type": "string"
                   }
                 },
@@ -1043,6 +1682,9 @@
           "additionalProperties": false
         }
       },
+      "required": [
+        "configs"
+      ],
       "type": "object",
       "additionalProperties": false
     },

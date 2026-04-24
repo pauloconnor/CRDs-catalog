@@ -1,4 +1,6 @@
 {
+  "type": "object",
+  "x-kubernetes-preserve-unknown-fields": true,
   "description": "ENIConfig is the Schema for the eniconfigs API",
   "properties": {
     "apiVersion": {
@@ -35,7 +37,5 @@
       "description": "ENIConfigStatus defines the observed state of ENIConfig",
       "type": "object"
     }
-  },
-  "type": "object",
-  "x-kubernetes-preserve-unknown-fields": true
+  }
 }

@@ -1,0 +1,34 @@
+{
+  "type": "object",
+  "properties": {
+    "spec": {
+      "properties": {
+        "instanceID": {
+          "description": "Application Gateway Instance unique ID",
+          "type": "string"
+        },
+        "instanceCount": {
+          "description": "The total count of Application Gateway Instances",
+          "type": "integer"
+        },
+        "desiredBackendPoolResourceVersion": {
+          "description": "Disired Backend Pool Resource Version Applied by Application Gateway Instance",
+          "type": "string"
+        },
+        "currentAppliedBackendPoolResourceVersion": {
+          "description": "Current Backend Pool Resource Version Applied by Application Gateway Instance",
+          "type": "string"
+        },
+        "lastCheckInTime": {
+          "description": "The Last Timestamp the Application Gateway Instance Checks in the InstanceUpdateStatus CRD Object",
+          "type": "string"
+        },
+        "errorCode": {
+          "description": "(optional) Error Code to Indicate Instance Update Status Failure",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

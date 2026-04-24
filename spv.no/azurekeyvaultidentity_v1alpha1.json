@@ -1,0 +1,16 @@
+{
+  "properties": {
+    "spec": {
+      "required": [
+        "identity"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the Azure Managed Identity to"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

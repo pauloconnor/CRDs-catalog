@@ -13,7 +13,7 @@
       "type": "object"
     },
     "spec": {
-      "description": "GroupSpec defines the desired state of Group.\n\nContains information about an IAM group entity.\n\nThis data type is used as a response element in the following operations:\n\n  - CreateGroup\n\n  - GetGroup\n\n  - ListGroups",
+      "description": "GroupSpec defines the desired state of Group.\n\nContains information about an IAM group entity.\n\nThis data type is used as a response element in the following operations:\n\n   * CreateGroup\n\n   * GetGroup\n\n   * ListGroups",
       "properties": {
         "inlinePolicies": {
           "additionalProperties": {

@@ -2,6 +2,1006 @@
   "properties": {
     "spec": {
       "properties": {
+        "ai": {
+          "properties": {
+            "anthropic": {
+              "properties": {
+                "authToken": {
+                  "properties": {
+                    "inline": {
+                      "type": "string"
+                    },
+                    "passthrough": {
+                      "type": "object"
+                    },
+                    "secretRef": {
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "namespace": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "customHost": {
+                  "properties": {
+                    "host": {
+                      "type": "string"
+                    },
+                    "hostname": {
+                      "nullable": true,
+                      "type": "string"
+                    },
+                    "pathOverride": {
+                      "properties": {
+                        "basePath": {
+                          "type": "string"
+                        },
+                        "fullPath": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "port": {
+                      "maximum": 4294967295,
+                      "minimum": 0,
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "model": {
+                  "type": "string"
+                },
+                "version": {
+                  "type": "string"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
+            "azureOpenai": {
+              "properties": {
+                "apiVersion": {
+                  "type": "string"
+                },
+                "authToken": {
+                  "properties": {
+                    "inline": {
+                      "type": "string"
+                    },
+                    "passthrough": {
+                      "type": "object"
+                    },
+                    "secretRef": {
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "namespace": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "customHost": {
+                  "properties": {
+                    "host": {
+                      "type": "string"
+                    },
+                    "hostname": {
+                      "nullable": true,
+                      "type": "string"
+                    },
+                    "pathOverride": {
+                      "properties": {
+                        "basePath": {
+                          "type": "string"
+                        },
+                        "fullPath": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "port": {
+                      "maximum": 4294967295,
+                      "minimum": 0,
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "deploymentName": {
+                  "type": "string"
+                },
+                "endpoint": {
+                  "type": "string"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
+            "bedrock": {
+              "properties": {
+                "credentialProvider": {
+                  "properties": {
+                    "inline": {
+                      "properties": {
+                        "accessKeyId": {
+                          "type": "string"
+                        },
+                        "secretAccessKey": {
+                          "type": "string"
+                        },
+                        "sessionToken": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "secretRef": {
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "namespace": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "customHost": {
+                  "properties": {
+                    "host": {
+                      "type": "string"
+                    },
+                    "hostname": {
+                      "nullable": true,
+                      "type": "string"
+                    },
+                    "pathOverride": {
+                      "properties": {
+                        "basePath": {
+                          "type": "string"
+                        },
+                        "fullPath": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "port": {
+                      "maximum": 4294967295,
+                      "minimum": 0,
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "model": {
+                  "type": "string"
+                },
+                "region": {
+                  "type": "string"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
+            "gemini": {
+              "properties": {
+                "apiVersion": {
+                  "type": "string"
+                },
+                "authToken": {
+                  "properties": {
+                    "inline": {
+                      "type": "string"
+                    },
+                    "passthrough": {
+                      "type": "object"
+                    },
+                    "secretRef": {
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "namespace": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "customHost": {
+                  "properties": {
+                    "host": {
+                      "type": "string"
+                    },
+                    "hostname": {
+                      "nullable": true,
+                      "type": "string"
+                    },
+                    "pathOverride": {
+                      "properties": {
+                        "basePath": {
+                          "type": "string"
+                        },
+                        "fullPath": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "port": {
+                      "maximum": 4294967295,
+                      "minimum": 0,
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "model": {
+                  "type": "string"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
+            "mistral": {
+              "properties": {
+                "authToken": {
+                  "properties": {
+                    "inline": {
+                      "type": "string"
+                    },
+                    "passthrough": {
+                      "type": "object"
+                    },
+                    "secretRef": {
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "namespace": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "customHost": {
+                  "properties": {
+                    "host": {
+                      "type": "string"
+                    },
+                    "hostname": {
+                      "nullable": true,
+                      "type": "string"
+                    },
+                    "pathOverride": {
+                      "properties": {
+                        "basePath": {
+                          "type": "string"
+                        },
+                        "fullPath": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "port": {
+                      "maximum": 4294967295,
+                      "minimum": 0,
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "model": {
+                  "type": "string"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
+            "multi": {
+              "properties": {
+                "priorities": {
+                  "items": {
+                    "properties": {
+                      "pool": {
+                        "items": {
+                          "properties": {
+                            "anthropic": {
+                              "properties": {
+                                "authToken": {
+                                  "properties": {
+                                    "inline": {
+                                      "type": "string"
+                                    },
+                                    "passthrough": {
+                                      "type": "object"
+                                    },
+                                    "secretRef": {
+                                      "properties": {
+                                        "name": {
+                                          "type": "string"
+                                        },
+                                        "namespace": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                },
+                                "customHost": {
+                                  "properties": {
+                                    "host": {
+                                      "type": "string"
+                                    },
+                                    "hostname": {
+                                      "nullable": true,
+                                      "type": "string"
+                                    },
+                                    "pathOverride": {
+                                      "properties": {
+                                        "basePath": {
+                                          "type": "string"
+                                        },
+                                        "fullPath": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    },
+                                    "port": {
+                                      "maximum": 4294967295,
+                                      "minimum": 0,
+                                      "type": "integer"
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                },
+                                "model": {
+                                  "type": "string"
+                                },
+                                "version": {
+                                  "type": "string"
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            },
+                            "azureOpenai": {
+                              "properties": {
+                                "apiVersion": {
+                                  "type": "string"
+                                },
+                                "authToken": {
+                                  "properties": {
+                                    "inline": {
+                                      "type": "string"
+                                    },
+                                    "passthrough": {
+                                      "type": "object"
+                                    },
+                                    "secretRef": {
+                                      "properties": {
+                                        "name": {
+                                          "type": "string"
+                                        },
+                                        "namespace": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                },
+                                "customHost": {
+                                  "properties": {
+                                    "host": {
+                                      "type": "string"
+                                    },
+                                    "hostname": {
+                                      "nullable": true,
+                                      "type": "string"
+                                    },
+                                    "pathOverride": {
+                                      "properties": {
+                                        "basePath": {
+                                          "type": "string"
+                                        },
+                                        "fullPath": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    },
+                                    "port": {
+                                      "maximum": 4294967295,
+                                      "minimum": 0,
+                                      "type": "integer"
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                },
+                                "deploymentName": {
+                                  "type": "string"
+                                },
+                                "endpoint": {
+                                  "type": "string"
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            },
+                            "bedrock": {
+                              "properties": {
+                                "credentialProvider": {
+                                  "properties": {
+                                    "inline": {
+                                      "properties": {
+                                        "accessKeyId": {
+                                          "type": "string"
+                                        },
+                                        "secretAccessKey": {
+                                          "type": "string"
+                                        },
+                                        "sessionToken": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    },
+                                    "secretRef": {
+                                      "properties": {
+                                        "name": {
+                                          "type": "string"
+                                        },
+                                        "namespace": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                },
+                                "customHost": {
+                                  "properties": {
+                                    "host": {
+                                      "type": "string"
+                                    },
+                                    "hostname": {
+                                      "nullable": true,
+                                      "type": "string"
+                                    },
+                                    "pathOverride": {
+                                      "properties": {
+                                        "basePath": {
+                                          "type": "string"
+                                        },
+                                        "fullPath": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    },
+                                    "port": {
+                                      "maximum": 4294967295,
+                                      "minimum": 0,
+                                      "type": "integer"
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                },
+                                "model": {
+                                  "type": "string"
+                                },
+                                "region": {
+                                  "type": "string"
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            },
+                            "gemini": {
+                              "properties": {
+                                "apiVersion": {
+                                  "type": "string"
+                                },
+                                "authToken": {
+                                  "properties": {
+                                    "inline": {
+                                      "type": "string"
+                                    },
+                                    "passthrough": {
+                                      "type": "object"
+                                    },
+                                    "secretRef": {
+                                      "properties": {
+                                        "name": {
+                                          "type": "string"
+                                        },
+                                        "namespace": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                },
+                                "customHost": {
+                                  "properties": {
+                                    "host": {
+                                      "type": "string"
+                                    },
+                                    "hostname": {
+                                      "nullable": true,
+                                      "type": "string"
+                                    },
+                                    "pathOverride": {
+                                      "properties": {
+                                        "basePath": {
+                                          "type": "string"
+                                        },
+                                        "fullPath": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    },
+                                    "port": {
+                                      "maximum": 4294967295,
+                                      "minimum": 0,
+                                      "type": "integer"
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                },
+                                "model": {
+                                  "type": "string"
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            },
+                            "mistral": {
+                              "properties": {
+                                "authToken": {
+                                  "properties": {
+                                    "inline": {
+                                      "type": "string"
+                                    },
+                                    "passthrough": {
+                                      "type": "object"
+                                    },
+                                    "secretRef": {
+                                      "properties": {
+                                        "name": {
+                                          "type": "string"
+                                        },
+                                        "namespace": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                },
+                                "customHost": {
+                                  "properties": {
+                                    "host": {
+                                      "type": "string"
+                                    },
+                                    "hostname": {
+                                      "nullable": true,
+                                      "type": "string"
+                                    },
+                                    "pathOverride": {
+                                      "properties": {
+                                        "basePath": {
+                                          "type": "string"
+                                        },
+                                        "fullPath": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    },
+                                    "port": {
+                                      "maximum": 4294967295,
+                                      "minimum": 0,
+                                      "type": "integer"
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                },
+                                "model": {
+                                  "type": "string"
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            },
+                            "openai": {
+                              "properties": {
+                                "authToken": {
+                                  "properties": {
+                                    "inline": {
+                                      "type": "string"
+                                    },
+                                    "passthrough": {
+                                      "type": "object"
+                                    },
+                                    "secretRef": {
+                                      "properties": {
+                                        "name": {
+                                          "type": "string"
+                                        },
+                                        "namespace": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                },
+                                "customHost": {
+                                  "properties": {
+                                    "host": {
+                                      "type": "string"
+                                    },
+                                    "hostname": {
+                                      "nullable": true,
+                                      "type": "string"
+                                    },
+                                    "pathOverride": {
+                                      "properties": {
+                                        "basePath": {
+                                          "type": "string"
+                                        },
+                                        "fullPath": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    },
+                                    "port": {
+                                      "maximum": 4294967295,
+                                      "minimum": 0,
+                                      "type": "integer"
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                },
+                                "model": {
+                                  "type": "string"
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            },
+                            "vertexAi": {
+                              "properties": {
+                                "apiVersion": {
+                                  "type": "string"
+                                },
+                                "authToken": {
+                                  "properties": {
+                                    "inline": {
+                                      "type": "string"
+                                    },
+                                    "passthrough": {
+                                      "type": "object"
+                                    },
+                                    "secretRef": {
+                                      "properties": {
+                                        "name": {
+                                          "type": "string"
+                                        },
+                                        "namespace": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                },
+                                "customHost": {
+                                  "properties": {
+                                    "host": {
+                                      "type": "string"
+                                    },
+                                    "hostname": {
+                                      "nullable": true,
+                                      "type": "string"
+                                    },
+                                    "pathOverride": {
+                                      "properties": {
+                                        "basePath": {
+                                          "type": "string"
+                                        },
+                                        "fullPath": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    },
+                                    "port": {
+                                      "maximum": 4294967295,
+                                      "minimum": 0,
+                                      "type": "integer"
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                },
+                                "jsonSchema": {
+                                  "type": "string",
+                                  "x-kubernetes-int-or-string": true
+                                },
+                                "location": {
+                                  "type": "string"
+                                },
+                                "model": {
+                                  "type": "string"
+                                },
+                                "modelPath": {
+                                  "type": "string"
+                                },
+                                "projectId": {
+                                  "type": "string"
+                                },
+                                "publisher": {
+                                  "type": "string",
+                                  "x-kubernetes-int-or-string": true
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        },
+                        "type": "array"
+                      }
+                    },
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
+            "openai": {
+              "properties": {
+                "authToken": {
+                  "properties": {
+                    "inline": {
+                      "type": "string"
+                    },
+                    "passthrough": {
+                      "type": "object"
+                    },
+                    "secretRef": {
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "namespace": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "customHost": {
+                  "properties": {
+                    "host": {
+                      "type": "string"
+                    },
+                    "hostname": {
+                      "nullable": true,
+                      "type": "string"
+                    },
+                    "pathOverride": {
+                      "properties": {
+                        "basePath": {
+                          "type": "string"
+                        },
+                        "fullPath": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "port": {
+                      "maximum": 4294967295,
+                      "minimum": 0,
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "model": {
+                  "type": "string"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
+            "vertexAi": {
+              "properties": {
+                "apiVersion": {
+                  "type": "string"
+                },
+                "authToken": {
+                  "properties": {
+                    "inline": {
+                      "type": "string"
+                    },
+                    "passthrough": {
+                      "type": "object"
+                    },
+                    "secretRef": {
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "namespace": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "customHost": {
+                  "properties": {
+                    "host": {
+                      "type": "string"
+                    },
+                    "hostname": {
+                      "nullable": true,
+                      "type": "string"
+                    },
+                    "pathOverride": {
+                      "properties": {
+                        "basePath": {
+                          "type": "string"
+                        },
+                        "fullPath": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "port": {
+                      "maximum": 4294967295,
+                      "minimum": 0,
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "jsonSchema": {
+                  "type": "string",
+                  "x-kubernetes-int-or-string": true
+                },
+                "location": {
+                  "type": "string"
+                },
+                "model": {
+                  "type": "string"
+                },
+                "modelPath": {
+                  "type": "string"
+                },
+                "projectId": {
+                  "type": "string"
+                },
+                "publisher": {
+                  "type": "string",
+                  "x-kubernetes-int-or-string": true
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
         "aws": {
           "properties": {
             "awsAccountId": {
@@ -105,7 +1105,8 @@
               "type": "array"
             },
             "port": {
-              "format": "int32",
+              "maximum": 4294967295,
+              "minimum": 0,
               "type": "integer"
             },
             "publicIp": {
@@ -195,6 +1196,9 @@
               "minimum": 0,
               "nullable": true,
               "type": "integer"
+            },
+            "trackRemaining": {
+              "type": "boolean"
             }
           },
           "type": "object",
@@ -212,7 +1216,8 @@
                   "type": "string"
                 },
                 "maxHeadersCount": {
-                  "format": "int32",
+                  "maximum": 4294967295,
+                  "minimum": 0,
                   "type": "integer"
                 },
                 "maxStreamDuration": {
@@ -245,7 +1250,8 @@
               "additionalProperties": false
             },
             "maxRequestsPerConnection": {
-              "format": "int32",
+              "maximum": 4294967295,
+              "minimum": 0,
               "type": "integer"
             },
             "perConnectionBufferLimitBytes": {
@@ -260,7 +1266,8 @@
                   "type": "string"
                 },
                 "keepaliveProbes": {
-                  "format": "int32",
+                  "maximum": 4294967295,
+                  "minimum": 0,
                   "type": "integer"
                 },
                 "keepaliveTime": {
@@ -347,6 +1354,82 @@
                   "type": "object",
                   "additionalProperties": false
                 },
+                "grpcJsonTranscoder": {
+                  "properties": {
+                    "autoMapping": {
+                      "type": "boolean"
+                    },
+                    "convertGrpcStatus": {
+                      "type": "boolean"
+                    },
+                    "ignoreUnknownQueryParameters": {
+                      "type": "boolean"
+                    },
+                    "ignoredQueryParameters": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "matchIncomingRequestRoute": {
+                      "type": "boolean"
+                    },
+                    "printOptions": {
+                      "properties": {
+                        "addWhitespace": {
+                          "type": "boolean"
+                        },
+                        "alwaysPrintEnumsAsInts": {
+                          "type": "boolean"
+                        },
+                        "alwaysPrintPrimitiveFields": {
+                          "type": "boolean"
+                        },
+                        "preserveProtoFieldNames": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "protoDescriptor": {
+                      "type": "string"
+                    },
+                    "protoDescriptorBin": {
+                      "format": "byte",
+                      "type": "string"
+                    },
+                    "protoDescriptorConfigMap": {
+                      "properties": {
+                        "configMapRef": {
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            },
+                            "namespace": {
+                              "type": "string"
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        },
+                        "key": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "services": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
                 "rest": {
                   "properties": {
                     "swaggerInfo": {
@@ -379,6 +1462,9 @@
                           "dynamicMetadataValues": {
                             "items": {
                               "properties": {
+                                "jsonToProto": {
+                                  "type": "boolean"
+                                },
                                 "key": {
                                   "type": "string"
                                 },
@@ -400,6 +1486,9 @@
                             },
                             "type": "array"
                           },
+                          "escapeCharacters": {
+                            "type": "boolean"
+                          },
                           "extractors": {
                             "additionalProperties": {
                               "properties": {
@@ -410,11 +1499,20 @@
                                 "header": {
                                   "type": "string"
                                 },
+                                "mode": {
+                                  "type": "string",
+                                  "x-kubernetes-int-or-string": true
+                                },
                                 "regex": {
                                   "type": "string"
                                 },
+                                "replacementText": {
+                                  "nullable": true,
+                                  "type": "string"
+                                },
                                 "subgroup": {
-                                  "format": "int32",
+                                  "maximum": 4294967295,
+                                  "minimum": 0,
                                   "type": "integer"
                                 }
                               },
@@ -468,12 +1566,54 @@
                           "mergeExtractorsToBody": {
                             "type": "object"
                           },
+                          "mergeJsonKeys": {
+                            "properties": {
+                              "jsonKeys": {
+                                "additionalProperties": {
+                                  "properties": {
+                                    "overrideEmpty": {
+                                      "type": "boolean"
+                                    },
+                                    "tmpl": {
+                                      "properties": {
+                                        "text": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                },
+                                "type": "object"
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
                           "parseBodyBehavior": {
                             "type": "string",
                             "x-kubernetes-int-or-string": true
                           },
                           "passthrough": {
                             "type": "object"
+                          },
+                          "spanTransformer": {
+                            "properties": {
+                              "name": {
+                                "properties": {
+                                  "text": {
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
                           }
                         },
                         "type": "object",
@@ -505,6 +1645,10 @@
           "type": "object",
           "additionalProperties": false
         },
+        "disableIstioAutoMtls": {
+          "nullable": true,
+          "type": "boolean"
+        },
         "discoveryMetadata": {
           "properties": {
             "labels": {
@@ -516,6 +1660,9 @@
           },
           "type": "object",
           "additionalProperties": false
+        },
+        "dnsRefreshRate": {
+          "type": "string"
         },
         "failover": {
           "properties": {
@@ -555,7 +1702,8 @@
                                     "type": "string"
                                   },
                                   "portValue": {
-                                    "format": "int32",
+                                    "maximum": 4294967295,
+                                    "minimum": 0,
                                     "type": "integer"
                                   }
                                 },
@@ -568,8 +1716,16 @@
                                 "nullable": true,
                                 "type": "integer"
                               },
+                              "metadata": {
+                                "additionalProperties": {
+                                  "type": "object",
+                                  "x-kubernetes-preserve-unknown-fields": true
+                                },
+                                "type": "object"
+                              },
                               "port": {
-                                "format": "int32",
+                                "maximum": 4294967295,
+                                "minimum": 0,
                                 "type": "integer"
                               },
                               "upstreamSslConfig": {
@@ -583,6 +1739,10 @@
                                       "type": "string"
                                     },
                                     "type": "array"
+                                  },
+                                  "oneWayTls": {
+                                    "nullable": true,
+                                    "type": "boolean"
                                   },
                                   "parameters": {
                                     "properties": {
@@ -663,6 +1823,9 @@
                                   },
                                   "sslFiles": {
                                     "properties": {
+                                      "ocspStaple": {
+                                        "type": "string"
+                                      },
                                       "rootCa": {
                                         "type": "string"
                                       },
@@ -729,6 +1892,18 @@
           "type": "object",
           "additionalProperties": false
         },
+        "gcp": {
+          "properties": {
+            "audience": {
+              "type": "string"
+            },
+            "host": {
+              "type": "string"
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
         "healthChecks": {
           "items": {
             "properties": {
@@ -759,6 +1934,43 @@
                 "properties": {
                   "authority": {
                     "type": "string"
+                  },
+                  "initialMetadata": {
+                    "items": {
+                      "properties": {
+                        "append": {
+                          "nullable": true,
+                          "type": "boolean"
+                        },
+                        "header": {
+                          "properties": {
+                            "key": {
+                              "type": "string"
+                            },
+                            "value": {
+                              "type": "string"
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        },
+                        "headerSecretRef": {
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            },
+                            "namespace": {
+                              "type": "string"
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "type": "array"
                   },
                   "serviceName": {
                     "type": "string"
@@ -799,6 +2011,10 @@
                   },
                   "host": {
                     "type": "string"
+                  },
+                  "method": {
+                    "type": "string",
+                    "x-kubernetes-int-or-string": true
                   },
                   "path": {
                     "type": "string"
@@ -926,7 +2142,8 @@
                 "type": "string"
               },
               "intervalJitterPercent": {
-                "format": "int32",
+                "maximum": 4294967295,
+                "minimum": 0,
                 "type": "integer"
               },
               "noTrafficInterval": {
@@ -1011,6 +2228,10 @@
               },
               "type": "array"
             },
+            "oneWayTls": {
+              "nullable": true,
+              "type": "boolean"
+            },
             "parameters": {
               "properties": {
                 "cipherSuites": {
@@ -1090,6 +2311,9 @@
             },
             "sslFiles": {
               "properties": {
+                "ocspStaple": {
+                  "type": "string"
+                },
                 "rootCa": {
                   "type": "string"
                 },
@@ -1148,7 +2372,8 @@
               "type": "string"
             },
             "servicePort": {
-              "format": "int32",
+              "maximum": 4294967295,
+              "minimum": 0,
               "type": "integer"
             },
             "serviceSpec": {
@@ -1177,6 +2402,82 @@
                         },
                         "type": "object",
                         "additionalProperties": false
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "grpcJsonTranscoder": {
+                  "properties": {
+                    "autoMapping": {
+                      "type": "boolean"
+                    },
+                    "convertGrpcStatus": {
+                      "type": "boolean"
+                    },
+                    "ignoreUnknownQueryParameters": {
+                      "type": "boolean"
+                    },
+                    "ignoredQueryParameters": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "matchIncomingRequestRoute": {
+                      "type": "boolean"
+                    },
+                    "printOptions": {
+                      "properties": {
+                        "addWhitespace": {
+                          "type": "boolean"
+                        },
+                        "alwaysPrintEnumsAsInts": {
+                          "type": "boolean"
+                        },
+                        "alwaysPrintPrimitiveFields": {
+                          "type": "boolean"
+                        },
+                        "preserveProtoFieldNames": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "protoDescriptor": {
+                      "type": "string"
+                    },
+                    "protoDescriptorBin": {
+                      "format": "byte",
+                      "type": "string"
+                    },
+                    "protoDescriptorConfigMap": {
+                      "properties": {
+                        "configMapRef": {
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            },
+                            "namespace": {
+                              "type": "string"
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        },
+                        "key": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "services": {
+                      "items": {
+                        "type": "string"
                       },
                       "type": "array"
                     }
@@ -1216,6 +2517,9 @@
                           "dynamicMetadataValues": {
                             "items": {
                               "properties": {
+                                "jsonToProto": {
+                                  "type": "boolean"
+                                },
                                 "key": {
                                   "type": "string"
                                 },
@@ -1237,6 +2541,9 @@
                             },
                             "type": "array"
                           },
+                          "escapeCharacters": {
+                            "type": "boolean"
+                          },
                           "extractors": {
                             "additionalProperties": {
                               "properties": {
@@ -1247,11 +2554,20 @@
                                 "header": {
                                   "type": "string"
                                 },
+                                "mode": {
+                                  "type": "string",
+                                  "x-kubernetes-int-or-string": true
+                                },
                                 "regex": {
                                   "type": "string"
                                 },
+                                "replacementText": {
+                                  "nullable": true,
+                                  "type": "string"
+                                },
                                 "subgroup": {
-                                  "format": "int32",
+                                  "maximum": 4294967295,
+                                  "minimum": 0,
                                   "type": "integer"
                                 }
                               },
@@ -1305,12 +2621,54 @@
                           "mergeExtractorsToBody": {
                             "type": "object"
                           },
+                          "mergeJsonKeys": {
+                            "properties": {
+                              "jsonKeys": {
+                                "additionalProperties": {
+                                  "properties": {
+                                    "overrideEmpty": {
+                                      "type": "boolean"
+                                    },
+                                    "tmpl": {
+                                      "properties": {
+                                        "text": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                },
+                                "type": "object"
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
                           "parseBodyBehavior": {
                             "type": "string",
                             "x-kubernetes-int-or-string": true
                           },
                           "passthrough": {
                             "type": "object"
+                          },
+                          "spanTransformer": {
+                            "properties": {
+                              "name": {
+                                "properties": {
+                                  "text": {
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
                           }
                         },
                         "type": "object",
@@ -1372,6 +2730,9 @@
         },
         "loadBalancerConfig": {
           "properties": {
+            "closeConnectionsOnHostSetChange": {
+              "type": "boolean"
+            },
             "healthyPanicThreshold": {
               "nullable": true,
               "type": "number"
@@ -1379,8 +2740,26 @@
             "leastRequest": {
               "properties": {
                 "choiceCount": {
-                  "format": "int32",
+                  "maximum": 4294967295,
+                  "minimum": 0,
                   "type": "integer"
+                },
+                "slowStartConfig": {
+                  "properties": {
+                    "aggression": {
+                      "nullable": true,
+                      "type": "number"
+                    },
+                    "minWeightPercent": {
+                      "nullable": true,
+                      "type": "number"
+                    },
+                    "slowStartWindow": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
                 }
               },
               "type": "object",
@@ -1419,10 +2798,34 @@
               "additionalProperties": false
             },
             "roundRobin": {
-              "type": "object"
+              "properties": {
+                "slowStartConfig": {
+                  "properties": {
+                    "aggression": {
+                      "nullable": true,
+                      "type": "number"
+                    },
+                    "minWeightPercent": {
+                      "nullable": true,
+                      "type": "number"
+                    },
+                    "slowStartWindow": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
             },
             "updateMergeWindow": {
               "type": "string"
+            },
+            "useHostnameForHashing": {
+              "nullable": true,
+              "type": "boolean"
             }
           },
           "type": "object",
@@ -1576,6 +2979,82 @@
                   "type": "object",
                   "additionalProperties": false
                 },
+                "grpcJsonTranscoder": {
+                  "properties": {
+                    "autoMapping": {
+                      "type": "boolean"
+                    },
+                    "convertGrpcStatus": {
+                      "type": "boolean"
+                    },
+                    "ignoreUnknownQueryParameters": {
+                      "type": "boolean"
+                    },
+                    "ignoredQueryParameters": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "matchIncomingRequestRoute": {
+                      "type": "boolean"
+                    },
+                    "printOptions": {
+                      "properties": {
+                        "addWhitespace": {
+                          "type": "boolean"
+                        },
+                        "alwaysPrintEnumsAsInts": {
+                          "type": "boolean"
+                        },
+                        "alwaysPrintPrimitiveFields": {
+                          "type": "boolean"
+                        },
+                        "preserveProtoFieldNames": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "protoDescriptor": {
+                      "type": "string"
+                    },
+                    "protoDescriptorBin": {
+                      "format": "byte",
+                      "type": "string"
+                    },
+                    "protoDescriptorConfigMap": {
+                      "properties": {
+                        "configMapRef": {
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            },
+                            "namespace": {
+                              "type": "string"
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        },
+                        "key": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "services": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
                 "rest": {
                   "properties": {
                     "swaggerInfo": {
@@ -1608,6 +3087,9 @@
                           "dynamicMetadataValues": {
                             "items": {
                               "properties": {
+                                "jsonToProto": {
+                                  "type": "boolean"
+                                },
                                 "key": {
                                   "type": "string"
                                 },
@@ -1629,6 +3111,9 @@
                             },
                             "type": "array"
                           },
+                          "escapeCharacters": {
+                            "type": "boolean"
+                          },
                           "extractors": {
                             "additionalProperties": {
                               "properties": {
@@ -1639,11 +3124,20 @@
                                 "header": {
                                   "type": "string"
                                 },
+                                "mode": {
+                                  "type": "string",
+                                  "x-kubernetes-int-or-string": true
+                                },
                                 "regex": {
                                   "type": "string"
                                 },
+                                "replacementText": {
+                                  "nullable": true,
+                                  "type": "string"
+                                },
                                 "subgroup": {
-                                  "format": "int32",
+                                  "maximum": 4294967295,
+                                  "minimum": 0,
                                   "type": "integer"
                                 }
                               },
@@ -1697,12 +3191,54 @@
                           "mergeExtractorsToBody": {
                             "type": "object"
                           },
+                          "mergeJsonKeys": {
+                            "properties": {
+                              "jsonKeys": {
+                                "additionalProperties": {
+                                  "properties": {
+                                    "overrideEmpty": {
+                                      "type": "boolean"
+                                    },
+                                    "tmpl": {
+                                      "properties": {
+                                        "text": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                },
+                                "type": "object"
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
                           "parseBodyBehavior": {
                             "type": "string",
                             "x-kubernetes-int-or-string": true
                           },
                           "passthrough": {
                             "type": "object"
+                          },
+                          "spanTransformer": {
+                            "properties": {
+                              "name": {
+                                "properties": {
+                                  "text": {
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
                           }
                         },
                         "type": "object",
@@ -1722,9 +3258,31 @@
           "type": "object",
           "additionalProperties": false
         },
+        "preconnectPolicy": {
+          "properties": {
+            "perUpstreamPreconnectRatio": {
+              "nullable": true,
+              "type": "number"
+            },
+            "predictivePreconnectRatio": {
+              "nullable": true,
+              "type": "number"
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
         "protocolSelection": {
           "type": "string",
           "x-kubernetes-int-or-string": true
+        },
+        "proxyProtocolVersion": {
+          "nullable": true,
+          "type": "string"
+        },
+        "respectDnsTtl": {
+          "nullable": true,
+          "type": "boolean"
         },
         "sslConfig": {
           "properties": {
@@ -1737,6 +3295,10 @@
                 "type": "string"
               },
               "type": "array"
+            },
+            "oneWayTls": {
+              "nullable": true,
+              "type": "boolean"
             },
             "parameters": {
               "properties": {
@@ -1817,6 +3379,9 @@
             },
             "sslFiles": {
               "properties": {
+                "ocspStaple": {
+                  "type": "string"
+                },
                 "rootCa": {
                   "type": "string"
                 },
@@ -1870,8 +3435,16 @@
                     "nullable": true,
                     "type": "integer"
                   },
+                  "metadata": {
+                    "additionalProperties": {
+                      "type": "object",
+                      "x-kubernetes-preserve-unknown-fields": true
+                    },
+                    "type": "object"
+                  },
                   "port": {
-                    "format": "int32",
+                    "maximum": 4294967295,
+                    "minimum": 0,
                     "type": "integer"
                   },
                   "sniAddr": {
@@ -1916,6 +3489,82 @@
                   "type": "object",
                   "additionalProperties": false
                 },
+                "grpcJsonTranscoder": {
+                  "properties": {
+                    "autoMapping": {
+                      "type": "boolean"
+                    },
+                    "convertGrpcStatus": {
+                      "type": "boolean"
+                    },
+                    "ignoreUnknownQueryParameters": {
+                      "type": "boolean"
+                    },
+                    "ignoredQueryParameters": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "matchIncomingRequestRoute": {
+                      "type": "boolean"
+                    },
+                    "printOptions": {
+                      "properties": {
+                        "addWhitespace": {
+                          "type": "boolean"
+                        },
+                        "alwaysPrintEnumsAsInts": {
+                          "type": "boolean"
+                        },
+                        "alwaysPrintPrimitiveFields": {
+                          "type": "boolean"
+                        },
+                        "preserveProtoFieldNames": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "protoDescriptor": {
+                      "type": "string"
+                    },
+                    "protoDescriptorBin": {
+                      "format": "byte",
+                      "type": "string"
+                    },
+                    "protoDescriptorConfigMap": {
+                      "properties": {
+                        "configMapRef": {
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            },
+                            "namespace": {
+                              "type": "string"
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        },
+                        "key": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "services": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
                 "rest": {
                   "properties": {
                     "swaggerInfo": {
@@ -1948,6 +3597,9 @@
                           "dynamicMetadataValues": {
                             "items": {
                               "properties": {
+                                "jsonToProto": {
+                                  "type": "boolean"
+                                },
                                 "key": {
                                   "type": "string"
                                 },
@@ -1969,6 +3621,9 @@
                             },
                             "type": "array"
                           },
+                          "escapeCharacters": {
+                            "type": "boolean"
+                          },
                           "extractors": {
                             "additionalProperties": {
                               "properties": {
@@ -1979,11 +3634,20 @@
                                 "header": {
                                   "type": "string"
                                 },
+                                "mode": {
+                                  "type": "string",
+                                  "x-kubernetes-int-or-string": true
+                                },
                                 "regex": {
                                   "type": "string"
                                 },
+                                "replacementText": {
+                                  "nullable": true,
+                                  "type": "string"
+                                },
                                 "subgroup": {
-                                  "format": "int32",
+                                  "maximum": 4294967295,
+                                  "minimum": 0,
                                   "type": "integer"
                                 }
                               },
@@ -2037,12 +3701,54 @@
                           "mergeExtractorsToBody": {
                             "type": "object"
                           },
+                          "mergeJsonKeys": {
+                            "properties": {
+                              "jsonKeys": {
+                                "additionalProperties": {
+                                  "properties": {
+                                    "overrideEmpty": {
+                                      "type": "boolean"
+                                    },
+                                    "tmpl": {
+                                      "properties": {
+                                        "text": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                },
+                                "type": "object"
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
                           "parseBodyBehavior": {
                             "type": "string",
                             "x-kubernetes-int-or-string": true
                           },
                           "passthrough": {
                             "type": "object"
+                          },
+                          "spanTransformer": {
+                            "properties": {
+                              "name": {
+                                "properties": {
+                                  "text": {
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
                           }
                         },
                         "type": "object",
@@ -2059,6 +3765,7 @@
               "additionalProperties": false
             },
             "useTls": {
+              "nullable": true,
               "type": "boolean"
             }
           },

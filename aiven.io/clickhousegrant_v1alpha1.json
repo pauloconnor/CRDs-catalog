@@ -1,5 +1,5 @@
 {
-  "description": "ClickhouseGrant is the Schema for the ClickhouseGrants API",
+  "description": "ClickhouseGrant is the Schema for the ClickhouseGrants API\nWarning: Due to the way ClickHouse operates, updating this resource first revokes the existing privileges.",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -37,7 +37,7 @@
         "privilegeGrants": {
           "description": "Configuration to grant a privilege. Privileges not in the manifest are revoked. Existing privileges are retained; new ones are granted.",
           "items": {
-            "description": "PrivilegeGrant represents the privileges to be granted to users or roles.\nSee https://clickhouse.com/docs/en/sql-reference/statements/grant#granting-privilege-syntax.",
+            "description": "PrivilegeGrant represents the privileges to be granted to users or roles.\n[See](https://clickhouse.com/docs/en/sql-reference/statements/grant#granting-privilege-syntax).",
             "properties": {
               "columns": {
                 "description": "The column that the grant refers to.",
@@ -53,7 +53,7 @@
               "grantees": {
                 "description": "List of grantees (users or roles) to grant the privilege to.",
                 "items": {
-                  "description": "Grantee represents a user or a role to which privileges or roles are granted.",
+                  "description": "Grantee represents a user or a role to which privileges or roles are granted.\nWarning \"Ambiguity in the `GRANT` syntax\":\nDue to [an ambiguity](https://github.com/aiven/ospo-tracker/issues/350) in the GRANT syntax in ClickHouse,\nusers and roles should not share the same name.\nIt is unclear whether a grant applies to the user or the role.",
                   "properties": {
                     "role": {
                       "type": "string"
@@ -69,7 +69,7 @@
                 "type": "array"
               },
               "privileges": {
-                "description": "The privileges to grant, i.e. `INSERT`, `SELECT`.\nSee https://clickhouse.com/docs/en/sql-reference/statements/grant#assigning-role-syntax.",
+                "description": "The privileges to grant, i.e. `INSERT`, `SELECT`.\n[See](https://clickhouse.com/docs/en/sql-reference/statements/grant#assigning-role-syntax).",
                 "items": {
                   "type": "string"
                 },
@@ -80,7 +80,7 @@
                 "type": "string"
               },
               "withGrantOption": {
-                "description": "If true, then the grantee (user or role) get the permission to execute the `GRANT` query.\nUsers can grant privileges of the same scope they have and less.\nSee https://clickhouse.com/docs/en/sql-reference/statements/grant#granting-privilege-syntax",
+                "description": "If true, then the grantee (user or role) get the permission to execute the `GRANT` query.\nUsers can grant privileges of the same scope they have and less.\n[See](https://clickhouse.com/docs/en/sql-reference/statements/grant#granting-privilege-syntax)",
                 "type": "boolean"
               }
             },
@@ -115,12 +115,12 @@
         "roleGrants": {
           "description": "Configuration to grant a role. Role grants not in the manifest are revoked. Existing role grants are retained; new ones are granted.",
           "items": {
-            "description": "RoleGrant represents the roles to be assigned to users or roles.\nSee https://clickhouse.com/docs/en/sql-reference/statements/grant#assigning-role-syntax.",
+            "description": "RoleGrant represents the roles to be assigned to users or roles.\n[See](https://clickhouse.com/docs/en/sql-reference/statements/grant#assigning-role-syntax)",
             "properties": {
               "grantees": {
                 "description": "List of grantees (users or roles) to grant the privilege to.",
                 "items": {
-                  "description": "Grantee represents a user or a role to which privileges or roles are granted.",
+                  "description": "Grantee represents a user or a role to which privileges or roles are granted.\nWarning \"Ambiguity in the `GRANT` syntax\":\nDue to [an ambiguity](https://github.com/aiven/ospo-tracker/issues/350) in the GRANT syntax in ClickHouse,\nusers and roles should not share the same name.\nIt is unclear whether a grant applies to the user or the role.",
                   "properties": {
                     "role": {
                       "type": "string"
@@ -144,7 +144,7 @@
                 "type": "array"
               },
               "withAdminOption": {
-                "description": "If true, the grant is executed with `ADMIN OPTION` privilege.\nSee https://clickhouse.com/docs/en/sql-reference/statements/grant#admin-option.",
+                "description": "If true, the grant is executed with `ADMIN OPTION` privilege.\n[See](https://clickhouse.com/docs/en/sql-reference/statements/grant#admin-option)",
                 "type": "boolean"
               }
             },
@@ -182,7 +182,7 @@
       "properties": {
         "conditions": {
           "items": {
-            "description": "Condition contains details for one aspect of the current state of this API Resource.\n---\nThis struct is intended for direct use as an array at the field path .status.conditions.  For example,\n\n\n\ttype FooStatus struct{\n\t    // Represents the observations of a foo's current state.\n\t    // Known .status.conditions.type are: \"Available\", \"Progressing\", and \"Degraded\"\n\t    // +patchMergeKey=type\n\t    // +patchStrategy=merge\n\t    // +listType=map\n\t    // +listMapKey=type\n\t    Conditions []metav1.Condition `json:\"conditions,omitempty\" patchStrategy:\"merge\" patchMergeKey:\"type\" protobuf:\"bytes,1,rep,name=conditions\"`\n\n\n\t    // other fields\n\t}",
+            "description": "Condition contains details for one aspect of the current state of this API Resource.",
             "properties": {
               "lastTransitionTime": {
                 "description": "lastTransitionTime is the last time the condition transitioned from one status to another.\nThis should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.",
@@ -217,7 +217,7 @@
                 "type": "string"
               },
               "type": {
-                "description": "type of condition in CamelCase or in foo.example.com/CamelCase.\n---\nMany .condition.type values are consistent across resources like Available, but because arbitrary conditions can be\nuseful (see .node.status.conditions), the ability to deconflict is important.\nThe regex it matches is (dns1123SubdomainFmt/)?(qualifiedNameFmt)",
+                "description": "type of condition in CamelCase or in foo.example.com/CamelCase.",
                 "maxLength": 316,
                 "pattern": "^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$",
                 "type": "string"
@@ -234,6 +234,124 @@
             "additionalProperties": false
           },
           "type": "array"
+        },
+        "state": {
+          "description": "The previous applied grants to revoke. Do not edit",
+          "properties": {
+            "privilegeGrants": {
+              "description": "Configuration to grant a privilege. Privileges not in the manifest are revoked. Existing privileges are retained; new ones are granted.",
+              "items": {
+                "description": "PrivilegeGrant represents the privileges to be granted to users or roles.\n[See](https://clickhouse.com/docs/en/sql-reference/statements/grant#granting-privilege-syntax).",
+                "properties": {
+                  "columns": {
+                    "description": "The column that the grant refers to.",
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "database": {
+                    "description": "The database that the grant refers to.",
+                    "type": "string"
+                  },
+                  "grantees": {
+                    "description": "List of grantees (users or roles) to grant the privilege to.",
+                    "items": {
+                      "description": "Grantee represents a user or a role to which privileges or roles are granted.\nWarning \"Ambiguity in the `GRANT` syntax\":\nDue to [an ambiguity](https://github.com/aiven/ospo-tracker/issues/350) in the GRANT syntax in ClickHouse,\nusers and roles should not share the same name.\nIt is unclear whether a grant applies to the user or the role.",
+                      "properties": {
+                        "role": {
+                          "type": "string"
+                        },
+                        "user": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "privileges": {
+                    "description": "The privileges to grant, i.e. `INSERT`, `SELECT`.\n[See](https://clickhouse.com/docs/en/sql-reference/statements/grant#assigning-role-syntax).",
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "table": {
+                    "description": "The tables that the grant refers to. To grant a privilege on all tables in a database, omit this field instead of writing `table: \"*\"`.",
+                    "type": "string"
+                  },
+                  "withGrantOption": {
+                    "description": "If true, then the grantee (user or role) get the permission to execute the `GRANT` query.\nUsers can grant privileges of the same scope they have and less.\n[See](https://clickhouse.com/docs/en/sql-reference/statements/grant#granting-privilege-syntax)",
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "database",
+                  "grantees",
+                  "privileges"
+                ],
+                "type": "object",
+                "x-kubernetes-validations": [
+                  {
+                    "message": "`table` must be set if `columns` are set",
+                    "rule": "!has(self.columns) || (has(self.columns) && has(self.table))"
+                  }
+                ],
+                "additionalProperties": false
+              },
+              "type": "array"
+            },
+            "roleGrants": {
+              "description": "Configuration to grant a role. Role grants not in the manifest are revoked. Existing role grants are retained; new ones are granted.",
+              "items": {
+                "description": "RoleGrant represents the roles to be assigned to users or roles.\n[See](https://clickhouse.com/docs/en/sql-reference/statements/grant#assigning-role-syntax)",
+                "properties": {
+                  "grantees": {
+                    "description": "List of grantees (users or roles) to grant the privilege to.",
+                    "items": {
+                      "description": "Grantee represents a user or a role to which privileges or roles are granted.\nWarning \"Ambiguity in the `GRANT` syntax\":\nDue to [an ambiguity](https://github.com/aiven/ospo-tracker/issues/350) in the GRANT syntax in ClickHouse,\nusers and roles should not share the same name.\nIt is unclear whether a grant applies to the user or the role.",
+                      "properties": {
+                        "role": {
+                          "type": "string"
+                        },
+                        "user": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "roles": {
+                    "description": "List of roles to grant to the grantees.",
+                    "items": {
+                      "type": "string"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "withAdminOption": {
+                    "description": "If true, the grant is executed with `ADMIN OPTION` privilege.\n[See](https://clickhouse.com/docs/en/sql-reference/statements/grant#admin-option)",
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "grantees",
+                  "roles"
+                ],
+                "type": "object",
+                "additionalProperties": false
+              },
+              "type": "array"
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
         }
       },
       "required": [

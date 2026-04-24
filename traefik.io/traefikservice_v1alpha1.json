@@ -218,7 +218,10 @@
                             "enum": [
                               "none",
                               "lax",
-                              "strict"
+                              "strict",
+                              "None",
+                              "Lax",
+                              "Strict"
                             ],
                             "type": "string"
                           },
@@ -569,7 +572,10 @@
                             "enum": [
                               "none",
                               "lax",
-                              "strict"
+                              "strict",
+                              "None",
+                              "Lax",
+                              "Strict"
                             ],
                             "type": "string"
                           },
@@ -715,7 +721,10 @@
                       "enum": [
                         "none",
                         "lax",
-                        "strict"
+                        "strict",
+                        "None",
+                        "Lax",
+                        "Strict"
                       ],
                       "type": "string"
                     },
@@ -957,7 +966,10 @@
                             "enum": [
                               "none",
                               "lax",
-                              "strict"
+                              "strict",
+                              "None",
+                              "Lax",
+                              "Strict"
                             ],
                             "type": "string"
                           },
@@ -1029,7 +1041,10 @@
                       "enum": [
                         "none",
                         "lax",
-                        "strict"
+                        "strict",
+                        "None",
+                        "Lax",
+                        "Strict"
                       ],
                       "type": "string"
                     },
