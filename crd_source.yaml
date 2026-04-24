@@ -856,7 +856,7 @@ sources:
     changelog: "https://github.com/emissary-ingress/emissary/releases"
 
   - url: "https://github.com/grafana/grafana-operator"
-    tag: ""
+    tag: "v5.22.2"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/grafana/grafana-operator/releases"
 
