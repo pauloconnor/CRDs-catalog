@@ -866,7 +866,7 @@ sources:
     changelog: "https://github.com/gravitee-io/gravitee-kubernetes-operator/releases"
 
   - url: "https://github.com/kubernetes-csi/external-snapshotter"
-    tag: ""
+    tag: "v8.5.0"
     repo_path: "client/config/crd"
     changelog: "https://github.com/kubernetes-csi/external-snapshotter/releases"
 
