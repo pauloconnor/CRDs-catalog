@@ -545,7 +545,7 @@ sources:
     changelog: "https://github.com/kubernetes-sigs/gateway-api/releases"
 
   - url: "https://github.com/DataDog/datadog-operator"
-    tag: ""
+    tag: "v1.25.0"
     repo_path: "config/crd/bases/v1"
     changelog: "https://github.com/DataDog/datadog-operator/releases"
 
