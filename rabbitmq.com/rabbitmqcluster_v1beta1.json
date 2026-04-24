@@ -507,7 +507,7 @@
               "description": "Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).",
               "properties": {
                 "preferredDuringSchedulingIgnoredDuringExecution": {
-                  "description": "The scheduler will prefer to schedule pods to nodes that satisfy\nthe anti-affinity expressions specified by this field, but it may choose\na node that violates one or more of the expressions. The node that is\nmost preferred is the one with the greatest sum of weights, i.e.\nfor each node that meets all of the scheduling requirements (resource\nrequest, requiredDuringScheduling anti-affinity expressions, etc.),\ncompute a sum by iterating through the elements of this field and adding\n\"weight\" to the sum if the node has pods which matches the corresponding podAffinityTerm; the\nnode(s) with the highest sum are the most preferred.",
+                  "description": "The scheduler will prefer to schedule pods to nodes that satisfy\nthe anti-affinity expressions specified by this field, but it may choose\na node that violates one or more of the expressions. The node that is\nmost preferred is the one with the greatest sum of weights, i.e.\nfor each node that meets all of the scheduling requirements (resource\nrequest, requiredDuringScheduling anti-affinity expressions, etc.),\ncompute a sum by iterating through the elements of this field and subtracting\n\"weight\" from the sum if the node has pods which matches the corresponding podAffinityTerm; the\nnode(s) with the highest sum are the most preferred.",
                   "items": {
                     "description": "The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)",
                     "properties": {
@@ -803,6 +803,10 @@
           },
           "type": "object",
           "additionalProperties": false
+        },
+        "autoEnableAllFeatureFlags": {
+          "description": "Set to true to automatically enable all feature flags after each upgrade\nFor more information, see https://www.rabbitmq.com/docs/feature-flags",
+          "type": "boolean"
         },
         "delayStartSeconds": {
           "default": 30,
@@ -1862,6 +1866,31 @@
                                               "x-kubernetes-map-type": "atomic",
                                               "additionalProperties": false
                                             },
+                                            "fileKeyRef": {
+                                              "properties": {
+                                                "key": {
+                                                  "type": "string"
+                                                },
+                                                "optional": {
+                                                  "default": false,
+                                                  "type": "boolean"
+                                                },
+                                                "path": {
+                                                  "type": "string"
+                                                },
+                                                "volumeName": {
+                                                  "type": "string"
+                                                }
+                                              },
+                                              "required": [
+                                                "key",
+                                                "path",
+                                                "volumeName"
+                                              ],
+                                              "type": "object",
+                                              "x-kubernetes-map-type": "atomic",
+                                              "additionalProperties": false
+                                            },
                                             "resourceFieldRef": {
                                               "properties": {
                                                 "containerName": {
@@ -2573,6 +2602,42 @@
                                   },
                                   "restartPolicy": {
                                     "type": "string"
+                                  },
+                                  "restartPolicyRules": {
+                                    "items": {
+                                      "properties": {
+                                        "action": {
+                                          "type": "string"
+                                        },
+                                        "exitCodes": {
+                                          "properties": {
+                                            "operator": {
+                                              "type": "string"
+                                            },
+                                            "values": {
+                                              "items": {
+                                                "format": "int32",
+                                                "type": "integer"
+                                              },
+                                              "type": "array",
+                                              "x-kubernetes-list-type": "set"
+                                            }
+                                          },
+                                          "required": [
+                                            "operator"
+                                          ],
+                                          "type": "object",
+                                          "additionalProperties": false
+                                        }
+                                      },
+                                      "required": [
+                                        "action"
+                                      ],
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    },
+                                    "type": "array",
+                                    "x-kubernetes-list-type": "atomic"
                                   },
                                   "securityContext": {
                                     "properties": {
@@ -3019,6 +3084,31 @@
                                               "x-kubernetes-map-type": "atomic",
                                               "additionalProperties": false
                                             },
+                                            "fileKeyRef": {
+                                              "properties": {
+                                                "key": {
+                                                  "type": "string"
+                                                },
+                                                "optional": {
+                                                  "default": false,
+                                                  "type": "boolean"
+                                                },
+                                                "path": {
+                                                  "type": "string"
+                                                },
+                                                "volumeName": {
+                                                  "type": "string"
+                                                }
+                                              },
+                                              "required": [
+                                                "key",
+                                                "path",
+                                                "volumeName"
+                                              ],
+                                              "type": "object",
+                                              "x-kubernetes-map-type": "atomic",
+                                              "additionalProperties": false
+                                            },
                                             "resourceFieldRef": {
                                               "properties": {
                                                 "containerName": {
@@ -3730,6 +3820,42 @@
                                   },
                                   "restartPolicy": {
                                     "type": "string"
+                                  },
+                                  "restartPolicyRules": {
+                                    "items": {
+                                      "properties": {
+                                        "action": {
+                                          "type": "string"
+                                        },
+                                        "exitCodes": {
+                                          "properties": {
+                                            "operator": {
+                                              "type": "string"
+                                            },
+                                            "values": {
+                                              "items": {
+                                                "format": "int32",
+                                                "type": "integer"
+                                              },
+                                              "type": "array",
+                                              "x-kubernetes-list-type": "set"
+                                            }
+                                          },
+                                          "required": [
+                                            "operator"
+                                          ],
+                                          "type": "object",
+                                          "additionalProperties": false
+                                        }
+                                      },
+                                      "required": [
+                                        "action"
+                                      ],
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    },
+                                    "type": "array",
+                                    "x-kubernetes-list-type": "atomic"
                                   },
                                   "securityContext": {
                                     "properties": {
@@ -4114,6 +4240,9 @@
                             "hostname": {
                               "type": "string"
                             },
+                            "hostnameOverride": {
+                              "type": "string"
+                            },
                             "imagePullSecrets": {
                               "items": {
                                 "properties": {
@@ -4191,6 +4320,31 @@
                                               },
                                               "required": [
                                                 "fieldPath"
+                                              ],
+                                              "type": "object",
+                                              "x-kubernetes-map-type": "atomic",
+                                              "additionalProperties": false
+                                            },
+                                            "fileKeyRef": {
+                                              "properties": {
+                                                "key": {
+                                                  "type": "string"
+                                                },
+                                                "optional": {
+                                                  "default": false,
+                                                  "type": "boolean"
+                                                },
+                                                "path": {
+                                                  "type": "string"
+                                                },
+                                                "volumeName": {
+                                                  "type": "string"
+                                                }
+                                              },
+                                              "required": [
+                                                "key",
+                                                "path",
+                                                "volumeName"
                                               ],
                                               "type": "object",
                                               "x-kubernetes-map-type": "atomic",
@@ -4907,6 +5061,42 @@
                                   },
                                   "restartPolicy": {
                                     "type": "string"
+                                  },
+                                  "restartPolicyRules": {
+                                    "items": {
+                                      "properties": {
+                                        "action": {
+                                          "type": "string"
+                                        },
+                                        "exitCodes": {
+                                          "properties": {
+                                            "operator": {
+                                              "type": "string"
+                                            },
+                                            "values": {
+                                              "items": {
+                                                "format": "int32",
+                                                "type": "integer"
+                                              },
+                                              "type": "array",
+                                              "x-kubernetes-list-type": "set"
+                                            }
+                                          },
+                                          "required": [
+                                            "operator"
+                                          ],
+                                          "type": "object",
+                                          "additionalProperties": false
+                                        }
+                                      },
+                                      "required": [
+                                        "action"
+                                      ],
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    },
+                                    "type": "array",
+                                    "x-kubernetes-list-type": "atomic"
                                   },
                                   "securityContext": {
                                     "properties": {
@@ -6620,6 +6810,41 @@
                                               "type": "object",
                                               "additionalProperties": false
                                             },
+                                            "podCertificate": {
+                                              "properties": {
+                                                "certificateChainPath": {
+                                                  "type": "string"
+                                                },
+                                                "credentialBundlePath": {
+                                                  "type": "string"
+                                                },
+                                                "keyPath": {
+                                                  "type": "string"
+                                                },
+                                                "keyType": {
+                                                  "type": "string"
+                                                },
+                                                "maxExpirationSeconds": {
+                                                  "format": "int32",
+                                                  "type": "integer"
+                                                },
+                                                "signerName": {
+                                                  "type": "string"
+                                                },
+                                                "userAnnotations": {
+                                                  "additionalProperties": {
+                                                    "type": "string"
+                                                  },
+                                                  "type": "object"
+                                                }
+                                              },
+                                              "required": [
+                                                "keyType",
+                                                "signerName"
+                                              ],
+                                              "type": "object",
+                                              "additionalProperties": false
+                                            },
                                             "secret": {
                                               "properties": {
                                                 "items": {
@@ -6918,6 +7143,25 @@
                                 "name"
                               ],
                               "x-kubernetes-list-type": "map"
+                            },
+                            "workloadRef": {
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                },
+                                "podGroup": {
+                                  "type": "string"
+                                },
+                                "podGroupReplicaKey": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "name",
+                                "podGroup"
+                              ],
+                              "type": "object",
+                              "additionalProperties": false
                             }
                           },
                           "required": [
@@ -7160,6 +7404,30 @@
           },
           "description": "The desired persistent storage configuration for each Pod in the cluster.",
           "properties": {
+            "emptyDir": {
+              "description": "EmptyDir configuration to be used when Storage is set to 0Gi.",
+              "properties": {
+                "medium": {
+                  "description": "Medium represents the storage medium for the EmptyDir volume.\nThe default is \"\" which means to use the node's default medium.\nMust be an empty string (default) or Memory.\nMore info: https://kubernetes.io/docs/concepts/storage/volumes#emptydir",
+                  "type": "string"
+                },
+                "sizeLimit": {
+                  "anyOf": [
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ],
+                  "description": "SizeLimit sets the size limit for EmptyDir volumes.\nThe format of this field matches that defined by kubernetes/apimachinery.\nSee https://pkg.go.dev/k8s.io/apimachinery/pkg/api/resource#Quantity for more info on the format of this field.",
+                  "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                  "x-kubernetes-int-or-string": true
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
             "storage": {
               "anyOf": [
                 {
@@ -7241,7 +7509,7 @@
           "description": "The desired compute resource requirements of Pods in the cluster.",
           "properties": {
             "claims": {
-              "description": "Claims lists the names of resources, defined in spec.resourceClaims,\nthat are used by this container.\n\nThis is an alpha field and requires enabling the\nDynamicResourceAllocation feature gate.\n\nThis field is immutable. It can only be set for containers.",
+              "description": "Claims lists the names of resources, defined in spec.resourceClaims,\nthat are used by this container.\n\nThis field depends on the\nDynamicResourceAllocation feature gate.\n\nThis field is immutable. It can only be set for containers.",
               "items": {
                 "description": "ResourceClaim references one entry in PodSpec.ResourceClaims.",
                 "properties": {
@@ -7431,11 +7699,11 @@
           "description": "TLS-related configuration for the RabbitMQ cluster.",
           "properties": {
             "caSecretName": {
-              "description": "Name of a Secret in the same Namespace as the RabbitmqCluster, containing the Certificate Authority's public certificate for TLS.\nThe Secret must store this as ca.crt.\nThis Secret can be created by running `kubectl create secret generic ca-secret --from-file=ca.crt=path/to/ca.crt`\nUsed for mTLS, and TLS for rabbitmq_web_stomp and rabbitmq_web_mqtt.",
+              "description": "Name of a Secret in the same Namespace as the RabbitmqCluster, containing the Certificate Authority's public certificate for TLS.\nThe Secret must store this as ca.crt.\nThis Secret can be created by running `kubectl create secret generic ca-secret --from-file=ca.crt=path/to/ca.crt`\nUsed for mTLS.",
               "type": "string"
             },
             "disableNonTLSListeners": {
-              "description": "When set to true, the RabbitmqCluster disables non-TLS listeners for RabbitMQ, management plugin and for any enabled plugins in the following list: stomp, mqtt, web_stomp, web_mqtt.\nOnly TLS-enabled clients will be able to connect.",
+              "description": "When set to true, the RabbitmqCluster disables non-TLS listeners for RabbitMQ, management plugin and for any enabled plugins in the following list: stomp, mqtt, web_stomp, web_mqtt, web_amqp.\nOnly TLS-enabled clients will be able to connect.",
               "type": "boolean"
             },
             "secretName": {
@@ -7460,7 +7728,7 @@
                 "type": "string"
               },
               "operator": {
-                "description": "Operator represents a key's relationship to the value.\nValid operators are Exists and Equal. Defaults to Equal.\nExists is equivalent to wildcard for value, so that a pod can\ntolerate all taints of a particular category.",
+                "description": "Operator represents a key's relationship to the value.\nValid operators are Exists, Equal, Lt, and Gt. Defaults to Equal.\nExists is equivalent to wildcard for value, so that a pod can\ntolerate all taints of a particular category.\nLt and Gt perform numeric comparisons (requires feature gate TaintTolerationComparisonOperators).",
                 "type": "string"
               },
               "tolerationSeconds": {
@@ -7590,6 +7858,10 @@
           "description": "observedGeneration is the most recent successful generation observed for this RabbitmqCluster. It corresponds to the\nRabbitmqCluster's generation, which is updated on mutation by the API Server.",
           "format": "int64",
           "type": "integer"
+        },
+        "quorumStatus": {
+          "description": "QuorumStatus indicates whether any node in the cluster is quorum critical.\nFormat: \"<status> [(<details>)]\"\nExamples:\n  - \"ok\" - no nodes are quorum critical\n  - \"ok (1 unavailable)\" - no critical nodes, but 1 node unreachable\n  - \"quorum-critical: pod-0\" - pod-0 is quorum critical\n  - \"quorum-critical: pod-0, pod-2 (1 unavailable)\" - multiple critical pods\n  - \"unavailable\" - all nodes unreachable or StatefulSet not ready",
+          "type": "string"
         }
       },
       "required": [
