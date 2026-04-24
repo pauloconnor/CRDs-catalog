@@ -241,7 +241,7 @@ sources:
     changelog: "https://github.com/aws-controllers-k8s/sqs-controller/releases"
 
   - url: "https://github.com/aws-controllers-k8s/runtime"
-    tag: ""
+    tag: "v0.58.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/aws-controllers-k8s/runtime/releases"
 
