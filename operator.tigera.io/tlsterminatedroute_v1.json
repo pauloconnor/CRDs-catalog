@@ -1,0 +1,137 @@
+{
+  "properties": {
+    "apiVersion": {
+      "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+      "type": "string"
+    },
+    "kind": {
+      "description": "Kind is a string value representing the REST resource this object represents.\nServers may infer this from the endpoint the client submits requests to.\nCannot be updated.\nIn CamelCase.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object"
+    },
+    "spec": {
+      "properties": {
+        "caBundle": {
+          "description": "CABundle is where we read the CA bundle from to authenticate the\ndestination (if non-empty)",
+          "properties": {
+            "key": {
+              "description": "The key to select.",
+              "type": "string"
+            },
+            "name": {
+              "default": "",
+              "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+              "type": "string"
+            },
+            "optional": {
+              "description": "Specify whether the ConfigMap or its key must be defined",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "key"
+          ],
+          "type": "object",
+          "x-kubernetes-map-type": "atomic",
+          "additionalProperties": false
+        },
+        "destination": {
+          "description": "Destination is the destination URL where matching traffic is routed to.",
+          "type": "string"
+        },
+        "mtlsCert": {
+          "description": "ForwardingMTLSCert is the certificate used for mTLS between voltron and the destination. Either both ForwardingMTLSCert\nand ForwardingMTLSKey must be specified, or neither can be specified.",
+          "properties": {
+            "key": {
+              "description": "The key of the secret to select from.  Must be a valid secret key.",
+              "type": "string"
+            },
+            "name": {
+              "default": "",
+              "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+              "type": "string"
+            },
+            "optional": {
+              "description": "Specify whether the Secret or its key must be defined",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "key"
+          ],
+          "type": "object",
+          "x-kubernetes-map-type": "atomic",
+          "additionalProperties": false
+        },
+        "mtlsKey": {
+          "description": "ForwardingMTLSKey is the key used for mTLS between voltron and the destination. Either both ForwardingMTLSCert\nand ForwardingMTLSKey must be specified, or neither can be specified.",
+          "properties": {
+            "key": {
+              "description": "The key of the secret to select from.  Must be a valid secret key.",
+              "type": "string"
+            },
+            "name": {
+              "default": "",
+              "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+              "type": "string"
+            },
+            "optional": {
+              "description": "Specify whether the Secret or its key must be defined",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "key"
+          ],
+          "type": "object",
+          "x-kubernetes-map-type": "atomic",
+          "additionalProperties": false
+        },
+        "pathMatch": {
+          "description": "PathMatch is used to match requests based on what's in the path. Matching requests will be proxied to the Destination\ndefined in this structure.",
+          "properties": {
+            "path": {
+              "description": "Path is the path portion of the URL based on which we proxy.",
+              "type": "string"
+            },
+            "pathRegexp": {
+              "description": "PathRegexp, if not nil, checks if Regexp matches the path.",
+              "type": "string"
+            },
+            "pathReplace": {
+              "description": "PathReplace if not nil will be used to replace PathRegexp matches.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "path"
+          ],
+          "type": "object",
+          "additionalProperties": false
+        },
+        "target": {
+          "enum": [
+            "UpstreamTunnel",
+            "UI"
+          ],
+          "type": "string"
+        },
+        "unauthenticated": {
+          "description": "Unauthenticated says whether the request should go through authentication. This is only applicable if the Target\nis UI.",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "caBundle",
+        "destination",
+        "pathMatch",
+        "target"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  "type": "object"
+}

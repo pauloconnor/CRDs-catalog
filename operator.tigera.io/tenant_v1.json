@@ -1,5 +1,5 @@
 {
-  "description": "APIServer installs the Tigera API server and related resources. At most one instance\nof this resource is supported. It must be named \"default\" or \"tigera-secure\".",
+  "description": "Tenant is the Schema for the tenants API",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -13,10 +13,148 @@
       "type": "object"
     },
     "spec": {
-      "description": "Specification of the desired state for the Tigera API server.",
       "properties": {
-        "apiServerDeployment": {
-          "description": "APIServerDeployment configures the calico-apiserver Deployment. If\nused in conjunction with ControlPlaneNodeSelector or ControlPlaneTolerations, then these overrides\ntake precedence.",
+        "controlPlaneReplicas": {
+          "description": "ControlPlaneReplicas defines how many replicas of the control plane core components will be deployed\nin the Tenant's namespace. Defaults to the controlPlaneReplicas in Installation CR",
+          "format": "int32",
+          "type": "integer"
+        },
+        "dashboardsJob": {
+          "description": "DashboardsJob configures the Dashboards job",
+          "properties": {
+            "spec": {
+              "description": "Spec is the specification of the dashboards job.",
+              "properties": {
+                "template": {
+                  "description": "Template describes the Dashboards job pod that will be created.",
+                  "properties": {
+                    "spec": {
+                      "description": "Spec is the Dashboard job's PodSpec.",
+                      "properties": {
+                        "containers": {
+                          "description": "Containers is a list of dashboards job containers.\nIf specified, this overrides the specified Dashboard job containers.\nIf omitted, the Dashboard job will use its default values for its containers.",
+                          "items": {
+                            "description": "DashboardsJobContainer is the Dashboards job container.",
+                            "properties": {
+                              "name": {
+                                "description": "Name is an enum which identifies the Dashboard Job container by name.\nSupported values are: dashboards-installer",
+                                "enum": [
+                                  "dashboards-installer"
+                                ],
+                                "type": "string"
+                              },
+                              "resources": {
+                                "description": "Resources allows customization of limits and requests for compute resources such as cpu and memory.\nIf specified, this overrides the named Dashboard Job container's resources.\nIf omitted, the Dashboard Job will use its default value for this container's resources.",
+                                "properties": {
+                                  "claims": {
+                                    "description": "Claims lists the names of resources, defined in spec.resourceClaims,\nthat are used by this container.\nThis is an alpha field and requires enabling the\nDynamicResourceAllocation feature gate.\nThis field is immutable. It can only be set for containers.",
+                                    "items": {
+                                      "description": "ResourceClaim references one entry in PodSpec.ResourceClaims.",
+                                      "properties": {
+                                        "name": {
+                                          "description": "Name must match the name of one entry in pod.spec.resourceClaims of\nthe Pod where this field is used. It makes that resource available\ninside a container.",
+                                          "type": "string"
+                                        },
+                                        "request": {
+                                          "description": "Request is the name chosen for a request in the referenced claim.\nIf empty, everything from the claim is made available, otherwise\nonly the result of this request.",
+                                          "type": "string"
+                                        }
+                                      },
+                                      "required": [
+                                        "name"
+                                      ],
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    },
+                                    "type": "array",
+                                    "x-kubernetes-list-map-keys": [
+                                      "name"
+                                    ],
+                                    "x-kubernetes-list-type": "map"
+                                  },
+                                  "limits": {
+                                    "additionalProperties": {
+                                      "anyOf": [
+                                        {
+                                          "type": "integer"
+                                        },
+                                        {
+                                          "type": "string"
+                                        }
+                                      ],
+                                      "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                                      "x-kubernetes-int-or-string": true
+                                    },
+                                    "description": "Limits describes the maximum amount of compute resources allowed.\nMore info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/",
+                                    "type": "object"
+                                  },
+                                  "requests": {
+                                    "additionalProperties": {
+                                      "anyOf": [
+                                        {
+                                          "type": "integer"
+                                        },
+                                        {
+                                          "type": "string"
+                                        }
+                                      ],
+                                      "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                                      "x-kubernetes-int-or-string": true
+                                    },
+                                    "description": "Requests describes the minimum amount of compute resources required.\nIf Requests is omitted for a container, it defaults to Limits if that is explicitly specified,\notherwise to an implementation-defined value. Requests cannot exceed Limits.\nMore info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/",
+                                    "type": "object"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              }
+                            },
+                            "required": [
+                              "name"
+                            ],
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
+        "elastic": {
+          "description": "Elastic configures per-tenant ElasticSearch and Kibana parameters.\nThis field is required for clusters using external ES.",
+          "properties": {
+            "kibanaURL": {
+              "type": "string"
+            },
+            "mutualTLS": {
+              "type": "boolean"
+            },
+            "url": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "mutualTLS",
+            "url"
+          ],
+          "type": "object",
+          "additionalProperties": false
+        },
+        "esKubeControllerDeployment": {
+          "description": "ESKubeControllerDeployment configures the ESKubeController Deployment.",
           "properties": {
             "metadata": {
               "description": "Metadata is a subset of a Kubernetes object's metadata that is added to the Deployment.",
@@ -40,17 +178,17 @@
               "additionalProperties": false
             },
             "spec": {
-              "description": "Spec is the specification of the API server Deployment.",
+              "description": "Spec is the specification of the calico-kube-controllers Deployment.",
               "properties": {
                 "minReadySeconds": {
-                  "description": "MinReadySeconds is the minimum number of seconds for which a newly created Deployment pod should\nbe ready without any of its container crashing, for it to be considered available.\nIf specified, this overrides any minReadySeconds value that may be set on the API server Deployment.\nIf omitted, the API server Deployment will use its default value for minReadySeconds.",
+                  "description": "MinReadySeconds is the minimum number of seconds for which a newly created Deployment pod should\nbe ready without any of its container crashing, for it to be considered available.\nIf specified, this overrides any minReadySeconds value that may be set on the calico-kube-controllers Deployment.\nIf omitted, the calico-kube-controllers Deployment will use its default value for minReadySeconds.",
                   "format": "int32",
                   "maximum": 2147483647,
                   "minimum": 0,
                   "type": "integer"
                 },
                 "template": {
-                  "description": "Template describes the API server Deployment pod that will be created.",
+                  "description": "Template describes the calico-kube-controllers Deployment pod that will be created.",
                   "properties": {
                     "metadata": {
                       "description": "Metadata is a subset of a Kubernetes object's metadata that is added to\nthe pod's metadata.",
@@ -74,10 +212,10 @@
                       "additionalProperties": false
                     },
                     "spec": {
-                      "description": "Spec is the API server Deployment's PodSpec.",
+                      "description": "Spec is the calico-kube-controllers Deployment's PodSpec.",
                       "properties": {
                         "affinity": {
-                          "description": "Affinity is a group of affinity scheduling rules for the API server pods.\nIf specified, this overrides any affinity that may be set on the API server Deployment.\nIf omitted, the API server Deployment will use its default value for affinity.\nWARNING: Please note that this field will override the default API server Deployment affinity.",
+                          "description": "Affinity is a group of affinity scheduling rules for the calico-kube-controllers pods.\nIf specified, this overrides any affinity that may be set on the calico-kube-controllers Deployment.\nIf omitted, the calico-kube-controllers Deployment will use its default value for affinity.\nWARNING: Please note that this field will override the default calico-kube-controllers Deployment affinity.",
                           "properties": {
                             "nodeAffinity": {
                               "description": "Describes node affinity scheduling rules for the pod.",
@@ -866,135 +1004,20 @@
                           "additionalProperties": false
                         },
                         "containers": {
-                          "description": "Containers is a list of API server containers.\nIf specified, this overrides the specified API server Deployment containers.\nIf omitted, the API server Deployment will use its default values for its containers.",
+                          "description": "Containers is a list of calico-kube-controllers containers.\nIf specified, this overrides the specified calico-kube-controllers Deployment containers.\nIf omitted, the calico-kube-controllers Deployment will use its default values for its containers.",
                           "items": {
-                            "description": "APIServerDeploymentContainer is an API server Deployment container.",
+                            "description": "CalicoKubeControllersDeploymentContainer is a calico-kube-controllers Deployment container.",
                             "properties": {
                               "name": {
-                                "description": "Name is an enum which identifies the API server Deployment container by name.\nSupported values are: calico-apiserver, tigera-queryserver, calico-l7-admission-controller",
+                                "description": "Name is an enum which identifies the calico-kube-controllers Deployment container by name.\nSupported values are: calico-kube-controllers, es-calico-kube-controllers",
                                 "enum": [
-                                  "calico-apiserver",
-                                  "tigera-queryserver",
-                                  "calico-l7-admission-controller"
-                                ],
-                                "type": "string"
-                              },
-                              "ports": {
-                                "description": "Ports allows customization of container's ports.\nIf specified, this overrides the named APIServer Deployment container's ports.\nIf omitted, the API server Deployment will use its default value for this container's port.",
-                                "items": {
-                                  "properties": {
-                                    "containerPort": {
-                                      "description": "Number of port to expose on the pod's IP address.\nThis must be a valid port number, 0 < x < 65536.",
-                                      "format": "int32",
-                                      "type": "integer"
-                                    },
-                                    "name": {
-                                      "description": "Name is an enum which identifies the API server Deployment Container port by name.\nSupported values are: apiserver, queryserver, l7admctrl",
-                                      "enum": [
-                                        "apiserver",
-                                        "queryserver",
-                                        "l7admctrl"
-                                      ],
-                                      "type": "string"
-                                    }
-                                  },
-                                  "required": [
-                                    "containerPort",
-                                    "name"
-                                  ],
-                                  "type": "object",
-                                  "additionalProperties": false
-                                },
-                                "type": "array"
-                              },
-                              "resources": {
-                                "description": "Resources allows customization of limits and requests for compute resources such as cpu and memory.\nIf specified, this overrides the named API server Deployment container's resources.\nIf omitted, the API server Deployment will use its default value for this container's resources.\nIf used in conjunction with the deprecated ComponentResources, then this value takes precedence.",
-                                "properties": {
-                                  "claims": {
-                                    "description": "Claims lists the names of resources, defined in spec.resourceClaims,\nthat are used by this container.\nThis is an alpha field and requires enabling the\nDynamicResourceAllocation feature gate.\nThis field is immutable. It can only be set for containers.",
-                                    "items": {
-                                      "description": "ResourceClaim references one entry in PodSpec.ResourceClaims.",
-                                      "properties": {
-                                        "name": {
-                                          "description": "Name must match the name of one entry in pod.spec.resourceClaims of\nthe Pod where this field is used. It makes that resource available\ninside a container.",
-                                          "type": "string"
-                                        },
-                                        "request": {
-                                          "description": "Request is the name chosen for a request in the referenced claim.\nIf empty, everything from the claim is made available, otherwise\nonly the result of this request.",
-                                          "type": "string"
-                                        }
-                                      },
-                                      "required": [
-                                        "name"
-                                      ],
-                                      "type": "object",
-                                      "additionalProperties": false
-                                    },
-                                    "type": "array",
-                                    "x-kubernetes-list-map-keys": [
-                                      "name"
-                                    ],
-                                    "x-kubernetes-list-type": "map"
-                                  },
-                                  "limits": {
-                                    "additionalProperties": {
-                                      "anyOf": [
-                                        {
-                                          "type": "integer"
-                                        },
-                                        {
-                                          "type": "string"
-                                        }
-                                      ],
-                                      "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
-                                      "x-kubernetes-int-or-string": true
-                                    },
-                                    "description": "Limits describes the maximum amount of compute resources allowed.\nMore info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/",
-                                    "type": "object"
-                                  },
-                                  "requests": {
-                                    "additionalProperties": {
-                                      "anyOf": [
-                                        {
-                                          "type": "integer"
-                                        },
-                                        {
-                                          "type": "string"
-                                        }
-                                      ],
-                                      "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
-                                      "x-kubernetes-int-or-string": true
-                                    },
-                                    "description": "Requests describes the minimum amount of compute resources required.\nIf Requests is omitted for a container, it defaults to Limits if that is explicitly specified,\notherwise to an implementation-defined value. Requests cannot exceed Limits.\nMore info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/",
-                                    "type": "object"
-                                  }
-                                },
-                                "type": "object",
-                                "additionalProperties": false
-                              }
-                            },
-                            "required": [
-                              "name"
-                            ],
-                            "type": "object",
-                            "additionalProperties": false
-                          },
-                          "type": "array"
-                        },
-                        "initContainers": {
-                          "description": "InitContainers is a list of API server init containers.\nIf specified, this overrides the specified API server Deployment init containers.\nIf omitted, the API server Deployment will use its default values for its init containers.",
-                          "items": {
-                            "description": "APIServerDeploymentInitContainer is an API server Deployment init container.",
-                            "properties": {
-                              "name": {
-                                "description": "Name is an enum which identifies the API server Deployment init container by name.\nSupported values are: calico-apiserver-certs-key-cert-provisioner",
-                                "enum": [
-                                  "calico-apiserver-certs-key-cert-provisioner"
+                                  "calico-kube-controllers",
+                                  "es-calico-kube-controllers"
                                 ],
                                 "type": "string"
                               },
                               "resources": {
-                                "description": "Resources allows customization of limits and requests for compute resources such as cpu and memory.\nIf specified, this overrides the named API server Deployment init container's resources.\nIf omitted, the API server Deployment will use its default value for this init container's resources.",
+                                "description": "Resources allows customization of limits and requests for compute resources such as cpu and memory.\nIf specified, this overrides the named calico-kube-controllers Deployment container's resources.\nIf omitted, the calico-kube-controllers Deployment will use its default value for this container's resources.\nIf used in conjunction with the deprecated ComponentResources, then this value takes precedence.",
                                 "properties": {
                                   "claims": {
                                     "description": "Claims lists the names of resources, defined in spec.resourceClaims,\nthat are used by this container.\nThis is an alpha field and requires enabling the\nDynamicResourceAllocation feature gate.\nThis field is immutable. It can only be set for containers.",
@@ -1071,15 +1094,11 @@
                           "additionalProperties": {
                             "type": "string"
                           },
-                          "description": "NodeSelector is the API server pod's scheduling constraints.\nIf specified, each of the key/value pairs are added to the API server Deployment nodeSelector provided\nthe key does not already exist in the object's nodeSelector.\nIf used in conjunction with ControlPlaneNodeSelector, that nodeSelector is set on the API server Deployment\nand each of this field's key/value pairs are added to the API server Deployment nodeSelector provided\nthe key does not already exist in the object's nodeSelector.\nIf omitted, the API server Deployment will use its default value for nodeSelector.\nWARNING: Please note that this field will modify the default API server Deployment nodeSelector.",
+                          "description": "NodeSelector is the calico-kube-controllers pod's scheduling constraints.\nIf specified, each of the key/value pairs are added to the calico-kube-controllers Deployment nodeSelector provided\nthe key does not already exist in the object's nodeSelector.\nIf used in conjunction with ControlPlaneNodeSelector, that nodeSelector is set on the calico-kube-controllers Deployment\nand each of this field's key/value pairs are added to the calico-kube-controllers Deployment nodeSelector provided\nthe key does not already exist in the object's nodeSelector.\nIf omitted, the calico-kube-controllers Deployment will use its default value for nodeSelector.\nWARNING: Please note that this field will modify the default calico-kube-controllers Deployment nodeSelector.",
                           "type": "object"
                         },
-                        "priorityClassName": {
-                          "description": "PriorityClassName allows to specify a PriorityClass resource to be used.",
-                          "type": "string"
-                        },
                         "tolerations": {
-                          "description": "Tolerations is the API server pod's tolerations.\nIf specified, this overrides any tolerations that may be set on the API server Deployment.\nIf omitted, the API server Deployment will use its default value for tolerations.\nWARNING: Please note that this field will override the default API server Deployment tolerations.",
+                          "description": "Tolerations is the calico-kube-controllers pod's tolerations.\nIf specified, this overrides any tolerations that may be set on the calico-kube-controllers Deployment.\nIf omitted, the calico-kube-controllers Deployment will use its default value for tolerations.\nWARNING: Please note that this field will override the default calico-kube-controllers Deployment tolerations.",
                           "items": {
                             "description": "The pod this Toleration is attached to tolerates any taint that matches\nthe triple <key,value,effect> using the matching operator <operator>.",
                             "properties": {
@@ -1109,98 +1128,244 @@
                             "additionalProperties": false
                           },
                           "type": "array"
-                        },
-                        "topologySpreadConstraints": {
-                          "description": "TopologySpreadConstraints describes how a group of pods ought to spread across topology\ndomains. Scheduler will schedule pods in a way which abides by the constraints.\nAll topologySpreadConstraints are ANDed.",
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
+        "id": {
+          "description": "ID is the unique identifier for this tenant.",
+          "type": "string"
+        },
+        "indices": {
+          "description": "Indices defines the how to store a tenant's data",
+          "items": {
+            "description": "Index defines how to store a tenant's data",
+            "properties": {
+              "baseIndexName": {
+                "description": "BaseIndexName defines the name of the index\nthat will be used to store data (this name\nexcludes the numerical identifier suffix)",
+                "type": "string"
+              },
+              "dataType": {
+                "description": "DataType represents the type of data stored in the defined index",
+                "enum": [
+                  "Alerts",
+                  "AuditLogs",
+                  "BGPLogs",
+                  "ComplianceBenchmarks",
+                  "ComplianceReports",
+                  "ComplianceSnapshots",
+                  "DNSLogs",
+                  "FlowLogs",
+                  "L7Logs",
+                  "RuntimeReports",
+                  "ThreatFeedsDomainSet",
+                  "ThreatFeedsIPSet",
+                  "WAFLogs"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "baseIndexName",
+              "dataType"
+            ],
+            "type": "object",
+            "additionalProperties": false
+          },
+          "type": "array"
+        },
+        "linseedDeployment": {
+          "description": "LinseedDeployment configures the linseed Deployment.",
+          "properties": {
+            "spec": {
+              "description": "Spec is the specification of the linseed Deployment.",
+              "properties": {
+                "template": {
+                  "description": "Template describes the linseed Deployment pod that will be created.",
+                  "properties": {
+                    "spec": {
+                      "description": "Spec is the linseed Deployment's PodSpec.",
+                      "properties": {
+                        "containers": {
+                          "description": "Containers is a list of linseed containers.\nIf specified, this overrides the specified linseed Deployment containers.\nIf omitted, the linseed Deployment will use its default values for its containers.",
                           "items": {
-                            "description": "TopologySpreadConstraint specifies how to spread matching pods among the given topology.",
+                            "description": "LinseedDeploymentContainer is a linseed Deployment container.",
                             "properties": {
-                              "labelSelector": {
-                                "description": "LabelSelector is used to find matching pods.\nPods that match this label selector are counted to determine the number of pods\nin their corresponding topology domain.",
+                              "name": {
+                                "description": "Name is an enum which identifies the linseed Deployment container by name.\nSupported values are: tigera-linseed",
+                                "enum": [
+                                  "tigera-linseed"
+                                ],
+                                "type": "string"
+                              },
+                              "resources": {
+                                "description": "Resources allows customization of limits and requests for compute resources such as cpu and memory.\nIf specified, this overrides the named linseed Deployment container's resources.\nIf omitted, the linseed Deployment will use its default value for this container's resources.",
                                 "properties": {
-                                  "matchExpressions": {
-                                    "description": "matchExpressions is a list of label selector requirements. The requirements are ANDed.",
+                                  "claims": {
+                                    "description": "Claims lists the names of resources, defined in spec.resourceClaims,\nthat are used by this container.\nThis is an alpha field and requires enabling the\nDynamicResourceAllocation feature gate.\nThis field is immutable. It can only be set for containers.",
                                     "items": {
-                                      "description": "A label selector requirement is a selector that contains values, a key, and an operator that\nrelates the key and values.",
+                                      "description": "ResourceClaim references one entry in PodSpec.ResourceClaims.",
                                       "properties": {
-                                        "key": {
-                                          "description": "key is the label key that the selector applies to.",
+                                        "name": {
+                                          "description": "Name must match the name of one entry in pod.spec.resourceClaims of\nthe Pod where this field is used. It makes that resource available\ninside a container.",
                                           "type": "string"
                                         },
-                                        "operator": {
-                                          "description": "operator represents a key's relationship to a set of values.\nValid operators are In, NotIn, Exists and DoesNotExist.",
+                                        "request": {
+                                          "description": "Request is the name chosen for a request in the referenced claim.\nIf empty, everything from the claim is made available, otherwise\nonly the result of this request.",
                                           "type": "string"
-                                        },
-                                        "values": {
-                                          "description": "values is an array of string values. If the operator is In or NotIn,\nthe values array must be non-empty. If the operator is Exists or DoesNotExist,\nthe values array must be empty. This array is replaced during a strategic\nmerge patch.",
-                                          "items": {
-                                            "type": "string"
-                                          },
-                                          "type": "array",
-                                          "x-kubernetes-list-type": "atomic"
                                         }
                                       },
                                       "required": [
-                                        "key",
-                                        "operator"
+                                        "name"
                                       ],
                                       "type": "object",
                                       "additionalProperties": false
                                     },
                                     "type": "array",
-                                    "x-kubernetes-list-type": "atomic"
+                                    "x-kubernetes-list-map-keys": [
+                                      "name"
+                                    ],
+                                    "x-kubernetes-list-type": "map"
                                   },
-                                  "matchLabels": {
+                                  "limits": {
                                     "additionalProperties": {
-                                      "type": "string"
+                                      "anyOf": [
+                                        {
+                                          "type": "integer"
+                                        },
+                                        {
+                                          "type": "string"
+                                        }
+                                      ],
+                                      "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                                      "x-kubernetes-int-or-string": true
                                     },
-                                    "description": "matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels\nmap is equivalent to an element of matchExpressions, whose key field is \"key\", the\noperator is \"In\", and the values array contains only \"value\". The requirements are ANDed.",
+                                    "description": "Limits describes the maximum amount of compute resources allowed.\nMore info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/",
+                                    "type": "object"
+                                  },
+                                  "requests": {
+                                    "additionalProperties": {
+                                      "anyOf": [
+                                        {
+                                          "type": "integer"
+                                        },
+                                        {
+                                          "type": "string"
+                                        }
+                                      ],
+                                      "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                                      "x-kubernetes-int-or-string": true
+                                    },
+                                    "description": "Requests describes the minimum amount of compute resources required.\nIf Requests is omitted for a container, it defaults to Limits if that is explicitly specified,\notherwise to an implementation-defined value. Requests cannot exceed Limits.\nMore info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/",
                                     "type": "object"
                                   }
                                 },
                                 "type": "object",
-                                "x-kubernetes-map-type": "atomic",
                                 "additionalProperties": false
-                              },
-                              "matchLabelKeys": {
-                                "description": "MatchLabelKeys is a set of pod label keys to select the pods over which\nspreading will be calculated. The keys are used to lookup values from the\nincoming pod labels, those key-value labels are ANDed with labelSelector\nto select the group of existing pods over which spreading will be calculated\nfor the incoming pod. The same key is forbidden to exist in both MatchLabelKeys and LabelSelector.\nMatchLabelKeys cannot be set when LabelSelector isn't set.\nKeys that don't exist in the incoming pod labels will\nbe ignored. A null or empty list means only match against labelSelector.\nThis is a beta field and requires the MatchLabelKeysInPodTopologySpread feature gate to be enabled (enabled by default).",
-                                "items": {
-                                  "type": "string"
-                                },
-                                "type": "array",
-                                "x-kubernetes-list-type": "atomic"
-                              },
-                              "maxSkew": {
-                                "description": "MaxSkew describes the degree to which pods may be unevenly distributed.\nWhen `whenUnsatisfiable=DoNotSchedule`, it is the maximum permitted difference\nbetween the number of matching pods in the target topology and the global minimum.\nThe global minimum is the minimum number of matching pods in an eligible domain\nor zero if the number of eligible domains is less than MinDomains.\nFor example, in a 3-zone cluster, MaxSkew is set to 1, and pods with the same\nlabelSelector spread as 2/2/1:\nIn this case, the global minimum is 1.\n| zone1 | zone2 | zone3 |\n|  P P  |  P P  |   P   |\n- if MaxSkew is 1, incoming pod can only be scheduled to zone3 to become 2/2/2;\nscheduling it onto zone1(zone2) would make the ActualSkew(3-1) on zone1(zone2)\nviolate MaxSkew(1).\n- if MaxSkew is 2, incoming pod can be scheduled onto any zone.\nWhen `whenUnsatisfiable=ScheduleAnyway`, it is used to give higher precedence\nto topologies that satisfy it.\nIt's a required field. Default value is 1 and 0 is not allowed.",
-                                "format": "int32",
-                                "type": "integer"
-                              },
-                              "minDomains": {
-                                "description": "MinDomains indicates a minimum number of eligible domains.\nWhen the number of eligible domains with matching topology keys is less than minDomains,\nPod Topology Spread treats \"global minimum\" as 0, and then the calculation of Skew is performed.\nAnd when the number of eligible domains with matching topology keys equals or greater than minDomains,\nthis value has no effect on scheduling.\nAs a result, when the number of eligible domains is less than minDomains,\nscheduler won't schedule more than maxSkew Pods to those domains.\nIf value is nil, the constraint behaves as if MinDomains is equal to 1.\nValid values are integers greater than 0.\nWhen value is not nil, WhenUnsatisfiable must be DoNotSchedule.\nFor example, in a 3-zone cluster, MaxSkew is set to 2, MinDomains is set to 5 and pods with the same\nlabelSelector spread as 2/2/2:\n| zone1 | zone2 | zone3 |\n|  P P  |  P P  |  P P  |\nThe number of domains is less than 5(MinDomains), so \"global minimum\" is treated as 0.\nIn this situation, new pod with the same labelSelector cannot be scheduled,\nbecause computed skew will be 3(3 - 0) if new Pod is scheduled to any of the three zones,\nit will violate MaxSkew.",
-                                "format": "int32",
-                                "type": "integer"
-                              },
-                              "nodeAffinityPolicy": {
-                                "description": "NodeAffinityPolicy indicates how we will treat Pod's nodeAffinity/nodeSelector\nwhen calculating pod topology spread skew. Options are:\n- Honor: only nodes matching nodeAffinity/nodeSelector are included in the calculations.\n- Ignore: nodeAffinity/nodeSelector are ignored. All nodes are included in the calculations.\nIf this value is nil, the behavior is equivalent to the Honor policy.",
-                                "type": "string"
-                              },
-                              "nodeTaintsPolicy": {
-                                "description": "NodeTaintsPolicy indicates how we will treat node taints when calculating\npod topology spread skew. Options are:\n- Honor: nodes without taints, along with tainted nodes for which the incoming pod\nhas a toleration, are included.\n- Ignore: node taints are ignored. All nodes are included.\nIf this value is nil, the behavior is equivalent to the Ignore policy.",
-                                "type": "string"
-                              },
-                              "topologyKey": {
-                                "description": "TopologyKey is the key of node labels. Nodes that have a label with this key\nand identical values are considered to be in the same topology.\nWe consider each <key, value> as a \"bucket\", and try to put balanced number\nof pods into each bucket.\nWe define a domain as a particular instance of a topology.\nAlso, we define an eligible domain as a domain whose nodes meet the requirements of\nnodeAffinityPolicy and nodeTaintsPolicy.\ne.g. If TopologyKey is \"kubernetes.io/hostname\", each Node is a domain of that topology.\nAnd, if TopologyKey is \"topology.kubernetes.io/zone\", each zone is a domain of that topology.\nIt's a required field.",
-                                "type": "string"
-                              },
-                              "whenUnsatisfiable": {
-                                "description": "WhenUnsatisfiable indicates how to deal with a pod if it doesn't satisfy\nthe spread constraint.\n- DoNotSchedule (default) tells the scheduler not to schedule it.\n- ScheduleAnyway tells the scheduler to schedule the pod in any location,\n  but giving higher precedence to topologies that would help reduce the\n  skew.\nA constraint is considered \"Unsatisfiable\" for an incoming pod\nif and only if every possible node assignment for that pod would violate\n\"MaxSkew\" on some topology.\nFor example, in a 3-zone cluster, MaxSkew is set to 1, and pods with the same\nlabelSelector spread as 3/1/1:\n| zone1 | zone2 | zone3 |\n| P P P |   P   |   P   |\nIf WhenUnsatisfiable is set to DoNotSchedule, incoming pod can only be scheduled\nto zone2(zone3) to become 3/2/1(3/1/2) as ActualSkew(2-1) on zone2(zone3) satisfies\nMaxSkew(1). In other words, the cluster can still be imbalanced, but scheduler\nwon't make it *more* imbalanced.\nIt's a required field.",
-                                "type": "string"
                               }
                             },
                             "required": [
-                              "maxSkew",
-                              "topologyKey",
-                              "whenUnsatisfiable"
+                              "name"
+                            ],
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "type": "array"
+                        },
+                        "initContainers": {
+                          "description": "InitContainers is a list of linseed init containers.\nIf specified, this overrides the specified linseed Deployment init containers.\nIf omitted, the linseed Deployment will use its default values for its init containers.",
+                          "items": {
+                            "description": "LinseedDeploymentInitContainer is a linseed Deployment init container.",
+                            "properties": {
+                              "name": {
+                                "description": "Name is an enum which identifies the linseed Deployment init container by name.\nSupported values are: tigera-secure-linseed-token-tls-key-cert-provisioner,tigera-secure-linseed-cert-key-cert-provisioner",
+                                "enum": [
+                                  "tigera-secure-linseed-token-tls-key-cert-provisioner",
+                                  "tigera-secure-linseed-cert-key-cert-provisioner"
+                                ],
+                                "type": "string"
+                              },
+                              "resources": {
+                                "description": "Resources allows customization of limits and requests for compute resources such as cpu and memory.\nIf specified, this overrides the named linseed Deployment init container's resources.\nIf omitted, the linseed Deployment will use its default value for this init container's resources.",
+                                "properties": {
+                                  "claims": {
+                                    "description": "Claims lists the names of resources, defined in spec.resourceClaims,\nthat are used by this container.\nThis is an alpha field and requires enabling the\nDynamicResourceAllocation feature gate.\nThis field is immutable. It can only be set for containers.",
+                                    "items": {
+                                      "description": "ResourceClaim references one entry in PodSpec.ResourceClaims.",
+                                      "properties": {
+                                        "name": {
+                                          "description": "Name must match the name of one entry in pod.spec.resourceClaims of\nthe Pod where this field is used. It makes that resource available\ninside a container.",
+                                          "type": "string"
+                                        },
+                                        "request": {
+                                          "description": "Request is the name chosen for a request in the referenced claim.\nIf empty, everything from the claim is made available, otherwise\nonly the result of this request.",
+                                          "type": "string"
+                                        }
+                                      },
+                                      "required": [
+                                        "name"
+                                      ],
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    },
+                                    "type": "array",
+                                    "x-kubernetes-list-map-keys": [
+                                      "name"
+                                    ],
+                                    "x-kubernetes-list-type": "map"
+                                  },
+                                  "limits": {
+                                    "additionalProperties": {
+                                      "anyOf": [
+                                        {
+                                          "type": "integer"
+                                        },
+                                        {
+                                          "type": "string"
+                                        }
+                                      ],
+                                      "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                                      "x-kubernetes-int-or-string": true
+                                    },
+                                    "description": "Limits describes the maximum amount of compute resources allowed.\nMore info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/",
+                                    "type": "object"
+                                  },
+                                  "requests": {
+                                    "additionalProperties": {
+                                      "anyOf": [
+                                        {
+                                          "type": "integer"
+                                        },
+                                        {
+                                          "type": "string"
+                                        }
+                                      ],
+                                      "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                                      "x-kubernetes-int-or-string": true
+                                    },
+                                    "description": "Requests describes the minimum amount of compute resources required.\nIf Requests is omitted for a container, it defaults to Limits if that is explicitly specified,\notherwise to an implementation-defined value. Requests cannot exceed Limits.\nMore info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/",
+                                    "type": "object"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              }
+                            },
+                            "required": [
+                              "name"
                             ],
                             "type": "object",
                             "additionalProperties": false
@@ -1223,120 +1388,24 @@
           "type": "object",
           "additionalProperties": false
         },
-        "logging": {
-          "properties": {
-            "apiServer": {
-              "properties": {
-                "logSeverity": {
-                  "default": "Info",
-                  "description": "LogSeverity defines log level for APIServer container.",
-                  "enum": [
-                    "Fatal",
-                    "Error",
-                    "Warn",
-                    "Info",
-                    "Debug",
-                    "Trace"
-                  ],
-                  "type": "string"
-                }
-              },
-              "type": "object",
-              "additionalProperties": false
-            },
-            "queryServer": {
-              "properties": {
-                "logSeverity": {
-                  "default": "Info",
-                  "description": "LogSeverity defines log level for QueryServer container.",
-                  "enum": [
-                    "Fatal",
-                    "Error",
-                    "Warn",
-                    "Info",
-                    "Debug",
-                    "Trace"
-                  ],
-                  "type": "string"
-                }
-              },
-              "type": "object",
-              "additionalProperties": false
-            }
-          },
-          "type": "object",
-          "additionalProperties": false
+        "managedClusterVariant": {
+          "description": "ManagedClusterVariant is the variant of the managed cluster.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Name is a human readable name for this tenant.",
+          "type": "string"
         }
       },
+      "required": [
+        "id",
+        "indices"
+      ],
       "type": "object",
       "additionalProperties": false
     },
     "status": {
-      "description": "Most recently observed status for the Tigera API server.",
-      "properties": {
-        "conditions": {
-          "description": "Conditions represents the latest observed set of conditions for the component. A component may be one or more of\nReady, Progressing, Degraded or other customer types.",
-          "items": {
-            "description": "Condition contains details for one aspect of the current state of this API Resource.",
-            "properties": {
-              "lastTransitionTime": {
-                "description": "lastTransitionTime is the last time the condition transitioned from one status to another.\nThis should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.",
-                "format": "date-time",
-                "type": "string"
-              },
-              "message": {
-                "description": "message is a human readable message indicating details about the transition.\nThis may be an empty string.",
-                "maxLength": 32768,
-                "type": "string"
-              },
-              "observedGeneration": {
-                "description": "observedGeneration represents the .metadata.generation that the condition was set based upon.\nFor instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date\nwith respect to the current state of the instance.",
-                "format": "int64",
-                "minimum": 0,
-                "type": "integer"
-              },
-              "reason": {
-                "description": "reason contains a programmatic identifier indicating the reason for the condition's last transition.\nProducers of specific condition types may define expected values and meanings for this field,\nand whether the values are considered a guaranteed API.\nThe value should be a CamelCase string.\nThis field may not be empty.",
-                "maxLength": 1024,
-                "minLength": 1,
-                "pattern": "^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$",
-                "type": "string"
-              },
-              "status": {
-                "description": "status of the condition, one of True, False, Unknown.",
-                "enum": [
-                  "True",
-                  "False",
-                  "Unknown"
-                ],
-                "type": "string"
-              },
-              "type": {
-                "description": "type of condition in CamelCase or in foo.example.com/CamelCase.",
-                "maxLength": 316,
-                "pattern": "^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$",
-                "type": "string"
-              }
-            },
-            "required": [
-              "lastTransitionTime",
-              "message",
-              "reason",
-              "status",
-              "type"
-            ],
-            "type": "object",
-            "additionalProperties": false
-          },
-          "type": "array"
-        },
-        "state": {
-          "description": "State provides user-readable status.",
-          "type": "string"
-        }
-      },
-      "type": "object",
-      "additionalProperties": false
+      "type": "object"
     }
   },
   "type": "object"
