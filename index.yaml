@@ -714,6 +714,14 @@ apigatewayv2.services.k8s.aws:
     filename: apigatewayv2.services.k8s.aws/vpclink_v1alpha1.json
     kind: VPCLink
     name: vpclink_v1alpha1
+  - apiVersion: apigatewayv2.services.k8s.aws/v1alpha1
+    filename: apigatewayv2.services.k8s.aws/domainname_v1alpha1.json
+    kind: DomainName
+    name: domainname_v1alpha1
+  - apiVersion: apigatewayv2.services.k8s.aws/v1alpha1
+    filename: apigatewayv2.services.k8s.aws/apimapping_v1alpha1.json
+    kind: APIMapping
+    name: apimapping_v1alpha1
 apigee.cnrm.cloud.google.com:
   - apiVersion: apigee.cnrm.cloud.google.com/v1alpha1
     filename: apigee.cnrm.cloud.google.com/apigeeaddonsconfig_v1alpha1.json
