@@ -1251,7 +1251,7 @@ sources:
     changelog: "https://github.com/siderolabs/talos/releases"
 
   - url: "https://github.com/grafana/tempo-operator"
-    tag: ""
+    tag: "v0.20.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/grafana/tempo-operator/releases"
 
