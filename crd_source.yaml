@@ -483,7 +483,7 @@ sources:
     changelog: "https://github.com/crossplane/crossplane/releases"
 
   - url: "https://github.com/grafana/crossplane-provider-grafana"
-    tag: ""
+    tag: "v2.9.0"
     repo_path: "package/crds"
     changelog: "https://github.com/grafana/crossplane-provider-grafana/releases"
 
