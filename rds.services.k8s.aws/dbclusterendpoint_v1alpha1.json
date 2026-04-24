@@ -1,5 +1,5 @@
 {
-  "description": "DBClusterSnapshot is the Schema for the DBClusterSnapshots API",
+  "description": "DBClusterEndpoint is the Schema for the DBClusterEndpoints API",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -13,10 +13,14 @@
       "type": "object"
     },
     "spec": {
-      "description": "DBClusterSnapshotSpec defines the desired state of DBClusterSnapshot.\n\nContains the details for an Amazon RDS DB cluster snapshot\n\nThis data type is used as a response element in the DescribeDBClusterSnapshots\naction.",
+      "description": "DBClusterEndpointSpec defines the desired state of DBClusterEndpoint.\n\nThis data type represents the information you need to connect to an Amazon\nAurora DB cluster. This data type is used as a response element in the following\nactions:\n\n   * CreateDBClusterEndpoint\n\n   * DescribeDBClusterEndpoints\n\n   * ModifyDBClusterEndpoint\n\n   * DeleteDBClusterEndpoint\n\nFor the data structure that represents Amazon RDS DB instance endpoints,\nsee Endpoint.",
       "properties": {
+        "dbClusterEndpointIdentifier": {
+          "description": "The identifier to use for the new endpoint. This parameter is stored as a\nlowercase string.",
+          "type": "string"
+        },
         "dbClusterIdentifier": {
-          "description": "The identifier of the DB cluster to create a snapshot for. This parameter\nisn't case-sensitive.\n\nConstraints:\n\n   * Must match the identifier of an existing DBCluster.\n\nExample: my-cluster1",
+          "description": "The DB cluster identifier of the DB cluster associated with the endpoint.\nThis parameter is stored as a lowercase string.",
           "type": "string"
         },
         "dbClusterIdentifierRef": {
@@ -39,12 +43,26 @@
           "type": "object",
           "additionalProperties": false
         },
-        "dbClusterSnapshotIdentifier": {
-          "description": "The identifier of the DB cluster snapshot. This parameter is stored as a\nlowercase string.\n\nConstraints:\n\n   * Must contain from 1 to 63 letters, numbers, or hyphens.\n\n   * First character must be a letter.\n\n   * Can't end with a hyphen or contain two consecutive hyphens.\n\nExample: my-cluster1-snapshot1",
+        "endpointType": {
+          "description": "The type of the endpoint, one of: READER, WRITER, ANY.",
           "type": "string"
         },
+        "excludedMembers": {
+          "description": "List of DB instance identifiers that aren't part of the custom endpoint group.\nAll other eligible instances are reachable through the custom endpoint. This\nparameter is relevant only if the list of static members is empty.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "staticMembers": {
+          "description": "List of DB instance identifiers that are part of the custom endpoint group.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "tags": {
-          "description": "The tags to be assigned to the DB cluster snapshot.",
+          "description": "The tags to be assigned to the Amazon RDS resource.",
           "items": {
             "description": "Metadata assigned to an Amazon RDS resource consisting of a key-value pair.\n\nFor more information, see Tagging Amazon RDS resources (https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Tagging.html)\nin the Amazon RDS User Guide or Tagging Amazon Aurora and Amazon RDS resources\n(https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/USER_Tagging.html)\nin the Amazon Aurora User Guide.",
             "properties": {
@@ -62,13 +80,13 @@
         }
       },
       "required": [
-        "dbClusterSnapshotIdentifier"
+        "dbClusterEndpointIdentifier"
       ],
       "type": "object",
       "additionalProperties": false
     },
     "status": {
-      "description": "DBClusterSnapshotStatus defines the observed state of DBClusterSnapshot",
+      "description": "DBClusterEndpointStatus defines the observed state of DBClusterEndpoint",
       "properties": {
         "ackResourceMetadata": {
           "description": "All CRs managed by ACK have a common `Status.ACKResourceMetadata` member\nthat is used to contain resource sync state, account ownership,\nconstructed ARN for the resource",
@@ -92,23 +110,6 @@
           ],
           "type": "object",
           "additionalProperties": false
-        },
-        "allocatedStorage": {
-          "description": "The allocated storage size of the DB cluster snapshot in gibibytes (GiB).",
-          "format": "int64",
-          "type": "integer"
-        },
-        "availabilityZones": {
-          "description": "The list of Availability Zones (AZs) where instances in the DB cluster snapshot\ncan be restored.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "clusterCreateTime": {
-          "description": "The time when the DB cluster was created, in Universal Coordinated Time (UTC).",
-          "format": "date-time",
-          "type": "string"
         },
         "conditions": {
           "description": "All CRs managed by ACK have a common `Status.Conditions` member that\ncontains a collection of `ackv1alpha1.Condition` objects that describe\nthe various terminal states of the CR and its backend AWS service API\nresource",
@@ -146,87 +147,16 @@
           },
           "type": "array"
         },
-        "dbSystemID": {
-          "description": "Reserved for future use.",
+        "dbClusterEndpointResourceIdentifier": {
+          "description": "A unique system-generated identifier for an endpoint. It remains the same\nfor the whole life of the endpoint.",
           "type": "string"
         },
-        "engine": {
-          "description": "The name of the database engine for this DB cluster snapshot.",
-          "type": "string"
-        },
-        "engineMode": {
-          "description": "The engine mode of the database engine for this DB cluster snapshot.",
-          "type": "string"
-        },
-        "engineVersion": {
-          "description": "The version of the database engine for this DB cluster snapshot.",
-          "type": "string"
-        },
-        "iamDatabaseAuthenticationEnabled": {
-          "description": "Indicates whether mapping of Amazon Web Services Identity and Access Management\n(IAM) accounts to database accounts is enabled.",
-          "type": "boolean"
-        },
-        "kmsKeyID": {
-          "description": "If StorageEncrypted is true, the Amazon Web Services KMS key identifier for\nthe encrypted DB cluster snapshot.\n\nThe Amazon Web Services KMS key identifier is the key ARN, key ID, alias\nARN, or alias name for the KMS key.",
-          "type": "string"
-        },
-        "licenseModel": {
-          "description": "The license model information for this DB cluster snapshot.",
-          "type": "string"
-        },
-        "masterUsername": {
-          "description": "The master username for this DB cluster snapshot.",
-          "type": "string"
-        },
-        "percentProgress": {
-          "description": "The percentage of the estimated data that has been transferred.",
-          "format": "int64",
-          "type": "integer"
-        },
-        "port": {
-          "description": "The port that the DB cluster was listening on at the time of the snapshot.",
-          "format": "int64",
-          "type": "integer"
-        },
-        "snapshotCreateTime": {
-          "description": "The time when the snapshot was taken, in Universal Coordinated Time (UTC).",
-          "format": "date-time",
-          "type": "string"
-        },
-        "snapshotType": {
-          "description": "The type of the DB cluster snapshot.",
-          "type": "string"
-        },
-        "sourceDBClusterSnapshotARN": {
-          "description": "If the DB cluster snapshot was copied from a source DB cluster snapshot,\nthe Amazon Resource Name (ARN) for the source DB cluster snapshot, otherwise,\na null value.",
+        "endpoint": {
+          "description": "The DNS address of the endpoint.",
           "type": "string"
         },
         "status": {
-          "description": "The status of this DB cluster snapshot. Valid statuses are the following:\n\n   * available\n\n   * copying\n\n   * creating",
-          "type": "string"
-        },
-        "storageEncrypted": {
-          "description": "Indicates whether the DB cluster snapshot is encrypted.",
-          "type": "boolean"
-        },
-        "tagList": {
-          "items": {
-            "description": "Metadata assigned to an Amazon RDS resource consisting of a key-value pair.\n\nFor more information, see Tagging Amazon RDS resources (https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Tagging.html)\nin the Amazon RDS User Guide or Tagging Amazon Aurora and Amazon RDS resources\n(https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/USER_Tagging.html)\nin the Amazon Aurora User Guide.",
-            "properties": {
-              "key": {
-                "type": "string"
-              },
-              "value": {
-                "type": "string"
-              }
-            },
-            "type": "object",
-            "additionalProperties": false
-          },
-          "type": "array"
-        },
-        "vpcID": {
-          "description": "The VPC ID associated with the DB cluster snapshot.",
+          "description": "The current status of the endpoint. One of: creating, available, deleting,\ninactive, modifying. The inactive state applies to an endpoint that can't\nbe used for a certain kind of cluster, such as a writer endpoint for a read-only\nsecondary cluster in a global database.",
           "type": "string"
         }
       },
