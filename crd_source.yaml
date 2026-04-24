@@ -1241,7 +1241,7 @@ sources:
     changelog: "https://github.com/l7mp/stunner/releases"
 
   - url: "https://github.com/tailscale/tailscale"
-    tag: ""
+    tag: "v1.96.4"
     repo_path: "cmd/k8s-operator/deploy/crds"
     changelog: "https://github.com/tailscale/tailscale/releases"
 
