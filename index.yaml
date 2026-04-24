@@ -8296,6 +8296,10 @@ k8s.mariadb.com:
     filename: k8s.mariadb.com/externalmariadb_v1alpha1.json
     kind: ExternalMariaDB
     name: externalmariadb_v1alpha1
+  - apiVersion: k8s.mariadb.com/v1alpha1
+    filename: k8s.mariadb.com/pointintimerecovery_v1alpha1.json
+    kind: PointInTimeRecovery
+    name: pointintimerecovery_v1alpha1
 k8s.nginx.org:
   - apiVersion: k8s.nginx.org/v1alpha1
     filename: k8s.nginx.org/globalconfiguration_v1alpha1.json
