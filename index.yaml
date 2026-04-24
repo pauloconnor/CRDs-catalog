@@ -347,6 +347,55 @@ alerting.grafana.crossplane.io:
     filename: alerting.grafana.crossplane.io/alertenrichmentv1beta1_v1alpha1.json
     kind: AlertenrichmentV1Beta1
     name: alertenrichmentv1beta1_v1alpha1
+  - apiVersion: alerting.grafana.crossplane.io/v1alpha1
+    filename: alerting.grafana.crossplane.io/recordingrulev0alpha1_v1alpha1.json
+    kind: RecordingruleV0Alpha1
+    name: recordingrulev0alpha1_v1alpha1
+  - apiVersion: alerting.grafana.crossplane.io/v1alpha1
+    filename: alerting.grafana.crossplane.io/inhibitionrulev1beta1_v1alpha1.json
+    kind: InhibitionruleV1Beta1
+    name: inhibitionrulev1beta1_v1alpha1
+  - apiVersion: alerting.grafana.crossplane.io/v1alpha1
+    filename: alerting.grafana.crossplane.io/alertrulev0alpha1_v1alpha1.json
+    kind: AlertruleV0Alpha1
+    name: alertrulev0alpha1_v1alpha1
+alerting.grafana.m.crossplane.io:
+  - apiVersion: alerting.grafana.m.crossplane.io/v1alpha1
+    filename: alerting.grafana.m.crossplane.io/contactpoint_v1alpha1.json
+    kind: ContactPoint
+    name: contactpoint_v1alpha1
+  - apiVersion: alerting.grafana.m.crossplane.io/v1alpha1
+    filename: alerting.grafana.m.crossplane.io/recordingrulev0alpha1_v1alpha1.json
+    kind: RecordingruleV0Alpha1
+    name: recordingrulev0alpha1_v1alpha1
+  - apiVersion: alerting.grafana.m.crossplane.io/v1alpha1
+    filename: alerting.grafana.m.crossplane.io/messagetemplate_v1alpha1.json
+    kind: MessageTemplate
+    name: messagetemplate_v1alpha1
+  - apiVersion: alerting.grafana.m.crossplane.io/v1alpha1
+    filename: alerting.grafana.m.crossplane.io/inhibitionrulev1beta1_v1alpha1.json
+    kind: InhibitionruleV1Beta1
+    name: inhibitionrulev1beta1_v1alpha1
+  - apiVersion: alerting.grafana.m.crossplane.io/v1alpha1
+    filename: alerting.grafana.m.crossplane.io/mutetiming_v1alpha1.json
+    kind: MuteTiming
+    name: mutetiming_v1alpha1
+  - apiVersion: alerting.grafana.m.crossplane.io/v1alpha1
+    filename: alerting.grafana.m.crossplane.io/alertenrichmentv1beta1_v1alpha1.json
+    kind: AlertenrichmentV1Beta1
+    name: alertenrichmentv1beta1_v1alpha1
+  - apiVersion: alerting.grafana.m.crossplane.io/v1alpha1
+    filename: alerting.grafana.m.crossplane.io/rulegroup_v1alpha1.json
+    kind: RuleGroup
+    name: rulegroup_v1alpha1
+  - apiVersion: alerting.grafana.m.crossplane.io/v1alpha1
+    filename: alerting.grafana.m.crossplane.io/alertrulev0alpha1_v1alpha1.json
+    kind: AlertruleV0Alpha1
+    name: alertrulev0alpha1_v1alpha1
+  - apiVersion: alerting.grafana.m.crossplane.io/v1alpha1
+    filename: alerting.grafana.m.crossplane.io/notificationpolicy_v1alpha1.json
+    kind: NotificationPolicy
+    name: notificationpolicy_v1alpha1
 alertsmanagement.azure.com:
   - apiVersion: alertsmanagement.azure.com/v1api20230301
     filename: alertsmanagement.azure.com/prometheusrulegroup_v1api20230301.json
@@ -1291,6 +1340,63 @@ asserts.grafana.crossplane.io:
     filename: asserts.grafana.crossplane.io/logconfig_v1alpha1.json
     kind: LogConfig
     name: logconfig_v1alpha1
+  - apiVersion: asserts.grafana.crossplane.io/v1alpha1
+    filename: asserts.grafana.crossplane.io/stack_v1alpha1.json
+    kind: Stack
+    name: stack_v1alpha1
+  - apiVersion: asserts.grafana.crossplane.io/v1alpha1
+    filename: asserts.grafana.crossplane.io/thresholds_v1alpha1.json
+    kind: Thresholds
+    name: thresholds_v1alpha1
+  - apiVersion: asserts.grafana.crossplane.io/v1alpha1
+    filename: asserts.grafana.crossplane.io/promrulefile_v1alpha1.json
+    kind: PromRuleFile
+    name: promrulefile_v1alpha1
+  - apiVersion: asserts.grafana.crossplane.io/v1alpha1
+    filename: asserts.grafana.crossplane.io/traceconfig_v1alpha1.json
+    kind: TraceConfig
+    name: traceconfig_v1alpha1
+  - apiVersion: asserts.grafana.crossplane.io/v1alpha1
+    filename: asserts.grafana.crossplane.io/profileconfig_v1alpha1.json
+    kind: ProfileConfig
+    name: profileconfig_v1alpha1
+asserts.grafana.m.crossplane.io:
+  - apiVersion: asserts.grafana.m.crossplane.io/v1alpha1
+    filename: asserts.grafana.m.crossplane.io/suppressedassertionsconfig_v1alpha1.json
+    kind: SuppressedAssertionsConfig
+    name: suppressedassertionsconfig_v1alpha1
+  - apiVersion: asserts.grafana.m.crossplane.io/v1alpha1
+    filename: asserts.grafana.m.crossplane.io/stack_v1alpha1.json
+    kind: Stack
+    name: stack_v1alpha1
+  - apiVersion: asserts.grafana.m.crossplane.io/v1alpha1
+    filename: asserts.grafana.m.crossplane.io/thresholds_v1alpha1.json
+    kind: Thresholds
+    name: thresholds_v1alpha1
+  - apiVersion: asserts.grafana.m.crossplane.io/v1alpha1
+    filename: asserts.grafana.m.crossplane.io/promrulefile_v1alpha1.json
+    kind: PromRuleFile
+    name: promrulefile_v1alpha1
+  - apiVersion: asserts.grafana.m.crossplane.io/v1alpha1
+    filename: asserts.grafana.m.crossplane.io/custommodelrules_v1alpha1.json
+    kind: CustomModelRules
+    name: custommodelrules_v1alpha1
+  - apiVersion: asserts.grafana.m.crossplane.io/v1alpha1
+    filename: asserts.grafana.m.crossplane.io/traceconfig_v1alpha1.json
+    kind: TraceConfig
+    name: traceconfig_v1alpha1
+  - apiVersion: asserts.grafana.m.crossplane.io/v1alpha1
+    filename: asserts.grafana.m.crossplane.io/notificationalertsconfig_v1alpha1.json
+    kind: NotificationAlertsConfig
+    name: notificationalertsconfig_v1alpha1
+  - apiVersion: asserts.grafana.m.crossplane.io/v1alpha1
+    filename: asserts.grafana.m.crossplane.io/logconfig_v1alpha1.json
+    kind: LogConfig
+    name: logconfig_v1alpha1
+  - apiVersion: asserts.grafana.m.crossplane.io/v1alpha1
+    filename: asserts.grafana.m.crossplane.io/profileconfig_v1alpha1.json
+    kind: ProfileConfig
+    name: profileconfig_v1alpha1
 asset.cnrm.cloud.google.com:
   - apiVersion: asset.cnrm.cloud.google.com/v1beta1
     filename: asset.cnrm.cloud.google.com/assetfeed_v1beta1.json
@@ -2332,6 +2438,88 @@ cloud.grafana.crossplane.io:
     filename: cloud.grafana.crossplane.io/privatedatasourceconnectnetworktoken_v1alpha1.json
     kind: PrivateDataSourceConnectNetworkToken
     name: privatedatasourceconnectnetworktoken_v1alpha1
+  - apiVersion: cloud.grafana.crossplane.io/v1alpha1
+    filename: cloud.grafana.crossplane.io/accesspolicyrotatingtoken_v1alpha1.json
+    kind: AccessPolicyRotatingToken
+    name: accesspolicyrotatingtoken_v1alpha1
+  - apiVersion: cloud.grafana.crossplane.io/v1alpha1
+    filename: cloud.grafana.crossplane.io/stackserviceaccountrotatingtoken_v1alpha1.json
+    kind: StackServiceAccountRotatingToken
+    name: stackserviceaccountrotatingtoken_v1alpha1
+cloud.grafana.m.crossplane.io:
+  - apiVersion: cloud.grafana.m.crossplane.io/v1alpha1
+    filename: cloud.grafana.m.crossplane.io/accesspolicyrotatingtoken_v1alpha1.json
+    kind: AccessPolicyRotatingToken
+    name: accesspolicyrotatingtoken_v1alpha1
+  - apiVersion: cloud.grafana.m.crossplane.io/v1alpha1
+    filename: cloud.grafana.m.crossplane.io/plugininstallation_v1alpha1.json
+    kind: PluginInstallation
+    name: plugininstallation_v1alpha1
+  - apiVersion: cloud.grafana.m.crossplane.io/v1alpha1
+    filename: cloud.grafana.m.crossplane.io/orgmember_v1alpha1.json
+    kind: OrgMember
+    name: orgmember_v1alpha1
+  - apiVersion: cloud.grafana.m.crossplane.io/v1alpha1
+    filename: cloud.grafana.m.crossplane.io/stack_v1alpha1.json
+    kind: Stack
+    name: stack_v1alpha1
+  - apiVersion: cloud.grafana.m.crossplane.io/v1alpha1
+    filename: cloud.grafana.m.crossplane.io/accesspolicy_v1alpha1.json
+    kind: AccessPolicy
+    name: accesspolicy_v1alpha1
+  - apiVersion: cloud.grafana.m.crossplane.io/v1alpha1
+    filename: cloud.grafana.m.crossplane.io/stackserviceaccounttoken_v1alpha1.json
+    kind: StackServiceAccountToken
+    name: stackserviceaccounttoken_v1alpha1
+  - apiVersion: cloud.grafana.m.crossplane.io/v1alpha1
+    filename: cloud.grafana.m.crossplane.io/k8so11yconfigv1alpha1_v1alpha1.json
+    kind: K8So11YconfigV1Alpha1
+    name: k8so11yconfigv1alpha1_v1alpha1
+  - apiVersion: cloud.grafana.m.crossplane.io/v1alpha1
+    filename: cloud.grafana.m.crossplane.io/privatedatasourceconnectnetwork_v1alpha1.json
+    kind: PrivateDataSourceConnectNetwork
+    name: privatedatasourceconnectnetwork_v1alpha1
+  - apiVersion: cloud.grafana.m.crossplane.io/v1alpha1
+    filename: cloud.grafana.m.crossplane.io/stackserviceaccount_v1alpha1.json
+    kind: StackServiceAccount
+    name: stackserviceaccount_v1alpha1
+  - apiVersion: cloud.grafana.m.crossplane.io/v1alpha1
+    filename: cloud.grafana.m.crossplane.io/appo11yconfigv1alpha1_v1alpha1.json
+    kind: Appo11YconfigV1Alpha1
+    name: appo11yconfigv1alpha1_v1alpha1
+  - apiVersion: cloud.grafana.m.crossplane.io/v1alpha1
+    filename: cloud.grafana.m.crossplane.io/accesspolicytoken_v1alpha1.json
+    kind: AccessPolicyToken
+    name: accesspolicytoken_v1alpha1
+  - apiVersion: cloud.grafana.m.crossplane.io/v1alpha1
+    filename: cloud.grafana.m.crossplane.io/privatedatasourceconnectnetworktoken_v1alpha1.json
+    kind: PrivateDataSourceConnectNetworkToken
+    name: privatedatasourceconnectnetworktoken_v1alpha1
+  - apiVersion: cloud.grafana.m.crossplane.io/v1alpha1
+    filename: cloud.grafana.m.crossplane.io/stackserviceaccountrotatingtoken_v1alpha1.json
+    kind: StackServiceAccountRotatingToken
+    name: stackserviceaccountrotatingtoken_v1alpha1
+cloud.grafana.o.crossplane.io:
+  - apiVersion: cloud.grafana.o.crossplane.io/v1alpha1
+    filename: cloud.grafana.o.crossplane.io/organization_v1alpha1.json
+    kind: Organization
+    name: organization_v1alpha1
+  - apiVersion: cloud.grafana.o.crossplane.io/v1alpha1
+    filename: cloud.grafana.o.crossplane.io/stack_v1alpha1.json
+    kind: Stack
+    name: stack_v1alpha1
+  - apiVersion: cloud.grafana.o.crossplane.io/v1alpha1
+    filename: cloud.grafana.o.crossplane.io/ips_v1alpha1.json
+    kind: IPS
+    name: ips_v1alpha1
+  - apiVersion: cloud.grafana.o.crossplane.io/v1alpha1
+    filename: cloud.grafana.o.crossplane.io/privatedatasourceconnectnetworks_v1alpha1.json
+    kind: PrivateDataSourceConnectNetworks
+    name: privatedatasourceconnectnetworks_v1alpha1
+  - apiVersion: cloud.grafana.o.crossplane.io/v1alpha1
+    filename: cloud.grafana.o.crossplane.io/accesspolicies_v1alpha1.json
+    kind: AccessPolicies
+    name: accesspolicies_v1alpha1
 cloudasset.cnrm.cloud.google.com:
   - apiVersion: cloudasset.cnrm.cloud.google.com/v1alpha1
     filename: cloudasset.cnrm.cloud.google.com/cloudassetfolderfeed_v1alpha1.json
@@ -2443,6 +2631,40 @@ cloudprovider.grafana.crossplane.io:
     filename: cloudprovider.grafana.crossplane.io/awscloudwatchscrapejob_v1alpha1.json
     kind: AwsCloudwatchScrapeJob
     name: awscloudwatchscrapejob_v1alpha1
+cloudprovider.grafana.m.crossplane.io:
+  - apiVersion: cloudprovider.grafana.m.crossplane.io/v1alpha1
+    filename: cloudprovider.grafana.m.crossplane.io/awsresourcemetadatascrapejob_v1alpha1.json
+    kind: AwsResourceMetadataScrapeJob
+    name: awsresourcemetadatascrapejob_v1alpha1
+  - apiVersion: cloudprovider.grafana.m.crossplane.io/v1alpha1
+    filename: cloudprovider.grafana.m.crossplane.io/awsaccount_v1alpha1.json
+    kind: AwsAccount
+    name: awsaccount_v1alpha1
+  - apiVersion: cloudprovider.grafana.m.crossplane.io/v1alpha1
+    filename: cloudprovider.grafana.m.crossplane.io/awscloudwatchscrapejob_v1alpha1.json
+    kind: AwsCloudwatchScrapeJob
+    name: awscloudwatchscrapejob_v1alpha1
+  - apiVersion: cloudprovider.grafana.m.crossplane.io/v1alpha1
+    filename: cloudprovider.grafana.m.crossplane.io/azurecredential_v1alpha1.json
+    kind: AzureCredential
+    name: azurecredential_v1alpha1
+cloudprovider.grafana.o.crossplane.io:
+  - apiVersion: cloudprovider.grafana.o.crossplane.io/v1alpha1
+    filename: cloudprovider.grafana.o.crossplane.io/awscloudwatchscrapejobset_v1alpha1.json
+    kind: AwsCloudwatchScrapeJobSet
+    name: awscloudwatchscrapejobset_v1alpha1
+  - apiVersion: cloudprovider.grafana.o.crossplane.io/v1alpha1
+    filename: cloudprovider.grafana.o.crossplane.io/awsaccount_v1alpha1.json
+    kind: AwsAccount
+    name: awsaccount_v1alpha1
+  - apiVersion: cloudprovider.grafana.o.crossplane.io/v1alpha1
+    filename: cloudprovider.grafana.o.crossplane.io/awscloudwatchscrapejob_v1alpha1.json
+    kind: AwsCloudwatchScrapeJob
+    name: awscloudwatchscrapejob_v1alpha1
+  - apiVersion: cloudprovider.grafana.o.crossplane.io/v1alpha1
+    filename: cloudprovider.grafana.o.crossplane.io/azurecredential_v1alpha1.json
+    kind: AzureCredential
+    name: azurecredential_v1alpha1
 cloudquota.cnrm.cloud.google.com:
   - apiVersion: cloudquota.cnrm.cloud.google.com/v1beta1
     filename: cloudquota.cnrm.cloud.google.com/apiquotapreference_v1beta1.json
@@ -3185,6 +3407,16 @@ configuration.konghq.com:
 connections.grafana.crossplane.io:
   - apiVersion: connections.grafana.crossplane.io/v1alpha1
     filename: connections.grafana.crossplane.io/metricsendpointscrapejob_v1alpha1.json
+    kind: MetricsEndpointScrapeJob
+    name: metricsendpointscrapejob_v1alpha1
+connections.grafana.m.crossplane.io:
+  - apiVersion: connections.grafana.m.crossplane.io/v1alpha1
+    filename: connections.grafana.m.crossplane.io/metricsendpointscrapejob_v1alpha1.json
+    kind: MetricsEndpointScrapeJob
+    name: metricsendpointscrapejob_v1alpha1
+connections.grafana.o.crossplane.io:
+  - apiVersion: connections.grafana.o.crossplane.io/v1alpha1
+    filename: connections.grafana.o.crossplane.io/metricsendpointscrapejob_v1alpha1.json
     kind: MetricsEndpointScrapeJob
     name: metricsendpointscrapejob_v1alpha1
 container.cnrm.cloud.google.com:
@@ -5633,6 +5865,80 @@ enterprise.grafana.crossplane.io:
     filename: enterprise.grafana.crossplane.io/scimconfig_v1alpha1.json
     kind: ScimConfig
     name: scimconfig_v1alpha1
+  - apiVersion: enterprise.grafana.crossplane.io/v1alpha1
+    filename: enterprise.grafana.crossplane.io/keeperactivationv1beta1_v1alpha1.json
+    kind: KeeperActivationV1Beta1
+    name: keeperactivationv1beta1_v1alpha1
+  - apiVersion: enterprise.grafana.crossplane.io/v1alpha1
+    filename: enterprise.grafana.crossplane.io/datasourcecacheconfig_v1alpha1.json
+    kind: DataSourceCacheConfig
+    name: datasourcecacheconfig_v1alpha1
+  - apiVersion: enterprise.grafana.crossplane.io/v1alpha1
+    filename: enterprise.grafana.crossplane.io/securevaluev1beta1_v1alpha1.json
+    kind: SecurevalueV1Beta1
+    name: securevaluev1beta1_v1alpha1
+  - apiVersion: enterprise.grafana.crossplane.io/v1alpha1
+    filename: enterprise.grafana.crossplane.io/keeperv1beta1_v1alpha1.json
+    kind: KeeperV1Beta1
+    name: keeperv1beta1_v1alpha1
+enterprise.grafana.m.crossplane.io:
+  - apiVersion: enterprise.grafana.m.crossplane.io/v1alpha1
+    filename: enterprise.grafana.m.crossplane.io/roleassignment_v1alpha1.json
+    kind: RoleAssignment
+    name: roleassignment_v1alpha1
+  - apiVersion: enterprise.grafana.m.crossplane.io/v1alpha1
+    filename: enterprise.grafana.m.crossplane.io/scimconfig_v1alpha1.json
+    kind: ScimConfig
+    name: scimconfig_v1alpha1
+  - apiVersion: enterprise.grafana.m.crossplane.io/v1alpha1
+    filename: enterprise.grafana.m.crossplane.io/datasourcepermission_v1alpha1.json
+    kind: DataSourcePermission
+    name: datasourcepermission_v1alpha1
+  - apiVersion: enterprise.grafana.m.crossplane.io/v1alpha1
+    filename: enterprise.grafana.m.crossplane.io/roleassignmentitem_v1alpha1.json
+    kind: RoleAssignmentItem
+    name: roleassignmentitem_v1alpha1
+  - apiVersion: enterprise.grafana.m.crossplane.io/v1alpha1
+    filename: enterprise.grafana.m.crossplane.io/report_v1alpha1.json
+    kind: Report
+    name: report_v1alpha1
+  - apiVersion: enterprise.grafana.m.crossplane.io/v1alpha1
+    filename: enterprise.grafana.m.crossplane.io/role_v1alpha1.json
+    kind: Role
+    name: role_v1alpha1
+  - apiVersion: enterprise.grafana.m.crossplane.io/v1alpha1
+    filename: enterprise.grafana.m.crossplane.io/datasourcepermissionitem_v1alpha1.json
+    kind: DataSourcePermissionItem
+    name: datasourcepermissionitem_v1alpha1
+  - apiVersion: enterprise.grafana.m.crossplane.io/v1alpha1
+    filename: enterprise.grafana.m.crossplane.io/teamexternalgroup_v1alpha1.json
+    kind: TeamExternalGroup
+    name: teamexternalgroup_v1alpha1
+  - apiVersion: enterprise.grafana.m.crossplane.io/v1alpha1
+    filename: enterprise.grafana.m.crossplane.io/keeperactivationv1beta1_v1alpha1.json
+    kind: KeeperActivationV1Beta1
+    name: keeperactivationv1beta1_v1alpha1
+  - apiVersion: enterprise.grafana.m.crossplane.io/v1alpha1
+    filename: enterprise.grafana.m.crossplane.io/datasourceconfiglbacrules_v1alpha1.json
+    kind: DataSourceConfigLbacRules
+    name: datasourceconfiglbacrules_v1alpha1
+  - apiVersion: enterprise.grafana.m.crossplane.io/v1alpha1
+    filename: enterprise.grafana.m.crossplane.io/datasourcecacheconfig_v1alpha1.json
+    kind: DataSourceCacheConfig
+    name: datasourcecacheconfig_v1alpha1
+  - apiVersion: enterprise.grafana.m.crossplane.io/v1alpha1
+    filename: enterprise.grafana.m.crossplane.io/securevaluev1beta1_v1alpha1.json
+    kind: SecurevalueV1Beta1
+    name: securevaluev1beta1_v1alpha1
+  - apiVersion: enterprise.grafana.m.crossplane.io/v1alpha1
+    filename: enterprise.grafana.m.crossplane.io/keeperv1beta1_v1alpha1.json
+    kind: KeeperV1Beta1
+    name: keeperv1beta1_v1alpha1
+enterprise.grafana.o.crossplane.io:
+  - apiVersion: enterprise.grafana.o.crossplane.io/v1alpha1
+    filename: enterprise.grafana.o.crossplane.io/role_v1alpha1.json
+    kind: Role
+    name: role_v1alpha1
 enterprisesearch.k8s.elastic.co:
   - apiVersion: enterprisesearch.k8s.elastic.co/v1beta1
     filename: enterprisesearch.k8s.elastic.co/enterprisesearch_v1beta1.json
@@ -5980,6 +6286,24 @@ fleetmanagement.grafana.crossplane.io:
     filename: fleetmanagement.grafana.crossplane.io/collector_v1alpha1.json
     kind: Collector
     name: collector_v1alpha1
+fleetmanagement.grafana.m.crossplane.io:
+  - apiVersion: fleetmanagement.grafana.m.crossplane.io/v1alpha1
+    filename: fleetmanagement.grafana.m.crossplane.io/pipeline_v1alpha1.json
+    kind: Pipeline
+    name: pipeline_v1alpha1
+  - apiVersion: fleetmanagement.grafana.m.crossplane.io/v1alpha1
+    filename: fleetmanagement.grafana.m.crossplane.io/collector_v1alpha1.json
+    kind: Collector
+    name: collector_v1alpha1
+fleetmanagement.grafana.o.crossplane.io:
+  - apiVersion: fleetmanagement.grafana.o.crossplane.io/v1alpha1
+    filename: fleetmanagement.grafana.o.crossplane.io/collectorset_v1alpha1.json
+    kind: CollectorSet
+    name: collectorset_v1alpha1
+  - apiVersion: fleetmanagement.grafana.o.crossplane.io/v1alpha1
+    filename: fleetmanagement.grafana.o.crossplane.io/collector_v1alpha1.json
+    kind: Collector
+    name: collector_v1alpha1
 flink.apache.org:
   - apiVersion: flink.apache.org/v1beta1
     filename: flink.apache.org/flinkdeployment_v1beta1.json
@@ -6112,6 +6436,16 @@ forklift.cdi.kubevirt.io:
 frontendobservability.grafana.crossplane.io:
   - apiVersion: frontendobservability.grafana.crossplane.io/v1alpha1
     filename: frontendobservability.grafana.crossplane.io/app_v1alpha1.json
+    kind: App
+    name: app_v1alpha1
+frontendobservability.grafana.m.crossplane.io:
+  - apiVersion: frontendobservability.grafana.m.crossplane.io/v1alpha1
+    filename: frontendobservability.grafana.m.crossplane.io/app_v1alpha1.json
+    kind: App
+    name: app_v1alpha1
+frontendobservability.grafana.o.crossplane.io:
+  - apiVersion: frontendobservability.grafana.o.crossplane.io/v1alpha1
+    filename: frontendobservability.grafana.o.crossplane.io/app_v1alpha1.json
     kind: App
     name: app_v1alpha1
 gameservices.cnrm.cloud.google.com:
@@ -6717,6 +7051,19 @@ grafana.integreatly.org:
     filename: grafana.integreatly.org/grafanaserviceaccount_v1beta1.json
     kind: GrafanaServiceAccount
     name: grafanaserviceaccount_v1beta1
+grafana.m.crossplane.io:
+  - apiVersion: grafana.m.crossplane.io/v1beta1
+    filename: grafana.m.crossplane.io/clusterproviderconfig_v1beta1.json
+    kind: clusterproviderconfig
+    name: clusterproviderconfig_v1beta1
+  - apiVersion: grafana.m.crossplane.io/v1beta1
+    filename: grafana.m.crossplane.io/providerconfig_v1beta1.json
+    kind: providerconfig
+    name: providerconfig_v1beta1
+  - apiVersion: grafana.m.crossplane.io/v1beta1
+    filename: grafana.m.crossplane.io/providerconfigusage_v1beta1.json
+    kind: providerconfigusage
+    name: providerconfigusage_v1beta1
 graphql.gloo.solo.io:
   - apiVersion: graphql.gloo.solo.io/v1beta1
     filename: graphql.gloo.solo.io/graphqlapi_v1beta1.json
@@ -8224,6 +8571,72 @@ k6.grafana.crossplane.io:
     filename: k6.grafana.crossplane.io/project_v1alpha1.json
     kind: Project
     name: project_v1alpha1
+  - apiVersion: k6.grafana.crossplane.io/v1alpha1
+    filename: k6.grafana.crossplane.io/installation_v1alpha1.json
+    kind: Installation
+    name: installation_v1alpha1
+  - apiVersion: k6.grafana.crossplane.io/v1alpha1
+    filename: k6.grafana.crossplane.io/schedule_v1alpha1.json
+    kind: Schedule
+    name: schedule_v1alpha1
+k6.grafana.m.crossplane.io:
+  - apiVersion: k6.grafana.m.crossplane.io/v1alpha1
+    filename: k6.grafana.m.crossplane.io/projectallowedloadzones_v1alpha1.json
+    kind: ProjectAllowedLoadZones
+    name: projectallowedloadzones_v1alpha1
+  - apiVersion: k6.grafana.m.crossplane.io/v1alpha1
+    filename: k6.grafana.m.crossplane.io/installation_v1alpha1.json
+    kind: Installation
+    name: installation_v1alpha1
+  - apiVersion: k6.grafana.m.crossplane.io/v1alpha1
+    filename: k6.grafana.m.crossplane.io/schedule_v1alpha1.json
+    kind: Schedule
+    name: schedule_v1alpha1
+  - apiVersion: k6.grafana.m.crossplane.io/v1alpha1
+    filename: k6.grafana.m.crossplane.io/loadtest_v1alpha1.json
+    kind: LoadTest
+    name: loadtest_v1alpha1
+  - apiVersion: k6.grafana.m.crossplane.io/v1alpha1
+    filename: k6.grafana.m.crossplane.io/projectlimits_v1alpha1.json
+    kind: ProjectLimits
+    name: projectlimits_v1alpha1
+  - apiVersion: k6.grafana.m.crossplane.io/v1alpha1
+    filename: k6.grafana.m.crossplane.io/project_v1alpha1.json
+    kind: Project
+    name: project_v1alpha1
+k6.grafana.o.crossplane.io:
+  - apiVersion: k6.grafana.o.crossplane.io/v1alpha1
+    filename: k6.grafana.o.crossplane.io/projectallowedloadzones_v1alpha1.json
+    kind: ProjectAllowedLoadZones
+    name: projectallowedloadzones_v1alpha1
+  - apiVersion: k6.grafana.o.crossplane.io/v1alpha1
+    filename: k6.grafana.o.crossplane.io/schedule_v1alpha1.json
+    kind: Schedule
+    name: schedule_v1alpha1
+  - apiVersion: k6.grafana.o.crossplane.io/v1alpha1
+    filename: k6.grafana.o.crossplane.io/loadtestset_v1alpha1.json
+    kind: LoadTestSet
+    name: loadtestset_v1alpha1
+  - apiVersion: k6.grafana.o.crossplane.io/v1alpha1
+    filename: k6.grafana.o.crossplane.io/loadtest_v1alpha1.json
+    kind: LoadTest
+    name: loadtest_v1alpha1
+  - apiVersion: k6.grafana.o.crossplane.io/v1alpha1
+    filename: k6.grafana.o.crossplane.io/projectset_v1alpha1.json
+    kind: ProjectSet
+    name: projectset_v1alpha1
+  - apiVersion: k6.grafana.o.crossplane.io/v1alpha1
+    filename: k6.grafana.o.crossplane.io/projectlimits_v1alpha1.json
+    kind: ProjectLimits
+    name: projectlimits_v1alpha1
+  - apiVersion: k6.grafana.o.crossplane.io/v1alpha1
+    filename: k6.grafana.o.crossplane.io/project_v1alpha1.json
+    kind: Project
+    name: project_v1alpha1
+  - apiVersion: k6.grafana.o.crossplane.io/v1alpha1
+    filename: k6.grafana.o.crossplane.io/scheduleset_v1alpha1.json
+    kind: ScheduleSet
+    name: scheduleset_v1alpha1
 k6.io:
   - apiVersion: k6.io/v1alpha1
     filename: k6.io/k6_v1alpha1.json
@@ -9635,6 +10048,23 @@ ml.grafana.crossplane.io:
     filename: ml.grafana.crossplane.io/alert_v1alpha1.json
     kind: Alert
     name: alert_v1alpha1
+ml.grafana.m.crossplane.io:
+  - apiVersion: ml.grafana.m.crossplane.io/v1alpha1
+    filename: ml.grafana.m.crossplane.io/alert_v1alpha1.json
+    kind: Alert
+    name: alert_v1alpha1
+  - apiVersion: ml.grafana.m.crossplane.io/v1alpha1
+    filename: ml.grafana.m.crossplane.io/job_v1alpha1.json
+    kind: Job
+    name: job_v1alpha1
+  - apiVersion: ml.grafana.m.crossplane.io/v1alpha1
+    filename: ml.grafana.m.crossplane.io/outlierdetector_v1alpha1.json
+    kind: OutlierDetector
+    name: outlierdetector_v1alpha1
+  - apiVersion: ml.grafana.m.crossplane.io/v1alpha1
+    filename: ml.grafana.m.crossplane.io/holiday_v1alpha1.json
+    kind: Holiday
+    name: holiday_v1alpha1
 mlengine.cnrm.cloud.google.com:
   - apiVersion: mlengine.cnrm.cloud.google.com/v1alpha1
     filename: mlengine.cnrm.cloud.google.com/mlenginemodel_v1alpha1.json
@@ -10630,6 +11060,80 @@ oncall.grafana.crossplane.io:
     filename: oncall.grafana.crossplane.io/usernotificationrule_v1alpha1.json
     kind: UserNotificationRule
     name: usernotificationrule_v1alpha1
+oncall.grafana.m.crossplane.io:
+  - apiVersion: oncall.grafana.m.crossplane.io/v1alpha1
+    filename: oncall.grafana.m.crossplane.io/outgoingwebhook_v1alpha1.json
+    kind: OutgoingWebhook
+    name: outgoingwebhook_v1alpha1
+  - apiVersion: oncall.grafana.m.crossplane.io/v1alpha1
+    filename: oncall.grafana.m.crossplane.io/route_v1alpha1.json
+    kind: Route
+    name: route_v1alpha1
+  - apiVersion: oncall.grafana.m.crossplane.io/v1alpha1
+    filename: oncall.grafana.m.crossplane.io/integration_v1alpha1.json
+    kind: Integration
+    name: integration_v1alpha1
+  - apiVersion: oncall.grafana.m.crossplane.io/v1alpha1
+    filename: oncall.grafana.m.crossplane.io/schedule_v1alpha1.json
+    kind: Schedule
+    name: schedule_v1alpha1
+  - apiVersion: oncall.grafana.m.crossplane.io/v1alpha1
+    filename: oncall.grafana.m.crossplane.io/oncallshift_v1alpha1.json
+    kind: OnCallShift
+    name: oncallshift_v1alpha1
+  - apiVersion: oncall.grafana.m.crossplane.io/v1alpha1
+    filename: oncall.grafana.m.crossplane.io/escalationchain_v1alpha1.json
+    kind: EscalationChain
+    name: escalationchain_v1alpha1
+  - apiVersion: oncall.grafana.m.crossplane.io/v1alpha1
+    filename: oncall.grafana.m.crossplane.io/usernotificationrule_v1alpha1.json
+    kind: UserNotificationRule
+    name: usernotificationrule_v1alpha1
+  - apiVersion: oncall.grafana.m.crossplane.io/v1alpha1
+    filename: oncall.grafana.m.crossplane.io/escalation_v1alpha1.json
+    kind: Escalation
+    name: escalation_v1alpha1
+oncall.grafana.o.crossplane.io:
+  - apiVersion: oncall.grafana.o.crossplane.io/v1alpha1
+    filename: oncall.grafana.o.crossplane.io/label_v1alpha1.json
+    kind: Label
+    name: label_v1alpha1
+  - apiVersion: oncall.grafana.o.crossplane.io/v1alpha1
+    filename: oncall.grafana.o.crossplane.io/outgoingwebhook_v1alpha1.json
+    kind: OutgoingWebhook
+    name: outgoingwebhook_v1alpha1
+  - apiVersion: oncall.grafana.o.crossplane.io/v1alpha1
+    filename: oncall.grafana.o.crossplane.io/userset_v1alpha1.json
+    kind: UserSet
+    name: userset_v1alpha1
+  - apiVersion: oncall.grafana.o.crossplane.io/v1alpha1
+    filename: oncall.grafana.o.crossplane.io/integration_v1alpha1.json
+    kind: Integration
+    name: integration_v1alpha1
+  - apiVersion: oncall.grafana.o.crossplane.io/v1alpha1
+    filename: oncall.grafana.o.crossplane.io/team_v1alpha1.json
+    kind: Team
+    name: team_v1alpha1
+  - apiVersion: oncall.grafana.o.crossplane.io/v1alpha1
+    filename: oncall.grafana.o.crossplane.io/schedule_v1alpha1.json
+    kind: Schedule
+    name: schedule_v1alpha1
+  - apiVersion: oncall.grafana.o.crossplane.io/v1alpha1
+    filename: oncall.grafana.o.crossplane.io/user_v1alpha1.json
+    kind: User
+    name: user_v1alpha1
+  - apiVersion: oncall.grafana.o.crossplane.io/v1alpha1
+    filename: oncall.grafana.o.crossplane.io/escalationchain_v1alpha1.json
+    kind: EscalationChain
+    name: escalationchain_v1alpha1
+  - apiVersion: oncall.grafana.o.crossplane.io/v1alpha1
+    filename: oncall.grafana.o.crossplane.io/slackchannel_v1alpha1.json
+    kind: SlackChannel
+    name: slackchannel_v1alpha1
+  - apiVersion: oncall.grafana.o.crossplane.io/v1alpha1
+    filename: oncall.grafana.o.crossplane.io/usergroup_v1alpha1.json
+    kind: UserGroup
+    name: usergroup_v1alpha1
 onepassword.com:
   - apiVersion: onepassword.com/v1
     filename: onepassword.com/onepassworditem_v1.json
@@ -11040,6 +11544,212 @@ oss.grafana.crossplane.io:
     filename: oss.grafana.crossplane.io/datasourceconfig_v1alpha1.json
     kind: DataSourceConfig
     name: datasourceconfig_v1alpha1
+  - apiVersion: oss.grafana.crossplane.io/v1alpha1
+    filename: oss.grafana.crossplane.io/dashboardv2beta1_v1alpha1.json
+    kind: DashboardV2Beta1
+    name: dashboardv2beta1_v1alpha1
+  - apiVersion: oss.grafana.crossplane.io/v1alpha1
+    filename: oss.grafana.crossplane.io/repositoryv0alpha1_v1alpha1.json
+    kind: RepositoryV0Alpha1
+    name: repositoryv0alpha1_v1alpha1
+  - apiVersion: oss.grafana.crossplane.io/v1alpha1
+    filename: oss.grafana.crossplane.io/resource_v1alpha1.json
+    kind: Resource
+    name: resource_v1alpha1
+  - apiVersion: oss.grafana.crossplane.io/v1alpha1
+    filename: oss.grafana.crossplane.io/serviceaccountrotatingtoken_v1alpha1.json
+    kind: ServiceAccountRotatingToken
+    name: serviceaccountrotatingtoken_v1alpha1
+  - apiVersion: oss.grafana.crossplane.io/v1alpha1
+    filename: oss.grafana.crossplane.io/playlistv1_v1alpha1.json
+    kind: PlaylistV1
+    name: playlistv1_v1alpha1
+  - apiVersion: oss.grafana.crossplane.io/v1alpha1
+    filename: oss.grafana.crossplane.io/dashboardv2_v1alpha1.json
+    kind: DashboardV2
+    name: dashboardv2_v1alpha1
+  - apiVersion: oss.grafana.crossplane.io/v1alpha1
+    filename: oss.grafana.crossplane.io/connectionv0alpha1_v1alpha1.json
+    kind: ConnectionV0Alpha1
+    name: connectionv0alpha1_v1alpha1
+oss.grafana.m.crossplane.io:
+  - apiVersion: oss.grafana.m.crossplane.io/v1alpha1
+    filename: oss.grafana.m.crossplane.io/dashboardv2beta1_v1alpha1.json
+    kind: DashboardV2Beta1
+    name: dashboardv2beta1_v1alpha1
+  - apiVersion: oss.grafana.m.crossplane.io/v1alpha1
+    filename: oss.grafana.m.crossplane.io/serviceaccount_v1alpha1.json
+    kind: ServiceAccount
+    name: serviceaccount_v1alpha1
+  - apiVersion: oss.grafana.m.crossplane.io/v1alpha1
+    filename: oss.grafana.m.crossplane.io/organization_v1alpha1.json
+    kind: Organization
+    name: organization_v1alpha1
+  - apiVersion: oss.grafana.m.crossplane.io/v1alpha1
+    filename: oss.grafana.m.crossplane.io/folder_v1alpha1.json
+    kind: Folder
+    name: folder_v1alpha1
+  - apiVersion: oss.grafana.m.crossplane.io/v1alpha1
+    filename: oss.grafana.m.crossplane.io/repositoryv0alpha1_v1alpha1.json
+    kind: RepositoryV0Alpha1
+    name: repositoryv0alpha1_v1alpha1
+  - apiVersion: oss.grafana.m.crossplane.io/v1alpha1
+    filename: oss.grafana.m.crossplane.io/folderpermission_v1alpha1.json
+    kind: FolderPermission
+    name: folderpermission_v1alpha1
+  - apiVersion: oss.grafana.m.crossplane.io/v1alpha1
+    filename: oss.grafana.m.crossplane.io/librarypanel_v1alpha1.json
+    kind: LibraryPanel
+    name: librarypanel_v1alpha1
+  - apiVersion: oss.grafana.m.crossplane.io/v1alpha1
+    filename: oss.grafana.m.crossplane.io/team_v1alpha1.json
+    kind: Team
+    name: team_v1alpha1
+  - apiVersion: oss.grafana.m.crossplane.io/v1alpha1
+    filename: oss.grafana.m.crossplane.io/resource_v1alpha1.json
+    kind: Resource
+    name: resource_v1alpha1
+  - apiVersion: oss.grafana.m.crossplane.io/v1alpha1
+    filename: oss.grafana.m.crossplane.io/ssosettings_v1alpha1.json
+    kind: SsoSettings
+    name: ssosettings_v1alpha1
+  - apiVersion: oss.grafana.m.crossplane.io/v1alpha1
+    filename: oss.grafana.m.crossplane.io/dashboardpermission_v1alpha1.json
+    kind: DashboardPermission
+    name: dashboardpermission_v1alpha1
+  - apiVersion: oss.grafana.m.crossplane.io/v1alpha1
+    filename: oss.grafana.m.crossplane.io/user_v1alpha1.json
+    kind: User
+    name: user_v1alpha1
+  - apiVersion: oss.grafana.m.crossplane.io/v1alpha1
+    filename: oss.grafana.m.crossplane.io/playlistv0alpha1_v1alpha1.json
+    kind: PlaylistV0Alpha1
+    name: playlistv0alpha1_v1alpha1
+  - apiVersion: oss.grafana.m.crossplane.io/v1alpha1
+    filename: oss.grafana.m.crossplane.io/folderpermissionitem_v1alpha1.json
+    kind: FolderPermissionItem
+    name: folderpermissionitem_v1alpha1
+  - apiVersion: oss.grafana.m.crossplane.io/v1alpha1
+    filename: oss.grafana.m.crossplane.io/dashboardpublic_v1alpha1.json
+    kind: DashboardPublic
+    name: dashboardpublic_v1alpha1
+  - apiVersion: oss.grafana.m.crossplane.io/v1alpha1
+    filename: oss.grafana.m.crossplane.io/datasourceconfig_v1alpha1.json
+    kind: DataSourceConfig
+    name: datasourceconfig_v1alpha1
+  - apiVersion: oss.grafana.m.crossplane.io/v1alpha1
+    filename: oss.grafana.m.crossplane.io/organizationpreferences_v1alpha1.json
+    kind: OrganizationPreferences
+    name: organizationpreferences_v1alpha1
+  - apiVersion: oss.grafana.m.crossplane.io/v1alpha1
+    filename: oss.grafana.m.crossplane.io/dashboard_v1alpha1.json
+    kind: Dashboard
+    name: dashboard_v1alpha1
+  - apiVersion: oss.grafana.m.crossplane.io/v1alpha1
+    filename: oss.grafana.m.crossplane.io/serviceaccountrotatingtoken_v1alpha1.json
+    kind: ServiceAccountRotatingToken
+    name: serviceaccountrotatingtoken_v1alpha1
+  - apiVersion: oss.grafana.m.crossplane.io/v1alpha1
+    filename: oss.grafana.m.crossplane.io/playlist_v1alpha1.json
+    kind: Playlist
+    name: playlist_v1alpha1
+  - apiVersion: oss.grafana.m.crossplane.io/v1alpha1
+    filename: oss.grafana.m.crossplane.io/annotation_v1alpha1.json
+    kind: Annotation
+    name: annotation_v1alpha1
+  - apiVersion: oss.grafana.m.crossplane.io/v1alpha1
+    filename: oss.grafana.m.crossplane.io/serviceaccountpermission_v1alpha1.json
+    kind: ServiceAccountPermission
+    name: serviceaccountpermission_v1alpha1
+  - apiVersion: oss.grafana.m.crossplane.io/v1alpha1
+    filename: oss.grafana.m.crossplane.io/dashboardv1beta1_v1alpha1.json
+    kind: DashboardV1Beta1
+    name: dashboardv1beta1_v1alpha1
+  - apiVersion: oss.grafana.m.crossplane.io/v1alpha1
+    filename: oss.grafana.m.crossplane.io/playlistv1_v1alpha1.json
+    kind: PlaylistV1
+    name: playlistv1_v1alpha1
+  - apiVersion: oss.grafana.m.crossplane.io/v1alpha1
+    filename: oss.grafana.m.crossplane.io/dashboardv2_v1alpha1.json
+    kind: DashboardV2
+    name: dashboardv2_v1alpha1
+  - apiVersion: oss.grafana.m.crossplane.io/v1alpha1
+    filename: oss.grafana.m.crossplane.io/serviceaccounttoken_v1alpha1.json
+    kind: ServiceAccountToken
+    name: serviceaccounttoken_v1alpha1
+  - apiVersion: oss.grafana.m.crossplane.io/v1alpha1
+    filename: oss.grafana.m.crossplane.io/connectionv0alpha1_v1alpha1.json
+    kind: ConnectionV0Alpha1
+    name: connectionv0alpha1_v1alpha1
+  - apiVersion: oss.grafana.m.crossplane.io/v1alpha1
+    filename: oss.grafana.m.crossplane.io/dashboardpermissionitem_v1alpha1.json
+    kind: DashboardPermissionItem
+    name: dashboardpermissionitem_v1alpha1
+  - apiVersion: oss.grafana.m.crossplane.io/v1alpha1
+    filename: oss.grafana.m.crossplane.io/datasource_v1alpha1.json
+    kind: DataSource
+    name: datasource_v1alpha1
+  - apiVersion: oss.grafana.m.crossplane.io/v1alpha1
+    filename: oss.grafana.m.crossplane.io/serviceaccountpermissionitem_v1alpha1.json
+    kind: ServiceAccountPermissionItem
+    name: serviceaccountpermissionitem_v1alpha1
+oss.grafana.o.crossplane.io:
+  - apiVersion: oss.grafana.o.crossplane.io/v1alpha1
+    filename: oss.grafana.o.crossplane.io/librarypanelset_v1alpha1.json
+    kind: LibraryPanelSet
+    name: librarypanelset_v1alpha1
+  - apiVersion: oss.grafana.o.crossplane.io/v1alpha1
+    filename: oss.grafana.o.crossplane.io/serviceaccount_v1alpha1.json
+    kind: ServiceAccount
+    name: serviceaccount_v1alpha1
+  - apiVersion: oss.grafana.o.crossplane.io/v1alpha1
+    filename: oss.grafana.o.crossplane.io/organization_v1alpha1.json
+    kind: Organization
+    name: organization_v1alpha1
+  - apiVersion: oss.grafana.o.crossplane.io/v1alpha1
+    filename: oss.grafana.o.crossplane.io/folder_v1alpha1.json
+    kind: Folder
+    name: folder_v1alpha1
+  - apiVersion: oss.grafana.o.crossplane.io/v1alpha1
+    filename: oss.grafana.o.crossplane.io/userset_v1alpha1.json
+    kind: UserSet
+    name: userset_v1alpha1
+  - apiVersion: oss.grafana.o.crossplane.io/v1alpha1
+    filename: oss.grafana.o.crossplane.io/librarypanel_v1alpha1.json
+    kind: LibraryPanel
+    name: librarypanel_v1alpha1
+  - apiVersion: oss.grafana.o.crossplane.io/v1alpha1
+    filename: oss.grafana.o.crossplane.io/team_v1alpha1.json
+    kind: Team
+    name: team_v1alpha1
+  - apiVersion: oss.grafana.o.crossplane.io/v1alpha1
+    filename: oss.grafana.o.crossplane.io/folderset_v1alpha1.json
+    kind: FolderSet
+    name: folderset_v1alpha1
+  - apiVersion: oss.grafana.o.crossplane.io/v1alpha1
+    filename: oss.grafana.o.crossplane.io/user_v1alpha1.json
+    kind: User
+    name: user_v1alpha1
+  - apiVersion: oss.grafana.o.crossplane.io/v1alpha1
+    filename: oss.grafana.o.crossplane.io/organizationpreferences_v1alpha1.json
+    kind: OrganizationPreferences
+    name: organizationpreferences_v1alpha1
+  - apiVersion: oss.grafana.o.crossplane.io/v1alpha1
+    filename: oss.grafana.o.crossplane.io/dashboard_v1alpha1.json
+    kind: Dashboard
+    name: dashboard_v1alpha1
+  - apiVersion: oss.grafana.o.crossplane.io/v1alpha1
+    filename: oss.grafana.o.crossplane.io/dashboardset_v1alpha1.json
+    kind: DashboardSet
+    name: dashboardset_v1alpha1
+  - apiVersion: oss.grafana.o.crossplane.io/v1alpha1
+    filename: oss.grafana.o.crossplane.io/organizationuser_v1alpha1.json
+    kind: OrganizationUser
+    name: organizationuser_v1alpha1
+  - apiVersion: oss.grafana.o.crossplane.io/v1alpha1
+    filename: oss.grafana.o.crossplane.io/datasource_v1alpha1.json
+    kind: DataSource
+    name: datasource_v1alpha1
 packages.eks.amazonaws.com:
   - apiVersion: packages.eks.amazonaws.com/v1alpha1
     filename: packages.eks.amazonaws.com/packagebundlecontroller_v1alpha1.json
@@ -13314,6 +14024,16 @@ slo.grafana.crossplane.io:
     filename: slo.grafana.crossplane.io/slo_v1alpha1.json
     kind: SLO
     name: slo_v1alpha1
+slo.grafana.m.crossplane.io:
+  - apiVersion: slo.grafana.m.crossplane.io/v1alpha1
+    filename: slo.grafana.m.crossplane.io/slo_v1alpha1.json
+    kind: SLO
+    name: slo_v1alpha1
+slo.grafana.o.crossplane.io:
+  - apiVersion: slo.grafana.o.crossplane.io/v1alpha1
+    filename: slo.grafana.o.crossplane.io/slos_v1alpha1.json
+    kind: SLOs
+    name: slos_v1alpha1
 sloth.slok.dev:
   - apiVersion: sloth.slok.dev/v1
     filename: sloth.slok.dev/prometheusservicelevel_v1.json
@@ -13336,6 +14056,32 @@ sm.grafana.crossplane.io:
     filename: sm.grafana.crossplane.io/checkalerts_v1alpha1.json
     kind: CheckAlerts
     name: checkalerts_v1alpha1
+sm.grafana.m.crossplane.io:
+  - apiVersion: sm.grafana.m.crossplane.io/v1alpha1
+    filename: sm.grafana.m.crossplane.io/checkalerts_v1alpha1.json
+    kind: CheckAlerts
+    name: checkalerts_v1alpha1
+  - apiVersion: sm.grafana.m.crossplane.io/v1alpha1
+    filename: sm.grafana.m.crossplane.io/check_v1alpha1.json
+    kind: Check
+    name: check_v1alpha1
+  - apiVersion: sm.grafana.m.crossplane.io/v1alpha1
+    filename: sm.grafana.m.crossplane.io/installation_v1alpha1.json
+    kind: Installation
+    name: installation_v1alpha1
+  - apiVersion: sm.grafana.m.crossplane.io/v1alpha1
+    filename: sm.grafana.m.crossplane.io/probe_v1alpha1.json
+    kind: Probe
+    name: probe_v1alpha1
+sm.grafana.o.crossplane.io:
+  - apiVersion: sm.grafana.o.crossplane.io/v1alpha1
+    filename: sm.grafana.o.crossplane.io/probeset_v1alpha1.json
+    kind: ProbeSet
+    name: probeset_v1alpha1
+  - apiVersion: sm.grafana.o.crossplane.io/v1alpha1
+    filename: sm.grafana.o.crossplane.io/probe_v1alpha1.json
+    kind: Probe
+    name: probe_v1alpha1
 snapscheduler.backube:
   - apiVersion: snapscheduler.backube/v1
     filename: snapscheduler.backube/snapshotschedule_v1.json
