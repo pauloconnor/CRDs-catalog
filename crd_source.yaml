@@ -1301,7 +1301,7 @@ sources:
     changelog: "https://github.com/bank-vaults/vault-operator/releases"
 
   - url: "https://github.com/vmware-tanzu/velero"
-    tag: ""
+    tag: "v1.18.0"
     repo_path: "config/crd/v1/bases"
     changelog: "https://github.com/vmware-tanzu/velero/releases"
 
