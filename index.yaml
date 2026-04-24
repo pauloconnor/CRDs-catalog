@@ -8603,6 +8603,10 @@ kiali.io:
     filename: kiali.io/kiali_v1alpha1.json
     kind: kiali
     name: kiali_v1alpha1
+  - apiVersion: kiali.io/v1alpha1
+    filename: kiali.io/ossmconsole_v1alpha1.json
+    kind: ossmconsole
+    name: ossmconsole_v1alpha1
 kibana.k8s.elastic.co:
   - apiVersion: kibana.k8s.elastic.co/v1alpha1
     filename: kibana.k8s.elastic.co/kibana_v1alpha1.json
