@@ -13,7 +13,7 @@
       "type": "object"
     },
     "spec": {
-      "description": "InstanceProfileSpec defines the desired state of InstanceProfile.\n\nContains information about an instance profile.\n\nThis data type is used as a response element in the following operations:\n\n  - CreateInstanceProfile\n\n  - GetInstanceProfile\n\n  - ListInstanceProfiles\n\n  - ListInstanceProfilesForRole",
+      "description": "InstanceProfileSpec defines the desired state of InstanceProfile.\n\nContains information about an instance profile.\n\nThis data type is used as a response element in the following operations:\n\n   * CreateInstanceProfile\n\n   * GetInstanceProfile\n\n   * ListInstanceProfiles\n\n   * ListInstanceProfilesForRole",
       "properties": {
         "name": {
           "description": "The name of the instance profile to create.\n\nThis parameter allows (through its regex pattern (http://wikipedia.org/wiki/regex))\na string of characters consisting of upper and lowercase alphanumeric characters\nwith no spaces. You can also include any of the following characters: _+=,.@-\n\nRegex Pattern: `^[\\w+=,.@-]+$`",
