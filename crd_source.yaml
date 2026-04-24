@@ -951,7 +951,7 @@ sources:
     changelog: "https://github.com/akuity/kargo/releases"
 
   - url: "https://github.com/kubernetes-sigs/karpenter"
-    tag: ""
+    tag: "v1.11.1"
     repo_path: "pkg/apis/crds"
     changelog: "https://github.com/kubernetes-sigs/karpenter/releases"
 
