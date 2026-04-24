@@ -931,7 +931,7 @@ sources:
     changelog: "https://github.com/keycloak/keycloak-k8s-resources/releases"
 
   - url: "https://github.com/mariadb-operator/mariadb-operator"
-    tag: ""
+    tag: "mariadb-operator-crds-26.3.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/mariadb-operator/mariadb-operator/releases"
 
