@@ -11604,6 +11604,10 @@ organizations.services.k8s.aws:
     filename: organizations.services.k8s.aws/organizationalunit_v1alpha1.json
     kind: OrganizationalUnit
     name: organizationalunit_v1alpha1
+  - apiVersion: organizations.services.k8s.aws/v1alpha1
+    filename: organizations.services.k8s.aws/account_v1alpha1.json
+    kind: Account
+    name: account_v1alpha1
 orgpolicy.cnrm.cloud.google.com:
   - apiVersion: orgpolicy.cnrm.cloud.google.com/v1alpha1
     filename: orgpolicy.cnrm.cloud.google.com/orgpolicycustomconstraint_v1alpha1.json
