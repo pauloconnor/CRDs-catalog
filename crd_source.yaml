@@ -106,7 +106,7 @@ sources:
     changelog: "https://github.com/aws-controllers-k8s/dynamodb-controller/releases"
 
   - url: "https://github.com/aws-controllers-k8s/ec2-controller"
-    tag: ""
+    tag: "v1.11.1"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/aws-controllers-k8s/ec2-controller/releases"
 
