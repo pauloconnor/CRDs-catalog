@@ -5221,6 +5221,10 @@ ecr.services.k8s.aws:
     filename: ecr.services.k8s.aws/pullthroughcacherule_v1alpha1.json
     kind: PullThroughCacheRule
     name: pullthroughcacherule_v1alpha1
+  - apiVersion: ecr.services.k8s.aws/v1alpha1
+    filename: ecr.services.k8s.aws/repositorycreationtemplate_v1alpha1.json
+    kind: RepositoryCreationTemplate
+    name: repositorycreationtemplate_v1alpha1
 edgecontainer.cnrm.cloud.google.com:
   - apiVersion: edgecontainer.cnrm.cloud.google.com/v1beta1
     filename: edgecontainer.cnrm.cloud.google.com/edgecontainernodepool_v1beta1.json
