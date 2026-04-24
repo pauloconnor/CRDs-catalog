@@ -12171,6 +12171,10 @@ rds.services.k8s.aws:
     filename: rds.services.k8s.aws/dbclustersnapshot_v1alpha1.json
     kind: DBClusterSnapshot
     name: dbclustersnapshot_v1alpha1
+  - apiVersion: rds.services.k8s.aws/v1alpha1
+    filename: rds.services.k8s.aws/dbclusterendpoint_v1alpha1.json
+    kind: DBClusterEndpoint
+    name: dbclusterendpoint_v1alpha1
 readiness.node.x-k8s.io:
   - apiVersion: readiness.node.x-k8s.io/v1alpha1
     filename: readiness.node.x-k8s.io/nodereadinessrule_v1alpha1.json

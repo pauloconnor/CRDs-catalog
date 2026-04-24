@@ -16,7 +16,7 @@
       "description": "DBSnapshotSpec defines the desired state of DBSnapshot.\n\nContains the details of an Amazon RDS DB snapshot.\n\nThis data type is used as a response element in the DescribeDBSnapshots action.",
       "properties": {
         "dbInstanceIdentifier": {
-          "description": "The identifier of the DB instance that you want to create the snapshot of.\n\nConstraints:\n\n  - Must match the identifier of an existing DBInstance.",
+          "description": "The identifier of the DB instance that you want to create the snapshot of.\n\nConstraints:\n\n   * Must match the identifier of an existing DBInstance.",
           "type": "string"
         },
         "dbInstanceIdentifierRef": {
@@ -40,7 +40,7 @@
           "additionalProperties": false
         },
         "dbSnapshotIdentifier": {
-          "description": "The identifier for the DB snapshot.\n\nConstraints:\n\n  - Can't be null, empty, or blank\n\n  - Must contain from 1 to 255 letters, numbers, or hyphens\n\n  - First character must be a letter\n\n  - Can't end with a hyphen or contain two consecutive hyphens\n\nExample: my-snapshot-id",
+          "description": "The identifier for the DB snapshot.\n\nConstraints:\n\n   * Can't be null, empty, or blank\n\n   * Must contain from 1 to 255 letters, numbers, or hyphens\n\n   * First character must be a letter\n\n   * Can't end with a hyphen or contain two consecutive hyphens\n\nExample: my-snapshot-id",
           "type": "string"
         },
         "tags": {
@@ -193,7 +193,7 @@
         "processorFeatures": {
           "description": "The number of CPU cores and the number of threads per core for the DB instance\nclass of the DB instance when the DB snapshot was created.",
           "items": {
-            "description": "Contains the processor features of a DB instance class.\n\nTo specify the number of CPU cores, use the coreCount feature name for the\nName parameter. To specify the number of threads per core, use the threadsPerCore\nfeature name for the Name parameter.\n\nYou can set the processor features of the DB instance class for a DB instance\nwhen you call one of the following actions:\n\n  - CreateDBInstance\n\n  - ModifyDBInstance\n\n  - RestoreDBInstanceFromDBSnapshot\n\n  - RestoreDBInstanceFromS3\n\n  - RestoreDBInstanceToPointInTime\n\nYou can view the valid processor values for a particular instance class by\ncalling the DescribeOrderableDBInstanceOptions action and specifying the\ninstance class for the DBInstanceClass parameter.\n\nIn addition, you can use the following actions for DB instance class processor\ninformation:\n\n  - DescribeDBInstances\n\n  - DescribeDBSnapshots\n\n  - DescribeValidDBInstanceModifications\n\nIf you call DescribeDBInstances, ProcessorFeature returns non-null values\nonly if the following conditions are met:\n\n  - You are accessing an Oracle DB instance.\n\n  - Your Oracle DB instance class supports configuring the number of CPU\n    cores and threads per core.\n\n  - The current number CPU cores and threads is set to a non-default value.\n\nFor more information, see Configuring the processor for a DB instance class\nin RDS for Oracle (https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.DBInstanceClass.html#USER_ConfigureProcessor)\nin the Amazon RDS User Guide.",
+            "description": "Contains the processor features of a DB instance class.\n\nTo specify the number of CPU cores, use the coreCount feature name for the\nName parameter. To specify the number of threads per core, use the threadsPerCore\nfeature name for the Name parameter.\n\nYou can set the processor features of the DB instance class for a DB instance\nwhen you call one of the following actions:\n\n   * CreateDBInstance\n\n   * ModifyDBInstance\n\n   * RestoreDBInstanceFromDBSnapshot\n\n   * RestoreDBInstanceFromS3\n\n   * RestoreDBInstanceToPointInTime\n\nYou can view the valid processor values for a particular instance class by\ncalling the DescribeOrderableDBInstanceOptions action and specifying the\ninstance class for the DBInstanceClass parameter.\n\nIn addition, you can use the following actions for DB instance class processor\ninformation:\n\n   * DescribeDBInstances\n\n   * DescribeDBSnapshots\n\n   * DescribeValidDBInstanceModifications\n\nIf you call DescribeDBInstances, ProcessorFeature returns non-null values\nonly if the following conditions are met:\n\n   * You are accessing an Oracle DB instance.\n\n   * Your Oracle DB instance class supports configuring the number of CPU\n   cores and threads per core.\n\n   * The current number CPU cores and threads is set to a non-default value.\n\nFor more information, see Configuring the processor for a DB instance class\nin RDS for Oracle (https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.DBInstanceClass.html#USER_ConfigureProcessor)\nin the Amazon RDS User Guide.",
             "properties": {
               "name": {
                 "type": "string"
