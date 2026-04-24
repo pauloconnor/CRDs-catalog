@@ -916,7 +916,7 @@ sources:
     changelog: "https://github.com/k0sproject/k0smotron/releases"
 
   - url: "https://github.com/grafana/k6-operator"
-    tag: ""
+    tag: "v1.3.2"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/grafana/k6-operator/releases"
 
