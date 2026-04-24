@@ -1271,7 +1271,7 @@ sources:
     changelog: "https://github.com/kubeshop/testkube/releases"
 
   - url: "https://github.com/traefik/traefik"
-    tag: ""
+    tag: "v3.6.14"
     repo_path: "docs/content/reference/dynamic-configuration"
     changelog: "https://github.com/traefik/traefik/releases"
 
