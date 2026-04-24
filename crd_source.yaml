@@ -836,7 +836,7 @@ sources:
     changelog: "https://github.com/fluent/fluent-operator/releases"
 
   - url: "https://github.com/envoyproxy/gateway"
-    tag: ""
+    tag: "v1.7.2"
     repo_path: "charts/gateway-helm/crds/generated"
     changelog: "https://github.com/envoyproxy/gateway/releases"
 
