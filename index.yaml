@@ -6780,6 +6780,18 @@ groupsnapshot.storage.k8s.io:
     filename: groupsnapshot.storage.k8s.io/volumegroupsnapshotcontent_v1beta1.json
     kind: VolumeGroupSnapshotContent
     name: volumegroupsnapshotcontent_v1beta1
+  - apiVersion: groupsnapshot.storage.k8s.io/v1beta2
+    filename: groupsnapshot.storage.k8s.io/volumegroupsnapshot_v1beta2.json
+    kind: VolumeGroupSnapshot
+    name: volumegroupsnapshot_v1beta2
+  - apiVersion: groupsnapshot.storage.k8s.io/v1beta2
+    filename: groupsnapshot.storage.k8s.io/volumegroupsnapshotcontent_v1beta2.json
+    kind: VolumeGroupSnapshotContent
+    name: volumegroupsnapshotcontent_v1beta2
+  - apiVersion: groupsnapshot.storage.k8s.io/v1beta2
+    filename: groupsnapshot.storage.k8s.io/volumegroupsnapshotclass_v1beta2.json
+    kind: VolumeGroupSnapshotClass
+    name: volumegroupsnapshotclass_v1beta2
 healthcare.cnrm.cloud.google.com:
   - apiVersion: healthcare.cnrm.cloud.google.com/v1alpha1
     filename: healthcare.cnrm.cloud.google.com/healthcaredataset_v1alpha1.json
