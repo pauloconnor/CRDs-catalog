@@ -88,7 +88,9 @@ def strip_dot_slash(str: str) -> str:
 
 def list_dirs_in_src_dir(src: str) -> List[str]:
     entries = [strip_dot_slash(os.path.join(src, name)) for name in os.listdir(src)]
-    return [dir for dir in entries if os.path.isdir(dir)]
+    # Only include directories that look like CRD API groups (contain a dot,
+    # e.g. "cert-manager.io").  This skips non-CRD dirs like Utilities, .github, etc.
+    return [dir for dir in entries if os.path.isdir(dir) and "." in os.path.basename(dir)]
 
 def CreateCrds(dir: str, org_data: YamlDataStructure) -> SubResult_CrdCollection:
     print(f"Processing directory {dir}")

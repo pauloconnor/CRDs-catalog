@@ -1,0 +1,1326 @@
+# CRD Source Registry
+# Each entry points to an upstream GitHub repository containing CRD definitions.
+# API groups are discovered automatically at runtime from spec.group in each CRD,
+# so new groups added upstream are picked up without changes to this file.
+#
+# Fields:
+#   url:            GitHub repository URL
+#   tag:            Last processed release tag (managed by update_crds.py).
+#                   Set to "" for first run. The script skips sources whose
+#                   upstream tag matches this value and bumps it after a
+#                   successful update.
+#   fetch_strategy: How to obtain CRD YAML files (default: repo_path):
+#     - repo_path:     Fetch YAML files from a directory at the latest release tag
+#     - release_asset:  Download a named asset from the latest GitHub release
+#     - release_url:   Download from a URL template (use {version} placeholder)
+#   repo_path:      Directory in the repo containing CRD YAML files
+#   asset_name:     Release asset filename (for release_asset strategy)
+#   url_template:   URL with {version} placeholder (for release_url strategy)
+#   changelog:      URL to release notes / changelog
+#
+# The update_crds.py script reads this file, fetches CRDs, converts to JSON
+# schema, and places them into directories named after each spec.group.
+
+sources:
+
+  # ---------------------------------------------------------------------------
+  # Google Cloud Config Connector (all *.cnrm.cloud.google.com groups)
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/GoogleCloudPlatform/k8s-config-connector"
+    tag: ""
+    repo_path: "crds"
+    changelog: "https://github.com/GoogleCloudPlatform/k8s-config-connector/releases"
+
+  - url: "https://github.com/GoogleCloudPlatform/gke-networking-recipes"
+    tag: ""
+    repo_path: "crds"
+    changelog: "https://github.com/GoogleCloudPlatform/gke-networking-recipes/releases"
+
+  - url: "https://github.com/GoogleCloudPlatform/cloud-sql-proxy-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/GoogleCloudPlatform/cloud-sql-proxy-operator/releases"
+
+  - url: "https://github.com/GoogleCloudPlatform/gke-secret-sync-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/GoogleCloudPlatform/gke-secret-sync-controller/releases"
+
+  - url: "https://github.com/GoogleCloudPlatform/prometheus-engine"
+    tag: ""
+    repo_path: "cmd/operator/deploy/crds"
+    changelog: "https://github.com/GoogleCloudPlatform/prometheus-engine/releases"
+
+  # ---------------------------------------------------------------------------
+  # AWS Controllers for Kubernetes (ACK)
+  # Each service has its own controller repo at config/crd/bases
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/aws-controllers-k8s/acm-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/acm-controller/releases"
+
+  - url: "https://github.com/aws-controllers-k8s/acmpca-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/acmpca-controller/releases"
+
+  - url: "https://github.com/aws-controllers-k8s/apigatewayv2-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/apigatewayv2-controller/releases"
+
+  - url: "https://github.com/aws-controllers-k8s/applicationautoscaling-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/applicationautoscaling-controller/releases"
+
+  - url: "https://github.com/aws-controllers-k8s/cloudfront-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/cloudfront-controller/releases"
+
+  - url: "https://github.com/aws-controllers-k8s/cloudtrail-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/cloudtrail-controller/releases"
+
+  - url: "https://github.com/aws-controllers-k8s/cloudwatch-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/cloudwatch-controller/releases"
+
+  - url: "https://github.com/aws-controllers-k8s/cloudwatchlogs-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/cloudwatchlogs-controller/releases"
+
+  - url: "https://github.com/aws-controllers-k8s/cognitoidentityprovider-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/cognitoidentityprovider-controller/releases"
+
+  - url: "https://github.com/aws-controllers-k8s/dynamodb-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/dynamodb-controller/releases"
+
+  - url: "https://github.com/aws-controllers-k8s/ec2-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/ec2-controller/releases"
+
+  - url: "https://github.com/aws-controllers-k8s/ecr-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/ecr-controller/releases"
+
+  - url: "https://github.com/aws-controllers-k8s/eks-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/eks-controller/releases"
+
+  - url: "https://github.com/aws-controllers-k8s/elasticache-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/elasticache-controller/releases"
+
+  - url: "https://github.com/aws-controllers-k8s/emrcontainers-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/emrcontainers-controller/releases"
+
+  - url: "https://github.com/aws-controllers-k8s/eventbridge-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/eventbridge-controller/releases"
+
+  - url: "https://github.com/aws-controllers-k8s/iam-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/iam-controller/releases"
+
+  - url: "https://github.com/aws-controllers-k8s/kafka-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/kafka-controller/releases"
+
+  - url: "https://github.com/aws-controllers-k8s/kinesis-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/kinesis-controller/releases"
+
+  - url: "https://github.com/aws-controllers-k8s/kms-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/kms-controller/releases"
+
+  - url: "https://github.com/aws-controllers-k8s/lambda-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/lambda-controller/releases"
+
+  - url: "https://github.com/aws-controllers-k8s/memorydb-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/memorydb-controller/releases"
+
+  - url: "https://github.com/aws-controllers-k8s/mq-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/mq-controller/releases"
+
+  - url: "https://github.com/aws-controllers-k8s/networkfirewall-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/networkfirewall-controller/releases"
+
+  - url: "https://github.com/aws-controllers-k8s/opensearchservice-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/opensearchservice-controller/releases"
+
+  - url: "https://github.com/aws-controllers-k8s/organizations-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/organizations-controller/releases"
+
+  - url: "https://github.com/aws-controllers-k8s/pipes-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/pipes-controller/releases"
+
+  - url: "https://github.com/aws-controllers-k8s/prometheusservice-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/prometheusservice-controller/releases"
+
+  - url: "https://github.com/aws-controllers-k8s/ram-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/ram-controller/releases"
+
+  - url: "https://github.com/aws-controllers-k8s/rds-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/rds-controller/releases"
+
+  - url: "https://github.com/aws-controllers-k8s/route53-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/route53-controller/releases"
+
+  - url: "https://github.com/aws-controllers-k8s/s3-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/s3-controller/releases"
+
+  - url: "https://github.com/aws-controllers-k8s/sagemaker-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/sagemaker-controller/releases"
+
+  - url: "https://github.com/aws-controllers-k8s/secretsmanager-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/secretsmanager-controller/releases"
+
+  - url: "https://github.com/aws-controllers-k8s/sfn-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/sfn-controller/releases"
+
+  - url: "https://github.com/aws-controllers-k8s/sns-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/sns-controller/releases"
+
+  - url: "https://github.com/aws-controllers-k8s/sqs-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/sqs-controller/releases"
+
+  - url: "https://github.com/aws-controllers-k8s/runtime"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/runtime/releases"
+
+  # ---------------------------------------------------------------------------
+  # Other AWS CRDs
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/aws/aws-application-networking-k8s"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws/aws-application-networking-k8s/releases"
+
+  - url: "https://github.com/aws/amazon-vpc-cni-k8s"
+    tag: ""
+    repo_path: "charts/aws-vpc-cni/crds"
+    changelog: "https://github.com/aws/amazon-vpc-cni-k8s/releases"
+
+  - url: "https://github.com/aws/amazon-vpc-resource-controller-k8s"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws/amazon-vpc-resource-controller-k8s/releases"
+
+  - url: "https://github.com/kubernetes-sigs/aws-load-balancer-controller"
+    tag: ""
+    repo_path: "helm/aws-load-balancer-controller/crds"
+    changelog: "https://github.com/kubernetes-sigs/aws-load-balancer-controller/releases"
+
+  - url: "https://github.com/aws/karpenter-provider-aws"
+    tag: ""
+    repo_path: "pkg/apis/crds"
+    changelog: "https://github.com/aws/karpenter-provider-aws/releases"
+
+  - url: "https://github.com/aws/eks-anywhere"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws/eks-anywhere/releases"
+
+  - url: "https://github.com/aws/amazon-eks-pod-identity-webhook"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws/amazon-eks-pod-identity-webhook/releases"
+
+  - url: "https://github.com/kubernetes-sigs/cluster-api-provider-aws"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/kubernetes-sigs/cluster-api-provider-aws/releases"
+
+  # ---------------------------------------------------------------------------
+  # Azure Service Operator + related Azure CRDs
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/Azure/azure-service-operator"
+    tag: ""
+    repo_path: "v2/config/crd/bases"
+    changelog: "https://github.com/Azure/azure-service-operator/releases"
+
+  - url: "https://github.com/Azure/karpenter-provider-azure"
+    tag: ""
+    repo_path: "pkg/apis/crds"
+    changelog: "https://github.com/Azure/karpenter-provider-azure/releases"
+
+  - url: "https://github.com/Azure/application-gateway-kubernetes-ingress"
+    tag: ""
+    repo_path: "crds"
+    changelog: "https://github.com/Azure/application-gateway-kubernetes-ingress/releases"
+
+  - url: "https://github.com/kubernetes-sigs/cluster-api-provider-azure"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/kubernetes-sigs/cluster-api-provider-azure/releases"
+
+  # ---------------------------------------------------------------------------
+  # Upbound Providers
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/upbound/provider-aws"
+    tag: ""
+    repo_path: "package/crds"
+    changelog: "https://github.com/upbound/provider-aws/releases"
+
+  - url: "https://github.com/upbound/provider-azure"
+    tag: ""
+    repo_path: "package/crds"
+    changelog: "https://github.com/upbound/provider-azure/releases"
+
+  # ---------------------------------------------------------------------------
+  # Elastic Cloud on Kubernetes (ECK)
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/elastic/cloud-on-k8s"
+    tag: ""
+    repo_path: "config/crds/v1"
+    changelog: "https://github.com/elastic/cloud-on-k8s/releases"
+
+  # ---------------------------------------------------------------------------
+  # Istio
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/istio/istio"
+    tag: ""
+    repo_path: "manifests/charts/base/crds"
+    changelog: "https://github.com/istio/istio/releases"
+
+  # ---------------------------------------------------------------------------
+  # Strimzi Kafka Operator
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/strimzi/strimzi-kafka-operator"
+    tag: ""
+    repo_path: "packaging/install/cluster-operator"
+    changelog: "https://github.com/strimzi/strimzi-kafka-operator/releases"
+
+  # ---------------------------------------------------------------------------
+  # KubeVirt
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/kubevirt/kubevirt"
+    tag: ""
+    fetch_strategy: release_url
+    url_template: "https://github.com/kubevirt/kubevirt/releases/download/{version}/kubevirt-operator.yaml"
+    changelog: "https://github.com/kubevirt/kubevirt/releases"
+
+  - url: "https://github.com/kubevirt/containerized-data-importer"
+    tag: ""
+    fetch_strategy: release_url
+    url_template: "https://github.com/kubevirt/containerized-data-importer/releases/download/{version}/cdi-operator.yaml"
+    changelog: "https://github.com/kubevirt/containerized-data-importer/releases"
+
+  # ---------------------------------------------------------------------------
+  # Cluster API (CAPI)
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/kubernetes-sigs/cluster-api"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/kubernetes-sigs/cluster-api/releases"
+
+  # ---------------------------------------------------------------------------
+  # OPA Gatekeeper
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/open-policy-agent/gatekeeper"
+    tag: ""
+    repo_path: "charts/gatekeeper/crds"
+    changelog: "https://github.com/open-policy-agent/gatekeeper/releases"
+
+  # ---------------------------------------------------------------------------
+  # Flux CD
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/fluxcd/helm-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/fluxcd/helm-controller/releases"
+
+  - url: "https://github.com/fluxcd/kustomize-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/fluxcd/kustomize-controller/releases"
+
+  - url: "https://github.com/fluxcd/source-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/fluxcd/source-controller/releases"
+
+  - url: "https://github.com/fluxcd/notification-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/fluxcd/notification-controller/releases"
+
+  - url: "https://github.com/fluxcd/image-automation-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/fluxcd/image-automation-controller/releases"
+
+  - url: "https://github.com/flux-iac/tofu-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/flux-iac/tofu-controller/releases"
+
+  - url: "https://github.com/controlplaneio-fluxcd/flux-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/controlplaneio-fluxcd/flux-operator/releases"
+
+  - url: "https://github.com/fluxcd/flagger"
+    tag: ""
+    repo_path: "charts/flagger/crds"
+    changelog: "https://github.com/fluxcd/flagger/releases"
+
+  # ---------------------------------------------------------------------------
+  # cert-manager
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/cert-manager/cert-manager"
+    tag: ""
+    fetch_strategy: release_asset
+    asset_name: "cert-manager.crds.yaml"
+    changelog: "https://github.com/cert-manager/cert-manager/releases"
+
+  - url: "https://github.com/cert-manager/approver-policy"
+    tag: ""
+    repo_path: "deploy/charts/approver-policy/templates/crds"
+    changelog: "https://github.com/cert-manager/approver-policy/releases"
+
+  - url: "https://github.com/cert-manager/trust-manager"
+    tag: ""
+    repo_path: "deploy/charts/trust-manager/templates/crds"
+    changelog: "https://github.com/cert-manager/trust-manager/releases"
+
+  - url: "https://github.com/cert-manager/aws-privateca-issuer"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/cert-manager/aws-privateca-issuer/releases"
+
+  - url: "https://github.com/cloudflare/origin-ca-issuer"
+    tag: ""
+    repo_path: "deploy/charts/origin-ca-issuer/crds"
+    changelog: "https://github.com/cloudflare/origin-ca-issuer/releases"
+
+  # ---------------------------------------------------------------------------
+  # Argo
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/argoproj/argo-cd"
+    tag: ""
+    repo_path: "manifests/crds"
+    changelog: "https://github.com/argoproj/argo-cd/releases"
+
+  - url: "https://github.com/argoproj/argo-rollouts"
+    tag: ""
+    repo_path: "manifests/crds"
+    changelog: "https://github.com/argoproj/argo-rollouts/releases"
+
+  - url: "https://github.com/argoproj-labs/argocd-image-updater"
+    tag: ""
+    repo_path: "manifests/crds"
+    changelog: "https://github.com/argoproj-labs/argocd-image-updater/releases"
+
+  - url: "https://github.com/argoproj-labs/gitops-promoter"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/argoproj-labs/gitops-promoter/releases"
+
+  # ---------------------------------------------------------------------------
+  # Crossplane + Grafana Crossplane Provider
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/crossplane/crossplane"
+    tag: ""
+    repo_path: "cluster/crds"
+    changelog: "https://github.com/crossplane/crossplane/releases"
+
+  - url: "https://github.com/grafana/crossplane-provider-grafana"
+    tag: ""
+    repo_path: "package/crds"
+    changelog: "https://github.com/grafana/crossplane-provider-grafana/releases"
+
+  # ---------------------------------------------------------------------------
+  # Prometheus Operator
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/prometheus-operator/prometheus-operator"
+    tag: ""
+    repo_path: "example/prometheus-operator-crd"
+    changelog: "https://github.com/prometheus-operator/prometheus-operator/releases"
+
+  # ---------------------------------------------------------------------------
+  # Rancher / Cattle
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/rancher/rancher"
+    tag: ""
+    repo_path: "pkg/crds/yaml/generated"
+    changelog: "https://github.com/rancher/rancher/releases"
+
+  - url: "https://github.com/rancher/fleet"
+    tag: ""
+    repo_path: "charts/fleet-crd/templates"
+    changelog: "https://github.com/rancher/fleet/releases"
+
+  - url: "https://github.com/rancher/system-upgrade-controller"
+    tag: ""
+    repo_path: "config/crd"
+    changelog: "https://github.com/rancher/system-upgrade-controller/releases"
+
+  # ---------------------------------------------------------------------------
+  # KEDA
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/kedacore/keda"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/kedacore/keda/releases"
+
+  - url: "https://github.com/kedacore/http-add-on"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/kedacore/http-add-on/releases"
+
+  # ---------------------------------------------------------------------------
+  # external-secrets / Kyverno / Gateway API / Datadog
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/external-secrets/external-secrets"
+    tag: ""
+    repo_path: "deploy/crds"
+    changelog: "https://github.com/external-secrets/external-secrets/releases"
+
+  - url: "https://github.com/kyverno/kyverno"
+    tag: ""
+    repo_path: "config/crds"
+    changelog: "https://github.com/kyverno/kyverno/releases"
+
+  - url: "https://github.com/kubernetes-sigs/gateway-api"
+    tag: ""
+    repo_path: "config/crd/standard"
+    changelog: "https://github.com/kubernetes-sigs/gateway-api/releases"
+
+  - url: "https://github.com/DataDog/datadog-operator"
+    tag: ""
+    repo_path: "config/crd/bases/v1"
+    changelog: "https://github.com/DataDog/datadog-operator/releases"
+
+  # ---------------------------------------------------------------------------
+  # Open Cluster Management / Solo.io / Percona / VSHN / Pinniped
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/open-cluster-management-io/api"
+    tag: ""
+    repo_path: "."
+    changelog: "https://github.com/open-cluster-management-io/api/releases"
+
+  - url: "https://github.com/open-cluster-management-io/ocm"
+    tag: ""
+    repo_path: "deploy/cluster-manager/config/crds"
+    changelog: "https://github.com/open-cluster-management-io/ocm/releases"
+
+  - url: "https://github.com/solo-io/gloo"
+    tag: ""
+    repo_path: "install/helm/gloo/crds"
+    changelog: "https://github.com/solo-io/gloo/releases"
+
+  - url: "https://github.com/percona/percona-postgresql-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/percona/percona-postgresql-operator/releases"
+
+  - url: "https://github.com/percona/percona-server-mongodb-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/percona/percona-server-mongodb-operator/releases"
+
+  - url: "https://github.com/percona/percona-xtradb-cluster-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/percona/percona-xtradb-cluster-operator/releases"
+
+  - url: "https://github.com/percona/percona-server-mysql-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/percona/percona-server-mysql-operator/releases"
+
+  - url: "https://github.com/percona/dbaas-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/percona/dbaas-operator/releases"
+
+  - url: "https://github.com/vshn/appcat"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/vshn/appcat/releases"
+
+  - url: "https://github.com/vmware-tanzu/pinniped"
+    tag: ""
+    repo_path: "deploy"
+    changelog: "https://github.com/vmware-tanzu/pinniped/releases"
+
+  # ---------------------------------------------------------------------------
+  # Individual Projects (alphabetical)
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/Azure/aad-pod-identity"
+    tag: ""
+    repo_path: "deploy/infra/base"
+    changelog: "https://github.com/Azure/aad-pod-identity/releases"
+
+  - url: "https://github.com/zalando/postgres-operator"
+    tag: ""
+    repo_path: "charts/postgres-operator/crds"
+    changelog: "https://github.com/zalando/postgres-operator/releases"
+
+  - url: "https://github.com/actions/actions-runner-controller"
+    tag: ""
+    repo_path: "charts/gha-runner-scale-set-controller/crds"
+    changelog: "https://github.com/actions/actions-runner-controller/releases"
+
+  - url: "https://github.com/aiven/aiven-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aiven/aiven-operator/releases"
+
+  - url: "https://github.com/project-akri/akri"
+    tag: ""
+    repo_path: "deployment/helm/crds"
+    changelog: "https://github.com/project-akri/akri/releases"
+
+  - url: "https://github.com/apache/apisix-ingress-controller"
+    tag: ""
+    repo_path: "samples/deploy/crd/v1"
+    changelog: "https://github.com/apache/apisix-ingress-controller/releases"
+
+  - url: "https://github.com/RedisLabs/redis-enterprise-k8s-docs"
+    tag: ""
+    repo_path: "crds"
+    changelog: "https://github.com/RedisLabs/redis-enterprise-k8s-docs/releases"
+
+  - url: "https://github.com/emqx/emqx-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/emqx/emqx-operator/releases"
+
+  - url: "https://github.com/gitlab-org/cloud-native/gitlab-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/gitlab-org/cloud-native/gitlab-operator/releases"
+
+  - url: "https://github.com/jfrog/jfrog-registry-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/jfrog/jfrog-registry-operator/releases"
+
+  - url: "https://github.com/projectsveltos/addon-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/projectsveltos/addon-controller/releases"
+
+  - url: "https://github.com/aquasecurity/trivy-operator"
+    tag: ""
+    repo_path: "deploy/helm/crds"
+    changelog: "https://github.com/aquasecurity/trivy-operator/releases"
+
+  - url: "https://github.com/k0sproject/k0s"
+    tag: ""
+    repo_path: "static/manifests/autopilot"
+    changelog: "https://github.com/k0sproject/k0s/releases"
+
+  - url: "https://github.com/castai/kvisor"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/castai/kvisor/releases"
+
+  - url: "https://github.com/kubernetes/autoscaler"
+    tag: ""
+    repo_path: "vertical-pod-autoscaler/deploy"
+    changelog: "https://github.com/kubernetes/autoscaler/releases"
+
+  - url: "https://github.com/ansible/awx-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/ansible/awx-operator/releases"
+
+  - url: "https://github.com/cloudnative-pg/cloudnative-pg"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/cloudnative-pg/cloudnative-pg/releases"
+
+  - url: "https://github.com/bitnami-labs/sealed-secrets"
+    tag: ""
+    repo_path: "helm/sealed-secrets/crds"
+    changelog: "https://github.com/bitnami-labs/sealed-secrets/releases"
+
+  - url: "https://github.com/tinkerbell/tinkerbell"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/tinkerbell/tinkerbell/releases"
+
+  - url: "https://github.com/projectcapsule/capsule"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/projectcapsule/capsule/releases"
+
+  - url: "https://github.com/weaveworks/cluster-api-provider-existinginfra"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/weaveworks/cluster-api-provider-existinginfra/releases"
+
+  - url: "https://github.com/rook/rook"
+    tag: ""
+    repo_path: "deploy/charts/rook-ceph/crds"
+    changelog: "https://github.com/rook/rook/releases"
+
+  - url: "https://github.com/smallstep/step-issuer"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/smallstep/step-issuer/releases"
+
+  - url: "https://github.com/FyraLabs/chisel-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/FyraLabs/chisel-operator/releases"
+
+  - url: "https://github.com/cilium/cilium"
+    tag: ""
+    repo_path: "pkg/k8s/apis/cilium.io/client/crds"
+    changelog: "https://github.com/cilium/cilium/releases"
+
+  - url: "https://github.com/Altinity/clickhouse-operator"
+    tag: ""
+    repo_path: "deploy/operator"
+    changelog: "https://github.com/Altinity/clickhouse-operator/releases"
+
+  - url: "https://github.com/ClickHouse/clickhouse-operator"
+    tag: ""
+    repo_path: "deploy/operator"
+    changelog: "https://github.com/ClickHouse/clickhouse-operator/releases"
+
+  - url: "https://github.com/adyanth/cloudflare-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/adyanth/cloudflare-operator/releases"
+
+  - url: "https://github.com/zarqman/clustersecret"
+    tag: ""
+    repo_path: "yaml"
+    changelog: "https://github.com/zarqman/clustersecret/releases"
+
+  - url: "https://github.com/grafana/alloy"
+    tag: ""
+    repo_path: "operations/helm/charts/alloy/crds"
+    changelog: "https://github.com/grafana/alloy/releases"
+
+  - url: "https://github.com/coreweave/virtual-server"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/coreweave/virtual-server/releases"
+
+  - url: "https://github.com/Kong/kubernetes-ingress-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/Kong/kubernetes-ingress-controller/releases"
+
+  - url: "https://github.com/open-feature/open-feature-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/open-feature/open-feature-operator/releases"
+
+  - url: "https://github.com/coroot/coroot-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/coroot/coroot-operator/releases"
+
+  - url: "https://github.com/dapr/dapr"
+    tag: ""
+    repo_path: "charts/dapr/crds"
+    changelog: "https://github.com/dapr/dapr/releases"
+
+  - url: "https://github.com/spotahome/redis-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/spotahome/redis-operator/releases"
+
+  - url: "https://github.com/ariga/atlas-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/ariga/atlas-operator/releases"
+
+  - url: "https://github.com/dexidp/dex"
+    tag: ""
+    repo_path: "scripts"
+    changelog: "https://github.com/dexidp/dex/releases"
+
+  - url: "https://github.com/dragonflydb/dragonfly-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/dragonflydb/dragonfly-operator/releases"
+
+  - url: "https://github.com/datainfrahq/druid-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/datainfrahq/druid-operator/releases"
+
+  - url: "https://github.com/Dynatrace/dynatrace-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/Dynatrace/dynatrace-operator/releases"
+
+  - url: "https://github.com/eraser-dev/eraser"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/eraser-dev/eraser/releases"
+
+  - url: "https://github.com/kubernetes-sigs/external-dns"
+    tag: ""
+    repo_path: "charts/external-dns/crds"
+    changelog: "https://github.com/kubernetes-sigs/external-dns/releases"
+
+  - url: "https://github.com/nginxinc/nginx-ingress-helm-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/nginxinc/nginx-ingress-helm-operator/releases"
+
+  - url: "https://github.com/apache/flink-kubernetes-operator"
+    tag: ""
+    repo_path: "helm/flink-kubernetes-operator/crds"
+    changelog: "https://github.com/apache/flink-kubernetes-operator/releases"
+
+  - url: "https://github.com/fluent/fluent-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/fluent/fluent-operator/releases"
+
+  - url: "https://github.com/envoyproxy/gateway"
+    tag: ""
+    repo_path: "charts/gateway-helm/crds/generated"
+    changelog: "https://github.com/envoyproxy/gateway/releases"
+
+  - url: "https://github.com/kgateway-dev/kgateway"
+    tag: ""
+    repo_path: "install/helm/kgateway/crds"
+    changelog: "https://github.com/kgateway-dev/kgateway/releases"
+
+  - url: "https://github.com/nginx/nginx-gateway-fabric"
+    tag: ""
+    repo_path: "deploy/crds"
+    changelog: "https://github.com/nginx/nginx-gateway-fabric/releases"
+
+  - url: "https://github.com/emissary-ingress/emissary"
+    tag: ""
+    repo_path: "charts/emissary-ingress/crds"
+    changelog: "https://github.com/emissary-ingress/emissary/releases"
+
+  - url: "https://github.com/grafana/grafana-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/grafana/grafana-operator/releases"
+
+  - url: "https://github.com/gravitee-io/gravitee-kubernetes-operator"
+    tag: ""
+    repo_path: "helm/gko/crds"
+    changelog: "https://github.com/gravitee-io/gravitee-kubernetes-operator/releases"
+
+  - url: "https://github.com/kubernetes-csi/external-snapshotter"
+    tag: ""
+    repo_path: "client/config/crd"
+    changelog: "https://github.com/kubernetes-csi/external-snapshotter/releases"
+
+  - url: "https://github.com/hivemq/hivemq-operator"
+    tag: ""
+    repo_path: "charts/hivemq-operator/crds"
+    changelog: "https://github.com/hivemq/hivemq-operator/releases"
+
+  - url: "https://github.com/robusta-dev/holmesgpt"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/robusta-dev/holmesgpt/releases"
+
+  - url: "https://github.com/oracle/oci-native-ingress-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/oracle/oci-native-ingress-controller/releases"
+
+  - url: "https://github.com/haproxytech/kubernetes-ingress"
+    tag: ""
+    repo_path: "deploy/crds"
+    changelog: "https://github.com/haproxytech/kubernetes-ingress/releases"
+
+  - url: "https://github.com/isindir/sops-secrets-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/isindir/sops-secrets-operator/releases"
+
+  - url: "https://github.com/jaegertracing/jaeger-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/jaegertracing/jaeger-operator/releases"
+
+  - url: "https://github.com/nats-io/nack"
+    tag: ""
+    repo_path: "deploy/crds"
+    changelog: "https://github.com/nats-io/nack/releases"
+
+  - url: "https://github.com/minio/operator"
+    tag: ""
+    repo_path: "resources"
+    changelog: "https://github.com/minio/operator/releases"
+
+  - url: "https://github.com/k0sproject/k0smotron"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/k0sproject/k0smotron/releases"
+
+  - url: "https://github.com/grafana/k6-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/grafana/k6-operator/releases"
+
+  - url: "https://github.com/k8snetworkplumbingwg/multus-cni"
+    tag: ""
+    repo_path: "deployments/multus-daemonset"
+    changelog: "https://github.com/k8snetworkplumbingwg/multus-cni/releases"
+
+  - url: "https://github.com/keycloak/keycloak-k8s-resources"
+    tag: ""
+    repo_path: "kubernetes"
+    changelog: "https://github.com/keycloak/keycloak-k8s-resources/releases"
+
+  - url: "https://github.com/mariadb-operator/mariadb-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/mariadb-operator/mariadb-operator/releases"
+
+  - url: "https://github.com/nginx/nginx-ingress"
+    tag: ""
+    repo_path: "charts/nginx-ingress/crds"
+    changelog: "https://github.com/nginx/nginx-ingress/releases"
+
+  - url: "https://github.com/k8up-io/k8up"
+    tag: ""
+    repo_path: "config/crd/apiextensions.k8s.io/v1/base"
+    changelog: "https://github.com/k8up-io/k8up/releases"
+
+  - url: "https://github.com/akuity/kargo"
+    tag: ""
+    repo_path: "charts/kargo/resources/crds"
+    changelog: "https://github.com/akuity/kargo/releases"
+
+  - url: "https://github.com/kubernetes-sigs/karpenter"
+    tag: ""
+    repo_path: "pkg/apis/crds"
+    changelog: "https://github.com/kubernetes-sigs/karpenter/releases"
+
+  - url: "https://github.com/kiali/kiali-operator"
+    tag: ""
+    repo_path: "crd-docs/crd"
+    changelog: "https://github.com/kiali/kiali-operator/releases"
+
+  - url: "https://github.com/db-operator/db-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/db-operator/db-operator/releases"
+
+  - url: "https://github.com/kro-run/kro"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/kro-run/kro/releases"
+
+  - url: "https://github.com/senthilrch/kube-fledged"
+    tag: ""
+    repo_path: "deploy/kubefledged-operator/deploy/crds"
+    changelog: "https://github.com/senthilrch/kube-fledged/releases"
+
+  - url: "https://github.com/kubeflow/training-operator"
+    tag: ""
+    repo_path: "manifests/base/crds"
+    changelog: "https://github.com/kubeflow/training-operator/releases"
+
+  - url: "https://github.com/kubescape/operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/kubescape/operator/releases"
+
+  - url: "https://github.com/kubernetes-sigs/kueue"
+    tag: ""
+    repo_path: "config/components/crd/bases"
+    changelog: "https://github.com/kubernetes-sigs/kueue/releases"
+
+  - url: "https://github.com/linkerd/linkerd2"
+    tag: ""
+    repo_path: "charts/linkerd-crds/templates"
+    changelog: "https://github.com/linkerd/linkerd2/releases"
+
+  - url: "https://github.com/kube-logging/logging-operator"
+    tag: ""
+    repo_path: "charts/logging-operator/crds"
+    changelog: "https://github.com/kube-logging/logging-operator/releases"
+
+  - url: "https://github.com/openshift/cluster-logging-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/openshift/cluster-logging-operator/releases"
+
+  - url: "https://github.com/longhorn/longhorn"
+    tag: ""
+    repo_path: "chart/crds"
+    changelog: "https://github.com/longhorn/longhorn/releases"
+
+  - url: "https://github.com/metal3-io/baremetal-operator"
+    tag: ""
+    repo_path: "config/base/crds"
+    changelog: "https://github.com/metal3-io/baremetal-operator/releases"
+
+  - url: "https://github.com/metallb/metallb"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/metallb/metallb/releases"
+
+  - url: "https://github.com/mongodb/mongodb-kubernetes-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/mongodb/mongodb-kubernetes-operator/releases"
+
+  - url: "https://github.com/mysql/mysql-operator"
+    tag: ""
+    repo_path: "deploy/charts/mysql-operator/crds"
+    changelog: "https://github.com/mysql/mysql-operator/releases"
+
+  - url: "https://github.com/bitpoke/mysql-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/bitpoke/mysql-operator/releases"
+
+  - url: "https://github.com/kubernetes-sigs/node-feature-discovery"
+    tag: ""
+    repo_path: "deployment/helm/node-feature-discovery/crds"
+    changelog: "https://github.com/kubernetes-sigs/node-feature-discovery/releases"
+
+  - url: "https://github.com/NVIDIA/gpu-operator"
+    tag: ""
+    repo_path: "deployments/gpu-operator/crds"
+    changelog: "https://github.com/NVIDIA/gpu-operator/releases"
+
+  - url: "https://github.com/NVIDIA/k8s-nim-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/NVIDIA/k8s-nim-operator/releases"
+
+  - url: "https://github.com/1Password/onepassword-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/1Password/onepassword-operator/releases"
+
+  - url: "https://github.com/openebs/openebs"
+    tag: ""
+    repo_path: "deploy/helm/charts/crds"
+    changelog: "https://github.com/openebs/openebs/releases"
+
+  - url: "https://github.com/openshift/api"
+    tag: ""
+    repo_path: "."
+    changelog: "https://github.com/openshift/api/releases"
+
+  - url: "https://github.com/open-telemetry/opentelemetry-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/open-telemetry/opentelemetry-operator/releases"
+
+  - url: "https://github.com/h3poteto/node-manager"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/h3poteto/node-manager/releases"
+
+  - url: "https://github.com/tigera/operator"
+    tag: ""
+    repo_path: "pkg/crds/operator"
+    changelog: "https://github.com/tigera/operator/releases"
+
+  - url: "https://github.com/VictoriaMetrics/operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/VictoriaMetrics/operator/releases"
+
+  - url: "https://github.com/operator-framework/operator-lifecycle-manager"
+    tag: ""
+    repo_path: "deploy/chart/crds"
+    changelog: "https://github.com/operator-framework/operator-lifecycle-manager/releases"
+
+  - url: "https://github.com/pingcap/tidb-operator"
+    tag: ""
+    repo_path: "manifests/crd"
+    changelog: "https://github.com/pingcap/tidb-operator/releases"
+
+  - url: "https://github.com/piraeusdatastore/piraeus-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/piraeusdatastore/piraeus-operator/releases"
+
+  - url: "https://github.com/confluentinc/confluent-kubernetes-examples"
+    tag: ""
+    repo_path: "crds"
+    changelog: "https://github.com/confluentinc/confluent-kubernetes-examples/releases"
+
+  - url: "https://github.com/sigstore/policy-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/sigstore/policy-controller/releases"
+
+  - url: "https://github.com/CrunchyData/postgres-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/CrunchyData/postgres-operator/releases"
+
+  - url: "https://github.com/projectcontour/contour"
+    tag: ""
+    repo_path: "examples/contour"
+    changelog: "https://github.com/projectcontour/contour/releases"
+
+  - url: "https://github.com/pyrra-dev/pyrra"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/pyrra-dev/pyrra/releases"
+
+  - url: "https://github.com/rabbitmq/cluster-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/rabbitmq/cluster-operator/releases"
+
+  - url: "https://github.com/FairwindsOps/rbac-manager"
+    tag: ""
+    repo_path: "deploy/charts/rbac-manager/crds"
+    changelog: "https://github.com/FairwindsOps/rbac-manager/releases"
+
+  - url: "https://github.com/OT-CONTAINER-KIT/redis-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/OT-CONTAINER-KIT/redis-operator/releases"
+
+  - url: "https://github.com/mogenius/renovate-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/mogenius/renovate-operator/releases"
+
+  - url: "https://github.com/streamnative/pulsar-resources-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/streamnative/pulsar-resources-operator/releases"
+
+  - url: "https://github.com/teleport/teleport"
+    tag: ""
+    repo_path: "integrations/operator/config/crd/bases"
+    changelog: "https://github.com/gravitational/teleport/releases"
+
+  - url: "https://github.com/restatedev/restate-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/restatedev/restate-operator/releases"
+
+  - url: "https://github.com/grafana/rollout-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/grafana/rollout-operator/releases"
+
+  - url: "https://github.com/redpanda-data/redpanda-operator"
+    tag: ""
+    repo_path: "operator/config/crd/bases"
+    changelog: "https://github.com/redpanda-data/redpanda-operator/releases"
+
+  - url: "https://github.com/scylladb/scylla-operator"
+    tag: ""
+    repo_path: "pkg/api/scylla/v1/crds"
+    changelog: "https://github.com/scylladb/scylla-operator/releases"
+
+  - url: "https://github.com/seaweedfs/seaweedfs-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/seaweedfs/seaweedfs-operator/releases"
+
+  - url: "https://github.com/mittwald/kubernetes-secret-generator"
+    tag: ""
+    repo_path: "deploy/crds"
+    changelog: "https://github.com/mittwald/kubernetes-secret-generator/releases"
+
+  - url: "https://github.com/DopplerHQ/kubernetes-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/DopplerHQ/kubernetes-operator/releases"
+
+  - url: "https://github.com/hashicorp/vault-secrets-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/hashicorp/vault-secrets-operator/releases"
+
+  - url: "https://github.com/Infisical/infisical"
+    tag: ""
+    repo_path: "helm-charts/secrets-operator/crds"
+    changelog: "https://github.com/Infisical/infisical/releases"
+
+  - url: "https://github.com/kubernetes-sigs/secrets-store-csi-driver"
+    tag: ""
+    repo_path: "charts/secrets-store-csi-driver/crds"
+    changelog: "https://github.com/kubernetes-sigs/secrets-store-csi-driver/releases"
+
+  - url: "https://github.com/kserve/kserve"
+    tag: ""
+    repo_path: "config/crd/full"
+    changelog: "https://github.com/kserve/kserve/releases"
+
+  - url: "https://github.com/slok/sloth"
+    tag: ""
+    repo_path: "deploy/kubernetes/helm/sloth/crds"
+    changelog: "https://github.com/slok/sloth/releases"
+
+  - url: "https://github.com/backube/snapscheduler"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/backube/snapscheduler/releases"
+
+  - url: "https://github.com/backube/volsync"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/backube/volsync/releases"
+
+  - url: "https://github.com/kubeflow/spark-operator"
+    tag: ""
+    repo_path: "charts/spark-operator-chart/crds"
+    changelog: "https://github.com/kubeflow/spark-operator/releases"
+
+  - url: "https://github.com/SparebankenVest/azure-key-vault-to-kubernetes"
+    tag: ""
+    repo_path: "crds"
+    changelog: "https://github.com/SparebankenVest/azure-key-vault-to-kubernetes/releases"
+
+  - url: "https://github.com/l7mp/stunner"
+    tag: ""
+    repo_path: "deploy/chart/stunner-gateway-operator/crds"
+    changelog: "https://github.com/l7mp/stunner/releases"
+
+  - url: "https://github.com/tailscale/tailscale"
+    tag: ""
+    repo_path: "cmd/k8s-operator/deploy/crds"
+    changelog: "https://github.com/tailscale/tailscale/releases"
+
+  - url: "https://github.com/siderolabs/talos"
+    tag: ""
+    repo_path: "pkg/machinery/config/schemas"
+    changelog: "https://github.com/siderolabs/talos/releases"
+
+  - url: "https://github.com/grafana/tempo-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/grafana/tempo-operator/releases"
+
+  - url: "https://github.com/temporalio/temporal-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/temporalio/temporal-operator/releases"
+
+  - url: "https://github.com/kluctl/kluctl"
+    tag: ""
+    repo_path: "install/controller/crds"
+    changelog: "https://github.com/kluctl/kluctl/releases"
+
+  - url: "https://github.com/kubeshop/testkube"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/kubeshop/testkube/releases"
+
+  - url: "https://github.com/traefik/traefik"
+    tag: ""
+    repo_path: "docs/content/reference/dynamic-configuration"
+    changelog: "https://github.com/traefik/traefik/releases"
+
+  - url: "https://github.com/NetApp/trident"
+    tag: ""
+    repo_path: "deploy/crds"
+    changelog: "https://github.com/NetApp/trident/releases"
+
+  - url: "https://github.com/Twingate/kubernetes-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/Twingate/kubernetes-operator/releases"
+
+  - url: "https://github.com/defenseunicorns/uds-core"
+    tag: ""
+    repo_path: "src/pepr/operator/crd"
+    changelog: "https://github.com/defenseunicorns/uds-core/releases"
+
+  - url: "https://github.com/epam/edp-codebase-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/epam/edp-codebase-operator/releases"
+
+  - url: "https://github.com/bank-vaults/vault-operator"
+    tag: ""
+    repo_path: "deploy/charts/vault-operator/crds"
+    changelog: "https://github.com/bank-vaults/vault-operator/releases"
+
+  - url: "https://github.com/vmware-tanzu/velero"
+    tag: ""
+    repo_path: "config/crd/v1/bases"
+    changelog: "https://github.com/vmware-tanzu/velero/releases"
+
+  - url: "https://github.com/wiz-sec/wiz-kubernetes-connector"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/wiz-sec/wiz-kubernetes-connector/releases"
+
+  - url: "https://github.com/nauth-io/nauth"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/nauth-io/nauth/releases"
+
+  - url: "https://github.com/openreports/openreports-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/openreports/openreports-operator/releases"
+
+  - url: "https://github.com/tuppercloud/tuppr"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/tuppercloud/tuppr/releases"
