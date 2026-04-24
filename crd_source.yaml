@@ -540,7 +540,7 @@ sources:
     changelog: "https://github.com/kyverno/kyverno/releases"
 
   - url: "https://github.com/kubernetes-sigs/gateway-api"
-    tag: ""
+    tag: "v1.5.1"
     repo_path: "config/crd/standard"
     changelog: "https://github.com/kubernetes-sigs/gateway-api/releases"
 
