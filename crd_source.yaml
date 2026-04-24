@@ -1276,7 +1276,7 @@ sources:
     changelog: "https://github.com/traefik/traefik/releases"
 
   - url: "https://github.com/NetApp/trident"
-    tag: ""
+    tag: "v26.02.0"
     repo_path: "deploy/crds"
     changelog: "https://github.com/NetApp/trident/releases"
 
