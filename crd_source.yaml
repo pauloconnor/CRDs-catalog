@@ -946,7 +946,7 @@ sources:
     changelog: "https://github.com/k8up-io/k8up/releases"
 
   - url: "https://github.com/akuity/kargo"
-    tag: ""
+    tag: "v1.10.2"
     repo_path: "charts/kargo/resources/crds"
     changelog: "https://github.com/akuity/kargo/releases"
 
