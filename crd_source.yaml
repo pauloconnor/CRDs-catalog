@@ -460,7 +460,7 @@ sources:
     changelog: "https://github.com/argoproj/argo-cd/releases"
 
   - url: "https://github.com/argoproj/argo-rollouts"
-    tag: ""
+    tag: "v1.9.0"
     repo_path: "manifests/crds"
     changelog: "https://github.com/argoproj/argo-rollouts/releases"
 
