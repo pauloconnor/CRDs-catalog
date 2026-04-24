@@ -616,7 +616,7 @@ sources:
     changelog: "https://github.com/zalando/postgres-operator/releases"
 
   - url: "https://github.com/actions/actions-runner-controller"
-    tag: ""
+    tag: "gha-runner-scale-set-0.14.1"
     repo_path: "charts/gha-runner-scale-set-controller/crds"
     changelog: "https://github.com/actions/actions-runner-controller/releases"
 
