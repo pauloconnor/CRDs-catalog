@@ -2739,6 +2739,14 @@ cloudwatch.services.k8s.aws:
     filename: cloudwatch.services.k8s.aws/metricalarm_v1alpha1.json
     kind: MetricAlarm
     name: metricalarm_v1alpha1
+  - apiVersion: cloudwatch.services.k8s.aws/v1alpha1
+    filename: cloudwatch.services.k8s.aws/metricstream_v1alpha1.json
+    kind: MetricStream
+    name: metricstream_v1alpha1
+  - apiVersion: cloudwatch.services.k8s.aws/v1alpha1
+    filename: cloudwatch.services.k8s.aws/dashboard_v1alpha1.json
+    kind: Dashboard
+    name: dashboard_v1alpha1
 cloudwatchlogs.services.k8s.aws:
   - apiVersion: cloudwatchlogs.services.k8s.aws/v1alpha1
     filename: cloudwatchlogs.services.k8s.aws/loggroup_v1alpha1.json
