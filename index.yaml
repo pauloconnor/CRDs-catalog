@@ -10768,6 +10768,90 @@ operator.tigera.io:
     filename: operator.tigera.io/apiserver_v1.json
     kind: APIServer
     name: apiserver_v1
+  - apiVersion: operator.tigera.io/v1
+    filename: operator.tigera.io/authentication_v1.json
+    kind: Authentication
+    name: authentication_v1
+  - apiVersion: operator.tigera.io/v1
+    filename: operator.tigera.io/applicationlayer_v1.json
+    kind: ApplicationLayer
+    name: applicationlayer_v1
+  - apiVersion: operator.tigera.io/v1
+    filename: operator.tigera.io/packetcaptureapi_v1.json
+    kind: PacketCaptureAPI
+    name: packetcaptureapi_v1
+  - apiVersion: operator.tigera.io/v1
+    filename: operator.tigera.io/managementclusterconnection_v1.json
+    kind: ManagementClusterConnection
+    name: managementclusterconnection_v1
+  - apiVersion: operator.tigera.io/v1
+    filename: operator.tigera.io/istio_v1.json
+    kind: Istio
+    name: istio_v1
+  - apiVersion: operator.tigera.io/v1
+    filename: operator.tigera.io/tenant_v1.json
+    kind: Tenant
+    name: tenant_v1
+  - apiVersion: operator.tigera.io/v1
+    filename: operator.tigera.io/intrusiondetection_v1.json
+    kind: IntrusionDetection
+    name: intrusiondetection_v1
+  - apiVersion: operator.tigera.io/v1
+    filename: operator.tigera.io/tlsterminatedroute_v1.json
+    kind: tlsterminatedroute
+    name: tlsterminatedroute_v1
+  - apiVersion: operator.tigera.io/v1
+    filename: operator.tigera.io/compliance_v1.json
+    kind: Compliance
+    name: compliance_v1
+  - apiVersion: operator.tigera.io/v1
+    filename: operator.tigera.io/egressgateway_v1.json
+    kind: EgressGateway
+    name: egressgateway_v1
+  - apiVersion: operator.tigera.io/v1
+    filename: operator.tigera.io/logstorage_v1.json
+    kind: LogStorage
+    name: logstorage_v1
+  - apiVersion: operator.tigera.io/v1
+    filename: operator.tigera.io/nonclusterhost_v1.json
+    kind: NonClusterHost
+    name: nonclusterhost_v1
+  - apiVersion: operator.tigera.io/v1
+    filename: operator.tigera.io/gatewayapi_v1.json
+    kind: gatewayapi
+    name: gatewayapi_v1
+  - apiVersion: operator.tigera.io/v1
+    filename: operator.tigera.io/goldmane_v1.json
+    kind: goldmane
+    name: goldmane_v1
+  - apiVersion: operator.tigera.io/v1
+    filename: operator.tigera.io/tlspassthroughroute_v1.json
+    kind: tlspassthroughroute
+    name: tlspassthroughroute_v1
+  - apiVersion: operator.tigera.io/v1
+    filename: operator.tigera.io/managementcluster_v1.json
+    kind: ManagementCluster
+    name: managementcluster_v1
+  - apiVersion: operator.tigera.io/v1
+    filename: operator.tigera.io/monitor_v1.json
+    kind: Monitor
+    name: monitor_v1
+  - apiVersion: operator.tigera.io/v1
+    filename: operator.tigera.io/whisker_v1.json
+    kind: whisker
+    name: whisker_v1
+  - apiVersion: operator.tigera.io/v1
+    filename: operator.tigera.io/manager_v1.json
+    kind: Manager
+    name: manager_v1
+  - apiVersion: operator.tigera.io/v1
+    filename: operator.tigera.io/logcollector_v1.json
+    kind: LogCollector
+    name: logcollector_v1
+  - apiVersion: operator.tigera.io/v1
+    filename: operator.tigera.io/policyrecommendation_v1.json
+    kind: PolicyRecommendation
+    name: policyrecommendation_v1
 operator.victoriametrics.com:
   - apiVersion: operator.victoriametrics.com/v1beta1
     filename: operator.victoriametrics.com/vmcluster_v1beta1.json
