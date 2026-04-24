@@ -455,7 +455,7 @@ sources:
   # Argo
   # ---------------------------------------------------------------------------
   - url: "https://github.com/argoproj/argo-cd"
-    tag: ""
+    tag: "v3.3.8"
     repo_path: "manifests/crds"
     changelog: "https://github.com/argoproj/argo-cd/releases"
 
