@@ -14939,6 +14939,14 @@ tailscale.com:
     filename: tailscale.com/dnsconfig_v1alpha1.json
     kind: DNSConfig
     name: dnsconfig_v1alpha1
+  - apiVersion: tailscale.com/v1alpha1
+    filename: tailscale.com/tailnet_v1alpha1.json
+    kind: tailnet
+    name: tailnet_v1alpha1
+  - apiVersion: tailscale.com/v1alpha1
+    filename: tailscale.com/proxygrouppolicy_v1alpha1.json
+    kind: proxygrouppolicy
+    name: proxygrouppolicy_v1alpha1
 talos.dev:
   - apiVersion: talos.dev/v1alpha1
     filename: talos.dev/serviceaccount_v1alpha1.json
