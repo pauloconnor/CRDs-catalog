@@ -5194,8 +5194,8 @@
                 "additionalProperties": false
               },
               "url": {
-                "description": "url defines the URL of the endpoint to send samples to.",
-                "minLength": 1,
+                "description": "url defines the URL of the endpoint to send samples to.\n\nIt must use the HTTP or HTTPS scheme.",
+                "pattern": "^(http|https)://.+$",
                 "type": "string"
               },
               "writeRelabelConfigs": {
@@ -5475,6 +5475,11 @@
           "type": "object",
           "x-kubernetes-map-type": "atomic",
           "additionalProperties": false
+        },
+        "schedulerName": {
+          "description": "schedulerName defines the scheduler to use for Pod scheduling. If not specified, the default scheduler is used.",
+          "minLength": 1,
+          "type": "string"
         },
         "securityContext": {
           "description": "securityContext defines the pod-level security attributes and common container settings.\nThis defaults to the default PodSecurityContext.",
@@ -8104,14 +8109,6 @@
                   },
                   "type": "array"
                 },
-                "clientAuthType": {
-                  "description": "clientAuthType defines the server policy for client TLS authentication.\n\nFor more detail on clientAuth options:\nhttps://golang.org/pkg/crypto/tls/#ClientAuthType",
-                  "type": "string"
-                },
-                "clientCAFile": {
-                  "description": "clientCAFile defines the path to the CA certificate file for client certificate authentication to\nthe server.\n\nIt is mutually exclusive with `client_ca`.",
-                  "type": "string"
-                },
                 "client_ca": {
                   "description": "client_ca defines the Secret or ConfigMap containing the CA certificate for client certificate\nauthentication to the server.\n\nIt is mutually exclusive with `clientCAFile`.",
                   "properties": {
@@ -8166,6 +8163,14 @@
                   },
                   "type": "object",
                   "additionalProperties": false
+                },
+                "clientAuthType": {
+                  "description": "clientAuthType defines the server policy for client TLS authentication.\n\nFor more detail on clientAuth options:\nhttps://golang.org/pkg/crypto/tls/#ClientAuthType",
+                  "type": "string"
+                },
+                "clientCAFile": {
+                  "description": "clientCAFile defines the path to the CA certificate file for client certificate authentication to\nthe server.\n\nIt is mutually exclusive with `client_ca`.",
+                  "type": "string"
                 },
                 "curvePreferences": {
                   "description": "curvePreferences defines elliptic curves that will be used in an ECDHE handshake, in preference\norder.\n\nAvailable curves are documented in the Go documentation:\nhttps://golang.org/pkg/crypto/tls/#CurveID",

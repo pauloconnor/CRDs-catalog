@@ -1,0 +1,45 @@
+extends: default
+
+rules:
+  braces:
+    min-spaces-inside: 0
+    max-spaces-inside: 2
+  # Helm templates often require complex lines
+  line-length:
+    max: 180
+    level: warning
+    allow-non-breakable-words: true
+    allow-non-breakable-inline-mappings: true
+
+  # Common in Helm values files
+  comments:
+    min-spaces-from-content: 1
+
+  # Helm values often need empty values
+  empty-values: enable
+
+  # Allow multiple documents in values files
+  document-start:
+    present: false
+
+  # Indentation rules
+  indentation:
+    spaces: 2
+    indent-sequences: whatever
+
+  # Key formatting
+  key-duplicates: enable
+  key-ordering: disable
+
+  # Other formatting rules
+  new-line-at-end-of-file: enable
+  new-lines:
+    type: unix
+
+  # Trailing spaces
+  trailing-spaces: disable
+
+  # Truthy/falsy values
+  truthy:
+    allowed-values: ['true', 'false', 'yes', 'no']
+    check-keys: false

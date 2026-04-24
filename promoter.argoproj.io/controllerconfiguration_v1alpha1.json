@@ -1,0 +1,1632 @@
+{
+  "description": "ControllerConfiguration is the Schema for the controllerconfigurations API.",
+  "properties": {
+    "apiVersion": {
+      "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+      "type": "string"
+    },
+    "kind": {
+      "description": "Kind is a string value representing the REST resource this object represents.\nServers may infer this from the endpoint the client submits requests to.\nCannot be updated.\nIn CamelCase.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object"
+    },
+    "spec": {
+      "description": "ControllerConfigurationSpec defines the desired state of ControllerConfiguration.\n\nThis spec contains the global configuration for all controllers in the promoter system.\nEach controller has its own configuration section that specifies WorkQueue settings,\nrate limiters, and other controller-specific parameters. All fields should be required,\nwith defaults set in manifests rather than in code.",
+      "properties": {
+        "argocdCommitStatus": {
+          "description": "ArgoCDCommitStatus contains the configuration for the ArgoCDCommitStatus controller,\nincluding WorkQueue settings that control reconciliation behavior.",
+          "properties": {
+            "watchLocalApplications": {
+              "default": true,
+              "description": "WatchLocalApplications controls whether the controller monitors Argo CD Applications\nin the local cluster. When false, the controller will only watch Applications in remote clusters\nconfigured via kubeconfig secrets. This is useful when the Argo CD Application CRD is not installed\nin the local cluster or when all Applications are deployed to remote clusters.",
+              "type": "boolean"
+            },
+            "workQueue": {
+              "description": "WorkQueue contains the work queue configuration for the ArgoCDCommitStatus controller.\nThis includes requeue duration, maximum concurrent reconciles, and rate limiter settings.",
+              "properties": {
+                "maxConcurrentReconciles": {
+                  "description": "MaxConcurrentReconciles defines the maximum number of concurrent reconcile operations\nthat can run for this controller. Higher values increase throughput but consume more\nresources.",
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "rateLimiter": {
+                  "description": "RateLimiter defines the rate limiting strategy for the controller's work queue.\nRate limiting controls how quickly failed reconciliations are retried and helps\nprevent overwhelming external APIs or systems.",
+                  "properties": {
+                    "bucket": {
+                      "description": "Bucket rate limiter uses a token bucket algorithm to control request rate.\nAllows bursts while maintaining an average rate limit.",
+                      "properties": {
+                        "bucket": {
+                          "description": "Bucket is the maximum number of tokens that can be accumulated in the bucket.\nThis defines the maximum burst size - how many operations can occur in rapid\nsuccession before rate limiting takes effect. Must be non-negative.",
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "qps": {
+                          "description": "Qps (queries per second) is the rate at which tokens are added to the bucket.\nThis defines the sustained rate limit for operations. Must be non-negative.",
+                          "minimum": 0,
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "bucket",
+                        "qps"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "exponentialFailure": {
+                      "description": "ExponentialFailure rate limiter increases delay exponentially with each failure.\nStandard approach for backing off when operations fail repeatedly.",
+                      "properties": {
+                        "baseDelay": {
+                          "description": "BaseDelay is the initial delay after the first failure. Subsequent failures will exponentially\nincrease this delay (2x, 4x, 8x, etc.) until MaxDelay is reached.\nFormat follows Go's time.Duration syntax (e.g., \"1s\" for 1 second).",
+                          "type": "string"
+                        },
+                        "maxDelay": {
+                          "description": "MaxDelay is the maximum delay between retry attempts. Once the exponential backoff reaches\nthis value, all subsequent retries will use this delay.\nFormat follows Go's time.Duration syntax (e.g., \"1m\" for 1 minute).",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "baseDelay",
+                        "maxDelay"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "fastSlow": {
+                      "description": "FastSlow rate limiter provides fast retries initially, then switches to slow retries.\nUseful for quickly retrying transient errors while backing off for persistent failures.",
+                      "properties": {
+                        "fastDelay": {
+                          "description": "FastDelay is the delay used for the first MaxFastAttempts retry attempts.\nFormat follows Go's time.Duration syntax (e.g., \"100ms\" for 100 milliseconds).",
+                          "type": "string"
+                        },
+                        "maxFastAttempts": {
+                          "description": "MaxFastAttempts is the number of retry attempts that use FastDelay before switching to SlowDelay.\nMust be at least 1.",
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "slowDelay": {
+                          "description": "SlowDelay is the delay used for retry attempts after MaxFastAttempts have been exhausted.\nFormat follows Go's time.Duration syntax (e.g., \"10s\" for 10 seconds).",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "fastDelay",
+                        "maxFastAttempts",
+                        "slowDelay"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "maxOf": {
+                      "description": "MaxOf allows combining multiple rate limiters, where the maximum delay from all\nlimiters is used. This enables sophisticated rate limiting that respects multiple\nconstraints simultaneously (e.g., both per-item exponential backoff and global rate limits).",
+                      "items": {
+                        "description": "RateLimiterTypes defines the different algorithms available for rate limiting.\n\nExactly one of the three rate limiter types must be specified:\n  - FastSlow: Quick retry for transient errors, then slower retry for persistent failures\n  - ExponentialFailure: Standard exponential backoff for repeated failures\n  - Bucket: Token bucket algorithm for controlling overall request rate\n\nSee https://pkg.go.dev/k8s.io/client-go/util/workqueue for implementation details.",
+                        "properties": {
+                          "bucket": {
+                            "description": "Bucket rate limiter uses a token bucket algorithm to control request rate.\nAllows bursts while maintaining an average rate limit.",
+                            "properties": {
+                              "bucket": {
+                                "description": "Bucket is the maximum number of tokens that can be accumulated in the bucket.\nThis defines the maximum burst size - how many operations can occur in rapid\nsuccession before rate limiting takes effect. Must be non-negative.",
+                                "minimum": 0,
+                                "type": "integer"
+                              },
+                              "qps": {
+                                "description": "Qps (queries per second) is the rate at which tokens are added to the bucket.\nThis defines the sustained rate limit for operations. Must be non-negative.",
+                                "minimum": 0,
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "bucket",
+                              "qps"
+                            ],
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "exponentialFailure": {
+                            "description": "ExponentialFailure rate limiter increases delay exponentially with each failure.\nStandard approach for backing off when operations fail repeatedly.",
+                            "properties": {
+                              "baseDelay": {
+                                "description": "BaseDelay is the initial delay after the first failure. Subsequent failures will exponentially\nincrease this delay (2x, 4x, 8x, etc.) until MaxDelay is reached.\nFormat follows Go's time.Duration syntax (e.g., \"1s\" for 1 second).",
+                                "type": "string"
+                              },
+                              "maxDelay": {
+                                "description": "MaxDelay is the maximum delay between retry attempts. Once the exponential backoff reaches\nthis value, all subsequent retries will use this delay.\nFormat follows Go's time.Duration syntax (e.g., \"1m\" for 1 minute).",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "baseDelay",
+                              "maxDelay"
+                            ],
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "fastSlow": {
+                            "description": "FastSlow rate limiter provides fast retries initially, then switches to slow retries.\nUseful for quickly retrying transient errors while backing off for persistent failures.",
+                            "properties": {
+                              "fastDelay": {
+                                "description": "FastDelay is the delay used for the first MaxFastAttempts retry attempts.\nFormat follows Go's time.Duration syntax (e.g., \"100ms\" for 100 milliseconds).",
+                                "type": "string"
+                              },
+                              "maxFastAttempts": {
+                                "description": "MaxFastAttempts is the number of retry attempts that use FastDelay before switching to SlowDelay.\nMust be at least 1.",
+                                "minimum": 1,
+                                "type": "integer"
+                              },
+                              "slowDelay": {
+                                "description": "SlowDelay is the delay used for retry attempts after MaxFastAttempts have been exhausted.\nFormat follows Go's time.Duration syntax (e.g., \"10s\" for 10 seconds).",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "fastDelay",
+                              "maxFastAttempts",
+                              "slowDelay"
+                            ],
+                            "type": "object",
+                            "additionalProperties": false
+                          }
+                        },
+                        "type": "object",
+                        "x-kubernetes-validations": [
+                          {
+                            "message": "at most one of the fields in [fastSlow exponentialFailure bucket] may be set",
+                            "rule": "[has(self.fastSlow),has(self.exponentialFailure),has(self.bucket)].filter(x,x==true).size() <= 1"
+                          }
+                        ],
+                        "additionalProperties": false
+                      },
+                      "maxItems": 3,
+                      "type": "array"
+                    }
+                  },
+                  "type": "object",
+                  "x-kubernetes-validations": [
+                    {
+                      "message": "at most one of the fields in [fastSlow exponentialFailure bucket maxOf] may be set",
+                      "rule": "[has(self.fastSlow),has(self.exponentialFailure),has(self.bucket),has(self.maxOf)].filter(x,x==true).size() <= 1"
+                    },
+                    {
+                      "message": "at most one of the fields in [fastSlow exponentialFailure bucket] may be set",
+                      "rule": "[has(self.fastSlow),has(self.exponentialFailure),has(self.bucket)].filter(x,x==true).size() <= 1"
+                    }
+                  ],
+                  "additionalProperties": false
+                },
+                "requeueDuration": {
+                  "description": "RequeueDuration specifies how frequently resources should be requeued for automatic reconciliation.\nThis creates a periodic reconciliation loop that ensures the desired state is maintained even\nwithout external triggers. Format follows Go's time.Duration syntax (e.g., \"5m\" for 5 minutes).",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "maxConcurrentReconciles",
+                "rateLimiter",
+                "requeueDuration"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "watchLocalApplications",
+            "workQueue"
+          ],
+          "type": "object",
+          "additionalProperties": false
+        },
+        "changeTransferPolicy": {
+          "description": "ChangeTransferPolicy contains the configuration for the ChangeTransferPolicy controller,\nincluding WorkQueue settings that control reconciliation behavior.",
+          "properties": {
+            "workQueue": {
+              "description": "WorkQueue contains the work queue configuration for the ChangeTransferPolicy controller.\nThis includes requeue duration, maximum concurrent reconciles, and rate limiter settings.",
+              "properties": {
+                "maxConcurrentReconciles": {
+                  "description": "MaxConcurrentReconciles defines the maximum number of concurrent reconcile operations\nthat can run for this controller. Higher values increase throughput but consume more\nresources.",
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "rateLimiter": {
+                  "description": "RateLimiter defines the rate limiting strategy for the controller's work queue.\nRate limiting controls how quickly failed reconciliations are retried and helps\nprevent overwhelming external APIs or systems.",
+                  "properties": {
+                    "bucket": {
+                      "description": "Bucket rate limiter uses a token bucket algorithm to control request rate.\nAllows bursts while maintaining an average rate limit.",
+                      "properties": {
+                        "bucket": {
+                          "description": "Bucket is the maximum number of tokens that can be accumulated in the bucket.\nThis defines the maximum burst size - how many operations can occur in rapid\nsuccession before rate limiting takes effect. Must be non-negative.",
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "qps": {
+                          "description": "Qps (queries per second) is the rate at which tokens are added to the bucket.\nThis defines the sustained rate limit for operations. Must be non-negative.",
+                          "minimum": 0,
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "bucket",
+                        "qps"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "exponentialFailure": {
+                      "description": "ExponentialFailure rate limiter increases delay exponentially with each failure.\nStandard approach for backing off when operations fail repeatedly.",
+                      "properties": {
+                        "baseDelay": {
+                          "description": "BaseDelay is the initial delay after the first failure. Subsequent failures will exponentially\nincrease this delay (2x, 4x, 8x, etc.) until MaxDelay is reached.\nFormat follows Go's time.Duration syntax (e.g., \"1s\" for 1 second).",
+                          "type": "string"
+                        },
+                        "maxDelay": {
+                          "description": "MaxDelay is the maximum delay between retry attempts. Once the exponential backoff reaches\nthis value, all subsequent retries will use this delay.\nFormat follows Go's time.Duration syntax (e.g., \"1m\" for 1 minute).",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "baseDelay",
+                        "maxDelay"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "fastSlow": {
+                      "description": "FastSlow rate limiter provides fast retries initially, then switches to slow retries.\nUseful for quickly retrying transient errors while backing off for persistent failures.",
+                      "properties": {
+                        "fastDelay": {
+                          "description": "FastDelay is the delay used for the first MaxFastAttempts retry attempts.\nFormat follows Go's time.Duration syntax (e.g., \"100ms\" for 100 milliseconds).",
+                          "type": "string"
+                        },
+                        "maxFastAttempts": {
+                          "description": "MaxFastAttempts is the number of retry attempts that use FastDelay before switching to SlowDelay.\nMust be at least 1.",
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "slowDelay": {
+                          "description": "SlowDelay is the delay used for retry attempts after MaxFastAttempts have been exhausted.\nFormat follows Go's time.Duration syntax (e.g., \"10s\" for 10 seconds).",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "fastDelay",
+                        "maxFastAttempts",
+                        "slowDelay"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "maxOf": {
+                      "description": "MaxOf allows combining multiple rate limiters, where the maximum delay from all\nlimiters is used. This enables sophisticated rate limiting that respects multiple\nconstraints simultaneously (e.g., both per-item exponential backoff and global rate limits).",
+                      "items": {
+                        "description": "RateLimiterTypes defines the different algorithms available for rate limiting.\n\nExactly one of the three rate limiter types must be specified:\n  - FastSlow: Quick retry for transient errors, then slower retry for persistent failures\n  - ExponentialFailure: Standard exponential backoff for repeated failures\n  - Bucket: Token bucket algorithm for controlling overall request rate\n\nSee https://pkg.go.dev/k8s.io/client-go/util/workqueue for implementation details.",
+                        "properties": {
+                          "bucket": {
+                            "description": "Bucket rate limiter uses a token bucket algorithm to control request rate.\nAllows bursts while maintaining an average rate limit.",
+                            "properties": {
+                              "bucket": {
+                                "description": "Bucket is the maximum number of tokens that can be accumulated in the bucket.\nThis defines the maximum burst size - how many operations can occur in rapid\nsuccession before rate limiting takes effect. Must be non-negative.",
+                                "minimum": 0,
+                                "type": "integer"
+                              },
+                              "qps": {
+                                "description": "Qps (queries per second) is the rate at which tokens are added to the bucket.\nThis defines the sustained rate limit for operations. Must be non-negative.",
+                                "minimum": 0,
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "bucket",
+                              "qps"
+                            ],
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "exponentialFailure": {
+                            "description": "ExponentialFailure rate limiter increases delay exponentially with each failure.\nStandard approach for backing off when operations fail repeatedly.",
+                            "properties": {
+                              "baseDelay": {
+                                "description": "BaseDelay is the initial delay after the first failure. Subsequent failures will exponentially\nincrease this delay (2x, 4x, 8x, etc.) until MaxDelay is reached.\nFormat follows Go's time.Duration syntax (e.g., \"1s\" for 1 second).",
+                                "type": "string"
+                              },
+                              "maxDelay": {
+                                "description": "MaxDelay is the maximum delay between retry attempts. Once the exponential backoff reaches\nthis value, all subsequent retries will use this delay.\nFormat follows Go's time.Duration syntax (e.g., \"1m\" for 1 minute).",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "baseDelay",
+                              "maxDelay"
+                            ],
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "fastSlow": {
+                            "description": "FastSlow rate limiter provides fast retries initially, then switches to slow retries.\nUseful for quickly retrying transient errors while backing off for persistent failures.",
+                            "properties": {
+                              "fastDelay": {
+                                "description": "FastDelay is the delay used for the first MaxFastAttempts retry attempts.\nFormat follows Go's time.Duration syntax (e.g., \"100ms\" for 100 milliseconds).",
+                                "type": "string"
+                              },
+                              "maxFastAttempts": {
+                                "description": "MaxFastAttempts is the number of retry attempts that use FastDelay before switching to SlowDelay.\nMust be at least 1.",
+                                "minimum": 1,
+                                "type": "integer"
+                              },
+                              "slowDelay": {
+                                "description": "SlowDelay is the delay used for retry attempts after MaxFastAttempts have been exhausted.\nFormat follows Go's time.Duration syntax (e.g., \"10s\" for 10 seconds).",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "fastDelay",
+                              "maxFastAttempts",
+                              "slowDelay"
+                            ],
+                            "type": "object",
+                            "additionalProperties": false
+                          }
+                        },
+                        "type": "object",
+                        "x-kubernetes-validations": [
+                          {
+                            "message": "at most one of the fields in [fastSlow exponentialFailure bucket] may be set",
+                            "rule": "[has(self.fastSlow),has(self.exponentialFailure),has(self.bucket)].filter(x,x==true).size() <= 1"
+                          }
+                        ],
+                        "additionalProperties": false
+                      },
+                      "maxItems": 3,
+                      "type": "array"
+                    }
+                  },
+                  "type": "object",
+                  "x-kubernetes-validations": [
+                    {
+                      "message": "at most one of the fields in [fastSlow exponentialFailure bucket maxOf] may be set",
+                      "rule": "[has(self.fastSlow),has(self.exponentialFailure),has(self.bucket),has(self.maxOf)].filter(x,x==true).size() <= 1"
+                    },
+                    {
+                      "message": "at most one of the fields in [fastSlow exponentialFailure bucket] may be set",
+                      "rule": "[has(self.fastSlow),has(self.exponentialFailure),has(self.bucket)].filter(x,x==true).size() <= 1"
+                    }
+                  ],
+                  "additionalProperties": false
+                },
+                "requeueDuration": {
+                  "description": "RequeueDuration specifies how frequently resources should be requeued for automatic reconciliation.\nThis creates a periodic reconciliation loop that ensures the desired state is maintained even\nwithout external triggers. Format follows Go's time.Duration syntax (e.g., \"5m\" for 5 minutes).",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "maxConcurrentReconciles",
+                "rateLimiter",
+                "requeueDuration"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "workQueue"
+          ],
+          "type": "object",
+          "additionalProperties": false
+        },
+        "commitStatus": {
+          "description": "CommitStatus contains the configuration for the CommitStatus controller,\nincluding WorkQueue settings that control reconciliation behavior.",
+          "properties": {
+            "workQueue": {
+              "description": "WorkQueue contains the work queue configuration for the CommitStatus controller.\nThis includes requeue duration, maximum concurrent reconciles, and rate limiter settings.",
+              "properties": {
+                "maxConcurrentReconciles": {
+                  "description": "MaxConcurrentReconciles defines the maximum number of concurrent reconcile operations\nthat can run for this controller. Higher values increase throughput but consume more\nresources.",
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "rateLimiter": {
+                  "description": "RateLimiter defines the rate limiting strategy for the controller's work queue.\nRate limiting controls how quickly failed reconciliations are retried and helps\nprevent overwhelming external APIs or systems.",
+                  "properties": {
+                    "bucket": {
+                      "description": "Bucket rate limiter uses a token bucket algorithm to control request rate.\nAllows bursts while maintaining an average rate limit.",
+                      "properties": {
+                        "bucket": {
+                          "description": "Bucket is the maximum number of tokens that can be accumulated in the bucket.\nThis defines the maximum burst size - how many operations can occur in rapid\nsuccession before rate limiting takes effect. Must be non-negative.",
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "qps": {
+                          "description": "Qps (queries per second) is the rate at which tokens are added to the bucket.\nThis defines the sustained rate limit for operations. Must be non-negative.",
+                          "minimum": 0,
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "bucket",
+                        "qps"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "exponentialFailure": {
+                      "description": "ExponentialFailure rate limiter increases delay exponentially with each failure.\nStandard approach for backing off when operations fail repeatedly.",
+                      "properties": {
+                        "baseDelay": {
+                          "description": "BaseDelay is the initial delay after the first failure. Subsequent failures will exponentially\nincrease this delay (2x, 4x, 8x, etc.) until MaxDelay is reached.\nFormat follows Go's time.Duration syntax (e.g., \"1s\" for 1 second).",
+                          "type": "string"
+                        },
+                        "maxDelay": {
+                          "description": "MaxDelay is the maximum delay between retry attempts. Once the exponential backoff reaches\nthis value, all subsequent retries will use this delay.\nFormat follows Go's time.Duration syntax (e.g., \"1m\" for 1 minute).",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "baseDelay",
+                        "maxDelay"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "fastSlow": {
+                      "description": "FastSlow rate limiter provides fast retries initially, then switches to slow retries.\nUseful for quickly retrying transient errors while backing off for persistent failures.",
+                      "properties": {
+                        "fastDelay": {
+                          "description": "FastDelay is the delay used for the first MaxFastAttempts retry attempts.\nFormat follows Go's time.Duration syntax (e.g., \"100ms\" for 100 milliseconds).",
+                          "type": "string"
+                        },
+                        "maxFastAttempts": {
+                          "description": "MaxFastAttempts is the number of retry attempts that use FastDelay before switching to SlowDelay.\nMust be at least 1.",
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "slowDelay": {
+                          "description": "SlowDelay is the delay used for retry attempts after MaxFastAttempts have been exhausted.\nFormat follows Go's time.Duration syntax (e.g., \"10s\" for 10 seconds).",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "fastDelay",
+                        "maxFastAttempts",
+                        "slowDelay"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "maxOf": {
+                      "description": "MaxOf allows combining multiple rate limiters, where the maximum delay from all\nlimiters is used. This enables sophisticated rate limiting that respects multiple\nconstraints simultaneously (e.g., both per-item exponential backoff and global rate limits).",
+                      "items": {
+                        "description": "RateLimiterTypes defines the different algorithms available for rate limiting.\n\nExactly one of the three rate limiter types must be specified:\n  - FastSlow: Quick retry for transient errors, then slower retry for persistent failures\n  - ExponentialFailure: Standard exponential backoff for repeated failures\n  - Bucket: Token bucket algorithm for controlling overall request rate\n\nSee https://pkg.go.dev/k8s.io/client-go/util/workqueue for implementation details.",
+                        "properties": {
+                          "bucket": {
+                            "description": "Bucket rate limiter uses a token bucket algorithm to control request rate.\nAllows bursts while maintaining an average rate limit.",
+                            "properties": {
+                              "bucket": {
+                                "description": "Bucket is the maximum number of tokens that can be accumulated in the bucket.\nThis defines the maximum burst size - how many operations can occur in rapid\nsuccession before rate limiting takes effect. Must be non-negative.",
+                                "minimum": 0,
+                                "type": "integer"
+                              },
+                              "qps": {
+                                "description": "Qps (queries per second) is the rate at which tokens are added to the bucket.\nThis defines the sustained rate limit for operations. Must be non-negative.",
+                                "minimum": 0,
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "bucket",
+                              "qps"
+                            ],
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "exponentialFailure": {
+                            "description": "ExponentialFailure rate limiter increases delay exponentially with each failure.\nStandard approach for backing off when operations fail repeatedly.",
+                            "properties": {
+                              "baseDelay": {
+                                "description": "BaseDelay is the initial delay after the first failure. Subsequent failures will exponentially\nincrease this delay (2x, 4x, 8x, etc.) until MaxDelay is reached.\nFormat follows Go's time.Duration syntax (e.g., \"1s\" for 1 second).",
+                                "type": "string"
+                              },
+                              "maxDelay": {
+                                "description": "MaxDelay is the maximum delay between retry attempts. Once the exponential backoff reaches\nthis value, all subsequent retries will use this delay.\nFormat follows Go's time.Duration syntax (e.g., \"1m\" for 1 minute).",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "baseDelay",
+                              "maxDelay"
+                            ],
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "fastSlow": {
+                            "description": "FastSlow rate limiter provides fast retries initially, then switches to slow retries.\nUseful for quickly retrying transient errors while backing off for persistent failures.",
+                            "properties": {
+                              "fastDelay": {
+                                "description": "FastDelay is the delay used for the first MaxFastAttempts retry attempts.\nFormat follows Go's time.Duration syntax (e.g., \"100ms\" for 100 milliseconds).",
+                                "type": "string"
+                              },
+                              "maxFastAttempts": {
+                                "description": "MaxFastAttempts is the number of retry attempts that use FastDelay before switching to SlowDelay.\nMust be at least 1.",
+                                "minimum": 1,
+                                "type": "integer"
+                              },
+                              "slowDelay": {
+                                "description": "SlowDelay is the delay used for retry attempts after MaxFastAttempts have been exhausted.\nFormat follows Go's time.Duration syntax (e.g., \"10s\" for 10 seconds).",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "fastDelay",
+                              "maxFastAttempts",
+                              "slowDelay"
+                            ],
+                            "type": "object",
+                            "additionalProperties": false
+                          }
+                        },
+                        "type": "object",
+                        "x-kubernetes-validations": [
+                          {
+                            "message": "at most one of the fields in [fastSlow exponentialFailure bucket] may be set",
+                            "rule": "[has(self.fastSlow),has(self.exponentialFailure),has(self.bucket)].filter(x,x==true).size() <= 1"
+                          }
+                        ],
+                        "additionalProperties": false
+                      },
+                      "maxItems": 3,
+                      "type": "array"
+                    }
+                  },
+                  "type": "object",
+                  "x-kubernetes-validations": [
+                    {
+                      "message": "at most one of the fields in [fastSlow exponentialFailure bucket maxOf] may be set",
+                      "rule": "[has(self.fastSlow),has(self.exponentialFailure),has(self.bucket),has(self.maxOf)].filter(x,x==true).size() <= 1"
+                    },
+                    {
+                      "message": "at most one of the fields in [fastSlow exponentialFailure bucket] may be set",
+                      "rule": "[has(self.fastSlow),has(self.exponentialFailure),has(self.bucket)].filter(x,x==true).size() <= 1"
+                    }
+                  ],
+                  "additionalProperties": false
+                },
+                "requeueDuration": {
+                  "description": "RequeueDuration specifies how frequently resources should be requeued for automatic reconciliation.\nThis creates a periodic reconciliation loop that ensures the desired state is maintained even\nwithout external triggers. Format follows Go's time.Duration syntax (e.g., \"5m\" for 5 minutes).",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "maxConcurrentReconciles",
+                "rateLimiter",
+                "requeueDuration"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "workQueue"
+          ],
+          "type": "object",
+          "additionalProperties": false
+        },
+        "gitCommitStatus": {
+          "description": "GitCommitStatus contains the configuration for the GitCommitStatus controller,\nincluding WorkQueue settings that control reconciliation behavior.",
+          "properties": {
+            "workQueue": {
+              "description": "WorkQueue contains the work queue configuration for the GitCommitStatus controller.\nThis includes requeue duration, maximum concurrent reconciles, and rate limiter settings.",
+              "properties": {
+                "maxConcurrentReconciles": {
+                  "description": "MaxConcurrentReconciles defines the maximum number of concurrent reconcile operations\nthat can run for this controller. Higher values increase throughput but consume more\nresources.",
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "rateLimiter": {
+                  "description": "RateLimiter defines the rate limiting strategy for the controller's work queue.\nRate limiting controls how quickly failed reconciliations are retried and helps\nprevent overwhelming external APIs or systems.",
+                  "properties": {
+                    "bucket": {
+                      "description": "Bucket rate limiter uses a token bucket algorithm to control request rate.\nAllows bursts while maintaining an average rate limit.",
+                      "properties": {
+                        "bucket": {
+                          "description": "Bucket is the maximum number of tokens that can be accumulated in the bucket.\nThis defines the maximum burst size - how many operations can occur in rapid\nsuccession before rate limiting takes effect. Must be non-negative.",
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "qps": {
+                          "description": "Qps (queries per second) is the rate at which tokens are added to the bucket.\nThis defines the sustained rate limit for operations. Must be non-negative.",
+                          "minimum": 0,
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "bucket",
+                        "qps"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "exponentialFailure": {
+                      "description": "ExponentialFailure rate limiter increases delay exponentially with each failure.\nStandard approach for backing off when operations fail repeatedly.",
+                      "properties": {
+                        "baseDelay": {
+                          "description": "BaseDelay is the initial delay after the first failure. Subsequent failures will exponentially\nincrease this delay (2x, 4x, 8x, etc.) until MaxDelay is reached.\nFormat follows Go's time.Duration syntax (e.g., \"1s\" for 1 second).",
+                          "type": "string"
+                        },
+                        "maxDelay": {
+                          "description": "MaxDelay is the maximum delay between retry attempts. Once the exponential backoff reaches\nthis value, all subsequent retries will use this delay.\nFormat follows Go's time.Duration syntax (e.g., \"1m\" for 1 minute).",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "baseDelay",
+                        "maxDelay"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "fastSlow": {
+                      "description": "FastSlow rate limiter provides fast retries initially, then switches to slow retries.\nUseful for quickly retrying transient errors while backing off for persistent failures.",
+                      "properties": {
+                        "fastDelay": {
+                          "description": "FastDelay is the delay used for the first MaxFastAttempts retry attempts.\nFormat follows Go's time.Duration syntax (e.g., \"100ms\" for 100 milliseconds).",
+                          "type": "string"
+                        },
+                        "maxFastAttempts": {
+                          "description": "MaxFastAttempts is the number of retry attempts that use FastDelay before switching to SlowDelay.\nMust be at least 1.",
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "slowDelay": {
+                          "description": "SlowDelay is the delay used for retry attempts after MaxFastAttempts have been exhausted.\nFormat follows Go's time.Duration syntax (e.g., \"10s\" for 10 seconds).",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "fastDelay",
+                        "maxFastAttempts",
+                        "slowDelay"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "maxOf": {
+                      "description": "MaxOf allows combining multiple rate limiters, where the maximum delay from all\nlimiters is used. This enables sophisticated rate limiting that respects multiple\nconstraints simultaneously (e.g., both per-item exponential backoff and global rate limits).",
+                      "items": {
+                        "description": "RateLimiterTypes defines the different algorithms available for rate limiting.\n\nExactly one of the three rate limiter types must be specified:\n  - FastSlow: Quick retry for transient errors, then slower retry for persistent failures\n  - ExponentialFailure: Standard exponential backoff for repeated failures\n  - Bucket: Token bucket algorithm for controlling overall request rate\n\nSee https://pkg.go.dev/k8s.io/client-go/util/workqueue for implementation details.",
+                        "properties": {
+                          "bucket": {
+                            "description": "Bucket rate limiter uses a token bucket algorithm to control request rate.\nAllows bursts while maintaining an average rate limit.",
+                            "properties": {
+                              "bucket": {
+                                "description": "Bucket is the maximum number of tokens that can be accumulated in the bucket.\nThis defines the maximum burst size - how many operations can occur in rapid\nsuccession before rate limiting takes effect. Must be non-negative.",
+                                "minimum": 0,
+                                "type": "integer"
+                              },
+                              "qps": {
+                                "description": "Qps (queries per second) is the rate at which tokens are added to the bucket.\nThis defines the sustained rate limit for operations. Must be non-negative.",
+                                "minimum": 0,
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "bucket",
+                              "qps"
+                            ],
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "exponentialFailure": {
+                            "description": "ExponentialFailure rate limiter increases delay exponentially with each failure.\nStandard approach for backing off when operations fail repeatedly.",
+                            "properties": {
+                              "baseDelay": {
+                                "description": "BaseDelay is the initial delay after the first failure. Subsequent failures will exponentially\nincrease this delay (2x, 4x, 8x, etc.) until MaxDelay is reached.\nFormat follows Go's time.Duration syntax (e.g., \"1s\" for 1 second).",
+                                "type": "string"
+                              },
+                              "maxDelay": {
+                                "description": "MaxDelay is the maximum delay between retry attempts. Once the exponential backoff reaches\nthis value, all subsequent retries will use this delay.\nFormat follows Go's time.Duration syntax (e.g., \"1m\" for 1 minute).",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "baseDelay",
+                              "maxDelay"
+                            ],
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "fastSlow": {
+                            "description": "FastSlow rate limiter provides fast retries initially, then switches to slow retries.\nUseful for quickly retrying transient errors while backing off for persistent failures.",
+                            "properties": {
+                              "fastDelay": {
+                                "description": "FastDelay is the delay used for the first MaxFastAttempts retry attempts.\nFormat follows Go's time.Duration syntax (e.g., \"100ms\" for 100 milliseconds).",
+                                "type": "string"
+                              },
+                              "maxFastAttempts": {
+                                "description": "MaxFastAttempts is the number of retry attempts that use FastDelay before switching to SlowDelay.\nMust be at least 1.",
+                                "minimum": 1,
+                                "type": "integer"
+                              },
+                              "slowDelay": {
+                                "description": "SlowDelay is the delay used for retry attempts after MaxFastAttempts have been exhausted.\nFormat follows Go's time.Duration syntax (e.g., \"10s\" for 10 seconds).",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "fastDelay",
+                              "maxFastAttempts",
+                              "slowDelay"
+                            ],
+                            "type": "object",
+                            "additionalProperties": false
+                          }
+                        },
+                        "type": "object",
+                        "x-kubernetes-validations": [
+                          {
+                            "message": "at most one of the fields in [fastSlow exponentialFailure bucket] may be set",
+                            "rule": "[has(self.fastSlow),has(self.exponentialFailure),has(self.bucket)].filter(x,x==true).size() <= 1"
+                          }
+                        ],
+                        "additionalProperties": false
+                      },
+                      "maxItems": 3,
+                      "type": "array"
+                    }
+                  },
+                  "type": "object",
+                  "x-kubernetes-validations": [
+                    {
+                      "message": "at most one of the fields in [fastSlow exponentialFailure bucket maxOf] may be set",
+                      "rule": "[has(self.fastSlow),has(self.exponentialFailure),has(self.bucket),has(self.maxOf)].filter(x,x==true).size() <= 1"
+                    },
+                    {
+                      "message": "at most one of the fields in [fastSlow exponentialFailure bucket] may be set",
+                      "rule": "[has(self.fastSlow),has(self.exponentialFailure),has(self.bucket)].filter(x,x==true).size() <= 1"
+                    }
+                  ],
+                  "additionalProperties": false
+                },
+                "requeueDuration": {
+                  "description": "RequeueDuration specifies how frequently resources should be requeued for automatic reconciliation.\nThis creates a periodic reconciliation loop that ensures the desired state is maintained even\nwithout external triggers. Format follows Go's time.Duration syntax (e.g., \"5m\" for 5 minutes).",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "maxConcurrentReconciles",
+                "rateLimiter",
+                "requeueDuration"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "workQueue"
+          ],
+          "type": "object",
+          "additionalProperties": false
+        },
+        "promotionStrategy": {
+          "description": "PromotionStrategy contains the configuration for the PromotionStrategy controller,\nincluding WorkQueue settings that control reconciliation behavior.",
+          "properties": {
+            "workQueue": {
+              "description": "WorkQueue contains the work queue configuration for the PromotionStrategy controller.\nThis includes requeue duration, maximum concurrent reconciles, and rate limiter settings.",
+              "properties": {
+                "maxConcurrentReconciles": {
+                  "description": "MaxConcurrentReconciles defines the maximum number of concurrent reconcile operations\nthat can run for this controller. Higher values increase throughput but consume more\nresources.",
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "rateLimiter": {
+                  "description": "RateLimiter defines the rate limiting strategy for the controller's work queue.\nRate limiting controls how quickly failed reconciliations are retried and helps\nprevent overwhelming external APIs or systems.",
+                  "properties": {
+                    "bucket": {
+                      "description": "Bucket rate limiter uses a token bucket algorithm to control request rate.\nAllows bursts while maintaining an average rate limit.",
+                      "properties": {
+                        "bucket": {
+                          "description": "Bucket is the maximum number of tokens that can be accumulated in the bucket.\nThis defines the maximum burst size - how many operations can occur in rapid\nsuccession before rate limiting takes effect. Must be non-negative.",
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "qps": {
+                          "description": "Qps (queries per second) is the rate at which tokens are added to the bucket.\nThis defines the sustained rate limit for operations. Must be non-negative.",
+                          "minimum": 0,
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "bucket",
+                        "qps"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "exponentialFailure": {
+                      "description": "ExponentialFailure rate limiter increases delay exponentially with each failure.\nStandard approach for backing off when operations fail repeatedly.",
+                      "properties": {
+                        "baseDelay": {
+                          "description": "BaseDelay is the initial delay after the first failure. Subsequent failures will exponentially\nincrease this delay (2x, 4x, 8x, etc.) until MaxDelay is reached.\nFormat follows Go's time.Duration syntax (e.g., \"1s\" for 1 second).",
+                          "type": "string"
+                        },
+                        "maxDelay": {
+                          "description": "MaxDelay is the maximum delay between retry attempts. Once the exponential backoff reaches\nthis value, all subsequent retries will use this delay.\nFormat follows Go's time.Duration syntax (e.g., \"1m\" for 1 minute).",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "baseDelay",
+                        "maxDelay"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "fastSlow": {
+                      "description": "FastSlow rate limiter provides fast retries initially, then switches to slow retries.\nUseful for quickly retrying transient errors while backing off for persistent failures.",
+                      "properties": {
+                        "fastDelay": {
+                          "description": "FastDelay is the delay used for the first MaxFastAttempts retry attempts.\nFormat follows Go's time.Duration syntax (e.g., \"100ms\" for 100 milliseconds).",
+                          "type": "string"
+                        },
+                        "maxFastAttempts": {
+                          "description": "MaxFastAttempts is the number of retry attempts that use FastDelay before switching to SlowDelay.\nMust be at least 1.",
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "slowDelay": {
+                          "description": "SlowDelay is the delay used for retry attempts after MaxFastAttempts have been exhausted.\nFormat follows Go's time.Duration syntax (e.g., \"10s\" for 10 seconds).",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "fastDelay",
+                        "maxFastAttempts",
+                        "slowDelay"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "maxOf": {
+                      "description": "MaxOf allows combining multiple rate limiters, where the maximum delay from all\nlimiters is used. This enables sophisticated rate limiting that respects multiple\nconstraints simultaneously (e.g., both per-item exponential backoff and global rate limits).",
+                      "items": {
+                        "description": "RateLimiterTypes defines the different algorithms available for rate limiting.\n\nExactly one of the three rate limiter types must be specified:\n  - FastSlow: Quick retry for transient errors, then slower retry for persistent failures\n  - ExponentialFailure: Standard exponential backoff for repeated failures\n  - Bucket: Token bucket algorithm for controlling overall request rate\n\nSee https://pkg.go.dev/k8s.io/client-go/util/workqueue for implementation details.",
+                        "properties": {
+                          "bucket": {
+                            "description": "Bucket rate limiter uses a token bucket algorithm to control request rate.\nAllows bursts while maintaining an average rate limit.",
+                            "properties": {
+                              "bucket": {
+                                "description": "Bucket is the maximum number of tokens that can be accumulated in the bucket.\nThis defines the maximum burst size - how many operations can occur in rapid\nsuccession before rate limiting takes effect. Must be non-negative.",
+                                "minimum": 0,
+                                "type": "integer"
+                              },
+                              "qps": {
+                                "description": "Qps (queries per second) is the rate at which tokens are added to the bucket.\nThis defines the sustained rate limit for operations. Must be non-negative.",
+                                "minimum": 0,
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "bucket",
+                              "qps"
+                            ],
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "exponentialFailure": {
+                            "description": "ExponentialFailure rate limiter increases delay exponentially with each failure.\nStandard approach for backing off when operations fail repeatedly.",
+                            "properties": {
+                              "baseDelay": {
+                                "description": "BaseDelay is the initial delay after the first failure. Subsequent failures will exponentially\nincrease this delay (2x, 4x, 8x, etc.) until MaxDelay is reached.\nFormat follows Go's time.Duration syntax (e.g., \"1s\" for 1 second).",
+                                "type": "string"
+                              },
+                              "maxDelay": {
+                                "description": "MaxDelay is the maximum delay between retry attempts. Once the exponential backoff reaches\nthis value, all subsequent retries will use this delay.\nFormat follows Go's time.Duration syntax (e.g., \"1m\" for 1 minute).",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "baseDelay",
+                              "maxDelay"
+                            ],
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "fastSlow": {
+                            "description": "FastSlow rate limiter provides fast retries initially, then switches to slow retries.\nUseful for quickly retrying transient errors while backing off for persistent failures.",
+                            "properties": {
+                              "fastDelay": {
+                                "description": "FastDelay is the delay used for the first MaxFastAttempts retry attempts.\nFormat follows Go's time.Duration syntax (e.g., \"100ms\" for 100 milliseconds).",
+                                "type": "string"
+                              },
+                              "maxFastAttempts": {
+                                "description": "MaxFastAttempts is the number of retry attempts that use FastDelay before switching to SlowDelay.\nMust be at least 1.",
+                                "minimum": 1,
+                                "type": "integer"
+                              },
+                              "slowDelay": {
+                                "description": "SlowDelay is the delay used for retry attempts after MaxFastAttempts have been exhausted.\nFormat follows Go's time.Duration syntax (e.g., \"10s\" for 10 seconds).",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "fastDelay",
+                              "maxFastAttempts",
+                              "slowDelay"
+                            ],
+                            "type": "object",
+                            "additionalProperties": false
+                          }
+                        },
+                        "type": "object",
+                        "x-kubernetes-validations": [
+                          {
+                            "message": "at most one of the fields in [fastSlow exponentialFailure bucket] may be set",
+                            "rule": "[has(self.fastSlow),has(self.exponentialFailure),has(self.bucket)].filter(x,x==true).size() <= 1"
+                          }
+                        ],
+                        "additionalProperties": false
+                      },
+                      "maxItems": 3,
+                      "type": "array"
+                    }
+                  },
+                  "type": "object",
+                  "x-kubernetes-validations": [
+                    {
+                      "message": "at most one of the fields in [fastSlow exponentialFailure bucket maxOf] may be set",
+                      "rule": "[has(self.fastSlow),has(self.exponentialFailure),has(self.bucket),has(self.maxOf)].filter(x,x==true).size() <= 1"
+                    },
+                    {
+                      "message": "at most one of the fields in [fastSlow exponentialFailure bucket] may be set",
+                      "rule": "[has(self.fastSlow),has(self.exponentialFailure),has(self.bucket)].filter(x,x==true).size() <= 1"
+                    }
+                  ],
+                  "additionalProperties": false
+                },
+                "requeueDuration": {
+                  "description": "RequeueDuration specifies how frequently resources should be requeued for automatic reconciliation.\nThis creates a periodic reconciliation loop that ensures the desired state is maintained even\nwithout external triggers. Format follows Go's time.Duration syntax (e.g., \"5m\" for 5 minutes).",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "maxConcurrentReconciles",
+                "rateLimiter",
+                "requeueDuration"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "workQueue"
+          ],
+          "type": "object",
+          "additionalProperties": false
+        },
+        "pullRequest": {
+          "description": "PullRequest contains the configuration for the PullRequest controller,\nincluding WorkQueue settings and pull request template configuration.",
+          "properties": {
+            "template": {
+              "description": "Template is the template configuration used to generate pull request titles and descriptions.\nUses Go template syntax with Sprig functions available.",
+              "properties": {
+                "description": {
+                  "description": "Description is the template used to generate the body/description of the pull request.\nUses Go template syntax with Sprig functions available for string manipulation.",
+                  "type": "string"
+                },
+                "title": {
+                  "description": "Title is the template used to generate the title of the pull request.\nUses Go template syntax with Sprig functions available for string manipulation.",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "description",
+                "title"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            },
+            "workQueue": {
+              "description": "WorkQueue contains the work queue configuration for the PullRequest controller.\nThis includes requeue duration, maximum concurrent reconciles, and rate limiter settings.",
+              "properties": {
+                "maxConcurrentReconciles": {
+                  "description": "MaxConcurrentReconciles defines the maximum number of concurrent reconcile operations\nthat can run for this controller. Higher values increase throughput but consume more\nresources.",
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "rateLimiter": {
+                  "description": "RateLimiter defines the rate limiting strategy for the controller's work queue.\nRate limiting controls how quickly failed reconciliations are retried and helps\nprevent overwhelming external APIs or systems.",
+                  "properties": {
+                    "bucket": {
+                      "description": "Bucket rate limiter uses a token bucket algorithm to control request rate.\nAllows bursts while maintaining an average rate limit.",
+                      "properties": {
+                        "bucket": {
+                          "description": "Bucket is the maximum number of tokens that can be accumulated in the bucket.\nThis defines the maximum burst size - how many operations can occur in rapid\nsuccession before rate limiting takes effect. Must be non-negative.",
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "qps": {
+                          "description": "Qps (queries per second) is the rate at which tokens are added to the bucket.\nThis defines the sustained rate limit for operations. Must be non-negative.",
+                          "minimum": 0,
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "bucket",
+                        "qps"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "exponentialFailure": {
+                      "description": "ExponentialFailure rate limiter increases delay exponentially with each failure.\nStandard approach for backing off when operations fail repeatedly.",
+                      "properties": {
+                        "baseDelay": {
+                          "description": "BaseDelay is the initial delay after the first failure. Subsequent failures will exponentially\nincrease this delay (2x, 4x, 8x, etc.) until MaxDelay is reached.\nFormat follows Go's time.Duration syntax (e.g., \"1s\" for 1 second).",
+                          "type": "string"
+                        },
+                        "maxDelay": {
+                          "description": "MaxDelay is the maximum delay between retry attempts. Once the exponential backoff reaches\nthis value, all subsequent retries will use this delay.\nFormat follows Go's time.Duration syntax (e.g., \"1m\" for 1 minute).",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "baseDelay",
+                        "maxDelay"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "fastSlow": {
+                      "description": "FastSlow rate limiter provides fast retries initially, then switches to slow retries.\nUseful for quickly retrying transient errors while backing off for persistent failures.",
+                      "properties": {
+                        "fastDelay": {
+                          "description": "FastDelay is the delay used for the first MaxFastAttempts retry attempts.\nFormat follows Go's time.Duration syntax (e.g., \"100ms\" for 100 milliseconds).",
+                          "type": "string"
+                        },
+                        "maxFastAttempts": {
+                          "description": "MaxFastAttempts is the number of retry attempts that use FastDelay before switching to SlowDelay.\nMust be at least 1.",
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "slowDelay": {
+                          "description": "SlowDelay is the delay used for retry attempts after MaxFastAttempts have been exhausted.\nFormat follows Go's time.Duration syntax (e.g., \"10s\" for 10 seconds).",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "fastDelay",
+                        "maxFastAttempts",
+                        "slowDelay"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "maxOf": {
+                      "description": "MaxOf allows combining multiple rate limiters, where the maximum delay from all\nlimiters is used. This enables sophisticated rate limiting that respects multiple\nconstraints simultaneously (e.g., both per-item exponential backoff and global rate limits).",
+                      "items": {
+                        "description": "RateLimiterTypes defines the different algorithms available for rate limiting.\n\nExactly one of the three rate limiter types must be specified:\n  - FastSlow: Quick retry for transient errors, then slower retry for persistent failures\n  - ExponentialFailure: Standard exponential backoff for repeated failures\n  - Bucket: Token bucket algorithm for controlling overall request rate\n\nSee https://pkg.go.dev/k8s.io/client-go/util/workqueue for implementation details.",
+                        "properties": {
+                          "bucket": {
+                            "description": "Bucket rate limiter uses a token bucket algorithm to control request rate.\nAllows bursts while maintaining an average rate limit.",
+                            "properties": {
+                              "bucket": {
+                                "description": "Bucket is the maximum number of tokens that can be accumulated in the bucket.\nThis defines the maximum burst size - how many operations can occur in rapid\nsuccession before rate limiting takes effect. Must be non-negative.",
+                                "minimum": 0,
+                                "type": "integer"
+                              },
+                              "qps": {
+                                "description": "Qps (queries per second) is the rate at which tokens are added to the bucket.\nThis defines the sustained rate limit for operations. Must be non-negative.",
+                                "minimum": 0,
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "bucket",
+                              "qps"
+                            ],
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "exponentialFailure": {
+                            "description": "ExponentialFailure rate limiter increases delay exponentially with each failure.\nStandard approach for backing off when operations fail repeatedly.",
+                            "properties": {
+                              "baseDelay": {
+                                "description": "BaseDelay is the initial delay after the first failure. Subsequent failures will exponentially\nincrease this delay (2x, 4x, 8x, etc.) until MaxDelay is reached.\nFormat follows Go's time.Duration syntax (e.g., \"1s\" for 1 second).",
+                                "type": "string"
+                              },
+                              "maxDelay": {
+                                "description": "MaxDelay is the maximum delay between retry attempts. Once the exponential backoff reaches\nthis value, all subsequent retries will use this delay.\nFormat follows Go's time.Duration syntax (e.g., \"1m\" for 1 minute).",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "baseDelay",
+                              "maxDelay"
+                            ],
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "fastSlow": {
+                            "description": "FastSlow rate limiter provides fast retries initially, then switches to slow retries.\nUseful for quickly retrying transient errors while backing off for persistent failures.",
+                            "properties": {
+                              "fastDelay": {
+                                "description": "FastDelay is the delay used for the first MaxFastAttempts retry attempts.\nFormat follows Go's time.Duration syntax (e.g., \"100ms\" for 100 milliseconds).",
+                                "type": "string"
+                              },
+                              "maxFastAttempts": {
+                                "description": "MaxFastAttempts is the number of retry attempts that use FastDelay before switching to SlowDelay.\nMust be at least 1.",
+                                "minimum": 1,
+                                "type": "integer"
+                              },
+                              "slowDelay": {
+                                "description": "SlowDelay is the delay used for retry attempts after MaxFastAttempts have been exhausted.\nFormat follows Go's time.Duration syntax (e.g., \"10s\" for 10 seconds).",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "fastDelay",
+                              "maxFastAttempts",
+                              "slowDelay"
+                            ],
+                            "type": "object",
+                            "additionalProperties": false
+                          }
+                        },
+                        "type": "object",
+                        "x-kubernetes-validations": [
+                          {
+                            "message": "at most one of the fields in [fastSlow exponentialFailure bucket] may be set",
+                            "rule": "[has(self.fastSlow),has(self.exponentialFailure),has(self.bucket)].filter(x,x==true).size() <= 1"
+                          }
+                        ],
+                        "additionalProperties": false
+                      },
+                      "maxItems": 3,
+                      "type": "array"
+                    }
+                  },
+                  "type": "object",
+                  "x-kubernetes-validations": [
+                    {
+                      "message": "at most one of the fields in [fastSlow exponentialFailure bucket maxOf] may be set",
+                      "rule": "[has(self.fastSlow),has(self.exponentialFailure),has(self.bucket),has(self.maxOf)].filter(x,x==true).size() <= 1"
+                    },
+                    {
+                      "message": "at most one of the fields in [fastSlow exponentialFailure bucket] may be set",
+                      "rule": "[has(self.fastSlow),has(self.exponentialFailure),has(self.bucket)].filter(x,x==true).size() <= 1"
+                    }
+                  ],
+                  "additionalProperties": false
+                },
+                "requeueDuration": {
+                  "description": "RequeueDuration specifies how frequently resources should be requeued for automatic reconciliation.\nThis creates a periodic reconciliation loop that ensures the desired state is maintained even\nwithout external triggers. Format follows Go's time.Duration syntax (e.g., \"5m\" for 5 minutes).",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "maxConcurrentReconciles",
+                "rateLimiter",
+                "requeueDuration"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "template",
+            "workQueue"
+          ],
+          "type": "object",
+          "additionalProperties": false
+        },
+        "timedCommitStatus": {
+          "description": "TimedCommitStatus contains the configuration for the TimedCommitStatus controller,\nincluding WorkQueue settings that control reconciliation behavior.",
+          "properties": {
+            "workQueue": {
+              "description": "WorkQueue contains the work queue configuration for the TimedCommitStatus controller.\nThis includes requeue duration, maximum concurrent reconciles, and rate limiter settings.",
+              "properties": {
+                "maxConcurrentReconciles": {
+                  "description": "MaxConcurrentReconciles defines the maximum number of concurrent reconcile operations\nthat can run for this controller. Higher values increase throughput but consume more\nresources.",
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "rateLimiter": {
+                  "description": "RateLimiter defines the rate limiting strategy for the controller's work queue.\nRate limiting controls how quickly failed reconciliations are retried and helps\nprevent overwhelming external APIs or systems.",
+                  "properties": {
+                    "bucket": {
+                      "description": "Bucket rate limiter uses a token bucket algorithm to control request rate.\nAllows bursts while maintaining an average rate limit.",
+                      "properties": {
+                        "bucket": {
+                          "description": "Bucket is the maximum number of tokens that can be accumulated in the bucket.\nThis defines the maximum burst size - how many operations can occur in rapid\nsuccession before rate limiting takes effect. Must be non-negative.",
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "qps": {
+                          "description": "Qps (queries per second) is the rate at which tokens are added to the bucket.\nThis defines the sustained rate limit for operations. Must be non-negative.",
+                          "minimum": 0,
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "bucket",
+                        "qps"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "exponentialFailure": {
+                      "description": "ExponentialFailure rate limiter increases delay exponentially with each failure.\nStandard approach for backing off when operations fail repeatedly.",
+                      "properties": {
+                        "baseDelay": {
+                          "description": "BaseDelay is the initial delay after the first failure. Subsequent failures will exponentially\nincrease this delay (2x, 4x, 8x, etc.) until MaxDelay is reached.\nFormat follows Go's time.Duration syntax (e.g., \"1s\" for 1 second).",
+                          "type": "string"
+                        },
+                        "maxDelay": {
+                          "description": "MaxDelay is the maximum delay between retry attempts. Once the exponential backoff reaches\nthis value, all subsequent retries will use this delay.\nFormat follows Go's time.Duration syntax (e.g., \"1m\" for 1 minute).",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "baseDelay",
+                        "maxDelay"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "fastSlow": {
+                      "description": "FastSlow rate limiter provides fast retries initially, then switches to slow retries.\nUseful for quickly retrying transient errors while backing off for persistent failures.",
+                      "properties": {
+                        "fastDelay": {
+                          "description": "FastDelay is the delay used for the first MaxFastAttempts retry attempts.\nFormat follows Go's time.Duration syntax (e.g., \"100ms\" for 100 milliseconds).",
+                          "type": "string"
+                        },
+                        "maxFastAttempts": {
+                          "description": "MaxFastAttempts is the number of retry attempts that use FastDelay before switching to SlowDelay.\nMust be at least 1.",
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "slowDelay": {
+                          "description": "SlowDelay is the delay used for retry attempts after MaxFastAttempts have been exhausted.\nFormat follows Go's time.Duration syntax (e.g., \"10s\" for 10 seconds).",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "fastDelay",
+                        "maxFastAttempts",
+                        "slowDelay"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "maxOf": {
+                      "description": "MaxOf allows combining multiple rate limiters, where the maximum delay from all\nlimiters is used. This enables sophisticated rate limiting that respects multiple\nconstraints simultaneously (e.g., both per-item exponential backoff and global rate limits).",
+                      "items": {
+                        "description": "RateLimiterTypes defines the different algorithms available for rate limiting.\n\nExactly one of the three rate limiter types must be specified:\n  - FastSlow: Quick retry for transient errors, then slower retry for persistent failures\n  - ExponentialFailure: Standard exponential backoff for repeated failures\n  - Bucket: Token bucket algorithm for controlling overall request rate\n\nSee https://pkg.go.dev/k8s.io/client-go/util/workqueue for implementation details.",
+                        "properties": {
+                          "bucket": {
+                            "description": "Bucket rate limiter uses a token bucket algorithm to control request rate.\nAllows bursts while maintaining an average rate limit.",
+                            "properties": {
+                              "bucket": {
+                                "description": "Bucket is the maximum number of tokens that can be accumulated in the bucket.\nThis defines the maximum burst size - how many operations can occur in rapid\nsuccession before rate limiting takes effect. Must be non-negative.",
+                                "minimum": 0,
+                                "type": "integer"
+                              },
+                              "qps": {
+                                "description": "Qps (queries per second) is the rate at which tokens are added to the bucket.\nThis defines the sustained rate limit for operations. Must be non-negative.",
+                                "minimum": 0,
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "bucket",
+                              "qps"
+                            ],
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "exponentialFailure": {
+                            "description": "ExponentialFailure rate limiter increases delay exponentially with each failure.\nStandard approach for backing off when operations fail repeatedly.",
+                            "properties": {
+                              "baseDelay": {
+                                "description": "BaseDelay is the initial delay after the first failure. Subsequent failures will exponentially\nincrease this delay (2x, 4x, 8x, etc.) until MaxDelay is reached.\nFormat follows Go's time.Duration syntax (e.g., \"1s\" for 1 second).",
+                                "type": "string"
+                              },
+                              "maxDelay": {
+                                "description": "MaxDelay is the maximum delay between retry attempts. Once the exponential backoff reaches\nthis value, all subsequent retries will use this delay.\nFormat follows Go's time.Duration syntax (e.g., \"1m\" for 1 minute).",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "baseDelay",
+                              "maxDelay"
+                            ],
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "fastSlow": {
+                            "description": "FastSlow rate limiter provides fast retries initially, then switches to slow retries.\nUseful for quickly retrying transient errors while backing off for persistent failures.",
+                            "properties": {
+                              "fastDelay": {
+                                "description": "FastDelay is the delay used for the first MaxFastAttempts retry attempts.\nFormat follows Go's time.Duration syntax (e.g., \"100ms\" for 100 milliseconds).",
+                                "type": "string"
+                              },
+                              "maxFastAttempts": {
+                                "description": "MaxFastAttempts is the number of retry attempts that use FastDelay before switching to SlowDelay.\nMust be at least 1.",
+                                "minimum": 1,
+                                "type": "integer"
+                              },
+                              "slowDelay": {
+                                "description": "SlowDelay is the delay used for retry attempts after MaxFastAttempts have been exhausted.\nFormat follows Go's time.Duration syntax (e.g., \"10s\" for 10 seconds).",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "fastDelay",
+                              "maxFastAttempts",
+                              "slowDelay"
+                            ],
+                            "type": "object",
+                            "additionalProperties": false
+                          }
+                        },
+                        "type": "object",
+                        "x-kubernetes-validations": [
+                          {
+                            "message": "at most one of the fields in [fastSlow exponentialFailure bucket] may be set",
+                            "rule": "[has(self.fastSlow),has(self.exponentialFailure),has(self.bucket)].filter(x,x==true).size() <= 1"
+                          }
+                        ],
+                        "additionalProperties": false
+                      },
+                      "maxItems": 3,
+                      "type": "array"
+                    }
+                  },
+                  "type": "object",
+                  "x-kubernetes-validations": [
+                    {
+                      "message": "at most one of the fields in [fastSlow exponentialFailure bucket maxOf] may be set",
+                      "rule": "[has(self.fastSlow),has(self.exponentialFailure),has(self.bucket),has(self.maxOf)].filter(x,x==true).size() <= 1"
+                    },
+                    {
+                      "message": "at most one of the fields in [fastSlow exponentialFailure bucket] may be set",
+                      "rule": "[has(self.fastSlow),has(self.exponentialFailure),has(self.bucket)].filter(x,x==true).size() <= 1"
+                    }
+                  ],
+                  "additionalProperties": false
+                },
+                "requeueDuration": {
+                  "description": "RequeueDuration specifies how frequently resources should be requeued for automatic reconciliation.\nThis creates a periodic reconciliation loop that ensures the desired state is maintained even\nwithout external triggers. Format follows Go's time.Duration syntax (e.g., \"5m\" for 5 minutes).",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "maxConcurrentReconciles",
+                "rateLimiter",
+                "requeueDuration"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "workQueue"
+          ],
+          "type": "object",
+          "additionalProperties": false
+        },
+        "webRequestCommitStatus": {
+          "description": "WebRequestCommitStatus contains the configuration for the WebRequestCommitStatus controller,\nincluding WorkQueue settings that control reconciliation behavior.",
+          "properties": {
+            "workQueue": {
+              "description": "WorkQueue contains the work queue configuration for the WebRequestCommitStatus controller.\nThis includes requeue duration, maximum concurrent reconciles, and rate limiter settings.",
+              "properties": {
+                "maxConcurrentReconciles": {
+                  "description": "MaxConcurrentReconciles defines the maximum number of concurrent reconcile operations\nthat can run for this controller. Higher values increase throughput but consume more\nresources.",
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "rateLimiter": {
+                  "description": "RateLimiter defines the rate limiting strategy for the controller's work queue.\nRate limiting controls how quickly failed reconciliations are retried and helps\nprevent overwhelming external APIs or systems.",
+                  "properties": {
+                    "bucket": {
+                      "description": "Bucket rate limiter uses a token bucket algorithm to control request rate.\nAllows bursts while maintaining an average rate limit.",
+                      "properties": {
+                        "bucket": {
+                          "description": "Bucket is the maximum number of tokens that can be accumulated in the bucket.\nThis defines the maximum burst size - how many operations can occur in rapid\nsuccession before rate limiting takes effect. Must be non-negative.",
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "qps": {
+                          "description": "Qps (queries per second) is the rate at which tokens are added to the bucket.\nThis defines the sustained rate limit for operations. Must be non-negative.",
+                          "minimum": 0,
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "bucket",
+                        "qps"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "exponentialFailure": {
+                      "description": "ExponentialFailure rate limiter increases delay exponentially with each failure.\nStandard approach for backing off when operations fail repeatedly.",
+                      "properties": {
+                        "baseDelay": {
+                          "description": "BaseDelay is the initial delay after the first failure. Subsequent failures will exponentially\nincrease this delay (2x, 4x, 8x, etc.) until MaxDelay is reached.\nFormat follows Go's time.Duration syntax (e.g., \"1s\" for 1 second).",
+                          "type": "string"
+                        },
+                        "maxDelay": {
+                          "description": "MaxDelay is the maximum delay between retry attempts. Once the exponential backoff reaches\nthis value, all subsequent retries will use this delay.\nFormat follows Go's time.Duration syntax (e.g., \"1m\" for 1 minute).",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "baseDelay",
+                        "maxDelay"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "fastSlow": {
+                      "description": "FastSlow rate limiter provides fast retries initially, then switches to slow retries.\nUseful for quickly retrying transient errors while backing off for persistent failures.",
+                      "properties": {
+                        "fastDelay": {
+                          "description": "FastDelay is the delay used for the first MaxFastAttempts retry attempts.\nFormat follows Go's time.Duration syntax (e.g., \"100ms\" for 100 milliseconds).",
+                          "type": "string"
+                        },
+                        "maxFastAttempts": {
+                          "description": "MaxFastAttempts is the number of retry attempts that use FastDelay before switching to SlowDelay.\nMust be at least 1.",
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "slowDelay": {
+                          "description": "SlowDelay is the delay used for retry attempts after MaxFastAttempts have been exhausted.\nFormat follows Go's time.Duration syntax (e.g., \"10s\" for 10 seconds).",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "fastDelay",
+                        "maxFastAttempts",
+                        "slowDelay"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "maxOf": {
+                      "description": "MaxOf allows combining multiple rate limiters, where the maximum delay from all\nlimiters is used. This enables sophisticated rate limiting that respects multiple\nconstraints simultaneously (e.g., both per-item exponential backoff and global rate limits).",
+                      "items": {
+                        "description": "RateLimiterTypes defines the different algorithms available for rate limiting.\n\nExactly one of the three rate limiter types must be specified:\n  - FastSlow: Quick retry for transient errors, then slower retry for persistent failures\n  - ExponentialFailure: Standard exponential backoff for repeated failures\n  - Bucket: Token bucket algorithm for controlling overall request rate\n\nSee https://pkg.go.dev/k8s.io/client-go/util/workqueue for implementation details.",
+                        "properties": {
+                          "bucket": {
+                            "description": "Bucket rate limiter uses a token bucket algorithm to control request rate.\nAllows bursts while maintaining an average rate limit.",
+                            "properties": {
+                              "bucket": {
+                                "description": "Bucket is the maximum number of tokens that can be accumulated in the bucket.\nThis defines the maximum burst size - how many operations can occur in rapid\nsuccession before rate limiting takes effect. Must be non-negative.",
+                                "minimum": 0,
+                                "type": "integer"
+                              },
+                              "qps": {
+                                "description": "Qps (queries per second) is the rate at which tokens are added to the bucket.\nThis defines the sustained rate limit for operations. Must be non-negative.",
+                                "minimum": 0,
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "bucket",
+                              "qps"
+                            ],
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "exponentialFailure": {
+                            "description": "ExponentialFailure rate limiter increases delay exponentially with each failure.\nStandard approach for backing off when operations fail repeatedly.",
+                            "properties": {
+                              "baseDelay": {
+                                "description": "BaseDelay is the initial delay after the first failure. Subsequent failures will exponentially\nincrease this delay (2x, 4x, 8x, etc.) until MaxDelay is reached.\nFormat follows Go's time.Duration syntax (e.g., \"1s\" for 1 second).",
+                                "type": "string"
+                              },
+                              "maxDelay": {
+                                "description": "MaxDelay is the maximum delay between retry attempts. Once the exponential backoff reaches\nthis value, all subsequent retries will use this delay.\nFormat follows Go's time.Duration syntax (e.g., \"1m\" for 1 minute).",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "baseDelay",
+                              "maxDelay"
+                            ],
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "fastSlow": {
+                            "description": "FastSlow rate limiter provides fast retries initially, then switches to slow retries.\nUseful for quickly retrying transient errors while backing off for persistent failures.",
+                            "properties": {
+                              "fastDelay": {
+                                "description": "FastDelay is the delay used for the first MaxFastAttempts retry attempts.\nFormat follows Go's time.Duration syntax (e.g., \"100ms\" for 100 milliseconds).",
+                                "type": "string"
+                              },
+                              "maxFastAttempts": {
+                                "description": "MaxFastAttempts is the number of retry attempts that use FastDelay before switching to SlowDelay.\nMust be at least 1.",
+                                "minimum": 1,
+                                "type": "integer"
+                              },
+                              "slowDelay": {
+                                "description": "SlowDelay is the delay used for retry attempts after MaxFastAttempts have been exhausted.\nFormat follows Go's time.Duration syntax (e.g., \"10s\" for 10 seconds).",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "fastDelay",
+                              "maxFastAttempts",
+                              "slowDelay"
+                            ],
+                            "type": "object",
+                            "additionalProperties": false
+                          }
+                        },
+                        "type": "object",
+                        "x-kubernetes-validations": [
+                          {
+                            "message": "at most one of the fields in [fastSlow exponentialFailure bucket] may be set",
+                            "rule": "[has(self.fastSlow),has(self.exponentialFailure),has(self.bucket)].filter(x,x==true).size() <= 1"
+                          }
+                        ],
+                        "additionalProperties": false
+                      },
+                      "maxItems": 3,
+                      "type": "array"
+                    }
+                  },
+                  "type": "object",
+                  "x-kubernetes-validations": [
+                    {
+                      "message": "at most one of the fields in [fastSlow exponentialFailure bucket maxOf] may be set",
+                      "rule": "[has(self.fastSlow),has(self.exponentialFailure),has(self.bucket),has(self.maxOf)].filter(x,x==true).size() <= 1"
+                    },
+                    {
+                      "message": "at most one of the fields in [fastSlow exponentialFailure bucket] may be set",
+                      "rule": "[has(self.fastSlow),has(self.exponentialFailure),has(self.bucket)].filter(x,x==true).size() <= 1"
+                    }
+                  ],
+                  "additionalProperties": false
+                },
+                "requeueDuration": {
+                  "description": "RequeueDuration specifies how frequently resources should be requeued for automatic reconciliation.\nThis creates a periodic reconciliation loop that ensures the desired state is maintained even\nwithout external triggers. Format follows Go's time.Duration syntax (e.g., \"5m\" for 5 minutes).",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "maxConcurrentReconciles",
+                "rateLimiter",
+                "requeueDuration"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "workQueue"
+          ],
+          "type": "object",
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "argocdCommitStatus",
+        "changeTransferPolicy",
+        "commitStatus",
+        "gitCommitStatus",
+        "promotionStrategy",
+        "pullRequest",
+        "timedCommitStatus",
+        "webRequestCommitStatus"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    },
+    "status": {
+      "description": "ControllerConfigurationStatus defines the observed state of ControllerConfiguration.\n\nCurrently, this resource does not maintain any status information as it is a configuration-only\nresource. Status fields may be added in the future to track configuration validation or\ncontroller health metrics.",
+      "type": "object"
+    }
+  },
+  "type": "object"
+}

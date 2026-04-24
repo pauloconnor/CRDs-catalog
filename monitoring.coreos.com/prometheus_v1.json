@@ -7081,8 +7081,8 @@
                 "additionalProperties": false
               },
               "url": {
-                "description": "url defines the URL of the endpoint to send samples to.",
-                "minLength": 1,
+                "description": "url defines the URL of the endpoint to send samples to.\n\nIt must use the HTTP or HTTPS scheme.",
+                "pattern": "^(http|https)://.+$",
                 "type": "string"
               },
               "writeRelabelConfigs": {
@@ -7406,6 +7406,11 @@
           "description": "sampleLimit defines per-scrape limit on number of scraped samples that will be accepted.\nOnly valid in Prometheus versions 2.45.0 and newer.\n\nNote that the global limit only applies to scrape objects that don't specify an explicit limit value.\nIf you want to enforce a maximum limit for all scrape objects, refer to enforcedSampleLimit.",
           "format": "int64",
           "type": "integer"
+        },
+        "schedulerName": {
+          "description": "schedulerName defines the scheduler to use for Pod scheduling. If not specified, the default scheduler is used.",
+          "minLength": 1,
+          "type": "string"
         },
         "scrapeClasses": {
           "description": "scrapeClasses defines the list of scrape classes to expose to scraping objects such as\nPodMonitors, ServiceMonitors, Probes and ScrapeConfigs.\n\nThis is an *experimental feature*, it may change in any upcoming release\nin a breaking way.",
@@ -11433,14 +11438,6 @@
                   },
                   "type": "array"
                 },
-                "clientAuthType": {
-                  "description": "clientAuthType defines the server policy for client TLS authentication.\n\nFor more detail on clientAuth options:\nhttps://golang.org/pkg/crypto/tls/#ClientAuthType",
-                  "type": "string"
-                },
-                "clientCAFile": {
-                  "description": "clientCAFile defines the path to the CA certificate file for client certificate authentication to\nthe server.\n\nIt is mutually exclusive with `client_ca`.",
-                  "type": "string"
-                },
                 "client_ca": {
                   "description": "client_ca defines the Secret or ConfigMap containing the CA certificate for client certificate\nauthentication to the server.\n\nIt is mutually exclusive with `clientCAFile`.",
                   "properties": {
@@ -11495,6 +11492,14 @@
                   },
                   "type": "object",
                   "additionalProperties": false
+                },
+                "clientAuthType": {
+                  "description": "clientAuthType defines the server policy for client TLS authentication.\n\nFor more detail on clientAuth options:\nhttps://golang.org/pkg/crypto/tls/#ClientAuthType",
+                  "type": "string"
+                },
+                "clientCAFile": {
+                  "description": "clientCAFile defines the path to the CA certificate file for client certificate authentication to\nthe server.\n\nIt is mutually exclusive with `client_ca`.",
+                  "type": "string"
                 },
                 "curvePreferences": {
                   "description": "curvePreferences defines elliptic curves that will be used in an ECDHE handshake, in preference\norder.\n\nAvailable curves are documented in the Go documentation:\nhttps://golang.org/pkg/crypto/tls/#CurveID",

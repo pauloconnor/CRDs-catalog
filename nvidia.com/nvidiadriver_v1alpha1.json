@@ -231,6 +231,16 @@
           "type": "object",
           "additionalProperties": false
         },
+        "kernelModuleType": {
+          "default": "auto",
+          "description": "KernelModuleType represents the type of driver kernel modules to be used when installing the GPU driver.\nAccepted values are auto, proprietary and open. NOTE: If auto is chosen, it means that the recommended kernel module\ntype is chosen based on the GPU devices on the host and the driver branch used",
+          "enum": [
+            "auto",
+            "open",
+            "proprietary"
+          ],
+          "type": "string"
+        },
         "labels": {
           "additionalProperties": {
             "type": "string"
@@ -242,11 +252,15 @@
           "description": "Optional: Licensing configuration for NVIDIA vGPU licensing",
           "properties": {
             "name": {
+              "description": "Deprecated: ConfigMapName has been deprecated in favour of SecretName. Please use secrets to handle the licensing server configuration more securely",
               "type": "string"
             },
             "nlsEnabled": {
               "description": "NLSEnabled indicates if NVIDIA Licensing System is used for licensing.",
               "type": "boolean"
+            },
+            "secretName": {
+              "type": "string"
             }
           },
           "type": "object",
@@ -644,6 +658,10 @@
           "type": "object",
           "additionalProperties": false
         },
+        "secretEnv": {
+          "description": "Optional: SecretEnv represents the name of the Kubernetes Secret with secret environment variables for the NVIDIA Driver",
+          "type": "string"
+        },
         "startupProbe": {
           "description": "NVIDIA Driver container startup probe settings",
           "properties": {
@@ -713,7 +731,7 @@
           "type": "array"
         },
         "useOpenKernelModules": {
-          "description": "UseOpenKernelModules indicates if the open GPU kernel modules should be used",
+          "description": "Deprecated: This field is no longer honored by the gpu-operator. Please use KernelModuleType instead.\nUseOpenKernelModules indicates if the open GPU kernel modules should be used",
           "type": "boolean"
         },
         "usePrecompiled": {

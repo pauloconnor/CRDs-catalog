@@ -1,0 +1,197 @@
+{
+  "description": "GitCommitStatus is the Schema for the gitcommitstatuses API.\n\nIt validates commits from PromotionStrategy environments using configurable expressions\nand creates CommitStatus resources with the validation results.\n\nUse the Target field to control which commit is validated:\n- \"active\" (default): Validates the currently deployed commit\n- \"proposed\": Validates the incoming commit\n\nThe validation result is always reported on the PROPOSED commit to enable promotion gating,\nregardless of which commit was validated.\n\nWorkflow:\n 1. Controller reads PromotionStrategy to get ProposedHydratedSha and ActiveHydratedSha\n 2. Controller selects SHA to validate based on Target field\n 3. Controller fetches commit data (subject, body, author, trailers) for selected SHA\n 4. Controller evaluates expression against selected commit data\n 5. Controller creates/updates CommitStatus with result attached to PROPOSED SHA\n 6. PromotionStrategy checks CommitStatus on PROPOSED SHA before allowing promotion\n\nCommon use cases:\n  - \"Ensure active commit is not a revert before promoting\"",
+  "properties": {
+    "apiVersion": {
+      "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+      "type": "string"
+    },
+    "kind": {
+      "description": "Kind is a string value representing the REST resource this object represents.\nServers may infer this from the endpoint the client submits requests to.\nCannot be updated.\nIn CamelCase.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object"
+    },
+    "spec": {
+      "description": "spec defines the desired state of GitCommitStatus",
+      "properties": {
+        "description": {
+          "description": "Description is a human-readable description of this validation that will be shown in the SCM provider\n(GitHub, GitLab, etc.) as the commit status description.\nIf not specified, defaults to empty string.",
+          "type": "string"
+        },
+        "expression": {
+          "description": "Expression is evaluated using the expr library (github.com/expr-lang/expr) against commit data\nfor environments in the referenced PromotionStrategy.\nThe expression must return a boolean value where true indicates the validation passed.\n\nThe commit validated is determined by the Target field:\n- \"active\" (default): Validates the ACTIVE (currently deployed) commit\n- \"proposed\": Validates the PROPOSED commit (what will be promoted)\n\nThe validation result is always reported on the PROPOSED commit to enable promotion gating.\n\nUse Cases by Mode:\n  Active mode: State-based gating - validate current environment before allowing promotion\n    - \"Don't promote until active commit has required sign-offs\"\n    - \"Verify current deployment meets compliance before next promotion\"\n    - \"Ensure active commit is not a revert before promoting\"\n\n  Proposed mode: Change-based gating - validate the incoming change itself\n    - \"Don't promote unless new commit follows naming convention\"\n    - \"Ensure proposed commit has proper JIRA ticket reference\"\n    - \"Require specific author for proposed changes\"\n\nAvailable variables in the expression context:\n  - Commit.SHA (string): the commit SHA being validated (active or proposed based on Target)\n  - Commit.Subject (string): the first line of the commit message\n  - Commit.Body (string): the commit message body (everything after the subject line)\n  - Commit.Author (string): commit author email address\n  - Commit.Trailers (map[string][]string): git trailers parsed from commit message",
+          "type": "string"
+        },
+        "key": {
+          "description": "Key is the unique identifier for this validation rule.\nIt is used as the commit status key and in status messages.\nThis key is matched against PromotionStrategy's proposedCommitStatuses or activeCommitStatuses\nto determine which environments this validation applies to.",
+          "maxLength": 63,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
+          "type": "string"
+        },
+        "promotionStrategyRef": {
+          "description": "PromotionStrategyRef is a reference to the promotion strategy that this commit status applies to.\nThe controller will validate commits from ALL environments in the referenced PromotionStrategy\nwhere this GitCommitStatus.Spec.Key matches an entry in either:\n  - PromotionStrategy.Spec.ProposedCommitStatuses (applies to all environments), OR\n  - Environment.ProposedCommitStatuses (applies to specific environment)",
+          "properties": {
+            "name": {
+              "description": "Name is the name of the object to refer to.",
+              "maxLength": 253,
+              "minLength": 1,
+              "pattern": "^[a-z0-9]([-a-z0-9.]*[a-z0-9])?$",
+              "type": "string"
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "type": "object",
+          "additionalProperties": false
+        },
+        "target": {
+          "default": "active",
+          "description": "Target specifies which commit SHA to validate with the expression.\n- \"active\": Validates the currently active/deployed commit (default behavior)\n- \"proposed\": Validates the proposed commit that will be promoted\n\nThe validation result is always reported on the PROPOSED commit (for gating), but this field\ncontrols which commit's data is used in the expression evaluation.\n\nExamples:\n  target: \"active\" - \"Don't promote if a revert commit is detected\"\n  target: \"proposed\" - \"Don't promote unless new commit follows naming convention\"",
+          "enum": [
+            "active",
+            "proposed"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "expression",
+        "key",
+        "promotionStrategyRef"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    },
+    "status": {
+      "description": "status defines the observed state of GitCommitStatus",
+      "properties": {
+        "conditions": {
+          "description": "Conditions represent the latest available observations of the GitCommitStatus's state.\nStandard condition types include \"Ready\" which aggregates the status of all environments.",
+          "items": {
+            "description": "Condition contains details for one aspect of the current state of this API Resource.",
+            "properties": {
+              "lastTransitionTime": {
+                "description": "lastTransitionTime is the last time the condition transitioned from one status to another.\nThis should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.",
+                "format": "date-time",
+                "type": "string"
+              },
+              "message": {
+                "description": "message is a human readable message indicating details about the transition.\nThis may be an empty string.",
+                "maxLength": 32768,
+                "type": "string"
+              },
+              "observedGeneration": {
+                "description": "observedGeneration represents the .metadata.generation that the condition was set based upon.\nFor instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date\nwith respect to the current state of the instance.",
+                "format": "int64",
+                "minimum": 0,
+                "type": "integer"
+              },
+              "reason": {
+                "description": "reason contains a programmatic identifier indicating the reason for the condition's last transition.\nProducers of specific condition types may define expected values and meanings for this field,\nand whether the values are considered a guaranteed API.\nThe value should be a CamelCase string.\nThis field may not be empty.",
+                "maxLength": 1024,
+                "minLength": 1,
+                "pattern": "^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$",
+                "type": "string"
+              },
+              "status": {
+                "description": "status of the condition, one of True, False, Unknown.",
+                "enum": [
+                  "True",
+                  "False",
+                  "Unknown"
+                ],
+                "type": "string"
+              },
+              "type": {
+                "description": "type of condition in CamelCase or in foo.example.com/CamelCase.",
+                "maxLength": 316,
+                "pattern": "^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "lastTransitionTime",
+              "message",
+              "reason",
+              "status",
+              "type"
+            ],
+            "type": "object",
+            "additionalProperties": false
+          },
+          "type": "array",
+          "x-kubernetes-list-map-keys": [
+            "type"
+          ],
+          "x-kubernetes-list-type": "map"
+        },
+        "environments": {
+          "description": "Environments holds the validation results for each environment where this validation applies.\nEach entry corresponds to an environment from the PromotionStrategy where the Key matches\neither global or environment-specific proposedCommitStatuses.\n\nThe controller validates the commit specified by Target (\"active\" or \"proposed\")\nbut the CommitStatus is always reported on the PROPOSED commit for promotion gating.\nEach environment entry tracks both the ProposedHydratedSha (where status is reported) and the\nActiveHydratedSha, with TargetedSha indicating which one was actually evaluated.",
+          "items": {
+            "description": "GitCommitStatusEnvironmentStatus defines the observed validation status for a specific environment.",
+            "properties": {
+              "activeHydratedSha": {
+                "description": "ActiveHydratedSha is the currently active (deployed) hydrated commit SHA that was validated.\nThis comes from the PromotionStrategy's environment status.\nThe expression is evaluated against THIS commit's data, not the proposed commit.\nMay be empty if the PromotionStrategy hasn't reconciled yet.\nSupports both SHA-1 (40 chars) and SHA-256 (64 chars) Git hash formats.",
+                "maxLength": 64,
+                "pattern": "^([a-f0-9]{40}|[a-f0-9]{64})$",
+                "type": "string"
+              },
+              "branch": {
+                "description": "Branch is the environment branch name being validated.",
+                "minLength": 1,
+                "type": "string"
+              },
+              "expressionResult": {
+                "description": "ExpressionResult contains the boolean result of the expression evaluation.\nOnly set when the expression successfully evaluates to a boolean.\nnil indicates the expression has not yet been evaluated, failed to compile, or failed to evaluate.",
+                "type": "boolean"
+              },
+              "phase": {
+                "description": "Phase represents the current validation state of the commit.\n- \"pending\": validation has not completed, commit data is not yet available, or SHAs are empty\n- \"success\": expression evaluated to true, validation passed\n- \"failure\": expression evaluated to false, validation failed, or expression compilation failed",
+                "enum": [
+                  "pending",
+                  "success",
+                  "failure"
+                ],
+                "type": "string"
+              },
+              "proposedHydratedSha": {
+                "description": "ProposedHydratedSha is the proposed hydrated commit SHA where the validation result is reported.\nThis comes from the PromotionStrategy's environment status.\nThe CommitStatus resource is created with this SHA, allowing the PromotionStrategy to gate\npromotions based on the validation of the ACTIVE commit.\nMay be empty if the PromotionStrategy hasn't reconciled yet.\nSupports both SHA-1 (40 chars) and SHA-256 (64 chars) Git hash formats.",
+                "maxLength": 64,
+                "minLength": 40,
+                "pattern": "^([a-f0-9]{40}|[a-f0-9]{64})$",
+                "type": "string"
+              },
+              "targetedSha": {
+                "description": "TargetedSha is the commit SHA that was actually validated by the expression.\nThis will match either ProposedHydratedSha or ActiveHydratedSha depending on\nthe Target setting (\"proposed\" or \"active\").\nThis field clarifies which commit's data was used in the expression evaluation.\nSupports both SHA-1 (40 chars) and SHA-256 (64 chars) Git hash formats.",
+                "maxLength": 64,
+                "pattern": "^([a-f0-9]{40}|[a-f0-9]{64})$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "branch",
+              "phase",
+              "proposedHydratedSha"
+            ],
+            "type": "object",
+            "additionalProperties": false
+          },
+          "type": "array",
+          "x-kubernetes-list-map-keys": [
+            "branch"
+          ],
+          "x-kubernetes-list-type": "map"
+        }
+      },
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "spec"
+  ],
+  "type": "object"
+}

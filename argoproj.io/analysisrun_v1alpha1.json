@@ -385,9 +385,6 @@
                             "format": "int32",
                             "type": "integer"
                           },
-                          "managedBy": {
-                            "type": "string"
-                          },
                           "manualSelector": {
                             "type": "boolean"
                           },
@@ -486,8 +483,7 @@
                                       "items": {
                                         "type": "string"
                                       },
-                                      "type": "array",
-                                      "x-kubernetes-list-type": "atomic"
+                                      "type": "array"
                                     }
                                   },
                                   "required": [
@@ -497,8 +493,7 @@
                                   "type": "object",
                                   "additionalProperties": false
                                 },
-                                "type": "array",
-                                "x-kubernetes-list-type": "atomic"
+                                "type": "array"
                               },
                               "matchLabels": {
                                 "additionalProperties": {
@@ -509,32 +504,6 @@
                             },
                             "type": "object",
                             "x-kubernetes-map-type": "atomic",
-                            "additionalProperties": false
-                          },
-                          "successPolicy": {
-                            "properties": {
-                              "rules": {
-                                "items": {
-                                  "properties": {
-                                    "succeededCount": {
-                                      "format": "int32",
-                                      "type": "integer"
-                                    },
-                                    "succeededIndexes": {
-                                      "type": "string"
-                                    }
-                                  },
-                                  "type": "object",
-                                  "additionalProperties": false
-                                },
-                                "type": "array",
-                                "x-kubernetes-list-type": "atomic"
-                              }
-                            },
-                            "required": [
-                              "rules"
-                            ],
-                            "type": "object",
                             "additionalProperties": false
                           },
                           "suspend": {
@@ -588,8 +557,7 @@
                                                             "items": {
                                                               "type": "string"
                                                             },
-                                                            "type": "array",
-                                                            "x-kubernetes-list-type": "atomic"
+                                                            "type": "array"
                                                           }
                                                         },
                                                         "required": [
@@ -599,8 +567,7 @@
                                                         "type": "object",
                                                         "additionalProperties": false
                                                       },
-                                                      "type": "array",
-                                                      "x-kubernetes-list-type": "atomic"
+                                                      "type": "array"
                                                     },
                                                     "matchFields": {
                                                       "items": {
@@ -615,8 +582,7 @@
                                                             "items": {
                                                               "type": "string"
                                                             },
-                                                            "type": "array",
-                                                            "x-kubernetes-list-type": "atomic"
+                                                            "type": "array"
                                                           }
                                                         },
                                                         "required": [
@@ -626,8 +592,7 @@
                                                         "type": "object",
                                                         "additionalProperties": false
                                                       },
-                                                      "type": "array",
-                                                      "x-kubernetes-list-type": "atomic"
+                                                      "type": "array"
                                                     }
                                                   },
                                                   "type": "object",
@@ -646,8 +611,7 @@
                                               "type": "object",
                                               "additionalProperties": false
                                             },
-                                            "type": "array",
-                                            "x-kubernetes-list-type": "atomic"
+                                            "type": "array"
                                           },
                                           "requiredDuringSchedulingIgnoredDuringExecution": {
                                             "properties": {
@@ -667,8 +631,7 @@
                                                             "items": {
                                                               "type": "string"
                                                             },
-                                                            "type": "array",
-                                                            "x-kubernetes-list-type": "atomic"
+                                                            "type": "array"
                                                           }
                                                         },
                                                         "required": [
@@ -678,8 +641,7 @@
                                                         "type": "object",
                                                         "additionalProperties": false
                                                       },
-                                                      "type": "array",
-                                                      "x-kubernetes-list-type": "atomic"
+                                                      "type": "array"
                                                     },
                                                     "matchFields": {
                                                       "items": {
@@ -694,8 +656,7 @@
                                                             "items": {
                                                               "type": "string"
                                                             },
-                                                            "type": "array",
-                                                            "x-kubernetes-list-type": "atomic"
+                                                            "type": "array"
                                                           }
                                                         },
                                                         "required": [
@@ -705,16 +666,14 @@
                                                         "type": "object",
                                                         "additionalProperties": false
                                                       },
-                                                      "type": "array",
-                                                      "x-kubernetes-list-type": "atomic"
+                                                      "type": "array"
                                                     }
                                                   },
                                                   "type": "object",
                                                   "x-kubernetes-map-type": "atomic",
                                                   "additionalProperties": false
                                                 },
-                                                "type": "array",
-                                                "x-kubernetes-list-type": "atomic"
+                                                "type": "array"
                                               }
                                             },
                                             "required": [
@@ -750,8 +709,7 @@
                                                                 "items": {
                                                                   "type": "string"
                                                                 },
-                                                                "type": "array",
-                                                                "x-kubernetes-list-type": "atomic"
+                                                                "type": "array"
                                                               }
                                                             },
                                                             "required": [
@@ -761,8 +719,7 @@
                                                             "type": "object",
                                                             "additionalProperties": false
                                                           },
-                                                          "type": "array",
-                                                          "x-kubernetes-list-type": "atomic"
+                                                          "type": "array"
                                                         },
                                                         "matchLabels": {
                                                           "additionalProperties": {
@@ -804,8 +761,7 @@
                                                                 "items": {
                                                                   "type": "string"
                                                                 },
-                                                                "type": "array",
-                                                                "x-kubernetes-list-type": "atomic"
+                                                                "type": "array"
                                                               }
                                                             },
                                                             "required": [
@@ -815,8 +771,7 @@
                                                             "type": "object",
                                                             "additionalProperties": false
                                                           },
-                                                          "type": "array",
-                                                          "x-kubernetes-list-type": "atomic"
+                                                          "type": "array"
                                                         },
                                                         "matchLabels": {
                                                           "additionalProperties": {
@@ -833,8 +788,7 @@
                                                       "items": {
                                                         "type": "string"
                                                       },
-                                                      "type": "array",
-                                                      "x-kubernetes-list-type": "atomic"
+                                                      "type": "array"
                                                     },
                                                     "topologyKey": {
                                                       "type": "string"
@@ -858,8 +812,7 @@
                                               "type": "object",
                                               "additionalProperties": false
                                             },
-                                            "type": "array",
-                                            "x-kubernetes-list-type": "atomic"
+                                            "type": "array"
                                           },
                                           "requiredDuringSchedulingIgnoredDuringExecution": {
                                             "items": {
@@ -879,8 +832,7 @@
                                                             "items": {
                                                               "type": "string"
                                                             },
-                                                            "type": "array",
-                                                            "x-kubernetes-list-type": "atomic"
+                                                            "type": "array"
                                                           }
                                                         },
                                                         "required": [
@@ -890,8 +842,7 @@
                                                         "type": "object",
                                                         "additionalProperties": false
                                                       },
-                                                      "type": "array",
-                                                      "x-kubernetes-list-type": "atomic"
+                                                      "type": "array"
                                                     },
                                                     "matchLabels": {
                                                       "additionalProperties": {
@@ -933,8 +884,7 @@
                                                             "items": {
                                                               "type": "string"
                                                             },
-                                                            "type": "array",
-                                                            "x-kubernetes-list-type": "atomic"
+                                                            "type": "array"
                                                           }
                                                         },
                                                         "required": [
@@ -944,8 +894,7 @@
                                                         "type": "object",
                                                         "additionalProperties": false
                                                       },
-                                                      "type": "array",
-                                                      "x-kubernetes-list-type": "atomic"
+                                                      "type": "array"
                                                     },
                                                     "matchLabels": {
                                                       "additionalProperties": {
@@ -962,8 +911,7 @@
                                                   "items": {
                                                     "type": "string"
                                                   },
-                                                  "type": "array",
-                                                  "x-kubernetes-list-type": "atomic"
+                                                  "type": "array"
                                                 },
                                                 "topologyKey": {
                                                   "type": "string"
@@ -975,8 +923,7 @@
                                               "type": "object",
                                               "additionalProperties": false
                                             },
-                                            "type": "array",
-                                            "x-kubernetes-list-type": "atomic"
+                                            "type": "array"
                                           }
                                         },
                                         "type": "object",
@@ -1004,8 +951,7 @@
                                                                 "items": {
                                                                   "type": "string"
                                                                 },
-                                                                "type": "array",
-                                                                "x-kubernetes-list-type": "atomic"
+                                                                "type": "array"
                                                               }
                                                             },
                                                             "required": [
@@ -1015,8 +961,7 @@
                                                             "type": "object",
                                                             "additionalProperties": false
                                                           },
-                                                          "type": "array",
-                                                          "x-kubernetes-list-type": "atomic"
+                                                          "type": "array"
                                                         },
                                                         "matchLabels": {
                                                           "additionalProperties": {
@@ -1058,8 +1003,7 @@
                                                                 "items": {
                                                                   "type": "string"
                                                                 },
-                                                                "type": "array",
-                                                                "x-kubernetes-list-type": "atomic"
+                                                                "type": "array"
                                                               }
                                                             },
                                                             "required": [
@@ -1069,8 +1013,7 @@
                                                             "type": "object",
                                                             "additionalProperties": false
                                                           },
-                                                          "type": "array",
-                                                          "x-kubernetes-list-type": "atomic"
+                                                          "type": "array"
                                                         },
                                                         "matchLabels": {
                                                           "additionalProperties": {
@@ -1087,8 +1030,7 @@
                                                       "items": {
                                                         "type": "string"
                                                       },
-                                                      "type": "array",
-                                                      "x-kubernetes-list-type": "atomic"
+                                                      "type": "array"
                                                     },
                                                     "topologyKey": {
                                                       "type": "string"
@@ -1112,8 +1054,7 @@
                                               "type": "object",
                                               "additionalProperties": false
                                             },
-                                            "type": "array",
-                                            "x-kubernetes-list-type": "atomic"
+                                            "type": "array"
                                           },
                                           "requiredDuringSchedulingIgnoredDuringExecution": {
                                             "items": {
@@ -1133,8 +1074,7 @@
                                                             "items": {
                                                               "type": "string"
                                                             },
-                                                            "type": "array",
-                                                            "x-kubernetes-list-type": "atomic"
+                                                            "type": "array"
                                                           }
                                                         },
                                                         "required": [
@@ -1144,8 +1084,7 @@
                                                         "type": "object",
                                                         "additionalProperties": false
                                                       },
-                                                      "type": "array",
-                                                      "x-kubernetes-list-type": "atomic"
+                                                      "type": "array"
                                                     },
                                                     "matchLabels": {
                                                       "additionalProperties": {
@@ -1187,8 +1126,7 @@
                                                             "items": {
                                                               "type": "string"
                                                             },
-                                                            "type": "array",
-                                                            "x-kubernetes-list-type": "atomic"
+                                                            "type": "array"
                                                           }
                                                         },
                                                         "required": [
@@ -1198,8 +1136,7 @@
                                                         "type": "object",
                                                         "additionalProperties": false
                                                       },
-                                                      "type": "array",
-                                                      "x-kubernetes-list-type": "atomic"
+                                                      "type": "array"
                                                     },
                                                     "matchLabels": {
                                                       "additionalProperties": {
@@ -1216,8 +1153,7 @@
                                                   "items": {
                                                     "type": "string"
                                                   },
-                                                  "type": "array",
-                                                  "x-kubernetes-list-type": "atomic"
+                                                  "type": "array"
                                                 },
                                                 "topologyKey": {
                                                   "type": "string"
@@ -1229,8 +1165,7 @@
                                               "type": "object",
                                               "additionalProperties": false
                                             },
-                                            "type": "array",
-                                            "x-kubernetes-list-type": "atomic"
+                                            "type": "array"
                                           }
                                         },
                                         "type": "object",
@@ -1250,15 +1185,13 @@
                                           "items": {
                                             "type": "string"
                                           },
-                                          "type": "array",
-                                          "x-kubernetes-list-type": "atomic"
+                                          "type": "array"
                                         },
                                         "command": {
                                           "items": {
                                             "type": "string"
                                           },
-                                          "type": "array",
-                                          "x-kubernetes-list-type": "atomic"
+                                          "type": "array"
                                         },
                                         "env": {
                                           "items": {
@@ -1277,7 +1210,6 @@
                                                         "type": "string"
                                                       },
                                                       "name": {
-                                                        "default": "",
                                                         "type": "string"
                                                       },
                                                       "optional": {
@@ -1302,31 +1234,6 @@
                                                     },
                                                     "required": [
                                                       "fieldPath"
-                                                    ],
-                                                    "type": "object",
-                                                    "x-kubernetes-map-type": "atomic",
-                                                    "additionalProperties": false
-                                                  },
-                                                  "fileKeyRef": {
-                                                    "properties": {
-                                                      "key": {
-                                                        "type": "string"
-                                                      },
-                                                      "optional": {
-                                                        "default": false,
-                                                        "type": "boolean"
-                                                      },
-                                                      "path": {
-                                                        "type": "string"
-                                                      },
-                                                      "volumeName": {
-                                                        "type": "string"
-                                                      }
-                                                    },
-                                                    "required": [
-                                                      "key",
-                                                      "path",
-                                                      "volumeName"
                                                     ],
                                                     "type": "object",
                                                     "x-kubernetes-map-type": "atomic",
@@ -1366,7 +1273,6 @@
                                                         "type": "string"
                                                       },
                                                       "name": {
-                                                        "default": "",
                                                         "type": "string"
                                                       },
                                                       "optional": {
@@ -1391,11 +1297,7 @@
                                             "type": "object",
                                             "additionalProperties": false
                                           },
-                                          "type": "array",
-                                          "x-kubernetes-list-map-keys": [
-                                            "name"
-                                          ],
-                                          "x-kubernetes-list-type": "map"
+                                          "type": "array"
                                         },
                                         "envFrom": {
                                           "items": {
@@ -1403,7 +1305,6 @@
                                               "configMapRef": {
                                                 "properties": {
                                                   "name": {
-                                                    "default": "",
                                                     "type": "string"
                                                   },
                                                   "optional": {
@@ -1420,7 +1321,6 @@
                                               "secretRef": {
                                                 "properties": {
                                                   "name": {
-                                                    "default": "",
                                                     "type": "string"
                                                   },
                                                   "optional": {
@@ -1435,8 +1335,7 @@
                                             "type": "object",
                                             "additionalProperties": false
                                           },
-                                          "type": "array",
-                                          "x-kubernetes-list-type": "atomic"
+                                          "type": "array"
                                         },
                                         "image": {
                                           "type": "string"
@@ -1454,8 +1353,7 @@
                                                       "items": {
                                                         "type": "string"
                                                       },
-                                                      "type": "array",
-                                                      "x-kubernetes-list-type": "atomic"
+                                                      "type": "array"
                                                     }
                                                   },
                                                   "type": "object",
@@ -1483,8 +1381,7 @@
                                                         "type": "object",
                                                         "additionalProperties": false
                                                       },
-                                                      "type": "array",
-                                                      "x-kubernetes-list-type": "atomic"
+                                                      "type": "array"
                                                     },
                                                     "path": {
                                                       "type": "string"
@@ -1558,8 +1455,7 @@
                                                       "items": {
                                                         "type": "string"
                                                       },
-                                                      "type": "array",
-                                                      "x-kubernetes-list-type": "atomic"
+                                                      "type": "array"
                                                     }
                                                   },
                                                   "type": "object",
@@ -1587,8 +1483,7 @@
                                                         "type": "object",
                                                         "additionalProperties": false
                                                       },
-                                                      "type": "array",
-                                                      "x-kubernetes-list-type": "atomic"
+                                                      "type": "array"
                                                     },
                                                     "path": {
                                                       "type": "string"
@@ -1653,9 +1548,6 @@
                                               },
                                               "type": "object",
                                               "additionalProperties": false
-                                            },
-                                            "stopSignal": {
-                                              "type": "string"
                                             }
                                           },
                                           "type": "object",
@@ -1669,8 +1561,7 @@
                                                   "items": {
                                                     "type": "string"
                                                   },
-                                                  "type": "array",
-                                                  "x-kubernetes-list-type": "atomic"
+                                                  "type": "array"
                                                 }
                                               },
                                               "type": "object",
@@ -1687,7 +1578,6 @@
                                                   "type": "integer"
                                                 },
                                                 "service": {
-                                                  "default": "",
                                                   "type": "string"
                                                 }
                                               },
@@ -1719,8 +1609,7 @@
                                                     "type": "object",
                                                     "additionalProperties": false
                                                   },
-                                                  "type": "array",
-                                                  "x-kubernetes-list-type": "atomic"
+                                                  "type": "array"
                                                 },
                                                 "path": {
                                                   "type": "string"
@@ -1839,8 +1728,7 @@
                                                   "items": {
                                                     "type": "string"
                                                   },
-                                                  "type": "array",
-                                                  "x-kubernetes-list-type": "atomic"
+                                                  "type": "array"
                                                 }
                                               },
                                               "type": "object",
@@ -1857,7 +1745,6 @@
                                                   "type": "integer"
                                                 },
                                                 "service": {
-                                                  "default": "",
                                                   "type": "string"
                                                 }
                                               },
@@ -1889,8 +1776,7 @@
                                                     "type": "object",
                                                     "additionalProperties": false
                                                   },
-                                                  "type": "array",
-                                                  "x-kubernetes-list-type": "atomic"
+                                                  "type": "array"
                                                 },
                                                 "path": {
                                                   "type": "string"
@@ -1990,9 +1876,6 @@
                                                 "properties": {
                                                   "name": {
                                                     "type": "string"
-                                                  },
-                                                  "request": {
-                                                    "type": "string"
                                                   }
                                                 },
                                                 "required": [
@@ -2020,61 +1903,10 @@
                                         "restartPolicy": {
                                           "type": "string"
                                         },
-                                        "restartPolicyRules": {
-                                          "items": {
-                                            "properties": {
-                                              "action": {
-                                                "type": "string"
-                                              },
-                                              "exitCodes": {
-                                                "properties": {
-                                                  "operator": {
-                                                    "type": "string"
-                                                  },
-                                                  "values": {
-                                                    "items": {
-                                                      "format": "int32",
-                                                      "type": "integer"
-                                                    },
-                                                    "type": "array",
-                                                    "x-kubernetes-list-type": "set"
-                                                  }
-                                                },
-                                                "required": [
-                                                  "operator"
-                                                ],
-                                                "type": "object",
-                                                "additionalProperties": false
-                                              }
-                                            },
-                                            "required": [
-                                              "action"
-                                            ],
-                                            "type": "object",
-                                            "additionalProperties": false
-                                          },
-                                          "type": "array",
-                                          "x-kubernetes-list-type": "atomic"
-                                        },
                                         "securityContext": {
                                           "properties": {
                                             "allowPrivilegeEscalation": {
                                               "type": "boolean"
-                                            },
-                                            "appArmorProfile": {
-                                              "properties": {
-                                                "localhostProfile": {
-                                                  "type": "string"
-                                                },
-                                                "type": {
-                                                  "type": "string"
-                                                }
-                                              },
-                                              "required": [
-                                                "type"
-                                              ],
-                                              "type": "object",
-                                              "additionalProperties": false
                                             },
                                             "capabilities": {
                                               "properties": {
@@ -2082,15 +1914,13 @@
                                                   "items": {
                                                     "type": "string"
                                                   },
-                                                  "type": "array",
-                                                  "x-kubernetes-list-type": "atomic"
+                                                  "type": "array"
                                                 },
                                                 "drop": {
                                                   "items": {
                                                     "type": "string"
                                                   },
-                                                  "type": "array",
-                                                  "x-kubernetes-list-type": "atomic"
+                                                  "type": "array"
                                                 }
                                               },
                                               "type": "object",
@@ -2179,8 +2009,7 @@
                                                   "items": {
                                                     "type": "string"
                                                   },
-                                                  "type": "array",
-                                                  "x-kubernetes-list-type": "atomic"
+                                                  "type": "array"
                                                 }
                                               },
                                               "type": "object",
@@ -2197,7 +2026,6 @@
                                                   "type": "integer"
                                                 },
                                                 "service": {
-                                                  "default": "",
                                                   "type": "string"
                                                 }
                                               },
@@ -2229,8 +2057,7 @@
                                                     "type": "object",
                                                     "additionalProperties": false
                                                   },
-                                                  "type": "array",
-                                                  "x-kubernetes-list-type": "atomic"
+                                                  "type": "array"
                                                 },
                                                 "path": {
                                                   "type": "string"
@@ -2335,11 +2162,7 @@
                                             "type": "object",
                                             "additionalProperties": false
                                           },
-                                          "type": "array",
-                                          "x-kubernetes-list-map-keys": [
-                                            "devicePath"
-                                          ],
-                                          "x-kubernetes-list-type": "map"
+                                          "type": "array"
                                         },
                                         "volumeMounts": {
                                           "items": {
@@ -2356,9 +2179,6 @@
                                               "readOnly": {
                                                 "type": "boolean"
                                               },
-                                              "recursiveReadOnly": {
-                                                "type": "string"
-                                              },
                                               "subPath": {
                                                 "type": "string"
                                               },
@@ -2373,11 +2193,7 @@
                                             "type": "object",
                                             "additionalProperties": false
                                           },
-                                          "type": "array",
-                                          "x-kubernetes-list-map-keys": [
-                                            "mountPath"
-                                          ],
-                                          "x-kubernetes-list-type": "map"
+                                          "type": "array"
                                         },
                                         "workingDir": {
                                           "type": "string"
@@ -2389,11 +2205,7 @@
                                       "type": "object",
                                       "additionalProperties": false
                                     },
-                                    "type": "array",
-                                    "x-kubernetes-list-map-keys": [
-                                      "name"
-                                    ],
-                                    "x-kubernetes-list-type": "map"
+                                    "type": "array"
                                   },
                                   "dnsConfig": {
                                     "properties": {
@@ -2401,8 +2213,7 @@
                                         "items": {
                                           "type": "string"
                                         },
-                                        "type": "array",
-                                        "x-kubernetes-list-type": "atomic"
+                                        "type": "array"
                                       },
                                       "options": {
                                         "items": {
@@ -2417,15 +2228,13 @@
                                           "type": "object",
                                           "additionalProperties": false
                                         },
-                                        "type": "array",
-                                        "x-kubernetes-list-type": "atomic"
+                                        "type": "array"
                                       },
                                       "searches": {
                                         "items": {
                                           "type": "string"
                                         },
-                                        "type": "array",
-                                        "x-kubernetes-list-type": "atomic"
+                                        "type": "array"
                                       }
                                     },
                                     "type": "object",
@@ -2444,15 +2253,13 @@
                                           "items": {
                                             "type": "string"
                                           },
-                                          "type": "array",
-                                          "x-kubernetes-list-type": "atomic"
+                                          "type": "array"
                                         },
                                         "command": {
                                           "items": {
                                             "type": "string"
                                           },
-                                          "type": "array",
-                                          "x-kubernetes-list-type": "atomic"
+                                          "type": "array"
                                         },
                                         "env": {
                                           "items": {
@@ -2471,7 +2278,6 @@
                                                         "type": "string"
                                                       },
                                                       "name": {
-                                                        "default": "",
                                                         "type": "string"
                                                       },
                                                       "optional": {
@@ -2496,31 +2302,6 @@
                                                     },
                                                     "required": [
                                                       "fieldPath"
-                                                    ],
-                                                    "type": "object",
-                                                    "x-kubernetes-map-type": "atomic",
-                                                    "additionalProperties": false
-                                                  },
-                                                  "fileKeyRef": {
-                                                    "properties": {
-                                                      "key": {
-                                                        "type": "string"
-                                                      },
-                                                      "optional": {
-                                                        "default": false,
-                                                        "type": "boolean"
-                                                      },
-                                                      "path": {
-                                                        "type": "string"
-                                                      },
-                                                      "volumeName": {
-                                                        "type": "string"
-                                                      }
-                                                    },
-                                                    "required": [
-                                                      "key",
-                                                      "path",
-                                                      "volumeName"
                                                     ],
                                                     "type": "object",
                                                     "x-kubernetes-map-type": "atomic",
@@ -2560,7 +2341,6 @@
                                                         "type": "string"
                                                       },
                                                       "name": {
-                                                        "default": "",
                                                         "type": "string"
                                                       },
                                                       "optional": {
@@ -2585,11 +2365,7 @@
                                             "type": "object",
                                             "additionalProperties": false
                                           },
-                                          "type": "array",
-                                          "x-kubernetes-list-map-keys": [
-                                            "name"
-                                          ],
-                                          "x-kubernetes-list-type": "map"
+                                          "type": "array"
                                         },
                                         "envFrom": {
                                           "items": {
@@ -2597,7 +2373,6 @@
                                               "configMapRef": {
                                                 "properties": {
                                                   "name": {
-                                                    "default": "",
                                                     "type": "string"
                                                   },
                                                   "optional": {
@@ -2614,7 +2389,6 @@
                                               "secretRef": {
                                                 "properties": {
                                                   "name": {
-                                                    "default": "",
                                                     "type": "string"
                                                   },
                                                   "optional": {
@@ -2629,8 +2403,7 @@
                                             "type": "object",
                                             "additionalProperties": false
                                           },
-                                          "type": "array",
-                                          "x-kubernetes-list-type": "atomic"
+                                          "type": "array"
                                         },
                                         "image": {
                                           "type": "string"
@@ -2648,8 +2421,7 @@
                                                       "items": {
                                                         "type": "string"
                                                       },
-                                                      "type": "array",
-                                                      "x-kubernetes-list-type": "atomic"
+                                                      "type": "array"
                                                     }
                                                   },
                                                   "type": "object",
@@ -2677,8 +2449,7 @@
                                                         "type": "object",
                                                         "additionalProperties": false
                                                       },
-                                                      "type": "array",
-                                                      "x-kubernetes-list-type": "atomic"
+                                                      "type": "array"
                                                     },
                                                     "path": {
                                                       "type": "string"
@@ -2752,8 +2523,7 @@
                                                       "items": {
                                                         "type": "string"
                                                       },
-                                                      "type": "array",
-                                                      "x-kubernetes-list-type": "atomic"
+                                                      "type": "array"
                                                     }
                                                   },
                                                   "type": "object",
@@ -2781,8 +2551,7 @@
                                                         "type": "object",
                                                         "additionalProperties": false
                                                       },
-                                                      "type": "array",
-                                                      "x-kubernetes-list-type": "atomic"
+                                                      "type": "array"
                                                     },
                                                     "path": {
                                                       "type": "string"
@@ -2847,9 +2616,6 @@
                                               },
                                               "type": "object",
                                               "additionalProperties": false
-                                            },
-                                            "stopSignal": {
-                                              "type": "string"
                                             }
                                           },
                                           "type": "object",
@@ -2863,8 +2629,7 @@
                                                   "items": {
                                                     "type": "string"
                                                   },
-                                                  "type": "array",
-                                                  "x-kubernetes-list-type": "atomic"
+                                                  "type": "array"
                                                 }
                                               },
                                               "type": "object",
@@ -2881,7 +2646,6 @@
                                                   "type": "integer"
                                                 },
                                                 "service": {
-                                                  "default": "",
                                                   "type": "string"
                                                 }
                                               },
@@ -2913,8 +2677,7 @@
                                                     "type": "object",
                                                     "additionalProperties": false
                                                   },
-                                                  "type": "array",
-                                                  "x-kubernetes-list-type": "atomic"
+                                                  "type": "array"
                                                 },
                                                 "path": {
                                                   "type": "string"
@@ -3033,8 +2796,7 @@
                                                   "items": {
                                                     "type": "string"
                                                   },
-                                                  "type": "array",
-                                                  "x-kubernetes-list-type": "atomic"
+                                                  "type": "array"
                                                 }
                                               },
                                               "type": "object",
@@ -3051,7 +2813,6 @@
                                                   "type": "integer"
                                                 },
                                                 "service": {
-                                                  "default": "",
                                                   "type": "string"
                                                 }
                                               },
@@ -3083,8 +2844,7 @@
                                                     "type": "object",
                                                     "additionalProperties": false
                                                   },
-                                                  "type": "array",
-                                                  "x-kubernetes-list-type": "atomic"
+                                                  "type": "array"
                                                 },
                                                 "path": {
                                                   "type": "string"
@@ -3184,9 +2944,6 @@
                                                 "properties": {
                                                   "name": {
                                                     "type": "string"
-                                                  },
-                                                  "request": {
-                                                    "type": "string"
                                                   }
                                                 },
                                                 "required": [
@@ -3214,61 +2971,10 @@
                                         "restartPolicy": {
                                           "type": "string"
                                         },
-                                        "restartPolicyRules": {
-                                          "items": {
-                                            "properties": {
-                                              "action": {
-                                                "type": "string"
-                                              },
-                                              "exitCodes": {
-                                                "properties": {
-                                                  "operator": {
-                                                    "type": "string"
-                                                  },
-                                                  "values": {
-                                                    "items": {
-                                                      "format": "int32",
-                                                      "type": "integer"
-                                                    },
-                                                    "type": "array",
-                                                    "x-kubernetes-list-type": "set"
-                                                  }
-                                                },
-                                                "required": [
-                                                  "operator"
-                                                ],
-                                                "type": "object",
-                                                "additionalProperties": false
-                                              }
-                                            },
-                                            "required": [
-                                              "action"
-                                            ],
-                                            "type": "object",
-                                            "additionalProperties": false
-                                          },
-                                          "type": "array",
-                                          "x-kubernetes-list-type": "atomic"
-                                        },
                                         "securityContext": {
                                           "properties": {
                                             "allowPrivilegeEscalation": {
                                               "type": "boolean"
-                                            },
-                                            "appArmorProfile": {
-                                              "properties": {
-                                                "localhostProfile": {
-                                                  "type": "string"
-                                                },
-                                                "type": {
-                                                  "type": "string"
-                                                }
-                                              },
-                                              "required": [
-                                                "type"
-                                              ],
-                                              "type": "object",
-                                              "additionalProperties": false
                                             },
                                             "capabilities": {
                                               "properties": {
@@ -3276,15 +2982,13 @@
                                                   "items": {
                                                     "type": "string"
                                                   },
-                                                  "type": "array",
-                                                  "x-kubernetes-list-type": "atomic"
+                                                  "type": "array"
                                                 },
                                                 "drop": {
                                                   "items": {
                                                     "type": "string"
                                                   },
-                                                  "type": "array",
-                                                  "x-kubernetes-list-type": "atomic"
+                                                  "type": "array"
                                                 }
                                               },
                                               "type": "object",
@@ -3373,8 +3077,7 @@
                                                   "items": {
                                                     "type": "string"
                                                   },
-                                                  "type": "array",
-                                                  "x-kubernetes-list-type": "atomic"
+                                                  "type": "array"
                                                 }
                                               },
                                               "type": "object",
@@ -3391,7 +3094,6 @@
                                                   "type": "integer"
                                                 },
                                                 "service": {
-                                                  "default": "",
                                                   "type": "string"
                                                 }
                                               },
@@ -3423,8 +3125,7 @@
                                                     "type": "object",
                                                     "additionalProperties": false
                                                   },
-                                                  "type": "array",
-                                                  "x-kubernetes-list-type": "atomic"
+                                                  "type": "array"
                                                 },
                                                 "path": {
                                                   "type": "string"
@@ -3532,11 +3233,7 @@
                                             "type": "object",
                                             "additionalProperties": false
                                           },
-                                          "type": "array",
-                                          "x-kubernetes-list-map-keys": [
-                                            "devicePath"
-                                          ],
-                                          "x-kubernetes-list-type": "map"
+                                          "type": "array"
                                         },
                                         "volumeMounts": {
                                           "items": {
@@ -3553,9 +3250,6 @@
                                               "readOnly": {
                                                 "type": "boolean"
                                               },
-                                              "recursiveReadOnly": {
-                                                "type": "string"
-                                              },
                                               "subPath": {
                                                 "type": "string"
                                               },
@@ -3570,11 +3264,7 @@
                                             "type": "object",
                                             "additionalProperties": false
                                           },
-                                          "type": "array",
-                                          "x-kubernetes-list-map-keys": [
-                                            "mountPath"
-                                          ],
-                                          "x-kubernetes-list-type": "map"
+                                          "type": "array"
                                         },
                                         "workingDir": {
                                           "type": "string"
@@ -3586,11 +3276,7 @@
                                       "type": "object",
                                       "additionalProperties": false
                                     },
-                                    "type": "array",
-                                    "x-kubernetes-list-map-keys": [
-                                      "name"
-                                    ],
-                                    "x-kubernetes-list-type": "map"
+                                    "type": "array"
                                   },
                                   "hostAliases": {
                                     "items": {
@@ -3599,24 +3285,16 @@
                                           "items": {
                                             "type": "string"
                                           },
-                                          "type": "array",
-                                          "x-kubernetes-list-type": "atomic"
+                                          "type": "array"
                                         },
                                         "ip": {
                                           "type": "string"
                                         }
                                       },
-                                      "required": [
-                                        "ip"
-                                      ],
                                       "type": "object",
                                       "additionalProperties": false
                                     },
-                                    "type": "array",
-                                    "x-kubernetes-list-map-keys": [
-                                      "ip"
-                                    ],
-                                    "x-kubernetes-list-type": "map"
+                                    "type": "array"
                                   },
                                   "hostIPC": {
                                     "type": "boolean"
@@ -3633,14 +3311,10 @@
                                   "hostname": {
                                     "type": "string"
                                   },
-                                  "hostnameOverride": {
-                                    "type": "string"
-                                  },
                                   "imagePullSecrets": {
                                     "items": {
                                       "properties": {
                                         "name": {
-                                          "default": "",
                                           "type": "string"
                                         }
                                       },
@@ -3648,11 +3322,7 @@
                                       "x-kubernetes-map-type": "atomic",
                                       "additionalProperties": false
                                     },
-                                    "type": "array",
-                                    "x-kubernetes-list-map-keys": [
-                                      "name"
-                                    ],
-                                    "x-kubernetes-list-type": "map"
+                                    "type": "array"
                                   },
                                   "initContainers": {
                                     "items": {
@@ -3661,15 +3331,13 @@
                                           "items": {
                                             "type": "string"
                                           },
-                                          "type": "array",
-                                          "x-kubernetes-list-type": "atomic"
+                                          "type": "array"
                                         },
                                         "command": {
                                           "items": {
                                             "type": "string"
                                           },
-                                          "type": "array",
-                                          "x-kubernetes-list-type": "atomic"
+                                          "type": "array"
                                         },
                                         "env": {
                                           "items": {
@@ -3688,7 +3356,6 @@
                                                         "type": "string"
                                                       },
                                                       "name": {
-                                                        "default": "",
                                                         "type": "string"
                                                       },
                                                       "optional": {
@@ -3713,31 +3380,6 @@
                                                     },
                                                     "required": [
                                                       "fieldPath"
-                                                    ],
-                                                    "type": "object",
-                                                    "x-kubernetes-map-type": "atomic",
-                                                    "additionalProperties": false
-                                                  },
-                                                  "fileKeyRef": {
-                                                    "properties": {
-                                                      "key": {
-                                                        "type": "string"
-                                                      },
-                                                      "optional": {
-                                                        "default": false,
-                                                        "type": "boolean"
-                                                      },
-                                                      "path": {
-                                                        "type": "string"
-                                                      },
-                                                      "volumeName": {
-                                                        "type": "string"
-                                                      }
-                                                    },
-                                                    "required": [
-                                                      "key",
-                                                      "path",
-                                                      "volumeName"
                                                     ],
                                                     "type": "object",
                                                     "x-kubernetes-map-type": "atomic",
@@ -3777,7 +3419,6 @@
                                                         "type": "string"
                                                       },
                                                       "name": {
-                                                        "default": "",
                                                         "type": "string"
                                                       },
                                                       "optional": {
@@ -3802,11 +3443,7 @@
                                             "type": "object",
                                             "additionalProperties": false
                                           },
-                                          "type": "array",
-                                          "x-kubernetes-list-map-keys": [
-                                            "name"
-                                          ],
-                                          "x-kubernetes-list-type": "map"
+                                          "type": "array"
                                         },
                                         "envFrom": {
                                           "items": {
@@ -3814,7 +3451,6 @@
                                               "configMapRef": {
                                                 "properties": {
                                                   "name": {
-                                                    "default": "",
                                                     "type": "string"
                                                   },
                                                   "optional": {
@@ -3831,7 +3467,6 @@
                                               "secretRef": {
                                                 "properties": {
                                                   "name": {
-                                                    "default": "",
                                                     "type": "string"
                                                   },
                                                   "optional": {
@@ -3846,8 +3481,7 @@
                                             "type": "object",
                                             "additionalProperties": false
                                           },
-                                          "type": "array",
-                                          "x-kubernetes-list-type": "atomic"
+                                          "type": "array"
                                         },
                                         "image": {
                                           "type": "string"
@@ -3865,8 +3499,7 @@
                                                       "items": {
                                                         "type": "string"
                                                       },
-                                                      "type": "array",
-                                                      "x-kubernetes-list-type": "atomic"
+                                                      "type": "array"
                                                     }
                                                   },
                                                   "type": "object",
@@ -3894,8 +3527,7 @@
                                                         "type": "object",
                                                         "additionalProperties": false
                                                       },
-                                                      "type": "array",
-                                                      "x-kubernetes-list-type": "atomic"
+                                                      "type": "array"
                                                     },
                                                     "path": {
                                                       "type": "string"
@@ -3969,8 +3601,7 @@
                                                       "items": {
                                                         "type": "string"
                                                       },
-                                                      "type": "array",
-                                                      "x-kubernetes-list-type": "atomic"
+                                                      "type": "array"
                                                     }
                                                   },
                                                   "type": "object",
@@ -3998,8 +3629,7 @@
                                                         "type": "object",
                                                         "additionalProperties": false
                                                       },
-                                                      "type": "array",
-                                                      "x-kubernetes-list-type": "atomic"
+                                                      "type": "array"
                                                     },
                                                     "path": {
                                                       "type": "string"
@@ -4064,9 +3694,6 @@
                                               },
                                               "type": "object",
                                               "additionalProperties": false
-                                            },
-                                            "stopSignal": {
-                                              "type": "string"
                                             }
                                           },
                                           "type": "object",
@@ -4080,8 +3707,7 @@
                                                   "items": {
                                                     "type": "string"
                                                   },
-                                                  "type": "array",
-                                                  "x-kubernetes-list-type": "atomic"
+                                                  "type": "array"
                                                 }
                                               },
                                               "type": "object",
@@ -4098,7 +3724,6 @@
                                                   "type": "integer"
                                                 },
                                                 "service": {
-                                                  "default": "",
                                                   "type": "string"
                                                 }
                                               },
@@ -4130,8 +3755,7 @@
                                                     "type": "object",
                                                     "additionalProperties": false
                                                   },
-                                                  "type": "array",
-                                                  "x-kubernetes-list-type": "atomic"
+                                                  "type": "array"
                                                 },
                                                 "path": {
                                                   "type": "string"
@@ -4250,8 +3874,7 @@
                                                   "items": {
                                                     "type": "string"
                                                   },
-                                                  "type": "array",
-                                                  "x-kubernetes-list-type": "atomic"
+                                                  "type": "array"
                                                 }
                                               },
                                               "type": "object",
@@ -4268,7 +3891,6 @@
                                                   "type": "integer"
                                                 },
                                                 "service": {
-                                                  "default": "",
                                                   "type": "string"
                                                 }
                                               },
@@ -4300,8 +3922,7 @@
                                                     "type": "object",
                                                     "additionalProperties": false
                                                   },
-                                                  "type": "array",
-                                                  "x-kubernetes-list-type": "atomic"
+                                                  "type": "array"
                                                 },
                                                 "path": {
                                                   "type": "string"
@@ -4401,9 +4022,6 @@
                                                 "properties": {
                                                   "name": {
                                                     "type": "string"
-                                                  },
-                                                  "request": {
-                                                    "type": "string"
                                                   }
                                                 },
                                                 "required": [
@@ -4431,61 +4049,10 @@
                                         "restartPolicy": {
                                           "type": "string"
                                         },
-                                        "restartPolicyRules": {
-                                          "items": {
-                                            "properties": {
-                                              "action": {
-                                                "type": "string"
-                                              },
-                                              "exitCodes": {
-                                                "properties": {
-                                                  "operator": {
-                                                    "type": "string"
-                                                  },
-                                                  "values": {
-                                                    "items": {
-                                                      "format": "int32",
-                                                      "type": "integer"
-                                                    },
-                                                    "type": "array",
-                                                    "x-kubernetes-list-type": "set"
-                                                  }
-                                                },
-                                                "required": [
-                                                  "operator"
-                                                ],
-                                                "type": "object",
-                                                "additionalProperties": false
-                                              }
-                                            },
-                                            "required": [
-                                              "action"
-                                            ],
-                                            "type": "object",
-                                            "additionalProperties": false
-                                          },
-                                          "type": "array",
-                                          "x-kubernetes-list-type": "atomic"
-                                        },
                                         "securityContext": {
                                           "properties": {
                                             "allowPrivilegeEscalation": {
                                               "type": "boolean"
-                                            },
-                                            "appArmorProfile": {
-                                              "properties": {
-                                                "localhostProfile": {
-                                                  "type": "string"
-                                                },
-                                                "type": {
-                                                  "type": "string"
-                                                }
-                                              },
-                                              "required": [
-                                                "type"
-                                              ],
-                                              "type": "object",
-                                              "additionalProperties": false
                                             },
                                             "capabilities": {
                                               "properties": {
@@ -4493,15 +4060,13 @@
                                                   "items": {
                                                     "type": "string"
                                                   },
-                                                  "type": "array",
-                                                  "x-kubernetes-list-type": "atomic"
+                                                  "type": "array"
                                                 },
                                                 "drop": {
                                                   "items": {
                                                     "type": "string"
                                                   },
-                                                  "type": "array",
-                                                  "x-kubernetes-list-type": "atomic"
+                                                  "type": "array"
                                                 }
                                               },
                                               "type": "object",
@@ -4590,8 +4155,7 @@
                                                   "items": {
                                                     "type": "string"
                                                   },
-                                                  "type": "array",
-                                                  "x-kubernetes-list-type": "atomic"
+                                                  "type": "array"
                                                 }
                                               },
                                               "type": "object",
@@ -4608,7 +4172,6 @@
                                                   "type": "integer"
                                                 },
                                                 "service": {
-                                                  "default": "",
                                                   "type": "string"
                                                 }
                                               },
@@ -4640,8 +4203,7 @@
                                                     "type": "object",
                                                     "additionalProperties": false
                                                   },
-                                                  "type": "array",
-                                                  "x-kubernetes-list-type": "atomic"
+                                                  "type": "array"
                                                 },
                                                 "path": {
                                                   "type": "string"
@@ -4746,11 +4308,7 @@
                                             "type": "object",
                                             "additionalProperties": false
                                           },
-                                          "type": "array",
-                                          "x-kubernetes-list-map-keys": [
-                                            "devicePath"
-                                          ],
-                                          "x-kubernetes-list-type": "map"
+                                          "type": "array"
                                         },
                                         "volumeMounts": {
                                           "items": {
@@ -4767,9 +4325,6 @@
                                               "readOnly": {
                                                 "type": "boolean"
                                               },
-                                              "recursiveReadOnly": {
-                                                "type": "string"
-                                              },
                                               "subPath": {
                                                 "type": "string"
                                               },
@@ -4784,11 +4339,7 @@
                                             "type": "object",
                                             "additionalProperties": false
                                           },
-                                          "type": "array",
-                                          "x-kubernetes-list-map-keys": [
-                                            "mountPath"
-                                          ],
-                                          "x-kubernetes-list-type": "map"
+                                          "type": "array"
                                         },
                                         "workingDir": {
                                           "type": "string"
@@ -4800,11 +4351,7 @@
                                       "type": "object",
                                       "additionalProperties": false
                                     },
-                                    "type": "array",
-                                    "x-kubernetes-list-map-keys": [
-                                      "name"
-                                    ],
-                                    "x-kubernetes-list-type": "map"
+                                    "type": "array"
                                   },
                                   "nodeName": {
                                     "type": "string"
@@ -4866,8 +4413,7 @@
                                       "type": "object",
                                       "additionalProperties": false
                                     },
-                                    "type": "array",
-                                    "x-kubernetes-list-type": "atomic"
+                                    "type": "array"
                                   },
                                   "resourceClaims": {
                                     "items": {
@@ -4875,11 +4421,17 @@
                                         "name": {
                                           "type": "string"
                                         },
-                                        "resourceClaimName": {
-                                          "type": "string"
-                                        },
-                                        "resourceClaimTemplateName": {
-                                          "type": "string"
+                                        "source": {
+                                          "properties": {
+                                            "resourceClaimName": {
+                                              "type": "string"
+                                            },
+                                            "resourceClaimTemplateName": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "type": "object",
+                                          "additionalProperties": false
                                         }
                                       },
                                       "required": [
@@ -4893,64 +4445,6 @@
                                       "name"
                                     ],
                                     "x-kubernetes-list-type": "map"
-                                  },
-                                  "resources": {
-                                    "properties": {
-                                      "claims": {
-                                        "items": {
-                                          "properties": {
-                                            "name": {
-                                              "type": "string"
-                                            },
-                                            "request": {
-                                              "type": "string"
-                                            }
-                                          },
-                                          "required": [
-                                            "name"
-                                          ],
-                                          "type": "object",
-                                          "additionalProperties": false
-                                        },
-                                        "type": "array",
-                                        "x-kubernetes-list-map-keys": [
-                                          "name"
-                                        ],
-                                        "x-kubernetes-list-type": "map"
-                                      },
-                                      "limits": {
-                                        "additionalProperties": {
-                                          "anyOf": [
-                                            {
-                                              "type": "integer"
-                                            },
-                                            {
-                                              "type": "string"
-                                            }
-                                          ],
-                                          "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
-                                          "x-kubernetes-int-or-string": true
-                                        },
-                                        "type": "object"
-                                      },
-                                      "requests": {
-                                        "additionalProperties": {
-                                          "anyOf": [
-                                            {
-                                              "type": "integer"
-                                            },
-                                            {
-                                              "type": "string"
-                                            }
-                                          ],
-                                          "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
-                                          "x-kubernetes-int-or-string": true
-                                        },
-                                        "type": "object"
-                                      }
-                                    },
-                                    "type": "object",
-                                    "additionalProperties": false
                                   },
                                   "restartPolicy": {
                                     "type": "string"
@@ -4982,21 +4476,6 @@
                                   },
                                   "securityContext": {
                                     "properties": {
-                                      "appArmorProfile": {
-                                        "properties": {
-                                          "localhostProfile": {
-                                            "type": "string"
-                                          },
-                                          "type": {
-                                            "type": "string"
-                                          }
-                                        },
-                                        "required": [
-                                          "type"
-                                        ],
-                                        "type": "object",
-                                        "additionalProperties": false
-                                      },
                                       "fsGroup": {
                                         "format": "int64",
                                         "type": "integer"
@@ -5014,9 +4493,6 @@
                                       "runAsUser": {
                                         "format": "int64",
                                         "type": "integer"
-                                      },
-                                      "seLinuxChangePolicy": {
-                                        "type": "string"
                                       },
                                       "seLinuxOptions": {
                                         "properties": {
@@ -5056,11 +4532,7 @@
                                           "format": "int64",
                                           "type": "integer"
                                         },
-                                        "type": "array",
-                                        "x-kubernetes-list-type": "atomic"
-                                      },
-                                      "supplementalGroupsPolicy": {
-                                        "type": "string"
+                                        "type": "array"
                                       },
                                       "sysctls": {
                                         "items": {
@@ -5079,8 +4551,7 @@
                                           "type": "object",
                                           "additionalProperties": false
                                         },
-                                        "type": "array",
-                                        "x-kubernetes-list-type": "atomic"
+                                        "type": "array"
                                       },
                                       "windowsOptions": {
                                         "properties": {
@@ -5146,8 +4617,7 @@
                                       "type": "object",
                                       "additionalProperties": false
                                     },
-                                    "type": "array",
-                                    "x-kubernetes-list-type": "atomic"
+                                    "type": "array"
                                   },
                                   "topologySpreadConstraints": {
                                     "items": {
@@ -5167,8 +4637,7 @@
                                                     "items": {
                                                       "type": "string"
                                                     },
-                                                    "type": "array",
-                                                    "x-kubernetes-list-type": "atomic"
+                                                    "type": "array"
                                                   }
                                                 },
                                                 "required": [
@@ -5178,8 +4647,7 @@
                                                 "type": "object",
                                                 "additionalProperties": false
                                               },
-                                              "type": "array",
-                                              "x-kubernetes-list-type": "atomic"
+                                              "type": "array"
                                             },
                                             "matchLabels": {
                                               "additionalProperties": {
@@ -5281,9 +4749,6 @@
                       "configurationAccountName": {
                         "type": "string"
                       },
-                      "lookback": {
-                        "type": "boolean"
-                      },
                       "metricsAccountName": {
                         "type": "string"
                       },
@@ -5310,8 +4775,10 @@
                                 }
                               },
                               "required": [
+                                "end",
                                 "region",
                                 "scope",
+                                "start",
                                 "step"
                               ],
                               "type": "object",
@@ -5337,8 +4804,10 @@
                                 }
                               },
                               "required": [
+                                "end",
                                 "region",
                                 "scope",
+                                "start",
                                 "step"
                               ],
                               "type": "object",

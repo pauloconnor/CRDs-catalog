@@ -152,7 +152,7 @@
           "additionalProperties": false
         },
         "name": {
-          "description": "The unique name to give to your cluster. The name can contain only alphanumeric\ncharacters (case-sensitive),hyphens, and underscores. It must start with\nan alphanumeric character and can't be longer than100 characters. The name\nmust be unique within the Amazon Web Services Region and Amazon Web Services\naccount that you're creating the cluster in.",
+          "description": "The unique name to give to your cluster. The name can contain only alphanumeric\ncharacters (case-sensitive),hyphens, and underscores. It must start with\nan alphanumeric character and can't be longer than100 characters. The name\nmust be unique within the Amazon Web Services Region and Amazon Web Services\naccount that you're creating the cluster in.\n\nRegex Pattern: `^[0-9A-Za-z][A-Za-z0-9\\-_]*$`",
           "type": "string"
         },
         "outpostConfig": {

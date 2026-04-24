@@ -908,10 +908,6 @@
                           "rule": "!(self.exists(f, f.type == 'RequestRedirect') && self.exists(f, f.type == 'URLRewrite'))"
                         },
                         {
-                          "message": "CORS filter cannot be repeated",
-                          "rule": "self.filter(f, f.type == 'CORS').size() <= 1"
-                        },
-                        {
                           "message": "RequestHeaderModifier filter cannot be repeated",
                           "rule": "self.filter(f, f.type == 'RequestHeaderModifier').size() <= 1"
                         },
@@ -1777,10 +1773,6 @@
                   {
                     "message": "May specify either httpRouteFilterRequestRedirect or httpRouteFilterRequestRewrite, but not both",
                     "rule": "!(self.exists(f, f.type == 'RequestRedirect') && self.exists(f, f.type == 'URLRewrite'))"
-                  },
-                  {
-                    "message": "CORS filter cannot be repeated",
-                    "rule": "self.filter(f, f.type == 'CORS').size() <= 1"
                   },
                   {
                     "message": "RequestHeaderModifier filter cannot be repeated",

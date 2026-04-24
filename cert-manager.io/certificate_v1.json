@@ -35,8 +35,7 @@
             "type": "object",
             "additionalProperties": false
           },
-          "type": "array",
-          "x-kubernetes-list-type": "atomic"
+          "type": "array"
         },
         "commonName": {
           "description": "Requested common name X509 certificate subject attribute.\nMore info: https://datatracker.ietf.org/doc/html/rfc5280#section-4.1.2.6\nNOTE: TLS clients will ignore this value when any subject alternative name is\nset (see https://tools.ietf.org/html/rfc6125#section-6.4.4).\n\nShould have a length of 64 characters or fewer to avoid generating invalid CSRs.\nCannot be set if the `literalSubject` field is set.",
@@ -47,8 +46,7 @@
           "items": {
             "type": "string"
           },
-          "type": "array",
-          "x-kubernetes-list-type": "atomic"
+          "type": "array"
         },
         "duration": {
           "description": "Requested 'duration' (i.e. lifetime) of the Certificate. Note that the\nissuer may choose to ignore the requested duration, just like any other\nrequested attribute.\n\nIf unset, this defaults to 90 days.\nMinimum accepted duration is 1 hour.\nValue must be in units accepted by Go time.ParseDuration https://golang.org/pkg/time/#ParseDuration.",
@@ -59,8 +57,7 @@
           "items": {
             "type": "string"
           },
-          "type": "array",
-          "x-kubernetes-list-type": "atomic"
+          "type": "array"
         },
         "encodeUsagesInRequest": {
           "description": "Whether the KeyUsage and ExtKeyUsage extensions should be set in the encoded CSR.\n\nThis option defaults to true, and should only be disabled if the target\nissuer does not support CSRs with these X509 KeyUsage/ ExtKeyUsage extensions.",
@@ -71,8 +68,7 @@
           "items": {
             "type": "string"
           },
-          "type": "array",
-          "x-kubernetes-list-type": "atomic"
+          "type": "array"
         },
         "isCA": {
           "description": "Requested basic constraints isCA value.\nThe isCA value is used to set the `isCA` field on the created CertificateRequest\nresources. Note that the issuer may choose to ignore the requested isCA value, just\nlike any other requested attribute.\n\nIf true, this will automatically add the `cert sign` usage to the list\nof requested `usages`.",
@@ -82,15 +78,15 @@
           "description": "Reference to the issuer responsible for issuing the certificate.\nIf the issuer is namespace-scoped, it must be in the same namespace\nas the Certificate. If the issuer is cluster-scoped, it can be used\nfrom any namespace.\n\nThe `name` field of the reference must always be specified.",
           "properties": {
             "group": {
-              "description": "Group of the issuer being referred to.\nDefaults to 'cert-manager.io'.",
+              "description": "Group of the resource being referred to.",
               "type": "string"
             },
             "kind": {
-              "description": "Kind of the issuer being referred to.\nDefaults to 'Issuer'.",
+              "description": "Kind of the resource being referred to.",
               "type": "string"
             },
             "name": {
-              "description": "Name of the issuer being referred to.",
+              "description": "Name of the resource being referred to.",
               "type": "string"
             }
           },
@@ -211,32 +207,28 @@
                   "items": {
                     "type": "string"
                   },
-                  "type": "array",
-                  "x-kubernetes-list-type": "atomic"
+                  "type": "array"
                 },
                 "emailAddresses": {
                   "description": "EmailAddresses is a list of Email Addresses that are permitted or excluded.",
                   "items": {
                     "type": "string"
                   },
-                  "type": "array",
-                  "x-kubernetes-list-type": "atomic"
+                  "type": "array"
                 },
                 "ipRanges": {
                   "description": "IPRanges is a list of IP Ranges that are permitted or excluded.\nThis should be a valid CIDR notation.",
                   "items": {
                     "type": "string"
                   },
-                  "type": "array",
-                  "x-kubernetes-list-type": "atomic"
+                  "type": "array"
                 },
                 "uriDomains": {
                   "description": "URIDomains is a list of URI domains that are permitted or excluded.",
                   "items": {
                     "type": "string"
                   },
-                  "type": "array",
-                  "x-kubernetes-list-type": "atomic"
+                  "type": "array"
                 }
               },
               "type": "object",
@@ -250,32 +242,28 @@
                   "items": {
                     "type": "string"
                   },
-                  "type": "array",
-                  "x-kubernetes-list-type": "atomic"
+                  "type": "array"
                 },
                 "emailAddresses": {
                   "description": "EmailAddresses is a list of Email Addresses that are permitted or excluded.",
                   "items": {
                     "type": "string"
                   },
-                  "type": "array",
-                  "x-kubernetes-list-type": "atomic"
+                  "type": "array"
                 },
                 "ipRanges": {
                   "description": "IPRanges is a list of IP Ranges that are permitted or excluded.\nThis should be a valid CIDR notation.",
                   "items": {
                     "type": "string"
                   },
-                  "type": "array",
-                  "x-kubernetes-list-type": "atomic"
+                  "type": "array"
                 },
                 "uriDomains": {
                   "description": "URIDomains is a list of URI domains that are permitted or excluded.",
                   "items": {
                     "type": "string"
                   },
-                  "type": "array",
-                  "x-kubernetes-list-type": "atomic"
+                  "type": "array"
                 }
               },
               "type": "object",
@@ -301,8 +289,7 @@
             "type": "object",
             "additionalProperties": false
           },
-          "type": "array",
-          "x-kubernetes-list-type": "atomic"
+          "type": "array"
         },
         "privateKey": {
           "description": "Private key options. These include the key algorithm and size, the used\nencoding and the rotation policy.",
@@ -400,48 +387,42 @@
               "items": {
                 "type": "string"
               },
-              "type": "array",
-              "x-kubernetes-list-type": "atomic"
+              "type": "array"
             },
             "localities": {
               "description": "Cities to be used on the Certificate.",
               "items": {
                 "type": "string"
               },
-              "type": "array",
-              "x-kubernetes-list-type": "atomic"
+              "type": "array"
             },
             "organizationalUnits": {
               "description": "Organizational Units to be used on the Certificate.",
               "items": {
                 "type": "string"
               },
-              "type": "array",
-              "x-kubernetes-list-type": "atomic"
+              "type": "array"
             },
             "organizations": {
               "description": "Organizations to be used on the Certificate.",
               "items": {
                 "type": "string"
               },
-              "type": "array",
-              "x-kubernetes-list-type": "atomic"
+              "type": "array"
             },
             "postalCodes": {
               "description": "Postal codes to be used on the Certificate.",
               "items": {
                 "type": "string"
               },
-              "type": "array",
-              "x-kubernetes-list-type": "atomic"
+              "type": "array"
             },
             "provinces": {
               "description": "State/Provinces to be used on the Certificate.",
               "items": {
                 "type": "string"
               },
-              "type": "array",
-              "x-kubernetes-list-type": "atomic"
+              "type": "array"
             },
             "serialNumber": {
               "description": "Serial number to be used on the Certificate.",
@@ -452,8 +433,7 @@
               "items": {
                 "type": "string"
               },
-              "type": "array",
-              "x-kubernetes-list-type": "atomic"
+              "type": "array"
             }
           },
           "type": "object",
@@ -464,8 +444,7 @@
           "items": {
             "type": "string"
           },
-          "type": "array",
-          "x-kubernetes-list-type": "atomic"
+          "type": "array"
         },
         "usages": {
           "description": "Requested key usages and extended key usages.\nThese usages are used to set the `usages` field on the created CertificateRequest\nresources. If `encodeUsagesInRequest` is unset or set to `true`, the usages\nwill additionally be encoded in the `request` field which contains the CSR blob.\n\nIf unset, defaults to `digital signature` and `key encipherment`.",
@@ -498,8 +477,7 @@
             ],
             "type": "string"
           },
-          "type": "array",
-          "x-kubernetes-list-type": "atomic"
+          "type": "array"
         }
       },
       "required": [

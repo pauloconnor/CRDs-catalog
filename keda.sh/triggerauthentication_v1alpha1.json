@@ -427,6 +427,10 @@
           },
           "type": "array"
         },
+        "filePath": {
+          "description": "FilePath specifies a file containing auth parameters as JSON map[string]string.\nWhen set, auth params are read directly from this file instead.",
+          "type": "string"
+        },
         "gcpSecretManager": {
           "properties": {
             "credentials": {
@@ -559,6 +563,9 @@
               "description": "Credential defines the Hashicorp Vault credentials depending on the authentication method",
               "properties": {
                 "serviceAccount": {
+                  "type": "string"
+                },
+                "serviceAccountName": {
                   "type": "string"
                 },
                 "token": {

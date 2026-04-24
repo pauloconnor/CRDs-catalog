@@ -1,7 +1,35 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2059
 
+# Detect shell: prefer bash 4+, fall back to zsh
+if [ -n "${BASH_VERSION:-}" ] && [ "${BASH_VERSION%%.*}" -lt 4 ]; then
+    if command -v zsh &>/dev/null; then
+        exec zsh "$0" "$@"
+    fi
+    printf "Error: Requires bash 4+ or zsh\n" >&2
+    exit 1
+fi
+
 set -euo pipefail
+
+if [ -n "${ZSH_VERSION:-}" ]; then
+    SHELL_TYPE=zsh
+else
+    SHELL_TYPE=bash
+fi
+
+# Shell-compatibility helpers
+enable_nullglob()  { [[ $SHELL_TYPE == zsh ]] && setopt NULL_GLOB  || shopt -s nullglob; }
+disable_nullglob() { [[ $SHELL_TYPE == zsh ]] && unsetopt NULL_GLOB || shopt -u nullglob; }
+
+assoc_keys() {
+    local var=$1
+    if [[ $SHELL_TYPE == zsh ]]; then
+        eval 'printf "%s\n" "${(k)'"$var"'[@]}"'
+    else
+        eval 'printf "%s\n" "${!'"$var"'[@]}"'
+    fi
+}
 
 # Support kubectl context via KUBECTL_CONTEXT environment variable
 KUBECTL_ARGS=(kubectl)
@@ -28,13 +56,6 @@ if ! command -v kubectl &>/dev/null; then
     printf "please visit https://kubernetes.io/docs/tasks/tools/#kubectl to install it"
     exit 1
 fi
-# Check if the major version is 4 or higher
-if [[ ! ${BASH_VERSION%%.*} -ge 4 ]]; then
-    printf "Bash version is lower than 4"
-    printf "please visit https://www.gnu.org/software/bash/ to install it"
-    exit 1
-fi
-
 # Check if the pyyaml module is installed
 if ! echo 'import yaml' | python3 &>/dev/null; then
     printf "the python3 module 'yaml' is required, and is not installed on your machine.\n"
@@ -59,7 +80,7 @@ if ! echo 'import yaml' | python3 &>/dev/null; then
     done
 fi
 
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]:-$0}" )" && pwd )"
 
 # Create temp folders for CRDs and conversion
 TMP=$(mktemp -d)
@@ -78,7 +99,11 @@ if [ -n "${KUBECTL_CONTEXT:-}" ]; then
 else
     printf "\n"
 fi
-IFS=$'\n' read -r -d '' -a CRD_LIST < <("${KUBECTL_ARGS[@]}" get crds 2>&1 | sed -n '/NAME/,$p' | tail -n +2 && printf '\0')
+if [[ $SHELL_TYPE == zsh ]]; then
+    IFS=$'\n' read -r -d '' -A CRD_LIST < <("${KUBECTL_ARGS[@]}" get crds 2>&1 | sed -n '/NAME/,$p' | tail -n +2 && printf '\0')
+else
+    IFS=$'\n' read -r -d '' -a CRD_LIST < <("${KUBECTL_ARGS[@]}" get crds 2>&1 | sed -n '/NAME/,$p' | tail -n +2 && printf '\0')
+fi
 
 # If no CRDs exist in the cluster, exit
 if [ ${#CRD_LIST[@]} == 0 ]; then
@@ -97,9 +122,9 @@ for crd in "${CRD_LIST[@]}"; do
 
     # allow to execute up to $PARALLELISM jobs in parallel
     if [[ $(jobs -r -p | wc -l) -ge $PARALLELISM ]]; then
-        # now there are $PARALLELISM jobs already running, so wait here for any job
-        # to be finished so there is a place to start next one.
-        wait -n
+        # wait for the current batch to finish before starting more
+        # (plain `wait` since `wait -n` requires bash 4.3+ and isn't in zsh)
+        wait
     fi
     ((++FETCHED_CRDS))
 done
@@ -119,11 +144,11 @@ declare -A PROCESSED_GROUPS
 
 # Find newly generated schemas in the conversion temp directory
 NEW_SCHEMAS=()
-shopt -s nullglob
+enable_nullglob
 for schema in "$CONVERSION_TMP"/*.json; do
     [ -f "$schema" ] && NEW_SCHEMAS+=("$schema")
 done
-shopt -u nullglob
+disable_nullglob
 
 # Only proceed if we have new schemas
 if [ ${#NEW_SCHEMAS[@]} -gt 0 ]; then
@@ -146,7 +171,7 @@ if [ ${#NEW_SCHEMAS[@]} -gt 0 ]; then
     # Copy organized schemas to git repository (when not using custom OUTPUT_DIR)
     if [ -z "${OUTPUT_DIR:-}" ]; then
         printf "\nCopying schemas to repository...\n"
-        for crdGroup in "${!PROCESSED_GROUPS[@]}"; do
+        for crdGroup in $(assoc_keys PROCESSED_GROUPS); do
             groupDir="$SCHEMAS_DIR/$crdGroup"
             if [ -d "$groupDir" ]; then
                 # Copy to parent directory of Utilities folder
@@ -169,7 +194,7 @@ if [ $conversionResult == 0 ] && [ ${#NEW_SCHEMAS[@]} -gt 0 ]; then
 
     if [ -z "${OUTPUT_DIR:-}" ] && [ ${#PROCESSED_GROUPS[@]} -gt 0 ]; then
         printf "\n${GREEN}Schemas organized by API group and copied to:${NC}\n"
-        for crdGroup in "${!PROCESSED_GROUPS[@]}"; do
+        for crdGroup in $(assoc_keys PROCESSED_GROUPS); do
             repoDir="$(dirname "$SCRIPT_DIR")/$crdGroup"
             printf "  - %s/\n" "$repoDir"
         done | sort -u
