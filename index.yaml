@@ -2577,6 +2577,30 @@ cloudfront.services.k8s.aws:
     filename: cloudfront.services.k8s.aws/cachepolicy_v1alpha1.json
     kind: CachePolicy
     name: cachepolicy_v1alpha1
+  - apiVersion: cloudfront.services.k8s.aws/v1alpha1
+    filename: cloudfront.services.k8s.aws/originrequestpolicy_v1alpha1.json
+    kind: OriginRequestPolicy
+    name: originrequestpolicy_v1alpha1
+  - apiVersion: cloudfront.services.k8s.aws/v1alpha1
+    filename: cloudfront.services.k8s.aws/responseheaderspolicy_v1alpha1.json
+    kind: ResponseHeadersPolicy
+    name: responseheaderspolicy_v1alpha1
+  - apiVersion: cloudfront.services.k8s.aws/v1alpha1
+    filename: cloudfront.services.k8s.aws/distribution_v1alpha1.json
+    kind: Distribution
+    name: distribution_v1alpha1
+  - apiVersion: cloudfront.services.k8s.aws/v1alpha1
+    filename: cloudfront.services.k8s.aws/vpcorigin_v1alpha1.json
+    kind: VPCOrigin
+    name: vpcorigin_v1alpha1
+  - apiVersion: cloudfront.services.k8s.aws/v1alpha1
+    filename: cloudfront.services.k8s.aws/originaccesscontrol_v1alpha1.json
+    kind: OriginAccessControl
+    name: originaccesscontrol_v1alpha1
+  - apiVersion: cloudfront.services.k8s.aws/v1alpha1
+    filename: cloudfront.services.k8s.aws/function_v1alpha1.json
+    kind: Function
+    name: function_v1alpha1
 cloudfunctions.cnrm.cloud.google.com:
   - apiVersion: cloudfunctions.cnrm.cloud.google.com/v1beta1
     filename: cloudfunctions.cnrm.cloud.google.com/cloudfunctionsfunction_v1beta1.json
