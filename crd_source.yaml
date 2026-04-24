@@ -1,0 +1,2186 @@
+# CRD Source Registry
+# Maps each CRD API group directory to its upstream source repository.
+#
+# Fields:
+#   url:            GitHub repository URL
+#   source_type:    github | helm | package
+#   fetch_strategy: How to obtain CRD YAML files:
+#     - release_asset: Download a named asset from the latest GitHub release
+#     - repo_path:     Fetch YAML files from a directory in the repo at the latest tag
+#     - release_url:   Download from a URL template (use {version} placeholder)
+#     - kustomize:     Run kustomize build on a repo path at the latest tag
+#   groups:         List of CRD API group directories this source provides
+#   changelog:      URL to release notes / changelog
+#
+# The update_crds.py script reads this file and automates pulling the latest CRDs.
+
+sources:
+
+  # ---------------------------------------------------------------------------
+  # Google Cloud Config Connector
+  # All *.cnrm.cloud.google.com groups plus related GCP groups
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/GoogleCloudPlatform/k8s-config-connector"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "crds"
+    changelog: "https://github.com/GoogleCloudPlatform/k8s-config-connector/releases"
+    groups:
+      - accesscontextmanager.cnrm.cloud.google.com
+      - alloydb.cnrm.cloud.google.com
+      - apigateway.cnrm.cloud.google.com
+      - apigee.cnrm.cloud.google.com
+      - apikeys.cnrm.cloud.google.com
+      - appengine.cnrm.cloud.google.com
+      - apphub.cnrm.cloud.google.com
+      - artifactregistry.cnrm.cloud.google.com
+      - asset.cnrm.cloud.google.com
+      - backupdr.cnrm.cloud.google.com
+      - beyondcorp.cnrm.cloud.google.com
+      - bigquery.cnrm.cloud.google.com
+      - bigqueryanalyticshub.cnrm.cloud.google.com
+      - bigquerybiglake.cnrm.cloud.google.com
+      - bigqueryconnection.cnrm.cloud.google.com
+      - bigquerydatapolicy.cnrm.cloud.google.com
+      - bigquerydatatransfer.cnrm.cloud.google.com
+      - bigqueryreservation.cnrm.cloud.google.com
+      - bigtable.cnrm.cloud.google.com
+      - billingbudgets.cnrm.cloud.google.com
+      - binaryauthorization.cnrm.cloud.google.com
+      - certificatemanager.cnrm.cloud.google.com
+      - cloudasset.cnrm.cloud.google.com
+      - cloudbuild.cnrm.cloud.google.com
+      - clouddeploy.cnrm.cloud.google.com
+      - cloudfunctions.cnrm.cloud.google.com
+      - cloudfunctions2.cnrm.cloud.google.com
+      - cloudidentity.cnrm.cloud.google.com
+      - cloudids.cnrm.cloud.google.com
+      - cloudiot.cnrm.cloud.google.com
+      - cloudquota.cnrm.cloud.google.com
+      - cloudscheduler.cnrm.cloud.google.com
+      - cloudtasks.cnrm.cloud.google.com
+      - composer.cnrm.cloud.google.com
+      - compute.cnrm.cloud.google.com
+      - configcontroller.cnrm.cloud.google.com
+      - container.cnrm.cloud.google.com
+      - containeranalysis.cnrm.cloud.google.com
+      - containerattached.cnrm.cloud.google.com
+      - core.cnrm.cloud.google.com
+      - customize.core.cnrm.cloud.google.com
+      - datacatalog.cnrm.cloud.google.com
+      - dataflow.cnrm.cloud.google.com
+      - dataform.cnrm.cloud.google.com
+      - datafusion.cnrm.cloud.google.com
+      - dataproc.cnrm.cloud.google.com
+      - datastore.cnrm.cloud.google.com
+      - datastream.cnrm.cloud.google.com
+      - deploymentmanager.cnrm.cloud.google.com
+      - dialogflow.cnrm.cloud.google.com
+      - dialogflowcx.cnrm.cloud.google.com
+      - discoveryengine.cnrm.cloud.google.com
+      - dlp.cnrm.cloud.google.com
+      - dns.cnrm.cloud.google.com
+      - documentai.cnrm.cloud.google.com
+      - edgecontainer.cnrm.cloud.google.com
+      - edgenetwork.cnrm.cloud.google.com
+      - essentialcontacts.cnrm.cloud.google.com
+      - eventarc.cnrm.cloud.google.com
+      - filestore.cnrm.cloud.google.com
+      - firebase.cnrm.cloud.google.com
+      - firebasedatabase.cnrm.cloud.google.com
+      - firebasehosting.cnrm.cloud.google.com
+      - firebasestorage.cnrm.cloud.google.com
+      - firestore.cnrm.cloud.google.com
+      - gameservices.cnrm.cloud.google.com
+      - gkebackup.cnrm.cloud.google.com
+      - gkehub.cnrm.cloud.google.com
+      - healthcare.cnrm.cloud.google.com
+      - iam.cnrm.cloud.google.com
+      - iap.cnrm.cloud.google.com
+      - identityplatform.cnrm.cloud.google.com
+      - kms.cnrm.cloud.google.com
+      - logging.cnrm.cloud.google.com
+      - managedkafka.cnrm.cloud.google.com
+      - memcache.cnrm.cloud.google.com
+      - metastore.cnrm.cloud.google.com
+      - mlengine.cnrm.cloud.google.com
+      - monitoring.cnrm.cloud.google.com
+      - networkconnectivity.cnrm.cloud.google.com
+      - networkmanagement.cnrm.cloud.google.com
+      - networksecurity.cnrm.cloud.google.com
+      - networkservices.cnrm.cloud.google.com
+      - notebooks.cnrm.cloud.google.com
+      - orgpolicy.cnrm.cloud.google.com
+      - osconfig.cnrm.cloud.google.com
+      - oslogin.cnrm.cloud.google.com
+      - privateca.cnrm.cloud.google.com
+      - privilegedaccessmanager.cnrm.cloud.google.com
+      - pubsub.cnrm.cloud.google.com
+      - pubsublite.cnrm.cloud.google.com
+      - recaptchaenterprise.cnrm.cloud.google.com
+      - redis.cnrm.cloud.google.com
+      - resourcemanager.cnrm.cloud.google.com
+      - run.cnrm.cloud.google.com
+      - secretmanager.cnrm.cloud.google.com
+      - securesourcemanager.cnrm.cloud.google.com
+      - securitycenter.cnrm.cloud.google.com
+      - servicedirectory.cnrm.cloud.google.com
+      - servicenetworking.cnrm.cloud.google.com
+      - serviceusage.cnrm.cloud.google.com
+      - sourcerepo.cnrm.cloud.google.com
+      - spanner.cnrm.cloud.google.com
+      - speech.cnrm.cloud.google.com
+      - sql.cnrm.cloud.google.com
+      - storage.cnrm.cloud.google.com
+      - storagetransfer.cnrm.cloud.google.com
+      - tags.cnrm.cloud.google.com
+      - tpu.cnrm.cloud.google.com
+      - vertexai.cnrm.cloud.google.com
+      - vmwareengine.cnrm.cloud.google.com
+      - vpcaccess.cnrm.cloud.google.com
+      - workflows.cnrm.cloud.google.com
+      - workstations.cnrm.cloud.google.com
+
+  # Other Google Cloud CRDs
+  - url: "https://github.com/GoogleCloudPlatform/gke-networking-recipes"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "crds"
+    changelog: "https://github.com/GoogleCloudPlatform/gke-networking-recipes/releases"
+    groups:
+      - cloud.google.com
+      - networking.gke.io
+
+  - url: "https://github.com/GoogleCloudPlatform/cloud-sql-proxy-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/GoogleCloudPlatform/cloud-sql-proxy-operator/releases"
+    groups:
+      - cloudsql.cloud.google.com
+
+  - url: "https://github.com/GoogleCloudPlatform/gke-secret-sync-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/GoogleCloudPlatform/gke-secret-sync-controller/releases"
+    groups:
+      - secret-sync.gke.io
+
+  - url: "https://github.com/GoogleCloudPlatform/prometheus-engine"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "cmd/operator/deploy/crds"
+    changelog: "https://github.com/GoogleCloudPlatform/prometheus-engine/releases"
+    groups:
+      - monitoring.googleapis.com
+
+  # ---------------------------------------------------------------------------
+  # AWS Controllers for Kubernetes (ACK)
+  # Each service has its own controller repo
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/aws-controllers-k8s/acm-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/acm-controller/releases"
+    groups: [acm.services.k8s.aws]
+
+  - url: "https://github.com/aws-controllers-k8s/acmpca-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/acmpca-controller/releases"
+    groups: [acmpca.services.k8s.aws]
+
+  - url: "https://github.com/aws-controllers-k8s/apigatewayv2-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/apigatewayv2-controller/releases"
+    groups: [apigatewayv2.services.k8s.aws]
+
+  - url: "https://github.com/aws-controllers-k8s/applicationautoscaling-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/applicationautoscaling-controller/releases"
+    groups: [applicationautoscaling.services.k8s.aws]
+
+  - url: "https://github.com/aws-controllers-k8s/cloudfront-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/cloudfront-controller/releases"
+    groups: [cloudfront.services.k8s.aws]
+
+  - url: "https://github.com/aws-controllers-k8s/cloudtrail-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/cloudtrail-controller/releases"
+    groups: [cloudtrail.services.k8s.aws]
+
+  - url: "https://github.com/aws-controllers-k8s/cloudwatch-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/cloudwatch-controller/releases"
+    groups: [cloudwatch.services.k8s.aws]
+
+  - url: "https://github.com/aws-controllers-k8s/cloudwatchlogs-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/cloudwatchlogs-controller/releases"
+    groups: [cloudwatchlogs.services.k8s.aws]
+
+  - url: "https://github.com/aws-controllers-k8s/cognitoidentityprovider-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/cognitoidentityprovider-controller/releases"
+    groups: [cognitoidentityprovider.services.k8s.aws]
+
+  - url: "https://github.com/aws-controllers-k8s/dynamodb-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/dynamodb-controller/releases"
+    groups: [dynamodb.services.k8s.aws]
+
+  - url: "https://github.com/aws-controllers-k8s/ec2-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/ec2-controller/releases"
+    groups: [ec2.services.k8s.aws]
+
+  - url: "https://github.com/aws-controllers-k8s/ecr-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/ecr-controller/releases"
+    groups: [ecr.services.k8s.aws]
+
+  - url: "https://github.com/aws-controllers-k8s/eks-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/eks-controller/releases"
+    groups: [eks.services.k8s.aws]
+
+  - url: "https://github.com/aws-controllers-k8s/elasticache-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/elasticache-controller/releases"
+    groups: [elasticache.services.k8s.aws]
+
+  - url: "https://github.com/aws-controllers-k8s/emrcontainers-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/emrcontainers-controller/releases"
+    groups: [emrcontainers.services.k8s.aws]
+
+  - url: "https://github.com/aws-controllers-k8s/eventbridge-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/eventbridge-controller/releases"
+    groups: [eventbridge.services.k8s.aws]
+
+  - url: "https://github.com/aws-controllers-k8s/iam-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/iam-controller/releases"
+    groups: [iam.services.k8s.aws]
+
+  - url: "https://github.com/aws-controllers-k8s/kafka-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/kafka-controller/releases"
+    groups: [kafka.services.k8s.aws]
+
+  - url: "https://github.com/aws-controllers-k8s/kinesis-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/kinesis-controller/releases"
+    groups: [kinesis.services.k8s.aws]
+
+  - url: "https://github.com/aws-controllers-k8s/kms-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/kms-controller/releases"
+    groups: [kms.services.k8s.aws]
+
+  - url: "https://github.com/aws-controllers-k8s/lambda-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/lambda-controller/releases"
+    groups: [lambda.services.k8s.aws]
+
+  - url: "https://github.com/aws-controllers-k8s/memorydb-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/memorydb-controller/releases"
+    groups: [memorydb.services.k8s.aws]
+
+  - url: "https://github.com/aws-controllers-k8s/mq-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/mq-controller/releases"
+    groups: [mq.services.k8s.aws]
+
+  - url: "https://github.com/aws-controllers-k8s/networkfirewall-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/networkfirewall-controller/releases"
+    groups: [networkfirewall.services.k8s.aws]
+
+  - url: "https://github.com/aws-controllers-k8s/opensearchservice-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/opensearchservice-controller/releases"
+    groups: [opensearchservice.services.k8s.aws]
+
+  - url: "https://github.com/aws-controllers-k8s/organizations-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/organizations-controller/releases"
+    groups: [organizations.services.k8s.aws]
+
+  - url: "https://github.com/aws-controllers-k8s/pipes-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/pipes-controller/releases"
+    groups: [pipes.services.k8s.aws]
+
+  - url: "https://github.com/aws-controllers-k8s/prometheusservice-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/prometheusservice-controller/releases"
+    groups: [prometheusservice.services.k8s.aws]
+
+  - url: "https://github.com/aws-controllers-k8s/ram-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/ram-controller/releases"
+    groups: [ram.services.k8s.aws]
+
+  - url: "https://github.com/aws-controllers-k8s/rds-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/rds-controller/releases"
+    groups: [rds.services.k8s.aws]
+
+  - url: "https://github.com/aws-controllers-k8s/route53-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/route53-controller/releases"
+    groups: [route53.services.k8s.aws]
+
+  - url: "https://github.com/aws-controllers-k8s/s3-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/s3-controller/releases"
+    groups: [s3.services.k8s.aws]
+
+  - url: "https://github.com/aws-controllers-k8s/sagemaker-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/sagemaker-controller/releases"
+    groups: [sagemaker.services.k8s.aws]
+
+  - url: "https://github.com/aws-controllers-k8s/secretsmanager-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/secretsmanager-controller/releases"
+    groups: [secretsmanager.services.k8s.aws]
+
+  - url: "https://github.com/aws-controllers-k8s/sfn-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/sfn-controller/releases"
+    groups: [sfn.services.k8s.aws]
+
+  - url: "https://github.com/aws-controllers-k8s/sns-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/sns-controller/releases"
+    groups: [sns.services.k8s.aws]
+
+  - url: "https://github.com/aws-controllers-k8s/sqs-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/sqs-controller/releases"
+    groups: [sqs.services.k8s.aws]
+
+  - url: "https://github.com/aws-controllers-k8s/runtime"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws-controllers-k8s/runtime/releases"
+    groups: [services.k8s.aws]
+
+  # ---------------------------------------------------------------------------
+  # Other AWS CRDs
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/aws/aws-application-networking-k8s"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws/aws-application-networking-k8s/releases"
+    groups:
+      - application-networking.k8s.aws
+      - aga.k8s.aws
+
+  - url: "https://github.com/aws/amazon-vpc-cni-k8s"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "charts/aws-vpc-cni/crds"
+    changelog: "https://github.com/aws/amazon-vpc-cni-k8s/releases"
+    groups:
+      - crd.k8s.amazonaws.com
+      - vpcresources.k8s.aws
+
+  - url: "https://github.com/aws/amazon-vpc-resource-controller-k8s"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws/amazon-vpc-resource-controller-k8s/releases"
+    groups: [networking.k8s.aws]
+
+  - url: "https://github.com/kubernetes-sigs/aws-load-balancer-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "helm/aws-load-balancer-controller/crds"
+    changelog: "https://github.com/kubernetes-sigs/aws-load-balancer-controller/releases"
+    groups:
+      - elbv2.k8s.aws
+      - gateway.k8s.aws
+
+  - url: "https://github.com/aws/karpenter-provider-aws"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "pkg/apis/crds"
+    changelog: "https://github.com/aws/karpenter-provider-aws/releases"
+    groups: [karpenter.k8s.aws]
+
+  - url: "https://github.com/aws/eks-anywhere"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws/eks-anywhere/releases"
+    groups:
+      - anywhere.eks.amazonaws.com
+      - distro.eks.amazonaws.com
+      - packages.eks.amazonaws.com
+
+  - url: "https://github.com/aws/amazon-eks-pod-identity-webhook"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aws/amazon-eks-pod-identity-webhook/releases"
+    groups: [eks.amazonaws.com]
+
+  - url: "https://github.com/kubernetes-sigs/cluster-api-provider-aws"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/kubernetes-sigs/cluster-api-provider-aws/releases"
+    groups: [awsprovider.k8s.io]
+
+  # ---------------------------------------------------------------------------
+  # Azure Service Operator
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/Azure/azure-service-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "v2/config/crd/bases"
+    changelog: "https://github.com/Azure/azure-service-operator/releases"
+    groups:
+      - alertsmanagement.azure.com
+      - apimanagement.azure.com
+      - app.azure.com
+      - appconfiguration.azure.com
+      - authorization.azure.com
+      - batch.azure.com
+      - cache.azure.com
+      - cdn.azure.com
+      - compute.azure.com
+      - containerinstance.azure.com
+      - containerregistry.azure.com
+      - containerservice.azure.com
+      - datafactory.azure.com
+      - dataprotection.azure.com
+      - dbformariadb.azure.com
+      - dbformysql.azure.com
+      - dbforpostgresql.azure.com
+      - devices.azure.com
+      - documentdb.azure.com
+      - eventgrid.azure.com
+      - eventhub.azure.com
+      - insights.azure.com
+      - keyvault.azure.com
+      - kubernetesconfiguration.azure.com
+      - kusto.azure.com
+      - machinelearningservices.azure.com
+      - managedidentity.azure.com
+      - monitor.azure.com
+      - network.azure.com
+      - network.frontdoor.azure.com
+      - notificationhubs.azure.com
+      - operationalinsights.azure.com
+      - redhatopenshift.azure.com
+      - resources.azure.com
+      - search.azure.com
+      - servicebus.azure.com
+      - signalrservice.azure.com
+      - sql.azure.com
+      - storage.azure.com
+      - subscription.azure.com
+      - synapse.azure.com
+      - web.azure.com
+
+  - url: "https://github.com/Azure/azure-service-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "v2/config/crd/bases"
+    changelog: "https://github.com/Azure/azure-service-operator/releases"
+    groups: [azmonitoring.coreos.com]
+
+  - url: "https://github.com/Azure/karpenter-provider-azure"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "pkg/apis/crds"
+    changelog: "https://github.com/Azure/karpenter-provider-azure/releases"
+    groups: [karpenter.azure.com]
+
+  - url: "https://github.com/Azure/application-gateway-kubernetes-ingress"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "crds"
+    changelog: "https://github.com/Azure/application-gateway-kubernetes-ingress/releases"
+    groups:
+      - appgw.ingress.azure.io
+      - appgw.ingress.k8s.io
+
+  - url: "https://github.com/kubernetes-sigs/cluster-api-provider-azure"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/kubernetes-sigs/cluster-api-provider-azure/releases"
+    groups: [azureprovider.k8s.io]
+
+  # ---------------------------------------------------------------------------
+  # Upbound Providers
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/upbound/provider-aws"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "package/crds"
+    changelog: "https://github.com/upbound/provider-aws/releases"
+    groups:
+      - aws.upbound.io
+      - aws.m.upbound.io
+      - ec2.aws.upbound.io
+      - ec2.aws.m.upbound.io
+      - eks.aws.upbound.io
+      - eks.aws.m.upbound.io
+      - elasticache.aws.upbound.io
+      - elasticache.aws.m.upbound.io
+      - elbv2.aws.upbound.io
+      - elbv2.aws.m.upbound.io
+      - iam.aws.upbound.io
+      - iam.aws.m.upbound.io
+      - rds.aws.upbound.io
+      - rds.aws.m.upbound.io
+      - s3.aws.upbound.io
+      - s3.aws.m.upbound.io
+      - s3control.aws.upbound.io
+      - s3control.aws.m.upbound.io
+      - sns.aws.upbound.io
+      - sns.aws.m.upbound.io
+      - sqs.aws.upbound.io
+      - sqs.aws.m.upbound.io
+
+  - url: "https://github.com/upbound/provider-azure"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "package/crds"
+    changelog: "https://github.com/upbound/provider-azure/releases"
+    groups:
+      - azure.upbound.io
+      - network.azure.upbound.io
+      - network.azure.m.upbound.io
+
+  # ---------------------------------------------------------------------------
+  # Elastic Cloud on Kubernetes (ECK)
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/elastic/cloud-on-k8s"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crds/v1"
+    changelog: "https://github.com/elastic/cloud-on-k8s/releases"
+    groups:
+      - agent.k8s.elastic.co
+      - apm.k8s.elastic.co
+      - autoscaling.k8s.elastic.co
+      - beat.k8s.elastic.co
+      - elasticsearch.k8s.elastic.co
+      - enterprisesearch.k8s.elastic.co
+      - kibana.k8s.elastic.co
+      - logstash.k8s.elastic.co
+      - maps.k8s.elastic.co
+      - stackconfigpolicy.k8s.elastic.co
+
+  # ---------------------------------------------------------------------------
+  # Istio
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/istio/istio"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "manifests/charts/base/crds"
+    changelog: "https://github.com/istio/istio/releases"
+    groups:
+      - extensions.istio.io
+      - networking.istio.io
+      - security.istio.io
+      - telemetry.istio.io
+
+  # ---------------------------------------------------------------------------
+  # Strimzi Kafka Operator
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/strimzi/strimzi-kafka-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "packaging/install/cluster-operator"
+    changelog: "https://github.com/strimzi/strimzi-kafka-operator/releases"
+    groups:
+      - core.strimzi.io
+      - kafka.strimzi.io
+
+  # ---------------------------------------------------------------------------
+  # KubeVirt
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/kubevirt/kubevirt"
+    source_type: github
+    fetch_strategy: release_url
+    url_template: "https://github.com/kubevirt/kubevirt/releases/download/{version}/kubevirt-operator.yaml"
+    changelog: "https://github.com/kubevirt/kubevirt/releases"
+    groups:
+      - kubevirt.io
+      - clone.kubevirt.io
+      - export.kubevirt.io
+      - instancetype.kubevirt.io
+      - migrations.kubevirt.io
+      - pool.kubevirt.io
+      - snapshot.kubevirt.io
+
+  - url: "https://github.com/kubevirt/containerized-data-importer"
+    source_type: github
+    fetch_strategy: release_url
+    url_template: "https://github.com/kubevirt/containerized-data-importer/releases/download/{version}/cdi-operator.yaml"
+    changelog: "https://github.com/kubevirt/containerized-data-importer/releases"
+    groups:
+      - cdi.kubevirt.io
+      - forklift.cdi.kubevirt.io
+
+  # ---------------------------------------------------------------------------
+  # Cluster API (CAPI)
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/kubernetes-sigs/cluster-api"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/kubernetes-sigs/cluster-api/releases"
+    groups:
+      - cluster.x-k8s.io
+      - addons.cluster.x-k8s.io
+      - bootstrap.cluster.x-k8s.io
+      - clusterctl.cluster.x-k8s.io
+      - controlplane.cluster.x-k8s.io
+      - infrastructure.cluster.x-k8s.io
+      - ipam.cluster.x-k8s.io
+      - operator.cluster.x-k8s.io
+      - runtime.cluster.x-k8s.io
+
+  # ---------------------------------------------------------------------------
+  # OPA Gatekeeper
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/open-policy-agent/gatekeeper"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "charts/gatekeeper/crds"
+    changelog: "https://github.com/open-policy-agent/gatekeeper/releases"
+    groups:
+      - config.gatekeeper.sh
+      - expansion.gatekeeper.sh
+      - externaldata.gatekeeper.sh
+      - mutations.gatekeeper.sh
+      - status.gatekeeper.sh
+      - syncset.gatekeeper.sh
+      - templates.gatekeeper.sh
+
+  # ---------------------------------------------------------------------------
+  # Flux CD
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/fluxcd/helm-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/fluxcd/helm-controller/releases"
+    groups: [helm.toolkit.fluxcd.io]
+
+  - url: "https://github.com/fluxcd/kustomize-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/fluxcd/kustomize-controller/releases"
+    groups: [kustomize.toolkit.fluxcd.io]
+
+  - url: "https://github.com/fluxcd/source-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/fluxcd/source-controller/releases"
+    groups: [source.toolkit.fluxcd.io]
+
+  - url: "https://github.com/fluxcd/notification-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/fluxcd/notification-controller/releases"
+    groups: [notification.toolkit.fluxcd.io]
+
+  - url: "https://github.com/fluxcd/image-automation-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/fluxcd/image-automation-controller/releases"
+    groups: [image.toolkit.fluxcd.io]
+
+  - url: "https://github.com/flux-iac/tofu-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/flux-iac/tofu-controller/releases"
+    groups: [infra.contrib.fluxcd.io]
+
+  - url: "https://github.com/controlplaneio-fluxcd/flux-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/controlplaneio-fluxcd/flux-operator/releases"
+    groups: [fluxcd.controlplane.io]
+
+  - url: "https://github.com/fluxcd/flagger"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "charts/flagger/crds"
+    changelog: "https://github.com/fluxcd/flagger/releases"
+    groups: [flagger.app]
+
+  # ---------------------------------------------------------------------------
+  # cert-manager
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/cert-manager/cert-manager"
+    source_type: github
+    fetch_strategy: release_asset
+    asset_name: "cert-manager.crds.yaml"
+    changelog: "https://github.com/cert-manager/cert-manager/releases"
+    groups:
+      - cert-manager.io
+      - acme.cert-manager.io
+
+  - url: "https://github.com/cert-manager/approver-policy"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "deploy/charts/approver-policy/templates/crds"
+    changelog: "https://github.com/cert-manager/approver-policy/releases"
+    groups: [policy.cert-manager.io]
+
+  - url: "https://github.com/cert-manager/trust-manager"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "deploy/charts/trust-manager/templates/crds"
+    changelog: "https://github.com/cert-manager/trust-manager/releases"
+    groups: [trust.cert-manager.io]
+
+  - url: "https://github.com/cert-manager/aws-privateca-issuer"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/cert-manager/aws-privateca-issuer/releases"
+    groups: [awspca.cert-manager.io]
+
+  - url: "https://github.com/cloudflare/origin-ca-issuer"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "deploy/charts/origin-ca-issuer/crds"
+    changelog: "https://github.com/cloudflare/origin-ca-issuer/releases"
+    groups: [cert-manager.k8s.cloudflare.com]
+
+  # ---------------------------------------------------------------------------
+  # Argo
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/argoproj/argo-cd"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "manifests/crds"
+    changelog: "https://github.com/argoproj/argo-cd/releases"
+    groups: [argoproj.io]
+
+  - url: "https://github.com/argoproj/argo-rollouts"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "manifests/crds"
+    changelog: "https://github.com/argoproj/argo-rollouts/releases"
+    groups: [argoproj.io]
+
+  - url: "https://github.com/argoproj-labs/argocd-image-updater"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "manifests/crds"
+    changelog: "https://github.com/argoproj-labs/argocd-image-updater/releases"
+    groups: [argocd-image-updater.argoproj.io]
+
+  - url: "https://github.com/argoproj-labs/gitops-promoter"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/argoproj-labs/gitops-promoter/releases"
+    groups: [promoter.argoproj.io]
+
+  # ---------------------------------------------------------------------------
+  # Crossplane
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/crossplane/crossplane"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "cluster/crds"
+    changelog: "https://github.com/crossplane/crossplane/releases"
+    groups:
+      - apiextensions.crossplane.io
+      - pkg.crossplane.io
+      - ops.crossplane.io
+      - secrets.crossplane.io
+      - protection.crossplane.io
+
+  # ---------------------------------------------------------------------------
+  # Grafana Crossplane Provider
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/grafana/crossplane-provider-grafana"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "package/crds"
+    changelog: "https://github.com/grafana/crossplane-provider-grafana/releases"
+    groups:
+      - grafana.crossplane.io
+      - alerting.grafana.crossplane.io
+      - asserts.grafana.crossplane.io
+      - cloud.grafana.crossplane.io
+      - cloudprovider.grafana.crossplane.io
+      - connections.grafana.crossplane.io
+      - enterprise.grafana.crossplane.io
+      - fleetmanagement.grafana.crossplane.io
+      - frontendobservability.grafana.crossplane.io
+      - k6.grafana.crossplane.io
+      - ml.grafana.crossplane.io
+      - oncall.grafana.crossplane.io
+      - oss.grafana.crossplane.io
+      - slo.grafana.crossplane.io
+      - sm.grafana.crossplane.io
+
+  # ---------------------------------------------------------------------------
+  # Prometheus Operator
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/prometheus-operator/prometheus-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "example/prometheus-operator-crd"
+    changelog: "https://github.com/prometheus-operator/prometheus-operator/releases"
+    groups: [monitoring.coreos.com]
+
+  # ---------------------------------------------------------------------------
+  # Rancher / Cattle
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/rancher/rancher"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "pkg/crds/yaml/generated"
+    changelog: "https://github.com/rancher/rancher/releases"
+    groups:
+      - auditlog.cattle.io
+      - catalog.cattle.io
+      - helm.cattle.io
+      - management.cattle.io
+      - provisioning.cattle.io
+      - rke.cattle.io
+
+  - url: "https://github.com/rancher/fleet"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "charts/fleet-crd/templates"
+    changelog: "https://github.com/rancher/fleet/releases"
+    groups: [fleet.cattle.io]
+
+  - url: "https://github.com/rancher/system-upgrade-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd"
+    changelog: "https://github.com/rancher/system-upgrade-controller/releases"
+    groups: [upgrade.cattle.io]
+
+  # ---------------------------------------------------------------------------
+  # KEDA
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/kedacore/keda"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/kedacore/keda/releases"
+    groups:
+      - keda.sh
+      - eventing.keda.sh
+
+  - url: "https://github.com/kedacore/http-add-on"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/kedacore/http-add-on/releases"
+    groups: [http.keda.sh]
+
+  # ---------------------------------------------------------------------------
+  # external-secrets
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/external-secrets/external-secrets"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "deploy/crds"
+    changelog: "https://github.com/external-secrets/external-secrets/releases"
+    groups:
+      - external-secrets.io
+      - generators.external-secrets.io
+
+  # ---------------------------------------------------------------------------
+  # Kyverno
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/kyverno/kyverno"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crds"
+    changelog: "https://github.com/kyverno/kyverno/releases"
+    groups:
+      - kyverno.io
+      - policies.kyverno.io
+      - reports.kyverno.io
+      - wgpolicyk8s.io
+
+  # ---------------------------------------------------------------------------
+  # Open Cluster Management
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/open-cluster-management-io/api"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "."
+    changelog: "https://github.com/open-cluster-management-io/api/releases"
+    groups:
+      - addon.open-cluster-management.io
+      - cluster.open-cluster-management.io
+      - work.open-cluster-management.io
+
+  - url: "https://github.com/open-cluster-management-io/ocm"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "deploy/cluster-manager/config/crds"
+    changelog: "https://github.com/open-cluster-management-io/ocm/releases"
+    groups: [operator.open-cluster-management.io]
+
+  # ---------------------------------------------------------------------------
+  # Solo.io / Gloo
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/solo-io/gloo"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "install/helm/gloo/crds"
+    changelog: "https://github.com/solo-io/gloo/releases"
+    groups:
+      - gloo.solo.io
+      - enterprise.gloo.solo.io
+      - gateway.solo.io
+      - graphql.gloo.solo.io
+      - ratelimit.solo.io
+
+  # ---------------------------------------------------------------------------
+  # Percona
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/percona/percona-postgresql-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/percona/percona-postgresql-operator/releases"
+    groups: [pg.percona.com]
+
+  - url: "https://github.com/percona/percona-server-mongodb-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/percona/percona-server-mongodb-operator/releases"
+    groups: [psmdb.percona.com]
+
+  - url: "https://github.com/percona/percona-xtradb-cluster-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/percona/percona-xtradb-cluster-operator/releases"
+    groups: [pxc.percona.com]
+
+  - url: "https://github.com/percona/percona-server-mysql-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/percona/percona-server-mysql-operator/releases"
+    groups: [ps.percona.com]
+
+  - url: "https://github.com/percona/dbaas-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/percona/dbaas-operator/releases"
+    groups: [dbaas.percona.com]
+
+  # ---------------------------------------------------------------------------
+  # VSHN / APPUiO
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/vshn/appcat"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/vshn/appcat/releases"
+    groups:
+      - appcat.vshn.io
+      - vshn.appcat.vshn.io
+      - exoscale.appcat.vshn.io
+
+  # ---------------------------------------------------------------------------
+  # Pinniped
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/vmware-tanzu/pinniped"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "deploy"
+    changelog: "https://github.com/vmware-tanzu/pinniped/releases"
+    groups:
+      - authentication.concierge.pinniped.dev
+      - config.concierge.pinniped.dev
+      - config.supervisor.pinniped.dev
+      - idp.supervisor.pinniped.dev
+
+  # ---------------------------------------------------------------------------
+  # Datadog
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/DataDog/datadog-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases/v1"
+    changelog: "https://github.com/DataDog/datadog-operator/releases"
+    groups: [datadoghq.com]
+
+  # ---------------------------------------------------------------------------
+  # Gateway API (Kubernetes SIG)
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/kubernetes-sigs/gateway-api"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/standard"
+    changelog: "https://github.com/kubernetes-sigs/gateway-api/releases"
+    groups:
+      - gateway.networking.k8s.io
+      - gateway.networking.x-k8s.io
+
+  # ---------------------------------------------------------------------------
+  # Individual Projects (alphabetical)
+  # ---------------------------------------------------------------------------
+  - url: "https://github.com/Azure/aad-pod-identity"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "deploy/infra/base"
+    changelog: "https://github.com/Azure/aad-pod-identity/releases"
+    groups: [aadpodidentity.k8s.io]
+
+  - url: "https://github.com/zalando/postgres-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "charts/postgres-operator/crds"
+    changelog: "https://github.com/zalando/postgres-operator/releases"
+    groups: [acid.zalan.do]
+
+  - url: "https://github.com/actions/actions-runner-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "charts/gha-runner-scale-set-controller/crds"
+    changelog: "https://github.com/actions/actions-runner-controller/releases"
+    groups:
+      - actions.github.com
+      - actions.summerwind.dev
+
+  - url: "https://github.com/aiven/aiven-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/aiven/aiven-operator/releases"
+    groups: [aiven.io]
+
+  - url: "https://github.com/project-akri/akri"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "deployment/helm/crds"
+    changelog: "https://github.com/project-akri/akri/releases"
+    groups: [akri.sh]
+
+  - url: "https://github.com/apache/apisix-ingress-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "samples/deploy/crd/v1"
+    changelog: "https://github.com/apache/apisix-ingress-controller/releases"
+    groups: [apisix.apache.org]
+
+  - url: "https://github.com/RedisLabs/redis-enterprise-k8s-docs"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "crds"
+    changelog: "https://github.com/RedisLabs/redis-enterprise-k8s-docs/releases"
+    groups: [app.redislabs.com]
+
+  - url: "https://github.com/emqx/emqx-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/emqx/emqx-operator/releases"
+    groups: [apps.emqx.io]
+
+  - url: "https://github.com/gitlab-org/cloud-native/gitlab-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/gitlab-org/cloud-native/gitlab-operator/releases"
+    groups: [apps.gitlab.com]
+
+  - url: "https://github.com/jfrog/jfrog-registry-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/jfrog/jfrog-registry-operator/releases"
+    groups: [apps.jfrog.com]
+
+  - url: "https://github.com/projectsveltos/addon-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/projectsveltos/addon-controller/releases"
+    groups: [apps.projectsveltos.io]
+
+  - url: "https://github.com/aquasecurity/trivy-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "deploy/helm/crds"
+    changelog: "https://github.com/aquasecurity/trivy-operator/releases"
+    groups: [aquasecurity.github.io]
+
+  - url: "https://github.com/k0sproject/k0s"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "static/manifests/autopilot"
+    changelog: "https://github.com/k0sproject/k0s/releases"
+    groups:
+      - autopilot.k0sproject.io
+      - etcd.k0sproject.io
+      - helm.k0sproject.io
+
+  - url: "https://github.com/castai/kvisor"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/castai/kvisor/releases"
+    groups: [autoscaling.cast.ai]
+
+  - url: "https://github.com/kubernetes/autoscaler"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "vertical-pod-autoscaler/deploy"
+    changelog: "https://github.com/kubernetes/autoscaler/releases"
+    groups: [autoscaling.k8s.io]
+
+  - url: "https://github.com/ansible/awx-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/ansible/awx-operator/releases"
+    groups: [awx.ansible.com]
+
+  - url: "https://github.com/cloudnative-pg/cloudnative-pg"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/cloudnative-pg/cloudnative-pg/releases"
+    groups:
+      - postgresql.cnpg.io
+      - barmancloud.cnpg.io
+
+  - url: "https://github.com/bitnami-labs/sealed-secrets"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "helm/sealed-secrets/crds"
+    changelog: "https://github.com/bitnami-labs/sealed-secrets/releases"
+    groups: [bitnami.com]
+
+  - url: "https://github.com/tinkerbell/tinkerbell"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/tinkerbell/tinkerbell/releases"
+    groups:
+      - bmc.tinkerbell.org
+      - tinkerbell.org
+
+  - url: "https://github.com/projectcapsule/capsule"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/projectcapsule/capsule/releases"
+    groups: [capsule.clastix.io]
+
+  - url: "https://github.com/weaveworks/cluster-api-provider-existinginfra"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/weaveworks/cluster-api-provider-existinginfra/releases"
+    groups: [capi.weave.works]
+
+  - url: "https://github.com/rook/rook"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "deploy/charts/rook-ceph/crds"
+    changelog: "https://github.com/rook/rook/releases"
+    groups:
+      - ceph.rook.io
+      - csi.ceph.io
+      - objectbucket.io
+
+  - url: "https://github.com/smallstep/step-issuer"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/smallstep/step-issuer/releases"
+    groups: [certmanager.step.sm]
+
+  - url: "https://github.com/FyraLabs/chisel-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/FyraLabs/chisel-operator/releases"
+    groups: [chisel-operator.io]
+
+  - url: "https://github.com/cilium/cilium"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "pkg/k8s/apis/cilium.io/client/crds"
+    changelog: "https://github.com/cilium/cilium/releases"
+    groups: [cilium.io]
+
+  - url: "https://github.com/Altinity/clickhouse-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "deploy/operator"
+    changelog: "https://github.com/Altinity/clickhouse-operator/releases"
+    groups:
+      - clickhouse.altinity.com
+      - clickhouse-keeper.altinity.com
+
+  - url: "https://github.com/ClickHouse/clickhouse-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "deploy/operator"
+    changelog: "https://github.com/ClickHouse/clickhouse-operator/releases"
+    groups: [clickhouse.com]
+
+  - url: "https://github.com/adyanth/cloudflare-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/adyanth/cloudflare-operator/releases"
+    groups: [cloudflare-operator.io]
+
+  - url: "https://github.com/zarqman/clustersecret"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "yaml"
+    changelog: "https://github.com/zarqman/clustersecret/releases"
+    groups: [clustersecret.io]
+
+  - url: "https://github.com/grafana/alloy"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "operations/helm/charts/alloy/crds"
+    changelog: "https://github.com/grafana/alloy/releases"
+    groups:
+      - collectors.grafana.com
+      - monitoring.grafana.com
+
+  - url: "https://github.com/coreweave/virtual-server"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/coreweave/virtual-server/releases"
+    groups: [compute.coreweave.com]
+
+  - url: "https://github.com/Kong/kubernetes-ingress-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/Kong/kubernetes-ingress-controller/releases"
+    groups: [configuration.konghq.com]
+
+  - url: "https://github.com/open-feature/open-feature-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/open-feature/open-feature-operator/releases"
+    groups: [core.openfeature.dev]
+
+  - url: "https://github.com/coroot/coroot-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/coroot/coroot-operator/releases"
+    groups: [coroot.com]
+
+  - url: "https://github.com/dapr/dapr"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "charts/dapr/crds"
+    changelog: "https://github.com/dapr/dapr/releases"
+    groups: [dapr.io]
+
+  - url: "https://github.com/spotahome/redis-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/spotahome/redis-operator/releases"
+    groups: [databases.spotahome.com]
+
+  - url: "https://github.com/ariga/atlas-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/ariga/atlas-operator/releases"
+    groups: [db.atlasgo.io]
+
+  - url: "https://github.com/dexidp/dex"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "scripts"
+    changelog: "https://github.com/dexidp/dex/releases"
+    groups: [dex.coreos.com]
+
+  - url: "https://github.com/dragonflydb/dragonfly-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/dragonflydb/dragonfly-operator/releases"
+    groups: [dragonflydb.io]
+
+  - url: "https://github.com/datainfrahq/druid-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/datainfrahq/druid-operator/releases"
+    groups: [druid.apache.org]
+
+  - url: "https://github.com/Dynatrace/dynatrace-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/Dynatrace/dynatrace-operator/releases"
+    groups: [dynatrace.com]
+
+  - url: "https://github.com/eraser-dev/eraser"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/eraser-dev/eraser/releases"
+    groups: [eraser.sh]
+
+  - url: "https://github.com/kubernetes-sigs/external-dns"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "charts/external-dns/crds"
+    changelog: "https://github.com/kubernetes-sigs/external-dns/releases"
+    groups: [externaldns.k8s.io]
+
+  - url: "https://github.com/nginxinc/nginx-ingress-helm-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/nginxinc/nginx-ingress-helm-operator/releases"
+    groups: [externaldns.nginx.org]
+
+  - url: "https://github.com/apache/flink-kubernetes-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "helm/flink-kubernetes-operator/crds"
+    changelog: "https://github.com/apache/flink-kubernetes-operator/releases"
+    groups: [flink.apache.org]
+
+  - url: "https://github.com/fluent/fluent-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/fluent/fluent-operator/releases"
+    groups:
+      - fluentbit.fluent.io
+      - fluentd.fluent.io
+
+  - url: "https://github.com/envoyproxy/gateway"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "charts/gateway-helm/crds/generated"
+    changelog: "https://github.com/envoyproxy/gateway/releases"
+    groups:
+      - gateway.envoyproxy.io
+      - aigateway.envoyproxy.io
+
+  - url: "https://github.com/kgateway-dev/kgateway"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "install/helm/kgateway/crds"
+    changelog: "https://github.com/kgateway-dev/kgateway/releases"
+    groups: [gateway.kgateway.dev]
+
+  - url: "https://github.com/nginx/nginx-gateway-fabric"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "deploy/crds"
+    changelog: "https://github.com/nginx/nginx-gateway-fabric/releases"
+    groups: [gateway.nginx.org]
+
+  - url: "https://github.com/emissary-ingress/emissary"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "charts/emissary-ingress/crds"
+    changelog: "https://github.com/emissary-ingress/emissary/releases"
+    groups: [getambassador.io]
+
+  - url: "https://github.com/grafana/grafana-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/grafana/grafana-operator/releases"
+    groups: [grafana.integreatly.org]
+
+  - url: "https://github.com/gravitee-io/gravitee-kubernetes-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "helm/gko/crds"
+    changelog: "https://github.com/gravitee-io/gravitee-kubernetes-operator/releases"
+    groups: [gravitee.io]
+
+  - url: "https://github.com/kubernetes-csi/external-snapshotter"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "client/config/crd"
+    changelog: "https://github.com/kubernetes-csi/external-snapshotter/releases"
+    groups:
+      - groupsnapshot.storage.k8s.io
+      - snapshot.storage.k8s.io
+
+  - url: "https://github.com/hivemq/hivemq-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "charts/hivemq-operator/crds"
+    changelog: "https://github.com/hivemq/hivemq-operator/releases"
+    groups: [hivemq.com]
+
+  - url: "https://github.com/robusta-dev/holmesgpt"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/robusta-dev/holmesgpt/releases"
+    groups: [holmesgpt.dev]
+
+  - url: "https://github.com/oracle/oci-native-ingress-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/oracle/oci-native-ingress-controller/releases"
+    groups: [ingress.oraclecloud.com]
+
+  - url: "https://github.com/haproxytech/kubernetes-ingress"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "deploy/crds"
+    changelog: "https://github.com/haproxytech/kubernetes-ingress/releases"
+    groups: [ingress.v1.haproxy.org]
+
+  - url: "https://github.com/isindir/sops-secrets-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/isindir/sops-secrets-operator/releases"
+    groups: [isindir.github.com]
+
+  - url: "https://github.com/jaegertracing/jaeger-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/jaegertracing/jaeger-operator/releases"
+    groups: [jaegertracing.io]
+
+  - url: "https://github.com/nats-io/nack"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "deploy/crds"
+    changelog: "https://github.com/nats-io/nack/releases"
+    groups: [jetstream.nats.io]
+
+  - url: "https://github.com/minio/operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "resources"
+    changelog: "https://github.com/minio/operator/releases"
+    groups:
+      - job.min.io
+      - minio.min.io
+      - sts.min.io
+
+  - url: "https://github.com/k0sproject/k0smotron"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/k0sproject/k0smotron/releases"
+    groups: [k0smotron.io]
+
+  - url: "https://github.com/grafana/k6-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/grafana/k6-operator/releases"
+    groups: [k6.io]
+
+  - url: "https://github.com/k8snetworkplumbingwg/multus-cni"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "deployments/multus-daemonset"
+    changelog: "https://github.com/k8snetworkplumbingwg/multus-cni/releases"
+    groups: [k8s.cni.cncf.io]
+
+  - url: "https://github.com/keycloak/keycloak-k8s-resources"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "kubernetes"
+    changelog: "https://github.com/keycloak/keycloak-k8s-resources/releases"
+    groups: [k8s.keycloak.org]
+
+  - url: "https://github.com/mariadb-operator/mariadb-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/mariadb-operator/mariadb-operator/releases"
+    groups: [k8s.mariadb.com]
+
+  - url: "https://github.com/nginx/nginx-ingress"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "charts/nginx-ingress/crds"
+    changelog: "https://github.com/nginx/nginx-ingress/releases"
+    groups: [k8s.nginx.org]
+
+  - url: "https://github.com/k8up-io/k8up"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/apiextensions.k8s.io/v1/base"
+    changelog: "https://github.com/k8up-io/k8up/releases"
+    groups: [k8up.io]
+
+  - url: "https://github.com/akuity/kargo"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "charts/kargo/resources/crds"
+    changelog: "https://github.com/akuity/kargo/releases"
+    groups: [kargo.akuity.io]
+
+  - url: "https://github.com/kubernetes-sigs/karpenter"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "pkg/apis/crds"
+    changelog: "https://github.com/kubernetes-sigs/karpenter/releases"
+    groups: [karpenter.sh]
+
+  - url: "https://github.com/kiali/kiali-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "crd-docs/crd"
+    changelog: "https://github.com/kiali/kiali-operator/releases"
+    groups: [kiali.io]
+
+  - url: "https://github.com/db-operator/db-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/db-operator/db-operator/releases"
+    groups: [kinda.rocks]
+
+  - url: "https://github.com/kro-run/kro"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/kro-run/kro/releases"
+    groups: [kro.run]
+
+  - url: "https://github.com/senthilrch/kube-fledged"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "deploy/kubefledged-operator/deploy/crds"
+    changelog: "https://github.com/senthilrch/kube-fledged/releases"
+    groups: [kubefledged.io]
+
+  - url: "https://github.com/kubeflow/training-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "manifests/base/crds"
+    changelog: "https://github.com/kubeflow/training-operator/releases"
+    groups: [kubeflow.org]
+
+  - url: "https://github.com/kubescape/operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/kubescape/operator/releases"
+    groups: [kubescape.io]
+
+  - url: "https://github.com/kubernetes-sigs/kueue"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/components/crd/bases"
+    changelog: "https://github.com/kubernetes-sigs/kueue/releases"
+    groups: [kueue.x-k8s.io]
+
+  - url: "https://github.com/linkerd/linkerd2"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "charts/linkerd-crds/templates"
+    changelog: "https://github.com/linkerd/linkerd2/releases"
+    groups:
+      - linkerd.io
+      - policy.linkerd.io
+
+  - url: "https://github.com/kube-logging/logging-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "charts/logging-operator/crds"
+    changelog: "https://github.com/kube-logging/logging-operator/releases"
+    groups:
+      - logging.banzaicloud.io
+      - logging-extensions.banzaicloud.io
+
+  - url: "https://github.com/openshift/cluster-logging-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/openshift/cluster-logging-operator/releases"
+    groups: [logging.openshift.io]
+
+  - url: "https://github.com/longhorn/longhorn"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "chart/crds"
+    changelog: "https://github.com/longhorn/longhorn/releases"
+    groups: [longhorn.io]
+
+  - url: "https://github.com/metal3-io/baremetal-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/base/crds"
+    changelog: "https://github.com/metal3-io/baremetal-operator/releases"
+    groups: [metal3.io]
+
+  - url: "https://github.com/metallb/metallb"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/metallb/metallb/releases"
+    groups: [metallb.io]
+
+  - url: "https://github.com/mongodb/mongodb-kubernetes-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/mongodb/mongodb-kubernetes-operator/releases"
+    groups: [mongodbcommunity.mongodb.com]
+
+  - url: "https://github.com/mysql/mysql-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "deploy/charts/mysql-operator/crds"
+    changelog: "https://github.com/mysql/mysql-operator/releases"
+    groups: [mysql.oracle.com]
+
+  - url: "https://github.com/bitpoke/mysql-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/bitpoke/mysql-operator/releases"
+    groups: [mysql.presslabs.org]
+
+  - url: "https://github.com/kubernetes-sigs/node-feature-discovery"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "deployment/helm/node-feature-discovery/crds"
+    changelog: "https://github.com/kubernetes-sigs/node-feature-discovery/releases"
+    groups:
+      - nfd.k8s-sigs.io
+      - readiness.node.x-k8s.io
+
+  - url: "https://github.com/NVIDIA/gpu-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "deployments/gpu-operator/crds"
+    changelog: "https://github.com/NVIDIA/gpu-operator/releases"
+    groups: [nvidia.com]
+
+  - url: "https://github.com/NVIDIA/k8s-nim-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/NVIDIA/k8s-nim-operator/releases"
+    groups: [ais.nvidia.com]
+
+  - url: "https://github.com/1Password/onepassword-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/1Password/onepassword-operator/releases"
+    groups: [onepassword.com]
+
+  - url: "https://github.com/openebs/openebs"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "deploy/helm/charts/crds"
+    changelog: "https://github.com/openebs/openebs/releases"
+    groups:
+      - openebs.io
+      - zfs.openebs.io
+
+  - url: "https://github.com/openshift/api"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "."
+    changelog: "https://github.com/openshift/api/releases"
+    groups: [openshift]
+
+  - url: "https://github.com/open-telemetry/opentelemetry-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/open-telemetry/opentelemetry-operator/releases"
+    groups: [opentelemetry.io]
+
+  - url: "https://github.com/h3poteto/node-manager"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/h3poteto/node-manager/releases"
+    groups: [operator.h3poteto.dev]
+
+  - url: "https://github.com/tigera/operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "pkg/crds/operator"
+    changelog: "https://github.com/tigera/operator/releases"
+    groups:
+      - operator.tigera.io
+      - projectcalico.org
+
+  - url: "https://github.com/VictoriaMetrics/operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/VictoriaMetrics/operator/releases"
+    groups: [operator.victoriametrics.com]
+
+  - url: "https://github.com/operator-framework/operator-lifecycle-manager"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "deploy/chart/crds"
+    changelog: "https://github.com/operator-framework/operator-lifecycle-manager/releases"
+    groups: [operators.coreos.com]
+
+  - url: "https://github.com/pingcap/tidb-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "manifests/crd"
+    changelog: "https://github.com/pingcap/tidb-operator/releases"
+    groups: [pingcap.com]
+
+  - url: "https://github.com/piraeusdatastore/piraeus-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/piraeusdatastore/piraeus-operator/releases"
+    groups: [piraeus.io]
+
+  - url: "https://github.com/confluentinc/confluent-kubernetes-examples"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "crds"
+    changelog: "https://github.com/confluentinc/confluent-kubernetes-examples/releases"
+    groups: [platform.confluent.io]
+
+  - url: "https://github.com/sigstore/policy-controller"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/sigstore/policy-controller/releases"
+    groups: [policy.sigstore.dev]
+
+  - url: "https://github.com/CrunchyData/postgres-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/CrunchyData/postgres-operator/releases"
+    groups: [postgres-operator.crunchydata.com]
+
+  - url: "https://github.com/projectcontour/contour"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "examples/contour"
+    changelog: "https://github.com/projectcontour/contour/releases"
+    groups: [projectcontour.io]
+
+  - url: "https://github.com/nginx/nginx-ingress"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "charts/nginx-ingress/crds"
+    changelog: "https://github.com/nginx/nginx-ingress/releases"
+    groups:
+      - appprotect.f5.com
+      - appprotectdos.f5.com
+
+  - url: "https://github.com/pyrra-dev/pyrra"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/pyrra-dev/pyrra/releases"
+    groups: [pyrra.dev]
+
+  - url: "https://github.com/rabbitmq/cluster-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/rabbitmq/cluster-operator/releases"
+    groups: [rabbitmq.com]
+
+  - url: "https://github.com/FairwindsOps/rbac-manager"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "deploy/charts/rbac-manager/crds"
+    changelog: "https://github.com/FairwindsOps/rbac-manager/releases"
+    groups: [rbacmanager.reactiveops.io]
+
+  - url: "https://github.com/OT-CONTAINER-KIT/redis-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/OT-CONTAINER-KIT/redis-operator/releases"
+    groups: [redis.redis.opstreelabs.in]
+
+  - url: "https://github.com/mogenius/renovate-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/mogenius/renovate-operator/releases"
+    groups: [renovate-operator.mogenius.com]
+
+  - url: "https://github.com/streamnative/pulsar-resources-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/streamnative/pulsar-resources-operator/releases"
+    groups: [resource.streamnative.io]
+
+  - url: "https://github.com/teleport/teleport"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "integrations/operator/config/crd/bases"
+    changelog: "https://github.com/gravitational/teleport/releases"
+    groups: [resources.teleport.dev]
+
+  - url: "https://github.com/restatedev/restate-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/restatedev/restate-operator/releases"
+    groups: [restate.dev]
+
+  - url: "https://github.com/grafana/rollout-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/grafana/rollout-operator/releases"
+    groups: [rollout-operator.grafana.com]
+
+  - url: "https://github.com/redpanda-data/redpanda-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "operator/config/crd/bases"
+    changelog: "https://github.com/redpanda-data/redpanda-operator/releases"
+    groups: [cluster.redpanda.com]
+
+  - url: "https://github.com/scylladb/scylla-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "pkg/api/scylla/v1/crds"
+    changelog: "https://github.com/scylladb/scylla-operator/releases"
+    groups: [scylla.scylladb.com]
+
+  - url: "https://github.com/seaweedfs/seaweedfs-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/seaweedfs/seaweedfs-operator/releases"
+    groups: [seaweed.seaweedfs.com]
+
+  - url: "https://github.com/mittwald/kubernetes-secret-generator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "deploy/crds"
+    changelog: "https://github.com/mittwald/kubernetes-secret-generator/releases"
+    groups: [secretgenerator.mittwald.de]
+
+  - url: "https://github.com/DopplerHQ/kubernetes-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/DopplerHQ/kubernetes-operator/releases"
+    groups: [secrets.doppler.com]
+
+  - url: "https://github.com/hashicorp/vault-secrets-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/hashicorp/vault-secrets-operator/releases"
+    groups: [secrets.hashicorp.com]
+
+  - url: "https://github.com/Infisical/infisical"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "helm-charts/secrets-operator/crds"
+    changelog: "https://github.com/Infisical/infisical/releases"
+    groups: [secrets.infisical.com]
+
+  - url: "https://github.com/kubernetes-sigs/secrets-store-csi-driver"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "charts/secrets-store-csi-driver/crds"
+    changelog: "https://github.com/kubernetes-sigs/secrets-store-csi-driver/releases"
+    groups: [secrets-store.csi.x-k8s.io]
+
+  - url: "https://github.com/kserve/kserve"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/full"
+    changelog: "https://github.com/kserve/kserve/releases"
+    groups: [serving.kserve.io]
+
+  - url: "https://github.com/slok/sloth"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "deploy/kubernetes/helm/sloth/crds"
+    changelog: "https://github.com/slok/sloth/releases"
+    groups: [sloth.slok.dev]
+
+  - url: "https://github.com/backube/snapscheduler"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/backube/snapscheduler/releases"
+    groups: [snapscheduler.backube]
+
+  - url: "https://github.com/backube/volsync"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/backube/volsync/releases"
+    groups: [volsync.backube]
+
+  - url: "https://github.com/kubeflow/spark-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "charts/spark-operator-chart/crds"
+    changelog: "https://github.com/kubeflow/spark-operator/releases"
+    groups: [sparkoperator.k8s.io]
+
+  - url: "https://github.com/SparebankenVest/azure-key-vault-to-kubernetes"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "crds"
+    changelog: "https://github.com/SparebankenVest/azure-key-vault-to-kubernetes/releases"
+    groups: [spv.no]
+
+  - url: "https://github.com/l7mp/stunner"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "deploy/chart/stunner-gateway-operator/crds"
+    changelog: "https://github.com/l7mp/stunner/releases"
+    groups: [stunner.l7mp.io]
+
+  - url: "https://github.com/tailscale/tailscale"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "cmd/k8s-operator/deploy/crds"
+    changelog: "https://github.com/tailscale/tailscale/releases"
+    groups: [tailscale.com]
+
+  - url: "https://github.com/siderolabs/talos"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "pkg/machinery/config/schemas"
+    changelog: "https://github.com/siderolabs/talos/releases"
+    groups: [talos.dev]
+
+  - url: "https://github.com/grafana/tempo-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/grafana/tempo-operator/releases"
+    groups: [tempo.grafana.com]
+
+  - url: "https://github.com/temporalio/temporal-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/temporalio/temporal-operator/releases"
+    groups: [temporal.io]
+
+  - url: "https://github.com/kluctl/kluctl"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "install/controller/crds"
+    changelog: "https://github.com/kluctl/kluctl/releases"
+    groups: [templates.kluctl.io]
+
+  - url: "https://github.com/kubeshop/testkube"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/kubeshop/testkube/releases"
+    groups:
+      - executor.testkube.io
+      - tests.testkube.io
+      - testworkflows.testkube.io
+
+  - url: "https://github.com/traefik/traefik"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "docs/content/reference/dynamic-configuration"
+    changelog: "https://github.com/traefik/traefik/releases"
+    groups:
+      - traefik.containo.us
+      - traefik.io
+
+  - url: "https://github.com/NetApp/trident"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "deploy/crds"
+    changelog: "https://github.com/NetApp/trident/releases"
+    groups: [trident.netapp.io]
+
+  - url: "https://github.com/Twingate/kubernetes-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/Twingate/kubernetes-operator/releases"
+    groups: [twingate.com]
+
+  - url: "https://github.com/defenseunicorns/uds-core"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "src/pepr/operator/crd"
+    changelog: "https://github.com/defenseunicorns/uds-core/releases"
+    groups: [uds.dev]
+
+  - url: "https://github.com/epam/edp-codebase-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/epam/edp-codebase-operator/releases"
+    groups: [v1.edp.epam.com]
+
+  - url: "https://github.com/bank-vaults/vault-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "deploy/charts/vault-operator/crds"
+    changelog: "https://github.com/bank-vaults/vault-operator/releases"
+    groups: [vault.banzaicloud.com]
+
+  - url: "https://github.com/vmware-tanzu/velero"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/v1/bases"
+    changelog: "https://github.com/vmware-tanzu/velero/releases"
+    groups: [velero.io]
+
+  - url: "https://github.com/wiz-sec/wiz-kubernetes-connector"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/wiz-sec/wiz-kubernetes-connector/releases"
+    groups: [wiz.io]
+
+  # Nauth (authentication operator)
+  - url: "https://github.com/nauth-io/nauth"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/nauth-io/nauth/releases"
+    groups: [nauth.io]
+
+  # OpenReports
+  - url: "https://github.com/openreports/openreports-operator"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/openreports/openreports-operator/releases"
+    groups: [openreports.io]
+
+  # Tuppr
+  - url: "https://github.com/tuppercloud/tuppr"
+    source_type: github
+    fetch_strategy: repo_path
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/tuppercloud/tuppr/releases"
+    groups: [tuppr.home-operations.com]
