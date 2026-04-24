@@ -1041,7 +1041,7 @@ sources:
     changelog: "https://github.com/kubernetes-sigs/node-feature-discovery/releases"
 
   - url: "https://github.com/NVIDIA/gpu-operator"
-    tag: ""
+    tag: "v26.3.1"
     repo_path: "deployments/gpu-operator/crds"
     changelog: "https://github.com/NVIDIA/gpu-operator/releases"
 
