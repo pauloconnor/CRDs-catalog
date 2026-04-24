@@ -45,7 +45,7 @@
           "type": "object"
         },
         "experimentConfig": {
-          "description": "Associates a SageMaker job as a trial component with an experiment and trial.\nSpecified when you call the following APIs:\n\n  - CreateProcessingJob (https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateProcessingJob.html)\n\n  - CreateTrainingJob (https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateTrainingJob.html)\n\n  - CreateTransformJob (https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateTransformJob.html)",
+          "description": "Associates a SageMaker job as a trial component with an experiment and trial.\nSpecified when you call the following APIs:\n\n   * CreateProcessingJob (https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateProcessingJob.html)\n\n   * CreateTrainingJob (https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateTrainingJob.html)\n\n   * CreateTransformJob (https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateTransformJob.html)",
           "properties": {
             "experimentName": {
               "type": "string"

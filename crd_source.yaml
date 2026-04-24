@@ -216,7 +216,7 @@ sources:
     changelog: "https://github.com/aws-controllers-k8s/s3-controller/releases"
 
   - url: "https://github.com/aws-controllers-k8s/sagemaker-controller"
-    tag: ""
+    tag: "v1.7.4"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/aws-controllers-k8s/sagemaker-controller/releases"
 

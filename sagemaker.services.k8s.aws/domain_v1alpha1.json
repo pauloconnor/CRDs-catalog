@@ -16,7 +16,7 @@
       "description": "DomainSpec defines the desired state of Domain.",
       "properties": {
         "appNetworkAccessType": {
-          "description": "Specifies the VPC used for non-EFS traffic. The default value is PublicInternetOnly.\n\n  - PublicInternetOnly - Non-EFS traffic is through a VPC managed by Amazon\n    SageMaker AI, which allows direct internet access\n\n  - VpcOnly - All traffic is through the specified VPC and subnets",
+          "description": "Specifies the VPC used for non-EFS traffic. The default value is PublicInternetOnly.\n\n   * PublicInternetOnly - Non-EFS traffic is through a VPC managed by Amazon\n   SageMaker AI, which allows direct internet access\n\n   * VpcOnly - All traffic is through the specified VPC and subnets",
           "type": "string"
         },
         "appSecurityGroupManagement": {

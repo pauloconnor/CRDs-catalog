@@ -13,7 +13,7 @@
       "type": "object"
     },
     "spec": {
-      "description": "ModelPackageSpec defines the desired state of ModelPackage.\n\nA container for your trained model that can be deployed for SageMaker inference.\nThis can include inference code, artifacts, and metadata. The model package\ntype can be one of the following.\n\n  - Versioned model: A part of a model package group in Model Registry.\n\n  - Unversioned model: Not part of a model package group and used in Amazon\n    Web Services Marketplace.\n\nFor more information, see CreateModelPackage (https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateModelPackage.html).",
+      "description": "ModelPackageSpec defines the desired state of ModelPackage.\n\nA container for your trained model that can be deployed for SageMaker inference.\nThis can include inference code, artifacts, and metadata. The model package\ntype can be one of the following.\n\n   * Versioned model: A part of a model package group in Model Registry.\n\n   * Unversioned model: Not part of a model package group and used in Amazon\n   Web Services Marketplace.\n\nFor more information, see CreateModelPackage (https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateModelPackage.html).",
       "properties": {
         "additionalInferenceSpecifications": {
           "description": "An array of additional Inference Specification objects. Each additional Inference\nSpecification specifies artifacts based on this model package that can be\nused on inference endpoints. Generally used with SageMaker Neo to store the\ncompiled artifacts.",
@@ -325,7 +325,7 @@
           "additionalProperties": false
         },
         "inferenceSpecification": {
-          "description": "Specifies details about inference jobs that you can run with models based\non this model package, including the following information:\n\n  - The Amazon ECR paths of containers that contain the inference code and\n    model artifacts.\n\n  - The instance types that the model package supports for transform jobs\n    and real-time endpoints used for inference.\n\n  - The input and output content formats that the model package supports\n    for inference.",
+          "description": "Specifies details about inference jobs that you can run with models based\non this model package, including the following information:\n\n   * The Amazon ECR paths of containers that contain the inference code and\n   model artifacts.\n\n   * The instance types that the model package supports for transform jobs\n   and real-time endpoints used for inference.\n\n   * The input and output content formats that the model package supports\n   for inference.",
           "properties": {
             "containers": {
               "items": {
