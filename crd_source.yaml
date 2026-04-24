@@ -831,7 +831,7 @@ sources:
     changelog: "https://github.com/apache/flink-kubernetes-operator/releases"
 
   - url: "https://github.com/fluent/fluent-operator"
-    tag: ""
+    tag: "v3.7.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/fluent/fluent-operator/releases"
 
