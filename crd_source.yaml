@@ -517,7 +517,7 @@ sources:
   # KEDA
   # ---------------------------------------------------------------------------
   - url: "https://github.com/kedacore/keda"
-    tag: ""
+    tag: "v2.19.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/kedacore/keda/releases"
 
