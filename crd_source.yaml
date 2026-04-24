@@ -956,7 +956,7 @@ sources:
     changelog: "https://github.com/kubernetes-sigs/karpenter/releases"
 
   - url: "https://github.com/kiali/kiali-operator"
-    tag: ""
+    tag: "v2.25.0"
     repo_path: "crd-docs/crd"
     changelog: "https://github.com/kiali/kiali-operator/releases"
 
