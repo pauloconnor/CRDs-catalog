@@ -1126,7 +1126,7 @@ sources:
     changelog: "https://github.com/pyrra-dev/pyrra/releases"
 
   - url: "https://github.com/rabbitmq/cluster-operator"
-    tag: ""
+    tag: "v2.20.1"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/rabbitmq/cluster-operator/releases"
 
