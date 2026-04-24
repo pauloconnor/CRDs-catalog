@@ -1066,7 +1066,7 @@ sources:
     changelog: "https://github.com/openshift/api/releases"
 
   - url: "https://github.com/open-telemetry/opentelemetry-operator"
-    tag: ""
+    tag: "v0.149.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/open-telemetry/opentelemetry-operator/releases"
 
