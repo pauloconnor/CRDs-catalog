@@ -1,5 +1,5 @@
 {
-  "description": "User is the Schema for the Users API",
+  "description": "ServerlessCacheSnapshot is the Schema for the ServerlessCacheSnapshots API",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -13,84 +13,80 @@
       "type": "object"
     },
     "spec": {
+      "description": "ServerlessCacheSnapshotSpec defines the desired state of ServerlessCacheSnapshot.\n\nThe resource representing a serverless cache snapshot. Available for Valkey,\nRedis OSS and Serverless Memcached only.",
       "properties": {
-        "accessString": {
-          "description": "Access permissions string used for this user.\n\nRegex Pattern: `\\S`",
-          "type": "string"
+        "kmsKeyID": {
+          "description": "The ID of the KMS key used to encrypt the snapshot. Available for Valkey,\nRedis OSS and Serverless Memcached only. Default: NULL",
+          "type": "string",
+          "x-kubernetes-validations": [
+            {
+              "message": "Value is immutable once set",
+              "rule": "self == oldSelf"
+            }
+          ]
         },
-        "authenticationMode": {
-          "description": "Specifies how to authenticate the user.",
+        "kmsKeyRef": {
+          "description": "AWSResourceReferenceWrapper provides a wrapper around *AWSResourceReference\ntype to provide more user friendly syntax for references using 'from' field\nEx:\nAPIIDRef:\n\n\tfrom:\n\t  name: my-api",
           "properties": {
-            "passwords": {
-              "items": {
-                "description": "SecretKeyReference combines a k8s corev1.SecretReference with a\nspecific key within the referred-to Secret",
-                "properties": {
-                  "key": {
-                    "description": "Key is the key within the secret",
-                    "type": "string"
-                  },
-                  "name": {
-                    "description": "name is unique within a namespace to reference a secret resource.",
-                    "type": "string"
-                  },
-                  "namespace": {
-                    "description": "namespace defines the space within which the secret name must be unique.",
-                    "type": "string"
-                  }
+            "from": {
+              "description": "AWSResourceReference provides all the values necessary to reference another\nk8s resource for finding the identifier(Id/ARN/Name)",
+              "properties": {
+                "name": {
+                  "type": "string"
                 },
-                "required": [
-                  "key"
-                ],
-                "type": "object",
-                "x-kubernetes-map-type": "atomic",
-                "additionalProperties": false
+                "namespace": {
+                  "type": "string"
+                }
               },
-              "type": "array"
-            },
-            "type": {
-              "type": "string"
+              "type": "object",
+              "additionalProperties": false
             }
           },
           "type": "object",
           "additionalProperties": false
         },
-        "engine": {
-          "description": "The options are valkey or redis.\n\nRegex Pattern: `^[a-zA-Z]*$`",
-          "type": "string"
+        "serverlessCacheName": {
+          "description": "The name of an existing serverless cache. The snapshot is created from this\ncache. Available for Valkey, Redis OSS and Serverless Memcached only.",
+          "type": "string",
+          "x-kubernetes-validations": [
+            {
+              "message": "Value is immutable once set",
+              "rule": "self == oldSelf"
+            }
+          ]
         },
-        "noPasswordRequired": {
-          "description": "Indicates a password is not required for this user.",
-          "type": "boolean"
-        },
-        "passwords": {
-          "description": "Passwords used for this user. You can create up to two passwords for each\nuser.",
-          "items": {
-            "description": "SecretKeyReference combines a k8s corev1.SecretReference with a\nspecific key within the referred-to Secret",
-            "properties": {
-              "key": {
-                "description": "Key is the key within the secret",
-                "type": "string"
+        "serverlessCacheRef": {
+          "description": "AWSResourceReferenceWrapper provides a wrapper around *AWSResourceReference\ntype to provide more user friendly syntax for references using 'from' field\nEx:\nAPIIDRef:\n\n\tfrom:\n\t  name: my-api",
+          "properties": {
+            "from": {
+              "description": "AWSResourceReference provides all the values necessary to reference another\nk8s resource for finding the identifier(Id/ARN/Name)",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "namespace": {
+                  "type": "string"
+                }
               },
-              "name": {
-                "description": "name is unique within a namespace to reference a secret resource.",
-                "type": "string"
-              },
-              "namespace": {
-                "description": "namespace defines the space within which the secret name must be unique.",
-                "type": "string"
-              }
-            },
-            "required": [
-              "key"
-            ],
-            "type": "object",
-            "x-kubernetes-map-type": "atomic",
-            "additionalProperties": false
+              "type": "object",
+              "additionalProperties": false
+            }
           },
-          "type": "array"
+          "type": "object",
+          "additionalProperties": false
+        },
+        "serverlessCacheSnapshotName": {
+          "description": "The name for the snapshot being created. Must be unique for the customer\naccount. Available for Valkey, Redis OSS and Serverless Memcached only. Must\nbe between 1 and 255 characters.",
+          "type": "string",
+          "x-kubernetes-validations": [
+            {
+              "message": "Value is immutable once set",
+              "rule": "self == oldSelf"
+            }
+          ]
         },
         "tags": {
-          "description": "A list of tags to be added to this resource. A tag is a key-value pair. A\ntag key must be accompanied by a tag value, although null is accepted.",
+          "description": "A list of tags to be added to the snapshot resource. A tag is a key-value\npair. Available for Valkey, Redis OSS and Serverless Memcached only.",
           "items": {
             "description": "A tag that can be added to an ElastiCache cluster or replication group. Tags\nare composed of a Key/Value pair. You can use tags to categorize and track\nall your ElastiCache resources, with the exception of global replication\ngroup. When you add or remove tags on replication groups, those actions will\nbe replicated to all nodes in the replication group. A tag with a null Value\nis permitted.",
             "properties": {
@@ -105,27 +101,16 @@
             "additionalProperties": false
           },
           "type": "array"
-        },
-        "userID": {
-          "description": "The ID of the user.\n\nRegex Pattern: `^[a-zA-Z][a-zA-Z0-9\\-]*$`",
-          "type": "string"
-        },
-        "userName": {
-          "description": "The username of the user.",
-          "type": "string"
         }
       },
       "required": [
-        "accessString",
-        "engine",
-        "userID",
-        "userName"
+        "serverlessCacheSnapshotName"
       ],
       "type": "object",
       "additionalProperties": false
     },
     "status": {
-      "description": "UserStatus defines the observed state of User",
+      "description": "ServerlessCacheSnapshotStatus defines the observed state of ServerlessCacheSnapshot",
       "properties": {
         "ackResourceMetadata": {
           "description": "All CRs managed by ACK have a common `Status.ACKResourceMetadata` member\nthat is used to contain resource sync state, account ownership,\nconstructed ARN for the resource",
@@ -150,19 +135,9 @@
           "type": "object",
           "additionalProperties": false
         },
-        "authentication": {
-          "description": "Denotes whether the user requires a password to authenticate.",
-          "properties": {
-            "passwordCount": {
-              "format": "int64",
-              "type": "integer"
-            },
-            "type_": {
-              "type": "string"
-            }
-          },
-          "type": "object",
-          "additionalProperties": false
+        "bytesUsedForCache": {
+          "description": "The total size of a serverless cache snapshot, in bytes. Available for Valkey,\nRedis OSS and Serverless Memcached only.",
+          "type": "string"
         },
         "conditions": {
           "description": "All CRs managed by ACK have a common `Status.Conditions` member that\ncontains a collection of `ackv1alpha1.Condition` objects that describe\nthe various terminal states of the CR and its backend AWS service API\nresource",
@@ -200,28 +175,39 @@
           },
           "type": "array"
         },
-        "expandedAccessString": {
-          "description": "Access permissions string used for this user.",
+        "createTime": {
+          "description": "The date and time that the source serverless cache's metadata and cache data\nset was obtained for the snapshot. Available for Valkey, Redis OSS and Serverless\nMemcached only.",
+          "format": "date-time",
           "type": "string"
         },
-        "lastRequestedAccessString": {
-          "description": "Access permissions string used for this user.",
+        "expiryTime": {
+          "description": "The time that the serverless cache snapshot will expire. Available for Valkey,\nRedis OSS and Serverless Memcached only.",
+          "format": "date-time",
           "type": "string"
         },
-        "minimumEngineVersion": {
-          "description": "The minimum engine version required, which is Redis OSS 6.0",
+        "serverlessCacheConfiguration": {
+          "description": "The configuration of the serverless cache, at the time the snapshot was taken.\nAvailable for Valkey, Redis OSS and Serverless Memcached only.",
+          "properties": {
+            "engine": {
+              "type": "string"
+            },
+            "majorEngineVersion": {
+              "type": "string"
+            },
+            "serverlessCacheName": {
+              "type": "string"
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
+        "snapshotType": {
+          "description": "The type of snapshot of serverless cache. Available for Valkey, Redis OSS\nand Serverless Memcached only.",
           "type": "string"
         },
         "status": {
-          "description": "Indicates the user status. Can be \"active\", \"modifying\" or \"deleting\".",
+          "description": "The current status of the serverless cache. Available for Valkey, Redis OSS\nand Serverless Memcached only.",
           "type": "string"
-        },
-        "userGroupIDs": {
-          "description": "Returns a list of the user group IDs the user belongs to.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
         }
       },
       "type": "object",
