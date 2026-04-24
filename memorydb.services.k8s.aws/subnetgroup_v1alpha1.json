@@ -13,7 +13,7 @@
       "type": "object"
     },
     "spec": {
-      "description": "SubnetGroupSpec defines the desired state of SubnetGroup.\n\nRepresents the output of one of the following operations:\n\n  - CreateSubnetGroup\n\n  - UpdateSubnetGroup\n\nA subnet group is a collection of subnets (typically private) that you can\ndesignate for your clusters running in an Amazon Virtual Private Cloud (VPC)\nenvironment.",
+      "description": "SubnetGroupSpec defines the desired state of SubnetGroup.\n\nRepresents the output of one of the following operations:\n\n   * CreateSubnetGroup\n\n   * UpdateSubnetGroup\n\nA subnet group is a collection of subnets (typically private) that you can\ndesignate for your clusters running in an Amazon Virtual Private Cloud (VPC)\nenvironment.",
       "properties": {
         "description": {
           "description": "A description for the subnet group.",
@@ -104,7 +104,7 @@
           "additionalProperties": false
         },
         "conditions": {
-          "description": "All CRS managed by ACK have a common `Status.Conditions` member that\ncontains a collection of `ackv1alpha1.Condition` objects that describe\nthe various terminal states of the CR and its backend AWS service API\nresource",
+          "description": "All CRs managed by ACK have a common `Status.Conditions` member that\ncontains a collection of `ackv1alpha1.Condition` objects that describe\nthe various terminal states of the CR and its backend AWS service API\nresource",
           "items": {
             "description": "Condition is the common struct used by all CRDs managed by ACK service\ncontrollers to indicate terminal states  of the CR and its backend AWS\nservice API resource",
             "properties": {
