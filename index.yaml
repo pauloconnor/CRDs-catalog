@@ -11291,6 +11291,10 @@ opentelemetry.io:
     filename: opentelemetry.io/targetallocator_v1alpha1.json
     kind: targetallocator
     name: targetallocator_v1alpha1
+  - apiVersion: opentelemetry.io/v1alpha1
+    filename: opentelemetry.io/clusterobservability_v1alpha1.json
+    kind: clusterobservability
+    name: clusterobservability_v1alpha1
 operationalinsights.azure.com:
   - apiVersion: operationalinsights.azure.com/v1api20210601
     filename: operationalinsights.azure.com/workspace_v1api20210601.json
