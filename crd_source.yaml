@@ -1021,7 +1021,7 @@ sources:
     changelog: "https://github.com/metallb/metallb/releases"
 
   - url: "https://github.com/mongodb/mongodb-kubernetes-operator"
-    tag: ""
+    tag: "v0.13.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/mongodb/mongodb-kubernetes-operator/releases"
 
