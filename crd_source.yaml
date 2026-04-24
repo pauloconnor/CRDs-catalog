@@ -236,7 +236,7 @@ sources:
     changelog: "https://github.com/aws-controllers-k8s/sns-controller/releases"
 
   - url: "https://github.com/aws-controllers-k8s/sqs-controller"
-    tag: ""
+    tag: "v1.4.3"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/aws-controllers-k8s/sqs-controller/releases"
 
