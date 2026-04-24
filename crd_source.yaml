@@ -1051,7 +1051,7 @@ sources:
     changelog: "https://github.com/NVIDIA/k8s-nim-operator/releases"
 
   - url: "https://github.com/1Password/onepassword-operator"
-    tag: ""
+    tag: "v1.12.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/1Password/onepassword-operator/releases"
 
