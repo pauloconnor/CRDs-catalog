@@ -31,8 +31,8 @@
           "type": "boolean"
         },
         "majorVersion": {
-          "description": "The ID of the cluster's major Postgres version.\nCurrently Bridge offers 13-17",
-          "maximum": 17,
+          "description": "The ID of the cluster's major Postgres version.\nCurrently Bridge offers 13-18",
+          "maximum": 18,
           "minimum": 13,
           "type": "integer"
         },
@@ -66,7 +66,6 @@
             "azure",
             "gcp"
           ],
-          "maxLength": 10,
           "type": "string",
           "x-kubernetes-validations": [
             {

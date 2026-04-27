@@ -568,7 +568,7 @@ sources:
     changelog: "https://github.com/solo-io/gloo/releases"
 
   - url: "https://github.com/percona/percona-postgresql-operator"
-    tag: ""
+    tag: "v2.9.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/percona/percona-postgresql-operator/releases"
 

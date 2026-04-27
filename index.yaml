@@ -12154,6 +12154,23 @@ pg.percona.com:
     filename: pg.percona.com/perconapgbackup_v2beta1.json
     kind: PerconaPGBackup
     name: perconapgbackup_v2beta1
+pgv2.percona.com:
+  - apiVersion: pgv2.percona.com/v2
+    filename: pgv2.percona.com/perconapgupgrade_v2.json
+    kind: PerconaPGUpgrade
+    name: perconapgupgrade_v2
+  - apiVersion: pgv2.percona.com/v2
+    filename: pgv2.percona.com/perconapgcluster_v2.json
+    kind: PerconaPGCluster
+    name: perconapgcluster_v2
+  - apiVersion: pgv2.percona.com/v2
+    filename: pgv2.percona.com/perconapgrestore_v2.json
+    kind: PerconaPGRestore
+    name: perconapgrestore_v2
+  - apiVersion: pgv2.percona.com/v2
+    filename: pgv2.percona.com/perconapgbackup_v2.json
+    kind: PerconaPGBackup
+    name: perconapgbackup_v2
 pingcap.com:
   - apiVersion: pingcap.com/v1alpha1
     filename: pingcap.com/tidbcluster_v1alpha1.json
