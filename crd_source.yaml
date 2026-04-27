@@ -583,7 +583,7 @@ sources:
     changelog: "https://github.com/percona/percona-xtradb-cluster-operator/releases"
 
   - url: "https://github.com/percona/percona-server-mysql-operator"
-    tag: ""
+    tag: "v1.1.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/percona/percona-server-mysql-operator/releases"
 

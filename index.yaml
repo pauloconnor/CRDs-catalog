@@ -12697,6 +12697,18 @@ ps.percona.com:
     filename: ps.percona.com/perconaservermysql_v1alpha1.json
     kind: perconaservermysql
     name: perconaservermysql_v1alpha1
+  - apiVersion: ps.percona.com/v1
+    filename: ps.percona.com/perconaservermysql_v1.json
+    kind: perconaservermysql
+    name: perconaservermysql_v1
+  - apiVersion: ps.percona.com/v1
+    filename: ps.percona.com/perconaservermysqlrestore_v1.json
+    kind: perconaservermysqlrestore
+    name: perconaservermysqlrestore_v1
+  - apiVersion: ps.percona.com/v1
+    filename: ps.percona.com/perconaservermysqlbackup_v1.json
+    kind: perconaservermysqlbackup
+    name: perconaservermysqlbackup_v1
 psmdb.percona.com:
   - apiVersion: psmdb.percona.com/v1
     filename: psmdb.percona.com/perconaservermongodbrestore_v1.json
