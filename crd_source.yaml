@@ -426,7 +426,7 @@ sources:
   # cert-manager
   # ---------------------------------------------------------------------------
   - url: "https://github.com/cert-manager/cert-manager"
-    tag: ""
+    tag: "v1.20.2"
     fetch_strategy: release_asset
     asset_name: "cert-manager.crds.yaml"
     changelog: "https://github.com/cert-manager/cert-manager/releases"
