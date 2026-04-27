@@ -15,7 +15,7 @@
         "capacity": {
           "description": "This contains the number of slots for the Instance",
           "format": "uint",
-          "minimum": 0,
+          "minimum": 0.0,
           "type": "integer"
         },
         "cdiName": {

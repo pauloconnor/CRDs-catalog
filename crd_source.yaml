@@ -626,7 +626,7 @@ sources:
     changelog: "https://github.com/aiven/aiven-operator/releases"
 
   - url: "https://github.com/project-akri/akri"
-    tag: ""
+    tag: "v0.13.8"
     repo_path: "deployment/helm/crds"
     changelog: "https://github.com/project-akri/akri/releases"
 
