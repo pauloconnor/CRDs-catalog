@@ -56,11 +56,12 @@
           "description": "ControlPlaneEndpoint represents the endpoint used to communicate with the control plane.",
           "properties": {
             "host": {
-              "description": "The hostname on which the API server is serving.",
+              "description": "host is the hostname on which the API server is serving.",
+              "maxLength": 512,
               "type": "string"
             },
             "port": {
-              "description": "The port on which the API server is serving.",
+              "description": "port is the port on which the API server is serving.",
               "format": "int32",
               "type": "integer"
             }
@@ -83,7 +84,7 @@
               "type": "array"
             },
             "crossZoneLoadBalancing": {
-              "description": "CrossZoneLoadBalancing enables the classic ELB cross availability zone balancing.\n\n\nWith cross-zone load balancing, each load balancer node for your Classic Load Balancer\ndistributes requests evenly across the registered instances in all enabled Availability Zones.\nIf cross-zone load balancing is disabled, each load balancer node distributes requests evenly across\nthe registered instances in its Availability Zone only.\n\n\nDefaults to false.",
+              "description": "CrossZoneLoadBalancing enables the classic ELB cross availability zone balancing.\n\nWith cross-zone load balancing, each load balancer node for your Classic Load Balancer\ndistributes requests evenly across the registered instances in all enabled Availability Zones.\nIf cross-zone load balancing is disabled, each load balancer node distributes requests evenly across\nthe registered instances in its Availability Zone only.\n\nDefaults to false.",
               "type": "boolean"
             },
             "healthCheckProtocol": {
@@ -220,11 +221,11 @@
                     "type": "string"
                   },
                   "ipv6CidrBlock": {
-                    "description": "IPv6CidrBlock is the IPv6 CIDR block to be used when the provider creates a managed VPC.\nA subnet can have an IPv4 and an IPv6 address.\nIPv6 is only supported in managed clusters, this field cannot be set on AWSCluster object.",
+                    "description": "IPv6CidrBlock is the IPv6 CIDR block to be used when the provider creates a managed VPC.\nA subnet can have an IPv4 and an IPv6 address.",
                     "type": "string"
                   },
                   "isIpv6": {
-                    "description": "IsIPv6 defines the subnet as an IPv6 subnet. A subnet is IPv6 when it is associated with a VPC that has IPv6 enabled.\nIPv6 is only supported in managed clusters, this field cannot be set on AWSCluster object.",
+                    "description": "IsIPv6 defines the subnet as an IPv6 subnet. A subnet is IPv6 when it is associated with an IPv6 CIDR.",
                     "type": "boolean"
                   },
                   "isPublic": {
@@ -283,7 +284,7 @@
                   "type": "string"
                 },
                 "ipv6": {
-                  "description": "IPv6 contains ipv6 specific settings for the network. Supported only in managed clusters.\nThis field cannot be set on AWSCluster object.",
+                  "description": "IPv6 contains ipv6 specific settings for the network.",
                   "properties": {
                     "cidrBlock": {
                       "description": "CidrBlock is the CIDR block provided by Amazon when VPC has enabled IPv6.",
@@ -370,11 +371,20 @@
                 "description": "MachineAddress contains information for the node's address.",
                 "properties": {
                   "address": {
-                    "description": "The machine address.",
+                    "description": "address is the machine address.",
+                    "maxLength": 256,
+                    "minLength": 1,
                     "type": "string"
                   },
                   "type": {
-                    "description": "Machine address type, one of Hostname, ExternalIP, InternalIP, ExternalDNS or InternalDNS.",
+                    "description": "type is the machine address type, one of Hostname, ExternalIP, InternalIP, ExternalDNS or InternalDNS.",
+                    "enum": [
+                      "Hostname",
+                      "ExternalIP",
+                      "InternalIP",
+                      "ExternalDNS",
+                      "InternalDNS"
+                    ],
                     "type": "string"
                   }
                 },
@@ -582,28 +592,35 @@
             "description": "Condition defines an observation of a Cluster API resource operational state.",
             "properties": {
               "lastTransitionTime": {
-                "description": "Last time the condition transitioned from one status to another.\nThis should be when the underlying condition changed. If that is not known, then using the time when\nthe API field changed is acceptable.",
+                "description": "lastTransitionTime is the last time the condition transitioned from one status to another.\nThis should be when the underlying condition changed. If that is not known, then using the time when\nthe API field changed is acceptable.",
                 "format": "date-time",
                 "type": "string"
               },
               "message": {
-                "description": "A human readable message indicating details about the transition.\nThis field may be empty.",
+                "description": "message is a human readable message indicating details about the transition.\nThis field may be empty.",
+                "maxLength": 10240,
+                "minLength": 1,
                 "type": "string"
               },
               "reason": {
-                "description": "The reason for the condition's last transition in CamelCase.\nThe specific API may choose whether or not this field is considered a guaranteed API.\nThis field may not be empty.",
+                "description": "reason is the reason for the condition's last transition in CamelCase.\nThe specific API may choose whether or not this field is considered a guaranteed API.\nThis field may be empty.",
+                "maxLength": 256,
+                "minLength": 1,
                 "type": "string"
               },
               "severity": {
-                "description": "Severity provides an explicit classification of Reason code, so the users or machines can immediately\nunderstand the current situation and act accordingly.\nThe Severity field MUST be set only when Status=False.",
+                "description": "severity provides an explicit classification of Reason code, so the users or machines can immediately\nunderstand the current situation and act accordingly.\nThe Severity field MUST be set only when Status=False.",
+                "maxLength": 32,
                 "type": "string"
               },
               "status": {
-                "description": "Status of the condition, one of True, False, Unknown.",
+                "description": "status of the condition, one of True, False, Unknown.",
                 "type": "string"
               },
               "type": {
-                "description": "Type of condition in CamelCase or in foo.example.com/CamelCase.\nMany .condition.type values are consistent across resources like Available, but because arbitrary conditions\ncan be useful (see .node.status.conditions), the ability to deconflict is important.",
+                "description": "type of condition in CamelCase or in foo.example.com/CamelCase.\nMany .condition.type values are consistent across resources like Available, but because arbitrary conditions\ncan be useful (see .node.status.conditions), the ability to deconflict is important.",
+                "maxLength": 256,
+                "minLength": 1,
                 "type": "string"
               }
             },
@@ -625,11 +642,11 @@
                 "additionalProperties": {
                   "type": "string"
                 },
-                "description": "Attributes is a free form map of attributes an infrastructure provider might use or require.",
+                "description": "attributes is a free form map of attributes an infrastructure provider might use or require.",
                 "type": "object"
               },
               "controlPlane": {
-                "description": "ControlPlane determines if this failure domain is suitable for use by control plane machines.",
+                "description": "controlPlane determines if this failure domain is suitable for use by control plane machines.",
                 "type": "boolean"
               }
             },

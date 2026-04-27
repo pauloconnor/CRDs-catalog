@@ -1932,6 +1932,14 @@ bootstrap.cluster.x-k8s.io:
     filename: bootstrap.cluster.x-k8s.io/k0scontrollerconfig_v1beta1.json
     kind: k0scontrollerconfig
     name: k0scontrollerconfig_v1beta1
+  - apiVersion: bootstrap.cluster.x-k8s.io/v1beta2
+    filename: bootstrap.cluster.x-k8s.io/nodeadmconfig_v1beta2.json
+    kind: NodeadmConfig
+    name: nodeadmconfig_v1beta2
+  - apiVersion: bootstrap.cluster.x-k8s.io/v1beta2
+    filename: bootstrap.cluster.x-k8s.io/nodeadmconfigtemplate_v1beta2.json
+    kind: NodeadmConfigTemplate
+    name: nodeadmconfigtemplate_v1beta2
 cache.azure.com:
   - apiVersion: cache.azure.com/v1api20210301
     filename: cache.azure.com/redisenterprisedatabase_v1api20210301.json
@@ -3707,6 +3715,10 @@ controlplane.cluster.x-k8s.io:
     filename: controlplane.cluster.x-k8s.io/kubeadmcontrolplanetemplate_v1beta2.json
     kind: KubeadmControlPlaneTemplate
     name: kubeadmcontrolplanetemplate_v1beta2
+  - apiVersion: controlplane.cluster.x-k8s.io/v1beta2
+    filename: controlplane.cluster.x-k8s.io/awsmanagedcontrolplanetemplate_v1beta2.json
+    kind: AWSManagedControlPlaneTemplate
+    name: awsmanagedcontrolplanetemplate_v1beta2
 core.cnrm.cloud.google.com:
   - apiVersion: core.cnrm.cloud.google.com/v1beta1
     filename: core.cnrm.cloud.google.com/configconnector_v1beta1.json
@@ -8489,6 +8501,18 @@ infrastructure.cluster.x-k8s.io:
     filename: infrastructure.cluster.x-k8s.io/hcloudmachine_v1beta1.json
     kind: HCloudMachine
     name: hcloudmachine_v1beta1
+  - apiVersion: infrastructure.cluster.x-k8s.io/v1beta2
+    filename: infrastructure.cluster.x-k8s.io/rosanetwork_v1beta2.json
+    kind: ROSANetwork
+    name: rosanetwork_v1beta2
+  - apiVersion: infrastructure.cluster.x-k8s.io/v1beta2
+    filename: infrastructure.cluster.x-k8s.io/rosaroleconfig_v1beta2.json
+    kind: ROSARoleConfig
+    name: rosaroleconfig_v1beta2
+  - apiVersion: infrastructure.cluster.x-k8s.io/v1beta2
+    filename: infrastructure.cluster.x-k8s.io/awsmanagedclustertemplate_v1beta2.json
+    kind: AWSManagedClusterTemplate
+    name: awsmanagedclustertemplate_v1beta2
 ingress.oraclecloud.com:
   - apiVersion: ingress.oraclecloud.com/v1beta1
     filename: ingress.oraclecloud.com/ingressclassparameters_v1beta1.json
