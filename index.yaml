@@ -1583,6 +1583,10 @@ autoscaling.k8s.io:
     filename: autoscaling.k8s.io/verticalpodautoscalercheckpoint_v1.json
     kind: VerticalPodAutoscalerCheckpoint
     name: verticalpodautoscalercheckpoint_v1
+  - apiVersion: autoscaling.k8s.io/v1beta1
+    filename: autoscaling.k8s.io/verticalpodautoscaler_v1beta1.json
+    kind: verticalpodautoscaler
+    name: verticalpodautoscaler_v1beta1
 aws.m.upbound.io:
   - apiVersion: aws.m.upbound.io/v1beta1
     filename: aws.m.upbound.io/providerconfigusage_v1beta1.json
@@ -12527,6 +12531,11 @@ platform.confluent.io:
     filename: platform.confluent.io/referencegrant_v1beta1.json
     kind: ReferenceGrant
     name: referencegrant_v1beta1
+poc.autoscaling.k8s.io:
+  - apiVersion: poc.autoscaling.k8s.io/v1alpha1
+    filename: poc.autoscaling.k8s.io/verticalpodautoscaler_v1alpha1.json
+    kind: verticalpodautoscaler
+    name: verticalpodautoscaler_v1alpha1
 policies.kyverno.io:
   - apiVersion: policies.kyverno.io/v1
     filename: policies.kyverno.io/mutatingpolicy_v1.json
