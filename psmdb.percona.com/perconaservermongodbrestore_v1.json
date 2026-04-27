@@ -115,6 +115,75 @@
               "format": "date-time",
               "type": "string"
             },
+            "minio": {
+              "properties": {
+                "bucket": {
+                  "type": "string"
+                },
+                "caBundle": {
+                  "properties": {
+                    "key": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "default": "",
+                      "type": "string"
+                    },
+                    "optional": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "key"
+                  ],
+                  "type": "object",
+                  "x-kubernetes-map-type": "atomic",
+                  "additionalProperties": false
+                },
+                "credentialsSecret": {
+                  "type": "string"
+                },
+                "debugTrace": {
+                  "type": "boolean"
+                },
+                "endpointUrl": {
+                  "type": "string"
+                },
+                "forcePathStyle": {
+                  "type": "boolean"
+                },
+                "insecureSkipTLSVerify": {
+                  "type": "boolean"
+                },
+                "partSize": {
+                  "format": "int64",
+                  "type": "integer"
+                },
+                "prefix": {
+                  "type": "string"
+                },
+                "region": {
+                  "type": "string"
+                },
+                "retryer": {
+                  "properties": {
+                    "numMaxRetries": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "numMaxRetries"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "secure": {
+                  "type": "boolean"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
             "pbmName": {
               "type": "string"
             },
@@ -254,8 +323,11 @@
           ],
           "additionalProperties": false
         },
-        "replset": {
-          "type": "string"
+        "replsetRemapping": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
         },
         "selective": {
           "properties": {
