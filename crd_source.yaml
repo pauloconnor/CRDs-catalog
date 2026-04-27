@@ -328,7 +328,7 @@ sources:
   # Elastic Cloud on Kubernetes (ECK)
   # ---------------------------------------------------------------------------
   - url: "https://github.com/elastic/cloud-on-k8s"
-    tag: ""
+    tag: "v3.3.2"
     repo_path: "config/crds/v1"
     changelog: "https://github.com/elastic/cloud-on-k8s/releases"
 
