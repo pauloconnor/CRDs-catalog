@@ -976,7 +976,7 @@ sources:
     changelog: "https://github.com/senthilrch/kube-fledged/releases"
 
   - url: "https://github.com/kubeflow/training-operator"
-    tag: ""
+    tag: "v2.2.0"
     repo_path: "manifests/base/crds"
     changelog: "https://github.com/kubeflow/training-operator/releases"
 
