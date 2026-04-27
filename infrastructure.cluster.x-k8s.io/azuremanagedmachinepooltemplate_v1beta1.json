@@ -43,7 +43,7 @@
                   "type": "array"
                 },
                 "enableEncryptionAtHost": {
-                  "description": "EnableEncryptionAtHost indicates whether host encryption is enabled on the node pool.\nImmutable.\nSee also [AKS doc].\n\n\n[AKS doc]: https://learn.microsoft.com/en-us/azure/aks/enable-host-encryption",
+                  "description": "EnableEncryptionAtHost indicates whether host encryption is enabled on the node pool.\nImmutable.\nSee also [AKS doc].\n\n[AKS doc]: https://learn.microsoft.com/en-us/azure/aks/enable-host-encryption",
                   "type": "boolean"
                 },
                 "enableFIPS": {
@@ -129,7 +129,7 @@
                   "additionalProperties": false
                 },
                 "kubeletDiskType": {
-                  "description": "KubeletDiskType specifies the kubelet disk type. Default to OS. Possible values include: 'OS', 'Temporary'.\nRequires Microsoft.ContainerService/KubeletDisk preview feature to be set.\nImmutable.\nSee also [AKS doc].\n\n\n[AKS doc]: https://learn.microsoft.com/rest/api/aks/agent-pools/create-or-update?tabs=HTTP#kubeletdisktype",
+                  "description": "KubeletDiskType specifies the kubelet disk type. Default to OS. Possible values include: 'OS', 'Temporary'.\nRequires Microsoft.ContainerService/KubeletDisk preview feature to be set.\nImmutable.\nSee also [AKS doc].\n\n[AKS doc]: https://learn.microsoft.com/rest/api/aks/agent-pools/create-or-update?tabs=HTTP#kubeletdisktype",
                   "enum": [
                     "OS",
                     "Temporary"
@@ -140,7 +140,7 @@
                   "description": "LinuxOSConfig specifies the custom Linux OS settings and configurations.\nImmutable.",
                   "properties": {
                     "swapFileSizeMB": {
-                      "description": "SwapFileSizeMB specifies size in MB of a swap file will be created on the agent nodes from this node pool.\nMax value of SwapFileSizeMB should be the size of temporary disk(/dev/sdb).\nMust be at least 1.\nSee also [AKS doc].\n\n\n[AKS doc]: https://learn.microsoft.com/azure/virtual-machines/managed-disks-overview#temporary-disk",
+                      "description": "SwapFileSizeMB specifies size in MB of a swap file will be created on the agent nodes from this node pool.\nMax value of SwapFileSizeMB should be the size of temporary disk(/dev/sdb).\nMust be at least 1.\nSee also [AKS doc].\n\n[AKS doc]: https://learn.microsoft.com/azure/virtual-machines/managed-disks-overview#temporary-disk",
                       "minimum": 1,
                       "type": "integer"
                     },
@@ -316,7 +316,7 @@
                       "additionalProperties": false
                     },
                     "transparentHugePageDefrag": {
-                      "description": "TransparentHugePageDefrag specifies whether the kernel should make aggressive use of memory compaction to make more hugepages available.\nSee also [Linux doc].\n\n\n[Linux doc]: https://www.kernel.org/doc/html/latest/admin-guide/mm/transhuge.html#admin-guide-transhuge for more details.",
+                      "description": "TransparentHugePageDefrag specifies whether the kernel should make aggressive use of memory compaction to make more hugepages available.\nSee also [Linux doc].\n\n[Linux doc]: https://www.kernel.org/doc/html/latest/admin-guide/mm/transhuge.html#admin-guide-transhuge for more details.",
                       "enum": [
                         "always",
                         "defer",
@@ -327,7 +327,7 @@
                       "type": "string"
                     },
                     "transparentHugePageEnabled": {
-                      "description": "TransparentHugePageEnabled specifies various modes of Transparent Hugepages.\nSee also [Linux doc].\n\n\n[Linux doc]: https://www.kernel.org/doc/html/latest/admin-guide/mm/transhuge.html#admin-guide-transhuge for more details.",
+                      "description": "TransparentHugePageEnabled specifies various modes of Transparent Hugepages.\nSee also [Linux doc].\n\n[Linux doc]: https://www.kernel.org/doc/html/latest/admin-guide/mm/transhuge.html#admin-guide-transhuge for more details.",
                       "enum": [
                         "always",
                         "madvise",
@@ -340,7 +340,7 @@
                   "additionalProperties": false
                 },
                 "maxPods": {
-                  "description": "MaxPods specifies the kubelet `--max-pods` configuration for the node pool.\nImmutable.\nSee also [AKS doc], [K8s doc].\n\n\n[AKS doc]: https://learn.microsoft.com/azure/aks/configure-azure-cni#configure-maximum---new-clusters\n[K8s doc]: https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet/",
+                  "description": "MaxPods specifies the kubelet `--max-pods` configuration for the node pool.\nImmutable.\nSee also [AKS doc], [K8s doc].\n\n[AKS doc]: https://learn.microsoft.com/azure/aks/configure-azure-cni#configure-maximum---new-clusters\n[K8s doc]: https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet/",
                   "type": "integer"
                 },
                 "mode": {
@@ -359,7 +359,7 @@
                   "additionalProperties": {
                     "type": "string"
                   },
-                  "description": "Node labels represent the labels for all of the nodes present in node pool.\nSee also [AKS doc].\n\n\n[AKS doc]: https://learn.microsoft.com/azure/aks/use-labels",
+                  "description": "Node labels represent the labels for all of the nodes present in node pool.\nSee also [AKS doc].\n\n[AKS doc]: https://learn.microsoft.com/azure/aks/use-labels",
                   "type": "object"
                 },
                 "nodePublicIPPrefixID": {
@@ -372,7 +372,7 @@
                 },
                 "osDiskType": {
                   "default": "Managed",
-                  "description": "OsDiskType specifies the OS disk type for each node in the pool. Allowed values are 'Ephemeral' and 'Managed' (default).\nImmutable.\nSee also [AKS doc].\n\n\n[AKS doc]: https://learn.microsoft.com/azure/aks/cluster-configuration#ephemeral-os",
+                  "description": "OsDiskType specifies the OS disk type for each node in the pool. Allowed values are 'Ephemeral' and 'Managed' (default).\nImmutable.\nSee also [AKS doc].\n\n[AKS doc]: https://learn.microsoft.com/azure/aks/cluster-configuration#ephemeral-os",
                   "enum": [
                     "Ephemeral",
                     "Managed"
@@ -380,7 +380,8 @@
                   "type": "string"
                 },
                 "osType": {
-                  "description": "OSType specifies the virtual machine operating system. Default to Linux. Possible values include: 'Linux', 'Windows'.\n'Windows' requires the AzureManagedControlPlane's `spec.networkPlugin` to be `azure`.\nImmutable.\nSee also [AKS doc].\n\n\n[AKS doc]: https://learn.microsoft.com/rest/api/aks/agent-pools/create-or-update?tabs=HTTP#ostype",
+                  "default": "Linux",
+                  "description": "OSType specifies the virtual machine operating system. Default to Linux. Possible values include: 'Linux', 'Windows'.\n'Windows' requires the AzureManagedControlPlane's `spec.networkPlugin` to be `azure`.\nImmutable.\nSee also [AKS doc].\n\n[AKS doc]: https://learn.microsoft.com/rest/api/aks/agent-pools/create-or-update?tabs=HTTP#ostype",
                   "enum": [
                     "Linux",
                     "Windows"
@@ -441,7 +442,7 @@
                   "type": "string"
                 },
                 "taints": {
-                  "description": "Taints specifies the taints for nodes present in this agent pool.\nSee also [AKS doc].\n\n\n[AKS doc]: https://learn.microsoft.com/azure/aks/use-multiple-node-pools#setting-node-pool-taints",
+                  "description": "Taints specifies the taints for nodes present in this agent pool.\nSee also [AKS doc].\n\n[AKS doc]: https://learn.microsoft.com/azure/aks/use-multiple-node-pools#setting-node-pool-taints",
                   "items": {
                     "description": "Taint represents a Kubernetes taint.",
                     "properties": {

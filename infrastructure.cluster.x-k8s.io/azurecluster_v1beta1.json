@@ -23,7 +23,7 @@
           "type": "object"
         },
         "azureEnvironment": {
-          "description": "AzureEnvironment is the name of the AzureCloud to be used.\nThe default value that would be used by most users is \"AzurePublicCloud\", other values are:\n- ChinaCloud: \"AzureChinaCloud\"\n- GermanCloud: \"AzureGermanCloud\"\n- PublicCloud: \"AzurePublicCloud\"\n- USGovernmentCloud: \"AzureUSGovernmentCloud\"\n\n\nNote that values other than the default must also be accompanied by corresponding changes to the\naso-controller-settings Secret to configure ASO to refer to the non-Public cloud. ASO currently does\nnot support referring to multiple different clouds in a single installation. The following fields must\nbe defined in the Secret:\n- AZURE_AUTHORITY_HOST\n- AZURE_RESOURCE_MANAGER_ENDPOINT\n- AZURE_RESOURCE_MANAGER_AUDIENCE\n\n\nSee the [ASO docs] for more details.\n\n\n[ASO docs]: https://azure.github.io/azure-service-operator/guide/aso-controller-settings-options/",
+          "description": "AzureEnvironment is the name of the AzureCloud to be used.\nThe default value that would be used by most users is \"AzurePublicCloud\", other values are:\n- ChinaCloud: \"AzureChinaCloud\"\n- GermanCloud: \"AzureGermanCloud\"\n- PublicCloud: \"AzurePublicCloud\"\n- USGovernmentCloud: \"AzureUSGovernmentCloud\"\n\nNote that values other than the default must also be accompanied by corresponding changes to the\naso-controller-settings Secret to configure ASO to refer to the non-Public cloud. ASO currently does\nnot support referring to multiple different clouds in a single installation. The following fields must\nbe defined in the Secret:\n- AZURE_AUTHORITY_HOST\n- AZURE_RESOURCE_MANAGER_ENDPOINT\n- AZURE_RESOURCE_MANAGER_AUDIENCE\n\nSee the [ASO docs] for more details.\n\n[ASO docs]: https://azure.github.io/azure-service-operator/guide/aso-controller-settings-options/",
           "type": "string"
         },
         "bastionSpec": {
@@ -152,6 +152,13 @@
                         },
                         "name": {
                           "type": "string"
+                        },
+                        "zones": {
+                          "description": "Zones mentions the list of zones the NAT gateway should be a part of.",
+                          "items": {
+                            "type": "string"
+                          },
+                          "type": "array"
                         }
                       },
                       "required": [
@@ -245,7 +252,7 @@
                         "node",
                         "control-plane",
                         "bastion",
-                        "all"
+                        "cluster"
                       ],
                       "type": "string"
                     },
@@ -539,23 +546,25 @@
           "type": "object",
           "additionalProperties": false
         },
+        "controlPlaneEnabled": {
+          "default": true,
+          "description": "ControlPlaneEnabled enables control plane components in the cluster.",
+          "type": "boolean"
+        },
         "controlPlaneEndpoint": {
           "description": "ControlPlaneEndpoint represents the endpoint used to communicate with the control plane. It is not recommended to set\nthis when creating an AzureCluster as CAPZ will set this for you. However, if it is set, CAPZ will not change it.",
           "properties": {
             "host": {
-              "description": "The hostname on which the API server is serving.",
+              "description": "host is the hostname on which the API server is serving.",
+              "maxLength": 512,
               "type": "string"
             },
             "port": {
-              "description": "The port on which the API server is serving.",
+              "description": "port is the port on which the API server is serving.",
               "format": "int32",
               "type": "integer"
             }
           },
-          "required": [
-            "host",
-            "port"
-          ],
           "type": "object",
           "additionalProperties": false
         },
@@ -589,11 +598,11 @@
                 "additionalProperties": {
                   "type": "string"
                 },
-                "description": "Attributes is a free form map of attributes an infrastructure provider might use or require.",
+                "description": "attributes is a free form map of attributes an infrastructure provider might use or require.",
                 "type": "object"
               },
               "controlPlane": {
-                "description": "ControlPlane determines if this failure domain is suitable for use by control plane machines.",
+                "description": "controlPlane determines if this failure domain is suitable for use by control plane machines.",
                 "type": "boolean"
               }
             },
@@ -611,7 +620,7 @@
               "type": "string"
             },
             "fieldPath": {
-              "description": "If referring to a piece of an object instead of an entire object, this string\nshould contain a valid JSON/Go field access statement, such as desiredState.manifest.containers[2].\nFor example, if the object reference is to a container within a pod, this would take on a value like:\n\"spec.containers{name}\" (where \"name\" refers to the name of the container that triggered\nthe event) or if no container name is specified \"spec.containers[2]\" (container with\nindex 2 in this pod). This syntax is chosen only to have some well-defined way of\nreferencing a part of an object.\nTODO: this design is not final and this field is subject to change in the future.",
+              "description": "If referring to a piece of an object instead of an entire object, this string\nshould contain a valid JSON/Go field access statement, such as desiredState.manifest.containers[2].\nFor example, if the object reference is to a container within a pod, this would take on a value like:\n\"spec.containers{name}\" (where \"name\" refers to the name of the container that triggered\nthe event) or if no container name is specified \"spec.containers[2]\" (container with\nindex 2 in this pod). This syntax is chosen only to have some well-defined way of\nreferencing a part of an object.",
               "type": "string"
             },
             "kind": {
@@ -645,6 +654,30 @@
         "networkSpec": {
           "description": "NetworkSpec encapsulates all things related to Azure network.",
           "properties": {
+            "additionalAPIServerLBPorts": {
+              "description": "AdditionalAPIServerLBPorts specifies extra inbound ports for the APIServer load balancer.\nEach port specified (e.g., 9345) creates an inbound rule where the frontend port and the backend port are the same.",
+              "items": {
+                "description": "LoadBalancerPort specifies additional port for the API server load balancer.",
+                "properties": {
+                  "name": {
+                    "description": "Name for the additional port within LB definition",
+                    "type": "string"
+                  },
+                  "port": {
+                    "description": "Port for the LB definition",
+                    "format": "int32",
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "name",
+                  "port"
+                ],
+                "type": "object",
+                "additionalProperties": false
+              },
+              "type": "array"
+            },
             "apiServerLB": {
               "description": "APIServerLB is the configuration for the control-plane load balancer.",
               "properties": {
@@ -948,8 +981,20 @@
               "type": "object",
               "additionalProperties": false
             },
+            "privateDNSZone": {
+              "description": "PrivateDNSZone enables private dns zone creation modes for a private cluster.\nWhen unspecified, it defaults to PrivateDNSZoneModeSystem which creates a private DNS zone.",
+              "enum": [
+                "System",
+                "None"
+              ],
+              "type": "string"
+            },
             "privateDNSZoneName": {
               "description": "PrivateDNSZoneName defines the zone name for the Azure Private DNS.",
+              "type": "string"
+            },
+            "privateDNSZoneResourceGroup": {
+              "description": "PrivateDNSZoneResourceGroup defines the resource group to be used for Azure Private DNS Zone.\nIf not specified, the resource group of the cluster will be used to create the Azure Private DNS Zone.",
               "type": "string"
             },
             "subnets": {
@@ -1019,6 +1064,13 @@
                       },
                       "name": {
                         "type": "string"
+                      },
+                      "zones": {
+                        "description": "Zones mentions the list of zones the NAT gateway should be a part of.",
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
                       }
                     },
                     "required": [
@@ -1112,7 +1164,7 @@
                       "node",
                       "control-plane",
                       "bastion",
-                      "all"
+                      "cluster"
                     ],
                     "type": "string"
                   },
@@ -1413,28 +1465,35 @@
             "description": "Condition defines an observation of a Cluster API resource operational state.",
             "properties": {
               "lastTransitionTime": {
-                "description": "Last time the condition transitioned from one status to another.\nThis should be when the underlying condition changed. If that is not known, then using the time when\nthe API field changed is acceptable.",
+                "description": "lastTransitionTime is the last time the condition transitioned from one status to another.\nThis should be when the underlying condition changed. If that is not known, then using the time when\nthe API field changed is acceptable.",
                 "format": "date-time",
                 "type": "string"
               },
               "message": {
-                "description": "A human readable message indicating details about the transition.\nThis field may be empty.",
+                "description": "message is a human readable message indicating details about the transition.\nThis field may be empty.",
+                "maxLength": 10240,
+                "minLength": 1,
                 "type": "string"
               },
               "reason": {
-                "description": "The reason for the condition's last transition in CamelCase.\nThe specific API may choose whether or not this field is considered a guaranteed API.\nThis field may not be empty.",
+                "description": "reason is the reason for the condition's last transition in CamelCase.\nThe specific API may choose whether or not this field is considered a guaranteed API.\nThis field may be empty.",
+                "maxLength": 256,
+                "minLength": 1,
                 "type": "string"
               },
               "severity": {
-                "description": "Severity provides an explicit classification of Reason code, so the users or machines can immediately\nunderstand the current situation and act accordingly.\nThe Severity field MUST be set only when Status=False.",
+                "description": "severity provides an explicit classification of Reason code, so the users or machines can immediately\nunderstand the current situation and act accordingly.\nThe Severity field MUST be set only when Status=False.",
+                "maxLength": 32,
                 "type": "string"
               },
               "status": {
-                "description": "Status of the condition, one of True, False, Unknown.",
+                "description": "status of the condition, one of True, False, Unknown.",
                 "type": "string"
               },
               "type": {
-                "description": "Type of condition in CamelCase or in foo.example.com/CamelCase.\nMany .condition.type values are consistent across resources like Available, but because arbitrary conditions\ncan be useful (see .node.status.conditions), the ability to deconflict is important.",
+                "description": "type of condition in CamelCase or in foo.example.com/CamelCase.\nMany .condition.type values are consistent across resources like Available, but because arbitrary conditions\ncan be useful (see .node.status.conditions), the ability to deconflict is important.",
+                "maxLength": 256,
+                "minLength": 1,
                 "type": "string"
               }
             },
@@ -1456,11 +1515,11 @@
                 "additionalProperties": {
                   "type": "string"
                 },
-                "description": "Attributes is a free form map of attributes an infrastructure provider might use or require.",
+                "description": "attributes is a free form map of attributes an infrastructure provider might use or require.",
                 "type": "object"
               },
               "controlPlane": {
-                "description": "ControlPlane determines if this failure domain is suitable for use by control plane machines.",
+                "description": "controlPlane determines if this failure domain is suitable for use by control plane machines.",
                 "type": "boolean"
               }
             },

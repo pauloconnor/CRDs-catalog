@@ -135,6 +135,7 @@
                   "description": "AutoscalerProfile is the parameters to be applied to the cluster-autoscaler when enabled",
                   "properties": {
                     "balanceSimilarNodeGroups": {
+                      "default": "false",
                       "description": "BalanceSimilarNodeGroups - Valid values are 'true' and 'false'. The default is false.",
                       "enum": [
                         "true",
@@ -143,6 +144,7 @@
                       "type": "string"
                     },
                     "expander": {
+                      "default": "random",
                       "description": "Expander - If not specified, the default is 'random'. See [expanders](https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/FAQ.md#what-are-expanders) for more information.",
                       "enum": [
                         "least-waste",
@@ -153,20 +155,24 @@
                       "type": "string"
                     },
                     "maxEmptyBulkDelete": {
+                      "default": "10",
                       "description": "MaxEmptyBulkDelete - The default is 10.",
                       "type": "string"
                     },
                     "maxGracefulTerminationSec": {
+                      "default": "600",
                       "description": "MaxGracefulTerminationSec - The default is 600.",
                       "pattern": "^(\\d+)$",
                       "type": "string"
                     },
                     "maxNodeProvisionTime": {
+                      "default": "15m",
                       "description": "MaxNodeProvisionTime - The default is '15m'. Values must be an integer followed by an 'm'. No unit of time other than minutes (m) is supported.",
                       "pattern": "^(\\d+)m$",
                       "type": "string"
                     },
                     "maxTotalUnreadyPercentage": {
+                      "default": "45",
                       "description": "MaxTotalUnreadyPercentage - The default is 45. The maximum is 100 and the minimum is 0.",
                       "maxLength": 3,
                       "minLength": 1,
@@ -174,49 +180,59 @@
                       "type": "string"
                     },
                     "newPodScaleUpDelay": {
+                      "default": "0s",
                       "description": "NewPodScaleUpDelay - For scenarios like burst/batch scale where you don't want CA to act before the kubernetes scheduler could schedule all the pods, you can tell CA to ignore unscheduled pods before they're a certain age. The default is '0s'. Values must be an integer followed by a unit ('s' for seconds, 'm' for minutes, 'h' for hours, etc).",
                       "type": "string"
                     },
                     "okTotalUnreadyCount": {
+                      "default": "3",
                       "description": "OkTotalUnreadyCount - This must be an integer. The default is 3.",
                       "pattern": "^(\\d+)$",
                       "type": "string"
                     },
                     "scaleDownDelayAfterAdd": {
+                      "default": "10m",
                       "description": "ScaleDownDelayAfterAdd - The default is '10m'. Values must be an integer followed by an 'm'. No unit of time other than minutes (m) is supported.",
                       "pattern": "^(\\d+)m$",
                       "type": "string"
                     },
                     "scaleDownDelayAfterDelete": {
+                      "default": "10s",
                       "description": "ScaleDownDelayAfterDelete - The default is the scan-interval. Values must be an integer followed by an 's'. No unit of time other than seconds (s) is supported.",
                       "pattern": "^(\\d+)s$",
                       "type": "string"
                     },
                     "scaleDownDelayAfterFailure": {
+                      "default": "3m",
                       "description": "ScaleDownDelayAfterFailure - The default is '3m'. Values must be an integer followed by an 'm'. No unit of time other than minutes (m) is supported.",
                       "pattern": "^(\\d+)m$",
                       "type": "string"
                     },
                     "scaleDownUnneededTime": {
+                      "default": "10m",
                       "description": "ScaleDownUnneededTime - The default is '10m'. Values must be an integer followed by an 'm'. No unit of time other than minutes (m) is supported.",
                       "pattern": "^(\\d+)m$",
                       "type": "string"
                     },
                     "scaleDownUnreadyTime": {
+                      "default": "20m",
                       "description": "ScaleDownUnreadyTime - The default is '20m'. Values must be an integer followed by an 'm'. No unit of time other than minutes (m) is supported.",
                       "pattern": "^(\\d+)m$",
                       "type": "string"
                     },
                     "scaleDownUtilizationThreshold": {
+                      "default": "0.5",
                       "description": "ScaleDownUtilizationThreshold - The default is '0.5'.",
                       "type": "string"
                     },
                     "scanInterval": {
+                      "default": "10s",
                       "description": "ScanInterval - How often cluster is reevaluated for scale up or down. The default is '10s'.",
                       "pattern": "^(\\d+)s$",
                       "type": "string"
                     },
                     "skipNodesWithLocalStorage": {
+                      "default": "false",
                       "description": "SkipNodesWithLocalStorage - The default is false.",
                       "enum": [
                         "true",
@@ -225,6 +241,7 @@
                       "type": "string"
                     },
                     "skipNodesWithSystemPods": {
+                      "default": "true",
                       "description": "SkipNodesWithSystemPods - The default is true.",
                       "enum": [
                         "true",
@@ -237,7 +254,7 @@
                   "additionalProperties": false
                 },
                 "azureEnvironment": {
-                  "description": "AzureEnvironment is the name of the AzureCloud to be used.\nThe default value that would be used by most users is \"AzurePublicCloud\", other values are:\n- ChinaCloud: \"AzureChinaCloud\"\n- PublicCloud: \"AzurePublicCloud\"\n- USGovernmentCloud: \"AzureUSGovernmentCloud\"\n\n\nNote that values other than the default must also be accompanied by corresponding changes to the\naso-controller-settings Secret to configure ASO to refer to the non-Public cloud. ASO currently does\nnot support referring to multiple different clouds in a single installation. The following fields must\nbe defined in the Secret:\n- AZURE_AUTHORITY_HOST\n- AZURE_RESOURCE_MANAGER_ENDPOINT\n- AZURE_RESOURCE_MANAGER_AUDIENCE\n\n\nSee the [ASO docs] for more details.\n\n\n[ASO docs]: https://azure.github.io/azure-service-operator/guide/aso-controller-settings-options/",
+                  "description": "AzureEnvironment is the name of the AzureCloud to be used.\nThe default value that would be used by most users is \"AzurePublicCloud\", other values are:\n- ChinaCloud: \"AzureChinaCloud\"\n- PublicCloud: \"AzurePublicCloud\"\n- USGovernmentCloud: \"AzureUSGovernmentCloud\"\n\nNote that values other than the default must also be accompanied by corresponding changes to the\naso-controller-settings Secret to configure ASO to refer to the non-Public cloud. ASO currently does\nnot support referring to multiple different clouds in a single installation. The following fields must\nbe defined in the Secret:\n- AZURE_AUTHORITY_HOST\n- AZURE_RESOURCE_MANAGER_ENDPOINT\n- AZURE_RESOURCE_MANAGER_AUDIENCE\n\nSee the [ASO docs] for more details.\n\n[ASO docs]: https://azure.github.io/azure-service-operator/guide/aso-controller-settings-options/",
                   "type": "string"
                 },
                 "disableLocalAccounts": {
@@ -249,13 +266,14 @@
                   "type": "string"
                 },
                 "enablePreviewFeatures": {
+                  "default": false,
                   "description": "EnablePreviewFeatures enables preview features for the cluster.",
                   "type": "boolean"
                 },
                 "extensions": {
                   "description": "Extensions is a list of AKS extensions to be installed on the cluster.",
                   "items": {
-                    "description": "AKSExtension represents the configuration for an AKS cluster extension.\nSee also [AKS doc].\n\n\n[AKS doc]: https://learn.microsoft.com/en-us/azure/aks/cluster-extensions",
+                    "description": "AKSExtension represents the configuration for an AKS cluster extension.\nSee also [AKS doc].\n\n[AKS doc]: https://learn.microsoft.com/en-us/azure/aks/cluster-extensions",
                     "properties": {
                       "aksAssignedIdentityType": {
                         "description": "AKSAssignedIdentityType is the type of the AKS assigned identity.",
@@ -364,9 +382,10 @@
                   "type": "array"
                 },
                 "fleetsMember": {
-                  "description": "FleetsMember is the spec for the fleet this cluster is a member of.\nSee also [AKS doc].\n\n\n[AKS doc]: https://learn.microsoft.com/en-us/azure/templates/microsoft.containerservice/2023-03-15-preview/fleets/members",
+                  "description": "FleetsMember is the spec for the fleet this cluster is a member of.\nSee also [AKS doc].\n\n[AKS doc]: https://learn.microsoft.com/en-us/azure/templates/microsoft.containerservice/2023-03-15-preview/fleets/members",
                   "properties": {
                     "group": {
+                      "default": "default",
                       "description": "Group is the group this member belongs to for multi-cluster update management.",
                       "type": "string"
                     },
@@ -416,6 +435,7 @@
                   "description": "Identity configuration used by the AKS control plane.",
                   "properties": {
                     "type": {
+                      "default": "SystemAssigned",
                       "description": "Type - The Identity type to use.",
                       "enum": [
                         "SystemAssigned",
@@ -439,7 +459,7 @@
                       "type": "string"
                     },
                     "fieldPath": {
-                      "description": "If referring to a piece of an object instead of an entire object, this string\nshould contain a valid JSON/Go field access statement, such as desiredState.manifest.containers[2].\nFor example, if the object reference is to a container within a pod, this would take on a value like:\n\"spec.containers{name}\" (where \"name\" refers to the name of the container that triggered\nthe event) or if no container name is specified \"spec.containers[2]\" (container with\nindex 2 in this pod). This syntax is chosen only to have some well-defined way of\nreferencing a part of an object.\nTODO: this design is not final and this field is subject to change in the future.",
+                      "description": "If referring to a piece of an object instead of an entire object, this string\nshould contain a valid JSON/Go field access statement, such as desiredState.manifest.containers[2].\nFor example, if the object reference is to a container within a pod, this would take on a value like:\n\"spec.containers{name}\" (where \"name\" refers to the name of the container that triggered\nthe event) or if no container name is specified \"spec.containers[2]\" (container with\nindex 2 in this pod). This syntax is chosen only to have some well-defined way of\nreferencing a part of an object.",
                       "type": "string"
                     },
                     "kind": {
@@ -530,6 +550,7 @@
                   "type": "string"
                 },
                 "networkPlugin": {
+                  "default": "azure",
                   "description": "NetworkPlugin used for building Kubernetes network.",
                   "enum": [
                     "azure",
@@ -558,6 +579,7 @@
                   "description": "OIDCIssuerProfile is the OIDC issuer profile of the Managed Cluster.",
                   "properties": {
                     "enabled": {
+                      "default": false,
                       "description": "Enabled is whether the OIDC issuer is enabled.",
                       "type": "boolean"
                     }
@@ -681,6 +703,7 @@
                   "description": "SKU is the SKU of the AKS to be provisioned.",
                   "properties": {
                     "tier": {
+                      "default": "Free",
                       "description": "Tier - Tier of an AKS cluster.",
                       "enum": [
                         "Free",
@@ -709,6 +732,7 @@
                   "description": "VirtualNetwork describes the virtual network for the AKS cluster. It will be created if it does not already exist.",
                   "properties": {
                     "cidrBlock": {
+                      "default": "10.0.0.0/8",
                       "type": "string"
                     },
                     "name": {
@@ -723,6 +747,7 @@
                       "description": "ManagedControlPlaneSubnet describes a subnet for an AKS cluster.",
                       "properties": {
                         "cidrBlock": {
+                          "default": "10.240.0.0/16",
                           "type": "string"
                         },
                         "name": {
