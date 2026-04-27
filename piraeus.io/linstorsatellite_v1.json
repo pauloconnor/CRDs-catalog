@@ -87,6 +87,23 @@
           ],
           "type": "string"
         },
+        "evacuationStrategy": {
+          "description": "EvacuationStrategy configures the evacuation of volumes from a Satellite when DeletionPolicy \"Evacuate\" is used.",
+          "properties": {
+            "attachedVolumeReattachTimeout": {
+              "default": "5m",
+              "description": "AttachedVolumeReattachTimeout configures how long evacuation waits for attached volumes to reattach on\ndifferent nodes. Setting this to 0 disable this evacuation step.",
+              "type": "string"
+            },
+            "unattachedVolumeAttachTimeout": {
+              "default": "5m",
+              "description": "UnattachedVolumeAttachTimeout configures how long evacuation waits for unattached volumes to attach on\ndifferent nodes. Setting this to 0 disable this evacuation step.",
+              "type": "string"
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
         "internalTLS": {
           "description": "InternalTLS configures secure communication for the LINSTOR Satellite.\n\nIf set, the control traffic between LINSTOR Controller and Satellite will be encrypted using mTLS.\nThe Controller will use the client key from `LinstorCluster.spec.internalTLS` when connecting.",
           "nullable": true,
@@ -175,11 +192,19 @@
             "description": "Patch represent either a Strategic Merge Patch or a JSON patch and its targets.",
             "properties": {
               "options": {
-                "additionalProperties": {
-                  "type": "boolean"
-                },
                 "description": "Options is a list of options for the patch",
-                "type": "object"
+                "properties": {
+                  "allowKindChange": {
+                    "description": "AllowKindChange allows kind changes to the resource.",
+                    "type": "boolean"
+                  },
+                  "allowNameChange": {
+                    "description": "AllowNameChange allows name changes to the resource.",
+                    "type": "boolean"
+                  }
+                },
+                "type": "object",
+                "additionalProperties": false
               },
               "patch": {
                 "description": "Patch is the content of a patch.",
@@ -487,6 +512,15 @@
     "status": {
       "description": "LinstorSatelliteStatus defines the observed state of LinstorSatellite",
       "properties": {
+        "availableCapacityBytes": {
+          "description": "The number of bytes in total in all storage pools on this Satellite.",
+          "format": "int64",
+          "type": "integer"
+        },
+        "capacity": {
+          "description": "Capacity mirrors the information from TotalCapacityBytes and FreeCapacityBytes in a human-readable string.",
+          "type": "string"
+        },
         "conditions": {
           "description": "Current LINSTOR Satellite state",
           "items": {
@@ -546,6 +580,35 @@
             "type"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "deviceLayers": {
+          "description": "DeviceLayers lists the device layers (LUKS, CACHE, etc...) this Satellite supports.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "freeCapacityBytes": {
+          "description": "The number of bytes free in all storage pools on this Satellite.",
+          "format": "int64",
+          "type": "integer"
+        },
+        "numberOfSnapshots": {
+          "description": "The number of snapshots on this Satellite.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "numberOfVolumes": {
+          "description": "The number of volumes on this Satellite.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "storageProviders": {
+          "description": "StorageProviders lists the storage providers (LVM, ZFS, etc...) this Satellite supports.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object",
