@@ -1324,3 +1324,118 @@ sources:
     tag: ""
     repo_path: "config/crd/bases"
     changelog: "https://github.com/tuppercloud/tuppr/releases"
+
+  # ---------------------------------------------------------------------------
+  # Added from GitHub issues
+  # ---------------------------------------------------------------------------
+
+  # Issue #851 - app.terraform.io CRDs
+  - url: "https://github.com/hashicorp/terraform-cloud-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/hashicorp/terraform-cloud-operator/releases"
+
+  # Issue #713 - openstack.k-orc.cloud CRDs
+  - url: "https://github.com/k-orc/openstack-resource-controller"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/k-orc/openstack-resource-controller/releases"
+
+  # Issue #598 - volcano.sh APIs
+  - url: "https://github.com/volcano-sh/volcano"
+    tag: ""
+    repo_path: "installer/helm/chart/volcano/crd/bases"
+    changelog: "https://github.com/volcano-sh/volcano/releases"
+
+  # Issue #592 - shipwright.io CRDs
+  - url: "https://github.com/shipwright-io/build"
+    tag: ""
+    repo_path: "deploy/crds"
+    changelog: "https://github.com/shipwright-io/build/releases"
+
+  # Issue #591 - kpack.io APIs
+  - url: "https://github.com/buildpacks-community/kpack"
+    tag: ""
+    repo_path: "config"
+    changelog: "https://github.com/buildpacks-community/kpack/releases"
+
+  # Issue #587 - radius project CRDs (radapp.io, ucp.dev)
+  - url: "https://github.com/radius-project/radius"
+    tag: ""
+    repo_path: "deploy/Chart/crds"
+    changelog: "https://github.com/radius-project/radius/releases"
+
+  # Issue #586 - netbird operator CRDs
+  - url: "https://github.com/netbirdio/kubernetes-operator"
+    tag: ""
+    repo_path: "crds"
+    changelog: "https://github.com/netbirdio/kubernetes-operator/releases"
+
+  # Issue #607 - barmancloud.cnpg.io CRDs
+  - url: "https://github.com/cloudnative-pg/plugin-barman-cloud"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/cloudnative-pg/plugin-barman-cloud/releases"
+
+  # Issue #624 - frp.zufardhiyaulhaq.com CRDs
+  - url: "https://github.com/zufardhiyaulhaq/frp-operator"
+    tag: ""
+    repo_path: "charts/frp-operator/crds"
+    changelog: "https://github.com/zufardhiyaulhaq/frp-operator/releases"
+
+  # Issue #597 - workspace.devfile.io CRDs
+  - url: "https://github.com/devfile/api"
+    tag: ""
+    repo_path: "crds"
+    changelog: "https://github.com/devfile/api/releases"
+
+  # Issue #593 - registries.mittwald.de CRDs
+  - url: "https://github.com/mittwald/harbor-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/mittwald/harbor-operator/releases"
+
+  # Issue #443 - Azure prometheus-collector CRDs (azmonitoring.coreos.com)
+  - url: "https://github.com/Azure/prometheus-collector"
+    tag: ""
+    repo_path: "otelcollector/deploy/addon-chart/azure-monitor-metrics-addon/templates"
+    changelog: "https://github.com/Azure/prometheus-collector/releases"
+
+  # Issue #256 - vault-config-operator CRDs (redhatcop.redhat.io)
+  - url: "https://github.com/redhat-cop/vault-config-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/redhat-cop/vault-config-operator/releases"
+
+  # Issue #596 - tackle.konveyor.io CRDs
+  - url: "https://github.com/konveyor/operator"
+    tag: ""
+    repo_path: "helm/templates/crds"
+    changelog: "https://github.com/konveyor/operator/releases"
+
+  # Issue #595 - etcd operator CRDs (etcd.aenix.io)
+  - url: "https://github.com/aenix-io/etcd-operator"
+    tag: ""
+    repo_path: "charts/etcd-operator/crds"
+    changelog: "https://github.com/aenix-io/etcd-operator/releases"
+
+  # Issue #588 - additional EDP EPAM operator CRDs
+  - url: "https://github.com/epam/edp-cd-pipeline-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/epam/edp-cd-pipeline-operator/releases"
+
+  - url: "https://github.com/epam/edp-gerrit-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/epam/edp-gerrit-operator/releases"
+
+  - url: "https://github.com/epam/edp-nexus-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/epam/edp-nexus-operator/releases"
+
+  - url: "https://github.com/epam/edp-sonar-operator"
+    tag: ""
+    repo_path: "config/crd/bases"
+    changelog: "https://github.com/epam/edp-sonar-operator/releases"
