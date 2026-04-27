@@ -1,0 +1,94 @@
+{
+  "description": "GitServer is the Schema for the gitservers API.",
+  "properties": {
+    "apiVersion": {
+      "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+      "type": "string"
+    },
+    "kind": {
+      "description": "Kind is a string value representing the REST resource this object represents.\nServers may infer this from the endpoint the client submits requests to.\nCannot be updated.\nIn CamelCase.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object"
+    },
+    "spec": {
+      "description": "GitServerSpec defines the desired state of GitServer.",
+      "properties": {
+        "gitHost": {
+          "type": "string"
+        },
+        "gitProvider": {
+          "default": "github",
+          "description": "GitProvider is a git provider type. It can be gerrit, github or gitlab. Default value is gerrit.",
+          "enum": [
+            "gerrit",
+            "gitlab",
+            "github",
+            "bitbucket"
+          ],
+          "type": "string"
+        },
+        "gitUser": {
+          "default": "git",
+          "description": "GitUser is a user name for git server.",
+          "type": "string"
+        },
+        "httpsPort": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "nameSshKeySecret": {
+          "description": "NameSshKeySecret is the name of the Kubernetes secret containing Git repository credentials.\nRequired keys:\n  - token: Git provider access token (required)\nOptional keys:\n  - id_rsa: SSH private key for Git operations over SSH\n  - secretString: Webhook secret for validating webhook requests\n  - username: Git username to override the default GitUser\nFor Gerrit provider, only id_rsa key is required and used.",
+          "example": "my-git-credentials",
+          "type": "string"
+        },
+        "skipWebhookSSLVerification": {
+          "description": "SkipWebhookSSLVerification is a flag to skip webhook tls verification.",
+          "type": "boolean"
+        },
+        "sshPort": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "tektonDisabled": {
+          "description": "TektonDisabled disables creation of Tekton EventListener and associated\nIngress/Route resources for this GitServer.\nUse this when the git provider's native CI (e.g. GitLab CI, GitHub Actions)\nis used instead of Tekton, or when webhook endpoints are managed externally.",
+          "type": "boolean"
+        },
+        "webhookUrl": {
+          "description": "WebhookUrl is a URL for webhook that will be created in the git provider.\nIf not set, a new EventListener and Ingress will be created and used for webhooks.",
+          "example": "https://webhook-url.com",
+          "type": "string"
+        }
+      },
+      "required": [
+        "gitHost",
+        "httpsPort",
+        "nameSshKeySecret",
+        "sshPort"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    },
+    "status": {
+      "description": "GitServerStatus defines the observed state of GitServer.",
+      "properties": {
+        "connected": {
+          "description": "Connected shows if operator is connected to git server.",
+          "type": "boolean"
+        },
+        "error": {
+          "description": "Error represents error message if something went wrong.",
+          "type": "string"
+        },
+        "status": {
+          "description": "Status indicates the current status of the GitServer.\nPossible values are: ok, failed.",
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  "type": "object"
+}
