@@ -231,7 +231,7 @@ sources:
     changelog: "https://github.com/aws-controllers-k8s/sfn-controller/releases"
 
   - url: "https://github.com/aws-controllers-k8s/sns-controller"
-    tag: "v1.4.1"
+    tag: "v1.4.2"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/aws-controllers-k8s/sns-controller/releases"
 
