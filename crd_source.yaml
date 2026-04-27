@@ -1176,7 +1176,7 @@ sources:
     changelog: "https://github.com/scylladb/scylla-operator/releases"
 
   - url: "https://github.com/seaweedfs/seaweedfs-operator"
-    tag: ""
+    tag: "seaweedfs-operator-0.1.16"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/seaweedfs/seaweedfs-operator/releases"
 
