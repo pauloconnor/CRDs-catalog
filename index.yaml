@@ -14530,6 +14530,14 @@ spv.no:
     filename: spv.no/azurekeyvaultsecret_v1.json
     kind: AzureKeyVaultSecret
     name: azurekeyvaultsecret_v1
+  - apiVersion: spv.no/v1alpha1
+    filename: spv.no/azuremanagedidentity_v1alpha1.json
+    kind: azuremanagedidentity
+    name: azuremanagedidentity_v1alpha1
+  - apiVersion: spv.no/v1alpha1
+    filename: spv.no/azurekeyvaultidentity_v1alpha1.json
+    kind: azurekeyvaultidentity
+    name: azurekeyvaultidentity_v1alpha1
 sql.azure.com:
   - apiVersion: sql.azure.com/v1api20211101
     filename: sql.azure.com/serversdatabasesbackupshorttermretentionpolicy_v1api20211101.json
