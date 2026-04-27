@@ -971,7 +971,7 @@ sources:
     changelog: "https://github.com/kro-run/kro/releases"
 
   - url: "https://github.com/senthilrch/kube-fledged"
-    tag: ""
+    tag: "v0.10.0"
     repo_path: "deploy/kubefledged-operator/deploy/crds"
     changelog: "https://github.com/senthilrch/kube-fledged/releases"
 
