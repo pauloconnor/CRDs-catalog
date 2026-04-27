@@ -470,7 +470,7 @@ sources:
     changelog: "https://github.com/argoproj-labs/argocd-image-updater/releases"
 
   - url: "https://github.com/argoproj-labs/gitops-promoter"
-    tag: ""
+    tag: "v0.27.1"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/argoproj-labs/gitops-promoter/releases"
 

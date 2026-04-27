@@ -1026,6 +1026,11 @@
           },
           "type": "array"
         },
+        "observedGeneration": {
+          "description": "ObservedGeneration is the .metadata.generation that this status was reconciled from.\nBecause status is written via Server-Side Apply with ForceOwnership (which has no\noptimistic-concurrency check), this field is the canonical way to detect stale\nstatus writes: compare status.observedGeneration with metadata.generation.",
+          "format": "int64",
+          "type": "integer"
+        },
         "proposed": {
           "description": "Proposed is the state of the proposed branch.",
           "properties": {

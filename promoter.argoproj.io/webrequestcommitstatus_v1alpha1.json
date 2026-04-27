@@ -500,6 +500,11 @@
           ],
           "x-kubernetes-list-type": "map"
         },
+        "observedGeneration": {
+          "description": "ObservedGeneration is the .metadata.generation that this status was reconciled from.\nBecause status is written via Server-Side Apply with ForceOwnership (which has no\noptimistic-concurrency check), this field is the canonical way to detect stale\nstatus writes: compare status.observedGeneration with metadata.generation.",
+          "format": "int64",
+          "type": "integer"
+        },
         "promotionStrategyContext": {
           "description": "PromotionStrategyContext holds the result of the one HTTP run when context is \"promotionstrategy\".\nAt most one request is made per WebRequestCommitStatus; phase(s) are reported on each environment's CommitStatus.",
           "properties": {
