@@ -4123,6 +4123,10 @@ dbaas.percona.com:
     filename: dbaas.percona.com/databaseengine_v1.json
     kind: DatabaseEngine
     name: databaseengine_v1
+  - apiVersion: dbaas.percona.com/v1
+    filename: dbaas.percona.com/databaseclusterbackup_v1.json
+    kind: DatabaseClusterBackup
+    name: databaseclusterbackup_v1
 dbformariadb.azure.com:
   - apiVersion: dbformariadb.azure.com/v1api20180601
     filename: dbformariadb.azure.com/server_v1api20180601.json
