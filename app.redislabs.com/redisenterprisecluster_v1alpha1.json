@@ -117,11 +117,30 @@
               "dbType": {
                 "type": "string"
               },
-              "version": {
-                "type": "string"
+              "featureSupport": {
+                "description": "Feature support flags for this database version",
+                "properties": {
+                  "activeActive": {
+                    "description": "Indicates whether this version supports Active-Active (CRDB) databases",
+                    "type": "boolean"
+                  },
+                  "flex": {
+                    "description": "Indicates whether this version supports Redis on Flash (Flex)",
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "activeActive",
+                  "flex"
+                ],
+                "type": "object",
+                "additionalProperties": false
               },
               "major": {
                 "type": "boolean"
+              },
+              "version": {
+                "type": "string"
               }
             },
             "required": [
@@ -711,6 +730,19 @@
             },
             "cacheTTLSeconds": {
               "type": "integer"
+            },
+            "cba": {
+              "type": "boolean"
+            },
+            "cbaIdentityOid": {
+              "type": "string"
+            },
+            "cbaIdentitySource": {
+              "enum": [
+                "SubjectCN",
+                "SubjectOID"
+              ],
+              "type": "string"
             },
             "directoryTimeoutSeconds": {
               "type": "integer"
