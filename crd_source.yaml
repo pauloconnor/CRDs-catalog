@@ -816,7 +816,7 @@ sources:
     changelog: "https://github.com/eraser-dev/eraser/releases"
 
   - url: "https://github.com/kubernetes-sigs/external-dns"
-    tag: ""
+    tag: "v0.21.0"
     repo_path: "charts/external-dns/crds"
     changelog: "https://github.com/kubernetes-sigs/external-dns/releases"
 
