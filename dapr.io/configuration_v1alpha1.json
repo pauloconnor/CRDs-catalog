@@ -614,10 +614,58 @@
                 "endpointAddress": {
                   "type": "string"
                 },
+                "headers": {
+                  "description": "Headers to add to the OTLP trace exporter request.\nEach header can contain plaintext values, reference secrets, or reference environment variables.",
+                  "items": {
+                    "description": "NameValuePair is a name/value pair.",
+                    "properties": {
+                      "envRef": {
+                        "description": "EnvRef is the name of an environmental variable to read the value from.",
+                        "type": "string"
+                      },
+                      "name": {
+                        "description": "Name of the property.",
+                        "type": "string"
+                      },
+                      "secretKeyRef": {
+                        "description": "SecretKeyRef is the reference of a value in a secret store component.",
+                        "properties": {
+                          "key": {
+                            "description": "Field in the secret.",
+                            "type": "string"
+                          },
+                          "name": {
+                            "description": "Secret name.",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "name"
+                        ],
+                        "type": "object",
+                        "additionalProperties": false
+                      },
+                      "value": {
+                        "description": "Value of the property, in plaintext.",
+                        "x-kubernetes-preserve-unknown-fields": true
+                      }
+                    },
+                    "required": [
+                      "name"
+                    ],
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "type": "array"
+                },
                 "isSecure": {
                   "type": "boolean"
                 },
                 "protocol": {
+                  "type": "string"
+                },
+                "timeout": {
+                  "description": "Timeout for the OTLP trace exporter request.",
                   "type": "string"
                 }
               },
@@ -670,7 +718,7 @@
           "description": "WorkflowSpec defines the configuration for Dapr workflows.",
           "properties": {
             "maxConcurrentActivityInvocations": {
-              "description": "maxConcurrentActivityInvocations is the maximum number of concurrent activities that can be processed by a single Dapr instance.\nAttempted invocations beyond this will be queued until the number of concurrent invocations drops below this value.\nIf If omitted, no maximum will be enforced.",
+              "description": "maxConcurrentActivityInvocations is the maximum number of concurrent activities that can be processed by a single Dapr instance.\nAttempted invocations beyond this will be queued until the number of concurrent invocations drops below this value.\nIf omitted, no maximum will be enforced.",
               "format": "int32",
               "type": "integer"
             },
@@ -678,6 +726,29 @@
               "description": "maxConcurrentWorkflowInvocations is the maximum number of concurrent workflow invocations that can be scheduled by a single Dapr instance.\nAttempted invocations beyond this will be queued until the number of concurrent invocations drops below this value.\nIf omitted, no maximum will be enforced.",
               "format": "int32",
               "type": "integer"
+            },
+            "stateRetentionPolicy": {
+              "description": "StateRetentionPolicy defines the retention configuration for workflow\nstate once a workflow reaches a terminal state. If not set, workflow\ninstances will not be automatically purged.",
+              "properties": {
+                "anyTerminal": {
+                  "description": "AnyTerminal is the TTL for purging workflow instances that reach any\nterminal state.",
+                  "type": "string"
+                },
+                "completed": {
+                  "description": "Completed is the TTL for purging workflow instances that reach the\nCompleted terminal state.",
+                  "type": "string"
+                },
+                "failed": {
+                  "description": "Failed is the TTL for purging workflow instances that reach the Failed\nterminal state.",
+                  "type": "string"
+                },
+                "terminated": {
+                  "description": "Terminated is the TTL for purging workflow instances that reach the\nTerminated terminal state.",
+                  "type": "string"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
             }
           },
           "type": "object",

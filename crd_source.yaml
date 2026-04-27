@@ -776,7 +776,7 @@ sources:
     changelog: "https://github.com/coroot/coroot-operator/releases"
 
   - url: "https://github.com/dapr/dapr"
-    tag: ""
+    tag: "v1.17.5"
     repo_path: "charts/dapr/crds"
     changelog: "https://github.com/dapr/dapr/releases"
 
