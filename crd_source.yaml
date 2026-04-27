@@ -1226,7 +1226,7 @@ sources:
     changelog: "https://github.com/backube/volsync/releases"
 
   - url: "https://github.com/kubeflow/spark-operator"
-    tag: ""
+    tag: "v2.5.0"
     repo_path: "charts/spark-operator-chart/crds"
     changelog: "https://github.com/kubeflow/spark-operator/releases"
 

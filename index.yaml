@@ -14488,6 +14488,10 @@ sparkoperator.k8s.io:
     filename: sparkoperator.k8s.io/scheduledsparkapplication_v1beta2.json
     kind: scheduledsparkapplication
     name: scheduledsparkapplication_v1beta2
+  - apiVersion: sparkoperator.k8s.io/v1alpha1
+    filename: sparkoperator.k8s.io/sparkconnect_v1alpha1.json
+    kind: SparkConnect
+    name: sparkconnect_v1alpha1
 speech.cnrm.cloud.google.com:
   - apiVersion: speech.cnrm.cloud.google.com/v1alpha1
     filename: speech.cnrm.cloud.google.com/speechcustomclass_v1alpha1.json
