@@ -11674,6 +11674,22 @@ operator.h3poteto.dev:
     filename: operator.h3poteto.dev/endpointgroupbinding_v1alpha1.json
     kind: EndpointGroupBinding
     name: endpointgroupbinding_v1alpha1
+  - apiVersion: operator.h3poteto.dev/v1alpha1
+    filename: operator.h3poteto.dev/nodemanager_v1alpha1.json
+    kind: NodeManager
+    name: nodemanager_v1alpha1
+  - apiVersion: operator.h3poteto.dev/v1alpha1
+    filename: operator.h3poteto.dev/awsnoderefresher_v1alpha1.json
+    kind: AWSNodeRefresher
+    name: awsnoderefresher_v1alpha1
+  - apiVersion: operator.h3poteto.dev/v1alpha1
+    filename: operator.h3poteto.dev/awsnodereplenisher_v1alpha1.json
+    kind: AWSNodeReplenisher
+    name: awsnodereplenisher_v1alpha1
+  - apiVersion: operator.h3poteto.dev/v1alpha1
+    filename: operator.h3poteto.dev/awsnodemanager_v1alpha1.json
+    kind: AWSNodeManager
+    name: awsnodemanager_v1alpha1
 operator.open-cluster-management.io:
   - apiVersion: operator.open-cluster-management.io/v1
     filename: operator.open-cluster-management.io/klusterlet_v1.json
