@@ -811,7 +811,7 @@ sources:
     changelog: "https://github.com/Dynatrace/dynatrace-operator/releases"
 
   - url: "https://github.com/eraser-dev/eraser"
-    tag: ""
+    tag: "v1.4.1"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/eraser-dev/eraser/releases"
 
