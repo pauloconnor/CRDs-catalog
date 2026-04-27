@@ -1076,7 +1076,7 @@ sources:
     changelog: "https://github.com/h3poteto/node-manager/releases"
 
   - url: "https://github.com/tigera/operator"
-    tag: "v1.40.8"
+    tag: "v1.40.9"
     repo_path: "pkg/crds/operator"
     changelog: "https://github.com/tigera/operator/releases"
 
