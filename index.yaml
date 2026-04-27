@@ -13934,6 +13934,10 @@ secrets.hashicorp.com:
     filename: secrets.hashicorp.com/vaultauthglobal_v1beta1.json
     kind: VaultAuthGlobal
     name: vaultauthglobal_v1beta1
+  - apiVersion: secrets.hashicorp.com/v1beta1
+    filename: secrets.hashicorp.com/csisecrets_v1beta1.json
+    kind: CSISecrets
+    name: csisecrets_v1beta1
 secrets.infisical.com:
   - apiVersion: secrets.infisical.com/v1alpha1
     filename: secrets.infisical.com/infisicalsecret_v1alpha1.json

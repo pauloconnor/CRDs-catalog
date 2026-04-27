@@ -1191,7 +1191,7 @@ sources:
     changelog: "https://github.com/DopplerHQ/kubernetes-operator/releases"
 
   - url: "https://github.com/hashicorp/vault-secrets-operator"
-    tag: ""
+    tag: "v1.3.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/hashicorp/vault-secrets-operator/releases"
 
