@@ -50,7 +50,7 @@
           "type": "string"
         },
         "generic": {
-          "description": "GenericInstance is used when instance type is generic\nand describes necessary informations to use instance\ngeneric instance can be any backend, it must be reachable by described address and port",
+          "description": "GenericInstance is used when instance type is generic\nand describes necessary information to use instance\ngeneric instance can be any backend, it must be reachable by described address and port",
           "properties": {
             "backupHost": {
               "description": "BackupHost address will be used for dumping database for backup\nUsually secondary address for primary-secondary setup or cluster lb address\nIf it's not defined, above Host will be used as backup host address.",
@@ -74,7 +74,7 @@
           "additionalProperties": false
         },
         "google": {
-          "description": "GoogleInstance is used when instance type is Google Cloud SQL\nand describes necessary informations to use google API to create sql instances",
+          "description": "GoogleInstance is used when instance type is Google Cloud SQL\nand describes necessary information to use google API to create sql instances",
           "properties": {
             "apiEndpoint": {
               "type": "string"
