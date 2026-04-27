@@ -2329,6 +2329,11 @@ charts.helm.kubefledged.io:
     filename: charts.helm.kubefledged.io/kubefledged_v1alpha2.json
     kind: KubeFledged
     name: kubefledged_v1alpha2
+charts.nginx.org:
+  - apiVersion: charts.nginx.org/v1alpha1
+    filename: charts.nginx.org/nginxingress_v1alpha1.json
+    kind: NginxIngress
+    name: nginxingress_v1alpha1
 chisel-operator.io:
   - apiVersion: chisel-operator.io/v1
     filename: chisel-operator.io/exitnodeprovisioner_v1.json
