@@ -254,7 +254,7 @@ sources:
     changelog: "https://github.com/aws/aws-application-networking-k8s/releases"
 
   - url: "https://github.com/aws/amazon-vpc-cni-k8s"
-    tag: ""
+    tag: "v1.21.1"
     repo_path: "charts/aws-vpc-cni/crds"
     changelog: "https://github.com/aws/amazon-vpc-cni-k8s/releases"
 
