@@ -1,75 +1,163 @@
 {
+  "type": "object",
   "properties": {
     "apiVersion": {
-      "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
-      "type": "string"
+      "type": "string",
+      "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources"
     },
     "kind": {
-      "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
-      "type": "string"
+      "type": "string",
+      "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds"
     },
     "metadata": {
       "type": "object"
     },
     "spec": {
-      "description": "The specification of the KafkaNodePool.",
+      "type": "object",
       "properties": {
-        "jvmOptions": {
-          "description": "JVM Options for pods.",
+        "replicas": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "The number of pods in the pool."
+        },
+        "storage": {
+          "type": "object",
           "properties": {
-            "-XX": {
+            "class": {
+              "type": "string",
+              "description": "The storage class to use for dynamic volume allocation."
+            },
+            "deleteClaim": {
+              "type": "boolean",
+              "description": "Specifies whether the persistent volume claim is deleted when a Kafka node is deleted. Optional. Defaults to `false`."
+            },
+            "id": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Storage identification number. It is mandatory only for storage volumes defined in a storage of type 'jbod'."
+            },
+            "kraftMetadata": {
+              "type": "string",
+              "enum": [
+                "shared"
+              ],
+              "description": "Specifies whether this volume should be used for storing KRaft metadata. This property is optional. When set, the only currently supported value is `shared`. At most one volume can have this property set."
+            },
+            "selector": {
               "additionalProperties": {
                 "type": "string"
               },
-              "description": "A map of -XX options to the JVM.",
-              "type": "object"
+              "type": "object",
+              "description": "Specifies a specific persistent volume to use. It contains key:value pairs representing labels for selecting such a volume."
             },
-            "-Xms": {
-              "description": "-Xms option to to the JVM.",
-              "pattern": "^[0-9]+[mMgG]?$",
-              "type": "string"
+            "size": {
+              "type": "string",
+              "description": "When `type=persistent-claim`, defines the size of the persistent volume claim, such as 100Gi. Mandatory when `type=persistent-claim`."
             },
-            "-Xmx": {
-              "description": "-Xmx option to to the JVM.",
-              "pattern": "^[0-9]+[mMgG]?$",
-              "type": "string"
+            "sizeLimit": {
+              "type": "string",
+              "pattern": "^([0-9.]+)([eEinumkKMGTP]*[-+]?[0-9]*)$",
+              "description": "When type=ephemeral, defines the total amount of local storage required for this EmptyDir volume (for example 1Gi)."
             },
-            "gcLoggingEnabled": {
-              "description": "Specifies whether the Garbage Collection logging is enabled. The default is false.",
-              "type": "boolean"
+            "type": {
+              "type": "string",
+              "enum": [
+                "ephemeral",
+                "persistent-claim",
+                "jbod"
+              ],
+              "description": "Storage type, must be either 'ephemeral', 'persistent-claim', or 'jbod'."
             },
-            "javaSystemProperties": {
-              "description": "A map of additional system properties which will be passed using the `-D` option to the JVM.",
+            "volumeAttributesClass": {
+              "type": "string",
+              "description": "Specifies `VolumeAttributeClass` name for dynamically configuring storage attributes."
+            },
+            "volumes": {
+              "type": "array",
               "items": {
+                "type": "object",
                 "properties": {
-                  "name": {
-                    "description": "The system property name.",
-                    "type": "string"
+                  "class": {
+                    "type": "string",
+                    "description": "The storage class to use for dynamic volume allocation."
                   },
-                  "value": {
-                    "description": "The system property value.",
-                    "type": "string"
+                  "deleteClaim": {
+                    "type": "boolean",
+                    "description": "Specifies whether the persistent volume claim is deleted when a Kafka node is deleted. Optional. Defaults to `false`."
+                  },
+                  "id": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "description": "Storage identification number. Mandatory for storage volumes defined with a `jbod` storage type configuration."
+                  },
+                  "kraftMetadata": {
+                    "type": "string",
+                    "enum": [
+                      "shared"
+                    ],
+                    "description": "Specifies whether this volume should be used for storing KRaft metadata. This property is optional. When set, the only currently supported value is `shared`. At most one volume can have this property set."
+                  },
+                  "selector": {
+                    "additionalProperties": {
+                      "type": "string"
+                    },
+                    "type": "object",
+                    "description": "Specifies a specific persistent volume to use. It contains key:value pairs representing labels for selecting such a volume."
+                  },
+                  "size": {
+                    "type": "string",
+                    "description": "When `type=persistent-claim`, defines the size of the persistent volume claim, such as 100Gi. Mandatory when `type=persistent-claim`."
+                  },
+                  "sizeLimit": {
+                    "type": "string",
+                    "pattern": "^([0-9.]+)([eEinumkKMGTP]*[-+]?[0-9]*)$",
+                    "description": "When type=ephemeral, defines the total amount of local storage required for this EmptyDir volume (for example 1Gi)."
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "ephemeral",
+                      "persistent-claim"
+                    ],
+                    "description": "Storage type, must be either 'ephemeral' or 'persistent-claim'."
+                  },
+                  "volumeAttributesClass": {
+                    "type": "string",
+                    "description": "Specifies `VolumeAttributeClass` name for dynamically configuring storage attributes."
                   }
                 },
-                "type": "object",
+                "required": [
+                  "type"
+                ],
                 "additionalProperties": false
               },
-              "type": "array"
+              "description": "List of volumes as Storage objects representing the JBOD disks array."
             }
           },
-          "type": "object",
+          "required": [
+            "type"
+          ],
+          "description": "Storage configuration (disk). Cannot be updated.",
           "additionalProperties": false
         },
-        "replicas": {
-          "description": "The number of pods in the pool.",
-          "minimum": 0,
-          "type": "integer"
+        "roles": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "controller",
+              "broker"
+            ]
+          },
+          "description": "The roles assigned to the node pool. Supported values are `broker` and `controller`. This property is required."
         },
         "resources": {
-          "description": "CPU and memory resources to reserve.",
+          "type": "object",
           "properties": {
             "claims": {
+              "type": "array",
               "items": {
+                "type": "object",
                 "properties": {
                   "name": {
                     "type": "string"
@@ -78,10 +166,8 @@
                     "type": "string"
                   }
                 },
-                "type": "object",
                 "additionalProperties": false
-              },
-              "type": "array"
+              }
             },
             "limits": {
               "additionalProperties": {
@@ -114,1389 +200,128 @@
               "type": "object"
             }
           },
-          "type": "object",
+          "description": "CPU and memory resources to reserve.",
           "additionalProperties": false
         },
-        "roles": {
-          "description": "The roles assigned to the node pool. Supported values are `broker` and `controller`. This property is required.",
-          "items": {
-            "enum": [
-              "controller",
-              "broker"
-            ],
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "storage": {
-          "description": "Storage configuration (disk). Cannot be updated.",
+        "jvmOptions": {
+          "type": "object",
           "properties": {
-            "class": {
-              "description": "The storage class to use for dynamic volume allocation.",
-              "type": "string"
-            },
-            "deleteClaim": {
-              "description": "Specifies if the persistent volume claim has to be deleted when the cluster is un-deployed.",
-              "type": "boolean"
-            },
-            "id": {
-              "description": "Storage identification number. It is mandatory only for storage volumes defined in a storage of type 'jbod'.",
-              "minimum": 0,
-              "type": "integer"
-            },
-            "kraftMetadata": {
-              "description": "Specifies whether this volume should be used for storing KRaft metadata. This property is optional. When set, the only currently supported value is `shared`. At most one volume can have this property set.",
-              "enum": [
-                "shared"
-              ],
-              "type": "string"
-            },
-            "selector": {
+            "-XX": {
               "additionalProperties": {
                 "type": "string"
               },
-              "description": "Specifies a specific persistent volume to use. It contains key:value pairs representing labels for selecting such a volume.",
-              "type": "object"
+              "type": "object",
+              "description": "A map of -XX options to the JVM."
             },
-            "size": {
-              "description": "When `type=persistent-claim`, defines the size of the persistent volume claim, such as 100Gi. Mandatory when `type=persistent-claim`.",
-              "type": "string"
+            "-Xmx": {
+              "type": "string",
+              "pattern": "^[0-9]+[mMgG]?$",
+              "description": "-Xmx option to to the JVM."
             },
-            "sizeLimit": {
-              "description": "When type=ephemeral, defines the total amount of local storage required for this EmptyDir volume (for example 1Gi).",
-              "pattern": "^([0-9.]+)([eEinumkKMGTP]*[-+]?[0-9]*)$",
-              "type": "string"
+            "-Xms": {
+              "type": "string",
+              "pattern": "^[0-9]+[mMgG]?$",
+              "description": "-Xms option to to the JVM."
             },
-            "type": {
-              "description": "Storage type, must be either 'ephemeral', 'persistent-claim', or 'jbod'.",
-              "enum": [
-                "ephemeral",
-                "persistent-claim",
-                "jbod"
-              ],
-              "type": "string"
+            "gcLoggingEnabled": {
+              "type": "boolean",
+              "description": "Specifies whether the Garbage Collection logging is enabled. The default is false."
             },
-            "volumeAttributesClass": {
-              "description": "Specifies `VolumeAttributeClass` name for dynamically configuring storage attributes.",
-              "type": "string"
-            },
-            "volumes": {
-              "description": "List of volumes as Storage objects representing the JBOD disks array.",
+            "javaSystemProperties": {
+              "type": "array",
               "items": {
+                "type": "object",
                 "properties": {
-                  "class": {
-                    "description": "The storage class to use for dynamic volume allocation.",
-                    "type": "string"
+                  "name": {
+                    "type": "string",
+                    "description": "The system property name."
                   },
-                  "deleteClaim": {
-                    "description": "Specifies if the persistent volume claim has to be deleted when the cluster is un-deployed.",
-                    "type": "boolean"
-                  },
-                  "id": {
-                    "description": "Storage identification number. Mandatory for storage volumes defined with a `jbod` storage type configuration.",
-                    "minimum": 0,
-                    "type": "integer"
-                  },
-                  "kraftMetadata": {
-                    "description": "Specifies whether this volume should be used for storing KRaft metadata. This property is optional. When set, the only currently supported value is `shared`. At most one volume can have this property set.",
-                    "enum": [
-                      "shared"
-                    ],
-                    "type": "string"
-                  },
-                  "selector": {
-                    "additionalProperties": {
-                      "type": "string"
-                    },
-                    "description": "Specifies a specific persistent volume to use. It contains key:value pairs representing labels for selecting such a volume.",
-                    "type": "object"
-                  },
-                  "size": {
-                    "description": "When `type=persistent-claim`, defines the size of the persistent volume claim, such as 100Gi. Mandatory when `type=persistent-claim`.",
-                    "type": "string"
-                  },
-                  "sizeLimit": {
-                    "description": "When type=ephemeral, defines the total amount of local storage required for this EmptyDir volume (for example 1Gi).",
-                    "pattern": "^([0-9.]+)([eEinumkKMGTP]*[-+]?[0-9]*)$",
-                    "type": "string"
-                  },
-                  "type": {
-                    "description": "Storage type, must be either 'ephemeral' or 'persistent-claim'.",
-                    "enum": [
-                      "ephemeral",
-                      "persistent-claim"
-                    ],
-                    "type": "string"
-                  },
-                  "volumeAttributesClass": {
-                    "description": "Specifies `VolumeAttributeClass` name for dynamically configuring storage attributes.",
-                    "type": "string"
+                  "value": {
+                    "type": "string",
+                    "description": "The system property value."
                   }
                 },
-                "required": [
-                  "type"
-                ],
-                "type": "object",
                 "additionalProperties": false
               },
-              "type": "array"
+              "description": "A map of additional system properties which will be passed using the `-D` option to the JVM."
             }
           },
-          "required": [
-            "type"
-          ],
-          "type": "object",
+          "description": "JVM Options for pods.",
           "additionalProperties": false
         },
         "template": {
-          "description": "Template for pool resources. The template allows users to specify how the resources belonging to this pool are generated.",
+          "type": "object",
           "properties": {
-            "initContainer": {
-              "description": "Template for the Kafka init container.",
-              "properties": {
-                "env": {
-                  "description": "Environment variables which should be applied to the container.",
-                  "items": {
-                    "oneOf": [
-                      {
-                        "properties": {
-                          "value": {}
-                        },
-                        "required": [
-                          "value"
-                        ]
-                      },
-                      {
-                        "properties": {
-                          "valueFrom": {}
-                        },
-                        "required": [
-                          "valueFrom"
-                        ]
-                      }
-                    ],
-                    "properties": {
-                      "name": {
-                        "description": "The environment variable key.",
-                        "type": "string"
-                      },
-                      "value": {
-                        "description": "The environment variable value.",
-                        "type": "string"
-                      },
-                      "valueFrom": {
-                        "description": "Reference to the secret or config map property to which the environment variable is set.",
-                        "oneOf": [
-                          {
-                            "properties": {
-                              "secretKeyRef": {}
-                            },
-                            "required": [
-                              "secretKeyRef"
-                            ]
-                          },
-                          {
-                            "properties": {
-                              "configMapKeyRef": {}
-                            },
-                            "required": [
-                              "configMapKeyRef"
-                            ]
-                          }
-                        ],
-                        "properties": {
-                          "configMapKeyRef": {
-                            "description": "Reference to a key in a config map.",
-                            "properties": {
-                              "key": {
-                                "type": "string"
-                              },
-                              "name": {
-                                "type": "string"
-                              },
-                              "optional": {
-                                "type": "boolean"
-                              }
-                            },
-                            "type": "object",
-                            "additionalProperties": false
-                          },
-                          "secretKeyRef": {
-                            "description": "Reference to a key in a secret.",
-                            "properties": {
-                              "key": {
-                                "type": "string"
-                              },
-                              "name": {
-                                "type": "string"
-                              },
-                              "optional": {
-                                "type": "boolean"
-                              }
-                            },
-                            "type": "object",
-                            "additionalProperties": false
-                          }
-                        },
-                        "type": "object",
-                        "additionalProperties": false
-                      }
-                    },
-                    "type": "object",
-                    "additionalProperties": false
-                  },
-                  "type": "array"
-                },
-                "securityContext": {
-                  "description": "Security context for the container.",
-                  "properties": {
-                    "allowPrivilegeEscalation": {
-                      "type": "boolean"
-                    },
-                    "appArmorProfile": {
-                      "properties": {
-                        "localhostProfile": {
-                          "type": "string"
-                        },
-                        "type": {
-                          "type": "string"
-                        }
-                      },
-                      "type": "object",
-                      "additionalProperties": false
-                    },
-                    "capabilities": {
-                      "properties": {
-                        "add": {
-                          "items": {
-                            "type": "string"
-                          },
-                          "type": "array"
-                        },
-                        "drop": {
-                          "items": {
-                            "type": "string"
-                          },
-                          "type": "array"
-                        }
-                      },
-                      "type": "object",
-                      "additionalProperties": false
-                    },
-                    "privileged": {
-                      "type": "boolean"
-                    },
-                    "procMount": {
-                      "type": "string"
-                    },
-                    "readOnlyRootFilesystem": {
-                      "type": "boolean"
-                    },
-                    "runAsGroup": {
-                      "type": "integer"
-                    },
-                    "runAsNonRoot": {
-                      "type": "boolean"
-                    },
-                    "runAsUser": {
-                      "type": "integer"
-                    },
-                    "seLinuxOptions": {
-                      "properties": {
-                        "level": {
-                          "type": "string"
-                        },
-                        "role": {
-                          "type": "string"
-                        },
-                        "type": {
-                          "type": "string"
-                        },
-                        "user": {
-                          "type": "string"
-                        }
-                      },
-                      "type": "object",
-                      "additionalProperties": false
-                    },
-                    "seccompProfile": {
-                      "properties": {
-                        "localhostProfile": {
-                          "type": "string"
-                        },
-                        "type": {
-                          "type": "string"
-                        }
-                      },
-                      "type": "object",
-                      "additionalProperties": false
-                    },
-                    "windowsOptions": {
-                      "properties": {
-                        "gmsaCredentialSpec": {
-                          "type": "string"
-                        },
-                        "gmsaCredentialSpecName": {
-                          "type": "string"
-                        },
-                        "hostProcess": {
-                          "type": "boolean"
-                        },
-                        "runAsUserName": {
-                          "type": "string"
-                        }
-                      },
-                      "type": "object",
-                      "additionalProperties": false
-                    }
-                  },
-                  "type": "object",
-                  "additionalProperties": false
-                },
-                "volumeMounts": {
-                  "description": "Additional volume mounts which should be applied to the container.",
-                  "items": {
-                    "properties": {
-                      "mountPath": {
-                        "type": "string"
-                      },
-                      "mountPropagation": {
-                        "type": "string"
-                      },
-                      "name": {
-                        "type": "string"
-                      },
-                      "readOnly": {
-                        "type": "boolean"
-                      },
-                      "recursiveReadOnly": {
-                        "type": "string"
-                      },
-                      "subPath": {
-                        "type": "string"
-                      },
-                      "subPathExpr": {
-                        "type": "string"
-                      }
-                    },
-                    "type": "object",
-                    "additionalProperties": false
-                  },
-                  "type": "array"
-                }
-              },
+            "podSet": {
               "type": "object",
-              "additionalProperties": false
-            },
-            "kafkaContainer": {
-              "description": "Template for the Kafka broker container.",
-              "properties": {
-                "env": {
-                  "description": "Environment variables which should be applied to the container.",
-                  "items": {
-                    "oneOf": [
-                      {
-                        "properties": {
-                          "value": {}
-                        },
-                        "required": [
-                          "value"
-                        ]
-                      },
-                      {
-                        "properties": {
-                          "valueFrom": {}
-                        },
-                        "required": [
-                          "valueFrom"
-                        ]
-                      }
-                    ],
-                    "properties": {
-                      "name": {
-                        "description": "The environment variable key.",
-                        "type": "string"
-                      },
-                      "value": {
-                        "description": "The environment variable value.",
-                        "type": "string"
-                      },
-                      "valueFrom": {
-                        "description": "Reference to the secret or config map property to which the environment variable is set.",
-                        "oneOf": [
-                          {
-                            "properties": {
-                              "secretKeyRef": {}
-                            },
-                            "required": [
-                              "secretKeyRef"
-                            ]
-                          },
-                          {
-                            "properties": {
-                              "configMapKeyRef": {}
-                            },
-                            "required": [
-                              "configMapKeyRef"
-                            ]
-                          }
-                        ],
-                        "properties": {
-                          "configMapKeyRef": {
-                            "description": "Reference to a key in a config map.",
-                            "properties": {
-                              "key": {
-                                "type": "string"
-                              },
-                              "name": {
-                                "type": "string"
-                              },
-                              "optional": {
-                                "type": "boolean"
-                              }
-                            },
-                            "type": "object",
-                            "additionalProperties": false
-                          },
-                          "secretKeyRef": {
-                            "description": "Reference to a key in a secret.",
-                            "properties": {
-                              "key": {
-                                "type": "string"
-                              },
-                              "name": {
-                                "type": "string"
-                              },
-                              "optional": {
-                                "type": "boolean"
-                              }
-                            },
-                            "type": "object",
-                            "additionalProperties": false
-                          }
-                        },
-                        "type": "object",
-                        "additionalProperties": false
-                      }
-                    },
-                    "type": "object",
-                    "additionalProperties": false
-                  },
-                  "type": "array"
-                },
-                "securityContext": {
-                  "description": "Security context for the container.",
-                  "properties": {
-                    "allowPrivilegeEscalation": {
-                      "type": "boolean"
-                    },
-                    "appArmorProfile": {
-                      "properties": {
-                        "localhostProfile": {
-                          "type": "string"
-                        },
-                        "type": {
-                          "type": "string"
-                        }
-                      },
-                      "type": "object",
-                      "additionalProperties": false
-                    },
-                    "capabilities": {
-                      "properties": {
-                        "add": {
-                          "items": {
-                            "type": "string"
-                          },
-                          "type": "array"
-                        },
-                        "drop": {
-                          "items": {
-                            "type": "string"
-                          },
-                          "type": "array"
-                        }
-                      },
-                      "type": "object",
-                      "additionalProperties": false
-                    },
-                    "privileged": {
-                      "type": "boolean"
-                    },
-                    "procMount": {
-                      "type": "string"
-                    },
-                    "readOnlyRootFilesystem": {
-                      "type": "boolean"
-                    },
-                    "runAsGroup": {
-                      "type": "integer"
-                    },
-                    "runAsNonRoot": {
-                      "type": "boolean"
-                    },
-                    "runAsUser": {
-                      "type": "integer"
-                    },
-                    "seLinuxOptions": {
-                      "properties": {
-                        "level": {
-                          "type": "string"
-                        },
-                        "role": {
-                          "type": "string"
-                        },
-                        "type": {
-                          "type": "string"
-                        },
-                        "user": {
-                          "type": "string"
-                        }
-                      },
-                      "type": "object",
-                      "additionalProperties": false
-                    },
-                    "seccompProfile": {
-                      "properties": {
-                        "localhostProfile": {
-                          "type": "string"
-                        },
-                        "type": {
-                          "type": "string"
-                        }
-                      },
-                      "type": "object",
-                      "additionalProperties": false
-                    },
-                    "windowsOptions": {
-                      "properties": {
-                        "gmsaCredentialSpec": {
-                          "type": "string"
-                        },
-                        "gmsaCredentialSpecName": {
-                          "type": "string"
-                        },
-                        "hostProcess": {
-                          "type": "boolean"
-                        },
-                        "runAsUserName": {
-                          "type": "string"
-                        }
-                      },
-                      "type": "object",
-                      "additionalProperties": false
-                    }
-                  },
-                  "type": "object",
-                  "additionalProperties": false
-                },
-                "volumeMounts": {
-                  "description": "Additional volume mounts which should be applied to the container.",
-                  "items": {
-                    "properties": {
-                      "mountPath": {
-                        "type": "string"
-                      },
-                      "mountPropagation": {
-                        "type": "string"
-                      },
-                      "name": {
-                        "type": "string"
-                      },
-                      "readOnly": {
-                        "type": "boolean"
-                      },
-                      "recursiveReadOnly": {
-                        "type": "string"
-                      },
-                      "subPath": {
-                        "type": "string"
-                      },
-                      "subPathExpr": {
-                        "type": "string"
-                      }
-                    },
-                    "type": "object",
-                    "additionalProperties": false
-                  },
-                  "type": "array"
-                }
-              },
-              "type": "object",
-              "additionalProperties": false
-            },
-            "perPodIngress": {
-              "description": "Template for Kafka per-pod `Ingress` used for access from outside of Kubernetes.",
               "properties": {
                 "metadata": {
-                  "description": "Metadata applied to the resource.",
+                  "type": "object",
                   "properties": {
-                    "annotations": {
-                      "additionalProperties": {
-                        "type": "string"
-                      },
-                      "description": "Annotations added to the Kubernetes resource.",
-                      "type": "object"
-                    },
                     "labels": {
                       "additionalProperties": {
                         "type": "string"
                       },
-                      "description": "Labels added to the Kubernetes resource.",
-                      "type": "object"
-                    }
-                  },
-                  "type": "object",
-                  "additionalProperties": false
-                }
-              },
-              "type": "object",
-              "additionalProperties": false
-            },
-            "perPodRoute": {
-              "description": "Template for Kafka per-pod `Routes` used for access from outside of OpenShift.",
-              "properties": {
-                "metadata": {
-                  "description": "Metadata applied to the resource.",
-                  "properties": {
+                      "type": "object",
+                      "description": "Labels added to the Kubernetes resource."
+                    },
                     "annotations": {
                       "additionalProperties": {
                         "type": "string"
                       },
-                      "description": "Annotations added to the Kubernetes resource.",
-                      "type": "object"
-                    },
-                    "labels": {
-                      "additionalProperties": {
-                        "type": "string"
-                      },
-                      "description": "Labels added to the Kubernetes resource.",
-                      "type": "object"
+                      "type": "object",
+                      "description": "Annotations added to the Kubernetes resource."
                     }
                   },
-                  "type": "object",
-                  "additionalProperties": false
-                }
-              },
-              "type": "object",
-              "additionalProperties": false
-            },
-            "perPodService": {
-              "description": "Template for Kafka per-pod `Services` used for access from outside of Kubernetes.",
-              "properties": {
-                "metadata": {
                   "description": "Metadata applied to the resource.",
-                  "properties": {
-                    "annotations": {
-                      "additionalProperties": {
-                        "type": "string"
-                      },
-                      "description": "Annotations added to the Kubernetes resource.",
-                      "type": "object"
-                    },
-                    "labels": {
-                      "additionalProperties": {
-                        "type": "string"
-                      },
-                      "description": "Labels added to the Kubernetes resource.",
-                      "type": "object"
-                    }
-                  },
-                  "type": "object",
                   "additionalProperties": false
                 }
               },
-              "type": "object",
-              "additionalProperties": false
-            },
-            "persistentVolumeClaim": {
-              "description": "Template for all Kafka `PersistentVolumeClaims`.",
-              "properties": {
-                "metadata": {
-                  "description": "Metadata applied to the resource.",
-                  "properties": {
-                    "annotations": {
-                      "additionalProperties": {
-                        "type": "string"
-                      },
-                      "description": "Annotations added to the Kubernetes resource.",
-                      "type": "object"
-                    },
-                    "labels": {
-                      "additionalProperties": {
-                        "type": "string"
-                      },
-                      "description": "Labels added to the Kubernetes resource.",
-                      "type": "object"
-                    }
-                  },
-                  "type": "object",
-                  "additionalProperties": false
-                }
-              },
-              "type": "object",
+              "description": "Template for Kafka `StrimziPodSet` resource.",
               "additionalProperties": false
             },
             "pod": {
-              "description": "Template for Kafka `Pods`.",
+              "type": "object",
               "properties": {
-                "affinity": {
-                  "description": "The pod's affinity rules.",
+                "metadata": {
+                  "type": "object",
                   "properties": {
-                    "nodeAffinity": {
-                      "properties": {
-                        "preferredDuringSchedulingIgnoredDuringExecution": {
-                          "items": {
-                            "properties": {
-                              "preference": {
-                                "properties": {
-                                  "matchExpressions": {
-                                    "items": {
-                                      "properties": {
-                                        "key": {
-                                          "type": "string"
-                                        },
-                                        "operator": {
-                                          "type": "string"
-                                        },
-                                        "values": {
-                                          "items": {
-                                            "type": "string"
-                                          },
-                                          "type": "array"
-                                        }
-                                      },
-                                      "type": "object",
-                                      "additionalProperties": false
-                                    },
-                                    "type": "array"
-                                  },
-                                  "matchFields": {
-                                    "items": {
-                                      "properties": {
-                                        "key": {
-                                          "type": "string"
-                                        },
-                                        "operator": {
-                                          "type": "string"
-                                        },
-                                        "values": {
-                                          "items": {
-                                            "type": "string"
-                                          },
-                                          "type": "array"
-                                        }
-                                      },
-                                      "type": "object",
-                                      "additionalProperties": false
-                                    },
-                                    "type": "array"
-                                  }
-                                },
-                                "type": "object",
-                                "additionalProperties": false
-                              },
-                              "weight": {
-                                "type": "integer"
-                              }
-                            },
-                            "type": "object",
-                            "additionalProperties": false
-                          },
-                          "type": "array"
-                        },
-                        "requiredDuringSchedulingIgnoredDuringExecution": {
-                          "properties": {
-                            "nodeSelectorTerms": {
-                              "items": {
-                                "properties": {
-                                  "matchExpressions": {
-                                    "items": {
-                                      "properties": {
-                                        "key": {
-                                          "type": "string"
-                                        },
-                                        "operator": {
-                                          "type": "string"
-                                        },
-                                        "values": {
-                                          "items": {
-                                            "type": "string"
-                                          },
-                                          "type": "array"
-                                        }
-                                      },
-                                      "type": "object",
-                                      "additionalProperties": false
-                                    },
-                                    "type": "array"
-                                  },
-                                  "matchFields": {
-                                    "items": {
-                                      "properties": {
-                                        "key": {
-                                          "type": "string"
-                                        },
-                                        "operator": {
-                                          "type": "string"
-                                        },
-                                        "values": {
-                                          "items": {
-                                            "type": "string"
-                                          },
-                                          "type": "array"
-                                        }
-                                      },
-                                      "type": "object",
-                                      "additionalProperties": false
-                                    },
-                                    "type": "array"
-                                  }
-                                },
-                                "type": "object",
-                                "additionalProperties": false
-                              },
-                              "type": "array"
-                            }
-                          },
-                          "type": "object",
-                          "additionalProperties": false
-                        }
+                    "labels": {
+                      "additionalProperties": {
+                        "type": "string"
                       },
                       "type": "object",
-                      "additionalProperties": false
+                      "description": "Labels added to the Kubernetes resource."
                     },
-                    "podAffinity": {
-                      "properties": {
-                        "preferredDuringSchedulingIgnoredDuringExecution": {
-                          "items": {
-                            "properties": {
-                              "podAffinityTerm": {
-                                "properties": {
-                                  "labelSelector": {
-                                    "properties": {
-                                      "matchExpressions": {
-                                        "items": {
-                                          "properties": {
-                                            "key": {
-                                              "type": "string"
-                                            },
-                                            "operator": {
-                                              "type": "string"
-                                            },
-                                            "values": {
-                                              "items": {
-                                                "type": "string"
-                                              },
-                                              "type": "array"
-                                            }
-                                          },
-                                          "type": "object",
-                                          "additionalProperties": false
-                                        },
-                                        "type": "array"
-                                      },
-                                      "matchLabels": {
-                                        "additionalProperties": {
-                                          "type": "string"
-                                        },
-                                        "type": "object"
-                                      }
-                                    },
-                                    "type": "object",
-                                    "additionalProperties": false
-                                  },
-                                  "matchLabelKeys": {
-                                    "items": {
-                                      "type": "string"
-                                    },
-                                    "type": "array"
-                                  },
-                                  "mismatchLabelKeys": {
-                                    "items": {
-                                      "type": "string"
-                                    },
-                                    "type": "array"
-                                  },
-                                  "namespaceSelector": {
-                                    "properties": {
-                                      "matchExpressions": {
-                                        "items": {
-                                          "properties": {
-                                            "key": {
-                                              "type": "string"
-                                            },
-                                            "operator": {
-                                              "type": "string"
-                                            },
-                                            "values": {
-                                              "items": {
-                                                "type": "string"
-                                              },
-                                              "type": "array"
-                                            }
-                                          },
-                                          "type": "object",
-                                          "additionalProperties": false
-                                        },
-                                        "type": "array"
-                                      },
-                                      "matchLabels": {
-                                        "additionalProperties": {
-                                          "type": "string"
-                                        },
-                                        "type": "object"
-                                      }
-                                    },
-                                    "type": "object",
-                                    "additionalProperties": false
-                                  },
-                                  "namespaces": {
-                                    "items": {
-                                      "type": "string"
-                                    },
-                                    "type": "array"
-                                  },
-                                  "topologyKey": {
-                                    "type": "string"
-                                  }
-                                },
-                                "type": "object",
-                                "additionalProperties": false
-                              },
-                              "weight": {
-                                "type": "integer"
-                              }
-                            },
-                            "type": "object",
-                            "additionalProperties": false
-                          },
-                          "type": "array"
-                        },
-                        "requiredDuringSchedulingIgnoredDuringExecution": {
-                          "items": {
-                            "properties": {
-                              "labelSelector": {
-                                "properties": {
-                                  "matchExpressions": {
-                                    "items": {
-                                      "properties": {
-                                        "key": {
-                                          "type": "string"
-                                        },
-                                        "operator": {
-                                          "type": "string"
-                                        },
-                                        "values": {
-                                          "items": {
-                                            "type": "string"
-                                          },
-                                          "type": "array"
-                                        }
-                                      },
-                                      "type": "object",
-                                      "additionalProperties": false
-                                    },
-                                    "type": "array"
-                                  },
-                                  "matchLabels": {
-                                    "additionalProperties": {
-                                      "type": "string"
-                                    },
-                                    "type": "object"
-                                  }
-                                },
-                                "type": "object",
-                                "additionalProperties": false
-                              },
-                              "matchLabelKeys": {
-                                "items": {
-                                  "type": "string"
-                                },
-                                "type": "array"
-                              },
-                              "mismatchLabelKeys": {
-                                "items": {
-                                  "type": "string"
-                                },
-                                "type": "array"
-                              },
-                              "namespaceSelector": {
-                                "properties": {
-                                  "matchExpressions": {
-                                    "items": {
-                                      "properties": {
-                                        "key": {
-                                          "type": "string"
-                                        },
-                                        "operator": {
-                                          "type": "string"
-                                        },
-                                        "values": {
-                                          "items": {
-                                            "type": "string"
-                                          },
-                                          "type": "array"
-                                        }
-                                      },
-                                      "type": "object",
-                                      "additionalProperties": false
-                                    },
-                                    "type": "array"
-                                  },
-                                  "matchLabels": {
-                                    "additionalProperties": {
-                                      "type": "string"
-                                    },
-                                    "type": "object"
-                                  }
-                                },
-                                "type": "object",
-                                "additionalProperties": false
-                              },
-                              "namespaces": {
-                                "items": {
-                                  "type": "string"
-                                },
-                                "type": "array"
-                              },
-                              "topologyKey": {
-                                "type": "string"
-                              }
-                            },
-                            "type": "object",
-                            "additionalProperties": false
-                          },
-                          "type": "array"
-                        }
+                    "annotations": {
+                      "additionalProperties": {
+                        "type": "string"
                       },
                       "type": "object",
-                      "additionalProperties": false
-                    },
-                    "podAntiAffinity": {
-                      "properties": {
-                        "preferredDuringSchedulingIgnoredDuringExecution": {
-                          "items": {
-                            "properties": {
-                              "podAffinityTerm": {
-                                "properties": {
-                                  "labelSelector": {
-                                    "properties": {
-                                      "matchExpressions": {
-                                        "items": {
-                                          "properties": {
-                                            "key": {
-                                              "type": "string"
-                                            },
-                                            "operator": {
-                                              "type": "string"
-                                            },
-                                            "values": {
-                                              "items": {
-                                                "type": "string"
-                                              },
-                                              "type": "array"
-                                            }
-                                          },
-                                          "type": "object",
-                                          "additionalProperties": false
-                                        },
-                                        "type": "array"
-                                      },
-                                      "matchLabels": {
-                                        "additionalProperties": {
-                                          "type": "string"
-                                        },
-                                        "type": "object"
-                                      }
-                                    },
-                                    "type": "object",
-                                    "additionalProperties": false
-                                  },
-                                  "matchLabelKeys": {
-                                    "items": {
-                                      "type": "string"
-                                    },
-                                    "type": "array"
-                                  },
-                                  "mismatchLabelKeys": {
-                                    "items": {
-                                      "type": "string"
-                                    },
-                                    "type": "array"
-                                  },
-                                  "namespaceSelector": {
-                                    "properties": {
-                                      "matchExpressions": {
-                                        "items": {
-                                          "properties": {
-                                            "key": {
-                                              "type": "string"
-                                            },
-                                            "operator": {
-                                              "type": "string"
-                                            },
-                                            "values": {
-                                              "items": {
-                                                "type": "string"
-                                              },
-                                              "type": "array"
-                                            }
-                                          },
-                                          "type": "object",
-                                          "additionalProperties": false
-                                        },
-                                        "type": "array"
-                                      },
-                                      "matchLabels": {
-                                        "additionalProperties": {
-                                          "type": "string"
-                                        },
-                                        "type": "object"
-                                      }
-                                    },
-                                    "type": "object",
-                                    "additionalProperties": false
-                                  },
-                                  "namespaces": {
-                                    "items": {
-                                      "type": "string"
-                                    },
-                                    "type": "array"
-                                  },
-                                  "topologyKey": {
-                                    "type": "string"
-                                  }
-                                },
-                                "type": "object",
-                                "additionalProperties": false
-                              },
-                              "weight": {
-                                "type": "integer"
-                              }
-                            },
-                            "type": "object",
-                            "additionalProperties": false
-                          },
-                          "type": "array"
-                        },
-                        "requiredDuringSchedulingIgnoredDuringExecution": {
-                          "items": {
-                            "properties": {
-                              "labelSelector": {
-                                "properties": {
-                                  "matchExpressions": {
-                                    "items": {
-                                      "properties": {
-                                        "key": {
-                                          "type": "string"
-                                        },
-                                        "operator": {
-                                          "type": "string"
-                                        },
-                                        "values": {
-                                          "items": {
-                                            "type": "string"
-                                          },
-                                          "type": "array"
-                                        }
-                                      },
-                                      "type": "object",
-                                      "additionalProperties": false
-                                    },
-                                    "type": "array"
-                                  },
-                                  "matchLabels": {
-                                    "additionalProperties": {
-                                      "type": "string"
-                                    },
-                                    "type": "object"
-                                  }
-                                },
-                                "type": "object",
-                                "additionalProperties": false
-                              },
-                              "matchLabelKeys": {
-                                "items": {
-                                  "type": "string"
-                                },
-                                "type": "array"
-                              },
-                              "mismatchLabelKeys": {
-                                "items": {
-                                  "type": "string"
-                                },
-                                "type": "array"
-                              },
-                              "namespaceSelector": {
-                                "properties": {
-                                  "matchExpressions": {
-                                    "items": {
-                                      "properties": {
-                                        "key": {
-                                          "type": "string"
-                                        },
-                                        "operator": {
-                                          "type": "string"
-                                        },
-                                        "values": {
-                                          "items": {
-                                            "type": "string"
-                                          },
-                                          "type": "array"
-                                        }
-                                      },
-                                      "type": "object",
-                                      "additionalProperties": false
-                                    },
-                                    "type": "array"
-                                  },
-                                  "matchLabels": {
-                                    "additionalProperties": {
-                                      "type": "string"
-                                    },
-                                    "type": "object"
-                                  }
-                                },
-                                "type": "object",
-                                "additionalProperties": false
-                              },
-                              "namespaces": {
-                                "items": {
-                                  "type": "string"
-                                },
-                                "type": "array"
-                              },
-                              "topologyKey": {
-                                "type": "string"
-                              }
-                            },
-                            "type": "object",
-                            "additionalProperties": false
-                          },
-                          "type": "array"
-                        }
-                      },
-                      "type": "object",
-                      "additionalProperties": false
+                      "description": "Annotations added to the Kubernetes resource."
                     }
                   },
-                  "type": "object",
+                  "description": "Metadata applied to the resource.",
                   "additionalProperties": false
-                },
-                "dnsConfig": {
-                  "description": "The pod's DNSConfig. If specified, it will be merged to the generated DNS configuration based on the DNSPolicy.",
-                  "properties": {
-                    "nameservers": {
-                      "items": {
-                        "type": "string"
-                      },
-                      "type": "array"
-                    },
-                    "options": {
-                      "items": {
-                        "properties": {
-                          "name": {
-                            "type": "string"
-                          },
-                          "value": {
-                            "type": "string"
-                          }
-                        },
-                        "type": "object",
-                        "additionalProperties": false
-                      },
-                      "type": "array"
-                    },
-                    "searches": {
-                      "items": {
-                        "type": "string"
-                      },
-                      "type": "array"
-                    }
-                  },
-                  "type": "object",
-                  "additionalProperties": false
-                },
-                "dnsPolicy": {
-                  "description": "The pod's DNSPolicy. Defaults to `ClusterFirst`. Valid values are `ClusterFirstWithHostNet`, `ClusterFirst`, `Default` or `None`.",
-                  "enum": [
-                    "ClusterFirst",
-                    "ClusterFirstWithHostNet",
-                    "Default",
-                    "None"
-                  ],
-                  "type": "string"
-                },
-                "enableServiceLinks": {
-                  "description": "Indicates whether information about services should be injected into Pod's environment variables.",
-                  "type": "boolean"
-                },
-                "hostAliases": {
-                  "description": "The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the Pod's hosts file if specified.",
-                  "items": {
-                    "properties": {
-                      "hostnames": {
-                        "items": {
-                          "type": "string"
-                        },
-                        "type": "array"
-                      },
-                      "ip": {
-                        "type": "string"
-                      }
-                    },
-                    "type": "object",
-                    "additionalProperties": false
-                  },
-                  "type": "array"
                 },
                 "imagePullSecrets": {
-                  "description": "List of references to secrets in the same namespace to use for pulling any of the images used by this Pod. When the `STRIMZI_IMAGE_PULL_SECRETS` environment variable in Cluster Operator and the `imagePullSecrets` option are specified, only the `imagePullSecrets` variable is used and the `STRIMZI_IMAGE_PULL_SECRETS` variable is ignored.",
+                  "type": "array",
                   "items": {
+                    "type": "object",
                     "properties": {
                       "name": {
                         "type": "string"
                       }
                     },
-                    "type": "object",
                     "additionalProperties": false
                   },
-                  "type": "array"
-                },
-                "metadata": {
-                  "description": "Metadata applied to the resource.",
-                  "properties": {
-                    "annotations": {
-                      "additionalProperties": {
-                        "type": "string"
-                      },
-                      "description": "Annotations added to the Kubernetes resource.",
-                      "type": "object"
-                    },
-                    "labels": {
-                      "additionalProperties": {
-                        "type": "string"
-                      },
-                      "description": "Labels added to the Kubernetes resource.",
-                      "type": "object"
-                    }
-                  },
-                  "type": "object",
-                  "additionalProperties": false
-                },
-                "priorityClassName": {
-                  "description": "The name of the priority class used to assign priority to the pods. ",
-                  "type": "string"
-                },
-                "schedulerName": {
-                  "description": "The name of the scheduler used to dispatch this `Pod`. If not specified, the default scheduler will be used.",
-                  "type": "string"
+                  "description": "List of references to secrets in the same namespace to use for pulling any of the images used by this Pod. When the `STRIMZI_IMAGE_PULL_SECRETS` environment variable in Cluster Operator and the `imagePullSecrets` option are specified, only the `imagePullSecrets` variable is used and the `STRIMZI_IMAGE_PULL_SECRETS` variable is ignored."
                 },
                 "securityContext": {
-                  "description": "Configures pod-level security attributes and common container settings.",
+                  "type": "object",
                   "properties": {
                     "appArmorProfile": {
+                      "type": "object",
                       "properties": {
                         "localhostProfile": {
                           "type": "string"
@@ -1505,7 +330,6 @@
                           "type": "string"
                         }
                       },
-                      "type": "object",
                       "additionalProperties": false
                     },
                     "fsGroup": {
@@ -1527,6 +351,7 @@
                       "type": "string"
                     },
                     "seLinuxOptions": {
+                      "type": "object",
                       "properties": {
                         "level": {
                           "type": "string"
@@ -1541,10 +366,10 @@
                           "type": "string"
                         }
                       },
-                      "type": "object",
                       "additionalProperties": false
                     },
                     "seccompProfile": {
+                      "type": "object",
                       "properties": {
                         "localhostProfile": {
                           "type": "string"
@@ -1553,20 +378,21 @@
                           "type": "string"
                         }
                       },
-                      "type": "object",
                       "additionalProperties": false
                     },
                     "supplementalGroups": {
+                      "type": "array",
                       "items": {
                         "type": "integer"
-                      },
-                      "type": "array"
+                      }
                     },
                     "supplementalGroupsPolicy": {
                       "type": "string"
                     },
                     "sysctls": {
+                      "type": "array",
                       "items": {
+                        "type": "object",
                         "properties": {
                           "name": {
                             "type": "string"
@@ -1575,12 +401,11 @@
                             "type": "string"
                           }
                         },
-                        "type": "object",
                         "additionalProperties": false
-                      },
-                      "type": "array"
+                      }
                     },
                     "windowsOptions": {
+                      "type": "object",
                       "properties": {
                         "gmsaCredentialSpec": {
                           "type": "string"
@@ -1595,26 +420,565 @@
                           "type": "string"
                         }
                       },
-                      "type": "object",
                       "additionalProperties": false
                     }
                   },
-                  "type": "object",
+                  "description": "Configures pod-level security attributes and common container settings.",
                   "additionalProperties": false
                 },
                 "terminationGracePeriodSeconds": {
-                  "description": "The grace period is the duration in seconds after the processes running in the pod are sent a termination signal, and the time when the processes are forcibly halted with a kill signal. Set this value to longer than the expected cleanup time for your process. Value must be a non-negative integer. A zero value indicates delete immediately. You might need to increase the grace period for very large Kafka clusters, so that the Kafka brokers have enough time to transfer their work to another broker before they are terminated. Defaults to 30 seconds.",
+                  "type": "integer",
                   "minimum": 0,
-                  "type": "integer"
+                  "description": "The grace period is the duration in seconds after the processes running in the pod are sent a termination signal, and the time when the processes are forcibly halted with a kill signal. Set this value to longer than the expected cleanup time for your process. Value must be a non-negative integer. A zero value indicates delete immediately. You might need to increase the grace period for very large Kafka clusters, so that the Kafka brokers have enough time to transfer their work to another broker before they are terminated. Defaults to 30 seconds."
                 },
-                "tmpDirSizeLimit": {
-                  "description": "Defines the total amount of pod memory allocated for the temporary `EmptyDir` volume `/tmp`. Specify the allocation in memory units, for example, `100Mi` for 100 mebibytes. Default value is `5Mi`. The `/tmp` volume is backed by pod memory, not disk storage, so avoid setting a high value as it consumes pod memory resources.",
-                  "pattern": "^([0-9.]+)([eEinumkKMGTP]*[-+]?[0-9]*)$",
-                  "type": "string"
+                "affinity": {
+                  "type": "object",
+                  "properties": {
+                    "nodeAffinity": {
+                      "type": "object",
+                      "properties": {
+                        "preferredDuringSchedulingIgnoredDuringExecution": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "preference": {
+                                "type": "object",
+                                "properties": {
+                                  "matchExpressions": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "key": {
+                                          "type": "string"
+                                        },
+                                        "operator": {
+                                          "type": "string"
+                                        },
+                                        "values": {
+                                          "type": "array",
+                                          "items": {
+                                            "type": "string"
+                                          }
+                                        }
+                                      },
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "matchFields": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "key": {
+                                          "type": "string"
+                                        },
+                                        "operator": {
+                                          "type": "string"
+                                        },
+                                        "values": {
+                                          "type": "array",
+                                          "items": {
+                                            "type": "string"
+                                          }
+                                        }
+                                      },
+                                      "additionalProperties": false
+                                    }
+                                  }
+                                },
+                                "additionalProperties": false
+                              },
+                              "weight": {
+                                "type": "integer"
+                              }
+                            },
+                            "additionalProperties": false
+                          }
+                        },
+                        "requiredDuringSchedulingIgnoredDuringExecution": {
+                          "type": "object",
+                          "properties": {
+                            "nodeSelectorTerms": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "matchExpressions": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "key": {
+                                          "type": "string"
+                                        },
+                                        "operator": {
+                                          "type": "string"
+                                        },
+                                        "values": {
+                                          "type": "array",
+                                          "items": {
+                                            "type": "string"
+                                          }
+                                        }
+                                      },
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "matchFields": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "key": {
+                                          "type": "string"
+                                        },
+                                        "operator": {
+                                          "type": "string"
+                                        },
+                                        "values": {
+                                          "type": "array",
+                                          "items": {
+                                            "type": "string"
+                                          }
+                                        }
+                                      },
+                                      "additionalProperties": false
+                                    }
+                                  }
+                                },
+                                "additionalProperties": false
+                              }
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "podAffinity": {
+                      "type": "object",
+                      "properties": {
+                        "preferredDuringSchedulingIgnoredDuringExecution": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "podAffinityTerm": {
+                                "type": "object",
+                                "properties": {
+                                  "labelSelector": {
+                                    "type": "object",
+                                    "properties": {
+                                      "matchExpressions": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "object",
+                                          "properties": {
+                                            "key": {
+                                              "type": "string"
+                                            },
+                                            "operator": {
+                                              "type": "string"
+                                            },
+                                            "values": {
+                                              "type": "array",
+                                              "items": {
+                                                "type": "string"
+                                              }
+                                            }
+                                          },
+                                          "additionalProperties": false
+                                        }
+                                      },
+                                      "matchLabels": {
+                                        "additionalProperties": {
+                                          "type": "string"
+                                        },
+                                        "type": "object"
+                                      }
+                                    },
+                                    "additionalProperties": false
+                                  },
+                                  "matchLabelKeys": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "mismatchLabelKeys": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "namespaceSelector": {
+                                    "type": "object",
+                                    "properties": {
+                                      "matchExpressions": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "object",
+                                          "properties": {
+                                            "key": {
+                                              "type": "string"
+                                            },
+                                            "operator": {
+                                              "type": "string"
+                                            },
+                                            "values": {
+                                              "type": "array",
+                                              "items": {
+                                                "type": "string"
+                                              }
+                                            }
+                                          },
+                                          "additionalProperties": false
+                                        }
+                                      },
+                                      "matchLabels": {
+                                        "additionalProperties": {
+                                          "type": "string"
+                                        },
+                                        "type": "object"
+                                      }
+                                    },
+                                    "additionalProperties": false
+                                  },
+                                  "namespaces": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "topologyKey": {
+                                    "type": "string"
+                                  }
+                                },
+                                "additionalProperties": false
+                              },
+                              "weight": {
+                                "type": "integer"
+                              }
+                            },
+                            "additionalProperties": false
+                          }
+                        },
+                        "requiredDuringSchedulingIgnoredDuringExecution": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "labelSelector": {
+                                "type": "object",
+                                "properties": {
+                                  "matchExpressions": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "key": {
+                                          "type": "string"
+                                        },
+                                        "operator": {
+                                          "type": "string"
+                                        },
+                                        "values": {
+                                          "type": "array",
+                                          "items": {
+                                            "type": "string"
+                                          }
+                                        }
+                                      },
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "matchLabels": {
+                                    "additionalProperties": {
+                                      "type": "string"
+                                    },
+                                    "type": "object"
+                                  }
+                                },
+                                "additionalProperties": false
+                              },
+                              "matchLabelKeys": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              },
+                              "mismatchLabelKeys": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              },
+                              "namespaceSelector": {
+                                "type": "object",
+                                "properties": {
+                                  "matchExpressions": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "key": {
+                                          "type": "string"
+                                        },
+                                        "operator": {
+                                          "type": "string"
+                                        },
+                                        "values": {
+                                          "type": "array",
+                                          "items": {
+                                            "type": "string"
+                                          }
+                                        }
+                                      },
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "matchLabels": {
+                                    "additionalProperties": {
+                                      "type": "string"
+                                    },
+                                    "type": "object"
+                                  }
+                                },
+                                "additionalProperties": false
+                              },
+                              "namespaces": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              },
+                              "topologyKey": {
+                                "type": "string"
+                              }
+                            },
+                            "additionalProperties": false
+                          }
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "podAntiAffinity": {
+                      "type": "object",
+                      "properties": {
+                        "preferredDuringSchedulingIgnoredDuringExecution": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "podAffinityTerm": {
+                                "type": "object",
+                                "properties": {
+                                  "labelSelector": {
+                                    "type": "object",
+                                    "properties": {
+                                      "matchExpressions": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "object",
+                                          "properties": {
+                                            "key": {
+                                              "type": "string"
+                                            },
+                                            "operator": {
+                                              "type": "string"
+                                            },
+                                            "values": {
+                                              "type": "array",
+                                              "items": {
+                                                "type": "string"
+                                              }
+                                            }
+                                          },
+                                          "additionalProperties": false
+                                        }
+                                      },
+                                      "matchLabels": {
+                                        "additionalProperties": {
+                                          "type": "string"
+                                        },
+                                        "type": "object"
+                                      }
+                                    },
+                                    "additionalProperties": false
+                                  },
+                                  "matchLabelKeys": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "mismatchLabelKeys": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "namespaceSelector": {
+                                    "type": "object",
+                                    "properties": {
+                                      "matchExpressions": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "object",
+                                          "properties": {
+                                            "key": {
+                                              "type": "string"
+                                            },
+                                            "operator": {
+                                              "type": "string"
+                                            },
+                                            "values": {
+                                              "type": "array",
+                                              "items": {
+                                                "type": "string"
+                                              }
+                                            }
+                                          },
+                                          "additionalProperties": false
+                                        }
+                                      },
+                                      "matchLabels": {
+                                        "additionalProperties": {
+                                          "type": "string"
+                                        },
+                                        "type": "object"
+                                      }
+                                    },
+                                    "additionalProperties": false
+                                  },
+                                  "namespaces": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "topologyKey": {
+                                    "type": "string"
+                                  }
+                                },
+                                "additionalProperties": false
+                              },
+                              "weight": {
+                                "type": "integer"
+                              }
+                            },
+                            "additionalProperties": false
+                          }
+                        },
+                        "requiredDuringSchedulingIgnoredDuringExecution": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "labelSelector": {
+                                "type": "object",
+                                "properties": {
+                                  "matchExpressions": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "key": {
+                                          "type": "string"
+                                        },
+                                        "operator": {
+                                          "type": "string"
+                                        },
+                                        "values": {
+                                          "type": "array",
+                                          "items": {
+                                            "type": "string"
+                                          }
+                                        }
+                                      },
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "matchLabels": {
+                                    "additionalProperties": {
+                                      "type": "string"
+                                    },
+                                    "type": "object"
+                                  }
+                                },
+                                "additionalProperties": false
+                              },
+                              "matchLabelKeys": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              },
+                              "mismatchLabelKeys": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              },
+                              "namespaceSelector": {
+                                "type": "object",
+                                "properties": {
+                                  "matchExpressions": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "key": {
+                                          "type": "string"
+                                        },
+                                        "operator": {
+                                          "type": "string"
+                                        },
+                                        "values": {
+                                          "type": "array",
+                                          "items": {
+                                            "type": "string"
+                                          }
+                                        }
+                                      },
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "matchLabels": {
+                                    "additionalProperties": {
+                                      "type": "string"
+                                    },
+                                    "type": "object"
+                                  }
+                                },
+                                "additionalProperties": false
+                              },
+                              "namespaces": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              },
+                              "topologyKey": {
+                                "type": "string"
+                              }
+                            },
+                            "additionalProperties": false
+                          }
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  },
+                  "description": "The pod's affinity rules.",
+                  "additionalProperties": false
                 },
                 "tolerations": {
-                  "description": "The pod's tolerations.",
+                  "type": "array",
                   "items": {
+                    "type": "object",
                     "properties": {
                       "effect": {
                         "type": "string"
@@ -1632,19 +996,22 @@
                         "type": "string"
                       }
                     },
-                    "type": "object",
                     "additionalProperties": false
                   },
-                  "type": "array"
+                  "description": "The pod's tolerations."
                 },
                 "topologySpreadConstraints": {
-                  "description": "The pod's topology spread constraints.",
+                  "type": "array",
                   "items": {
+                    "type": "object",
                     "properties": {
                       "labelSelector": {
+                        "type": "object",
                         "properties": {
                           "matchExpressions": {
+                            "type": "array",
                             "items": {
+                              "type": "object",
                               "properties": {
                                 "key": {
                                   "type": "string"
@@ -1653,16 +1020,14 @@
                                   "type": "string"
                                 },
                                 "values": {
+                                  "type": "array",
                                   "items": {
                                     "type": "string"
-                                  },
-                                  "type": "array"
+                                  }
                                 }
                               },
-                              "type": "object",
                               "additionalProperties": false
-                            },
-                            "type": "array"
+                            }
                           },
                           "matchLabels": {
                             "additionalProperties": {
@@ -1671,14 +1036,13 @@
                             "type": "object"
                           }
                         },
-                        "type": "object",
                         "additionalProperties": false
                       },
                       "matchLabelKeys": {
+                        "type": "array",
                         "items": {
                           "type": "string"
-                        },
-                        "type": "array"
+                        }
                       },
                       "maxSkew": {
                         "type": "integer"
@@ -1699,35 +1063,109 @@
                         "type": "string"
                       }
                     },
-                    "type": "object",
                     "additionalProperties": false
                   },
-                  "type": "array"
+                  "description": "The pod's topology spread constraints."
+                },
+                "priorityClassName": {
+                  "type": "string",
+                  "description": "The name of the priority class used to assign priority to the pods. "
+                },
+                "schedulerName": {
+                  "type": "string",
+                  "description": "The name of the scheduler used to dispatch this `Pod`. If not specified, the default scheduler will be used."
+                },
+                "hostAliases": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "hostnames": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "ip": {
+                        "type": "string"
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "description": "The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the Pod's hosts file if specified."
+                },
+                "dnsPolicy": {
+                  "type": "string",
+                  "enum": [
+                    "ClusterFirst",
+                    "ClusterFirstWithHostNet",
+                    "Default",
+                    "None"
+                  ],
+                  "description": "The pod's DNSPolicy. Defaults to `ClusterFirst`. Valid values are `ClusterFirstWithHostNet`, `ClusterFirst`, `Default` or `None`."
+                },
+                "dnsConfig": {
+                  "type": "object",
+                  "properties": {
+                    "nameservers": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "options": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    },
+                    "searches": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "The pod's DNSConfig. If specified, it will be merged to the generated DNS configuration based on the DNSPolicy.",
+                  "additionalProperties": false
+                },
+                "enableServiceLinks": {
+                  "type": "boolean",
+                  "description": "Indicates whether information about services should be injected into Pod's environment variables."
+                },
+                "tmpDirSizeLimit": {
+                  "type": "string",
+                  "pattern": "^([0-9.]+)([eEinumkKMGTP]*[-+]?[0-9]*)$",
+                  "description": "Defines the total amount of pod memory allocated for the temporary `EmptyDir` volume `/tmp`. Specify the allocation in memory units, for example, `100Mi` for 100 mebibytes. Default value is `5Mi`. The `/tmp` volume is backed by pod memory, not disk storage, so avoid setting a high value as it consumes pod memory resources."
                 },
                 "volumes": {
-                  "description": "Additional volumes that can be mounted to the pod.",
+                  "type": "array",
                   "items": {
-                    "oneOf": [
-                      {
-                        "properties": {
-                          "configMap": {},
-                          "csi": {},
-                          "emptyDir": {},
-                          "image": {},
-                          "persistentVolumeClaim": {},
-                          "secret": {}
-                        }
-                      }
-                    ],
+                    "type": "object",
                     "properties": {
-                      "configMap": {
-                        "description": "`ConfigMap` to use to populate the volume.",
+                      "name": {
+                        "type": "string",
+                        "description": "Name to use for the volume. Required."
+                      },
+                      "secret": {
+                        "type": "object",
                         "properties": {
                           "defaultMode": {
                             "type": "integer"
                           },
                           "items": {
+                            "type": "array",
                             "items": {
+                              "type": "object",
                               "properties": {
                                 "key": {
                                   "type": "string"
@@ -1739,10 +1177,42 @@
                                   "type": "string"
                                 }
                               },
-                              "type": "object",
                               "additionalProperties": false
-                            },
-                            "type": "array"
+                            }
+                          },
+                          "optional": {
+                            "type": "boolean"
+                          },
+                          "secretName": {
+                            "type": "string"
+                          }
+                        },
+                        "description": "`Secret` to use to populate the volume.",
+                        "additionalProperties": false
+                      },
+                      "configMap": {
+                        "type": "object",
+                        "properties": {
+                          "defaultMode": {
+                            "type": "integer"
+                          },
+                          "items": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "key": {
+                                  "type": "string"
+                                },
+                                "mode": {
+                                  "type": "integer"
+                                },
+                                "path": {
+                                  "type": "string"
+                                }
+                              },
+                              "additionalProperties": false
+                            }
                           },
                           "name": {
                             "type": "string"
@@ -1751,11 +1221,43 @@
                             "type": "boolean"
                           }
                         },
+                        "description": "`ConfigMap` to use to populate the volume.",
+                        "additionalProperties": false
+                      },
+                      "emptyDir": {
                         "type": "object",
+                        "properties": {
+                          "medium": {
+                            "type": "string",
+                            "enum": [
+                              "Memory"
+                            ],
+                            "description": "Medium represents the type of storage medium should back this volume. Valid values are unset or `Memory`. When not set, it will use the node's default medium."
+                          },
+                          "sizeLimit": {
+                            "type": "string",
+                            "pattern": "^([0-9.]+)([eEinumkKMGTP]*[-+]?[0-9]*)$",
+                            "description": "The total amount of local storage required for this EmptyDir volume (for example 1Gi)."
+                          }
+                        },
+                        "description": "`EmptyDir` to use to populate the volume.",
+                        "additionalProperties": false
+                      },
+                      "persistentVolumeClaim": {
+                        "type": "object",
+                        "properties": {
+                          "claimName": {
+                            "type": "string"
+                          },
+                          "readOnly": {
+                            "type": "boolean"
+                          }
+                        },
+                        "description": "`PersistentVolumeClaim` object to use to populate the volume.",
                         "additionalProperties": false
                       },
                       "csi": {
-                        "description": "`CSIVolumeSource` object to use to populate the volume.",
+                        "type": "object",
                         "properties": {
                           "driver": {
                             "type": "string"
@@ -1764,12 +1266,12 @@
                             "type": "string"
                           },
                           "nodePublishSecretRef": {
+                            "type": "object",
                             "properties": {
                               "name": {
                                 "type": "string"
                               }
                             },
-                            "type": "object",
                             "additionalProperties": false
                           },
                           "readOnly": {
@@ -1782,30 +1284,11 @@
                             "type": "object"
                           }
                         },
-                        "type": "object",
-                        "additionalProperties": false
-                      },
-                      "emptyDir": {
-                        "description": "`EmptyDir` to use to populate the volume.",
-                        "properties": {
-                          "medium": {
-                            "description": "Medium represents the type of storage medium should back this volume. Valid values are unset or `Memory`. When not set, it will use the node's default medium.",
-                            "enum": [
-                              "Memory"
-                            ],
-                            "type": "string"
-                          },
-                          "sizeLimit": {
-                            "description": "The total amount of local storage required for this EmptyDir volume (for example 1Gi).",
-                            "pattern": "^([0-9.]+)([eEinumkKMGTP]*[-+]?[0-9]*)$",
-                            "type": "string"
-                          }
-                        },
-                        "type": "object",
+                        "description": "`CSIVolumeSource` object to use to populate the volume.",
                         "additionalProperties": false
                       },
                       "image": {
-                        "description": "`ImageVolumeSource` object to use to populate the volume.",
+                        "type": "object",
                         "properties": {
                           "pullPolicy": {
                             "type": "string"
@@ -1814,100 +1297,622 @@
                             "type": "string"
                           }
                         },
-                        "type": "object",
-                        "additionalProperties": false
-                      },
-                      "name": {
-                        "description": "Name to use for the volume. Required.",
-                        "type": "string"
-                      },
-                      "persistentVolumeClaim": {
-                        "description": "`PersistentVolumeClaim` object to use to populate the volume.",
-                        "properties": {
-                          "claimName": {
-                            "type": "string"
-                          },
-                          "readOnly": {
-                            "type": "boolean"
-                          }
-                        },
-                        "type": "object",
-                        "additionalProperties": false
-                      },
-                      "secret": {
-                        "description": "`Secret` to use to populate the volume.",
-                        "properties": {
-                          "defaultMode": {
-                            "type": "integer"
-                          },
-                          "items": {
-                            "items": {
-                              "properties": {
-                                "key": {
-                                  "type": "string"
-                                },
-                                "mode": {
-                                  "type": "integer"
-                                },
-                                "path": {
-                                  "type": "string"
-                                }
-                              },
-                              "type": "object",
-                              "additionalProperties": false
-                            },
-                            "type": "array"
-                          },
-                          "optional": {
-                            "type": "boolean"
-                          },
-                          "secretName": {
-                            "type": "string"
-                          }
-                        },
-                        "type": "object",
+                        "description": "`ImageVolumeSource` object to use to populate the volume.",
                         "additionalProperties": false
                       }
                     },
-                    "type": "object",
+                    "oneOf": [
+                      {
+                        "properties": {
+                          "secret": {},
+                          "configMap": {},
+                          "emptyDir": {},
+                          "persistentVolumeClaim": {},
+                          "csi": {},
+                          "image": {}
+                        }
+                      }
+                    ],
                     "additionalProperties": false
                   },
-                  "type": "array"
+                  "description": "Additional volumes that can be mounted to the pod."
+                },
+                "hostUsers": {
+                  "type": "boolean",
+                  "description": "Use the host user namespace. Optional. Defaults to `true`. When `true` or not set, the pod runs in the host user namespace. This is required when the pod needs features available only in the host namespace, such as loading kernel modules with `CAP_SYS_MODULE`.When set to `false`, the pod runs in a new user namespace. Setting `false` helps mitigate container breakout vulnerabilities and allows containers to run as `root` without granting `root` privileges on the host. This property is alpha-level in Kubernetes and is supported only by Kubernetes clusters that enable the `UserNamespacesSupport` feature."
                 }
               },
-              "type": "object",
+              "description": "Template for Kafka `Pods`.",
               "additionalProperties": false
             },
-            "podSet": {
-              "description": "Template for Kafka `StrimziPodSet` resource.",
+            "perPodService": {
+              "type": "object",
               "properties": {
                 "metadata": {
-                  "description": "Metadata applied to the resource.",
+                  "type": "object",
                   "properties": {
-                    "annotations": {
-                      "additionalProperties": {
-                        "type": "string"
-                      },
-                      "description": "Annotations added to the Kubernetes resource.",
-                      "type": "object"
-                    },
                     "labels": {
                       "additionalProperties": {
                         "type": "string"
                       },
-                      "description": "Labels added to the Kubernetes resource.",
-                      "type": "object"
+                      "type": "object",
+                      "description": "Labels added to the Kubernetes resource."
+                    },
+                    "annotations": {
+                      "additionalProperties": {
+                        "type": "string"
+                      },
+                      "type": "object",
+                      "description": "Annotations added to the Kubernetes resource."
                     }
                   },
-                  "type": "object",
+                  "description": "Metadata applied to the resource.",
                   "additionalProperties": false
                 }
               },
+              "description": "Template for Kafka per-pod `Services` used for access from outside of Kubernetes.",
+              "additionalProperties": false
+            },
+            "perPodRoute": {
               "type": "object",
+              "properties": {
+                "metadata": {
+                  "type": "object",
+                  "properties": {
+                    "labels": {
+                      "additionalProperties": {
+                        "type": "string"
+                      },
+                      "type": "object",
+                      "description": "Labels added to the Kubernetes resource."
+                    },
+                    "annotations": {
+                      "additionalProperties": {
+                        "type": "string"
+                      },
+                      "type": "object",
+                      "description": "Annotations added to the Kubernetes resource."
+                    }
+                  },
+                  "description": "Metadata applied to the resource.",
+                  "additionalProperties": false
+                }
+              },
+              "description": "Template for Kafka per-pod `Routes` used for access from outside of OpenShift.",
+              "additionalProperties": false
+            },
+            "perPodIngress": {
+              "type": "object",
+              "properties": {
+                "metadata": {
+                  "type": "object",
+                  "properties": {
+                    "labels": {
+                      "additionalProperties": {
+                        "type": "string"
+                      },
+                      "type": "object",
+                      "description": "Labels added to the Kubernetes resource."
+                    },
+                    "annotations": {
+                      "additionalProperties": {
+                        "type": "string"
+                      },
+                      "type": "object",
+                      "description": "Annotations added to the Kubernetes resource."
+                    }
+                  },
+                  "description": "Metadata applied to the resource.",
+                  "additionalProperties": false
+                }
+              },
+              "description": "Template for Kafka per-pod `Ingress` used for access from outside of Kubernetes.",
+              "additionalProperties": false
+            },
+            "persistentVolumeClaim": {
+              "type": "object",
+              "properties": {
+                "metadata": {
+                  "type": "object",
+                  "properties": {
+                    "labels": {
+                      "additionalProperties": {
+                        "type": "string"
+                      },
+                      "type": "object",
+                      "description": "Labels added to the Kubernetes resource."
+                    },
+                    "annotations": {
+                      "additionalProperties": {
+                        "type": "string"
+                      },
+                      "type": "object",
+                      "description": "Annotations added to the Kubernetes resource."
+                    }
+                  },
+                  "description": "Metadata applied to the resource.",
+                  "additionalProperties": false
+                }
+              },
+              "description": "Template for all Kafka `PersistentVolumeClaims`.",
+              "additionalProperties": false
+            },
+            "kafkaContainer": {
+              "type": "object",
+              "properties": {
+                "env": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "The environment variable key."
+                      },
+                      "value": {
+                        "type": "string",
+                        "description": "The environment variable value."
+                      },
+                      "valueFrom": {
+                        "type": "object",
+                        "properties": {
+                          "secretKeyRef": {
+                            "type": "object",
+                            "properties": {
+                              "key": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "optional": {
+                                "type": "boolean"
+                              }
+                            },
+                            "description": "Reference to a key in a secret.",
+                            "additionalProperties": false
+                          },
+                          "configMapKeyRef": {
+                            "type": "object",
+                            "properties": {
+                              "key": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "optional": {
+                                "type": "boolean"
+                              }
+                            },
+                            "description": "Reference to a key in a config map.",
+                            "additionalProperties": false
+                          }
+                        },
+                        "oneOf": [
+                          {
+                            "properties": {
+                              "secretKeyRef": {}
+                            },
+                            "required": [
+                              "secretKeyRef"
+                            ]
+                          },
+                          {
+                            "properties": {
+                              "configMapKeyRef": {}
+                            },
+                            "required": [
+                              "configMapKeyRef"
+                            ]
+                          }
+                        ],
+                        "description": "Reference to the secret or config map property to which the environment variable is set.",
+                        "additionalProperties": false
+                      }
+                    },
+                    "oneOf": [
+                      {
+                        "properties": {
+                          "value": {}
+                        },
+                        "required": [
+                          "value"
+                        ]
+                      },
+                      {
+                        "properties": {
+                          "valueFrom": {}
+                        },
+                        "required": [
+                          "valueFrom"
+                        ]
+                      }
+                    ],
+                    "additionalProperties": false
+                  },
+                  "description": "Environment variables which should be applied to the container."
+                },
+                "securityContext": {
+                  "type": "object",
+                  "properties": {
+                    "allowPrivilegeEscalation": {
+                      "type": "boolean"
+                    },
+                    "appArmorProfile": {
+                      "type": "object",
+                      "properties": {
+                        "localhostProfile": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "capabilities": {
+                      "type": "object",
+                      "properties": {
+                        "add": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "drop": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "privileged": {
+                      "type": "boolean"
+                    },
+                    "procMount": {
+                      "type": "string"
+                    },
+                    "readOnlyRootFilesystem": {
+                      "type": "boolean"
+                    },
+                    "runAsGroup": {
+                      "type": "integer"
+                    },
+                    "runAsNonRoot": {
+                      "type": "boolean"
+                    },
+                    "runAsUser": {
+                      "type": "integer"
+                    },
+                    "seLinuxOptions": {
+                      "type": "object",
+                      "properties": {
+                        "level": {
+                          "type": "string"
+                        },
+                        "role": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "user": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "seccompProfile": {
+                      "type": "object",
+                      "properties": {
+                        "localhostProfile": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "windowsOptions": {
+                      "type": "object",
+                      "properties": {
+                        "gmsaCredentialSpec": {
+                          "type": "string"
+                        },
+                        "gmsaCredentialSpecName": {
+                          "type": "string"
+                        },
+                        "hostProcess": {
+                          "type": "boolean"
+                        },
+                        "runAsUserName": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  },
+                  "description": "Security context for the container.",
+                  "additionalProperties": false
+                },
+                "volumeMounts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "mountPath": {
+                        "type": "string"
+                      },
+                      "mountPropagation": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "readOnly": {
+                        "type": "boolean"
+                      },
+                      "recursiveReadOnly": {
+                        "type": "string"
+                      },
+                      "subPath": {
+                        "type": "string"
+                      },
+                      "subPathExpr": {
+                        "type": "string"
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "description": "Additional volume mounts which should be applied to the container."
+                }
+              },
+              "description": "Template for the Kafka broker container.",
+              "additionalProperties": false
+            },
+            "initContainer": {
+              "type": "object",
+              "properties": {
+                "env": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "The environment variable key."
+                      },
+                      "value": {
+                        "type": "string",
+                        "description": "The environment variable value."
+                      },
+                      "valueFrom": {
+                        "type": "object",
+                        "properties": {
+                          "secretKeyRef": {
+                            "type": "object",
+                            "properties": {
+                              "key": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "optional": {
+                                "type": "boolean"
+                              }
+                            },
+                            "description": "Reference to a key in a secret.",
+                            "additionalProperties": false
+                          },
+                          "configMapKeyRef": {
+                            "type": "object",
+                            "properties": {
+                              "key": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "optional": {
+                                "type": "boolean"
+                              }
+                            },
+                            "description": "Reference to a key in a config map.",
+                            "additionalProperties": false
+                          }
+                        },
+                        "oneOf": [
+                          {
+                            "properties": {
+                              "secretKeyRef": {}
+                            },
+                            "required": [
+                              "secretKeyRef"
+                            ]
+                          },
+                          {
+                            "properties": {
+                              "configMapKeyRef": {}
+                            },
+                            "required": [
+                              "configMapKeyRef"
+                            ]
+                          }
+                        ],
+                        "description": "Reference to the secret or config map property to which the environment variable is set.",
+                        "additionalProperties": false
+                      }
+                    },
+                    "oneOf": [
+                      {
+                        "properties": {
+                          "value": {}
+                        },
+                        "required": [
+                          "value"
+                        ]
+                      },
+                      {
+                        "properties": {
+                          "valueFrom": {}
+                        },
+                        "required": [
+                          "valueFrom"
+                        ]
+                      }
+                    ],
+                    "additionalProperties": false
+                  },
+                  "description": "Environment variables which should be applied to the container."
+                },
+                "securityContext": {
+                  "type": "object",
+                  "properties": {
+                    "allowPrivilegeEscalation": {
+                      "type": "boolean"
+                    },
+                    "appArmorProfile": {
+                      "type": "object",
+                      "properties": {
+                        "localhostProfile": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "capabilities": {
+                      "type": "object",
+                      "properties": {
+                        "add": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "drop": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "privileged": {
+                      "type": "boolean"
+                    },
+                    "procMount": {
+                      "type": "string"
+                    },
+                    "readOnlyRootFilesystem": {
+                      "type": "boolean"
+                    },
+                    "runAsGroup": {
+                      "type": "integer"
+                    },
+                    "runAsNonRoot": {
+                      "type": "boolean"
+                    },
+                    "runAsUser": {
+                      "type": "integer"
+                    },
+                    "seLinuxOptions": {
+                      "type": "object",
+                      "properties": {
+                        "level": {
+                          "type": "string"
+                        },
+                        "role": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "user": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "seccompProfile": {
+                      "type": "object",
+                      "properties": {
+                        "localhostProfile": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "windowsOptions": {
+                      "type": "object",
+                      "properties": {
+                        "gmsaCredentialSpec": {
+                          "type": "string"
+                        },
+                        "gmsaCredentialSpecName": {
+                          "type": "string"
+                        },
+                        "hostProcess": {
+                          "type": "boolean"
+                        },
+                        "runAsUserName": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  },
+                  "description": "Security context for the container.",
+                  "additionalProperties": false
+                },
+                "volumeMounts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "mountPath": {
+                        "type": "string"
+                      },
+                      "mountPropagation": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "readOnly": {
+                        "type": "boolean"
+                      },
+                      "recursiveReadOnly": {
+                        "type": "string"
+                      },
+                      "subPath": {
+                        "type": "string"
+                      },
+                      "subPathExpr": {
+                        "type": "string"
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "description": "Additional volume mounts which should be applied to the container."
+                }
+              },
+              "description": "Template for the Kafka init container.",
               "additionalProperties": false
             }
           },
-          "type": "object",
+          "description": "Template for pool resources. The template allows users to specify how the resources belonging to this pool are generated.",
           "additionalProperties": false
         }
       },
@@ -1916,83 +1921,82 @@
         "storage",
         "roles"
       ],
-      "type": "object",
+      "description": "The specification of the KafkaNodePool.",
       "additionalProperties": false
     },
     "status": {
-      "description": "The status of the KafkaNodePool.",
+      "type": "object",
       "properties": {
-        "clusterId": {
-          "description": "Kafka cluster ID.",
-          "type": "string"
-        },
         "conditions": {
-          "description": "List of status conditions.",
+          "type": "array",
           "items": {
+            "type": "object",
             "properties": {
-              "lastTransitionTime": {
-                "description": "Last time the condition of a type changed from one status to another. The required format is 'yyyy-MM-ddTHH:mm:ssZ', in the UTC time zone.",
-                "type": "string"
-              },
-              "message": {
-                "description": "Human-readable message indicating details about the condition's last transition.",
-                "type": "string"
-              },
-              "reason": {
-                "description": "The reason for the condition's last transition (a single word in CamelCase).",
-                "type": "string"
+              "type": {
+                "type": "string",
+                "description": "The unique identifier of a condition, used to distinguish between other conditions in the resource."
               },
               "status": {
-                "description": "The status of the condition, either True, False or Unknown.",
-                "type": "string"
+                "type": "string",
+                "description": "The status of the condition, either True, False or Unknown."
               },
-              "type": {
-                "description": "The unique identifier of a condition, used to distinguish between other conditions in the resource.",
-                "type": "string"
+              "lastTransitionTime": {
+                "type": "string",
+                "description": "Last time the condition of a type changed from one status to another. The required format is 'yyyy-MM-ddTHH:mm:ssZ', in the UTC time zone."
+              },
+              "reason": {
+                "type": "string",
+                "description": "The reason for the condition's last transition (a single word in CamelCase)."
+              },
+              "message": {
+                "type": "string",
+                "description": "Human-readable message indicating details about the condition's last transition."
               }
             },
-            "type": "object",
             "additionalProperties": false
           },
-          "type": "array"
+          "description": "List of status conditions."
         },
-        "labelSelector": {
-          "description": "Label selector for pods providing this resource.",
-          "type": "string"
+        "observedGeneration": {
+          "type": "integer",
+          "description": "The generation of the CRD that was last reconciled by the operator."
         },
         "nodeIds": {
-          "description": "Node IDs used by Kafka nodes in this pool.",
+          "type": "array",
           "items": {
             "type": "integer"
           },
-          "type": "array"
+          "description": "Node IDs used by Kafka nodes in this pool."
         },
-        "observedGeneration": {
-          "description": "The generation of the CRD that was last reconciled by the operator.",
-          "type": "integer"
-        },
-        "replicas": {
-          "description": "The current number of pods being used to provide this resource.",
-          "type": "integer"
+        "clusterId": {
+          "type": "string",
+          "description": "Kafka cluster ID."
         },
         "roles": {
-          "description": "The roles currently assigned to this pool.",
+          "type": "array",
           "items": {
+            "type": "string",
             "enum": [
               "controller",
               "broker"
-            ],
-            "type": "string"
+            ]
           },
-          "type": "array"
+          "description": "The roles currently assigned to this pool."
+        },
+        "replicas": {
+          "type": "integer",
+          "description": "The current number of pods being used to provide this resource."
+        },
+        "labelSelector": {
+          "type": "string",
+          "description": "Label selector for pods providing this resource."
         }
       },
-      "type": "object",
+      "description": "The status of the KafkaNodePool.",
       "additionalProperties": false
     }
   },
   "required": [
     "spec"
-  ],
-  "type": "object"
+  ]
 }
