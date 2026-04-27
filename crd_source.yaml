@@ -1206,7 +1206,7 @@ sources:
     changelog: "https://github.com/kubernetes-sigs/secrets-store-csi-driver/releases"
 
   - url: "https://github.com/kserve/kserve"
-    tag: ""
+    tag: "v0.17.0"
     repo_path: "config/crd/full"
     changelog: "https://github.com/kserve/kserve/releases"
 
