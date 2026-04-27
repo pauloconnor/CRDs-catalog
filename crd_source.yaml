@@ -1001,7 +1001,7 @@ sources:
     changelog: "https://github.com/kube-logging/logging-operator/releases"
 
   - url: "https://github.com/openshift/cluster-logging-operator"
-    tag: ""
+    tag: "release-5.5-preview.1"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/openshift/cluster-logging-operator/releases"
 
