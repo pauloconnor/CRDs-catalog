@@ -8695,6 +8695,42 @@ infrastructure.cluster.x-k8s.io:
     filename: infrastructure.cluster.x-k8s.io/awsmanagedclustertemplate_v1beta2.json
     kind: AWSManagedClusterTemplate
     name: awsmanagedclustertemplate_v1beta2
+  - apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+    filename: infrastructure.cluster.x-k8s.io/azureasomanagedclustertemplate_v1beta1.json
+    kind: AzureASOManagedClusterTemplate
+    name: azureasomanagedclustertemplate_v1beta1
+  - apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+    filename: infrastructure.cluster.x-k8s.io/azureasomanagedcluster_v1beta1.json
+    kind: AzureASOManagedCluster
+    name: azureasomanagedcluster_v1beta1
+  - apiVersion: infrastructure.cluster.x-k8s.io/v1alpha3
+    filename: infrastructure.cluster.x-k8s.io/azuresystemassignedidentity_v1alpha3.json
+    kind: AzureSystemAssignedIdentity
+    name: azuresystemassignedidentity_v1alpha3
+  - apiVersion: infrastructure.cluster.x-k8s.io/v1alpha3
+    filename: infrastructure.cluster.x-k8s.io/azureuserassignedidentity_v1alpha3.json
+    kind: AzureUserAssignedIdentity
+    name: azureuserassignedidentity_v1alpha3
+  - apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+    filename: infrastructure.cluster.x-k8s.io/azureasomanagedmachinepooltemplate_v1beta1.json
+    kind: AzureASOManagedMachinePoolTemplate
+    name: azureasomanagedmachinepooltemplate_v1beta1
+  - apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+    filename: infrastructure.cluster.x-k8s.io/azureasomanagedmachinepool_v1beta1.json
+    kind: AzureASOManagedMachinePool
+    name: azureasomanagedmachinepool_v1beta1
+  - apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+    filename: infrastructure.cluster.x-k8s.io/azureasomanagedcontrolplane_v1beta1.json
+    kind: AzureASOManagedControlPlane
+    name: azureasomanagedcontrolplane_v1beta1
+  - apiVersion: infrastructure.cluster.x-k8s.io/v1alpha3
+    filename: infrastructure.cluster.x-k8s.io/azureserviceprincipal_v1alpha3.json
+    kind: AzureServicePrincipal
+    name: azureserviceprincipal_v1alpha3
+  - apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+    filename: infrastructure.cluster.x-k8s.io/azureasomanagedcontrolplanetemplate_v1beta1.json
+    kind: AzureASOManagedControlPlaneTemplate
+    name: azureasomanagedcontrolplanetemplate_v1beta1
 ingress.oraclecloud.com:
   - apiVersion: ingress.oraclecloud.com/v1beta1
     filename: ingress.oraclecloud.com/ingressclassparameters_v1beta1.json
