@@ -269,7 +269,7 @@ sources:
     changelog: "https://github.com/kubernetes-sigs/aws-load-balancer-controller/releases"
 
   - url: "https://github.com/aws/karpenter-provider-aws"
-    tag: ""
+    tag: "v1.12.0"
     repo_path: "pkg/apis/crds"
     changelog: "https://github.com/aws/karpenter-provider-aws/releases"
 
