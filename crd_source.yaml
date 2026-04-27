@@ -801,7 +801,7 @@ sources:
     changelog: "https://github.com/dragonflydb/dragonfly-operator/releases"
 
   - url: "https://github.com/datainfrahq/druid-operator"
-    tag: ""
+    tag: "v1.3.1"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/datainfrahq/druid-operator/releases"
 
