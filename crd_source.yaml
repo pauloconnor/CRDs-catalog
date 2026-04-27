@@ -588,7 +588,7 @@ sources:
     changelog: "https://github.com/percona/percona-server-mysql-operator/releases"
 
   - url: "https://github.com/percona/dbaas-operator"
-    tag: ""
+    tag: "v0.1.17"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/percona/dbaas-operator/releases"
 
