@@ -1,5 +1,5 @@
 {
-  "description": "User defines the CRD for a Redpanda user.",
+  "description": "Group defines the CRD for managing ACLs for an OIDC group in Redpanda.\nGroups are external identities sourced from OIDC identity providers via JWT token\nclaims. Unlike users, groups are not created in Redpanda \u2014 they exist externally.\nThis CRD allows the operator to manage Kafka ACLs for a group principal.\nGroup-based authorization must be enabled in Redpanda (enterprise feature).",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -13,92 +13,13 @@
       "type": "object"
     },
     "spec": {
-      "description": "Defines the desired state of the Redpanda user.",
+      "description": "Defines the desired state of the Redpanda group.",
       "properties": {
-        "authentication": {
-          "description": "Authentication defines the authentication information for a user. If no\nAuthentication credentials are specified, then no user will be created.\nThis is useful when wanting to manage ACLs for an already-existing user.",
-          "properties": {
-            "password": {
-              "description": "Password specifies where a password is read from.",
-              "properties": {
-                "noGenerate": {
-                  "description": "NoGenerate when set to true does not create kubernetes secret when ValueFrom points to none-existent secret.",
-                  "type": "boolean"
-                },
-                "value": {
-                  "description": "Value is a hardcoded value to use for the given password. It should only be used for testing purposes.\nIn production, use ValueFrom.",
-                  "type": "string"
-                },
-                "valueFrom": {
-                  "description": "ValueFrom specifies a source for a password to be fetched from when specifying or generating user credentials.",
-                  "properties": {
-                    "secretKeyRef": {
-                      "description": "SecretKeyRef specifies the secret used in reading a User password.\nIf the Secret exists and has a value in it, then that value is used.\nIf the Secret does not exist, or is empty, a password is generated and\nstored based on this configuration.",
-                      "properties": {
-                        "key": {
-                          "description": "The key of the secret to select from.  Must be a valid secret key.",
-                          "type": "string"
-                        },
-                        "name": {
-                          "default": "",
-                          "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
-                          "type": "string"
-                        },
-                        "optional": {
-                          "description": "Specify whether the Secret or its key must be defined",
-                          "type": "boolean"
-                        }
-                      },
-                      "required": [
-                        "key"
-                      ],
-                      "type": "object",
-                      "x-kubernetes-map-type": "atomic",
-                      "additionalProperties": false
-                    }
-                  },
-                  "required": [
-                    "secretKeyRef"
-                  ],
-                  "type": "object",
-                  "additionalProperties": false
-                }
-              },
-              "required": [
-                "valueFrom"
-              ],
-              "type": "object",
-              "x-kubernetes-validations": [
-                {
-                  "message": "valueFrom must not be empty if no value supplied",
-                  "rule": "self.value != \"\" || has(self.valueFrom)"
-                }
-              ],
-              "additionalProperties": false
-            },
-            "type": {
-              "default": "scram-sha-512",
-              "description": "SASL mechanism to use for the user credentials. Valid values are:\n- scram-sha-512\n- scram-sha-256",
-              "enum": [
-                "scram-sha-256",
-                "scram-sha-512",
-                "SCRAM-SHA-256",
-                "SCRAM-SHA-512"
-              ],
-              "type": "string"
-            }
-          },
-          "required": [
-            "password"
-          ],
-          "type": "object",
-          "additionalProperties": false
-        },
         "authorization": {
-          "description": "Authorization rules defined for this user.",
+          "description": "Authorization rules defined for this group. The operator always manages ACLs\nfor the group principal. When omitted or empty, any existing ACLs for this\ngroup are removed.",
           "properties": {
             "acls": {
-              "description": "List of ACL rules which should be applied to this user.",
+              "description": "List of ACL rules which should be applied to this group.",
               "items": {
                 "description": "ACLRule defines an ACL rule applied to the given user.\n\nValidations taken from https://cwiki.apache.org/confluence/pages/viewpage.action?pageId=75978240",
                 "properties": {
@@ -212,21 +133,13 @@
               },
               "maxItems": 1024,
               "type": "array"
-            },
-            "type": {
-              "default": "simple",
-              "description": "Type specifies the type of authorization to use for User ACLs. If unspecified, defaults to `simple`. Valid values are:\n- simple",
-              "enum": [
-                "simple"
-              ],
-              "type": "string"
             }
           },
           "type": "object",
           "additionalProperties": false
         },
         "cluster": {
-          "description": "ClusterSource is a reference to the cluster where the user should be created.\nIt is used in constructing the client created to configure a cluster.",
+          "description": "ClusterSource is a reference to the cluster where the group's ACLs should be managed.\nIt is used in constructing the client created to configure a cluster.",
           "properties": {
             "clusterRef": {
               "description": "ClusterRef is a reference to the cluster where the object should be created.\nIt is used in constructing the client created to configure a cluster.\nThis takes precedence over StaticConfigurationSource.",
@@ -2553,10 +2466,6 @@
           "type": "object",
           "x-kubernetes-validations": [
             {
-              "message": "spec.cluster.staticConfiguration.admin: required value",
-              "rule": "!has(self.staticConfiguration) || has(self.staticConfiguration.admin)"
-            },
-            {
               "message": "spec.cluster.staticConfiguration.kafka: required value",
               "rule": "!has(self.staticConfiguration) || has(self.staticConfiguration.kafka)"
             },
@@ -2569,44 +2478,6 @@
               "rule": "has(self.clusterRef) || has(self.staticConfiguration)"
             }
           ],
-          "additionalProperties": false
-        },
-        "template": {
-          "description": "Template to specify how user secrets are generated.",
-          "properties": {
-            "secret": {
-              "description": "Specifies how the Secret with a user password is generated.",
-              "properties": {
-                "metadata": {
-                  "description": "Metadata specifies additional metadata to associate with a resource.",
-                  "properties": {
-                    "annotations": {
-                      "additionalProperties": {
-                        "type": "string"
-                      },
-                      "description": "Annotations specifies the Kubernetes annotations to apply to a managed resource.",
-                      "type": "object"
-                    },
-                    "labels": {
-                      "additionalProperties": {
-                        "type": "string"
-                      },
-                      "description": "Labels specifies the Kubernetes labels to apply to a managed resource.",
-                      "type": "object"
-                    }
-                  },
-                  "type": "object",
-                  "additionalProperties": false
-                }
-              },
-              "required": [
-                "metadata"
-              ],
-              "type": "object",
-              "additionalProperties": false
-            }
-          },
-          "type": "object",
           "additionalProperties": false
         }
       },
@@ -2628,10 +2499,10 @@
           }
         ]
       },
-      "description": "Represents the current status of the Redpanda user.",
+      "description": "Represents the current status of the Redpanda group.",
       "properties": {
         "conditions": {
-          "description": "Conditions holds the conditions for the Redpanda user.",
+          "description": "Conditions holds the conditions for the Redpanda group.",
           "items": {
             "description": "Condition contains details for one aspect of the current state of this API Resource.",
             "properties": {
@@ -2685,14 +2556,6 @@
             "additionalProperties": false
           },
           "type": "array"
-        },
-        "managedAcls": {
-          "description": "ManagedACLs returns whether the user has managed ACLs that need\nto be cleaned up.",
-          "type": "boolean"
-        },
-        "managedUser": {
-          "description": "ManagedUser returns whether the user has a managed SCRAM user that need\nto be cleaned up.",
-          "type": "boolean"
         },
         "observedGeneration": {
           "description": "Specifies the last observed generation.",
