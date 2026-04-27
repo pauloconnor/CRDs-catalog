@@ -611,7 +611,7 @@ sources:
     changelog: "https://github.com/Azure/aad-pod-identity/releases"
 
   - url: "https://github.com/zalando/postgres-operator"
-    tag: ""
+    tag: "v1.15.1"
     repo_path: "charts/postgres-operator/crds"
     changelog: "https://github.com/zalando/postgres-operator/releases"
 
