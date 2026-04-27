@@ -2218,6 +2218,11 @@ certmanager.step.sm:
     filename: certmanager.step.sm/stepissuer_v1beta1.json
     kind: StepIssuer
     name: stepissuer_v1beta1
+charts.helm.kubefledged.io:
+  - apiVersion: charts.helm.kubefledged.io/v1alpha2
+    filename: charts.helm.kubefledged.io/kubefledged_v1alpha2.json
+    kind: KubeFledged
+    name: kubefledged_v1alpha2
 chisel-operator.io:
   - apiVersion: chisel-operator.io/v1
     filename: chisel-operator.io/exitnodeprovisioner_v1.json
