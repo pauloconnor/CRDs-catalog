@@ -619,6 +619,22 @@ anywhere.eks.amazonaws.com:
     filename: anywhere.eks.amazonaws.com/dockerclustertemplate_v1alpha4.json
     kind: DockerClusterTemplate
     name: dockerclustertemplate_v1alpha4
+  - apiVersion: anywhere.eks.amazonaws.com/v1alpha1
+    filename: anywhere.eks.amazonaws.com/nodeupgrade_v1alpha1.json
+    kind: NodeUpgrade
+    name: nodeupgrade_v1alpha1
+  - apiVersion: anywhere.eks.amazonaws.com/v1alpha1
+    filename: anywhere.eks.amazonaws.com/machinedeploymentupgrade_v1alpha1.json
+    kind: MachineDeploymentUpgrade
+    name: machinedeploymentupgrade_v1alpha1
+  - apiVersion: anywhere.eks.amazonaws.com/v1alpha1
+    filename: anywhere.eks.amazonaws.com/eksarelease_v1alpha1.json
+    kind: EKSARelease
+    name: eksarelease_v1alpha1
+  - apiVersion: anywhere.eks.amazonaws.com/v1alpha1
+    filename: anywhere.eks.amazonaws.com/controlplaneupgrade_v1alpha1.json
+    kind: ControlPlaneUpgrade
+    name: controlplaneupgrade_v1alpha1
 apiextensions.crossplane.io:
   - apiVersion: apiextensions.crossplane.io/v1beta1
     filename: apiextensions.crossplane.io/environmentconfig_v1beta1.json
