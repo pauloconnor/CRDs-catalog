@@ -716,7 +716,7 @@ sources:
     changelog: "https://github.com/rook/rook/releases"
 
   - url: "https://github.com/smallstep/step-issuer"
-    tag: ""
+    tag: "v0.10.2"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/smallstep/step-issuer/releases"
 
