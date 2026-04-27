@@ -986,7 +986,7 @@ sources:
     changelog: "https://github.com/kubescape/operator/releases"
 
   - url: "https://github.com/kubernetes-sigs/kueue"
-    tag: ""
+    tag: "v0.17.1"
     repo_path: "config/components/crd/bases"
     changelog: "https://github.com/kubernetes-sigs/kueue/releases"
 
