@@ -1136,7 +1136,7 @@ sources:
     changelog: "https://github.com/FairwindsOps/rbac-manager/releases"
 
   - url: "https://github.com/OT-CONTAINER-KIT/redis-operator"
-    tag: ""
+    tag: "v0.24.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/OT-CONTAINER-KIT/redis-operator/releases"
 
