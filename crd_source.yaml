@@ -651,7 +651,7 @@ sources:
     changelog: "https://github.com/gitlab-org/cloud-native/gitlab-operator/releases"
 
   - url: "https://github.com/jfrog/jfrog-registry-operator"
-    tag: ""
+    tag: "3.0.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/jfrog/jfrog-registry-operator/releases"
 
