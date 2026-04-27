@@ -15374,6 +15374,43 @@ v1.edp.epam.com:
     filename: v1.edp.epam.com/keycloakrealmgroup_v1.json
     kind: KeycloakRealmGroup
     name: keycloakrealmgroup_v1
+v2.edp.epam.com:
+  - apiVersion: v2.edp.epam.com/v1
+    filename: v2.edp.epam.com/gitserver_v1.json
+    kind: GitServer
+    name: gitserver_v1
+  - apiVersion: v2.edp.epam.com/v1alpha1
+    filename: v2.edp.epam.com/template_v1alpha1.json
+    kind: Template
+    name: template_v1alpha1
+  - apiVersion: v2.edp.epam.com/v1
+    filename: v2.edp.epam.com/jiraissuemetadata_v1.json
+    kind: JiraIssueMetadata
+    name: jiraissuemetadata_v1
+  - apiVersion: v2.edp.epam.com/v1
+    filename: v2.edp.epam.com/codebaseimagestream_v1.json
+    kind: CodebaseImageStream
+    name: codebaseimagestream_v1
+  - apiVersion: v2.edp.epam.com/v1
+    filename: v2.edp.epam.com/jiraserver_v1.json
+    kind: JiraServer
+    name: jiraserver_v1
+  - apiVersion: v2.edp.epam.com/v1
+    filename: v2.edp.epam.com/codebase_v1.json
+    kind: Codebase
+    name: codebase_v1
+  - apiVersion: v2.edp.epam.com/v1
+    filename: v2.edp.epam.com/cdstagedeploy_v1.json
+    kind: CDStageDeploy
+    name: cdstagedeploy_v1
+  - apiVersion: v2.edp.epam.com/v1
+    filename: v2.edp.epam.com/quicklink_v1.json
+    kind: QuickLink
+    name: quicklink_v1
+  - apiVersion: v2.edp.epam.com/v1
+    filename: v2.edp.epam.com/codebasebranch_v1.json
+    kind: CodebaseBranch
+    name: codebasebranch_v1
 vault.banzaicloud.com:
   - apiVersion: vault.banzaicloud.com/v1alpha1
     filename: vault.banzaicloud.com/vault_v1alpha1.json
