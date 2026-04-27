@@ -1343,7 +1343,7 @@ sources:
 
   # Issue #598 - volcano.sh APIs
   - url: "https://github.com/volcano-sh/volcano"
-    tag: ""
+    tag: "v1.14.1"
     repo_path: "installer/helm/chart/volcano/crd/bases"
     changelog: "https://github.com/volcano-sh/volcano/releases"
 

@@ -2725,6 +2725,15 @@ batch.azure.com:
     filename: batch.azure.com/batchaccount_v1api20210101.json
     kind: batchAccount
     name: batchaccount_v1api20210101
+batch.volcano.sh:
+  - apiVersion: batch.volcano.sh/v1alpha1
+    filename: batch.volcano.sh/job_v1alpha1.json
+    kind: job
+    name: job_v1alpha1
+  - apiVersion: batch.volcano.sh/v1alpha1
+    filename: batch.volcano.sh/cronjob_v1alpha1.json
+    kind: cronjob
+    name: cronjob_v1alpha1
 beat.k8s.elastic.co:
   - apiVersion: beat.k8s.elastic.co/v1beta1
     filename: beat.k8s.elastic.co/beat_v1beta1.json
@@ -3066,6 +3075,11 @@ botservice.azure.upbound.io:
     filename: botservice.azure.upbound.io/botwebapp_v1beta1.json
     kind: BotWebApp
     name: botwebapp_v1beta1
+bus.volcano.sh:
+  - apiVersion: bus.volcano.sh/v1alpha1
+    filename: bus.volcano.sh/command_v1alpha1.json
+    kind: Command
+    name: command_v1alpha1
 cache.azure.com:
   - apiVersion: cache.azure.com/v1api20210301
     filename: cache.azure.com/redisenterprisedatabase_v1api20210301.json
@@ -5207,6 +5221,11 @@ config.supervisor.pinniped.dev:
     filename: config.supervisor.pinniped.dev/oidcclient_v1alpha1.json
     kind: OIDCClient
     name: oidcclient_v1alpha1
+config.volcano.sh:
+  - apiVersion: config.volcano.sh/v1alpha1
+    filename: config.volcano.sh/colocationconfiguration_v1alpha1.json
+    kind: ColocationConfiguration
+    name: colocationconfiguration_v1alpha1
 configcontroller.cnrm.cloud.google.com:
   - apiVersion: configcontroller.cnrm.cloud.google.com/v1beta1
     filename: configcontroller.cnrm.cloud.google.com/configcontrollerinstance_v1beta1.json
@@ -16214,6 +16233,11 @@ nfd.k8s-sigs.io:
     filename: nfd.k8s-sigs.io/nodefeature_v1alpha1.json
     kind: NodeFeature
     name: nodefeature_v1alpha1
+nodeinfo.volcano.sh:
+  - apiVersion: nodeinfo.volcano.sh/v1alpha1
+    filename: nodeinfo.volcano.sh/numatopology_v1alpha1.json
+    kind: Numatopology
+    name: numatopology_v1alpha1
 notebooks.cnrm.cloud.google.com:
   - apiVersion: notebooks.cnrm.cloud.google.com/v1alpha1
     filename: notebooks.cnrm.cloud.google.com/notebooksenvironment_v1alpha1.json
@@ -19089,6 +19113,15 @@ scc.cattle.io:
     filename: scc.cattle.io/registration_v1.json
     kind: registration
     name: registration_v1
+scheduling.volcano.sh:
+  - apiVersion: scheduling.volcano.sh/v1beta1
+    filename: scheduling.volcano.sh/podgroup_v1beta1.json
+    kind: PodGroup
+    name: podgroup_v1beta1
+  - apiVersion: scheduling.volcano.sh/v1beta1
+    filename: scheduling.volcano.sh/queue_v1beta1.json
+    kind: Queue
+    name: queue_v1beta1
 scylla.scylladb.com:
   - apiVersion: scylla.scylladb.com/v1alpha1
     filename: scylla.scylladb.com/scyllaoperatorconfig_v1alpha1.json
@@ -19475,6 +19508,11 @@ sfn.services.k8s.aws:
     filename: sfn.services.k8s.aws/statemachine_v1alpha1.json
     kind: StateMachine
     name: statemachine_v1alpha1
+shard.volcano.sh:
+  - apiVersion: shard.volcano.sh/v1alpha1
+    filename: shard.volcano.sh/nodeshard_v1alpha1.json
+    kind: NodeShard
+    name: nodeshard_v1alpha1
 signalrservice.azure.com:
   - apiVersion: signalrservice.azure.com/v1api20240301
     filename: signalrservice.azure.com/customdomain_v1api20240301.json
@@ -20422,6 +20460,11 @@ tinkerbell.org:
     filename: tinkerbell.org/template_v1alpha1.json
     kind: Template
     name: template_v1alpha1
+topology.volcano.sh:
+  - apiVersion: topology.volcano.sh/v1alpha1
+    filename: topology.volcano.sh/hypernode_v1alpha1.json
+    kind: HyperNode
+    name: hypernode_v1alpha1
 tpu.cnrm.cloud.google.com:
   - apiVersion: tpu.cnrm.cloud.google.com/v1alpha1
     filename: tpu.cnrm.cloud.google.com/tpunode_v1alpha1.json
