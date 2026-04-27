@@ -1086,7 +1086,7 @@ sources:
     changelog: "https://github.com/VictoriaMetrics/operator/releases"
 
   - url: "https://github.com/operator-framework/operator-lifecycle-manager"
-    tag: ""
+    tag: "v0.42.0"
     repo_path: "deploy/chart/crds"
     changelog: "https://github.com/operator-framework/operator-lifecycle-manager/releases"
 
