@@ -2913,6 +2913,15 @@ cluster.redpanda.com:
     filename: cluster.redpanda.com/topic_v1alpha2.json
     kind: Topic
     name: topic_v1alpha2
+cluster.weave.works:
+  - apiVersion: cluster.weave.works/v1alpha3
+    filename: cluster.weave.works/existinginframachine_v1alpha3.json
+    kind: ExistingInfraMachine
+    name: existinginframachine_v1alpha3
+  - apiVersion: cluster.weave.works/v1alpha3
+    filename: cluster.weave.works/existinginfracluster_v1alpha3.json
+    kind: ExistingInfraCluster
+    name: existinginfracluster_v1alpha3
 cluster.x-k8s.io:
   - apiVersion: cluster.x-k8s.io/v1beta1
     filename: cluster.x-k8s.io/machinedeployment_v1beta1.json
