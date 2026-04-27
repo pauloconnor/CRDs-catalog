@@ -1046,7 +1046,7 @@ sources:
     changelog: "https://github.com/NVIDIA/gpu-operator/releases"
 
   - url: "https://github.com/NVIDIA/k8s-nim-operator"
-    tag: ""
+    tag: "v3.1.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/NVIDIA/k8s-nim-operator/releases"
 
