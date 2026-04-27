@@ -413,7 +413,7 @@ sources:
     changelog: "https://github.com/flux-iac/tofu-controller/releases"
 
   - url: "https://github.com/controlplaneio-fluxcd/flux-operator"
-    tag: ""
+    tag: "v0.48.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/controlplaneio-fluxcd/flux-operator/releases"
 
