@@ -358,7 +358,7 @@ sources:
     changelog: "https://github.com/kubevirt/kubevirt/releases"
 
   - url: "https://github.com/kubevirt/containerized-data-importer"
-    tag: ""
+    tag: "v1.65.0"
     fetch_strategy: release_url
     url_template: "https://github.com/kubevirt/containerized-data-importer/releases/download/{version}/cdi-operator.yaml"
     changelog: "https://github.com/kubevirt/containerized-data-importer/releases"
