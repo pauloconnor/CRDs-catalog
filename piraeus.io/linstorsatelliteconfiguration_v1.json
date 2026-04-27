@@ -24,6 +24,24 @@
           ],
           "type": "string"
         },
+        "evacuationStrategy": {
+          "description": "EvacuationStrategy configures the evacuation of volumes from a Satellite when DeletionPolicy \"Evacuate\" is used.",
+          "nullable": true,
+          "properties": {
+            "attachedVolumeReattachTimeout": {
+              "default": "5m",
+              "description": "AttachedVolumeReattachTimeout configures how long evacuation waits for attached volumes to reattach on\ndifferent nodes. Setting this to 0 disable this evacuation step.",
+              "type": "string"
+            },
+            "unattachedVolumeAttachTimeout": {
+              "default": "5m",
+              "description": "UnattachedVolumeAttachTimeout configures how long evacuation waits for unattached volumes to attach on\ndifferent nodes. Setting this to 0 disable this evacuation step.",
+              "type": "string"
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
         "internalTLS": {
           "description": "InternalTLS configures secure communication for the LINSTOR Satellite.\n\nIf set, the control traffic between LINSTOR Controller and Satellite will be encrypted using mTLS.",
           "nullable": true,
@@ -207,11 +225,19 @@
             "description": "Patch represent either a Strategic Merge Patch or a JSON patch and its targets.",
             "properties": {
               "options": {
-                "additionalProperties": {
-                  "type": "boolean"
-                },
                 "description": "Options is a list of options for the patch",
-                "type": "object"
+                "properties": {
+                  "allowKindChange": {
+                    "description": "AllowKindChange allows kind changes to the resource.",
+                    "type": "boolean"
+                  },
+                  "allowNameChange": {
+                    "description": "AllowNameChange allows name changes to the resource.",
+                    "type": "boolean"
+                  }
+                },
+                "type": "object",
+                "additionalProperties": false
               },
               "patch": {
                 "description": "Patch is the content of a patch.",
@@ -518,6 +544,13 @@
     "status": {
       "description": "LinstorSatelliteConfigurationStatus defines the observed state of LinstorSatelliteConfiguration",
       "properties": {
+        "appliedTo": {
+          "description": "AppliedTo lists the LinstorSatellite resource this configuration was applied to",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "conditions": {
           "description": "Current LINSTOR Satellite Config state",
           "items": {
@@ -577,6 +610,11 @@
             "type"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "matched": {
+          "description": "Number of configured LinstorSatellite resource.",
+          "format": "int64",
+          "type": "integer"
         }
       },
       "type": "object",
