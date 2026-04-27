@@ -18392,6 +18392,22 @@ resource.streamnative.io:
     filename: resource.streamnative.io/pulsartopic_v1alpha1.json
     kind: PulsarTopic
     name: pulsartopic_v1alpha1
+  - apiVersion: resource.streamnative.io/v1alpha1
+    filename: resource.streamnative.io/serviceaccount_v1alpha1.json
+    kind: ServiceAccount
+    name: serviceaccount_v1alpha1
+  - apiVersion: resource.streamnative.io/v1alpha1
+    filename: resource.streamnative.io/serviceaccountbinding_v1alpha1.json
+    kind: ServiceAccountBinding
+    name: serviceaccountbinding_v1alpha1
+  - apiVersion: resource.streamnative.io/v1alpha1
+    filename: resource.streamnative.io/rolebinding_v1alpha1.json
+    kind: RoleBinding
+    name: rolebinding_v1alpha1
+  - apiVersion: resource.streamnative.io/v1alpha1
+    filename: resource.streamnative.io/apikey_v1alpha1.json
+    kind: APIKey
+    name: apikey_v1alpha1
 resourcemanager.cnrm.cloud.google.com:
   - apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     filename: resourcemanager.cnrm.cloud.google.com/resourcemanagerlien_v1beta1.json

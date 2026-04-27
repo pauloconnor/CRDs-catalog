@@ -1,5 +1,5 @@
 {
-  "description": "ComputeWorkspace is the Schema for the workspaces API",
+  "description": "APIKey is the Schema for the APIKeys API",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -13,7 +13,7 @@
       "type": "object"
     },
     "spec": {
-      "description": "ComputeWorkspaceSpec defines the desired state of Workspace",
+      "description": "APIKeySpec defines the desired state of APIKey",
       "properties": {
         "apiServerRef": {
           "description": "APIServerRef is the reference to the StreamNativeCloudConnection",
@@ -28,60 +28,50 @@
           "x-kubernetes-map-type": "atomic",
           "additionalProperties": false
         },
-        "flinkBlobStorage": {
-          "description": "FlinkBlobStorage is the configuration for the Flink blob storage.",
+        "description": {
+          "description": "Description is a user defined description of the key",
+          "type": "string"
+        },
+        "encryptionKey": {
+          "description": "EncryptionKey contains the public key used to encrypt the token",
           "properties": {
-            "bucket": {
-              "description": "Bucket is required if you want to use cloud storage.",
-              "type": "string"
-            },
-            "path": {
-              "description": "Path is the sub path in the bucket.\nLeave it empty if you want to use the whole bucket.",
+            "pem": {
+              "description": "PEM is the public key in PEM format",
               "type": "string"
             }
           },
-          "required": [
-            "bucket"
-          ],
           "type": "object",
+          "x-kubernetes-map-type": "atomic",
           "additionalProperties": false
         },
+        "expirationTime": {
+          "description": "ExpirationTime is a timestamp that defines when this API key will expire\nThis can only be set on initial creation and not updated later",
+          "format": "date-time",
+          "type": "string"
+        },
+        "exportPlaintextToken": {
+          "description": "ExportPlaintextToken indicates whether the token should be exported in plaintext",
+          "type": "boolean"
+        },
+        "instanceName": {
+          "description": "InstanceName is the name of the instance this API key is for",
+          "type": "string"
+        },
         "lifecyclePolicy": {
-          "description": "LifecyclePolicy determines whether to keep or delete the remote workspace\nwhen the Kubernetes resource is deleted.",
+          "description": "LifecyclePolicy determines whether to keep or delete the remote API key\nwhen the Kubernetes resource is deleted.",
           "enum": [
             "CleanUpAfterDeletion",
             "KeepAfterDeletion"
           ],
           "type": "string"
         },
-        "poolRef": {
-          "description": "PoolRef is the reference to the pool that the workspace will be access to.",
-          "properties": {
-            "name": {
-              "description": "Name is the name of the pool",
-              "type": "string"
-            },
-            "namespace": {
-              "description": "Namespace is the namespace of the pool",
-              "type": "string"
-            }
-          },
-          "required": [
-            "name"
-          ],
-          "type": "object",
-          "additionalProperties": false
-        },
-        "pulsarClusterNames": {
-          "description": "PulsarClusterNames is the list of Pulsar clusters that the workspace will have access to.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "useExternalAccess": {
-          "description": "UseExternalAccess is the flag to indicate whether the workspace will use external access.",
+        "revoke": {
+          "description": "Revoke indicates whether this API key should be revoked",
           "type": "boolean"
+        },
+        "serviceAccountName": {
+          "description": "ServiceAccountName is the name of the service account this API key is for",
+          "type": "string"
         }
       },
       "required": [
@@ -91,7 +81,7 @@
       "additionalProperties": false
     },
     "status": {
-      "description": "ComputeWorkspaceStatus defines the observed state of Workspace",
+      "description": "APIKeyStatus defines the observed state of APIKey",
       "properties": {
         "conditions": {
           "description": "Conditions represent the latest available observations of an object's state",
@@ -149,13 +139,44 @@
           },
           "type": "array"
         },
+        "encryptedToken": {
+          "description": "EncryptedToken is the encrypted security token issued for the key",
+          "properties": {
+            "jwe": {
+              "description": "JWE is the token as a JSON Web Encryption (JWE) message\nFor RSA public keys, the key encryption algorithm is RSA-OAEP, and the content encryption algorithm is AES GCM",
+              "type": "string"
+            }
+          },
+          "type": "object",
+          "x-kubernetes-map-type": "atomic",
+          "additionalProperties": false
+        },
+        "expiresAt": {
+          "description": "ExpiresAt is a timestamp of when the key expires",
+          "format": "date-time",
+          "type": "string"
+        },
+        "issuedAt": {
+          "description": "IssuedAt is a timestamp of when the key was issued",
+          "format": "date-time",
+          "type": "string"
+        },
+        "keyId": {
+          "description": "KeyID is a generated field that is a uid for the token",
+          "type": "string"
+        },
         "observedGeneration": {
-          "description": "ObservedGeneration is the last observed generation.",
+          "description": "ObservedGeneration is the last observed generation",
           "format": "int64",
           "type": "integer"
         },
-        "workspaceId": {
-          "description": "WorkspaceID is the ID of the workspace in the API server",
+        "revokedAt": {
+          "description": "RevokedAt is a timestamp of when the key was revoked, it triggers revocation action",
+          "format": "date-time",
+          "type": "string"
+        },
+        "token": {
+          "description": "Token is the plaintext security token issued for the key",
           "type": "string"
         }
       },

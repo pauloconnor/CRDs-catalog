@@ -1146,7 +1146,7 @@ sources:
     changelog: "https://github.com/mogenius/renovate-operator/releases"
 
   - url: "https://github.com/streamnative/pulsar-resources-operator"
-    tag: ""
+    tag: "pulsar-resources-operator-v0.19.1-rc.1-rc.1"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/streamnative/pulsar-resources-operator/releases"
 
