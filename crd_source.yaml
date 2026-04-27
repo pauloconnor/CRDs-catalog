@@ -826,7 +826,7 @@ sources:
     changelog: "https://github.com/nginxinc/nginx-ingress-helm-operator/releases"
 
   - url: "https://github.com/apache/flink-kubernetes-operator"
-    tag: ""
+    tag: "release-1.14.0"
     repo_path: "helm/flink-kubernetes-operator/crds"
     changelog: "https://github.com/apache/flink-kubernetes-operator/releases"
 

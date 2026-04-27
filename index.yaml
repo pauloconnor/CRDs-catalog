@@ -6566,6 +6566,10 @@ flink.apache.org:
     filename: flink.apache.org/flinksessionjob_v1beta1.json
     kind: flinksessionjob
     name: flinksessionjob_v1beta1
+  - apiVersion: flink.apache.org/v1beta1
+    filename: flink.apache.org/flinkbluegreendeployment_v1beta1.json
+    kind: flinkbluegreendeployment
+    name: flinkbluegreendeployment_v1beta1
 fluentbit.fluent.io:
   - apiVersion: fluentbit.fluent.io/v1alpha2
     filename: fluentbit.fluent.io/collector_v1alpha2.json
