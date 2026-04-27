@@ -1,0 +1,39 @@
+{
+  "type": "object",
+  "properties": {
+    "spec": {
+      "type": "object",
+      "properties": {
+        "backendAddressPools": {
+          "description": "A list of Application Gateway backend pools",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "description": "Name of the Application Gateway backend pool",
+                "type": "string"
+              },
+              "backendAddresses": {
+                "description": "A list of backend pool addresses",
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "ipAddress": {
+                      "description": "ipv4 address",
+                      "type": "string"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -1065,6 +1065,14 @@ appgw.ingress.azure.io:
     filename: appgw.ingress.azure.io/azureapplicationgatewayrewrite_v1beta1.json
     kind: azureapplicationgatewayrewrite
     name: azureapplicationgatewayrewrite_v1beta1
+  - apiVersion: appgw.ingress.azure.io/v1beta1
+    filename: appgw.ingress.azure.io/azureapplicationgatewaybackendpool_v1beta1.json
+    kind: azureapplicationgatewaybackendpool
+    name: azureapplicationgatewaybackendpool_v1beta1
+  - apiVersion: appgw.ingress.azure.io/v1beta1
+    filename: appgw.ingress.azure.io/azureapplicationgatewayinstanceupdatestatus_v1beta1.json
+    kind: azureapplicationgatewayinstanceupdatestatus
+    name: azureapplicationgatewayinstanceupdatestatus_v1beta1
 appgw.ingress.k8s.io:
   - apiVersion: appgw.ingress.k8s.io/v1
     filename: appgw.ingress.k8s.io/azureingressprohibitedtarget_v1.json

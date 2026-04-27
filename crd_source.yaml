@@ -302,7 +302,7 @@ sources:
     changelog: "https://github.com/Azure/karpenter-provider-azure/releases"
 
   - url: "https://github.com/Azure/application-gateway-kubernetes-ingress"
-    tag: ""
+    tag: "1.9.7"
     repo_path: "crds"
     changelog: "https://github.com/Azure/application-gateway-kubernetes-ingress/releases"
 
