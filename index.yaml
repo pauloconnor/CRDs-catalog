@@ -1200,6 +1200,10 @@ apps.emqx.io:
     filename: apps.emqx.io/rebalance_v1beta4.json
     kind: rebalance
     name: rebalance_v1beta4
+  - apiVersion: apps.emqx.io/v2
+    filename: apps.emqx.io/emqx_v2.json
+    kind: EMQX
+    name: emqx_v2
 apps.gitlab.com:
   - apiVersion: apps.gitlab.com/v1beta1
     filename: apps.gitlab.com/gitlab_v1beta1.json
