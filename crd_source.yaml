@@ -1211,7 +1211,7 @@ sources:
     changelog: "https://github.com/kserve/kserve/releases"
 
   - url: "https://github.com/slok/sloth"
-    tag: ""
+    tag: "v0.16.0"
     repo_path: "deploy/kubernetes/helm/sloth/crds"
     changelog: "https://github.com/slok/sloth/releases"
 
