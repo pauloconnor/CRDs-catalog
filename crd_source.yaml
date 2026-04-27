@@ -408,7 +408,7 @@ sources:
     changelog: "https://github.com/fluxcd/image-automation-controller/releases"
 
   - url: "https://github.com/flux-iac/tofu-controller"
-    tag: ""
+    tag: "v0.16.2"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/flux-iac/tofu-controller/releases"
 
