@@ -25,14 +25,14 @@
                   "additionalProperties": {
                     "type": "string"
                   },
-                  "description": "Annotations is an unstructured key value map stored with a resource that may be\nset by external tools to store and retrieve arbitrary metadata. They are not\nqueryable and should be preserved when modifying objects.\nMore info: http://kubernetes.io/docs/user-guide/annotations",
+                  "description": "annotations is an unstructured key value map stored with a resource that may be\nset by external tools to store and retrieve arbitrary metadata. They are not\nqueryable and should be preserved when modifying objects.\nMore info: http://kubernetes.io/docs/user-guide/annotations",
                   "type": "object"
                 },
                 "labels": {
                   "additionalProperties": {
                     "type": "string"
                   },
-                  "description": "Map of string keys and values that can be used to organize and categorize\n(scope and select) objects. May match selectors of replication controllers\nand services.\nMore info: http://kubernetes.io/docs/user-guide/labels",
+                  "description": "labels is a map of string keys and values that can be used to organize and categorize\n(scope and select) objects. May match selectors of replication controllers\nand services.\nMore info: http://kubernetes.io/docs/user-guide/labels",
                   "type": "object"
                 }
               },
@@ -48,7 +48,7 @@
                     "description": "AWSResourceReference is a reference to a specific AWS resource by ID or filters.\nOnly one of ID or Filters may be specified. Specifying more than one will result in\na validation error.",
                     "properties": {
                       "arn": {
-                        "description": "ARN of resource.\nDeprecated: This field has no function and is going to be removed in the next release.",
+                        "description": "ARN of resource.\n\nDeprecated: This field has no function and is going to be removed in the next release.",
                         "type": "string"
                       },
                       "filters": {
@@ -308,7 +308,7 @@
                   "description": "Subnet is a reference to the subnet to use for this instance. If not specified,\nthe cluster subnet will be used.",
                   "properties": {
                     "arn": {
-                      "description": "ARN of resource.\nDeprecated: This field has no function and is going to be removed in the next release.",
+                      "description": "ARN of resource.\n\nDeprecated: This field has no function and is going to be removed in the next release.",
                       "type": "string"
                     },
                     "filters": {

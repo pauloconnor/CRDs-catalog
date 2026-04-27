@@ -25,14 +25,14 @@
                   "additionalProperties": {
                     "type": "string"
                   },
-                  "description": "Annotations is an unstructured key value map stored with a resource that may be\nset by external tools to store and retrieve arbitrary metadata. They are not\nqueryable and should be preserved when modifying objects.\nMore info: http://kubernetes.io/docs/user-guide/annotations",
+                  "description": "annotations is an unstructured key value map stored with a resource that may be\nset by external tools to store and retrieve arbitrary metadata. They are not\nqueryable and should be preserved when modifying objects.\nMore info: http://kubernetes.io/docs/user-guide/annotations",
                   "type": "object"
                 },
                 "labels": {
                   "additionalProperties": {
                     "type": "string"
                   },
-                  "description": "Map of string keys and values that can be used to organize and categorize\n(scope and select) objects. May match selectors of replication controllers\nand services.\nMore info: http://kubernetes.io/docs/user-guide/labels",
+                  "description": "labels is a map of string keys and values that can be used to organize and categorize\n(scope and select) objects. May match selectors of replication controllers\nand services.\nMore info: http://kubernetes.io/docs/user-guide/labels",
                   "type": "object"
                 }
               },
@@ -83,11 +83,12 @@
                   "description": "ControlPlaneEndpoint represents the endpoint used to communicate with the control plane.",
                   "properties": {
                     "host": {
-                      "description": "The hostname on which the API server is serving.",
+                      "description": "host is the hostname on which the API server is serving.",
+                      "maxLength": 512,
                       "type": "string"
                     },
                     "port": {
-                      "description": "The port on which the API server is serving.",
+                      "description": "port is the port on which the API server is serving.",
                       "format": "int32",
                       "type": "integer"
                     }
@@ -110,7 +111,7 @@
                       "type": "array"
                     },
                     "crossZoneLoadBalancing": {
-                      "description": "CrossZoneLoadBalancing enables the classic ELB cross availability zone balancing.\n\n\nWith cross-zone load balancing, each load balancer node for your Classic Load Balancer\ndistributes requests evenly across the registered instances in all enabled Availability Zones.\nIf cross-zone load balancing is disabled, each load balancer node distributes requests evenly across\nthe registered instances in its Availability Zone only.\n\n\nDefaults to false.",
+                      "description": "CrossZoneLoadBalancing enables the classic ELB cross availability zone balancing.\n\nWith cross-zone load balancing, each load balancer node for your Classic Load Balancer\ndistributes requests evenly across the registered instances in all enabled Availability Zones.\nIf cross-zone load balancing is disabled, each load balancer node distributes requests evenly across\nthe registered instances in its Availability Zone only.\n\nDefaults to false.",
                       "type": "boolean"
                     },
                     "healthCheckProtocol": {
@@ -247,11 +248,11 @@
                             "type": "string"
                           },
                           "ipv6CidrBlock": {
-                            "description": "IPv6CidrBlock is the IPv6 CIDR block to be used when the provider creates a managed VPC.\nA subnet can have an IPv4 and an IPv6 address.\nIPv6 is only supported in managed clusters, this field cannot be set on AWSCluster object.",
+                            "description": "IPv6CidrBlock is the IPv6 CIDR block to be used when the provider creates a managed VPC.\nA subnet can have an IPv4 and an IPv6 address.",
                             "type": "string"
                           },
                           "isIpv6": {
-                            "description": "IsIPv6 defines the subnet as an IPv6 subnet. A subnet is IPv6 when it is associated with a VPC that has IPv6 enabled.\nIPv6 is only supported in managed clusters, this field cannot be set on AWSCluster object.",
+                            "description": "IsIPv6 defines the subnet as an IPv6 subnet. A subnet is IPv6 when it is associated with an IPv6 CIDR.",
                             "type": "boolean"
                           },
                           "isPublic": {
@@ -310,7 +311,7 @@
                           "type": "string"
                         },
                         "ipv6": {
-                          "description": "IPv6 contains ipv6 specific settings for the network. Supported only in managed clusters.\nThis field cannot be set on AWSCluster object.",
+                          "description": "IPv6 contains ipv6 specific settings for the network.",
                           "properties": {
                             "cidrBlock": {
                               "description": "CidrBlock is the CIDR block provided by Amazon when VPC has enabled IPv6.",

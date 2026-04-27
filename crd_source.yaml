@@ -284,7 +284,7 @@ sources:
     changelog: "https://github.com/aws/amazon-eks-pod-identity-webhook/releases"
 
   - url: "https://github.com/kubernetes-sigs/cluster-api-provider-aws"
-    tag: ""
+    tag: "v2.11.1"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/kubernetes-sigs/cluster-api-provider-aws/releases"
 
