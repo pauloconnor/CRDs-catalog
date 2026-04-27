@@ -264,7 +264,7 @@ sources:
     changelog: "https://github.com/aws/amazon-vpc-resource-controller-k8s/releases"
 
   - url: "https://github.com/kubernetes-sigs/aws-load-balancer-controller"
-    tag: ""
+    tag: "v3.2.2"
     repo_path: "helm/aws-load-balancer-controller/crds"
     changelog: "https://github.com/kubernetes-sigs/aws-load-balancer-controller/releases"
 
