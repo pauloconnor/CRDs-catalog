@@ -1,0 +1,161 @@
+{
+  "description": "AWSNodeReplenisher is the Schema for the awsnodereplenishers API",
+  "properties": {
+    "apiVersion": {
+      "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+      "type": "string"
+    },
+    "kind": {
+      "description": "Kind is a string value representing the REST resource this object represents.\nServers may infer this from the endpoint the client submits requests to.\nCannot be updated.\nIn CamelCase.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object"
+    },
+    "spec": {
+      "description": "AWSNodeReplenisherSpec defines the desired state of AWSNodeReplenisher",
+      "properties": {
+        "asgModifyCoolTimeSeconds": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "autoScalingGroups": {
+          "items": {
+            "properties": {
+              "name": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "type": "object",
+            "additionalProperties": false
+          },
+          "type": "array"
+        },
+        "desired": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "region": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "asgModifyCoolTimeSeconds",
+        "autoScalingGroups",
+        "desired",
+        "region",
+        "role"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    },
+    "status": {
+      "description": "AWSNodeReplenisherStatus defines the observed state of AWSNodeReplenisher",
+      "properties": {
+        "awsNodes": {
+          "items": {
+            "properties": {
+              "autoScalingGroupName": {
+                "type": "string"
+              },
+              "availabilityZone": {
+                "type": "string"
+              },
+              "creationTimestamp": {
+                "format": "date-time",
+                "type": "string"
+              },
+              "instanceID": {
+                "description": "InstanceID of EC2 instances",
+                "type": "string"
+              },
+              "instanceType": {
+                "type": "string"
+              },
+              "name": {
+                "description": "Node name in the Kubernetes cluster",
+                "type": "string"
+              }
+            },
+            "required": [
+              "autoScalingGroupName",
+              "availabilityZone",
+              "creationTimestamp",
+              "instanceID",
+              "instanceType",
+              "name"
+            ],
+            "type": "object",
+            "additionalProperties": false
+          },
+          "type": "array"
+        },
+        "lastASGModifiedTime": {
+          "format": "date-time",
+          "nullable": true,
+          "type": "string"
+        },
+        "notJoinedAWSNodes": {
+          "items": {
+            "properties": {
+              "autoScalingGroupName": {
+                "type": "string"
+              },
+              "availabilityZone": {
+                "type": "string"
+              },
+              "creationTimestamp": {
+                "format": "date-time",
+                "type": "string"
+              },
+              "instanceID": {
+                "description": "InstanceID of EC2 instances",
+                "type": "string"
+              },
+              "instanceType": {
+                "type": "string"
+              },
+              "name": {
+                "description": "Node name in the Kubernetes cluster",
+                "type": "string"
+              }
+            },
+            "required": [
+              "autoScalingGroupName",
+              "availabilityZone",
+              "creationTimestamp",
+              "instanceID",
+              "instanceType",
+              "name"
+            ],
+            "type": "object",
+            "additionalProperties": false
+          },
+          "type": "array"
+        },
+        "phase": {
+          "default": "init",
+          "type": "string"
+        },
+        "revision": {
+          "default": 0,
+          "format": "int64",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "phase",
+        "revision"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  "type": "object"
+}
