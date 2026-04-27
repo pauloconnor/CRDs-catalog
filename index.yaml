@@ -11053,6 +11053,31 @@ networkfirewall.services.k8s.aws:
     filename: networkfirewall.services.k8s.aws/firewallpolicy_v1alpha1.json
     kind: FirewallPolicy
     name: firewallpolicy_v1alpha1
+networking.cfargotunnel.com:
+  - apiVersion: networking.cfargotunnel.com/v1alpha2
+    filename: networking.cfargotunnel.com/tunnel_v1alpha2.json
+    kind: Tunnel
+    name: tunnel_v1alpha2
+  - apiVersion: networking.cfargotunnel.com/v1alpha1
+    filename: networking.cfargotunnel.com/clustertunnel_v1alpha1.json
+    kind: ClusterTunnel
+    name: clustertunnel_v1alpha1
+  - apiVersion: networking.cfargotunnel.com/v1alpha1
+    filename: networking.cfargotunnel.com/tunnelbinding_v1alpha1.json
+    kind: TunnelBinding
+    name: tunnelbinding_v1alpha1
+  - apiVersion: networking.cfargotunnel.com/v1alpha1
+    filename: networking.cfargotunnel.com/tunnel_v1alpha1.json
+    kind: Tunnel
+    name: tunnel_v1alpha1
+  - apiVersion: networking.cfargotunnel.com/v1alpha1
+    filename: networking.cfargotunnel.com/accesstunnel_v1alpha1.json
+    kind: AccessTunnel
+    name: accesstunnel_v1alpha1
+  - apiVersion: networking.cfargotunnel.com/v1alpha2
+    filename: networking.cfargotunnel.com/clustertunnel_v1alpha2.json
+    kind: ClusterTunnel
+    name: clustertunnel_v1alpha2
 networking.gke.io:
   - apiVersion: networking.gke.io/v1
     filename: networking.gke.io/managedcertificate_v1.json
