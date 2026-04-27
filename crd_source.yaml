@@ -1111,7 +1111,7 @@ sources:
     changelog: "https://github.com/sigstore/policy-controller/releases"
 
   - url: "https://github.com/CrunchyData/postgres-operator"
-    tag: ""
+    tag: "v6.0.1"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/CrunchyData/postgres-operator/releases"
 
