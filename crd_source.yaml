@@ -344,7 +344,7 @@ sources:
   # Strimzi Kafka Operator
   # ---------------------------------------------------------------------------
   - url: "https://github.com/strimzi/strimzi-kafka-operator"
-    tag: ""
+    tag: "0.51.0"
     repo_path: "packaging/install/cluster-operator"
     changelog: "https://github.com/strimzi/strimzi-kafka-operator/releases"
 
