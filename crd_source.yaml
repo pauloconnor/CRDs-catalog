@@ -403,7 +403,7 @@ sources:
     changelog: "https://github.com/fluxcd/notification-controller/releases"
 
   - url: "https://github.com/fluxcd/image-automation-controller"
-    tag: ""
+    tag: "v1.1.2"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/fluxcd/image-automation-controller/releases"
 
