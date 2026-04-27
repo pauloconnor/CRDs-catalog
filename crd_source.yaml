@@ -522,7 +522,7 @@ sources:
     changelog: "https://github.com/kedacore/keda/releases"
 
   - url: "https://github.com/kedacore/http-add-on"
-    tag: ""
+    tag: "v0.14.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/kedacore/http-add-on/releases"
 
