@@ -393,7 +393,7 @@ sources:
     changelog: "https://github.com/fluxcd/kustomize-controller/releases"
 
   - url: "https://github.com/fluxcd/source-controller"
-    tag: ""
+    tag: "v1.8.3"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/fluxcd/source-controller/releases"
 
