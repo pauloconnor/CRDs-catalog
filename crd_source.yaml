@@ -796,7 +796,7 @@ sources:
     changelog: "https://github.com/dexidp/dex/releases"
 
   - url: "https://github.com/dragonflydb/dragonfly-operator"
-    tag: ""
+    tag: "v1.5.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/dragonflydb/dragonfly-operator/releases"
 
