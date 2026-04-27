@@ -1,5 +1,4 @@
 {
-  "description": "SyncSet defines which resources Gatekeeper will cache. The union of all SyncSets plus the syncOnly field of Gatekeeper's Config resource defines the sets of resources that will be synced.",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -10,32 +9,42 @@
       "type": "string"
     },
     "metadata": {
-      "properties": {
-        "name": {
-          "maxLength": 63,
-          "type": "string"
-        }
-      },
-      "type": "object",
-      "additionalProperties": false
+      "type": "object"
     },
-    "spec": {
+    "status": {
       "properties": {
-        "gvks": {
+        "configUID": {
+          "description": "UID is a type that holds unique ID values, including UUIDs.  Because we\ndon't ONLY use UUIDs, this is an alias to string.  Being a type captures\nintent and helps make sure that UIDs and names do not get conflated.",
+          "type": "string"
+        },
+        "errors": {
           "items": {
             "properties": {
-              "group": {
+              "message": {
                 "type": "string"
               },
-              "kind": {
-                "type": "string"
-              },
-              "version": {
+              "type": {
                 "type": "string"
               }
             },
+            "required": [
+              "message"
+            ],
             "type": "object",
             "additionalProperties": false
+          },
+          "type": "array"
+        },
+        "id": {
+          "type": "string"
+        },
+        "observedGeneration": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "operations": {
+          "items": {
+            "type": "string"
           },
           "type": "array"
         }

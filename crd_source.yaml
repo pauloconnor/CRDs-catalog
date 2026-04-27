@@ -375,7 +375,7 @@ sources:
   # OPA Gatekeeper
   # ---------------------------------------------------------------------------
   - url: "https://github.com/open-policy-agent/gatekeeper"
-    tag: ""
+    tag: "v3.22.1"
     repo_path: "charts/gatekeeper/crds"
     changelog: "https://github.com/open-policy-agent/gatekeeper/releases"
 

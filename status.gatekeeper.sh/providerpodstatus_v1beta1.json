@@ -1,5 +1,5 @@
 {
-  "description": "ConstraintPodStatus is the Schema for the constraintpodstatuses API.",
+  "description": "ProviderPodStatus is the Schema for the providerpodstatuses API.",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -13,59 +13,35 @@
       "type": "object"
     },
     "status": {
-      "description": "ConstraintPodStatusStatus defines the observed state of ConstraintPodStatus.",
+      "description": "No spec field is defined here, as this is a status-only resource.",
       "properties": {
-        "constraintUID": {
-          "description": "Storing the constraint UID allows us to detect drift, such as\nwhen a constraint has been recreated after its CRD was deleted\nout from under it, interrupting the watch",
-          "type": "string"
-        },
-        "enforced": {
+        "active": {
           "type": "boolean"
-        },
-        "enforcementPointsStatus": {
-          "items": {
-            "description": "EnforcementPointStatus represents the status of a single enforcement point.",
-            "properties": {
-              "enforcementPoint": {
-                "type": "string"
-              },
-              "message": {
-                "type": "string"
-              },
-              "observedGeneration": {
-                "format": "int64",
-                "type": "integer"
-              },
-              "state": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "enforcementPoint",
-              "state"
-            ],
-            "type": "object",
-            "additionalProperties": false
-          },
-          "type": "array"
         },
         "errors": {
           "items": {
-            "description": "Error represents a single error caught while adding a constraint to engine.",
+            "description": "ProviderError represents a single error caught while managing providers.",
             "properties": {
-              "code": {
-                "type": "string"
-              },
-              "location": {
+              "errorTimestamp": {
+                "format": "date-time",
                 "type": "string"
               },
               "message": {
                 "type": "string"
+              },
+              "retryable": {
+                "type": "boolean"
+              },
+              "type": {
+                "description": "Type indicates a specific class of error for use by controller code.\nIf not present, the error should be treated as not matching any known type.",
+                "type": "string"
               }
             },
             "required": [
-              "code",
-              "message"
+              "errorTimestamp",
+              "message",
+              "retryable",
+              "type"
             ],
             "type": "object",
             "additionalProperties": false
@@ -73,6 +49,14 @@
           "type": "array"
         },
         "id": {
+          "type": "string"
+        },
+        "lastCacheUpdateTime": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "lastTransitionTime": {
+          "format": "date-time",
           "type": "string"
         },
         "observedGeneration": {
@@ -84,6 +68,10 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "providerUID": {
+          "description": "Storing the provider UID allows us to detect drift, such as\nwhen a provider has been recreated after its CRD was deleted\nout from under it, interrupting the watch",
+          "type": "string"
         }
       },
       "type": "object",

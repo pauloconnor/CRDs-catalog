@@ -3444,6 +3444,11 @@ configuration.konghq.com:
     filename: configuration.konghq.com/kongconsumergroup_v1beta1.json
     kind: KongConsumerGroup
     name: kongconsumergroup_v1beta1
+connection.gatekeeper.sh:
+  - apiVersion: connection.gatekeeper.sh/v1alpha1
+    filename: connection.gatekeeper.sh/connection_v1alpha1.json
+    kind: Connection
+    name: connection_v1alpha1
 connections.grafana.crossplane.io:
   - apiVersion: connections.grafana.crossplane.io/v1alpha1
     filename: connections.grafana.crossplane.io/metricsendpointscrapejob_v1alpha1.json
@@ -14701,6 +14706,18 @@ status.gatekeeper.sh:
     filename: status.gatekeeper.sh/mutatorpodstatus_v1beta1.json
     kind: MutatorPodStatus
     name: mutatorpodstatus_v1beta1
+  - apiVersion: status.gatekeeper.sh/v1beta1
+    filename: status.gatekeeper.sh/providerpodstatus_v1beta1.json
+    kind: ProviderPodStatus
+    name: providerpodstatus_v1beta1
+  - apiVersion: status.gatekeeper.sh/v1beta1
+    filename: status.gatekeeper.sh/configpodstatus_v1beta1.json
+    kind: configpodstatus
+    name: configpodstatus_v1beta1
+  - apiVersion: status.gatekeeper.sh/v1alpha1
+    filename: status.gatekeeper.sh/connectionpodstatus_v1alpha1.json
+    kind: ConnectionPodStatus
+    name: connectionpodstatus_v1alpha1
 storage.azure.com:
   - apiVersion: storage.azure.com/v1api20230101
     filename: storage.azure.com/storageaccountsfileservicesshare_v1api20230101.json

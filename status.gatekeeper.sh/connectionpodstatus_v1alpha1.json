@@ -1,5 +1,5 @@
 {
-  "description": "ConstraintPodStatus is the Schema for the constraintpodstatuses API.",
+  "description": "ConnectionPodStatus is the Schema for the connectionpodstatuses API.",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -13,59 +13,29 @@
       "type": "object"
     },
     "status": {
-      "description": "ConstraintPodStatusStatus defines the observed state of ConstraintPodStatus.",
+      "description": "No spec field is defined here, as this is a status-only resource.",
       "properties": {
-        "constraintUID": {
-          "description": "Storing the constraint UID allows us to detect drift, such as\nwhen a constraint has been recreated after its CRD was deleted\nout from under it, interrupting the watch",
-          "type": "string"
-        },
-        "enforced": {
+        "active": {
+          "description": "Indicator for alive connection with at least one successful publish",
           "type": "boolean"
         },
-        "enforcementPointsStatus": {
-          "items": {
-            "description": "EnforcementPointStatus represents the status of a single enforcement point.",
-            "properties": {
-              "enforcementPoint": {
-                "type": "string"
-              },
-              "message": {
-                "type": "string"
-              },
-              "observedGeneration": {
-                "format": "int64",
-                "type": "integer"
-              },
-              "state": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "enforcementPoint",
-              "state"
-            ],
-            "type": "object",
-            "additionalProperties": false
-          },
-          "type": "array"
+        "connectionUID": {
+          "description": "UID is a type that holds unique ID values, including UUIDs.  Because we\ndon't ONLY use UUIDs, this is an alias to string.  Being a type captures\nintent and helps make sure that UIDs and names do not get conflated.",
+          "type": "string"
         },
         "errors": {
           "items": {
-            "description": "Error represents a single error caught while adding a constraint to engine.",
             "properties": {
-              "code": {
-                "type": "string"
-              },
-              "location": {
-                "type": "string"
-              },
               "message": {
+                "type": "string"
+              },
+              "type": {
                 "type": "string"
               }
             },
             "required": [
-              "code",
-              "message"
+              "message",
+              "type"
             ],
             "type": "object",
             "additionalProperties": false
@@ -73,6 +43,7 @@
           "type": "array"
         },
         "id": {
+          "description": "ID is the unique identifier for the pod that wrote the status",
           "type": "string"
         },
         "observedGeneration": {

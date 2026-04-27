@@ -1,5 +1,5 @@
 {
-  "description": "Provider is the Schema for the providers API.",
+  "description": "Connection is the Schema for the connections API.",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -13,56 +13,51 @@
       "type": "object"
     },
     "spec": {
-      "description": "Spec defines the Provider specifications.",
+      "description": "ConnectionSpec defines the desired state of Connection.",
       "properties": {
-        "caBundle": {
-          "description": "CABundle is a base64-encoded string that contains the TLS CA bundle in PEM format.\nIt is used to verify the signature of the provider's certificate.",
-          "type": "string"
+        "config": {
+          "x-kubernetes-preserve-unknown-fields": true
         },
-        "timeout": {
-          "description": "Timeout is the timeout when querying the provider.",
-          "type": "integer"
-        },
-        "url": {
-          "description": "URL is the url for the provider. URL is prefixed with https://.",
+        "driver": {
+          "description": "Driver is the name of one of the expected drivers i.e. dapr, disk",
           "type": "string"
         }
       },
+      "required": [
+        "config",
+        "driver"
+      ],
       "type": "object",
       "additionalProperties": false
     },
     "status": {
-      "description": "ProviderStatus defines the observed state of Provider.",
+      "description": "ConnectionStatus defines the observed state of Connection.",
       "properties": {
         "byPod": {
-          "description": "ByPod is the status of the provider by pod",
           "items": {
-            "description": "ProviderPodStatusStatus defines the observed state of ProviderPodStatus.",
+            "description": "ConnectionPodStatusStatus defines the observed state of ConnectionPodStatus.",
             "properties": {
               "active": {
+                "description": "Indicator for alive connection with at least one successful publish",
                 "type": "boolean"
+              },
+              "connectionUID": {
+                "description": "UID is a type that holds unique ID values, including UUIDs.  Because we\ndon't ONLY use UUIDs, this is an alias to string.  Being a type captures\nintent and helps make sure that UIDs and names do not get conflated.",
+                "type": "string"
               },
               "errors": {
                 "items": {
-                  "description": "ProviderError represents a single error caught while managing providers.",
                   "properties": {
-                    "errorTimestamp": {
-                      "format": "date-time",
-                      "type": "string"
-                    },
                     "message": {
                       "type": "string"
                     },
-                    "retryable": {
-                      "type": "boolean"
-                    },
                     "type": {
-                      "description": "Type indicates a specific class of error for use by controller code.\nIf not present, the error should be treated as not matching any known type.",
                       "type": "string"
                     }
                   },
                   "required": [
-                    "message"
+                    "message",
+                    "type"
                   ],
                   "type": "object",
                   "additionalProperties": false
@@ -70,14 +65,7 @@
                 "type": "array"
               },
               "id": {
-                "type": "string"
-              },
-              "lastCacheUpdateTime": {
-                "format": "date-time",
-                "type": "string"
-              },
-              "lastTransitionTime": {
-                "format": "date-time",
+                "description": "ID is the unique identifier for the pod that wrote the status",
                 "type": "string"
               },
               "observedGeneration": {
@@ -89,10 +77,6 @@
                   "type": "string"
                 },
                 "type": "array"
-              },
-              "providerUID": {
-                "description": "Storing the provider UID allows us to detect drift, such as\nwhen a provider has been recreated after its CRD was deleted\nout from under it, interrupting the watch",
-                "type": "string"
               }
             },
             "type": "object",
