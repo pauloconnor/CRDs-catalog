@@ -563,7 +563,7 @@ sources:
     changelog: "https://github.com/open-cluster-management-io/ocm/releases"
 
   - url: "https://github.com/solo-io/gloo"
-    tag: ""
+    tag: "v1.22.0-beta2"
     repo_path: "install/helm/gloo/crds"
     changelog: "https://github.com/solo-io/gloo/releases"
 

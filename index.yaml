@@ -6686,6 +6686,15 @@ gateway.envoyproxy.io:
     filename: gateway.envoyproxy.io/backend_v1alpha1.json
     kind: Backend
     name: backend_v1alpha1
+gateway.gloo.solo.io:
+  - apiVersion: gateway.gloo.solo.io/v1alpha1
+    filename: gateway.gloo.solo.io/directresponse_v1alpha1.json
+    kind: directresponse
+    name: directresponse_v1alpha1
+  - apiVersion: gateway.gloo.solo.io/v1alpha1
+    filename: gateway.gloo.solo.io/gatewayparameters_v1alpha1.json
+    kind: gatewayparameters
+    name: gatewayparameters_v1alpha1
 gateway.k8s.aws:
   - apiVersion: gateway.k8s.aws/v1beta1
     filename: gateway.k8s.aws/loadbalancerconfiguration_v1beta1.json
@@ -6880,6 +6889,18 @@ gateway.solo.io:
     filename: gateway.solo.io/gateway_v1.json
     kind: gateway
     name: gateway_v1
+  - apiVersion: gateway.solo.io/v1
+    filename: gateway.solo.io/matchabletcpgateway_v1.json
+    kind: matchabletcpgateway
+    name: matchabletcpgateway_v1
+  - apiVersion: gateway.solo.io/v1
+    filename: gateway.solo.io/listeneroption_v1.json
+    kind: listeneroption
+    name: listeneroption_v1
+  - apiVersion: gateway.solo.io/v1
+    filename: gateway.solo.io/httplisteneroption_v1.json
+    kind: httplisteneroption
+    name: httplisteneroption_v1
 generators.external-secrets.io:
   - apiVersion: generators.external-secrets.io/v1alpha1
     filename: generators.external-secrets.io/fake_v1alpha1.json
