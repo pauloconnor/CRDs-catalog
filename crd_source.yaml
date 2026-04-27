@@ -388,7 +388,7 @@ sources:
     changelog: "https://github.com/fluxcd/helm-controller/releases"
 
   - url: "https://github.com/fluxcd/kustomize-controller"
-    tag: ""
+    tag: "v1.8.4"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/fluxcd/kustomize-controller/releases"
 
