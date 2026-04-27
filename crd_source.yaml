@@ -367,7 +367,7 @@ sources:
   # Cluster API (CAPI)
   # ---------------------------------------------------------------------------
   - url: "https://github.com/kubernetes-sigs/cluster-api"
-    tag: ""
+    tag: "v1.13.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/kubernetes-sigs/cluster-api/releases"
 
