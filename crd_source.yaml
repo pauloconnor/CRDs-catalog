@@ -1186,7 +1186,7 @@ sources:
     changelog: "https://github.com/mittwald/kubernetes-secret-generator/releases"
 
   - url: "https://github.com/DopplerHQ/kubernetes-operator"
-    tag: ""
+    tag: "v1.7.1"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/DopplerHQ/kubernetes-operator/releases"
 
