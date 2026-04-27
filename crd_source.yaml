@@ -786,7 +786,7 @@ sources:
     changelog: "https://github.com/spotahome/redis-operator/releases"
 
   - url: "https://github.com/ariga/atlas-operator"
-    tag: ""
+    tag: "v0.7.28"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/ariga/atlas-operator/releases"
 
