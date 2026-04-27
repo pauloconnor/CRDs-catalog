@@ -578,7 +578,7 @@ sources:
     changelog: "https://github.com/percona/percona-server-mongodb-operator/releases"
 
   - url: "https://github.com/percona/percona-xtradb-cluster-operator"
-    tag: ""
+    tag: "v1.19.1"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/percona/percona-xtradb-cluster-operator/releases"
 
