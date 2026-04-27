@@ -558,7 +558,7 @@ sources:
     changelog: "https://github.com/open-cluster-management-io/api/releases"
 
   - url: "https://github.com/open-cluster-management-io/ocm"
-    tag: ""
+    tag: "v1.2.1"
     repo_path: "deploy/cluster-manager/config/crds"
     changelog: "https://github.com/open-cluster-management-io/ocm/releases"
 
