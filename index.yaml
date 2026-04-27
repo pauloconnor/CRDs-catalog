@@ -1186,6 +1186,43 @@ apps.jfrog.com:
     filename: apps.jfrog.com/secretrotator_v1alpha1.json
     kind: SecretRotator
     name: secretrotator_v1alpha1
+apps.nvidia.com:
+  - apiVersion: apps.nvidia.com/v1alpha1
+    filename: apps.nvidia.com/nemodatastore_v1alpha1.json
+    kind: NemoDatastore
+    name: nemodatastore_v1alpha1
+  - apiVersion: apps.nvidia.com/v1alpha1
+    filename: apps.nvidia.com/nemoevaluator_v1alpha1.json
+    kind: NemoEvaluator
+    name: nemoevaluator_v1alpha1
+  - apiVersion: apps.nvidia.com/v1alpha1
+    filename: apps.nvidia.com/nimservice_v1alpha1.json
+    kind: NIMService
+    name: nimservice_v1alpha1
+  - apiVersion: apps.nvidia.com/v1alpha1
+    filename: apps.nvidia.com/nemoentitystore_v1alpha1.json
+    kind: NemoEntitystore
+    name: nemoentitystore_v1alpha1
+  - apiVersion: apps.nvidia.com/v1alpha1
+    filename: apps.nvidia.com/nimbuild_v1alpha1.json
+    kind: NIMBuild
+    name: nimbuild_v1alpha1
+  - apiVersion: apps.nvidia.com/v1alpha1
+    filename: apps.nvidia.com/nemocustomizer_v1alpha1.json
+    kind: NemoCustomizer
+    name: nemocustomizer_v1alpha1
+  - apiVersion: apps.nvidia.com/v1alpha1
+    filename: apps.nvidia.com/nimpipeline_v1alpha1.json
+    kind: NIMPipeline
+    name: nimpipeline_v1alpha1
+  - apiVersion: apps.nvidia.com/v1alpha1
+    filename: apps.nvidia.com/nemoguardrail_v1alpha1.json
+    kind: NemoGuardrail
+    name: nemoguardrail_v1alpha1
+  - apiVersion: apps.nvidia.com/v1alpha1
+    filename: apps.nvidia.com/nimcache_v1alpha1.json
+    kind: NIMCache
+    name: nimcache_v1alpha1
 apps.projectsveltos.io:
   - apiVersion: apps.projectsveltos.io/v1alpha1
     filename: apps.projectsveltos.io/report_v1alpha1.json
