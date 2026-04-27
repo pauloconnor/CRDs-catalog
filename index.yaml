@@ -9978,6 +9978,10 @@ logging.banzaicloud.io:
     filename: logging.banzaicloud.io/output_v1beta1.json
     kind: output
     name: output_v1beta1
+  - apiVersion: logging.banzaicloud.io/v1beta1
+    filename: logging.banzaicloud.io/axosyslog_v1beta1.json
+    kind: axosyslog
+    name: axosyslog_v1beta1
 logging.cnrm.cloud.google.com:
   - apiVersion: logging.cnrm.cloud.google.com/v1beta1
     filename: logging.cnrm.cloud.google.com/logginglogbucket_v1beta1.json
