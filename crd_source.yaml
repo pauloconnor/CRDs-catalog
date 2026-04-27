@@ -530,7 +530,7 @@ sources:
   # external-secrets / Kyverno / Gateway API / Datadog
   # ---------------------------------------------------------------------------
   - url: "https://github.com/external-secrets/external-secrets"
-    tag: ""
+    tag: "helm-chart-2.4.0"
     repo_path: "deploy/crds"
     changelog: "https://github.com/external-secrets/external-secrets/releases"
 
