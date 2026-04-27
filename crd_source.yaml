@@ -274,7 +274,7 @@ sources:
     changelog: "https://github.com/aws/karpenter-provider-aws/releases"
 
   - url: "https://github.com/aws/eks-anywhere"
-    tag: ""
+    tag: "v0.25.2"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/aws/eks-anywhere/releases"
 

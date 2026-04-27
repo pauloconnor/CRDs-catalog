@@ -276,6 +276,53 @@
                 "type": "object",
                 "additionalProperties": false
               },
+              "bottlerocketBootstrapContainers": {
+                "properties": {
+                  "multiNetworkBootstrap": {
+                    "properties": {
+                      "arch": {
+                        "description": "Architectures of the asset",
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "imageDigest": {
+                        "description": "The SHA256 digest of the image manifest",
+                        "type": "string"
+                      },
+                      "name": {
+                        "description": "The asset name",
+                        "type": "string"
+                      },
+                      "os": {
+                        "description": "Operating system of the asset",
+                        "enum": [
+                          "linux",
+                          "darwin",
+                          "windows"
+                        ],
+                        "type": "string"
+                      },
+                      "osName": {
+                        "description": "Name of the OS like ubuntu, bottlerocket",
+                        "type": "string"
+                      },
+                      "uri": {
+                        "description": "The image repository, name, and tag",
+                        "type": "string"
+                      }
+                    },
+                    "type": "object",
+                    "additionalProperties": false
+                  }
+                },
+                "type": "object",
+                "additionalProperties": false
+              },
               "bottlerocketHostContainers": {
                 "properties": {
                   "admin": {
@@ -536,6 +583,7 @@
                     "additionalProperties": false
                   },
                   "ctl": {
+                    "description": "This field has been deprecated",
                     "properties": {
                       "arch": {
                         "description": "Architectures of the asset",
@@ -580,6 +628,47 @@
                     "properties": {
                       "uri": {
                         "description": "URI points to the manifest yaml file",
+                        "type": "string"
+                      }
+                    },
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "startupapicheck": {
+                    "properties": {
+                      "arch": {
+                        "description": "Architectures of the asset",
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "imageDigest": {
+                        "description": "The SHA256 digest of the image manifest",
+                        "type": "string"
+                      },
+                      "name": {
+                        "description": "The asset name",
+                        "type": "string"
+                      },
+                      "os": {
+                        "description": "Operating system of the asset",
+                        "enum": [
+                          "linux",
+                          "darwin",
+                          "windows"
+                        ],
+                        "type": "string"
+                      },
+                      "osName": {
+                        "description": "Name of the OS like ubuntu, bottlerocket",
+                        "type": "string"
+                      },
+                      "uri": {
+                        "description": "The image repository, name, and tag",
                         "type": "string"
                       }
                     },
@@ -635,8 +724,8 @@
                   "acmesolver",
                   "cainjector",
                   "controller",
-                  "ctl",
                   "manifest",
+                  "startupapicheck",
                   "webhook"
                 ],
                 "type": "object",
@@ -727,6 +816,7 @@
                     "additionalProperties": false
                   },
                   "manifest": {
+                    "description": "This field has been deprecated",
                     "properties": {
                       "uri": {
                         "description": "URI points to the manifest yaml file",
@@ -783,7 +873,6 @@
                 },
                 "required": [
                   "cilium",
-                  "manifest",
                   "operator"
                 ],
                 "type": "object",
@@ -1316,6 +1405,58 @@
               },
               "eksD": {
                 "properties": {
+                  "ami": {
+                    "description": "Ami points to a collection of AMIs built with this eks-d version",
+                    "properties": {
+                      "bottlerocket": {
+                        "properties": {
+                          "arch": {
+                            "description": "Architectures of the asset",
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "description": "The asset name",
+                            "type": "string"
+                          },
+                          "os": {
+                            "description": "Operating system of the asset",
+                            "enum": [
+                              "linux",
+                              "darwin",
+                              "windows"
+                            ],
+                            "type": "string"
+                          },
+                          "osName": {
+                            "description": "Name of the OS like ubuntu, bottlerocket",
+                            "type": "string"
+                          },
+                          "sha256": {
+                            "description": "The sha256 of the asset, only applies for 'file' store",
+                            "type": "string"
+                          },
+                          "sha512": {
+                            "description": "The sha512 of the asset, only applies for 'file' store",
+                            "type": "string"
+                          },
+                          "uri": {
+                            "description": "The URI where the asset is located",
+                            "type": "string"
+                          }
+                        },
+                        "type": "object",
+                        "additionalProperties": false
+                      }
+                    },
+                    "type": "object",
+                    "additionalProperties": false
+                  },
                   "channel": {
                     "description": "Release branch of the EKS-D release like 1-19, 1-20",
                     "type": "string"
@@ -1323,6 +1464,52 @@
                   "components": {
                     "description": "Components refers to the url that points to the EKS-D release CRD",
                     "type": "string"
+                  },
+                  "containerd": {
+                    "description": "Containerd points to the containerd binary baked into this eks-D based node image",
+                    "properties": {
+                      "arch": {
+                        "description": "Architectures of the asset",
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "description": "The asset name",
+                        "type": "string"
+                      },
+                      "os": {
+                        "description": "Operating system of the asset",
+                        "enum": [
+                          "linux",
+                          "darwin",
+                          "windows"
+                        ],
+                        "type": "string"
+                      },
+                      "osName": {
+                        "description": "Name of the OS like ubuntu, bottlerocket",
+                        "type": "string"
+                      },
+                      "sha256": {
+                        "description": "The sha256 of the asset, only applies for 'file' store",
+                        "type": "string"
+                      },
+                      "sha512": {
+                        "description": "The sha512 of the asset, only applies for 'file' store",
+                        "type": "string"
+                      },
+                      "uri": {
+                        "description": "The URI where the asset is located",
+                        "type": "string"
+                      }
+                    },
+                    "type": "object",
+                    "additionalProperties": false
                   },
                   "crictl": {
                     "description": "Crictl points to the crictl binary/tarball built for this eks-d kube version",
@@ -1520,7 +1707,7 @@
                     "type": "string"
                   },
                   "ova": {
-                    "description": "Ova points to a collection of Ovas built with this eks-d version",
+                    "description": "Ova points to a collection of OVAs built with this eks-d version",
                     "properties": {
                       "bottlerocket": {
                         "properties": {
@@ -1774,6 +1961,9 @@
                 ],
                 "type": "object",
                 "additionalProperties": false
+              },
+              "endOfStandardSupport": {
+                "type": "string"
               },
               "etcdadmBootstrap": {
                 "properties": {
@@ -2267,6 +2457,47 @@
               },
               "nutanix": {
                 "properties": {
+                  "cloudProvider": {
+                    "properties": {
+                      "arch": {
+                        "description": "Architectures of the asset",
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "imageDigest": {
+                        "description": "The SHA256 digest of the image manifest",
+                        "type": "string"
+                      },
+                      "name": {
+                        "description": "The asset name",
+                        "type": "string"
+                      },
+                      "os": {
+                        "description": "Operating system of the asset",
+                        "enum": [
+                          "linux",
+                          "darwin",
+                          "windows"
+                        ],
+                        "type": "string"
+                      },
+                      "osName": {
+                        "description": "Name of the OS like ubuntu, bottlerocket",
+                        "type": "string"
+                      },
+                      "uri": {
+                        "description": "The image repository, name, and tag",
+                        "type": "string"
+                      }
+                    },
+                    "type": "object",
+                    "additionalProperties": false
+                  },
                   "clusterAPIController": {
                     "properties": {
                       "arch": {
@@ -2396,6 +2627,47 @@
               },
               "packageController": {
                 "properties": {
+                  "credentialProviderPackage": {
+                    "properties": {
+                      "arch": {
+                        "description": "Architectures of the asset",
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "imageDigest": {
+                        "description": "The SHA256 digest of the image manifest",
+                        "type": "string"
+                      },
+                      "name": {
+                        "description": "The asset name",
+                        "type": "string"
+                      },
+                      "os": {
+                        "description": "Operating system of the asset",
+                        "enum": [
+                          "linux",
+                          "darwin",
+                          "windows"
+                        ],
+                        "type": "string"
+                      },
+                      "osName": {
+                        "description": "Name of the OS like ubuntu, bottlerocket",
+                        "type": "string"
+                      },
+                      "uri": {
+                        "description": "The image repository, name, and tag",
+                        "type": "string"
+                      }
+                    },
+                    "type": "object",
+                    "additionalProperties": false
+                  },
                   "helmChart": {
                     "properties": {
                       "arch": {
@@ -3150,6 +3422,7 @@
                         "additionalProperties": false
                       },
                       "hegel": {
+                        "description": "This field has been deprecated",
                         "properties": {
                           "arch": {
                             "description": "Architectures of the asset",
@@ -3375,6 +3648,109 @@
                             "type": "object",
                             "additionalProperties": false
                           },
+                          "iso": {
+                            "description": "HookArch defines the Tinkerbell hook architecture-specific artifacts.",
+                            "properties": {
+                              "amd": {
+                                "description": "Archive represents an archive asset (e.g. tarball) along with its OS/architecture metadata, and checksums for file integrity.",
+                                "properties": {
+                                  "arch": {
+                                    "description": "Architectures of the asset",
+                                    "items": {
+                                      "type": "string"
+                                    },
+                                    "type": "array"
+                                  },
+                                  "description": {
+                                    "type": "string"
+                                  },
+                                  "name": {
+                                    "description": "The asset name",
+                                    "type": "string"
+                                  },
+                                  "os": {
+                                    "description": "Operating system of the asset",
+                                    "enum": [
+                                      "linux",
+                                      "darwin",
+                                      "windows"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "osName": {
+                                    "description": "Name of the OS like ubuntu, bottlerocket",
+                                    "type": "string"
+                                  },
+                                  "sha256": {
+                                    "description": "The sha256 of the asset, only applies for 'file' store",
+                                    "type": "string"
+                                  },
+                                  "sha512": {
+                                    "description": "The sha512 of the asset, only applies for 'file' store",
+                                    "type": "string"
+                                  },
+                                  "uri": {
+                                    "description": "The URI where the asset is located",
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              },
+                              "arm": {
+                                "description": "Archive represents an archive asset (e.g. tarball) along with its OS/architecture metadata, and checksums for file integrity.",
+                                "properties": {
+                                  "arch": {
+                                    "description": "Architectures of the asset",
+                                    "items": {
+                                      "type": "string"
+                                    },
+                                    "type": "array"
+                                  },
+                                  "description": {
+                                    "type": "string"
+                                  },
+                                  "name": {
+                                    "description": "The asset name",
+                                    "type": "string"
+                                  },
+                                  "os": {
+                                    "description": "Operating system of the asset",
+                                    "enum": [
+                                      "linux",
+                                      "darwin",
+                                      "windows"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "osName": {
+                                    "description": "Name of the OS like ubuntu, bottlerocket",
+                                    "type": "string"
+                                  },
+                                  "sha256": {
+                                    "description": "The sha256 of the asset, only applies for 'file' store",
+                                    "type": "string"
+                                  },
+                                  "sha512": {
+                                    "description": "The sha512 of the asset, only applies for 'file' store",
+                                    "type": "string"
+                                  },
+                                  "uri": {
+                                    "description": "The URI where the asset is located",
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              }
+                            },
+                            "required": [
+                              "amd",
+                              "arm"
+                            ],
+                            "type": "object",
+                            "additionalProperties": false
+                          },
                           "kernel": {
                             "properties": {
                               "arch": {
@@ -3521,6 +3897,7 @@
                           "bootkit",
                           "docker",
                           "initramfs",
+                          "iso",
                           "kernel",
                           "vmlinuz"
                         ],
@@ -3528,6 +3905,48 @@
                         "additionalProperties": false
                       },
                       "rufio": {
+                        "description": "This field has been deprecated",
+                        "properties": {
+                          "arch": {
+                            "description": "Architectures of the asset",
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "imageDigest": {
+                            "description": "The SHA256 digest of the image manifest",
+                            "type": "string"
+                          },
+                          "name": {
+                            "description": "The asset name",
+                            "type": "string"
+                          },
+                          "os": {
+                            "description": "Operating system of the asset",
+                            "enum": [
+                              "linux",
+                              "darwin",
+                              "windows"
+                            ],
+                            "type": "string"
+                          },
+                          "osName": {
+                            "description": "Name of the OS like ubuntu, bottlerocket",
+                            "type": "string"
+                          },
+                          "uri": {
+                            "description": "The image repository, name, and tag",
+                            "type": "string"
+                          }
+                        },
+                        "type": "object",
+                        "additionalProperties": false
+                      },
+                      "stack": {
                         "properties": {
                           "arch": {
                             "description": "Architectures of the asset",
@@ -3570,7 +3989,133 @@
                       },
                       "tink": {
                         "properties": {
+                          "nginx": {
+                            "description": "This field has been deprecated",
+                            "properties": {
+                              "arch": {
+                                "description": "Architectures of the asset",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "type": "array"
+                              },
+                              "description": {
+                                "type": "string"
+                              },
+                              "imageDigest": {
+                                "description": "The SHA256 digest of the image manifest",
+                                "type": "string"
+                              },
+                              "name": {
+                                "description": "The asset name",
+                                "type": "string"
+                              },
+                              "os": {
+                                "description": "Operating system of the asset",
+                                "enum": [
+                                  "linux",
+                                  "darwin",
+                                  "windows"
+                                ],
+                                "type": "string"
+                              },
+                              "osName": {
+                                "description": "Name of the OS like ubuntu, bottlerocket",
+                                "type": "string"
+                              },
+                              "uri": {
+                                "description": "The image repository, name, and tag",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
                           "tinkController": {
+                            "description": "This field has been deprecated",
+                            "properties": {
+                              "arch": {
+                                "description": "Architectures of the asset",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "type": "array"
+                              },
+                              "description": {
+                                "type": "string"
+                              },
+                              "imageDigest": {
+                                "description": "The SHA256 digest of the image manifest",
+                                "type": "string"
+                              },
+                              "name": {
+                                "description": "The asset name",
+                                "type": "string"
+                              },
+                              "os": {
+                                "description": "Operating system of the asset",
+                                "enum": [
+                                  "linux",
+                                  "darwin",
+                                  "windows"
+                                ],
+                                "type": "string"
+                              },
+                              "osName": {
+                                "description": "Name of the OS like ubuntu, bottlerocket",
+                                "type": "string"
+                              },
+                              "uri": {
+                                "description": "The image repository, name, and tag",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "tinkRelay": {
+                            "description": "This field has been deprecated",
+                            "properties": {
+                              "arch": {
+                                "description": "Architectures of the asset",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "type": "array"
+                              },
+                              "description": {
+                                "type": "string"
+                              },
+                              "imageDigest": {
+                                "description": "The SHA256 digest of the image manifest",
+                                "type": "string"
+                              },
+                              "name": {
+                                "description": "The asset name",
+                                "type": "string"
+                              },
+                              "os": {
+                                "description": "Operating system of the asset",
+                                "enum": [
+                                  "linux",
+                                  "darwin",
+                                  "windows"
+                                ],
+                                "type": "string"
+                              },
+                              "osName": {
+                                "description": "Name of the OS like ubuntu, bottlerocket",
+                                "type": "string"
+                              },
+                              "uri": {
+                                "description": "The image repository, name, and tag",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "tinkRelayInit": {
                             "properties": {
                               "arch": {
                                 "description": "Architectures of the asset",
@@ -3612,6 +4157,7 @@
                             "additionalProperties": false
                           },
                           "tinkServer": {
+                            "description": "This field has been deprecated",
                             "properties": {
                               "arch": {
                                 "description": "Architectures of the asset",
@@ -3653,6 +4199,7 @@
                             "additionalProperties": false
                           },
                           "tinkWorker": {
+                            "description": "This field has been deprecated",
                             "properties": {
                               "arch": {
                                 "description": "Architectures of the asset",
@@ -3695,9 +4242,7 @@
                           }
                         },
                         "required": [
-                          "tinkController",
-                          "tinkServer",
-                          "tinkWorker"
+                          "tinkRelayInit"
                         ],
                         "type": "object",
                         "additionalProperties": false
@@ -3742,16 +4287,57 @@
                         },
                         "type": "object",
                         "additionalProperties": false
+                      },
+                      "tinkerbellCrds": {
+                        "properties": {
+                          "arch": {
+                            "description": "Architectures of the asset",
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "imageDigest": {
+                            "description": "The SHA256 digest of the image manifest",
+                            "type": "string"
+                          },
+                          "name": {
+                            "description": "The asset name",
+                            "type": "string"
+                          },
+                          "os": {
+                            "description": "Operating system of the asset",
+                            "enum": [
+                              "linux",
+                              "darwin",
+                              "windows"
+                            ],
+                            "type": "string"
+                          },
+                          "osName": {
+                            "description": "Name of the OS like ubuntu, bottlerocket",
+                            "type": "string"
+                          },
+                          "uri": {
+                            "description": "The image repository, name, and tag",
+                            "type": "string"
+                          }
+                        },
+                        "type": "object",
+                        "additionalProperties": false
                       }
                     },
                     "required": [
                       "actions",
                       "boots",
-                      "hegel",
                       "hook",
-                      "rufio",
+                      "stack",
                       "tink",
-                      "tinkerbellChart"
+                      "tinkerbellChart",
+                      "tinkerbellCrds"
                     ],
                     "type": "object",
                     "additionalProperties": false
@@ -3768,6 +4354,57 @@
                   "kubeVip",
                   "metadata",
                   "version"
+                ],
+                "type": "object",
+                "additionalProperties": false
+              },
+              "upgrader": {
+                "description": "UpgraderBundle is a In-place Kubernetes version upgrader bundle.",
+                "properties": {
+                  "upgrader": {
+                    "properties": {
+                      "arch": {
+                        "description": "Architectures of the asset",
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "imageDigest": {
+                        "description": "The SHA256 digest of the image manifest",
+                        "type": "string"
+                      },
+                      "name": {
+                        "description": "The asset name",
+                        "type": "string"
+                      },
+                      "os": {
+                        "description": "Operating system of the asset",
+                        "enum": [
+                          "linux",
+                          "darwin",
+                          "windows"
+                        ],
+                        "type": "string"
+                      },
+                      "osName": {
+                        "description": "Name of the OS like ubuntu, bottlerocket",
+                        "type": "string"
+                      },
+                      "uri": {
+                        "description": "The image repository, name, and tag",
+                        "type": "string"
+                      }
+                    },
+                    "type": "object",
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "upgrader"
                 ],
                 "type": "object",
                 "additionalProperties": false
@@ -3836,6 +4473,7 @@
                     "additionalProperties": false
                   },
                   "driver": {
+                    "description": "This field has been deprecated",
                     "properties": {
                       "arch": {
                         "description": "Architectures of the asset",
@@ -4010,6 +4648,7 @@
                     "additionalProperties": false
                   },
                   "syncer": {
+                    "description": "This field has been deprecated",
                     "properties": {
                       "arch": {
                         "description": "Architectures of the asset",
@@ -4058,12 +4697,10 @@
                   "clusterAPIController",
                   "clusterTemplate",
                   "components",
-                  "driver",
                   "kubeProxy",
                   "kubeVip",
                   "manager",
                   "metadata",
-                  "syncer",
                   "version"
                 ],
                 "type": "object",
