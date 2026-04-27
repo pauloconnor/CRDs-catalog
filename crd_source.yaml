@@ -352,7 +352,7 @@ sources:
   # KubeVirt
   # ---------------------------------------------------------------------------
   - url: "https://github.com/kubevirt/kubevirt"
-    tag: ""
+    tag: "v1.8.2"
     fetch_strategy: release_url
     url_template: "https://github.com/kubevirt/kubevirt/releases/download/{version}/kubevirt-operator.yaml"
     changelog: "https://github.com/kubevirt/kubevirt/releases"
