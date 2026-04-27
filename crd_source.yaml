@@ -1116,7 +1116,7 @@ sources:
     changelog: "https://github.com/CrunchyData/postgres-operator/releases"
 
   - url: "https://github.com/projectcontour/contour"
-    tag: ""
+    tag: "v1.33.4"
     repo_path: "examples/contour"
     changelog: "https://github.com/projectcontour/contour/releases"
 
