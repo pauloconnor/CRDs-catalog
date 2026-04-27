@@ -297,7 +297,7 @@ sources:
     changelog: "https://github.com/Azure/azure-service-operator/releases"
 
   - url: "https://github.com/Azure/karpenter-provider-azure"
-    tag: ""
+    tag: "v1.10.2"
     repo_path: "pkg/apis/crds"
     changelog: "https://github.com/Azure/karpenter-provider-azure/releases"
 
