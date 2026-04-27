@@ -1031,7 +1031,7 @@ sources:
     changelog: "https://github.com/mysql/mysql-operator/releases"
 
   - url: "https://github.com/bitpoke/mysql-operator"
-    tag: ""
+    tag: "v0.6.3"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/bitpoke/mysql-operator/releases"
 
