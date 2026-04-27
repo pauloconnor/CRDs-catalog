@@ -504,7 +504,7 @@ sources:
     changelog: "https://github.com/rancher/rancher/releases"
 
   - url: "https://github.com/rancher/fleet"
-    tag: ""
+    tag: "v0.15.0"
     repo_path: "charts/fleet-crd/templates"
     changelog: "https://github.com/rancher/fleet/releases"
 

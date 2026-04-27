@@ -6337,6 +6337,50 @@ fleet.cattle.io:
     filename: fleet.cattle.io/bundle_v1alpha1.json
     kind: bundle
     name: bundle_v1alpha1
+  - apiVersion: fleet.cattle.io/v1alpha1
+    filename: fleet.cattle.io/gitrepo_v1alpha1.json
+    kind: GitRepo
+    name: gitrepo_v1alpha1
+  - apiVersion: fleet.cattle.io/v1alpha1
+    filename: fleet.cattle.io/clusterregistrationtoken_v1alpha1.json
+    kind: ClusterRegistrationToken
+    name: clusterregistrationtoken_v1alpha1
+  - apiVersion: fleet.cattle.io/v1alpha1
+    filename: fleet.cattle.io/imagescan_v1alpha1.json
+    kind: imagescan
+    name: imagescan_v1alpha1
+  - apiVersion: fleet.cattle.io/v1alpha1
+    filename: fleet.cattle.io/bundlenamespacemapping_v1alpha1.json
+    kind: BundleNamespaceMapping
+    name: bundlenamespacemapping_v1alpha1
+  - apiVersion: fleet.cattle.io/v1alpha1
+    filename: fleet.cattle.io/schedule_v1alpha1.json
+    kind: Schedule
+    name: schedule_v1alpha1
+  - apiVersion: fleet.cattle.io/v1alpha1
+    filename: fleet.cattle.io/gitreporestriction_v1alpha1.json
+    kind: GitRepoRestriction
+    name: gitreporestriction_v1alpha1
+  - apiVersion: fleet.cattle.io/v1alpha1
+    filename: fleet.cattle.io/content_v1alpha1.json
+    kind: Content
+    name: content_v1alpha1
+  - apiVersion: fleet.cattle.io/v1alpha1
+    filename: fleet.cattle.io/clusterregistration_v1alpha1.json
+    kind: ClusterRegistration
+    name: clusterregistration_v1alpha1
+  - apiVersion: fleet.cattle.io/v1alpha1
+    filename: fleet.cattle.io/bundledeployment_v1alpha1.json
+    kind: BundleDeployment
+    name: bundledeployment_v1alpha1
+  - apiVersion: fleet.cattle.io/v1alpha1
+    filename: fleet.cattle.io/cluster_v1alpha1.json
+    kind: Cluster
+    name: cluster_v1alpha1
+  - apiVersion: fleet.cattle.io/v1alpha1
+    filename: fleet.cattle.io/helmop_v1alpha1.json
+    kind: HelmOp
+    name: helmop_v1alpha1
 fleetmanagement.grafana.crossplane.io:
   - apiVersion: fleetmanagement.grafana.crossplane.io/v1alpha1
     filename: fleetmanagement.grafana.crossplane.io/pipeline_v1alpha1.json
