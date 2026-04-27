@@ -1,5 +1,5 @@
 {
-  "description": "FeatureFlagSource is the Schema for the FeatureFlagSources API",
+  "description": "FlagSourceConfiguration is the Schema for the FlagSourceConfigurations API",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -13,22 +13,8 @@
       "type": "object"
     },
     "spec": {
-      "description": "FeatureFlagSourceSpec defines the desired state of FeatureFlagSource",
+      "description": "FlagSourceConfigurationSpec defines the desired state of FlagSourceConfiguration",
       "properties": {
-        "contextValues": {
-          "additionalProperties": {
-            "type": "string"
-          },
-          "description": "ContextValues are static key-value pairs added to the flagd evaluation context",
-          "type": "object"
-        },
-        "cors": {
-          "description": "CORS defines the allowed CORS origins for the flagd OFREP endpoint",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
         "debugLogging": {
           "description": "DebugLogging defines whether to enable --debug flag of flagd sidecar. Default false (disabled).",
           "type": "boolean"
@@ -38,12 +24,11 @@
           "type": "string"
         },
         "envVarPrefix": {
-          "default": "FLAGD",
           "description": "EnvVarPrefix defines the prefix to be applied to all environment variables applied to the sidecar, default FLAGD",
           "type": "string"
         },
         "envVars": {
-          "description": "EnvVars define the env vars to be applied to the sidecar, any env vars in FeatureFlag CRs\nare added at the lowest index, all values will have the EnvVarPrefix applied, default FLAGD",
+          "description": "EnvVars define the env vars to be applied to the sidecar, any env vars in FeatureFlagConfiguration CRs\nare added at the lowest index, all values will have the EnvVarPrefix applied",
           "items": {
             "description": "EnvVar represents an environment variable present in a Container.",
             "properties": {
@@ -171,31 +156,19 @@
           "type": "array"
         },
         "evaluator": {
-          "default": "json",
           "description": "Evaluator sets an evaluator, defaults to 'json'",
           "type": "string"
         },
-        "headerToContextMappings": {
-          "additionalProperties": {
-            "type": "string"
-          },
-          "description": "HeaderToContextMappings map HTTP header names to evaluation context keys",
-          "type": "object"
+        "image": {
+          "description": "Image allows for the sidecar image to be overridden, defaults to 'ghcr.io/open-feature/flagd'",
+          "type": "string"
         },
         "logFormat": {
-          "default": "json",
           "description": "LogFormat allows for the sidecar log format to be overridden, defaults to 'json'",
           "type": "string"
         },
-        "managementPort": {
-          "default": 8014,
-          "description": "ManagemetPort defines the port to serve management on, defaults to 8014",
-          "format": "int32",
-          "type": "integer"
-        },
-        "ofrepPort": {
-          "default": 8016,
-          "description": "OFREPPort defines the port for the OFREP service, defaults to 8016",
+        "metricsPort": {
+          "description": "MetricsPort defines the port to serve metrics on, defaults to 8014",
           "format": "int32",
           "type": "integer"
         },
@@ -204,7 +177,6 @@
           "type": "string"
         },
         "port": {
-          "default": 8013,
           "description": "Port defines the port to listen on, defaults to 8013",
           "format": "int32",
           "type": "integer"
@@ -287,7 +259,7 @@
           "type": "string"
         },
         "sources": {
-          "description": "SyncProviders define the syncProviders and associated configuration to be applied to the sidecar",
+          "description": "Sources defines the syncProviders and associated configuration to be applied to the sidecar",
           "items": {
             "properties": {
               "certPath": {
@@ -298,13 +270,8 @@
                 "description": "HttpSyncBearerToken is a bearer token. Used by http(s) sync provider only",
                 "type": "string"
               },
-              "interval": {
-                "description": "Interval is a flag configuration interval in seconds used by http provider",
-                "format": "int32",
-                "type": "integer"
-              },
               "provider": {
-                "description": "Provider type - kubernetes, http(s), grpc(s) or file",
+                "description": "Provider type - kubernetes, http, grpc or filepath",
                 "type": "string"
               },
               "providerID": {
@@ -339,6 +306,10 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "tag": {
+          "description": "Tag to be appended to the sidecar image, defaults to 'main'",
+          "type": "string"
         }
       },
       "required": [
@@ -348,7 +319,7 @@
       "additionalProperties": false
     },
     "status": {
-      "description": "FeatureFlagSourceStatus defines the observed state of FeatureFlagSource",
+      "description": "FlagSourceConfigurationStatus defines the observed state of FlagSourceConfiguration",
       "type": "object"
     }
   },

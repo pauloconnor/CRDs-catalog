@@ -3817,6 +3817,26 @@ core.openfeature.dev:
     filename: core.openfeature.dev/featureflagsource_v1beta1.json
     kind: FeatureFlagSource
     name: featureflagsource_v1beta1
+  - apiVersion: core.openfeature.dev/v1alpha1
+    filename: core.openfeature.dev/flagsourceconfiguration_v1alpha1.json
+    kind: FlagSourceConfiguration
+    name: flagsourceconfiguration_v1alpha1
+  - apiVersion: core.openfeature.dev/v1alpha2
+    filename: core.openfeature.dev/featureflagconfiguration_v1alpha2.json
+    kind: FeatureFlagConfiguration
+    name: featureflagconfiguration_v1alpha2
+  - apiVersion: core.openfeature.dev/v1alpha2
+    filename: core.openfeature.dev/flagsourceconfiguration_v1alpha2.json
+    kind: FlagSourceConfiguration
+    name: flagsourceconfiguration_v1alpha2
+  - apiVersion: core.openfeature.dev/v1alpha3
+    filename: core.openfeature.dev/flagsourceconfiguration_v1alpha3.json
+    kind: FlagSourceConfiguration
+    name: flagsourceconfiguration_v1alpha3
+  - apiVersion: core.openfeature.dev/v1alpha1
+    filename: core.openfeature.dev/featureflagconfiguration_v1alpha1.json
+    kind: FeatureFlagConfiguration
+    name: featureflagconfiguration_v1alpha1
 core.strimzi.io:
   - apiVersion: core.strimzi.io/v1beta2
     filename: core.strimzi.io/strimzipodset_v1beta2.json
