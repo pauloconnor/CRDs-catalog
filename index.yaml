@@ -9516,6 +9516,19 @@ essentialcontacts.cnrm.cloud.google.com:
     filename: essentialcontacts.cnrm.cloud.google.com/essentialcontactscontact_v1beta1.json
     kind: EssentialContactsContact
     name: essentialcontactscontact_v1beta1
+etcd.aenix.io:
+  - apiVersion: etcd.aenix.io/v1alpha1
+    filename: etcd.aenix.io/etcdbackup_v1alpha1.json
+    kind: EtcdBackup
+    name: etcdbackup_v1alpha1
+  - apiVersion: etcd.aenix.io/v1alpha1
+    filename: etcd.aenix.io/etcdbackupschedule_v1alpha1.json
+    kind: EtcdBackupSchedule
+    name: etcdbackupschedule_v1alpha1
+  - apiVersion: etcd.aenix.io/v1alpha1
+    filename: etcd.aenix.io/etcdcluster_v1alpha1.json
+    kind: EtcdCluster
+    name: etcdcluster_v1alpha1
 etcd.k0sproject.io:
   - apiVersion: etcd.k0sproject.io/v1beta1
     filename: etcd.k0sproject.io/etcdmember_v1beta1.json

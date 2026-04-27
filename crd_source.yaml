@@ -1415,7 +1415,7 @@ sources:
 
   # Issue #595 - etcd operator CRDs (etcd.aenix.io)
   - url: "https://github.com/aenix-io/etcd-operator"
-    tag: ""
+    tag: "v0.4.3"
     repo_path: "charts/etcd-operator/crds"
     changelog: "https://github.com/aenix-io/etcd-operator/releases"
 
