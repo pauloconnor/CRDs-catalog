@@ -891,7 +891,7 @@ sources:
     changelog: "https://github.com/haproxytech/kubernetes-ingress/releases"
 
   - url: "https://github.com/isindir/sops-secrets-operator"
-    tag: ""
+    tag: "0.20.2"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/isindir/sops-secrets-operator/releases"
 
