@@ -821,7 +821,7 @@ sources:
     changelog: "https://github.com/kubernetes-sigs/external-dns/releases"
 
   - url: "https://github.com/nginxinc/nginx-ingress-helm-operator"
-    tag: ""
+    tag: "v3.5.2"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/nginxinc/nginx-ingress-helm-operator/releases"
 
