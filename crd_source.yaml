@@ -996,7 +996,7 @@ sources:
     changelog: "https://github.com/linkerd/linkerd2/releases"
 
   - url: "https://github.com/kube-logging/logging-operator"
-    tag: ""
+    tag: "6.5.0"
     repo_path: "charts/logging-operator/crds"
     changelog: "https://github.com/kube-logging/logging-operator/releases"
 
