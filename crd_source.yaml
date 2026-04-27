@@ -478,7 +478,7 @@ sources:
   # Crossplane + Grafana Crossplane Provider
   # ---------------------------------------------------------------------------
   - url: "https://github.com/crossplane/crossplane"
-    tag: ""
+    tag: "v2.2.1"
     repo_path: "cluster/crds"
     changelog: "https://github.com/crossplane/crossplane/releases"
 
