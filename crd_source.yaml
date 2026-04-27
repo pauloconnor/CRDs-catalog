@@ -442,7 +442,7 @@ sources:
     changelog: "https://github.com/cert-manager/trust-manager/releases"
 
   - url: "https://github.com/cert-manager/aws-privateca-issuer"
-    tag: ""
+    tag: "v1.8.1"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/cert-manager/aws-privateca-issuer/releases"
 
