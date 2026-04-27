@@ -1,5 +1,5 @@
 {
-  "description": "Bundle contains the resources of an application and its deployment options.\nIt will be deployed as a Helm chart to target clusters.\n\nWhen a GitRepo is scanned it will produce one or more bundles. Bundles are\na collection of resources that get deployed to one or more cluster(s). Bundle is the\nfundamental deployment unit used in Fleet. The contents of a Bundle may be\nKubernetes manifests, Kustomize configuration, or Helm charts. Regardless\nof the source the contents are dynamically rendered into a Helm chart by\nthe agent and installed into the downstream cluster as a Helm release.",
+  "description": "HelmOp describes a helm chart information.\nThe resource contains the necessary information to deploy the chart to target clusters.",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -429,6 +429,11 @@
           "type": "object",
           "additionalProperties": false
         },
+        "helmSecretName": {
+          "description": "HelmSecretName contains the auth secret with the credentials to access\na private Helm repository.",
+          "nullable": true,
+          "type": "string"
+        },
         "ignore": {
           "description": "IgnoreOptions can be used to ignore fields when monitoring the bundle.",
           "nullable": true,
@@ -448,6 +453,10 @@
           "type": "object",
           "additionalProperties": false
         },
+        "insecureSkipTLSVerify": {
+          "description": "InsecureSkipTLSverify will use insecure HTTPS to clone the helm app resource.",
+          "type": "boolean"
+        },
         "keepResources": {
           "description": "KeepResources can be used to keep the deployed resources when removing the bundle",
           "type": "boolean"
@@ -464,6 +473,13 @@
           },
           "type": "object",
           "additionalProperties": false
+        },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Labels are copied to the bundle and can be used in a\ndependsOn.selector.",
+          "type": "object"
         },
         "namespace": {
           "description": "TargetNamespace if present will assign all resource to this\nnamespace and if any cluster scoped resource exists the deployment\nwill fail.",
@@ -508,6 +524,11 @@
         "paused": {
           "description": "Paused if set to true, will stop any BundleDeployments from being updated. It will be marked as out of sync.",
           "type": "boolean"
+        },
+        "pollingInterval": {
+          "description": "PollingInterval is how often to check the Helm repository for new updates.",
+          "nullable": true,
+          "type": "string"
         },
         "resources": {
           "description": "Resources contains the resources that were read from the bundle's\npath. This includes the content of downloaded helm charts.",
@@ -1415,7 +1436,7 @@
     "status": {
       "properties": {
         "conditions": {
-          "description": "Conditions is a list of Wrangler conditions that describe the state\nof the bundle.",
+          "description": "Conditions is a list of Wrangler conditions that describe the state\nof the resource.",
           "items": {
             "properties": {
               "lastTransitionTime": {
@@ -1452,276 +1473,254 @@
           },
           "type": "array"
         },
+        "desiredReadyClusters": {
+          "description": "DesiredReadyClusters\tis the number of clusters that should be ready for bundles of this resource.",
+          "type": "integer"
+        },
         "display": {
-          "description": "Display contains the number of ready, desiredready clusters and a\nsummary state for the bundle's resources.",
+          "description": "Display contains a human readable summary of the status.",
           "properties": {
-            "readyClusters": {
-              "description": "ReadyClusters is a string in the form \"%d/%d\", that describes the\nnumber of clusters that are ready vs. the number of clusters desired\nto be ready.",
-              "nullable": true,
+            "error": {
+              "description": "Error is true if a message is present.",
+              "type": "boolean"
+            },
+            "message": {
+              "description": "Message contains the relevant message from the deployment conditions.",
+              "type": "string"
+            },
+            "readyBundleDeployments": {
+              "description": "ReadyBundleDeployments is a string in the form \"%d/%d\", that describes the\nnumber of ready bundledeployments over the total number of bundledeployments.",
               "type": "string"
             },
             "state": {
-              "description": "State is a summary state for the bundle, calculated over the non-ready resources.",
-              "nullable": true,
+              "description": "State is the state of the resource, e.g. \"GitUpdating\" or the maximal\nBundleState according to StateRank.",
               "type": "string"
             }
           },
           "type": "object",
           "additionalProperties": false
         },
-        "maxNew": {
-          "description": "MaxNew is always 50. A bundle change can only stage 50\nbundledeployments at a time.",
-          "type": "integer"
-        },
-        "maxUnavailable": {
-          "description": "MaxUnavailable is the maximum number of unavailable deployments. See\nrollout configuration.",
-          "type": "integer"
-        },
-        "maxUnavailablePartitions": {
-          "description": "MaxUnavailablePartitions is the maximum number of unavailable\npartitions. The rollout configuration defines a maximum number or\npercentage of unavailable partitions.",
-          "type": "integer"
-        },
-        "newlyCreated": {
-          "description": "NewlyCreated is the number of bundle deployments that have been created,\nnot updated.",
-          "type": "integer"
-        },
-        "observedGeneration": {
-          "description": "ObservedGeneration is the current generation of the bundle.",
-          "format": "int64",
-          "type": "integer"
-        },
-        "ociReference": {
-          "description": "OCIReference is the OCI reference used to store contents, this is\nonly for informational purposes.",
+        "lastPollingTriggered": {
+          "description": "LastPollingTime is the last time the polling check was triggered",
+          "format": "date-time",
           "type": "string"
         },
-        "partitions": {
-          "description": "PartitionStatus lists the status of each partition.",
-          "items": {
-            "description": "PartitionStatus is the status of a single rollout partition.",
+        "perClusterResourceCounts": {
+          "additionalProperties": {
+            "description": "ResourceCounts contains the number of resources in each state.",
             "properties": {
-              "count": {
-                "description": "Count is the number of clusters in the partition.",
+              "desiredReady": {
+                "description": "DesiredReady is the number of resources that should be ready.",
                 "type": "integer"
               },
-              "maxUnavailable": {
-                "description": "MaxUnavailable is the maximum number of unavailable clusters in the partition.",
+              "missing": {
+                "description": "Missing is the number of missing resources.",
                 "type": "integer"
               },
-              "name": {
-                "description": "Name is the name of the partition.",
+              "modified": {
+                "description": "Modified is the number of resources that have been modified.",
+                "type": "integer"
+              },
+              "notReady": {
+                "description": "NotReady is the number of not ready resources. Resources are not\nready if they do not match any other state.",
+                "type": "integer"
+              },
+              "orphaned": {
+                "description": "Orphaned is the number of orphaned resources.",
+                "type": "integer"
+              },
+              "ready": {
+                "description": "Ready is the number of ready resources.",
+                "type": "integer"
+              },
+              "unknown": {
+                "description": "Unknown is the number of resources in an unknown state.",
+                "type": "integer"
+              },
+              "waitApplied": {
+                "description": "WaitApplied is the number of resources that are waiting to be applied.",
+                "type": "integer"
+              }
+            },
+            "type": "object",
+            "additionalProperties": false
+          },
+          "description": "PerClusterResourceCounts contains the number of resources in each state over all bundles, per cluster.",
+          "type": "object"
+        },
+        "readyClusters": {
+          "description": "ReadyClusters is the lowest number of clusters that are ready over\nall the bundles of this resource.",
+          "type": "integer"
+        },
+        "resourceCounts": {
+          "description": "ResourceCounts contains the number of resources in each state over all bundles.",
+          "properties": {
+            "desiredReady": {
+              "description": "DesiredReady is the number of resources that should be ready.",
+              "type": "integer"
+            },
+            "missing": {
+              "description": "Missing is the number of missing resources.",
+              "type": "integer"
+            },
+            "modified": {
+              "description": "Modified is the number of resources that have been modified.",
+              "type": "integer"
+            },
+            "notReady": {
+              "description": "NotReady is the number of not ready resources. Resources are not\nready if they do not match any other state.",
+              "type": "integer"
+            },
+            "orphaned": {
+              "description": "Orphaned is the number of orphaned resources.",
+              "type": "integer"
+            },
+            "ready": {
+              "description": "Ready is the number of ready resources.",
+              "type": "integer"
+            },
+            "unknown": {
+              "description": "Unknown is the number of resources in an unknown state.",
+              "type": "integer"
+            },
+            "waitApplied": {
+              "description": "WaitApplied is the number of resources that are waiting to be applied.",
+              "type": "integer"
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
+        "resources": {
+          "description": "Resources contains metadata about the resources of each bundle.",
+          "items": {
+            "description": "Resource contains metadata about the resources of a bundle.",
+            "properties": {
+              "apiVersion": {
+                "description": "APIVersion is the API version of the resource.",
                 "nullable": true,
                 "type": "string"
               },
-              "summary": {
-                "description": "Summary is a summary state for the partition, calculated over its non-ready resources.",
+              "error": {
+                "description": "Error is true if any Error in the PerClusterState is true.",
+                "type": "boolean"
+              },
+              "id": {
+                "description": "ID is the name of the resource, e.g. \"namespace1/my-config\" or \"backingimagemanagers.storage.io\".",
+                "nullable": true,
+                "type": "string"
+              },
+              "incompleteState": {
+                "description": "IncompleteState is true if a bundle summary has 10 or more non-ready\nresources or a non-ready resource has more 10 or more non-ready or\nmodified states.",
+                "type": "boolean"
+              },
+              "kind": {
+                "description": "Kind is the k8s kind of the resource.",
+                "nullable": true,
+                "type": "string"
+              },
+              "message": {
+                "description": "Message is the first message from the PerClusterStates.",
+                "nullable": true,
+                "type": "string"
+              },
+              "name": {
+                "description": "Name of the resource.",
+                "nullable": true,
+                "type": "string"
+              },
+              "namespace": {
+                "description": "Namespace of the resource.",
+                "nullable": true,
+                "type": "string"
+              },
+              "perClusterState": {
+                "description": "PerClusterState contains lists of cluster IDs for every State for this resource",
+                "nullable": true,
                 "properties": {
-                  "desiredReady": {
-                    "description": "DesiredReady is the number of bundle deployments that should be\nready.",
-                    "type": "integer"
-                  },
-                  "errApplied": {
-                    "description": "ErrApplied is the number of bundle deployments that have been synced\nfrom the Fleet controller and the downstream cluster, but with some\nerrors when deploying the bundle.",
-                    "type": "integer"
+                  "missing": {
+                    "description": "Missing is a list of cluster IDs for which this a resource is in Missing state",
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
                   },
                   "modified": {
-                    "description": "Modified is the number of bundle deployments that have been deployed\nand for which all resources are ready, but where some changes from the\nGit repository have not yet been synced.",
-                    "type": "integer"
-                  },
-                  "nonReadyResources": {
-                    "description": "NonReadyClusters is a list of states, which is filled for a bundle\nthat is not ready.",
+                    "description": "Modified is a list of cluster IDs for which this a resource is in Modified state",
                     "items": {
-                      "description": "NonReadyResource contains information about a bundle that is not ready for a\ngiven state like \"ErrApplied\". It contains a list of non-ready or modified\nresources and their states.",
-                      "properties": {
-                        "bundleState": {
-                          "description": "State is the state of the resource, like e.g. \"NotReady\" or \"ErrApplied\".",
-                          "nullable": true,
-                          "type": "string"
-                        },
-                        "message": {
-                          "description": "Message contains information why the bundle is not ready.",
-                          "nullable": true,
-                          "type": "string"
-                        },
-                        "modifiedStatus": {
-                          "description": "ModifiedStatus lists the state for each modified resource.",
-                          "items": {
-                            "description": "ModifiedStatus is used to report the status of a resource that is modified.\nIt indicates if the modification was a create, a delete or a patch.",
-                            "properties": {
-                              "apiVersion": {
-                                "nullable": true,
-                                "type": "string"
-                              },
-                              "delete": {
-                                "type": "boolean"
-                              },
-                              "exist": {
-                                "description": "Exist is true if the resource exists but is not owned by us. This can happen if a resource was adopted by another bundle whereas the first bundle still exists and due to that reports that it does not own it.",
-                                "type": "boolean"
-                              },
-                              "kind": {
-                                "nullable": true,
-                                "type": "string"
-                              },
-                              "missing": {
-                                "type": "boolean"
-                              },
-                              "name": {
-                                "nullable": true,
-                                "type": "string"
-                              },
-                              "namespace": {
-                                "nullable": true,
-                                "type": "string"
-                              },
-                              "patch": {
-                                "nullable": true,
-                                "type": "string"
-                              }
-                            },
-                            "type": "object",
-                            "additionalProperties": false
-                          },
-                          "nullable": true,
-                          "type": "array"
-                        },
-                        "name": {
-                          "description": "Name is the name of the resource.",
-                          "nullable": true,
-                          "type": "string"
-                        },
-                        "nonReadyStatus": {
-                          "description": "NonReadyStatus lists the state for each non-ready resource.",
-                          "items": {
-                            "description": "NonReadyStatus is used to report the status of a resource that is not ready. It includes a summary.",
-                            "properties": {
-                              "apiVersion": {
-                                "nullable": true,
-                                "type": "string"
-                              },
-                              "kind": {
-                                "nullable": true,
-                                "type": "string"
-                              },
-                              "name": {
-                                "nullable": true,
-                                "type": "string"
-                              },
-                              "namespace": {
-                                "nullable": true,
-                                "type": "string"
-                              },
-                              "summary": {
-                                "properties": {
-                                  "error": {
-                                    "type": "boolean"
-                                  },
-                                  "message": {
-                                    "items": {
-                                      "type": "string"
-                                    },
-                                    "type": "array"
-                                  },
-                                  "state": {
-                                    "type": "string"
-                                  },
-                                  "transitioning": {
-                                    "type": "boolean"
-                                  }
-                                },
-                                "type": "object",
-                                "additionalProperties": false
-                              },
-                              "uid": {
-                                "description": "UID is a type that holds unique ID values, including UUIDs.  Because we\ndon't ONLY use UUIDs, this is an alias to string.  Being a type captures\nintent and helps make sure that UIDs and names do not get conflated.",
-                                "nullable": true,
-                                "type": "string"
-                              }
-                            },
-                            "type": "object",
-                            "additionalProperties": false
-                          },
-                          "nullable": true,
-                          "type": "array"
-                        }
-                      },
-                      "type": "object",
-                      "additionalProperties": false
+                      "type": "string"
                     },
-                    "nullable": true,
                     "type": "array"
                   },
                   "notReady": {
-                    "description": "NotReady is the number of bundle deployments that have been deployed\nwhere some resources are not ready.",
-                    "type": "integer"
+                    "description": "NotReady is a list of cluster IDs for which this a resource is in NotReady state",
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
                   },
-                  "outOfSync": {
-                    "description": "OutOfSync is the number of bundle deployments that have been synced\nfrom Fleet controller, but not yet by the downstream agent.",
-                    "type": "integer"
+                  "orphaned": {
+                    "description": "Orphaned is a list of cluster IDs for which this a resource is in Orphaned state",
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
                   },
                   "pending": {
-                    "description": "Pending is the number of bundle deployments that are being processed\nby Fleet controller.",
-                    "type": "integer"
+                    "description": "Pending is a list of cluster IDs for which this a resource is in Pending state",
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
                   },
                   "ready": {
-                    "description": "Ready is the number of bundle deployments that have been deployed\nwhere all resources are ready.",
-                    "type": "integer"
+                    "description": "Ready is a list of cluster IDs for which this a resource is in Ready state",
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "unknown": {
+                    "description": "Unknown is a list of cluster IDs for which this a resource is in Unknown state",
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
                   },
                   "waitApplied": {
-                    "description": "WaitApplied is the number of bundle deployments that have been\nsynced from Fleet controller and downstream cluster, but are waiting\nto be deployed.",
-                    "type": "integer"
+                    "description": "WaitApplied is a list of cluster IDs for which this a resource is in WaitApplied state",
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
                   }
                 },
                 "type": "object",
                 "additionalProperties": false
               },
-              "unavailable": {
-                "description": "Unavailable is the number of unavailable clusters in the partition.",
-                "type": "integer"
+              "state": {
+                "description": "State is the state of the resource, e.g. \"Unknown\", \"WaitApplied\", \"ErrApplied\" or \"Ready\".",
+                "type": "string"
+              },
+              "transitioning": {
+                "description": "Transitioning is true if any Transitioning in the PerClusterState is true.",
+                "type": "boolean"
+              },
+              "type": {
+                "description": "Type is the type of the resource, e.g. \"apiextensions.k8s.io.customresourcedefinition\" or \"configmap\".",
+                "type": "string"
               }
             },
+            "required": [
+              "perClusterState"
+            ],
             "type": "object",
             "additionalProperties": false
           },
           "type": "array"
-        },
-        "resourceKey": {
-          "description": "ResourceKey lists resources, which will likely be deployed. The\nactual list of resources on a cluster might differ, depending on the\nhelm chart, value templating, etc.. (deprecated to reduce bundle size)",
-          "items": {
-            "description": "ResourceKey lists resources, which will likely be deployed.",
-            "properties": {
-              "apiVersion": {
-                "description": "APIVersion is the k8s api version of the resource.",
-                "nullable": true,
-                "type": "string"
-              },
-              "kind": {
-                "description": "Kind is the k8s api kind of the resource.",
-                "nullable": true,
-                "type": "string"
-              },
-              "name": {
-                "description": "Name is the name of the resource.",
-                "nullable": true,
-                "type": "string"
-              },
-              "namespace": {
-                "description": "Namespace is the namespace of the resource.",
-                "nullable": true,
-                "type": "string"
-              }
-            },
-            "type": "object",
-            "additionalProperties": false
-          },
-          "nullable": true,
-          "type": "array"
-        },
-        "resourcesSha256Sum": {
-          "description": "ResourcesSHA256Sum corresponds to the JSON serialization of the .Spec.Resources field",
-          "type": "string"
         },
         "summary": {
-          "description": "Summary contains the number of bundle deployments in each state and\na list of non-ready resources.",
+          "description": "Summary contains the number of bundle deployments in each state and a list of non-ready resources.",
           "properties": {
             "desiredReady": {
               "description": "DesiredReady is the number of bundle deployments that should be\nready.",
@@ -1882,13 +1881,9 @@
           "type": "object",
           "additionalProperties": false
         },
-        "unavailable": {
-          "description": "Unavailable is the number of bundle deployments that are not ready or\nwhere the AppliedDeploymentID in the status does not match the\nDeploymentID from the spec.",
-          "type": "integer"
-        },
-        "unavailablePartitions": {
-          "description": "UnavailablePartitions is the number of unavailable partitions.",
-          "type": "integer"
+        "version": {
+          "description": "Version installed for the helm chart.\nWhen using * or empty version in the spec we get the latest version from\nthe helm repository when possible",
+          "type": "string"
         }
       },
       "type": "object",
