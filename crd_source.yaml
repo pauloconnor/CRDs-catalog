@@ -766,7 +766,7 @@ sources:
     changelog: "https://github.com/Kong/kubernetes-ingress-controller/releases"
 
   - url: "https://github.com/open-feature/open-feature-operator"
-    tag: ""
+    tag: "v0.9.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/open-feature/open-feature-operator/releases"
 
