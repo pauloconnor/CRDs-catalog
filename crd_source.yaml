@@ -259,7 +259,7 @@ sources:
     changelog: "https://github.com/aws/amazon-vpc-cni-k8s/releases"
 
   - url: "https://github.com/aws/amazon-vpc-resource-controller-k8s"
-    tag: ""
+    tag: "v1.7.2"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/aws/amazon-vpc-resource-controller-k8s/releases"
 
