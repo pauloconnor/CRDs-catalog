@@ -10212,6 +10212,30 @@ management.cattle.io:
     filename: management.cattle.io/globalrolebinding_v3.json
     kind: GlobalRoleBinding
     name: globalrolebinding_v3
+  - apiVersion: management.cattle.io/v3
+    filename: management.cattle.io/oidcclient_v3.json
+    kind: oidcclient
+    name: oidcclient_v3
+  - apiVersion: management.cattle.io/v3
+    filename: management.cattle.io/clusterproxyconfig_v3.json
+    kind: ClusterProxyConfig
+    name: clusterproxyconfig_v3
+  - apiVersion: management.cattle.io/v3
+    filename: management.cattle.io/dynamicschema_v3.json
+    kind: DynamicSchema
+    name: dynamicschema_v3
+  - apiVersion: management.cattle.io/v3
+    filename: management.cattle.io/proxyendpoint_v3.json
+    kind: ProxyEndpoint
+    name: proxyendpoint_v3
+  - apiVersion: management.cattle.io/v3
+    filename: management.cattle.io/user_v3.json
+    kind: User
+    name: user_v3
+  - apiVersion: management.cattle.io/v3
+    filename: management.cattle.io/nodedriver_v3.json
+    kind: NodeDriver
+    name: nodedriver_v3
 maps.k8s.elastic.co:
   - apiVersion: maps.k8s.elastic.co/v1alpha1
     filename: maps.k8s.elastic.co/elasticmapsserver_v1alpha1.json
@@ -13581,6 +13605,22 @@ rke.cattle.io:
     filename: rke.cattle.io/custommachine_v1.json
     kind: CustomMachine
     name: custommachine_v1
+  - apiVersion: rke.cattle.io/v1
+    filename: rke.cattle.io/rkecluster_v1.json
+    kind: RKECluster
+    name: rkecluster_v1
+  - apiVersion: rke.cattle.io/v1
+    filename: rke.cattle.io/rkecontrolplane_v1.json
+    kind: RKEControlPlane
+    name: rkecontrolplane_v1
+  - apiVersion: rke.cattle.io/v1
+    filename: rke.cattle.io/rkebootstrap_v1.json
+    kind: RKEBootstrap
+    name: rkebootstrap_v1
+  - apiVersion: rke.cattle.io/v1
+    filename: rke.cattle.io/rkebootstraptemplate_v1.json
+    kind: RKEBootstrapTemplate
+    name: rkebootstraptemplate_v1
 rollout-operator.grafana.com:
   - apiVersion: rollout-operator.grafana.com/v1
     filename: rollout-operator.grafana.com/replicatemplate_v1.json
@@ -14071,6 +14111,11 @@ sagemaker.services.k8s.aws:
     filename: sagemaker.services.k8s.aws/inferencecomponent_v1alpha1.json
     kind: InferenceComponent
     name: inferencecomponent_v1alpha1
+scc.cattle.io:
+  - apiVersion: scc.cattle.io/v1
+    filename: scc.cattle.io/registration_v1.json
+    kind: registration
+    name: registration_v1
 scylla.scylladb.com:
   - apiVersion: scylla.scylladb.com/v1alpha1
     filename: scylla.scylladb.com/scyllaoperatorconfig_v1alpha1.json
@@ -15219,6 +15264,11 @@ talos.dev:
     filename: talos.dev/serviceaccount_v1alpha1.json
     kind: serviceaccount
     name: serviceaccount_v1alpha1
+telemetry.cattle.io:
+  - apiVersion: telemetry.cattle.io/v1
+    filename: telemetry.cattle.io/secretrequest_v1.json
+    kind: secretrequest
+    name: secretrequest_v1
 telemetry.istio.io:
   - apiVersion: telemetry.istio.io/v1
     filename: telemetry.istio.io/telemetry_v1.json

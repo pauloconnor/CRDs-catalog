@@ -1,5 +1,5 @@
 {
-  "description": "CustomMachine represents an unmanaged CAPI\nmachine registered to a Rancher custom cluster.",
+  "description": "RKECluster represents the InfraCluster resource required by Cluster API\nto provide the necessary infrastructure prerequisites for running machines.\nIt is referenced by the core Cluster API resource, Cluster.\nMore info: https://cluster-api.sigs.k8s.io/developer/providers/contracts/infra-cluster",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -13,54 +13,38 @@
       "type": "object"
     },
     "spec": {
-      "description": "Spec represents the desired configuration of the machine.",
+      "description": "Spec is the desired state of the RKECluster.",
       "properties": {
-        "providerID": {
-          "description": "ProviderID is a reference to the CAPI Node object corresponding to\nthis machine. This field is automatically set by CAPI during the\nmachine provisioning process.",
-          "nullable": true,
-          "type": "string"
+        "controlPlaneEndpoint": {
+          "description": "ControlPlaneEndpoint represents the endpoint used to communicate with the control plane.",
+          "minProperties": 1,
+          "properties": {
+            "host": {
+              "description": "host is the hostname on which the API server is serving.",
+              "maxLength": 512,
+              "minLength": 1,
+              "type": "string"
+            },
+            "port": {
+              "description": "port is the port on which the API server is serving.",
+              "format": "int32",
+              "maximum": 65535,
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
         }
       },
       "type": "object",
       "additionalProperties": false
     },
     "status": {
-      "description": "Status represents the most recently observed status of the machine.",
+      "description": "Status is the observed state of the RKECluster.",
       "properties": {
-        "addresses": {
-          "description": "Addresses contains the associated addresses for the machine.",
-          "items": {
-            "description": "MachineAddress contains information for the node's address.",
-            "properties": {
-              "address": {
-                "description": "address is the machine address.",
-                "maxLength": 256,
-                "minLength": 1,
-                "type": "string"
-              },
-              "type": {
-                "description": "type is the machine address type, one of Hostname, ExternalIP, InternalIP, ExternalDNS or InternalDNS.",
-                "enum": [
-                  "Hostname",
-                  "ExternalIP",
-                  "InternalIP",
-                  "ExternalDNS",
-                  "InternalDNS"
-                ],
-                "type": "string"
-              }
-            },
-            "required": [
-              "address",
-              "type"
-            ],
-            "type": "object",
-            "additionalProperties": false
-          },
-          "type": "array"
-        },
         "conditions": {
-          "description": "Conditions is a representation of the current state of the machine.",
+          "description": "Conditions is a representation of the current state of the RKE cluster.",
           "items": {
             "properties": {
               "lastTransitionTime": {
@@ -98,11 +82,11 @@
           "type": "array"
         },
         "initialization": {
-          "description": "Initialization provides observations of the CustomMachine initialization process.\nNOTE: Fields in this struct are part of the Cluster API contract and are used to orchestrate initial Machine provisioning.",
+          "description": "Initialization provides observations of the RKECluster initialization process.\nNOTE: Fields in this struct are part of the Cluster API contract and are used to orchestrate initial Cluster provisioning.",
           "minProperties": 1,
           "properties": {
             "provisioned": {
-              "description": "Provisioned is true when the infrastructure provider reports that the Machine's infrastructure is fully provisioned.\nNOTE: this field is part of the Cluster API contract, and it is used to orchestrate initial Machine provisioning.",
+              "description": "Provisioned is true when the infrastructure provider reports that the Cluster's infrastructure is fully provisioned.\nNOTE: this field is part of the Cluster API contract, and it is used to orchestrate initial Cluster provisioning.",
               "type": "boolean"
             }
           },
@@ -110,7 +94,7 @@
           "additionalProperties": false
         },
         "ready": {
-          "description": "Ready indicates that the machine infrastructure is fully provisioned,\nand is a requirement of the Cluster API contract. The value of this\nfield is never updated after provisioning has completed.\nPlease use Conditions to determine the current state of the machine.\nDeprecated: use Initialization.Provisioned instead.",
+          "description": "Ready denotes that the RKE cluster infrastructure is fully provisioned.\nNOTE:\nThis field is part of the Cluster API contract, and it is used to\norchestrate provisioning.\nThe value of this field is never updated after provisioning is completed.\nPlease use conditions to check the operational state of the cluster.\nDeprecated: use Initialization.Provisioned instead.",
           "type": "boolean"
         }
       },
@@ -118,5 +102,8 @@
       "additionalProperties": false
     }
   },
+  "required": [
+    "spec"
+  ],
   "type": "object"
 }

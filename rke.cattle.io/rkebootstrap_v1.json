@@ -1,0 +1,72 @@
+{
+  "description": "RKEBootstrap defines the BootstrapConfig resource required by Cluster API\nto supply the bootstrap data necessary for initializing a Kubernetes node.\nIt is referenced by one of the core Cluster API resources, Machine.\nMore info: https://cluster-api.sigs.k8s.io/developer/providers/contracts/bootstrap-config",
+  "properties": {
+    "apiVersion": {
+      "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+      "type": "string"
+    },
+    "kind": {
+      "description": "Kind is a string value representing the REST resource this object represents.\nServers may infer this from the endpoint the client submits requests to.\nCannot be updated.\nIn CamelCase.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object"
+    },
+    "spec": {
+      "description": "Spec is the desired state of RKEBootstrap.",
+      "properties": {
+        "clusterName": {
+          "description": "ClusterName refers to the name of the CAPI Cluster associated with this RKEBootstrap.",
+          "type": "string"
+        },
+        "userdata": {
+          "description": "Additional that will be merged with rancher-defined userdata.\n\nCurrently, this field is only supported for external CAPI\ninfrastructure providers, and will have no effect for\nRancher-provisioned nodes. Userdata for Rancher-provisioned nodes\ncan be set in the machine configuration.\n\nWARNING: Do not include sensitive data, this field is visible\nin non-Secret API objects.\n\nEXPERIMENTAL: this field is experimental and future compatibility\nis not guaranteed.",
+          "nullable": true,
+          "properties": {
+            "inlineUserdata": {
+              "description": "Userdata string in cloud-config format.\n\nWARNING: Do not include sensitive data, this field is visible\nin non-Secret API objects.\n\nEXPERIMENTAL: this field is experimental and future compatibility\nis not guaranteed.",
+              "type": "string"
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        }
+      },
+      "type": "object",
+      "additionalProperties": false
+    },
+    "status": {
+      "description": "Status is the observed state of RKEBootstrap.",
+      "properties": {
+        "dataSecretName": {
+          "description": "DataSecretName is the name of the secret that stores the bootstrap data script.",
+          "maxLength": 253,
+          "minLength": 1,
+          "type": "string"
+        },
+        "initialization": {
+          "description": "Initialization provides observations of the RKEBootstrap initialization process.\nNOTE: Fields in this struct are part of the Cluster API contract and are used to orchestrate initial Machine provisioning.",
+          "minProperties": 1,
+          "properties": {
+            "dataSecretCreated": {
+              "description": "DataSecretCreated is true when the Machine's boostrap secret is created.\nNOTE: this field is part of the Cluster API contract, and it is used to orchestrate initial Machine provisioning.",
+              "type": "boolean"
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
+        "ready": {
+          "description": "Ready indicates the BootstrapData field is ready to be consumed.\nDeprecated: use Initialization.DataSecretCreated instead.",
+          "type": "boolean"
+        }
+      },
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "spec"
+  ],
+  "type": "object"
+}

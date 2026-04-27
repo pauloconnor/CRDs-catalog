@@ -499,7 +499,7 @@ sources:
   # Rancher / Cattle
   # ---------------------------------------------------------------------------
   - url: "https://github.com/rancher/rancher"
-    tag: ""
+    tag: "v2.14.0"
     repo_path: "pkg/crds/yaml/generated"
     changelog: "https://github.com/rancher/rancher/releases"
 
