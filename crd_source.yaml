@@ -656,7 +656,7 @@ sources:
     changelog: "https://github.com/jfrog/jfrog-registry-operator/releases"
 
   - url: "https://github.com/projectsveltos/addon-controller"
-    tag: ""
+    tag: "v1.8.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/projectsveltos/addon-controller/releases"
 
