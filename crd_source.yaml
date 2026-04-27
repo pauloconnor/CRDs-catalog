@@ -1216,7 +1216,7 @@ sources:
     changelog: "https://github.com/slok/sloth/releases"
 
   - url: "https://github.com/backube/snapscheduler"
-    tag: ""
+    tag: "v3.5.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/backube/snapscheduler/releases"
 
