@@ -926,7 +926,7 @@ sources:
     changelog: "https://github.com/k8snetworkplumbingwg/multus-cni/releases"
 
   - url: "https://github.com/keycloak/keycloak-k8s-resources"
-    tag: ""
+    tag: "nightly"
     repo_path: "kubernetes"
     changelog: "https://github.com/keycloak/keycloak-k8s-resources/releases"
 

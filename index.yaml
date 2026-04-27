@@ -8962,6 +8962,14 @@ k8s.keycloak.org:
     filename: k8s.keycloak.org/keycloakrealmimport_v2alpha1.json
     kind: keycloakrealmimport
     name: keycloakrealmimport_v2alpha1
+  - apiVersion: k8s.keycloak.org/v2beta1
+    filename: k8s.keycloak.org/keycloakrealmimport_v2beta1.json
+    kind: keycloakrealmimport
+    name: keycloakrealmimport_v2beta1
+  - apiVersion: k8s.keycloak.org/v2beta1
+    filename: k8s.keycloak.org/keycloak_v2beta1.json
+    kind: keycloak
+    name: keycloak_v2beta1
 k8s.mariadb.com:
   - apiVersion: k8s.mariadb.com/v1alpha1
     filename: k8s.mariadb.com/grant_v1alpha1.json
