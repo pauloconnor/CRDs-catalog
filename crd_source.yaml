@@ -491,7 +491,7 @@ sources:
   # Prometheus Operator
   # ---------------------------------------------------------------------------
   - url: "https://github.com/prometheus-operator/prometheus-operator"
-    tag: ""
+    tag: "v0.90.1"
     repo_path: "example/prometheus-operator-crd"
     changelog: "https://github.com/prometheus-operator/prometheus-operator/releases"
 
