@@ -15516,6 +15516,19 @@ traefik.io:
     filename: traefik.io/middleware_v1alpha1.json
     kind: Middleware
     name: middleware_v1alpha1
+trainer.kubeflow.org:
+  - apiVersion: trainer.kubeflow.org/v1alpha1
+    filename: trainer.kubeflow.org/trainingruntime_v1alpha1.json
+    kind: TrainingRuntime
+    name: trainingruntime_v1alpha1
+  - apiVersion: trainer.kubeflow.org/v1alpha1
+    filename: trainer.kubeflow.org/trainjob_v1alpha1.json
+    kind: TrainJob
+    name: trainjob_v1alpha1
+  - apiVersion: trainer.kubeflow.org/v1alpha1
+    filename: trainer.kubeflow.org/clustertrainingruntime_v1alpha1.json
+    kind: ClusterTrainingRuntime
+    name: clustertrainingruntime_v1alpha1
 trident.netapp.io:
   - apiVersion: trident.netapp.io/v1
     filename: trident.netapp.io/tridentconfigurator_v1.json
