@@ -4545,6 +4545,10 @@ dynatrace.com:
     filename: dynatrace.com/dynakube_v1beta5.json
     kind: dynakube
     name: dynakube_v1beta5
+  - apiVersion: dynatrace.com/v1beta6
+    filename: dynatrace.com/dynakube_v1beta6.json
+    kind: dynakube
+    name: dynakube_v1beta6
 ec2.aws.m.upbound.io:
   - apiVersion: ec2.aws.m.upbound.io/v1beta1
     filename: ec2.aws.m.upbound.io/defaultroutetable_v1beta1.json

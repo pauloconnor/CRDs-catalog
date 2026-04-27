@@ -806,7 +806,7 @@ sources:
     changelog: "https://github.com/datainfrahq/druid-operator/releases"
 
   - url: "https://github.com/Dynatrace/dynatrace-operator"
-    tag: ""
+    tag: "v1.9.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/Dynatrace/dynatrace-operator/releases"
 
