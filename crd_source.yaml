@@ -741,7 +741,7 @@ sources:
     changelog: "https://github.com/ClickHouse/clickhouse-operator/releases"
 
   - url: "https://github.com/adyanth/cloudflare-operator"
-    tag: ""
+    tag: "v0.13.1"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/adyanth/cloudflare-operator/releases"
 
