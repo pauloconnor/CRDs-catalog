@@ -1449,6 +1449,11 @@ authorization.azure.com:
     filename: authorization.azure.com/roleassignment_v1api20200801preview.json
     kind: RoleAssignment
     name: roleassignment_v1api20200801preview
+autoops.k8s.elastic.co:
+  - apiVersion: autoops.k8s.elastic.co/v1alpha1
+    filename: autoops.k8s.elastic.co/autoopsagentpolicy_v1alpha1.json
+    kind: AutoOpsAgentPolicy
+    name: autoopsagentpolicy_v1alpha1
 autopilot.k0sproject.io:
   - apiVersion: autopilot.k0sproject.io/v1beta2
     filename: autopilot.k0sproject.io/updateconfig_v1beta2.json
@@ -11942,6 +11947,11 @@ oss.grafana.o.crossplane.io:
     filename: oss.grafana.o.crossplane.io/datasource_v1alpha1.json
     kind: DataSource
     name: datasource_v1alpha1
+packageregistry.k8s.elastic.co:
+  - apiVersion: packageregistry.k8s.elastic.co/v1alpha1
+    filename: packageregistry.k8s.elastic.co/packageregistry_v1alpha1.json
+    kind: PackageRegistry
+    name: packageregistry_v1alpha1
 packages.eks.amazonaws.com:
   - apiVersion: packages.eks.amazonaws.com/v1alpha1
     filename: packages.eks.amazonaws.com/packagebundlecontroller_v1alpha1.json
