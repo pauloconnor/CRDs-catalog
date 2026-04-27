@@ -4228,6 +4228,30 @@ cluster.redpanda.com:
     filename: cluster.redpanda.com/topic_v1alpha2.json
     kind: Topic
     name: topic_v1alpha2
+  - apiVersion: cluster.redpanda.com/v1alpha2
+    filename: cluster.redpanda.com/nodepool_v1alpha2.json
+    kind: nodepool
+    name: nodepool_v1alpha2
+  - apiVersion: cluster.redpanda.com/v1alpha2
+    filename: cluster.redpanda.com/group_v1alpha2.json
+    kind: Group
+    name: group_v1alpha2
+  - apiVersion: cluster.redpanda.com/v1alpha2
+    filename: cluster.redpanda.com/redpandarole_v1alpha2.json
+    kind: RedpandaRole
+    name: redpandarole_v1alpha2
+  - apiVersion: cluster.redpanda.com/v1alpha2
+    filename: cluster.redpanda.com/console_v1alpha2.json
+    kind: Console
+    name: console_v1alpha2
+  - apiVersion: cluster.redpanda.com/v1alpha2
+    filename: cluster.redpanda.com/stretchcluster_v1alpha2.json
+    kind: StretchCluster
+    name: stretchcluster_v1alpha2
+  - apiVersion: cluster.redpanda.com/v1alpha2
+    filename: cluster.redpanda.com/shadowlink_v1alpha2.json
+    kind: ShadowLink
+    name: shadowlink_v1alpha2
 cluster.weave.works:
   - apiVersion: cluster.weave.works/v1alpha3
     filename: cluster.weave.works/existinginframachine_v1alpha3.json
@@ -18284,6 +18308,15 @@ redis.redis.opstreelabs.in:
     filename: redis.redis.opstreelabs.in/rediscluster_v1beta2.json
     kind: RedisCluster
     name: rediscluster_v1beta2
+redpanda.vectorized.io:
+  - apiVersion: redpanda.vectorized.io/v1alpha1
+    filename: redpanda.vectorized.io/cluster_v1alpha1.json
+    kind: Cluster
+    name: cluster_v1alpha1
+  - apiVersion: redpanda.vectorized.io/v1alpha1
+    filename: redpanda.vectorized.io/console_v1alpha1.json
+    kind: Console
+    name: console_v1alpha1
 renovate-operator.mogenius.com:
   - apiVersion: renovate-operator.mogenius.com/v1alpha1
     filename: renovate-operator.mogenius.com/renovatejob_v1alpha1.json
