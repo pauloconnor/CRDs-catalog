@@ -1,5 +1,5 @@
 {
-  "description": "KafkaConnector is the Schema for the kafkaconnectors API",
+  "description": "OpenSearchACLConfig is the Schema for the opensearchaclconfigs API.\nManages the full OpenSearch ACL configuration for one Aiven OpenSearch service.",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -13,8 +13,63 @@
       "type": "object"
     },
     "spec": {
-      "description": "KafkaConnectorSpec defines the desired state of KafkaConnector",
+      "description": "OpenSearchACLConfigSpec defines the desired state of OpenSearchACLConfig.",
       "properties": {
+        "acls": {
+          "description": "List of OpenSearch ACLs",
+          "items": {
+            "description": "OpenSearchACLConfigACL defines a single OpenSearch ACL entry.",
+            "properties": {
+              "rules": {
+                "description": "OpenSearch rules",
+                "items": {
+                  "description": "OpenSearchACLConfigRule defines a single OpenSearch ACL rule.",
+                  "properties": {
+                    "index": {
+                      "description": "OpenSearch index pattern",
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "permission": {
+                      "description": "OpenSearch permission",
+                      "enum": [
+                        "admin",
+                        "deny",
+                        "read",
+                        "readwrite",
+                        "write"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "index",
+                    "permission"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "type": "array"
+              },
+              "username": {
+                "description": "Username",
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "rules",
+              "username"
+            ],
+            "type": "object",
+            "additionalProperties": false
+          },
+          "type": "array",
+          "x-kubernetes-list-map-keys": [
+            "username"
+          ],
+          "x-kubernetes-list-type": "map"
+        },
         "authSecretRef": {
           "description": "Authentication reference to Aiven token in a secret",
           "properties": {
@@ -34,10 +89,9 @@
           "type": "object",
           "additionalProperties": false
         },
-        "connectorClass": {
-          "description": "The Java class of the connector.",
-          "maxLength": 1024,
-          "type": "string"
+        "enabled": {
+          "description": "Enable OpenSearch ACLs. When disabled, authenticated service users have unrestricted access",
+          "type": "boolean"
         },
         "project": {
           "description": "Identifies the project this resource belongs to",
@@ -62,29 +116,21 @@
               "rule": "self == oldSelf"
             }
           ]
-        },
-        "userConfig": {
-          "additionalProperties": {
-            "type": "string"
-          },
-          "description": "The connector-specific configuration\nTo build config values from secret the template function `{{ fromSecret \"name\" \"key\" }}`\nis provided when interpreting the keys.\nWhere \"name\" is the name of the secret and \"key\" is the key in the secret\nin the same namespace as the KafkaConnector.",
-          "type": "object"
         }
       },
       "required": [
-        "connectorClass",
+        "enabled",
         "project",
-        "serviceName",
-        "userConfig"
+        "serviceName"
       ],
       "type": "object",
       "additionalProperties": false
     },
     "status": {
-      "description": "KafkaConnectorStatus defines the observed state of KafkaConnector",
+      "description": "OpenSearchACLConfigStatus defines the observed state of OpenSearchACLConfig",
       "properties": {
         "conditions": {
-          "description": "Conditions represent the latest available observations of an kafka connector state",
+          "description": "Conditions represent the latest available observations of an OpenSearchACLConfig state",
           "items": {
             "description": "Condition contains details for one aspect of the current state of this API Resource.",
             "properties": {
@@ -138,81 +184,10 @@
             "additionalProperties": false
           },
           "type": "array"
-        },
-        "pluginStatus": {
-          "description": "PluginStatus contains metadata about the configured connector plugin",
-          "properties": {
-            "author": {
-              "type": "string"
-            },
-            "class": {
-              "type": "string"
-            },
-            "docUrl": {
-              "type": "string"
-            },
-            "title": {
-              "type": "string"
-            },
-            "type": {
-              "type": "string"
-            },
-            "version": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "author",
-            "class",
-            "docUrl",
-            "title",
-            "type",
-            "version"
-          ],
-          "type": "object",
-          "additionalProperties": false
-        },
-        "state": {
-          "description": "Connector state",
-          "type": "string"
-        },
-        "tasksStatus": {
-          "description": "TasksStatus contains metadata about the running tasks",
-          "properties": {
-            "failed": {
-              "type": "integer"
-            },
-            "paused": {
-              "type": "integer"
-            },
-            "running": {
-              "type": "integer"
-            },
-            "stackTrace": {
-              "type": "string"
-            },
-            "total": {
-              "type": "integer"
-            },
-            "unassigned": {
-              "type": "integer"
-            },
-            "unknown": {
-              "type": "integer"
-            }
-          },
-          "required": [
-            "total"
-          ],
-          "type": "object",
-          "additionalProperties": false
         }
       },
       "required": [
-        "conditions",
-        "pluginStatus",
-        "state",
-        "tasksStatus"
+        "conditions"
       ],
       "type": "object",
       "additionalProperties": false

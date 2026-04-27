@@ -1,5 +1,5 @@
 {
-  "description": "Clickhouse is the Schema for the clickhouses API.\nInfo \"Exposes secret keys\": `CLICKHOUSE_HOST`, `CLICKHOUSE_PORT`, `CLICKHOUSE_USER`, `CLICKHOUSE_PASSWORD`",
+  "description": "Flink is the Schema for the flinks API.\nInfo \"Exposes secret keys\": `FLINK_HOST`, `FLINK_PORT`, `FLINK_USER`, `FLINK_PASSWORD`, `FLINK_URI`, `FLINK_HOSTS`",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -13,7 +13,7 @@
       "type": "object"
     },
     "spec": {
-      "description": "ClickhouseSpec defines the desired state of Clickhouse",
+      "description": "FlinkSpec defines the desired state of Flink",
       "properties": {
         "authSecretRef": {
           "description": "Authentication reference to Aiven token in a secret",
@@ -221,7 +221,7 @@
           "type": "boolean"
         },
         "userConfig": {
-          "description": "OpenSearch specific user configuration options",
+          "description": "Cassandra specific user configuration options",
           "properties": {
             "additional_backup_regions": {
               "description": "Deprecated. Additional Cloud Regions for Backup Replication",
@@ -231,25 +231,25 @@
               "maxItems": 1,
               "type": "array"
             },
-            "backup_hour": {
-              "description": "The hour of day (in UTC) when backup for the service is started. New backup is only started if previous backup has already completed.",
-              "maximum": 23,
-              "minimum": 0,
-              "type": "integer"
+            "custom_code": {
+              "description": "Enable to upload Custom JARs for Flink applications",
+              "type": "boolean",
+              "x-kubernetes-validations": [
+                {
+                  "message": "Value is immutable",
+                  "rule": "self == oldSelf"
+                }
+              ]
             },
-            "backup_minute": {
-              "description": "The minute of an hour when backup for the service is started. New backup is only started if previous backup has already completed.",
-              "maximum": 59,
-              "minimum": 0,
-              "type": "integer"
-            },
-            "clickhouse_version": {
-              "description": "Available versions: `25.3`. Newer versions may also be available.\nClickHouse major version",
-              "type": "string"
-            },
-            "enable_ipv6": {
-              "description": "Register AAAA DNS records for the service, and allow IPv6 packets to service ports",
-              "type": "boolean"
+            "flink_version": {
+              "description": "Available versions: `1.16`, `1.19`, `1.20`. Newer versions may also be available.\nFlink major version. Deprecated values: `1.16`",
+              "type": "string",
+              "x-kubernetes-validations": [
+                {
+                  "message": "Value is immutable",
+                  "rule": "self == oldSelf"
+                }
+              ]
             },
             "ip_filter": {
               "description": "Allow incoming connections from CIDR address block, e.g. '10.20.0.0/16'",
@@ -276,42 +276,29 @@
               "maxItems": 8000,
               "type": "array"
             },
-            "private_access": {
-              "description": "Allow access to selected service ports from private networks",
-              "properties": {
-                "clickhouse": {
-                  "description": "Allow clients to connect to clickhouse with a DNS name that always resolves to the service's private IP addresses. Only available in certain network locations",
-                  "type": "boolean"
-                },
-                "clickhouse_https": {
-                  "description": "Allow clients to connect to clickhouse_https with a DNS name that always resolves to the service's private IP addresses. Only available in certain network locations",
-                  "type": "boolean"
-                },
-                "clickhouse_mysql": {
-                  "description": "Allow clients to connect to clickhouse_mysql with a DNS name that always resolves to the service's private IP addresses. Only available in certain network locations",
-                  "type": "boolean"
-                },
-                "prometheus": {
-                  "description": "Allow clients to connect to prometheus with a DNS name that always resolves to the service's private IP addresses. Only available in certain network locations",
-                  "type": "boolean"
-                }
-              },
-              "type": "object",
-              "additionalProperties": false
+            "number_of_task_slots": {
+              "description": "Task slots per node. For a 3 node plan, total number of task slots is 3x this value",
+              "maximum": 1024,
+              "minimum": 1,
+              "type": "integer"
+            },
+            "pekko_ask_timeout_s": {
+              "description": "Timeout in seconds used for all futures and blocking Pekko requests",
+              "maximum": 60,
+              "minimum": 5,
+              "type": "integer"
+            },
+            "pekko_framesize_b": {
+              "description": "Maximum size in bytes for messages exchanged between the JobManager and the TaskManagers",
+              "maximum": 52428800,
+              "minimum": 1048576,
+              "type": "integer"
             },
             "privatelink_access": {
               "description": "Allow access to selected service components through Privatelink",
               "properties": {
-                "clickhouse": {
-                  "description": "Enable clickhouse",
-                  "type": "boolean"
-                },
-                "clickhouse_https": {
-                  "description": "Enable clickhouse_https",
-                  "type": "boolean"
-                },
-                "clickhouse_mysql": {
-                  "description": "Enable clickhouse_mysql",
+                "flink": {
+                  "description": "Enable flink",
                   "type": "boolean"
                 },
                 "prometheus": {
@@ -322,72 +309,24 @@
               "type": "object",
               "additionalProperties": false
             },
-            "project_to_fork_from": {
-              "description": "Name of another project to fork a service from. This has effect only when a new service is being created.",
-              "maxLength": 63,
-              "pattern": "^[a-z][-a-z0-9]{0,63}$|^$",
-              "type": "string",
-              "x-kubernetes-validations": [
-                {
-                  "message": "Value is immutable",
-                  "rule": "self == oldSelf"
-                }
-              ]
-            },
             "public_access": {
               "description": "Allow access to selected service ports from the public Internet",
               "properties": {
-                "clickhouse": {
-                  "description": "Allow clients to connect to clickhouse from the public internet for service nodes that are in a project VPC or another type of private network",
-                  "type": "boolean"
-                },
-                "clickhouse_https": {
-                  "description": "Allow clients to connect to clickhouse_https from the public internet for service nodes that are in a project VPC or another type of private network",
-                  "type": "boolean"
-                },
-                "clickhouse_mysql": {
-                  "description": "Allow clients to connect to clickhouse_mysql from the public internet for service nodes that are in a project VPC or another type of private network",
-                  "type": "boolean"
-                },
-                "prometheus": {
-                  "description": "Allow clients to connect to prometheus from the public internet for service nodes that are in a project VPC or another type of private network",
+                "flink": {
+                  "description": "Allow clients to connect to flink from the public internet for service nodes that are in a project VPC or another type of private network",
                   "type": "boolean"
                 }
               },
               "type": "object",
               "additionalProperties": false
             },
-            "recovery_basebackup_name": {
-              "description": "Name of the basebackup to restore in forked service",
-              "maxLength": 128,
-              "pattern": "^[a-zA-Z0-9-_:.+]+$",
-              "type": "string"
-            },
             "service_log": {
               "description": "Store logs for the service so that they are available in the HTTP API and console.",
               "type": "boolean"
             },
-            "service_to_fork_from": {
-              "description": "Name of another service to fork from. This has effect only when a new service is being created.",
-              "maxLength": 64,
-              "pattern": "^[a-z][-a-z0-9]{0,63}$|^$",
-              "type": "string",
-              "x-kubernetes-validations": [
-                {
-                  "message": "Value is immutable",
-                  "rule": "self == oldSelf"
-                }
-              ]
-            },
             "static_ips": {
               "description": "Use static public IP addresses",
               "type": "boolean"
-            },
-            "tiered_storage_move_factor": {
-              "description": "The percentage of free disk space required on local storage before data is moved to object storage. A value of 0.2 means data is moved when local storage has less than 20% free space.",
-              "maximum": 1,
-              "minimum": 0,
-              "type": "number"
             }
           },
           "type": "object",

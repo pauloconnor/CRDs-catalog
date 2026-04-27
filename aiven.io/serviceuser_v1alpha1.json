@@ -1,5 +1,5 @@
 {
-  "description": "ServiceUser is the Schema for the serviceusers API.\nInfo \"Exposes secret keys\": `SERVICEUSER_HOST`, `SERVICEUSER_PORT`, `SERVICEUSER_USERNAME`, `SERVICEUSER_PASSWORD`, `SERVICEUSER_CA_CERT`, `SERVICEUSER_ACCESS_CERT`, `SERVICEUSER_ACCESS_KEY`",
+  "description": "ServiceUser is the Schema for the serviceusers API.\nCreates a service user for accessing Aiven services. The ServiceUser resource name becomes the username in Aiven.\nBuilt-in users like 'avnadmin' cannot be deleted but their passwords can be modified using connInfoSecretSource.\nInfo \"Exposes secret keys\": `SERVICEUSER_HOST`, `SERVICEUSER_PORT`, `SERVICEUSER_USERNAME`, `SERVICEUSER_PASSWORD`, `SERVICEUSER_CA_CERT`, `SERVICEUSER_ACCESS_CERT`, `SERVICEUSER_ACCESS_KEY`",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -15,6 +15,41 @@
     "spec": {
       "description": "ServiceUserSpec defines the desired state of ServiceUser",
       "properties": {
+        "accessControl": {
+          "description": "AccessControl Service type specific access control rules for user.\nWhen this block is present, the operator manages the full access-control scope it contains.",
+          "properties": {
+            "valkeyAclCategories": {
+              "description": "Command category rules. Order matters.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "valkeyAclChannels": {
+              "description": "Glob-style patterns defining which pub/sub channels can be accessed.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "valkeyAclCommands": {
+              "description": "Rules for individual commands. Order matters.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "valkeyAclKeys": {
+              "description": "Key access rules.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
         "authSecretRef": {
           "description": "Authentication reference to Aiven token in a secret",
           "properties": {
@@ -41,6 +76,27 @@
             "mysql_native_password"
           ],
           "type": "string"
+        },
+        "connInfoSecretSource": {
+          "description": "ConnInfoSecretSource allows specifying an existing secret to read credentials from.\nThe password from this secret will be used to modify the service user credentials.\nPassword must be 8-256 characters long as per Aiven API requirements.\nThis can be used to set passwords for new users or modify passwords for existing users (e.g., avnadmin).\nThe source secret is watched for changes, and reconciliation will be automatically triggered\nwhen the secret data is updated.",
+          "properties": {
+            "name": {
+              "description": "Name of the secret resource to read connection parameters from.\nThe secret must be in the same namespace as the resource.",
+              "minLength": 1,
+              "type": "string"
+            },
+            "passwordKey": {
+              "description": "Key in the secret containing the password to use for authentication",
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "passwordKey"
+          ],
+          "type": "object",
+          "additionalProperties": false
         },
         "connInfoSecretTarget": {
           "description": "Secret configuration.",
@@ -136,7 +192,7 @@
         "conditions": {
           "description": "Conditions represent the latest available observations of an ServiceUser state",
           "items": {
-            "description": "Condition contains details for one aspect of the current state of this API Resource.\n---\nThis struct is intended for direct use as an array at the field path .status.conditions.  For example,\n\n\n\ttype FooStatus struct{\n\t    // Represents the observations of a foo's current state.\n\t    // Known .status.conditions.type are: \"Available\", \"Progressing\", and \"Degraded\"\n\t    // +patchMergeKey=type\n\t    // +patchStrategy=merge\n\t    // +listType=map\n\t    // +listMapKey=type\n\t    Conditions []metav1.Condition `json:\"conditions,omitempty\" patchStrategy:\"merge\" patchMergeKey:\"type\" protobuf:\"bytes,1,rep,name=conditions\"`\n\n\n\t    // other fields\n\t}",
+            "description": "Condition contains details for one aspect of the current state of this API Resource.",
             "properties": {
               "lastTransitionTime": {
                 "description": "lastTransitionTime is the last time the condition transitioned from one status to another.\nThis should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.",
@@ -171,7 +227,7 @@
                 "type": "string"
               },
               "type": {
-                "description": "type of condition in CamelCase or in foo.example.com/CamelCase.\n---\nMany .condition.type values are consistent across resources like Available, but because arbitrary conditions can be\nuseful (see .node.status.conditions), the ability to deconflict is important.\nThe regex it matches is (dns1123SubdomainFmt/)?(qualifiedNameFmt)",
+                "description": "type of condition in CamelCase or in foo.example.com/CamelCase.",
                 "maxLength": 316,
                 "pattern": "^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$",
                 "type": "string"
