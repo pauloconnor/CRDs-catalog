@@ -661,7 +661,7 @@ sources:
     changelog: "https://github.com/projectsveltos/addon-controller/releases"
 
   - url: "https://github.com/aquasecurity/trivy-operator"
-    tag: ""
+    tag: "v0.30.1"
     repo_path: "deploy/helm/crds"
     changelog: "https://github.com/aquasecurity/trivy-operator/releases"
 
