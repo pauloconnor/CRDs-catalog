@@ -1,5 +1,5 @@
 {
-  "description": "OpenSearch is the Schema for the opensearches API.\nInfo \"Exposes secret keys\": `OPENSEARCH_HOST`, `OPENSEARCH_PORT`, `OPENSEARCH_USER`, `OPENSEARCH_PASSWORD`",
+  "description": "OpenSearch is the Schema for the opensearches API.\nInfo \"Exposes secret keys\": `OPENSEARCH_HOST`, `OPENSEARCH_PORT`, `OPENSEARCH_USER`, `OPENSEARCH_PASSWORD`, `OPENSEARCH_URI`",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -117,6 +117,11 @@
           "maxLength": 128,
           "type": "string"
         },
+        "powered": {
+          "default": true,
+          "description": "Determines the power state of the service. When `true` (default), the service is running.\nWhen `false`, the service is powered off.\nFor more information please see [Aiven documentation](https://aiven.io/docs/platform/concepts/service-power-cycle).\nNote that:\n- When set to `false` the annotation `controllers.aiven.io/instance-is-running` is also set to `false`.\n- Services cannot be created in a powered off state. The value is ignored during creation.\n- It is highly recommended to not run dependent resources when the service is powered off.\n  Creating a new resource or updating an existing resource that depends on a powered off service will result in an error.\n  Existing resources will need to be manually recreated after the service is powered on.\n- Existing secrets will not be updated or removed when the service is powered off.\n- For Kafka services with backups: Topic configuration, schemas and connectors are all backed up, but not the data in topics. All topic data is lost on power off.\n- For Kafka services without backups: Topic configurations including all topic data is lost on power off.",
+          "type": "boolean"
+        },
         "project": {
           "description": "Identifies the project this resource belongs to",
           "maxLength": 63,
@@ -226,14 +231,149 @@
               "maxItems": 1,
               "type": "array"
             },
+            "azure_migration": {
+              "description": "Azure migration settings",
+              "properties": {
+                "account": {
+                  "description": "Account name",
+                  "pattern": "^[^\\r\\n]*$",
+                  "type": "string"
+                },
+                "base_path": {
+                  "description": "The path to the repository data within its container. The value of this setting should not start or end with a /",
+                  "pattern": "^[^\\r\\n]*$",
+                  "type": "string"
+                },
+                "chunk_size": {
+                  "description": "Big files can be broken down into chunks during snapshotting if needed. Should be the same as for the 3rd party repository",
+                  "pattern": "^[^\\r\\n]*$",
+                  "type": "string"
+                },
+                "compress": {
+                  "description": "when set to true metadata files are stored in compressed format",
+                  "type": "boolean"
+                },
+                "container": {
+                  "description": "Azure container name",
+                  "pattern": "^[^\\r\\n]*$",
+                  "type": "string"
+                },
+                "endpoint_suffix": {
+                  "description": "Defines the DNS suffix for Azure Storage endpoints.",
+                  "pattern": "^[^\\r\\n]*$",
+                  "type": "string"
+                },
+                "include_aliases": {
+                  "description": "Whether to restore aliases alongside their associated indexes. Default is true.",
+                  "type": "boolean"
+                },
+                "indices": {
+                  "description": "A comma-delimited list of indices to restore from the snapshot. Multi-index syntax is supported.",
+                  "pattern": "^(\\*?[a-z0-9._-]*\\*?|-\\*?[a-z0-9._-]*\\*?)(,(\\*?[a-z0-9._-]*\\*?|-\\*?[a-z0-9._-]*\\*?))*[,]?$",
+                  "type": "string"
+                },
+                "key": {
+                  "description": "Azure account secret key. One of key or sas_token should be specified",
+                  "pattern": "^[^\\r\\n]*$",
+                  "type": "string"
+                },
+                "readonly": {
+                  "description": "Whether the repository is read-only.",
+                  "type": "boolean"
+                },
+                "restore_global_state": {
+                  "description": "If true, restore the cluster state. Defaults to false",
+                  "type": "boolean"
+                },
+                "sas_token": {
+                  "description": "A shared access signatures (SAS) token. One of key or sas_token should be specified",
+                  "pattern": "^[^\\r\\n]*$",
+                  "type": "string"
+                },
+                "snapshot_name": {
+                  "description": "The snapshot name to restore from",
+                  "pattern": "^[^\\r\\n]*$",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "account",
+                "base_path",
+                "container",
+                "indices",
+                "snapshot_name"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            },
             "custom_domain": {
-              "description": "Serve the web frontend using a custom CNAME pointing to the Aiven DNS name",
+              "description": "Serve the web frontend using a custom CNAME pointing to the Aiven DNS name. When you set a custom domain for a service deployed in a VPC, the service certificate is only created for the public-* hostname and the custom domain.",
               "maxLength": 255,
               "type": "string"
             },
             "disable_replication_factor_adjustment": {
-              "description": "DEPRECATED: Disable automatic replication factor adjustment for multi-node services. By default, Aiven ensures all indexes are replicated at least to two nodes. Note: Due to potential data loss in case of losing a service node, this setting can no longer be activated.",
+              "description": "Disable automatic replication factor adjustment for multi-node services. By default, Aiven ensures all indexes are replicated at least to two nodes. Note: Due to potential data loss in case of losing a service node, this setting can not be activated unless specifically allowed for the project.",
               "type": "boolean"
+            },
+            "gcs_migration": {
+              "description": "Google Cloud Storage migration settings",
+              "properties": {
+                "base_path": {
+                  "description": "The path to the repository data within its container. The value of this setting should not start or end with a /",
+                  "pattern": "^[^\\r\\n]*$",
+                  "type": "string"
+                },
+                "bucket": {
+                  "description": "The path to the repository data within its container",
+                  "pattern": "^[^\\r\\n]*$",
+                  "type": "string"
+                },
+                "chunk_size": {
+                  "description": "Big files can be broken down into chunks during snapshotting if needed. Should be the same as for the 3rd party repository",
+                  "pattern": "^[^\\r\\n]*$",
+                  "type": "string"
+                },
+                "compress": {
+                  "description": "when set to true metadata files are stored in compressed format",
+                  "type": "boolean"
+                },
+                "credentials": {
+                  "description": "Google Cloud Storage credentials file content",
+                  "pattern": "^[^\\r\\n]*$",
+                  "type": "string"
+                },
+                "include_aliases": {
+                  "description": "Whether to restore aliases alongside their associated indexes. Default is true.",
+                  "type": "boolean"
+                },
+                "indices": {
+                  "description": "A comma-delimited list of indices to restore from the snapshot. Multi-index syntax is supported.",
+                  "pattern": "^(\\*?[a-z0-9._-]*\\*?|-\\*?[a-z0-9._-]*\\*?)(,(\\*?[a-z0-9._-]*\\*?|-\\*?[a-z0-9._-]*\\*?))*[,]?$",
+                  "type": "string"
+                },
+                "readonly": {
+                  "description": "Whether the repository is read-only.",
+                  "type": "boolean"
+                },
+                "restore_global_state": {
+                  "description": "If true, restore the cluster state. Defaults to false",
+                  "type": "boolean"
+                },
+                "snapshot_name": {
+                  "description": "The snapshot name to restore from",
+                  "pattern": "^[^\\r\\n]*$",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "base_path",
+                "bucket",
+                "credentials",
+                "indices",
+                "snapshot_name"
+              ],
+              "type": "object",
+              "additionalProperties": false
             },
             "index_patterns": {
               "description": "Index patterns",
@@ -270,23 +410,52 @@
               "maxItems": 512,
               "type": "array"
             },
+            "index_rollup": {
+              "description": "Index rollup settings",
+              "properties": {
+                "rollup_dashboards_enabled": {
+                  "description": "Whether rollups are enabled in OpenSearch Dashboards. Defaults to true.",
+                  "type": "boolean"
+                },
+                "rollup_enabled": {
+                  "description": "Whether the rollup plugin is enabled. Defaults to true.",
+                  "type": "boolean"
+                },
+                "rollup_search_backoff_count": {
+                  "description": "How many retries the plugin should attempt for failed rollup jobs. Defaults to 5.",
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "rollup_search_backoff_millis": {
+                  "description": "The backoff time between retries for failed rollup jobs. Defaults to 1000ms.",
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "rollup_search_search_all_jobs": {
+                  "description": "Whether OpenSearch should return all jobs that match all specified search terms. If disabled, OpenSearch returns just one, as opposed to all, of the jobs that matches the search terms. Defaults to false.",
+                  "type": "boolean"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
             "index_template": {
               "description": "Template settings for all new indexes",
               "properties": {
                 "mapping_nested_objects_limit": {
-                  "description": "The maximum number of nested JSON objects that a single document can contain across all nested types. This limit helps to prevent out of memory errors when a document contains too many nested objects. Default is 10000.",
+                  "description": "The maximum number of nested JSON objects that a single document can contain across all nested types. This limit helps to prevent out of memory errors when a document contains too many nested objects. Default is 10000. Deprecated, use an index template instead.",
                   "maximum": 100000,
                   "minimum": 0,
                   "type": "integer"
                 },
                 "number_of_replicas": {
-                  "description": "The number of replicas each primary shard has.",
+                  "description": "The number of replicas each primary shard has. Deprecated, use an index template instead.",
                   "maximum": 29,
                   "minimum": 0,
                   "type": "integer"
                 },
                 "number_of_shards": {
-                  "description": "The number of primary shards that an index should have.",
+                  "description": "The number of primary shards that an index should have. Deprecated, use an index template instead.",
                   "maximum": 1024,
                   "minimum": 1,
                   "type": "integer"
@@ -317,8 +486,77 @@
                 "type": "object",
                 "additionalProperties": false
               },
-              "maxItems": 1024,
+              "maxItems": 8000,
               "type": "array"
+            },
+            "jwt": {
+              "description": "OpenSearch JWT Configuration",
+              "properties": {
+                "enabled": {
+                  "description": "Enables or disables JWT-based authentication for OpenSearch. When enabled, users can authenticate using JWT tokens.",
+                  "type": "boolean"
+                },
+                "jwt_clock_skew_tolerance_seconds": {
+                  "description": "The maximum allowed time difference in seconds between the JWT issuer's clock and the OpenSearch server's clock. This helps prevent token validation failures due to minor time synchronization issues.",
+                  "maximum": 300,
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "jwt_header": {
+                  "description": "The HTTP header name where the JWT token is transmitted. Typically 'Authorization' for Bearer tokens.",
+                  "maxLength": 256,
+                  "minLength": 1,
+                  "pattern": "^[^\\r\\n]*$",
+                  "type": "string"
+                },
+                "jwt_url_parameter": {
+                  "description": "If the JWT token is transmitted as a URL parameter instead of an HTTP header, specify the parameter name here.",
+                  "maxLength": 256,
+                  "minLength": 1,
+                  "pattern": "^[^\\r\\n]*$",
+                  "type": "string"
+                },
+                "required_audience": {
+                  "description": "If specified, the JWT must contain an 'aud' claim that matches this value. This provides additional security by ensuring the JWT was issued for the expected audience.",
+                  "maxLength": 1024,
+                  "minLength": 1,
+                  "pattern": "^[^\\r\\n]*$",
+                  "type": "string"
+                },
+                "required_issuer": {
+                  "description": "If specified, the JWT must contain an 'iss' claim that matches this value. This provides additional security by ensuring the JWT was issued by the expected issuer.",
+                  "maxLength": 1024,
+                  "minLength": 1,
+                  "pattern": "^[^\\r\\n]*$",
+                  "type": "string"
+                },
+                "roles_key": {
+                  "description": "The key in the JWT payload that contains the user's roles. If specified, roles will be extracted from the JWT for authorization.",
+                  "maxLength": 256,
+                  "minLength": 1,
+                  "pattern": "^[^\\r\\n]*$",
+                  "type": "string"
+                },
+                "signing_key": {
+                  "description": "The secret key used to sign and verify JWT tokens. This should be a secure, randomly generated key HMAC key or public RSA/ECDSA key.",
+                  "maxLength": 1024,
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "subject_key": {
+                  "description": "The key in the JWT payload that contains the user's subject identifier. If not specified, the 'sub' claim is used by default.",
+                  "maxLength": 256,
+                  "minLength": 1,
+                  "pattern": "^[^\\r\\n]*$",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "enabled",
+                "signing_key"
+              ],
+              "type": "object",
+              "additionalProperties": false
             },
             "keep_index_refresh_interval": {
               "description": "Aiven automation resets index.refresh_interval to default value for every index to be sure that indices are always visible to search. If it doesn't fit your case, you can disable this by setting up this flag to true.",
@@ -349,6 +587,7 @@
                 "connect_url": {
                   "description": "The URL of your IdP where the Security plugin can find the OpenID Connect metadata/configuration settings.",
                   "maxLength": 2048,
+                  "pattern": "^[^\\r\\n]*$",
                   "type": "string"
                 },
                 "enabled": {
@@ -435,8 +674,8 @@
                       "properties": {
                         "allowed_tries": {
                           "description": "The number of login attempts allowed before login is blocked",
-                          "maximum": 2147483647,
-                          "minimum": 0,
+                          "maximum": 32767,
+                          "minimum": 1,
                           "type": "integer"
                         },
                         "authentication_backend": {
@@ -484,7 +723,7 @@
                       "additionalProperties": false
                     },
                     "ip_rate_limiting": {
-                      "description": "IP address rate limiting settings",
+                      "description": "Deprecated. IP address rate limiting settings",
                       "properties": {
                         "allowed_tries": {
                           "description": "The number of login attempts allowed before login is blocked",
@@ -495,7 +734,7 @@
                         "block_expiry_seconds": {
                           "description": "The duration of time that login remains blocked after a failed login",
                           "maximum": 36000,
-                          "minimum": 1,
+                          "minimum": 0,
                           "type": "integer"
                         },
                         "max_blocked_clients": {
@@ -513,7 +752,7 @@
                         "time_window_seconds": {
                           "description": "The window of time in which the value for `allowed_tries` is enforced",
                           "maximum": 36000,
-                          "minimum": 1,
+                          "minimum": 0,
                           "type": "integer"
                         },
                         "type": {
@@ -532,6 +771,85 @@
                   "type": "object",
                   "additionalProperties": false
                 },
+                "cluster.filecache.remote_data_ratio": {
+                  "description": "Defines a limit of how much total remote data can be referenced as a ratio of the size of the disk reserved for the file cache. This is designed to be a safeguard to prevent oversubscribing a cluster. Defaults to 0.",
+                  "maximum": 100,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "cluster.remote_store": {
+                  "properties": {
+                    "state.global_metadata.upload_timeout": {
+                      "description": "The amount of time to wait for the cluster state upload to complete. Defaults to 20s.",
+                      "pattern": "^\\d+\\s*(?:[dhms]|ms|micros|nanos)$",
+                      "type": "string"
+                    },
+                    "state.metadata_manifest.upload_timeout": {
+                      "description": "The amount of time to wait for the manifest file upload to complete. The manifest file contains the details of each of the files uploaded for a single cluster state, both index metadata files and global metadata files. Defaults to 20s.",
+                      "pattern": "^\\d+\\s*(?:[dhms]|ms|micros|nanos)$",
+                      "type": "string"
+                    },
+                    "translog.buffer_interval": {
+                      "description": "The default value of the translog buffer interval used when performing periodic translog updates. This setting is only effective when the index setting `index.remote_store.translog.buffer_interval` is not present. Defaults to 650ms.",
+                      "pattern": "^\\d+\\s*(?:[dhms]|ms|micros|nanos)$",
+                      "type": "string"
+                    },
+                    "translog.max_readers": {
+                      "description": "Sets the maximum number of open translog files for remote-backed indexes. This limits the total number of translog files per shard. After reaching this limit, the remote store flushes the translog files. Default is 1000. The minimum required is 100.",
+                      "maximum": 2147483647,
+                      "minimum": 100,
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "cluster.routing.allocation.balance.prefer_primary": {
+                  "description": "When set to true, OpenSearch attempts to evenly distribute the primary shards between the cluster nodes. Enabling this setting does not always guarantee an equal number of primary shards on each node, especially in the event of a failover. Changing this setting to false after it was set to true does not invoke redistribution of primary shards. Default is false.",
+                  "type": "boolean"
+                },
+                "cluster.search.request.slowlog": {
+                  "properties": {
+                    "level": {
+                      "description": "Log level",
+                      "enum": [
+                        "debug",
+                        "info",
+                        "trace",
+                        "warn"
+                      ],
+                      "type": "string"
+                    },
+                    "threshold": {
+                      "properties": {
+                        "debug": {
+                          "description": "Debug threshold for total request took time. The value should be in the form count and unit, where unit one of (s,m,h,d,nanos,ms,micros) or -1. Default is -1",
+                          "pattern": "^[^\\r\\n]*$",
+                          "type": "string"
+                        },
+                        "info": {
+                          "description": "Info threshold for total request took time. The value should be in the form count and unit, where unit one of (s,m,h,d,nanos,ms,micros) or -1. Default is -1",
+                          "pattern": "^[^\\r\\n]*$",
+                          "type": "string"
+                        },
+                        "trace": {
+                          "description": "Trace threshold for total request took time. The value should be in the form count and unit, where unit one of (s,m,h,d,nanos,ms,micros) or -1. Default is -1",
+                          "pattern": "^[^\\r\\n]*$",
+                          "type": "string"
+                        },
+                        "warn": {
+                          "description": "Warning threshold for total request took time. The value should be in the form count and unit, where unit one of (s,m,h,d,nanos,ms,micros) or -1. Default is -1",
+                          "pattern": "^[^\\r\\n]*$",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
                 "cluster_max_shards_per_node": {
                   "description": "Controls the number of shards allowed in the cluster per data node",
                   "maximum": 10000,
@@ -539,10 +857,34 @@
                   "type": "integer"
                 },
                 "cluster_routing_allocation_node_concurrent_recoveries": {
-                  "description": "How many concurrent incoming/outgoing shard recoveries (normally replicas) are allowed to happen on a node. Defaults to 2.",
+                  "description": "How many concurrent incoming/outgoing shard recoveries (normally replicas) are allowed to happen on a node. Defaults to node cpu count * 2.",
                   "maximum": 16,
                   "minimum": 2,
                   "type": "integer"
+                },
+                "disk_watermarks": {
+                  "description": "Watermark settings",
+                  "properties": {
+                    "flood_stage": {
+                      "description": "The flood stage watermark for disk usage.",
+                      "type": "integer"
+                    },
+                    "high": {
+                      "description": "The high watermark for disk usage.",
+                      "type": "integer"
+                    },
+                    "low": {
+                      "description": "The low watermark for disk usage.",
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "flood_stage",
+                    "high",
+                    "low"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
                 },
                 "email_sender_name": {
                   "description": "Sender name placeholder to be used in Opensearch Dashboards and Opensearch keystore",
@@ -562,8 +904,20 @@
                   "pattern": "^[^\\x00-\\x1F]+$",
                   "type": "string"
                 },
+                "enable_remote_backed_storage": {
+                  "description": "Enable remote-backed storage",
+                  "type": "boolean"
+                },
+                "enable_searchable_snapshots": {
+                  "description": "Enable searchable snapshots",
+                  "type": "boolean"
+                },
                 "enable_security_audit": {
                   "description": "Enable/Disable security audit",
+                  "type": "boolean"
+                },
+                "enable_snapshot_api": {
+                  "description": "Enable/Disable snapshot API for custom repositories, this requires security management to be enabled",
                   "type": "boolean"
                 },
                 "http_max_content_length": {
@@ -663,8 +1017,37 @@
                   "minimum": 1,
                   "type": "integer"
                 },
+                "knn_memory_circuit_breaker_enabled": {
+                  "description": "Enable or disable KNN memory circuit breaker. Defaults to true.",
+                  "type": "boolean"
+                },
+                "knn_memory_circuit_breaker_limit": {
+                  "description": "Maximum amount of memory in percentage that can be used for the KNN index. Defaults to 50% of the JVM heap size. 0 is used to set it to null which can be used to invalidate caches.",
+                  "maximum": 100,
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "ml_commons_model_access_control_enabled": {
+                  "description": "Enable or disable model access control for ML Commons. When enabled, access to ML models is controlled by security permissions. Defaults to false.",
+                  "type": "boolean"
+                },
+                "ml_commons_native_memory_threshold": {
+                  "description": "Native memory threshold percentage for ML Commons. Controls the maximum percentage of native memory that can be used by ML Commons operations. Defaults to 90%.",
+                  "maximum": 100,
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "ml_commons_only_run_on_ml_node": {
+                  "description": "Enable or disable running ML Commons tasks only on ML nodes. When enabled, ML tasks will only execute on nodes designated as ML nodes. Defaults to true.",
+                  "type": "boolean"
+                },
+                "node.search.cache.size": {
+                  "description": "Defines a limit of how much total remote data can be referenced as a ratio of the size of the disk reserved for the file cache. This is designed to be a safeguard to prevent oversubscribing a cluster. Defaults to 5gb. Requires restarting all OpenSearch nodes.",
+                  "pattern": "\\d+(?:b|kb|mb|gb|tb)",
+                  "type": "string"
+                },
                 "override_main_response_version": {
-                  "description": "Compatibility mode sets OpenSearch to report its version as 7.10 so clients continue to work. Default is false",
+                  "description": "Compatibility mode sets OpenSearch to report its version as 7.10 so clients continue to work. Default is false. Deprecated and ignored for service version 3.3 and higher.",
                   "type": "boolean"
                 },
                 "plugins_alerting_filter_by_backend_roles": {
@@ -679,16 +1062,355 @@
                   "maxItems": 32,
                   "type": "array"
                 },
+                "remote_store": {
+                  "properties": {
+                    "segment.pressure.bytes_lag.variance_factor": {
+                      "description": "The variance factor that is used together with the moving average to calculate the dynamic bytes lag threshold for activating remote segment backpressure. Defaults to 10.",
+                      "minimum": 1,
+                      "type": "number"
+                    },
+                    "segment.pressure.consecutive_failures.limit": {
+                      "description": "The minimum consecutive failure count for activating remote segment backpressure. Defaults to 5.",
+                      "maximum": 2147483647,
+                      "minimum": 1,
+                      "type": "integer"
+                    },
+                    "segment.pressure.enabled": {
+                      "description": "Enables remote segment backpressure. Default is `true`",
+                      "type": "boolean"
+                    },
+                    "segment.pressure.time_lag.variance_factor": {
+                      "description": "The variance factor that is used together with the moving average to calculate the dynamic time lag threshold for activating remote segment backpressure. Defaults to 10.",
+                      "minimum": 1,
+                      "type": "number"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
                 "script_max_compilations_rate": {
                   "description": "Script compilation circuit breaker limits the number of inline script compilations within a period of time. Default is use-context",
                   "maxLength": 1024,
+                  "pattern": "^[^\\r\\n]*$",
                   "type": "string"
+                },
+                "search.insights.top_queries": {
+                  "properties": {
+                    "cpu": {
+                      "description": "Top N queries monitoring by CPU",
+                      "properties": {
+                        "enabled": {
+                          "description": "Enable or disable top N query monitoring by the metric",
+                          "type": "boolean"
+                        },
+                        "top_n_size": {
+                          "description": "Specify the value of N for the top N queries by the metric",
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "window_size": {
+                          "description": "Configure the window size of the top N queries. The value should be a time value with unit, e.g. 1m, 5s, 1h.",
+                          "pattern": "^\\d+\\s*(?:[dhms]|ms|micros|nanos)$",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "latency": {
+                      "description": "Top N queries monitoring by latency",
+                      "properties": {
+                        "enabled": {
+                          "description": "Enable or disable top N query monitoring by the metric",
+                          "type": "boolean"
+                        },
+                        "top_n_size": {
+                          "description": "Specify the value of N for the top N queries by the metric",
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "window_size": {
+                          "description": "Configure the window size of the top N queries. The value should be a time value with unit, e.g. 1m, 5s, 1h.",
+                          "pattern": "^\\d+\\s*(?:[dhms]|ms|micros|nanos)$",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "memory": {
+                      "description": "Top N queries monitoring by memory",
+                      "properties": {
+                        "enabled": {
+                          "description": "Enable or disable top N query monitoring by the metric",
+                          "type": "boolean"
+                        },
+                        "top_n_size": {
+                          "description": "Specify the value of N for the top N queries by the metric",
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "window_size": {
+                          "description": "Configure the window size of the top N queries. The value should be a time value with unit, e.g. 1m, 5s, 1h.",
+                          "pattern": "^\\d+\\s*(?:[dhms]|ms|micros|nanos)$",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "search_backpressure": {
+                  "description": "Search Backpressure Settings",
+                  "properties": {
+                    "mode": {
+                      "description": "The search backpressure mode. Valid values are monitor_only, enforced, or disabled. Default is monitor_only",
+                      "enum": [
+                        "disabled",
+                        "enforced",
+                        "monitor_only"
+                      ],
+                      "type": "string"
+                    },
+                    "node_duress": {
+                      "description": "Node duress settings",
+                      "properties": {
+                        "cpu_threshold": {
+                          "description": "The CPU usage threshold (as a percentage) required for a node to be considered to be under duress. Default is 0.9",
+                          "maximum": 1,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "heap_threshold": {
+                          "description": "The heap usage threshold (as a percentage) required for a node to be considered to be under duress. Default is 0.7",
+                          "maximum": 1,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "num_successive_breaches": {
+                          "description": "The number of successive limit breaches after which the node is considered to be under duress. Default is 3",
+                          "minimum": 1,
+                          "type": "integer"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "search_shard_task": {
+                      "description": "Search shard settings",
+                      "properties": {
+                        "cancellation_burst": {
+                          "description": "The maximum number of search tasks to cancel in a single iteration of the observer thread. Default is 10.0",
+                          "minimum": 1,
+                          "type": "number"
+                        },
+                        "cancellation_rate": {
+                          "description": "The maximum number of tasks to cancel per millisecond of elapsed time. Default is 0.003",
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "cancellation_ratio": {
+                          "description": "The maximum number of tasks to cancel, as a percentage of successful task completions. Default is 0.1",
+                          "maximum": 1,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "cpu_time_millis_threshold": {
+                          "description": "The CPU usage threshold (in milliseconds) required for a single search shard task before it is considered for cancellation. Default is 15000",
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "elapsed_time_millis_threshold": {
+                          "description": "The elapsed time threshold (in milliseconds) required for a single search shard task before it is considered for cancellation. Default is 30000",
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "heap_moving_average_window_size": {
+                          "description": "The number of previously completed search shard tasks to consider when calculating the rolling average of heap usage. Default is 100",
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "heap_percent_threshold": {
+                          "description": "The heap usage threshold (as a percentage) required for a single search shard task before it is considered for cancellation. Default is 0.5",
+                          "maximum": 1,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "heap_variance": {
+                          "description": "The minimum variance required for a single search shard task\u2019s heap usage compared to the rolling average of previously completed tasks before it is considered for cancellation. Default is 2.0",
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "total_heap_percent_threshold": {
+                          "description": "The heap usage threshold (as a percentage) required for the sum of heap usages of all search shard tasks before cancellation is applied. Default is 0.5",
+                          "maximum": 1,
+                          "minimum": 0,
+                          "type": "number"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "search_task": {
+                      "description": "Search task settings",
+                      "properties": {
+                        "cancellation_burst": {
+                          "description": "The maximum number of search tasks to cancel in a single iteration of the observer thread. Default is 5.0",
+                          "minimum": 1,
+                          "type": "number"
+                        },
+                        "cancellation_rate": {
+                          "description": "The maximum number of search tasks to cancel per millisecond of elapsed time. Default is 0.003",
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "cancellation_ratio": {
+                          "description": "The maximum number of search tasks to cancel, as a percentage of successful search task completions. Default is 0.1",
+                          "maximum": 1,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "cpu_time_millis_threshold": {
+                          "description": "The CPU usage threshold (in milliseconds) required for an individual parent task before it is considered for cancellation. Default is 30000",
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "elapsed_time_millis_threshold": {
+                          "description": "The elapsed time threshold (in milliseconds) required for an individual parent task before it is considered for cancellation. Default is 45000",
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "heap_moving_average_window_size": {
+                          "description": "The window size used to calculate the rolling average of the heap usage for the completed parent tasks. Default is 10",
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "heap_percent_threshold": {
+                          "description": "The heap usage threshold (as a percentage) required for an individual parent task before it is considered for cancellation. Default is 0.2",
+                          "maximum": 1,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "heap_variance": {
+                          "description": "The heap usage variance required for an individual parent task before it is considered for cancellation. A task is considered for cancellation when taskHeapUsage is greater than or equal to heapUsageMovingAverage * variance. Default is 2.0",
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "total_heap_percent_threshold": {
+                          "description": "The heap usage threshold (as a percentage) required for the sum of heap usages of all search tasks before cancellation is applied. Default is 0.5",
+                          "maximum": 1,
+                          "minimum": 0,
+                          "type": "number"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
                 },
                 "search_max_buckets": {
                   "description": "Maximum number of aggregation buckets allowed in a single response. OpenSearch default value is used when this is not defined.",
                   "maximum": 1000000,
                   "minimum": 1,
                   "type": "integer"
+                },
+                "segrep": {
+                  "description": "Segment Replication Backpressure Settings",
+                  "properties": {
+                    "pressure.checkpoint.limit": {
+                      "description": "The maximum number of indexing checkpoints that a replica shard can fall behind when copying from primary. Once `segrep.pressure.checkpoint.limit` is breached along with `segrep.pressure.time.limit`, the segment replication backpressure mechanism is initiated. Default is 4 checkpoints.",
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "pressure.enabled": {
+                      "description": "Enables the segment replication backpressure mechanism. Default is false.",
+                      "type": "boolean"
+                    },
+                    "pressure.replica.stale.limit": {
+                      "description": "The maximum number of stale replica shards that can exist in a replication group. Once `segrep.pressure.replica.stale.limit` is breached, the segment replication backpressure mechanism is initiated. Default is .5, which is 50% of a replication group.",
+                      "maximum": 1,
+                      "minimum": 0,
+                      "type": "number"
+                    },
+                    "pressure.time.limit": {
+                      "description": "The maximum amount of time that a replica shard can take to copy from the primary shard. Once segrep.pressure.time.limit is breached along with segrep.pressure.checkpoint.limit, the segment replication backpressure mechanism is initiated. Default is 5 minutes.",
+                      "pattern": "^\\d+\\s*(?:[dhms]|ms|micros|nanos)$",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "shard_indexing_pressure": {
+                  "description": "Shard indexing back pressure settings",
+                  "properties": {
+                    "enabled": {
+                      "description": "Enable or disable shard indexing backpressure. Default is false",
+                      "type": "boolean"
+                    },
+                    "enforced": {
+                      "description": "Run shard indexing backpressure in shadow mode or enforced mode. In shadow mode (value set as false), shard indexing backpressure tracks all granular-level metrics, but it doesn\u2019t actually reject any indexing requests. In enforced mode (value set as true), shard indexing backpressure rejects any requests to the cluster that might cause a dip in its performance. Default is false",
+                      "type": "boolean"
+                    },
+                    "operating_factor": {
+                      "description": "Operating factor",
+                      "properties": {
+                        "lower": {
+                          "description": "Specify the lower occupancy limit of the allocated quota of memory for the shard. If the total memory usage of a shard is below this limit, shard indexing backpressure decreases the current allocated memory for that shard. Default is 0.75",
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "optimal": {
+                          "description": "Specify the optimal occupancy of the allocated quota of memory for the shard. If the total memory usage of a shard is at this level, shard indexing backpressure doesn\u2019t change the current allocated memory for that shard. Default is 0.85",
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "upper": {
+                          "description": "Specify the upper occupancy limit of the allocated quota of memory for the shard. If the total memory usage of a shard is above this limit, shard indexing backpressure increases the current allocated memory for that shard. Default is 0.95",
+                          "minimum": 0,
+                          "type": "number"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "primary_parameter": {
+                      "description": "Primary parameter",
+                      "properties": {
+                        "node": {
+                          "properties": {
+                            "soft_limit": {
+                              "description": "Define the percentage of the node-level memory threshold that acts as a soft indicator for strain on a node. Default is 0.7",
+                              "minimum": 0,
+                              "type": "number"
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        },
+                        "shard": {
+                          "properties": {
+                            "min_limit": {
+                              "description": "Specify the minimum assigned quota for a new shard in any role (coordinator, primary, or replica). Shard indexing backpressure increases or decreases this allocated quota based on the inflow of traffic for the shard. Default is 0.001",
+                              "minimum": 0,
+                              "type": "number"
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
                 },
                 "thread_pool_analyze_queue_size": {
                   "description": "Size for the thread pool queue. See documentation for exact details.",
@@ -769,26 +1491,35 @@
                 },
                 "max_old_space_size": {
                   "description": "Limits the maximum amount of memory (in MiB) the OpenSearch Dashboards process can use. This sets the max_old_space_size option of the nodejs running the OpenSearch Dashboards. Note: the memory reserved by OpenSearch Dashboards is not available for OpenSearch.",
-                  "maximum": 2048,
+                  "maximum": 4096,
                   "minimum": 64,
                   "type": "integer"
+                },
+                "multiple_data_source_enabled": {
+                  "description": "Enable or disable multiple data sources in OpenSearch Dashboards",
+                  "type": "boolean"
                 },
                 "opensearch_request_timeout": {
                   "description": "Timeout in milliseconds for requests made by OpenSearch Dashboards towards OpenSearch",
                   "maximum": 120000,
                   "minimum": 5000,
                   "type": "integer"
+                },
+                "session_keepalive": {
+                  "description": "Determines whether the session TTL resets (is \u201ckept alive\u201d) on each user activity. Optional. Default is true.",
+                  "type": "boolean"
+                },
+                "session_ttl": {
+                  "description": "Defines the time-to-live (TTL) for user sessions. The value should be a time value with unit, e.g. 1m, 5s, 1h, 3d, 100ms. Default is 1 hour.",
+                  "pattern": "^\\d+\\s*(?:[dhms]|ms|micros|nanos)$",
+                  "type": "string"
                 }
               },
               "type": "object",
               "additionalProperties": false
             },
             "opensearch_version": {
-              "description": "OpenSearch major version",
-              "enum": [
-                "1",
-                "2"
-              ],
+              "description": "Available versions: `1`, `2`, `2.19`, `3.3`. Newer versions may also be available.\nOpenSearch version",
               "type": "string"
             },
             "private_access": {
@@ -866,6 +1597,87 @@
               "pattern": "^[a-zA-Z0-9-_:.]+$",
               "type": "string"
             },
+            "s3_migration": {
+              "description": "AWS S3 / AWS S3 compatible migration settings",
+              "properties": {
+                "access_key": {
+                  "description": "AWS Access key",
+                  "pattern": "^[^\\r\\n]*$",
+                  "type": "string"
+                },
+                "base_path": {
+                  "description": "The path to the repository data within its container. The value of this setting should not start or end with a /",
+                  "pattern": "^[^\\r\\n]*$",
+                  "type": "string"
+                },
+                "bucket": {
+                  "description": "S3 bucket name",
+                  "pattern": "^[^\\r\\n]*$",
+                  "type": "string"
+                },
+                "chunk_size": {
+                  "description": "Big files can be broken down into chunks during snapshotting if needed. Should be the same as for the 3rd party repository",
+                  "pattern": "^[^\\r\\n]*$",
+                  "type": "string"
+                },
+                "compress": {
+                  "description": "when set to true metadata files are stored in compressed format",
+                  "type": "boolean"
+                },
+                "endpoint": {
+                  "description": "The S3 service endpoint to connect to. If you are using an S3-compatible service then you should set this to the service\u2019s endpoint",
+                  "pattern": "^[^\\r\\n]*$",
+                  "type": "string"
+                },
+                "include_aliases": {
+                  "description": "Whether to restore aliases alongside their associated indexes. Default is true.",
+                  "type": "boolean"
+                },
+                "indices": {
+                  "description": "A comma-delimited list of indices to restore from the snapshot. Multi-index syntax is supported.",
+                  "pattern": "^(\\*?[a-z0-9._-]*\\*?|-\\*?[a-z0-9._-]*\\*?)(,(\\*?[a-z0-9._-]*\\*?|-\\*?[a-z0-9._-]*\\*?))*[,]?$",
+                  "type": "string"
+                },
+                "readonly": {
+                  "description": "Whether the repository is read-only.",
+                  "type": "boolean"
+                },
+                "region": {
+                  "description": "S3 region",
+                  "pattern": "^[^\\r\\n]*$",
+                  "type": "string"
+                },
+                "restore_global_state": {
+                  "description": "If true, restore the cluster state. Defaults to false",
+                  "type": "boolean"
+                },
+                "secret_key": {
+                  "description": "AWS secret key",
+                  "pattern": "^[^\\r\\n]*$",
+                  "type": "string"
+                },
+                "server_side_encryption": {
+                  "description": "When set to true files are encrypted on server side",
+                  "type": "boolean"
+                },
+                "snapshot_name": {
+                  "description": "The snapshot name to restore from",
+                  "pattern": "^[^\\r\\n]*$",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "access_key",
+                "base_path",
+                "bucket",
+                "indices",
+                "region",
+                "secret_key",
+                "snapshot_name"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            },
             "saml": {
               "description": "OpenSearch SAML configuration",
               "properties": {
@@ -884,6 +1696,7 @@
                   "description": "The URL of the SAML metadata for the Identity Provider (IdP). This is used to configure SAML-based authentication with the IdP.",
                   "maxLength": 2048,
                   "minLength": 1,
+                  "pattern": "^[^\\r\\n]*$",
                   "type": "string"
                 },
                 "idp_pemtrustedcas_content": {
@@ -966,7 +1779,7 @@
         "conditions": {
           "description": "Conditions represent the latest available observations of a service state",
           "items": {
-            "description": "Condition contains details for one aspect of the current state of this API Resource.\n---\nThis struct is intended for direct use as an array at the field path .status.conditions.  For example,\n\n\n\ttype FooStatus struct{\n\t    // Represents the observations of a foo's current state.\n\t    // Known .status.conditions.type are: \"Available\", \"Progressing\", and \"Degraded\"\n\t    // +patchMergeKey=type\n\t    // +patchStrategy=merge\n\t    // +listType=map\n\t    // +listMapKey=type\n\t    Conditions []metav1.Condition `json:\"conditions,omitempty\" patchStrategy:\"merge\" patchMergeKey:\"type\" protobuf:\"bytes,1,rep,name=conditions\"`\n\n\n\t    // other fields\n\t}",
+            "description": "Condition contains details for one aspect of the current state of this API Resource.",
             "properties": {
               "lastTransitionTime": {
                 "description": "lastTransitionTime is the last time the condition transitioned from one status to another.\nThis should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.",
@@ -1001,7 +1814,7 @@
                 "type": "string"
               },
               "type": {
-                "description": "type of condition in CamelCase or in foo.example.com/CamelCase.\n---\nMany .condition.type values are consistent across resources like Available, but because arbitrary conditions can be\nuseful (see .node.status.conditions), the ability to deconflict is important.\nThe regex it matches is (dns1123SubdomainFmt/)?(qualifiedNameFmt)",
+                "description": "type of condition in CamelCase or in foo.example.com/CamelCase.",
                 "maxLength": 316,
                 "pattern": "^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$",
                 "type": "string"

@@ -313,6 +313,30 @@ aiven.io:
     filename: aiven.io/postgresql_v1alpha1.json
     kind: PostgreSQL
     name: postgresql_v1alpha1
+  - apiVersion: aiven.io/v1alpha1
+    filename: aiven.io/flink_v1alpha1.json
+    kind: Flink
+    name: flink_v1alpha1
+  - apiVersion: aiven.io/v1alpha1
+    filename: aiven.io/grafana_v1alpha1.json
+    kind: Grafana
+    name: grafana_v1alpha1
+  - apiVersion: aiven.io/v1alpha1
+    filename: aiven.io/opensearchaclconfig_v1alpha1.json
+    kind: OpenSearchACLConfig
+    name: opensearchaclconfig_v1alpha1
+  - apiVersion: aiven.io/v1alpha1
+    filename: aiven.io/valkey_v1alpha1.json
+    kind: Valkey
+    name: valkey_v1alpha1
+  - apiVersion: aiven.io/v1alpha1
+    filename: aiven.io/kafkanativeacl_v1alpha1.json
+    kind: KafkaNativeACL
+    name: kafkanativeacl_v1alpha1
+  - apiVersion: aiven.io/v1alpha1
+    filename: aiven.io/alloydbomni_v1alpha1.json
+    kind: AlloyDBOmni
+    name: alloydbomni_v1alpha1
 akri.sh:
   - apiVersion: akri.sh/v0
     filename: akri.sh/configuration_v0.json

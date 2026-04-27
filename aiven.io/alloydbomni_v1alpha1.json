@@ -1,5 +1,5 @@
 {
-  "description": "PostgreSQL is the Schema for the postgresql API.\nInfo \"Exposes secret keys\": `POSTGRESQL_HOST`, `POSTGRESQL_PORT`, `POSTGRESQL_DATABASE`, `POSTGRESQL_USER`, `POSTGRESQL_PASSWORD`, `POSTGRESQL_SSLMODE`, `POSTGRESQL_DATABASE_URI`, `POSTGRESQL_CA_CERT`",
+  "description": "AlloyDBOmni is the Schema for the alloydbomni API.\nInfo \"Exposes secret keys\": `ALLOYDBOMNI_HOST`, `ALLOYDBOMNI_PORT`, `ALLOYDBOMNI_DATABASE`, `ALLOYDBOMNI_USER`, `ALLOYDBOMNI_PASSWORD`, `ALLOYDBOMNI_SSLMODE`, `ALLOYDBOMNI_DATABASE_URI`\nDeprecated: End of life notice - Aiven for AlloyDB Omni is entering its end-of-life cycle. See https://aiven.io/docs/platform/reference/end-of-life for details. From 5 September 2025, you can no longer create new Aiven for AlloyDB Omni services. Existing services continue to operate until the end of life (EOL) date but you cannot change plans for these services. On 5 December 2025, all active Aiven for AlloyDB Omni services are powered off and deleted, making data from these services inaccessible. The recommended alternatives are Aiven for PostgreSQL\u00ae, Aiven for ClickHouse\u00ae, and Aiven for MySQL\u00ae. To ensure uninterrupted service, complete your migration before December 5, 2025. For further assistance, contact the Aiven support team at support@aiven.io or your account team.",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -13,7 +13,7 @@
       "type": "object"
     },
     "spec": {
-      "description": "PostgreSQLSpec defines the desired state of postgres instance",
+      "description": "AlloyDBOmniSpec defines the desired state of AlloyDB Omni instance",
       "properties": {
         "authSecretRef": {
           "description": "Authentication reference to Aiven token in a secret",
@@ -157,6 +157,10 @@
           "maxLength": 36,
           "type": "string"
         },
+        "serviceAccountCredentials": {
+          "description": "Your [Google service account key](https://cloud.google.com/iam/docs/service-account-creds#key-types) in JSON format.",
+          "type": "string"
+        },
         "serviceIntegrations": {
           "description": "Service integrations to specify when creating a service. Not applied after initial service creation",
           "items": {
@@ -221,7 +225,7 @@
           "type": "boolean"
         },
         "userConfig": {
-          "description": "PostgreSQL specific user configuration options",
+          "description": "AlloyDBOmni specific user configuration options",
           "properties": {
             "additional_backup_regions": {
               "description": "Additional Cloud Regions for Backup Replication",
@@ -256,16 +260,14 @@
                 }
               ]
             },
+            "alloydbomni_version": {
+              "description": "Available versions: `15`. Newer versions may also be available.\nPostgreSQL major version. Deprecated values: `15`",
+              "type": "string"
+            },
             "backup_hour": {
               "description": "The hour of day (in UTC) when backup for the service is started. New backup is only started if previous backup has already completed.",
               "maximum": 23,
               "minimum": 0,
-              "type": "integer"
-            },
-            "backup_interval_hours": {
-              "description": "Interval in hours between automatic backups. Minimum value is 3 hours. Must be a divisor of 24 (3, 4, 6, 8, 12, 24). (Applicable to ACU plans only)",
-              "maximum": 24,
-              "minimum": 3,
               "type": "integer"
             },
             "backup_minute": {
@@ -274,19 +276,19 @@
               "minimum": 0,
               "type": "integer"
             },
-            "backup_retention_days": {
-              "description": "Number of days to retain automatic backups. Backups older than this value will be automatically deleted. (Applicable to ACU plans only)",
-              "maximum": 30,
-              "minimum": 1,
-              "type": "integer"
-            },
-            "enable_ha_replica_dns": {
-              "description": "Creates a dedicated read-only DNS that automatically falls back to the primary if standby nodes are unavailable. It switches back when a standby recovers.",
-              "type": "boolean"
-            },
             "enable_ipv6": {
               "description": "Register AAAA DNS records for the service, and allow IPv6 packets to service ports",
               "type": "boolean"
+            },
+            "google_columnar_engine_enabled": {
+              "description": "Enables or disables the columnar engine. When enabled, it accelerates SQL query processing.",
+              "type": "boolean"
+            },
+            "google_columnar_engine_memory_size_percentage": {
+              "description": "Allocate the amount of RAM to store columnar data.",
+              "maximum": 50,
+              "minimum": 0,
+              "type": "integer"
             },
             "ip_filter": {
               "description": "Allow incoming connections from CIDR address block, e.g. '10.20.0.0/16'",
@@ -312,65 +314,6 @@
               },
               "maxItems": 8000,
               "type": "array"
-            },
-            "migration": {
-              "description": "Migrate data from existing server",
-              "properties": {
-                "dbname": {
-                  "description": "Database name for bootstrapping the initial connection",
-                  "maxLength": 63,
-                  "type": "string"
-                },
-                "host": {
-                  "description": "Hostname or IP address of the server where to migrate data from",
-                  "maxLength": 255,
-                  "type": "string"
-                },
-                "ignore_dbs": {
-                  "description": "Comma-separated list of databases, which should be ignored during migration (supported by MySQL and PostgreSQL only at the moment)",
-                  "maxLength": 2048,
-                  "type": "string"
-                },
-                "ignore_roles": {
-                  "description": "Comma-separated list of database roles, which should be ignored during migration (supported by PostgreSQL only at the moment)",
-                  "maxLength": 2048,
-                  "type": "string"
-                },
-                "method": {
-                  "description": "The migration method to be used (currently supported only by Redis, Dragonfly, MySQL and PostgreSQL service types)",
-                  "enum": [
-                    "dump",
-                    "replication"
-                  ],
-                  "type": "string"
-                },
-                "password": {
-                  "description": "Password for authentication with the server where to migrate data from",
-                  "maxLength": 256,
-                  "type": "string"
-                },
-                "port": {
-                  "description": "Port number of the server where to migrate data from",
-                  "maximum": 65535,
-                  "minimum": 1,
-                  "type": "integer"
-                },
-                "ssl": {
-                  "description": "The server where to migrate data from is secured with SSL",
-                  "type": "boolean"
-                },
-                "username": {
-                  "description": "User name for authentication with the server where to migrate data from",
-                  "maxLength": 256,
-                  "type": "string"
-                }
-              },
-              "required": [
-                "host",
-                "port"
-              ],
-              "type": "object",
-              "additionalProperties": false
             },
             "node_count": {
               "description": "Number of nodes for the service",
@@ -466,7 +409,7 @@
                   "type": "integer"
                 },
                 "default_toast_compression": {
-                  "description": "Specifies the default TOAST compression method for values of compressible columns. The default is `lz4`. Only available for PostgreSQL 14+.",
+                  "description": "Specifies the default TOAST compression method for values of compressible columns. The default is `lz4`.",
                   "enum": [
                     "lz4",
                     "pglz"
@@ -477,39 +420,6 @@
                   "description": "Time out sessions with open transactions after this number of milliseconds",
                   "maximum": 604800000,
                   "minimum": 0,
-                  "type": "integer"
-                },
-                "io_combine_limit": {
-                  "description": "EXPERIMENTAL: Controls the largest I/O size in operations that combine I/O in 8kB units. Version 17 and up only.",
-                  "maximum": 32,
-                  "minimum": 1,
-                  "type": "integer"
-                },
-                "io_max_combine_limit": {
-                  "description": "EXPERIMENTAL: Controls the largest I/O size in operations that combine I/O in 8kB units, and silently limits the user-settable parameter io_combine_limit. Version 18 and up only. Changing this parameter causes a service restart.",
-                  "maximum": 128,
-                  "minimum": 1,
-                  "type": "integer"
-                },
-                "io_max_concurrency": {
-                  "description": "EXPERIMENTAL: Controls the maximum number of I/O operations that one process can execute simultaneously. Version 18 and up only. Changing this parameter causes a service restart.",
-                  "maximum": 1024,
-                  "minimum": -1,
-                  "type": "integer"
-                },
-                "io_method": {
-                  "description": "EXPERIMENTAL: Controls the maximum number of I/O operations that one process can execute simultaneously. Version 18 and up only. Changing this parameter causes a service restart.",
-                  "enum": [
-                    "io_uring",
-                    "sync",
-                    "worker"
-                  ],
-                  "type": "string"
-                },
-                "io_workers": {
-                  "description": "EXPERIMENTAL: Number of IO worker processes, for io_method=worker. Version 18 and up only. Changing this parameter causes a service restart.",
-                  "maximum": 32,
-                  "minimum": 1,
                   "type": "integer"
                 },
                 "jit": {
@@ -551,12 +461,6 @@
                   "description": "Log statements for each temporary file created larger than this number of kilobytes, -1 disables",
                   "maximum": 2147483647,
                   "minimum": -1,
-                  "type": "integer"
-                },
-                "max_connections": {
-                  "description": "Sets the PostgreSQL maximum number of concurrent connections to the database server. This is a limited-release parameter. Contact your account team to confirm your eligibility. You cannot decrease this parameter value when set. For services with a read replica, first increase the read replica's value. After the change is applied to the replica, you can increase the primary service's value. Changing this parameter causes a service restart.",
-                  "maximum": 60000,
-                  "minimum": 25,
                   "type": "integer"
                 },
                 "max_files_per_process": {
@@ -669,16 +573,6 @@
                   "pattern": "^[_A-Za-z0-9][-._A-Za-z0-9]{0,63}$",
                   "type": "string"
                 },
-                "pg_stat_monitor.pgsm_enable_query_plan": {
-                  "description": "Enables or disables query plan monitoring. Changing this parameter causes a service restart. Only available for PostgreSQL 13+.",
-                  "type": "boolean"
-                },
-                "pg_stat_monitor.pgsm_max_buckets": {
-                  "description": "Sets the maximum number of buckets. Changing this parameter causes a service restart. Only available for PostgreSQL 13+.",
-                  "maximum": 10,
-                  "minimum": 1,
-                  "type": "integer"
-                },
                 "pg_stat_statements.track": {
                   "description": "Controls which statements are counted. Specify top to track top-level statements (those issued directly by clients), all to also track nested statements (such as statements invoked within functions), or none to disable statement statistics collection. The default is `top`.",
                   "enum": [
@@ -745,35 +639,6 @@
               "type": "object",
               "additionalProperties": false
             },
-            "pg_qualstats": {
-              "description": "Deprecated. System-wide settings for the pg_qualstats extension",
-              "properties": {
-                "enabled": {
-                  "description": "Deprecated. Enable / Disable pg_qualstats",
-                  "type": "boolean"
-                },
-                "min_err_estimate_num": {
-                  "description": "Deprecated. Error estimation num threshold to save quals",
-                  "minimum": 0,
-                  "type": "integer"
-                },
-                "min_err_estimate_ratio": {
-                  "description": "Deprecated. Error estimation ratio threshold to save quals",
-                  "minimum": 0,
-                  "type": "integer"
-                },
-                "track_constants": {
-                  "description": "Deprecated. Enable / Disable pg_qualstats constants tracking",
-                  "type": "boolean"
-                },
-                "track_pg_catalog": {
-                  "description": "Deprecated. Track quals on system catalogs too.",
-                  "type": "boolean"
-                }
-              },
-              "type": "object",
-              "additionalProperties": false
-            },
             "pg_read_replica": {
               "description": "Should the service which is being forked be a read replica (deprecated, use read_replica service integration instead).",
               "type": "boolean"
@@ -790,12 +655,8 @@
                 }
               ]
             },
-            "pg_stat_monitor_enable": {
-              "description": "Enable the pg_stat_monitor extension. Changing this parameter causes a service restart. When this extension is enabled, pg_stat_statements results for utility commands are unreliable",
-              "type": "boolean"
-            },
             "pg_version": {
-              "description": "Available versions: `13`, `14`, `15`, `16`, `17`, `18`. Newer versions may also be available.\nPostgreSQL major version. Deprecated values: `13`",
+              "description": "Available versions: `15`. Newer versions may also be available.\nPostgreSQL major version",
               "type": "string"
             },
             "pgaudit": {
@@ -1074,19 +935,6 @@
                 "quorum"
               ],
               "type": "string"
-            },
-            "timescaledb": {
-              "description": "System-wide settings for the timescaledb extension",
-              "properties": {
-                "max_background_workers": {
-                  "description": "The number of background workers for timescaledb operations. You should configure this setting to the sum of your number of databases and the total number of concurrent background workers you want running at any given point in time. Changing this parameter causes a service restart.",
-                  "maximum": 4096,
-                  "minimum": 1,
-                  "type": "integer"
-                }
-              },
-              "type": "object",
-              "additionalProperties": false
             },
             "variant": {
               "description": "Variant of the PostgreSQL service, may affect the features that are exposed by default",

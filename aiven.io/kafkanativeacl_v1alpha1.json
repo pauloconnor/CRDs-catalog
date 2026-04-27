@@ -1,5 +1,5 @@
 {
-  "description": "KafkaConnector is the Schema for the kafkaconnectors API",
+  "description": "KafkaNativeACL\nCreates and manages Kafka-native access control lists (ACLs) for an Aiven for Apache Kafka\u00ae service.\nACLs control access to Kafka topics, consumer groups, clusters, and Schema Registry.\nKafka-native ACLs provide advanced resource-level access control with fine-grained permissions, including ALLOW and DENY rules.\nFor simplified topic-level control, you can use [KafkaACL](./kafkaacl.md).",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -13,7 +13,7 @@
       "type": "object"
     },
     "spec": {
-      "description": "KafkaConnectorSpec defines the desired state of KafkaConnector",
+      "description": "KafkaNativeACLSpec defines the desired state of KafkaNativeACL",
       "properties": {
         "authSecretRef": {
           "description": "Authentication reference to Aiven token in a secret",
@@ -34,9 +34,50 @@
           "type": "object",
           "additionalProperties": false
         },
-        "connectorClass": {
-          "description": "The Java class of the connector.",
-          "maxLength": 1024,
+        "host": {
+          "default": "*",
+          "description": "The host or `*` for all hosts",
+          "maxLength": 256,
+          "type": "string"
+        },
+        "operation": {
+          "description": "Kafka ACL operation represents an operation which an ACL grants or denies permission to perform",
+          "enum": [
+            "All",
+            "Alter",
+            "AlterConfigs",
+            "ClusterAction",
+            "Create",
+            "CreateTokens",
+            "Delete",
+            "Describe",
+            "DescribeConfigs",
+            "DescribeTokens",
+            "IdempotentWrite",
+            "Read",
+            "Write"
+          ],
+          "type": "string"
+        },
+        "patternType": {
+          "description": "Kafka ACL pattern type of resource name",
+          "enum": [
+            "LITERAL",
+            "PREFIXED"
+          ],
+          "type": "string"
+        },
+        "permissionType": {
+          "description": "Kafka ACL permission type",
+          "enum": [
+            "ALLOW",
+            "DENY"
+          ],
+          "type": "string"
+        },
+        "principal": {
+          "description": "Principal is in 'PrincipalType:name' format",
+          "maxLength": 256,
           "type": "string"
         },
         "project": {
@@ -51,6 +92,23 @@
             }
           ]
         },
+        "resourceName": {
+          "description": "Resource pattern used to match specified resources",
+          "maxLength": 256,
+          "type": "string"
+        },
+        "resourceType": {
+          "description": "Kafka ACL resource type represents a type of resource which an ACL can be applied to",
+          "enum": [
+            "Cluster",
+            "DelegationToken",
+            "Group",
+            "Topic",
+            "TransactionalId",
+            "User"
+          ],
+          "type": "string"
+        },
         "serviceName": {
           "description": "Specifies the name of the service that this resource belongs to",
           "maxLength": 63,
@@ -62,29 +120,32 @@
               "rule": "self == oldSelf"
             }
           ]
-        },
-        "userConfig": {
-          "additionalProperties": {
-            "type": "string"
-          },
-          "description": "The connector-specific configuration\nTo build config values from secret the template function `{{ fromSecret \"name\" \"key\" }}`\nis provided when interpreting the keys.\nWhere \"name\" is the name of the secret and \"key\" is the key in the secret\nin the same namespace as the KafkaConnector.",
-          "type": "object"
         }
       },
       "required": [
-        "connectorClass",
+        "operation",
+        "patternType",
+        "permissionType",
+        "principal",
         "project",
-        "serviceName",
-        "userConfig"
+        "resourceName",
+        "resourceType",
+        "serviceName"
       ],
       "type": "object",
+      "x-kubernetes-validations": [
+        {
+          "message": "Value is immutable",
+          "rule": "self == oldSelf"
+        }
+      ],
       "additionalProperties": false
     },
     "status": {
-      "description": "KafkaConnectorStatus defines the observed state of KafkaConnector",
+      "description": "KafkaNativeACLStatus defines the observed state of KafkaNativeACL",
       "properties": {
         "conditions": {
-          "description": "Conditions represent the latest available observations of an kafka connector state",
+          "description": "Conditions represent the latest available observations of an KafkaNativeACL state",
           "items": {
             "description": "Condition contains details for one aspect of the current state of this API Resource.",
             "properties": {
@@ -139,80 +200,14 @@
           },
           "type": "array"
         },
-        "pluginStatus": {
-          "description": "PluginStatus contains metadata about the configured connector plugin",
-          "properties": {
-            "author": {
-              "type": "string"
-            },
-            "class": {
-              "type": "string"
-            },
-            "docUrl": {
-              "type": "string"
-            },
-            "title": {
-              "type": "string"
-            },
-            "type": {
-              "type": "string"
-            },
-            "version": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "author",
-            "class",
-            "docUrl",
-            "title",
-            "type",
-            "version"
-          ],
-          "type": "object",
-          "additionalProperties": false
-        },
-        "state": {
-          "description": "Connector state",
+        "id": {
+          "description": "Kafka-native ACL ID",
           "type": "string"
-        },
-        "tasksStatus": {
-          "description": "TasksStatus contains metadata about the running tasks",
-          "properties": {
-            "failed": {
-              "type": "integer"
-            },
-            "paused": {
-              "type": "integer"
-            },
-            "running": {
-              "type": "integer"
-            },
-            "stackTrace": {
-              "type": "string"
-            },
-            "total": {
-              "type": "integer"
-            },
-            "unassigned": {
-              "type": "integer"
-            },
-            "unknown": {
-              "type": "integer"
-            }
-          },
-          "required": [
-            "total"
-          ],
-          "type": "object",
-          "additionalProperties": false
         }
       },
       "required": [
         "conditions",
-        "pluginStatus",
-        "state",
-        "tasksStatus"
+        "id"
       ],
       "type": "object",
       "additionalProperties": false

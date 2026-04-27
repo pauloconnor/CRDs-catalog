@@ -621,7 +621,7 @@ sources:
     changelog: "https://github.com/actions/actions-runner-controller/releases"
 
   - url: "https://github.com/aiven/aiven-operator"
-    tag: ""
+    tag: "v0.37.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/aiven/aiven-operator/releases"
 
