@@ -641,7 +641,7 @@ sources:
     changelog: "https://github.com/RedisLabs/redis-enterprise-k8s-docs/releases"
 
   - url: "https://github.com/emqx/emqx-operator"
-    tag: ""
+    tag: "2.3.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/emqx/emqx-operator/releases"
 
