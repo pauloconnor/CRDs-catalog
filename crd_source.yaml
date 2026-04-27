@@ -1221,7 +1221,7 @@ sources:
     changelog: "https://github.com/backube/snapscheduler/releases"
 
   - url: "https://github.com/backube/volsync"
-    tag: ""
+    tag: "v0.15.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/backube/volsync/releases"
 
