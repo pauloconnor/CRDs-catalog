@@ -869,7 +869,7 @@ sources:
     changelog: "https://github.com/kubernetes-sigs/karpenter/releases"
 
   - url: "https://github.com/kubernetes-sigs/kueue"
-    tag: "v0.17.1"
+    tag: "v0.17.3"
     repo_path: "config/components/crd/bases"
     changelog: "https://github.com/kubernetes-sigs/kueue/releases"
 
