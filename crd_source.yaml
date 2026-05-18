@@ -993,7 +993,7 @@ sources:
 
   # Issue #586 - netbird operator CRDs
   - url: "https://github.com/netbirdio/kubernetes-operator"
-    tag: ""
+    tag: "v0.4.1"
     repo_path: "crds"
     changelog: "https://github.com/netbirdio/kubernetes-operator/releases"
 
