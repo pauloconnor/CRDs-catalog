@@ -1681,6 +1681,9 @@
           "type": "object",
           "additionalProperties": false
         },
+        "ipV4Only": {
+          "type": "boolean"
+        },
         "knative": {
           "properties": {
             "clusterIngressProxyAddress": {
