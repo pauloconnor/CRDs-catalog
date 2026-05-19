@@ -619,6 +619,12 @@
                       },
                       "jwt": {
                         "properties": {
+                          "audiences": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          },
                           "issuer": {
                             "type": "string"
                           },
