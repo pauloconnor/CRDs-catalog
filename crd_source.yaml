@@ -530,7 +530,7 @@ sources:
     changelog: "https://github.com/emqx/emqx-operator/releases"
 
   - url: "https://github.com/envoyproxy/gateway"
-    tag: "v1.7.2"
+    tag: "v1.7.3"
     repo_path: "charts/gateway-helm/crds/generated"
     changelog: "https://github.com/envoyproxy/gateway/releases"
 
