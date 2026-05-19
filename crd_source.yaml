@@ -834,7 +834,7 @@ sources:
     changelog: "https://github.com/kubernetes-csi/external-snapshotter/releases"
 
   - url: "https://github.com/kubernetes-sigs/aws-load-balancer-controller"
-    tag: "v3.2.2"
+    tag: "v3.3.0"
     repo_path: "helm/aws-load-balancer-controller/crds"
     changelog: "https://github.com/kubernetes-sigs/aws-load-balancer-controller/releases"
 
