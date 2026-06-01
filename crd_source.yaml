@@ -536,7 +536,7 @@ sources:
 
   # Issue #588 - additional EDP EPAM operator CRDs
   - url: "https://github.com/epam/edp-cd-pipeline-operator"
-    tag: ""
+    tag: "v2.30.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/epam/edp-cd-pipeline-operator/releases"
 
