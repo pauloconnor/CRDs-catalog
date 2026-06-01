@@ -366,7 +366,7 @@ sources:
     changelog: "https://github.com/bank-vaults/vault-operator/releases"
 
   - url: "https://github.com/bitnami-labs/sealed-secrets"
-    tag: "v0.36.6"
+    tag: "v0.37.0"
     repo_path: "helm/sealed-secrets/crds"
     changelog: "https://github.com/bitnami-labs/sealed-secrets/releases"
 
