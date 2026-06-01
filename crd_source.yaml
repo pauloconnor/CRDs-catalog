@@ -1221,7 +1221,7 @@ sources:
 
   # Issue #592 - shipwright.io CRDs
   - url: "https://github.com/shipwright-io/build"
-    tag: ""
+    tag: "v0.19.6"
     repo_path: "deploy/crds"
     changelog: "https://github.com/shipwright-io/build/releases"
 
