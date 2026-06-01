@@ -280,14 +280,14 @@
               "x-kubernetes-list-type": "set"
             },
             "snapshotArnsToRestore": {
-              "description": "The list of ARN(s) of the snapshot that the new serverless cache will be created from. Available for Redis only.",
+              "description": "The list of ARN(s) of the snapshot that the new serverless cache will be created from. Only supported for engine types \"redis\" or \"valkey\".",
               "items": {
                 "type": "string"
               },
               "type": "array"
             },
             "snapshotRetentionLimit": {
-              "description": "The number of snapshots that will be retained for the serverless cache that is being created. As new snapshots beyond this limit are added, the oldest snapshots will be deleted on a rolling basis. Available for Redis only.",
+              "description": "The number of snapshots that will be retained for the serverless cache that is being created. As new snapshots beyond this limit are added, the oldest snapshots will be deleted on a rolling basis. Only supported for engine types \"redis\" or \"valkey\".",
               "type": "number"
             },
             "subnetIdRefs": {
@@ -399,7 +399,7 @@
               "x-kubernetes-map-type": "granular"
             },
             "userGroupId": {
-              "description": "The identifier of the UserGroup to be associated with the serverless cache. Available for Redis only. Default is NULL.",
+              "description": "The identifier of the UserGroup to be associated with the serverless cache. Available for Redis and Valkey. Default is NULL.",
               "type": "string"
             }
           },
@@ -671,14 +671,14 @@
               "x-kubernetes-list-type": "set"
             },
             "snapshotArnsToRestore": {
-              "description": "The list of ARN(s) of the snapshot that the new serverless cache will be created from. Available for Redis only.",
+              "description": "The list of ARN(s) of the snapshot that the new serverless cache will be created from. Only supported for engine types \"redis\" or \"valkey\".",
               "items": {
                 "type": "string"
               },
               "type": "array"
             },
             "snapshotRetentionLimit": {
-              "description": "The number of snapshots that will be retained for the serverless cache that is being created. As new snapshots beyond this limit are added, the oldest snapshots will be deleted on a rolling basis. Available for Redis only.",
+              "description": "The number of snapshots that will be retained for the serverless cache that is being created. As new snapshots beyond this limit are added, the oldest snapshots will be deleted on a rolling basis. Only supported for engine types \"redis\" or \"valkey\".",
               "type": "number"
             },
             "subnetIdRefs": {
@@ -790,7 +790,7 @@
               "x-kubernetes-map-type": "granular"
             },
             "userGroupId": {
-              "description": "The identifier of the UserGroup to be associated with the serverless cache. Available for Redis only. Default is NULL.",
+              "description": "The identifier of the UserGroup to be associated with the serverless cache. Available for Redis and Valkey. Default is NULL.",
               "type": "string"
             }
           },
@@ -1005,14 +1005,14 @@
               "x-kubernetes-list-type": "set"
             },
             "snapshotArnsToRestore": {
-              "description": "The list of ARN(s) of the snapshot that the new serverless cache will be created from. Available for Redis only.",
+              "description": "The list of ARN(s) of the snapshot that the new serverless cache will be created from. Only supported for engine types \"redis\" or \"valkey\".",
               "items": {
                 "type": "string"
               },
               "type": "array"
             },
             "snapshotRetentionLimit": {
-              "description": "The number of snapshots that will be retained for the serverless cache that is being created. As new snapshots beyond this limit are added, the oldest snapshots will be deleted on a rolling basis. Available for Redis only.",
+              "description": "The number of snapshots that will be retained for the serverless cache that is being created. As new snapshots beyond this limit are added, the oldest snapshots will be deleted on a rolling basis. Only supported for engine types \"redis\" or \"valkey\".",
               "type": "number"
             },
             "status": {
@@ -1043,7 +1043,7 @@
               "x-kubernetes-map-type": "granular"
             },
             "userGroupId": {
-              "description": "The identifier of the UserGroup to be associated with the serverless cache. Available for Redis only. Default is NULL.",
+              "description": "The identifier of the UserGroup to be associated with the serverless cache. Available for Redis and Valkey. Default is NULL.",
               "type": "string"
             }
           },

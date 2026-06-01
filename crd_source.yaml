@@ -1311,7 +1311,7 @@ sources:
     changelog: "https://github.com/Twingate/kubernetes-operator/releases"
 
   - url: "https://github.com/upbound/provider-aws"
-    tag: ""
+    tag: "v2.5.0"
     repo_path: "package/crds"
     changelog: "https://github.com/upbound/provider-aws/releases"
 
