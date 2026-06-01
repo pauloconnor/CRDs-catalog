@@ -20,7 +20,7 @@
           "properties": {
             "name": {
               "default": "",
-              "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nTODO: Add other useful fields. apiVersion, kind, uid?\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names\nTODO: Drop `kubebuilder:default` when controller-gen doesn't need it https://github.com/kubernetes-sigs/kubebuilder/issues/3896.",
+              "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
               "type": "string"
             }
           },
@@ -61,7 +61,7 @@
                   "properties": {
                     "name": {
                       "default": "",
-                      "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nTODO: Add other useful fields. apiVersion, kind, uid?\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names\nTODO: Drop `kubebuilder:default` when controller-gen doesn't need it https://github.com/kubernetes-sigs/kubebuilder/issues/3896.",
+                      "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
                       "type": "string"
                     }
                   },
@@ -111,7 +111,7 @@
       "properties": {
         "conditions": {
           "items": {
-            "description": "Condition contains details for one aspect of the current state of this API Resource.\n---\nThis struct is intended for direct use as an array at the field path .status.conditions.  For example,\n\n\n\ttype FooStatus struct{\n\t    // Represents the observations of a foo's current state.\n\t    // Known .status.conditions.type are: \"Available\", \"Progressing\", and \"Degraded\"\n\t    // +patchMergeKey=type\n\t    // +patchStrategy=merge\n\t    // +listType=map\n\t    // +listMapKey=type\n\t    Conditions []metav1.Condition `json:\"conditions,omitempty\" patchStrategy:\"merge\" patchMergeKey:\"type\" protobuf:\"bytes,1,rep,name=conditions\"`\n\n\n\t    // other fields\n\t}",
+            "description": "Condition contains details for one aspect of the current state of this API Resource.",
             "properties": {
               "lastTransitionTime": {
                 "description": "lastTransitionTime is the last time the condition transitioned from one status to another.\nThis should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.",
@@ -146,7 +146,7 @@
                 "type": "string"
               },
               "type": {
-                "description": "type of condition in CamelCase or in foo.example.com/CamelCase.\n---\nMany .condition.type values are consistent across resources like Available, but because arbitrary conditions can be\nuseful (see .node.status.conditions), the ability to deconflict is important.\nThe regex it matches is (dns1123SubdomainFmt/)?(qualifiedNameFmt)",
+                "description": "type of condition in CamelCase or in foo.example.com/CamelCase.",
                 "maxLength": 316,
                 "pattern": "^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$",
                 "type": "string"
@@ -166,6 +166,31 @@
         },
         "phase": {
           "type": "string"
+        },
+        "snapshot": {
+          "description": "Snapshot describes the artefact the backup-agent wrote.\nPopulated by the controller after the backup Job reaches\nphase=Succeeded, parsed from the agent's terminal\n\"snapshot uploaded: ...\" / \"snapshot written: ...\" pod-log\nmarker. Empty while the backup is in progress, on failure\nbefore the write step, or when the Job pod's log has been GC'd\nbefore the controller observed it.",
+          "properties": {
+            "checksum": {
+              "description": "Checksum is \"<algo>:<hex>\" of the snapshot bytes, computed by\nthe agent while streaming. Currently always \"sha256:<hex>\"\n(64 hex chars) when the controller populates BackupSnapshot at\nall; consumers MUST tolerate other algorithms via the prefix.\nThe controller's marker regex requires sha256=<64 hex> to be\npresent, so this field is non-empty whenever the enclosing\nBackupSnapshot is set.\n\nThe pattern admits hyphenated algorithm names (e.g.\n\"sha3-256:...\", \"blake2b-256:...\", \"blake3-256:...\") so a\nfuture agent build can adopt a stronger hash without an API\nbreak, and bounds the hex run to 32\u2013128 chars (128-bit to\n512-bit digests) so a truncated emit cannot satisfy the\npattern with a meaningless short hash.",
+              "pattern": "^[a-z0-9][a-z0-9-]*:[a-f0-9]{32,128}$",
+              "type": "string"
+            },
+            "sizeBytes": {
+              "description": "SizeBytes is the snapshot size in bytes, as observed by the\nbackup-agent at write time. Populated whenever the enclosing\nBackupSnapshot is set: a successful marker parse always\nproduces a value here. The only way SizeBytes==0 lands with\nBackupSnapshot set is the strconv.ParseInt overflow fallback\nin the marker scanner \u2014 i.e. an agent-emitted size larger\nthan int64, which is unreachable in practice. In that one\ncase the scanner deliberately STILL lands a populated\nBackupSnapshot (with SizeBytes=0, URI and Checksum\npreserved) rather than discarding it: the URI + checksum are\nthe load-bearing fields for a future restore, and a\nreviewer reading status sees the snapshot exists. When the\nagent log was GC'd or never contained a marker, the entire\nBackupSnapshot stays nil rather than being set with a zero\nSizeBytes.",
+              "format": "int64",
+              "type": "integer"
+            },
+            "uri": {
+              "description": "URI is an OBSERVATIONAL identifier of the snapshot the agent\nwrote \u2014 intended for humans, dashboards, and out-of-band\ntooling. For S3 destinations: \"s3://<bucket>/<key>\" where\n<key> is the FULL object name (with any BACKUP_INCLUDE_REVISION\n/ BACKUP_TIMESTAMP suffix the agent injected at write time).\nFor PVC destinations: \"file:///<abs-path>\" \u2014 note the triple\nslash, which is the literal output of joining the \"file://\"\nscheme with an absolute in-container path. The path is\nin-container (rooted at the operator-injected /backup/data\nmount of spec.destination.pvc.claimName) and is not directly\nreadable from outside the pod.\n\nThis field is NOT a stable contract for programmatic restore\ncallers. The S3 form omits endpoint / region / path-style flags\nthat are required to address non-AWS endpoints (MinIO, Ceph\nRGW, Wasabi, ...) and the PVC form omits the PVC claimName and\nnamespace. A future RestoreSpec consumer must read those values\nfrom the originating EtcdBackup.spec.destination \u2014 not from\nthis string. The URI format may evolve in subsequent versions\nto expose richer addressing; consumers should treat unfamiliar\nschemes as opaque rather than parsing.\n\nKEEP IN SYNC with the SnapshotURIPrefixPattern constant in this\npackage \u2014 the controller compiles its defense-in-depth regex\nfrom that constant; if this marker drifts, the controller will\nadmit URIs that the apiserver refuses to write and reconciles\nwill spin on Status().Update validation errors.",
+              "pattern": "^(s3|file)://.+",
+              "type": "string"
+            }
+          },
+          "required": [
+            "uri"
+          ],
+          "type": "object",
+          "additionalProperties": false
         }
       },
       "type": "object",
