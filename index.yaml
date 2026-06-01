@@ -20786,6 +20786,34 @@ v2.edp.epam.com:
     filename: v2.edp.epam.com/codebasebranch_v1.json
     kind: CodebaseBranch
     name: codebasebranch_v1
+  - apiVersion: v2.edp.epam.com/v1
+    filename: v2.edp.epam.com/gerritproject_v1.json
+    kind: GerritProject
+    name: gerritproject_v1
+  - apiVersion: v2.edp.epam.com/v1
+    filename: v2.edp.epam.com/gerritgroupmember_v1.json
+    kind: GerritGroupMember
+    name: gerritgroupmember_v1
+  - apiVersion: v2.edp.epam.com/v1
+    filename: v2.edp.epam.com/gerritgroup_v1.json
+    kind: GerritGroup
+    name: gerritgroup_v1
+  - apiVersion: v2.edp.epam.com/v1
+    filename: v2.edp.epam.com/gerritreplicationconfig_v1.json
+    kind: GerritReplicationConfig
+    name: gerritreplicationconfig_v1
+  - apiVersion: v2.edp.epam.com/v1
+    filename: v2.edp.epam.com/gerritmergerequest_v1.json
+    kind: GerritMergeRequest
+    name: gerritmergerequest_v1
+  - apiVersion: v2.edp.epam.com/v1
+    filename: v2.edp.epam.com/gerritprojectaccess_v1.json
+    kind: GerritProjectAccess
+    name: gerritprojectaccess_v1
+  - apiVersion: v2.edp.epam.com/v1
+    filename: v2.edp.epam.com/gerrit_v1.json
+    kind: Gerrit
+    name: gerrit_v1
 vault.banzaicloud.com:
   - apiVersion: vault.banzaicloud.com/v1alpha1
     filename: vault.banzaicloud.com/vault_v1alpha1.json
