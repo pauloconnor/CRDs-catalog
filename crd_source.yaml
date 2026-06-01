@@ -330,7 +330,7 @@ sources:
     changelog: "https://github.com/Azure/aad-pod-identity/releases"
 
   - url: "https://github.com/Azure/application-gateway-kubernetes-ingress"
-    tag: "1.9.7"
+    tag: "1.9.10"
     repo_path: "crds"
     changelog: "https://github.com/Azure/application-gateway-kubernetes-ingress/releases"
 
