@@ -10944,6 +10944,18 @@ groupsnapshot.storage.k8s.io:
     filename: groupsnapshot.storage.k8s.io/volumegroupsnapshotclass_v1beta2.json
     kind: VolumeGroupSnapshotClass
     name: volumegroupsnapshotclass_v1beta2
+  - apiVersion: groupsnapshot.storage.k8s.io/v1
+    filename: groupsnapshot.storage.k8s.io/volumegroupsnapshot_v1.json
+    kind: VolumeGroupSnapshot
+    name: volumegroupsnapshot_v1
+  - apiVersion: groupsnapshot.storage.k8s.io/v1
+    filename: groupsnapshot.storage.k8s.io/volumegroupsnapshotcontent_v1.json
+    kind: VolumeGroupSnapshotContent
+    name: volumegroupsnapshotcontent_v1
+  - apiVersion: groupsnapshot.storage.k8s.io/v1
+    filename: groupsnapshot.storage.k8s.io/volumegroupsnapshotclass_v1.json
+    kind: VolumeGroupSnapshotClass
+    name: volumegroupsnapshotclass_v1
 guestconfiguration.azure.m.upbound.io:
   - apiVersion: guestconfiguration.azure.m.upbound.io/v1beta1
     filename: guestconfiguration.azure.m.upbound.io/policyvirtualmachineconfigurationassignment_v1beta1.json
