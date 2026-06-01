@@ -541,7 +541,7 @@ sources:
     changelog: "https://github.com/epam/edp-cd-pipeline-operator/releases"
 
   - url: "https://github.com/epam/edp-codebase-operator"
-    tag: "v2.32.0"
+    tag: "v2.33.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/epam/edp-codebase-operator/releases"
 
