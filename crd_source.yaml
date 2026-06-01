@@ -1043,7 +1043,7 @@ sources:
     changelog: "https://github.com/open-policy-agent/gatekeeper/releases"
 
   - url: "https://github.com/open-telemetry/opentelemetry-operator"
-    tag: "v0.149.0"
+    tag: "v0.152.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/open-telemetry/opentelemetry-operator/releases"
 
