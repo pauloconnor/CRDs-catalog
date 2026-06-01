@@ -464,7 +464,7 @@ sources:
     changelog: "https://github.com/CrunchyData/postgres-operator/releases"
 
   - url: "https://github.com/dapr/dapr"
-    tag: "v1.17.5"
+    tag: "v1.17.8"
     repo_path: "charts/dapr/crds"
     changelog: "https://github.com/dapr/dapr/releases"
 
