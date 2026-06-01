@@ -884,7 +884,7 @@ sources:
     changelog: "https://github.com/kubernetes-sigs/secrets-store-csi-driver/releases"
 
   - url: "https://github.com/kubernetes/autoscaler"
-    tag: "cluster-autoscaler-chart-9.57.0"
+    tag: "vertical-pod-autoscaler-1.7.0"
     repo_path: "vertical-pod-autoscaler/deploy"
     changelog: "https://github.com/kubernetes/autoscaler/releases"
 
