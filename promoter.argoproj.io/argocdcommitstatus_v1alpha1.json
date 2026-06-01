@@ -62,6 +62,14 @@
           "x-kubernetes-map-type": "atomic",
           "additionalProperties": false
         },
+        "key": {
+          "default": "argocd-health",
+          "description": "Key is the gate name referenced in the PromotionStrategy's activeCommitStatuses.\nWhen omitted, the CRD default is argocd-health. Set Key explicitly, even if you use the CRD default.\nMust be lowercase alphanumeric with hyphens, 1\u201363 characters (pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$).",
+          "maxLength": 63,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
+          "type": "string"
+        },
         "promotionStrategyRef": {
           "description": "PromotionStrategyRef is a reference to the promotion strategy that this commit status applies to.",
           "properties": {
