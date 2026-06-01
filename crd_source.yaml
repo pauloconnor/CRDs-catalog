@@ -1133,7 +1133,7 @@ sources:
     changelog: "https://github.com/projectcontour/contour/releases"
 
   - url: "https://github.com/projectsveltos/addon-controller"
-    tag: "v1.8.0"
+    tag: "v1.10.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/projectsveltos/addon-controller/releases"
 
