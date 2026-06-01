@@ -105,7 +105,7 @@ sources:
     changelog: "https://github.com/ariga/atlas-operator/releases"
 
   - url: "https://github.com/aws-controllers-k8s/acm-controller"
-    tag: "v1.3.6"
+    tag: "v1.4.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/aws-controllers-k8s/acm-controller/releases"
 
