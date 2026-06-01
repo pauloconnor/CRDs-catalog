@@ -1159,7 +1159,7 @@ sources:
     changelog: "https://github.com/radius-project/radius/releases"
 
   - url: "https://github.com/rancher/fleet"
-    tag: "v0.15.0"
+    tag: "v0.15.2"
     repo_path: "charts/fleet-crd/templates"
     changelog: "https://github.com/rancher/fleet/releases"
 
