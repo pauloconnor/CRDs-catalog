@@ -809,7 +809,7 @@ sources:
     changelog: "https://github.com/kro-run/kro/releases"
 
   - url: "https://github.com/kserve/kserve"
-    tag: "v0.17.0"
+    tag: "v0.18.0"
     repo_path: "config/crd/full"
     changelog: "https://github.com/kserve/kserve/releases"
 
