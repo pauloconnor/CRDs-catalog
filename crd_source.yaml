@@ -987,7 +987,7 @@ sources:
     changelog: "https://github.com/nauth-io/nauth/releases"
 
   - url: "https://github.com/NetApp/trident"
-    tag: "v26.02.0"
+    tag: "v26.02.1"
     repo_path: "deploy/crds"
     changelog: "https://github.com/NetApp/trident/releases"
 
