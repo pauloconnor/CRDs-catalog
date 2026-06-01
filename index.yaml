@@ -9010,6 +9010,35 @@ edgenetwork.cnrm.cloud.google.com:
     filename: edgenetwork.cnrm.cloud.google.com/edgenetworknetwork_v1beta1.json
     kind: edgenetworknetwork
     name: edgenetworknetwork_v1beta1
+edp.epam.com:
+  - apiVersion: edp.epam.com/v1alpha1
+    filename: edp.epam.com/nexusrepository_v1alpha1.json
+    kind: NexusRepository
+    name: nexusrepository_v1alpha1
+  - apiVersion: edp.epam.com/v1alpha1
+    filename: edp.epam.com/nexususer_v1alpha1.json
+    kind: NexusUser
+    name: nexususer_v1alpha1
+  - apiVersion: edp.epam.com/v1alpha1
+    filename: edp.epam.com/nexus_v1alpha1.json
+    kind: Nexus
+    name: nexus_v1alpha1
+  - apiVersion: edp.epam.com/v1alpha1
+    filename: edp.epam.com/nexusscript_v1alpha1.json
+    kind: NexusScript
+    name: nexusscript_v1alpha1
+  - apiVersion: edp.epam.com/v1alpha1
+    filename: edp.epam.com/nexuscleanuppolicy_v1alpha1.json
+    kind: NexusCleanupPolicy
+    name: nexuscleanuppolicy_v1alpha1
+  - apiVersion: edp.epam.com/v1alpha1
+    filename: edp.epam.com/nexusblobstore_v1alpha1.json
+    kind: NexusBlobStore
+    name: nexusblobstore_v1alpha1
+  - apiVersion: edp.epam.com/v1alpha1
+    filename: edp.epam.com/nexusrole_v1alpha1.json
+    kind: NexusRole
+    name: nexusrole_v1alpha1
 eks.amazonaws.com:
   - apiVersion: eks.amazonaws.com/v1
     filename: eks.amazonaws.com/targetgroupbinding_v1.json

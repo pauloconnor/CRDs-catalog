@@ -551,7 +551,7 @@ sources:
     changelog: "https://github.com/epam/edp-gerrit-operator/releases"
 
   - url: "https://github.com/epam/edp-nexus-operator"
-    tag: ""
+    tag: "v3.5.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/epam/edp-nexus-operator/releases"
 
