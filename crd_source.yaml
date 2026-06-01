@@ -1175,7 +1175,7 @@ sources:
 
   # Issue #256 - vault-config-operator CRDs (redhatcop.redhat.io)
   - url: "https://github.com/redhat-cop/vault-config-operator"
-    tag: ""
+    tag: "v0.8.49"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/redhat-cop/vault-config-operator/releases"
 

@@ -18351,6 +18351,195 @@ recaptchaenterprise.cnrm.cloud.google.com:
     filename: recaptchaenterprise.cnrm.cloud.google.com/recaptchaenterprisekey_v1beta1.json
     kind: recaptchaenterprisekey
     name: recaptchaenterprisekey_v1beta1
+redhatcop.redhat.io:
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/ldapauthengineconfig_v1alpha1.json
+    kind: LDAPAuthEngineConfig
+    name: ldapauthengineconfig_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/azureauthenginerole_v1alpha1.json
+    kind: AzureAuthEngineRole
+    name: azureauthenginerole_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/quaysecretengineconfig_v1alpha1.json
+    kind: QuaySecretEngineConfig
+    name: quaysecretengineconfig_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/gcpauthenginerole_v1alpha1.json
+    kind: GCPAuthEngineRole
+    name: gcpauthenginerole_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/identitytokenconfig_v1alpha1.json
+    kind: IdentityTokenConfig
+    name: identitytokenconfig_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/secretenginemount_v1alpha1.json
+    kind: SecretEngineMount
+    name: secretenginemount_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/entity_v1alpha1.json
+    kind: Entity
+    name: entity_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/vaultsecret_v1alpha1.json
+    kind: VaultSecret
+    name: vaultsecret_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/identitytokenrole_v1alpha1.json
+    kind: IdentityTokenRole
+    name: identitytokenrole_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/jwtoidcauthenginerole_v1alpha1.json
+    kind: JWTOIDCAuthEngineRole
+    name: jwtoidcauthenginerole_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/quaysecretenginerole_v1alpha1.json
+    kind: QuaySecretEngineRole
+    name: quaysecretenginerole_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/kubernetessecretenginerole_v1alpha1.json
+    kind: KubernetesSecretEngineRole
+    name: kubernetessecretenginerole_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/pkisecretengineconfig_v1alpha1.json
+    kind: PKISecretEngineConfig
+    name: pkisecretengineconfig_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/identityoidcscope_v1alpha1.json
+    kind: IdentityOIDCScope
+    name: identityoidcscope_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/kubernetessecretengineconfig_v1alpha1.json
+    kind: KubernetesSecretEngineConfig
+    name: kubernetessecretengineconfig_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/identityoidcassignment_v1alpha1.json
+    kind: IdentityOIDCAssignment
+    name: identityoidcassignment_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/gcpauthengineconfig_v1alpha1.json
+    kind: GCPAuthEngineConfig
+    name: gcpauthengineconfig_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/policy_v1alpha1.json
+    kind: Policy
+    name: policy_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/randomsecret_v1alpha1.json
+    kind: RandomSecret
+    name: randomsecret_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/databasesecretenginerole_v1alpha1.json
+    kind: DatabaseSecretEngineRole
+    name: databasesecretenginerole_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/identityoidcclient_v1alpha1.json
+    kind: IdentityOIDCClient
+    name: identityoidcclient_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/group_v1alpha1.json
+    kind: Group
+    name: group_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/rabbitmqsecretengineconfig_v1alpha1.json
+    kind: RabbitMQSecretEngineConfig
+    name: rabbitmqsecretengineconfig_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/pkisecretenginerole_v1alpha1.json
+    kind: PKISecretEngineRole
+    name: pkisecretenginerole_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/quaysecretenginestaticrole_v1alpha1.json
+    kind: QuaySecretEngineStaticRole
+    name: quaysecretenginestaticrole_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/jwtoidcauthengineconfig_v1alpha1.json
+    kind: JWTOIDCAuthEngineConfig
+    name: jwtoidcauthengineconfig_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/ldapauthenginegroup_v1alpha1.json
+    kind: LDAPAuthEngineGroup
+    name: ldapauthenginegroup_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/githubsecretenginerole_v1alpha1.json
+    kind: GitHubSecretEngineRole
+    name: githubsecretenginerole_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/identitytokenkey_v1alpha1.json
+    kind: IdentityTokenKey
+    name: identitytokenkey_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/passwordpolicy_v1alpha1.json
+    kind: PasswordPolicy
+    name: passwordpolicy_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/certauthenginerole_v1alpha1.json
+    kind: CertAuthEngineRole
+    name: certauthenginerole_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/databasesecretenginestaticrole_v1alpha1.json
+    kind: DatabaseSecretEngineStaticRole
+    name: databasesecretenginestaticrole_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/authenginemount_v1alpha1.json
+    kind: AuthEngineMount
+    name: authenginemount_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/azuresecretengineconfig_v1alpha1.json
+    kind: AzureSecretEngineConfig
+    name: azuresecretengineconfig_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/databasesecretengineconfig_v1alpha1.json
+    kind: DatabaseSecretEngineConfig
+    name: databasesecretengineconfig_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/kubernetesauthenginerole_v1alpha1.json
+    kind: KubernetesAuthEngineRole
+    name: kubernetesauthenginerole_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/auditrequestheader_v1alpha1.json
+    kind: AuditRequestHeader
+    name: auditrequestheader_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/groupalias_v1alpha1.json
+    kind: GroupAlias
+    name: groupalias_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/azureauthengineconfig_v1alpha1.json
+    kind: AzureAuthEngineConfig
+    name: azureauthengineconfig_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/rabbitmqsecretenginerole_v1alpha1.json
+    kind: RabbitMQSecretEngineRole
+    name: rabbitmqsecretenginerole_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/githubsecretengineconfig_v1alpha1.json
+    kind: GitHubSecretEngineConfig
+    name: githubsecretengineconfig_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/entityalias_v1alpha1.json
+    kind: EntityAlias
+    name: entityalias_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/kubernetesauthengineconfig_v1alpha1.json
+    kind: KubernetesAuthEngineConfig
+    name: kubernetesauthengineconfig_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/azuresecretenginerole_v1alpha1.json
+    kind: AzureSecretEngineRole
+    name: azuresecretenginerole_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/certauthengineconfig_v1alpha1.json
+    kind: CertAuthEngineConfig
+    name: certauthengineconfig_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/audit_v1alpha1.json
+    kind: Audit
+    name: audit_v1alpha1
+  - apiVersion: redhatcop.redhat.io/v1alpha1
+    filename: redhatcop.redhat.io/identityoidcprovider_v1alpha1.json
+    kind: IdentityOIDCProvider
+    name: identityoidcprovider_v1alpha1
 redhatopenshift.azure.com:
   - apiVersion: redhatopenshift.azure.com/v1api20231122
     filename: redhatopenshift.azure.com/openshiftcluster_v1api20231122.json
