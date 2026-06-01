@@ -1008,7 +1008,7 @@ sources:
     changelog: "https://github.com/nginx/nginx-ingress/releases"
 
   - url: "https://github.com/nginxinc/nginx-ingress-helm-operator"
-    tag: "v3.5.2"
+    tag: "v3.6.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/nginxinc/nginx-ingress-helm-operator/releases"
 
