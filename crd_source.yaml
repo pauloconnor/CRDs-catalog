@@ -479,7 +479,7 @@ sources:
     changelog: "https://github.com/datainfrahq/druid-operator/releases"
 
   - url: "https://github.com/db-operator/db-operator"
-    tag: "2.28.0"
+    tag: "2.31.3"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/db-operator/db-operator/releases"
 
