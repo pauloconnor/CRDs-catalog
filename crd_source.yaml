@@ -702,7 +702,7 @@ sources:
     changelog: "https://github.com/hashicorp/terraform-cloud-operator/releases"
 
   - url: "https://github.com/hashicorp/vault-secrets-operator"
-    tag: "v1.3.0"
+    tag: "v1.4.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/hashicorp/vault-secrets-operator/releases"
 
