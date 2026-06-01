@@ -19162,6 +19162,26 @@ seaweed.seaweedfs.com:
     filename: seaweed.seaweedfs.com/seaweed_v1.json
     kind: seaweed
     name: seaweed_v1
+  - apiVersion: seaweed.seaweedfs.com/v1
+    filename: seaweed.seaweedfs.com/s3identity_v1.json
+    kind: s3identity
+    name: s3identity_v1
+  - apiVersion: seaweed.seaweedfs.com/v1
+    filename: seaweed.seaweedfs.com/s3policy_v1.json
+    kind: s3policy
+    name: s3policy_v1
+  - apiVersion: seaweed.seaweedfs.com/v1
+    filename: seaweed.seaweedfs.com/bucket_v1.json
+    kind: bucket
+    name: bucket_v1
+  - apiVersion: seaweed.seaweedfs.com/v1
+    filename: seaweed.seaweedfs.com/s3credentials_v1.json
+    kind: s3credentials
+    name: s3credentials_v1
+  - apiVersion: seaweed.seaweedfs.com/v1
+    filename: seaweed.seaweedfs.com/s3policybinding_v1.json
+    kind: s3policybinding
+    name: s3policybinding_v1
 secret-sync.gke.io:
   - apiVersion: secret-sync.gke.io/v1
     filename: secret-sync.gke.io/secretsync_v1.json
