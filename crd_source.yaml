@@ -1368,7 +1368,7 @@ sources:
 
   # Issue #624 - frp.zufardhiyaulhaq.com CRDs
   - url: "https://github.com/zufardhiyaulhaq/frp-operator"
-    tag: ""
+    tag: "v0.7.0"
     repo_path: "charts/frp-operator/crds"
     changelog: "https://github.com/zufardhiyaulhaq/frp-operator/releases"
 

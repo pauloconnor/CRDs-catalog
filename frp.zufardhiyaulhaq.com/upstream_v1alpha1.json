@@ -1,0 +1,940 @@
+{
+  "description": "Upstream is the Schema for the upstreams API",
+  "properties": {
+    "apiVersion": {
+      "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+      "type": "string"
+    },
+    "kind": {
+      "description": "Kind is a string value representing the REST resource this object represents.\nServers may infer this from the endpoint the client submits requests to.\nCannot be updated.\nIn CamelCase.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object"
+    },
+    "spec": {
+      "description": "UpstreamSpec defines the desired state of Upstream",
+      "properties": {
+        "client": {
+          "type": "string"
+        },
+        "http": {
+          "properties": {
+            "customDomains": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "healthCheck": {
+              "properties": {
+                "intervalSeconds": {
+                  "type": "integer"
+                },
+                "maxFailed": {
+                  "type": "integer"
+                },
+                "path": {
+                  "type": "string"
+                },
+                "timeoutSeconds": {
+                  "type": "integer"
+                },
+                "type": {
+                  "enum": [
+                    "http"
+                  ],
+                  "type": "string"
+                }
+              },
+              "required": [
+                "intervalSeconds",
+                "maxFailed",
+                "path",
+                "timeoutSeconds",
+                "type"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            },
+            "host": {
+              "type": "string"
+            },
+            "hostHeaderRewrite": {
+              "type": "string"
+            },
+            "httpPassword": {
+              "properties": {
+                "secret": {
+                  "properties": {
+                    "key": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "key",
+                    "name"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "secret"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            },
+            "httpUser": {
+              "properties": {
+                "secret": {
+                  "properties": {
+                    "key": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "key",
+                    "name"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "secret"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            },
+            "locations": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "port": {
+              "type": "integer"
+            },
+            "requestHeaders": {
+              "properties": {
+                "set": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
+            "responseHeaders": {
+              "properties": {
+                "set": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
+            "subdomain": {
+              "type": "string"
+            },
+            "transport": {
+              "properties": {
+                "bandwidthLimit": {
+                  "properties": {
+                    "enabled": {
+                      "default": false,
+                      "type": "boolean"
+                    },
+                    "limit": {
+                      "type": "integer"
+                    },
+                    "type": {
+                      "enum": [
+                        "KB",
+                        "MB"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "enabled",
+                    "limit",
+                    "type"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "proxyURL": {
+                  "type": "string"
+                },
+                "useCompression": {
+                  "default": false,
+                  "type": "boolean"
+                },
+                "useEncryption": {
+                  "default": true,
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "useCompression",
+                "useEncryption"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "host",
+            "port"
+          ],
+          "type": "object",
+          "additionalProperties": false
+        },
+        "https": {
+          "properties": {
+            "customDomains": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "host": {
+              "type": "string"
+            },
+            "port": {
+              "type": "integer"
+            },
+            "proxyProtocol": {
+              "enum": [
+                "v1",
+                "v2"
+              ],
+              "type": "string"
+            },
+            "transport": {
+              "properties": {
+                "bandwidthLimit": {
+                  "properties": {
+                    "enabled": {
+                      "default": false,
+                      "type": "boolean"
+                    },
+                    "limit": {
+                      "type": "integer"
+                    },
+                    "type": {
+                      "enum": [
+                        "KB",
+                        "MB"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "enabled",
+                    "limit",
+                    "type"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "proxyURL": {
+                  "type": "string"
+                },
+                "useCompression": {
+                  "default": false,
+                  "type": "boolean"
+                },
+                "useEncryption": {
+                  "default": true,
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "useCompression",
+                "useEncryption"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "customDomains",
+            "host",
+            "port"
+          ],
+          "type": "object",
+          "additionalProperties": false
+        },
+        "stcp": {
+          "properties": {
+            "allowUsers": {
+              "description": "AllowUsers specifies which FRP users can connect to this tunnel.\nUse \"*\" to allow any user. Empty means only the same user.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "healthCheck": {
+              "properties": {
+                "intervalSeconds": {
+                  "type": "integer"
+                },
+                "maxFailed": {
+                  "type": "integer"
+                },
+                "timeoutSeconds": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "intervalSeconds",
+                "maxFailed",
+                "timeoutSeconds"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            },
+            "host": {
+              "type": "string"
+            },
+            "port": {
+              "type": "integer"
+            },
+            "proxyProtocol": {
+              "enum": [
+                "v1",
+                "v2"
+              ],
+              "type": "string"
+            },
+            "secretKey": {
+              "properties": {
+                "secret": {
+                  "properties": {
+                    "key": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "key",
+                    "name"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "secret"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            },
+            "transport": {
+              "properties": {
+                "bandwidthLimit": {
+                  "properties": {
+                    "enabled": {
+                      "default": false,
+                      "type": "boolean"
+                    },
+                    "limit": {
+                      "type": "integer"
+                    },
+                    "type": {
+                      "enum": [
+                        "KB",
+                        "MB"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "enabled",
+                    "limit",
+                    "type"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "proxyURL": {
+                  "type": "string"
+                },
+                "useCompression": {
+                  "default": false,
+                  "type": "boolean"
+                },
+                "useEncryption": {
+                  "default": true,
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "useCompression",
+                "useEncryption"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "host",
+            "port",
+            "secretKey"
+          ],
+          "type": "object",
+          "additionalProperties": false
+        },
+        "tcp": {
+          "properties": {
+            "healthCheck": {
+              "properties": {
+                "intervalSeconds": {
+                  "type": "integer"
+                },
+                "maxFailed": {
+                  "type": "integer"
+                },
+                "timeoutSeconds": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "intervalSeconds",
+                "maxFailed",
+                "timeoutSeconds"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            },
+            "host": {
+              "type": "string"
+            },
+            "loadBalancer": {
+              "description": "LoadBalancer configures load balancing across multiple upstreams",
+              "properties": {
+                "group": {
+                  "description": "Group is the load balancer group name",
+                  "type": "string"
+                },
+                "groupKey": {
+                  "description": "GroupKey is the shared secret for the group",
+                  "properties": {
+                    "secret": {
+                      "properties": {
+                        "key": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "key",
+                        "name"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "secret"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "group"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            },
+            "plugin": {
+              "description": "UpstreamPlugin configures an FRP plugin instead of direct forwarding",
+              "properties": {
+                "httpPassword": {
+                  "properties": {
+                    "secret": {
+                      "properties": {
+                        "key": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "key",
+                        "name"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "secret"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "httpUser": {
+                  "properties": {
+                    "secret": {
+                      "properties": {
+                        "key": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "key",
+                        "name"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "secret"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "localAddr": {
+                  "description": "For https2http, https2https, http2https",
+                  "type": "string"
+                },
+                "localPath": {
+                  "description": "For static_file",
+                  "type": "string"
+                },
+                "password": {
+                  "properties": {
+                    "secret": {
+                      "properties": {
+                        "key": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "key",
+                        "name"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "secret"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "stripPrefix": {
+                  "type": "string"
+                },
+                "type": {
+                  "enum": [
+                    "socks5",
+                    "http_proxy",
+                    "static_file",
+                    "https2http",
+                    "https2https",
+                    "http2http",
+                    "http2https",
+                    "unix_domain_socket"
+                  ],
+                  "type": "string"
+                },
+                "unixPath": {
+                  "description": "For unix_domain_socket",
+                  "type": "string"
+                },
+                "username": {
+                  "description": "For socks5, http_proxy",
+                  "properties": {
+                    "secret": {
+                      "properties": {
+                        "key": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "key",
+                        "name"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "secret"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "type"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            },
+            "port": {
+              "type": "integer"
+            },
+            "proxyProtocol": {
+              "enum": [
+                "v1",
+                "v2"
+              ],
+              "type": "string"
+            },
+            "server": {
+              "properties": {
+                "port": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "port"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            },
+            "transport": {
+              "properties": {
+                "bandwidthLimit": {
+                  "properties": {
+                    "enabled": {
+                      "default": false,
+                      "type": "boolean"
+                    },
+                    "limit": {
+                      "type": "integer"
+                    },
+                    "type": {
+                      "enum": [
+                        "KB",
+                        "MB"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "enabled",
+                    "limit",
+                    "type"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "proxyURL": {
+                  "type": "string"
+                },
+                "useCompression": {
+                  "default": false,
+                  "type": "boolean"
+                },
+                "useEncryption": {
+                  "default": true,
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "useCompression",
+                "useEncryption"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "server"
+          ],
+          "type": "object",
+          "additionalProperties": false
+        },
+        "tcpmux": {
+          "description": "UpstreamSpec_TCPMUX exposes a service using TCP multiplexing over HTTP CONNECT",
+          "properties": {
+            "customDomains": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "host": {
+              "type": "string"
+            },
+            "multiplexer": {
+              "enum": [
+                "httpconnect"
+              ],
+              "type": "string"
+            },
+            "port": {
+              "type": "integer"
+            },
+            "transport": {
+              "properties": {
+                "bandwidthLimit": {
+                  "properties": {
+                    "enabled": {
+                      "default": false,
+                      "type": "boolean"
+                    },
+                    "limit": {
+                      "type": "integer"
+                    },
+                    "type": {
+                      "enum": [
+                        "KB",
+                        "MB"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "enabled",
+                    "limit",
+                    "type"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "proxyURL": {
+                  "type": "string"
+                },
+                "useCompression": {
+                  "default": false,
+                  "type": "boolean"
+                },
+                "useEncryption": {
+                  "default": true,
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "useCompression",
+                "useEncryption"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "customDomains",
+            "host",
+            "multiplexer",
+            "port"
+          ],
+          "type": "object",
+          "additionalProperties": false
+        },
+        "udp": {
+          "properties": {
+            "host": {
+              "type": "string"
+            },
+            "port": {
+              "type": "integer"
+            },
+            "server": {
+              "properties": {
+                "port": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "port"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "host",
+            "port",
+            "server"
+          ],
+          "type": "object",
+          "additionalProperties": false
+        },
+        "xtcp": {
+          "properties": {
+            "allowUsers": {
+              "description": "AllowUsers specifies which FRP users can connect to this tunnel.\nUse \"*\" to allow any user. Empty means only the same user.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "healthCheck": {
+              "properties": {
+                "intervalSeconds": {
+                  "type": "integer"
+                },
+                "maxFailed": {
+                  "type": "integer"
+                },
+                "timeoutSeconds": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "intervalSeconds",
+                "maxFailed",
+                "timeoutSeconds"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            },
+            "host": {
+              "type": "string"
+            },
+            "port": {
+              "type": "integer"
+            },
+            "proxyProtocol": {
+              "enum": [
+                "v1",
+                "v2"
+              ],
+              "type": "string"
+            },
+            "secretKey": {
+              "properties": {
+                "secret": {
+                  "properties": {
+                    "key": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "key",
+                    "name"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "secret"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            },
+            "transport": {
+              "properties": {
+                "bandwidthLimit": {
+                  "properties": {
+                    "enabled": {
+                      "default": false,
+                      "type": "boolean"
+                    },
+                    "limit": {
+                      "type": "integer"
+                    },
+                    "type": {
+                      "enum": [
+                        "KB",
+                        "MB"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "enabled",
+                    "limit",
+                    "type"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "proxyURL": {
+                  "type": "string"
+                },
+                "useCompression": {
+                  "default": false,
+                  "type": "boolean"
+                },
+                "useEncryption": {
+                  "default": true,
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "useCompression",
+                "useEncryption"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "host",
+            "port",
+            "secretKey"
+          ],
+          "type": "object",
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "client"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    },
+    "status": {
+      "description": "UpstreamStatus defines the observed state of Upstream",
+      "properties": {
+        "message": {
+          "description": "Message provides human-readable status information",
+          "type": "string"
+        },
+        "phase": {
+          "description": "Phase indicates the current state: Pending, Active, Failed",
+          "type": "string"
+        },
+        "registeredAt": {
+          "description": "RegisteredAt is when the proxy was registered with the server",
+          "format": "date-time",
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  "type": "object"
+}

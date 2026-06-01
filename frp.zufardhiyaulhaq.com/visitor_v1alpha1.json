@@ -1,0 +1,165 @@
+{
+  "description": "Visitor is the Schema for the visitors API",
+  "properties": {
+    "apiVersion": {
+      "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+      "type": "string"
+    },
+    "kind": {
+      "description": "Kind is a string value representing the REST resource this object represents.\nServers may infer this from the endpoint the client submits requests to.\nCannot be updated.\nIn CamelCase.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object"
+    },
+    "spec": {
+      "description": "VisitorSpec defines the desired state of Visitor",
+      "properties": {
+        "client": {
+          "type": "string"
+        },
+        "stcp": {
+          "properties": {
+            "host": {
+              "type": "string"
+            },
+            "port": {
+              "type": "integer"
+            },
+            "serverName": {
+              "type": "string"
+            },
+            "serverSecretKey": {
+              "properties": {
+                "secret": {
+                  "properties": {
+                    "key": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "key",
+                    "name"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "secret"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "host",
+            "port",
+            "serverName",
+            "serverSecretKey"
+          ],
+          "type": "object",
+          "additionalProperties": false
+        },
+        "xtcp": {
+          "properties": {
+            "enableAssistedAddrs": {
+              "description": "EnableAssistedAddrs enables using local network interface addresses for NAT traversal.\nBy default (false), only STUN-discovered public addresses are used for NAT hole punching,\nwhich is recommended for Kubernetes where pod IPs are not externally routable.\nSet to true to also try local network interfaces (advanced usage).",
+              "type": "boolean"
+            },
+            "fallback": {
+              "properties": {
+                "serverName": {
+                  "type": "string"
+                },
+                "timeout": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "serverName",
+                "timeout"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            },
+            "host": {
+              "type": "string"
+            },
+            "persistantConnection": {
+              "type": "boolean"
+            },
+            "port": {
+              "type": "integer"
+            },
+            "serverName": {
+              "type": "string"
+            },
+            "serverSecretKey": {
+              "properties": {
+                "secret": {
+                  "properties": {
+                    "key": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "key",
+                    "name"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "secret"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "host",
+            "port",
+            "serverName",
+            "serverSecretKey"
+          ],
+          "type": "object",
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "client"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    },
+    "status": {
+      "description": "VisitorStatus defines the observed state of Visitor",
+      "properties": {
+        "connectedAt": {
+          "description": "ConnectedAt is when the visitor established connection",
+          "format": "date-time",
+          "type": "string"
+        },
+        "message": {
+          "description": "Message provides human-readable status information",
+          "type": "string"
+        },
+        "phase": {
+          "description": "Phase indicates the current state: Pending, Active, Failed",
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  "type": "object"
+}
