@@ -13496,6 +13496,75 @@ kms.services.k8s.aws:
     filename: kms.services.k8s.aws/alias_v1alpha1.json
     kind: Alias
     name: alias_v1alpha1
+kpack.io:
+  - apiVersion: kpack.io/v1alpha1
+    filename: kpack.io/image_v1alpha1.json
+    kind: image
+    name: image_v1alpha1
+  - apiVersion: kpack.io/v1alpha1
+    filename: kpack.io/clusterbuilder_v1alpha1.json
+    kind: clusterbuilder
+    name: clusterbuilder_v1alpha1
+  - apiVersion: kpack.io/v1alpha2
+    filename: kpack.io/clusterstore_v1alpha2.json
+    kind: clusterstore
+    name: clusterstore_v1alpha2
+  - apiVersion: kpack.io/v1alpha2
+    filename: kpack.io/builder_v1alpha2.json
+    kind: builder
+    name: builder_v1alpha2
+  - apiVersion: kpack.io/v1alpha1
+    filename: kpack.io/clusterstack_v1alpha1.json
+    kind: clusterstack
+    name: clusterstack_v1alpha1
+  - apiVersion: kpack.io/v1alpha2
+    filename: kpack.io/build_v1alpha2.json
+    kind: build
+    name: build_v1alpha2
+  - apiVersion: kpack.io/v1alpha1
+    filename: kpack.io/clusterstore_v1alpha1.json
+    kind: clusterstore
+    name: clusterstore_v1alpha1
+  - apiVersion: kpack.io/v1alpha1
+    filename: kpack.io/build_v1alpha1.json
+    kind: build
+    name: build_v1alpha1
+  - apiVersion: kpack.io/v1alpha2
+    filename: kpack.io/clusterstack_v1alpha2.json
+    kind: clusterstack
+    name: clusterstack_v1alpha2
+  - apiVersion: kpack.io/v1alpha1
+    filename: kpack.io/builder_v1alpha1.json
+    kind: builder
+    name: builder_v1alpha1
+  - apiVersion: kpack.io/v1alpha2
+    filename: kpack.io/buildpack_v1alpha2.json
+    kind: buildpack
+    name: buildpack_v1alpha2
+  - apiVersion: kpack.io/v1alpha2
+    filename: kpack.io/clusterbuilder_v1alpha2.json
+    kind: clusterbuilder
+    name: clusterbuilder_v1alpha2
+  - apiVersion: kpack.io/v1alpha2
+    filename: kpack.io/sourceresolver_v1alpha2.json
+    kind: sourceresolver
+    name: sourceresolver_v1alpha2
+  - apiVersion: kpack.io/v1alpha2
+    filename: kpack.io/image_v1alpha2.json
+    kind: image
+    name: image_v1alpha2
+  - apiVersion: kpack.io/v1alpha2
+    filename: kpack.io/clusterlifecycle_v1alpha2.json
+    kind: clusterlifecycle
+    name: clusterlifecycle_v1alpha2
+  - apiVersion: kpack.io/v1alpha1
+    filename: kpack.io/sourceresolver_v1alpha1.json
+    kind: sourceresolver
+    name: sourceresolver_v1alpha1
+  - apiVersion: kpack.io/v1alpha2
+    filename: kpack.io/clusterbuildpack_v1alpha2.json
+    kind: clusterbuildpack
+    name: clusterbuildpack_v1alpha2
 kro.run:
   - apiVersion: kro.run/v1alpha1
     filename: kro.run/resourcegraphdefinition_v1alpha1.json

@@ -377,7 +377,7 @@ sources:
 
   # Issue #591 - kpack.io APIs
   - url: "https://github.com/buildpacks-community/kpack"
-    tag: ""
+    tag: "v0.17.1"
     repo_path: "config"
     changelog: "https://github.com/buildpacks-community/kpack/releases"
 
