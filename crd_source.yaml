@@ -439,7 +439,7 @@ sources:
     changelog: "https://github.com/confluentinc/confluent-kubernetes-examples/releases"
 
   - url: "https://github.com/controlplaneio-fluxcd/flux-operator"
-    tag: "v0.48.0"
+    tag: "v0.50.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/controlplaneio-fluxcd/flux-operator/releases"
 
