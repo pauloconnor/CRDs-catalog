@@ -423,7 +423,7 @@ sources:
     changelog: "https://github.com/cloudflare/origin-ca-issuer/releases"
 
   - url: "https://github.com/cloudnative-pg/cloudnative-pg"
-    tag: "v1.29.0"
+    tag: "v1.29.1"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/cloudnative-pg/cloudnative-pg/releases"
 
