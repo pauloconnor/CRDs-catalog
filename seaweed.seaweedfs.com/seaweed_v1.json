@@ -709,6 +709,119 @@
               ],
               "x-kubernetes-list-type": "map"
             },
+            "containerSecurityContext": {
+              "properties": {
+                "allowPrivilegeEscalation": {
+                  "type": "boolean"
+                },
+                "appArmorProfile": {
+                  "properties": {
+                    "localhostProfile": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "capabilities": {
+                  "properties": {
+                    "add": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array",
+                      "x-kubernetes-list-type": "atomic"
+                    },
+                    "drop": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array",
+                      "x-kubernetes-list-type": "atomic"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "privileged": {
+                  "type": "boolean"
+                },
+                "procMount": {
+                  "type": "string"
+                },
+                "readOnlyRootFilesystem": {
+                  "type": "boolean"
+                },
+                "runAsGroup": {
+                  "type": "integer"
+                },
+                "runAsNonRoot": {
+                  "type": "boolean"
+                },
+                "runAsUser": {
+                  "type": "integer"
+                },
+                "seLinuxOptions": {
+                  "properties": {
+                    "level": {
+                      "type": "string"
+                    },
+                    "role": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "user": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "seccompProfile": {
+                  "properties": {
+                    "localhostProfile": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "windowsOptions": {
+                  "properties": {
+                    "gmsaCredentialSpec": {
+                      "type": "string"
+                    },
+                    "gmsaCredentialSpecName": {
+                      "type": "string"
+                    },
+                    "hostProcess": {
+                      "type": "boolean"
+                    },
+                    "runAsUserName": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
             "credentialsSecret": {
               "properties": {
                 "name": {
@@ -898,6 +1011,15 @@
               "type": "object",
               "additionalProperties": false
             },
+            "initContainers": {
+              "x-kubernetes-preserve-unknown-fields": true
+            },
+            "labels": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
+            },
             "limits": {
               "additionalProperties": {
                 "anyOf": [
@@ -913,6 +1035,13 @@
               },
               "type": "object"
             },
+            "loggingArgs": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array",
+              "x-kubernetes-list-type": "atomic"
+            },
             "metricsPort": {
               "type": "integer"
             },
@@ -921,6 +1050,120 @@
                 "type": "string"
               },
               "type": "object"
+            },
+            "podSecurityContext": {
+              "properties": {
+                "appArmorProfile": {
+                  "properties": {
+                    "localhostProfile": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "fsGroup": {
+                  "type": "integer"
+                },
+                "fsGroupChangePolicy": {
+                  "type": "string"
+                },
+                "runAsGroup": {
+                  "type": "integer"
+                },
+                "runAsNonRoot": {
+                  "type": "boolean"
+                },
+                "runAsUser": {
+                  "type": "integer"
+                },
+                "seLinuxOptions": {
+                  "properties": {
+                    "level": {
+                      "type": "string"
+                    },
+                    "role": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "user": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "seccompProfile": {
+                  "properties": {
+                    "localhostProfile": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "supplementalGroups": {
+                  "items": {
+                    "type": "integer"
+                  },
+                  "type": "array",
+                  "x-kubernetes-list-type": "atomic"
+                },
+                "sysctls": {
+                  "items": {
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "value": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "value"
+                    ],
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "type": "array",
+                  "x-kubernetes-list-type": "atomic"
+                },
+                "windowsOptions": {
+                  "properties": {
+                    "gmsaCredentialSpec": {
+                      "type": "string"
+                    },
+                    "gmsaCredentialSpecName": {
+                      "type": "string"
+                    },
+                    "hostProcess": {
+                      "type": "boolean"
+                    },
+                    "runAsUserName": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
             },
             "priorityClassName": {
               "type": "string"
@@ -963,6 +1206,12 @@
               },
               "type": "object",
               "additionalProperties": false
+            },
+            "serviceAccountName": {
+              "type": "string"
+            },
+            "sidecars": {
+              "x-kubernetes-preserve-unknown-fields": true
             },
             "statefulSetUpdateStrategy": {
               "type": "string"
@@ -3620,6 +3869,119 @@
             "config": {
               "type": "string"
             },
+            "containerSecurityContext": {
+              "properties": {
+                "allowPrivilegeEscalation": {
+                  "type": "boolean"
+                },
+                "appArmorProfile": {
+                  "properties": {
+                    "localhostProfile": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "capabilities": {
+                  "properties": {
+                    "add": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array",
+                      "x-kubernetes-list-type": "atomic"
+                    },
+                    "drop": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array",
+                      "x-kubernetes-list-type": "atomic"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "privileged": {
+                  "type": "boolean"
+                },
+                "procMount": {
+                  "type": "string"
+                },
+                "readOnlyRootFilesystem": {
+                  "type": "boolean"
+                },
+                "runAsGroup": {
+                  "type": "integer"
+                },
+                "runAsNonRoot": {
+                  "type": "boolean"
+                },
+                "runAsUser": {
+                  "type": "integer"
+                },
+                "seLinuxOptions": {
+                  "properties": {
+                    "level": {
+                      "type": "string"
+                    },
+                    "role": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "user": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "seccompProfile": {
+                  "properties": {
+                    "localhostProfile": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "windowsOptions": {
+                  "properties": {
+                    "gmsaCredentialSpec": {
+                      "type": "string"
+                    },
+                    "gmsaCredentialSpecName": {
+                      "type": "string"
+                    },
+                    "hostProcess": {
+                      "type": "boolean"
+                    },
+                    "runAsUserName": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
             "env": {
               "items": {
                 "properties": {
@@ -3817,6 +4179,15 @@
               "type": "object",
               "additionalProperties": false
             },
+            "initContainers": {
+              "x-kubernetes-preserve-unknown-fields": true
+            },
+            "labels": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
+            },
             "limits": {
               "additionalProperties": {
                 "anyOf": [
@@ -3831,6 +4202,13 @@
                 "x-kubernetes-int-or-string": true
               },
               "type": "object"
+            },
+            "loggingArgs": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array",
+              "x-kubernetes-list-type": "atomic"
             },
             "maxMB": {
               "type": "integer"
@@ -3984,6 +4362,120 @@
               "type": "object",
               "additionalProperties": false
             },
+            "podSecurityContext": {
+              "properties": {
+                "appArmorProfile": {
+                  "properties": {
+                    "localhostProfile": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "fsGroup": {
+                  "type": "integer"
+                },
+                "fsGroupChangePolicy": {
+                  "type": "string"
+                },
+                "runAsGroup": {
+                  "type": "integer"
+                },
+                "runAsNonRoot": {
+                  "type": "boolean"
+                },
+                "runAsUser": {
+                  "type": "integer"
+                },
+                "seLinuxOptions": {
+                  "properties": {
+                    "level": {
+                      "type": "string"
+                    },
+                    "role": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "user": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "seccompProfile": {
+                  "properties": {
+                    "localhostProfile": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "supplementalGroups": {
+                  "items": {
+                    "type": "integer"
+                  },
+                  "type": "array",
+                  "x-kubernetes-list-type": "atomic"
+                },
+                "sysctls": {
+                  "items": {
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "value": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "value"
+                    ],
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "type": "array",
+                  "x-kubernetes-list-type": "atomic"
+                },
+                "windowsOptions": {
+                  "properties": {
+                    "gmsaCredentialSpec": {
+                      "type": "string"
+                    },
+                    "gmsaCredentialSpecName": {
+                      "type": "string"
+                    },
+                    "hostProcess": {
+                      "type": "boolean"
+                    },
+                    "runAsUserName": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
             "priorityClassName": {
               "type": "string"
             },
@@ -4102,6 +4594,12 @@
               },
               "type": "object",
               "additionalProperties": false
+            },
+            "serviceAccountName": {
+              "type": "string"
+            },
+            "sidecars": {
+              "x-kubernetes-preserve-unknown-fields": true
             },
             "statefulSetUpdateStrategy": {
               "type": "string"
@@ -5407,6 +5905,19 @@
           },
           "type": "array"
         },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "loggingArgs": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "x-kubernetes-list-type": "atomic"
+        },
         "master": {
           "properties": {
             "affinity": {
@@ -6111,6 +6622,119 @@
             "config": {
               "type": "string"
             },
+            "containerSecurityContext": {
+              "properties": {
+                "allowPrivilegeEscalation": {
+                  "type": "boolean"
+                },
+                "appArmorProfile": {
+                  "properties": {
+                    "localhostProfile": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "capabilities": {
+                  "properties": {
+                    "add": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array",
+                      "x-kubernetes-list-type": "atomic"
+                    },
+                    "drop": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array",
+                      "x-kubernetes-list-type": "atomic"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "privileged": {
+                  "type": "boolean"
+                },
+                "procMount": {
+                  "type": "string"
+                },
+                "readOnlyRootFilesystem": {
+                  "type": "boolean"
+                },
+                "runAsGroup": {
+                  "type": "integer"
+                },
+                "runAsNonRoot": {
+                  "type": "boolean"
+                },
+                "runAsUser": {
+                  "type": "integer"
+                },
+                "seLinuxOptions": {
+                  "properties": {
+                    "level": {
+                      "type": "string"
+                    },
+                    "role": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "user": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "seccompProfile": {
+                  "properties": {
+                    "localhostProfile": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "windowsOptions": {
+                  "properties": {
+                    "gmsaCredentialSpec": {
+                      "type": "string"
+                    },
+                    "gmsaCredentialSpecName": {
+                      "type": "string"
+                    },
+                    "hostProcess": {
+                      "type": "boolean"
+                    },
+                    "runAsUserName": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
             "defaultReplication": {
               "type": "string"
             },
@@ -6295,6 +6919,15 @@
               "type": "object",
               "additionalProperties": false
             },
+            "initContainers": {
+              "x-kubernetes-preserve-unknown-fields": true
+            },
+            "labels": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
+            },
             "limits": {
               "additionalProperties": {
                 "anyOf": [
@@ -6310,6 +6943,13 @@
               },
               "type": "object"
             },
+            "loggingArgs": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array",
+              "x-kubernetes-list-type": "atomic"
+            },
             "metricsPort": {
               "type": "integer"
             },
@@ -6318,6 +6958,120 @@
                 "type": "string"
               },
               "type": "object"
+            },
+            "podSecurityContext": {
+              "properties": {
+                "appArmorProfile": {
+                  "properties": {
+                    "localhostProfile": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "fsGroup": {
+                  "type": "integer"
+                },
+                "fsGroupChangePolicy": {
+                  "type": "string"
+                },
+                "runAsGroup": {
+                  "type": "integer"
+                },
+                "runAsNonRoot": {
+                  "type": "boolean"
+                },
+                "runAsUser": {
+                  "type": "integer"
+                },
+                "seLinuxOptions": {
+                  "properties": {
+                    "level": {
+                      "type": "string"
+                    },
+                    "role": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "user": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "seccompProfile": {
+                  "properties": {
+                    "localhostProfile": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "supplementalGroups": {
+                  "items": {
+                    "type": "integer"
+                  },
+                  "type": "array",
+                  "x-kubernetes-list-type": "atomic"
+                },
+                "sysctls": {
+                  "items": {
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "value": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "value"
+                    ],
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "type": "array",
+                  "x-kubernetes-list-type": "atomic"
+                },
+                "windowsOptions": {
+                  "properties": {
+                    "gmsaCredentialSpec": {
+                      "type": "string"
+                    },
+                    "gmsaCredentialSpecName": {
+                      "type": "string"
+                    },
+                    "hostProcess": {
+                      "type": "boolean"
+                    },
+                    "runAsUserName": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
             },
             "priorityClassName": {
               "type": "string"
@@ -6367,6 +7121,12 @@
               },
               "type": "object",
               "additionalProperties": false
+            },
+            "serviceAccountName": {
+              "type": "string"
+            },
+            "sidecars": {
+              "x-kubernetes-preserve-unknown-fields": true
             },
             "statefulSetUpdateStrategy": {
               "type": "string"
@@ -8382,6 +9142,119 @@
               "x-kubernetes-map-type": "atomic",
               "additionalProperties": false
             },
+            "containerSecurityContext": {
+              "properties": {
+                "allowPrivilegeEscalation": {
+                  "type": "boolean"
+                },
+                "appArmorProfile": {
+                  "properties": {
+                    "localhostProfile": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "capabilities": {
+                  "properties": {
+                    "add": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array",
+                      "x-kubernetes-list-type": "atomic"
+                    },
+                    "drop": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array",
+                      "x-kubernetes-list-type": "atomic"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "privileged": {
+                  "type": "boolean"
+                },
+                "procMount": {
+                  "type": "string"
+                },
+                "readOnlyRootFilesystem": {
+                  "type": "boolean"
+                },
+                "runAsGroup": {
+                  "type": "integer"
+                },
+                "runAsNonRoot": {
+                  "type": "boolean"
+                },
+                "runAsUser": {
+                  "type": "integer"
+                },
+                "seLinuxOptions": {
+                  "properties": {
+                    "level": {
+                      "type": "string"
+                    },
+                    "role": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "user": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "seccompProfile": {
+                  "properties": {
+                    "localhostProfile": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "windowsOptions": {
+                  "properties": {
+                    "gmsaCredentialSpec": {
+                      "type": "string"
+                    },
+                    "gmsaCredentialSpecName": {
+                      "type": "string"
+                    },
+                    "hostProcess": {
+                      "type": "boolean"
+                    },
+                    "runAsUserName": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
             "domainName": {
               "type": "string"
             },
@@ -8567,6 +9440,15 @@
               "type": "object",
               "additionalProperties": false
             },
+            "initContainers": {
+              "x-kubernetes-preserve-unknown-fields": true
+            },
+            "labels": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
+            },
             "limits": {
               "additionalProperties": {
                 "anyOf": [
@@ -8582,6 +9464,13 @@
               },
               "type": "object"
             },
+            "loggingArgs": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array",
+              "x-kubernetes-list-type": "atomic"
+            },
             "metricsPort": {
               "type": "integer"
             },
@@ -8590,6 +9479,120 @@
                 "type": "string"
               },
               "type": "object"
+            },
+            "podSecurityContext": {
+              "properties": {
+                "appArmorProfile": {
+                  "properties": {
+                    "localhostProfile": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "fsGroup": {
+                  "type": "integer"
+                },
+                "fsGroupChangePolicy": {
+                  "type": "string"
+                },
+                "runAsGroup": {
+                  "type": "integer"
+                },
+                "runAsNonRoot": {
+                  "type": "boolean"
+                },
+                "runAsUser": {
+                  "type": "integer"
+                },
+                "seLinuxOptions": {
+                  "properties": {
+                    "level": {
+                      "type": "string"
+                    },
+                    "role": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "user": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "seccompProfile": {
+                  "properties": {
+                    "localhostProfile": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "supplementalGroups": {
+                  "items": {
+                    "type": "integer"
+                  },
+                  "type": "array",
+                  "x-kubernetes-list-type": "atomic"
+                },
+                "sysctls": {
+                  "items": {
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "value": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "value"
+                    ],
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "type": "array",
+                  "x-kubernetes-list-type": "atomic"
+                },
+                "windowsOptions": {
+                  "properties": {
+                    "gmsaCredentialSpec": {
+                      "type": "string"
+                    },
+                    "gmsaCredentialSpecName": {
+                      "type": "string"
+                    },
+                    "hostProcess": {
+                      "type": "boolean"
+                    },
+                    "runAsUserName": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
             },
             "port": {
               "type": "integer"
@@ -8640,6 +9643,12 @@
               },
               "type": "object",
               "additionalProperties": false
+            },
+            "serviceAccountName": {
+              "type": "string"
+            },
+            "sidecars": {
+              "x-kubernetes-preserve-unknown-fields": true
             },
             "statefulSetUpdateStrategy": {
               "type": "string"
@@ -10623,6 +11632,119 @@
               ],
               "x-kubernetes-list-type": "map"
             },
+            "containerSecurityContext": {
+              "properties": {
+                "allowPrivilegeEscalation": {
+                  "type": "boolean"
+                },
+                "appArmorProfile": {
+                  "properties": {
+                    "localhostProfile": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "capabilities": {
+                  "properties": {
+                    "add": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array",
+                      "x-kubernetes-list-type": "atomic"
+                    },
+                    "drop": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array",
+                      "x-kubernetes-list-type": "atomic"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "privileged": {
+                  "type": "boolean"
+                },
+                "procMount": {
+                  "type": "string"
+                },
+                "readOnlyRootFilesystem": {
+                  "type": "boolean"
+                },
+                "runAsGroup": {
+                  "type": "integer"
+                },
+                "runAsNonRoot": {
+                  "type": "boolean"
+                },
+                "runAsUser": {
+                  "type": "integer"
+                },
+                "seLinuxOptions": {
+                  "properties": {
+                    "level": {
+                      "type": "string"
+                    },
+                    "role": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "user": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "seccompProfile": {
+                  "properties": {
+                    "localhostProfile": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "windowsOptions": {
+                  "properties": {
+                    "gmsaCredentialSpec": {
+                      "type": "string"
+                    },
+                    "gmsaCredentialSpecName": {
+                      "type": "string"
+                    },
+                    "hostProcess": {
+                      "type": "boolean"
+                    },
+                    "runAsUserName": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
             "env": {
               "items": {
                 "properties": {
@@ -10812,6 +11934,15 @@
               "type": "object",
               "additionalProperties": false
             },
+            "initContainers": {
+              "x-kubernetes-preserve-unknown-fields": true
+            },
+            "labels": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
+            },
             "limits": {
               "additionalProperties": {
                 "anyOf": [
@@ -10827,6 +11958,13 @@
               },
               "type": "object"
             },
+            "loggingArgs": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array",
+              "x-kubernetes-list-type": "atomic"
+            },
             "maxAuthTries": {
               "minimum": 1,
               "type": "integer"
@@ -10839,6 +11977,120 @@
                 "type": "string"
               },
               "type": "object"
+            },
+            "podSecurityContext": {
+              "properties": {
+                "appArmorProfile": {
+                  "properties": {
+                    "localhostProfile": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "fsGroup": {
+                  "type": "integer"
+                },
+                "fsGroupChangePolicy": {
+                  "type": "string"
+                },
+                "runAsGroup": {
+                  "type": "integer"
+                },
+                "runAsNonRoot": {
+                  "type": "boolean"
+                },
+                "runAsUser": {
+                  "type": "integer"
+                },
+                "seLinuxOptions": {
+                  "properties": {
+                    "level": {
+                      "type": "string"
+                    },
+                    "role": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "user": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "seccompProfile": {
+                  "properties": {
+                    "localhostProfile": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "supplementalGroups": {
+                  "items": {
+                    "type": "integer"
+                  },
+                  "type": "array",
+                  "x-kubernetes-list-type": "atomic"
+                },
+                "sysctls": {
+                  "items": {
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "value": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "value"
+                    ],
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "type": "array",
+                  "x-kubernetes-list-type": "atomic"
+                },
+                "windowsOptions": {
+                  "properties": {
+                    "gmsaCredentialSpec": {
+                      "type": "string"
+                    },
+                    "gmsaCredentialSpecName": {
+                      "type": "string"
+                    },
+                    "hostProcess": {
+                      "type": "boolean"
+                    },
+                    "runAsUserName": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
             },
             "port": {
               "maximum": 65535,
@@ -10891,6 +12143,12 @@
               },
               "type": "object",
               "additionalProperties": false
+            },
+            "serviceAccountName": {
+              "type": "string"
+            },
+            "sidecars": {
+              "x-kubernetes-preserve-unknown-fields": true
             },
             "statefulSetUpdateStrategy": {
               "type": "string"
@@ -12954,6 +14212,119 @@
             "compactionMBps": {
               "type": "integer"
             },
+            "containerSecurityContext": {
+              "properties": {
+                "allowPrivilegeEscalation": {
+                  "type": "boolean"
+                },
+                "appArmorProfile": {
+                  "properties": {
+                    "localhostProfile": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "capabilities": {
+                  "properties": {
+                    "add": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array",
+                      "x-kubernetes-list-type": "atomic"
+                    },
+                    "drop": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array",
+                      "x-kubernetes-list-type": "atomic"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "privileged": {
+                  "type": "boolean"
+                },
+                "procMount": {
+                  "type": "string"
+                },
+                "readOnlyRootFilesystem": {
+                  "type": "boolean"
+                },
+                "runAsGroup": {
+                  "type": "integer"
+                },
+                "runAsNonRoot": {
+                  "type": "boolean"
+                },
+                "runAsUser": {
+                  "type": "integer"
+                },
+                "seLinuxOptions": {
+                  "properties": {
+                    "level": {
+                      "type": "string"
+                    },
+                    "role": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "user": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "seccompProfile": {
+                  "properties": {
+                    "localhostProfile": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "windowsOptions": {
+                  "properties": {
+                    "gmsaCredentialSpec": {
+                      "type": "string"
+                    },
+                    "gmsaCredentialSpecName": {
+                      "type": "string"
+                    },
+                    "hostProcess": {
+                      "type": "boolean"
+                    },
+                    "runAsUserName": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
             "dataCenter": {
               "type": "string"
             },
@@ -13144,6 +14515,15 @@
               "type": "object",
               "additionalProperties": false
             },
+            "initContainers": {
+              "x-kubernetes-preserve-unknown-fields": true
+            },
+            "labels": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
+            },
             "limits": {
               "additionalProperties": {
                 "anyOf": [
@@ -13159,6 +14539,13 @@
               },
               "type": "object"
             },
+            "loggingArgs": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array",
+              "x-kubernetes-list-type": "atomic"
+            },
             "maxVolumeCounts": {
               "type": "integer"
             },
@@ -13173,6 +14560,120 @@
                 "type": "string"
               },
               "type": "object"
+            },
+            "podSecurityContext": {
+              "properties": {
+                "appArmorProfile": {
+                  "properties": {
+                    "localhostProfile": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "fsGroup": {
+                  "type": "integer"
+                },
+                "fsGroupChangePolicy": {
+                  "type": "string"
+                },
+                "runAsGroup": {
+                  "type": "integer"
+                },
+                "runAsNonRoot": {
+                  "type": "boolean"
+                },
+                "runAsUser": {
+                  "type": "integer"
+                },
+                "seLinuxOptions": {
+                  "properties": {
+                    "level": {
+                      "type": "string"
+                    },
+                    "role": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "user": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "seccompProfile": {
+                  "properties": {
+                    "localhostProfile": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "supplementalGroups": {
+                  "items": {
+                    "type": "integer"
+                  },
+                  "type": "array",
+                  "x-kubernetes-list-type": "atomic"
+                },
+                "sysctls": {
+                  "items": {
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "value": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "value"
+                    ],
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "type": "array",
+                  "x-kubernetes-list-type": "atomic"
+                },
+                "windowsOptions": {
+                  "properties": {
+                    "gmsaCredentialSpec": {
+                      "type": "string"
+                    },
+                    "gmsaCredentialSpecName": {
+                      "type": "string"
+                    },
+                    "hostProcess": {
+                      "type": "boolean"
+                    },
+                    "runAsUserName": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
             },
             "priorityClassName": {
               "type": "string"
@@ -13223,11 +14724,57 @@
               "type": "object",
               "additionalProperties": false
             },
+            "serviceAccountName": {
+              "type": "string"
+            },
+            "sidecars": {
+              "x-kubernetes-preserve-unknown-fields": true
+            },
             "statefulSetUpdateStrategy": {
               "type": "string"
             },
             "storageClassName": {
               "type": "string"
+            },
+            "storageSelector": {
+              "properties": {
+                "matchExpressions": {
+                  "items": {
+                    "properties": {
+                      "key": {
+                        "type": "string"
+                      },
+                      "operator": {
+                        "type": "string"
+                      },
+                      "values": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array",
+                        "x-kubernetes-list-type": "atomic"
+                      }
+                    },
+                    "required": [
+                      "key",
+                      "operator"
+                    ],
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "type": "array",
+                  "x-kubernetes-list-type": "atomic"
+                },
+                "matchLabels": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object",
+              "x-kubernetes-map-type": "atomic",
+              "additionalProperties": false
             },
             "terminationGracePeriodSeconds": {
               "type": "integer"
@@ -15209,6 +16756,119 @@
               "compactionMBps": {
                 "type": "integer"
               },
+              "containerSecurityContext": {
+                "properties": {
+                  "allowPrivilegeEscalation": {
+                    "type": "boolean"
+                  },
+                  "appArmorProfile": {
+                    "properties": {
+                      "localhostProfile": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "type"
+                    ],
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "capabilities": {
+                    "properties": {
+                      "add": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array",
+                        "x-kubernetes-list-type": "atomic"
+                      },
+                      "drop": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array",
+                        "x-kubernetes-list-type": "atomic"
+                      }
+                    },
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "privileged": {
+                    "type": "boolean"
+                  },
+                  "procMount": {
+                    "type": "string"
+                  },
+                  "readOnlyRootFilesystem": {
+                    "type": "boolean"
+                  },
+                  "runAsGroup": {
+                    "type": "integer"
+                  },
+                  "runAsNonRoot": {
+                    "type": "boolean"
+                  },
+                  "runAsUser": {
+                    "type": "integer"
+                  },
+                  "seLinuxOptions": {
+                    "properties": {
+                      "level": {
+                        "type": "string"
+                      },
+                      "role": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      },
+                      "user": {
+                        "type": "string"
+                      }
+                    },
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "seccompProfile": {
+                    "properties": {
+                      "localhostProfile": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "type"
+                    ],
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "windowsOptions": {
+                    "properties": {
+                      "gmsaCredentialSpec": {
+                        "type": "string"
+                      },
+                      "gmsaCredentialSpecName": {
+                        "type": "string"
+                      },
+                      "hostProcess": {
+                        "type": "boolean"
+                      },
+                      "runAsUserName": {
+                        "type": "string"
+                      }
+                    },
+                    "type": "object",
+                    "additionalProperties": false
+                  }
+                },
+                "type": "object",
+                "additionalProperties": false
+              },
               "dataCenter": {
                 "type": "string"
               },
@@ -15356,6 +17016,15 @@
                 },
                 "type": "array"
               },
+              "initContainers": {
+                "x-kubernetes-preserve-unknown-fields": true
+              },
+              "labels": {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
               "limits": {
                 "additionalProperties": {
                   "anyOf": [
@@ -15371,6 +17040,13 @@
                 },
                 "type": "object"
               },
+              "loggingArgs": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array",
+                "x-kubernetes-list-type": "atomic"
+              },
               "maxVolumeCounts": {
                 "type": "integer"
               },
@@ -15385,6 +17061,120 @@
                   "type": "string"
                 },
                 "type": "object"
+              },
+              "podSecurityContext": {
+                "properties": {
+                  "appArmorProfile": {
+                    "properties": {
+                      "localhostProfile": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "type"
+                    ],
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "fsGroup": {
+                    "type": "integer"
+                  },
+                  "fsGroupChangePolicy": {
+                    "type": "string"
+                  },
+                  "runAsGroup": {
+                    "type": "integer"
+                  },
+                  "runAsNonRoot": {
+                    "type": "boolean"
+                  },
+                  "runAsUser": {
+                    "type": "integer"
+                  },
+                  "seLinuxOptions": {
+                    "properties": {
+                      "level": {
+                        "type": "string"
+                      },
+                      "role": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      },
+                      "user": {
+                        "type": "string"
+                      }
+                    },
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "seccompProfile": {
+                    "properties": {
+                      "localhostProfile": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "type"
+                    ],
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "supplementalGroups": {
+                    "items": {
+                      "type": "integer"
+                    },
+                    "type": "array",
+                    "x-kubernetes-list-type": "atomic"
+                  },
+                  "sysctls": {
+                    "items": {
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "value"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "type": "array",
+                    "x-kubernetes-list-type": "atomic"
+                  },
+                  "windowsOptions": {
+                    "properties": {
+                      "gmsaCredentialSpec": {
+                        "type": "string"
+                      },
+                      "gmsaCredentialSpecName": {
+                        "type": "string"
+                      },
+                      "hostProcess": {
+                        "type": "boolean"
+                      },
+                      "runAsUserName": {
+                        "type": "string"
+                      }
+                    },
+                    "type": "object",
+                    "additionalProperties": false
+                  }
+                },
+                "type": "object",
+                "additionalProperties": false
               },
               "priorityClassName": {
                 "type": "string"
@@ -15435,11 +17225,57 @@
                 "type": "object",
                 "additionalProperties": false
               },
+              "serviceAccountName": {
+                "type": "string"
+              },
+              "sidecars": {
+                "x-kubernetes-preserve-unknown-fields": true
+              },
               "statefulSetUpdateStrategy": {
                 "type": "string"
               },
               "storageClassName": {
                 "type": "string"
+              },
+              "storageSelector": {
+                "properties": {
+                  "matchExpressions": {
+                    "items": {
+                      "properties": {
+                        "key": {
+                          "type": "string"
+                        },
+                        "operator": {
+                          "type": "string"
+                        },
+                        "values": {
+                          "items": {
+                            "type": "string"
+                          },
+                          "type": "array",
+                          "x-kubernetes-list-type": "atomic"
+                        }
+                      },
+                      "required": [
+                        "key",
+                        "operator"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "type": "array",
+                    "x-kubernetes-list-type": "atomic"
+                  },
+                  "matchLabels": {
+                    "additionalProperties": {
+                      "type": "string"
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object",
+                "x-kubernetes-map-type": "atomic",
+                "additionalProperties": false
               },
               "terminationGracePeriodSeconds": {
                 "type": "integer"
@@ -17418,6 +19254,119 @@
               ],
               "x-kubernetes-list-type": "map"
             },
+            "containerSecurityContext": {
+              "properties": {
+                "allowPrivilegeEscalation": {
+                  "type": "boolean"
+                },
+                "appArmorProfile": {
+                  "properties": {
+                    "localhostProfile": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "capabilities": {
+                  "properties": {
+                    "add": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array",
+                      "x-kubernetes-list-type": "atomic"
+                    },
+                    "drop": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array",
+                      "x-kubernetes-list-type": "atomic"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "privileged": {
+                  "type": "boolean"
+                },
+                "procMount": {
+                  "type": "string"
+                },
+                "readOnlyRootFilesystem": {
+                  "type": "boolean"
+                },
+                "runAsGroup": {
+                  "type": "integer"
+                },
+                "runAsNonRoot": {
+                  "type": "boolean"
+                },
+                "runAsUser": {
+                  "type": "integer"
+                },
+                "seLinuxOptions": {
+                  "properties": {
+                    "level": {
+                      "type": "string"
+                    },
+                    "role": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "user": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "seccompProfile": {
+                  "properties": {
+                    "localhostProfile": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "windowsOptions": {
+                  "properties": {
+                    "gmsaCredentialSpec": {
+                      "type": "string"
+                    },
+                    "gmsaCredentialSpecName": {
+                      "type": "string"
+                    },
+                    "hostProcess": {
+                      "type": "boolean"
+                    },
+                    "runAsUserName": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
             "env": {
               "items": {
                 "properties": {
@@ -17553,9 +19502,18 @@
               },
               "type": "array"
             },
+            "initContainers": {
+              "x-kubernetes-preserve-unknown-fields": true
+            },
             "jobType": {
               "default": "all",
               "type": "string"
+            },
+            "labels": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
             },
             "limits": {
               "additionalProperties": {
@@ -17571,6 +19529,13 @@
                 "x-kubernetes-int-or-string": true
               },
               "type": "object"
+            },
+            "loggingArgs": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array",
+              "x-kubernetes-list-type": "atomic"
             },
             "maxDetect": {
               "minimum": 1,
@@ -17729,6 +19694,120 @@
               "type": "object",
               "additionalProperties": false
             },
+            "podSecurityContext": {
+              "properties": {
+                "appArmorProfile": {
+                  "properties": {
+                    "localhostProfile": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "fsGroup": {
+                  "type": "integer"
+                },
+                "fsGroupChangePolicy": {
+                  "type": "string"
+                },
+                "runAsGroup": {
+                  "type": "integer"
+                },
+                "runAsNonRoot": {
+                  "type": "boolean"
+                },
+                "runAsUser": {
+                  "type": "integer"
+                },
+                "seLinuxOptions": {
+                  "properties": {
+                    "level": {
+                      "type": "string"
+                    },
+                    "role": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "user": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "seccompProfile": {
+                  "properties": {
+                    "localhostProfile": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "supplementalGroups": {
+                  "items": {
+                    "type": "integer"
+                  },
+                  "type": "array",
+                  "x-kubernetes-list-type": "atomic"
+                },
+                "sysctls": {
+                  "items": {
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "value": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "value"
+                    ],
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "type": "array",
+                  "x-kubernetes-list-type": "atomic"
+                },
+                "windowsOptions": {
+                  "properties": {
+                    "gmsaCredentialSpec": {
+                      "type": "string"
+                    },
+                    "gmsaCredentialSpecName": {
+                      "type": "string"
+                    },
+                    "hostProcess": {
+                      "type": "boolean"
+                    },
+                    "runAsUserName": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
             "priorityClassName": {
               "type": "string"
             },
@@ -17754,6 +19833,12 @@
             },
             "schedulerName": {
               "type": "string"
+            },
+            "serviceAccountName": {
+              "type": "string"
+            },
+            "sidecars": {
+              "x-kubernetes-preserve-unknown-fields": true
             },
             "statefulSetUpdateStrategy": {
               "type": "string"
