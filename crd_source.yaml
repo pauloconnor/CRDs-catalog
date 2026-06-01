@@ -738,7 +738,7 @@ sources:
 
   # Issue #713 - openstack.k-orc.cloud CRDs
   - url: "https://github.com/k-orc/openstack-resource-controller"
-    tag: ""
+    tag: "v2.5.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/k-orc/openstack-resource-controller/releases"
 

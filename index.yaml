@@ -16479,6 +16479,103 @@ opensearchservice.services.k8s.aws:
     filename: opensearchservice.services.k8s.aws/domain_v1alpha1.json
     kind: Domain
     name: domain_v1alpha1
+openstack.k-orc.cloud:
+  - apiVersion: openstack.k-orc.cloud/v1alpha1
+    filename: openstack.k-orc.cloud/image_v1alpha1.json
+    kind: Image
+    name: image_v1alpha1
+  - apiVersion: openstack.k-orc.cloud/v1alpha1
+    filename: openstack.k-orc.cloud/keypair_v1alpha1.json
+    kind: KeyPair
+    name: keypair_v1alpha1
+  - apiVersion: openstack.k-orc.cloud/v1alpha1
+    filename: openstack.k-orc.cloud/endpoint_v1alpha1.json
+    kind: Endpoint
+    name: endpoint_v1alpha1
+  - apiVersion: openstack.k-orc.cloud/v1alpha1
+    filename: openstack.k-orc.cloud/volume_v1alpha1.json
+    kind: Volume
+    name: volume_v1alpha1
+  - apiVersion: openstack.k-orc.cloud/v1alpha1
+    filename: openstack.k-orc.cloud/trunk_v1alpha1.json
+    kind: Trunk
+    name: trunk_v1alpha1
+  - apiVersion: openstack.k-orc.cloud/v1alpha1
+    filename: openstack.k-orc.cloud/applicationcredential_v1alpha1.json
+    kind: ApplicationCredential
+    name: applicationcredential_v1alpha1
+  - apiVersion: openstack.k-orc.cloud/v1alpha1
+    filename: openstack.k-orc.cloud/group_v1alpha1.json
+    kind: Group
+    name: group_v1alpha1
+  - apiVersion: openstack.k-orc.cloud/v1alpha1
+    filename: openstack.k-orc.cloud/port_v1alpha1.json
+    kind: Port
+    name: port_v1alpha1
+  - apiVersion: openstack.k-orc.cloud/v1alpha1
+    filename: openstack.k-orc.cloud/role_v1alpha1.json
+    kind: Role
+    name: role_v1alpha1
+  - apiVersion: openstack.k-orc.cloud/v1alpha1
+    filename: openstack.k-orc.cloud/project_v1alpha1.json
+    kind: Project
+    name: project_v1alpha1
+  - apiVersion: openstack.k-orc.cloud/v1alpha1
+    filename: openstack.k-orc.cloud/floatingip_v1alpha1.json
+    kind: FloatingIP
+    name: floatingip_v1alpha1
+  - apiVersion: openstack.k-orc.cloud/v1alpha1
+    filename: openstack.k-orc.cloud/server_v1alpha1.json
+    kind: Server
+    name: server_v1alpha1
+  - apiVersion: openstack.k-orc.cloud/v1alpha1
+    filename: openstack.k-orc.cloud/servergroup_v1alpha1.json
+    kind: ServerGroup
+    name: servergroup_v1alpha1
+  - apiVersion: openstack.k-orc.cloud/v1alpha1
+    filename: openstack.k-orc.cloud/subnet_v1alpha1.json
+    kind: Subnet
+    name: subnet_v1alpha1
+  - apiVersion: openstack.k-orc.cloud/v1alpha1
+    filename: openstack.k-orc.cloud/addressscope_v1alpha1.json
+    kind: AddressScope
+    name: addressscope_v1alpha1
+  - apiVersion: openstack.k-orc.cloud/v1alpha1
+    filename: openstack.k-orc.cloud/router_v1alpha1.json
+    kind: Router
+    name: router_v1alpha1
+  - apiVersion: openstack.k-orc.cloud/v1alpha1
+    filename: openstack.k-orc.cloud/network_v1alpha1.json
+    kind: Network
+    name: network_v1alpha1
+  - apiVersion: openstack.k-orc.cloud/v1alpha1
+    filename: openstack.k-orc.cloud/routerinterface_v1alpha1.json
+    kind: RouterInterface
+    name: routerinterface_v1alpha1
+  - apiVersion: openstack.k-orc.cloud/v1alpha1
+    filename: openstack.k-orc.cloud/flavor_v1alpha1.json
+    kind: Flavor
+    name: flavor_v1alpha1
+  - apiVersion: openstack.k-orc.cloud/v1alpha1
+    filename: openstack.k-orc.cloud/user_v1alpha1.json
+    kind: User
+    name: user_v1alpha1
+  - apiVersion: openstack.k-orc.cloud/v1alpha1
+    filename: openstack.k-orc.cloud/securitygroup_v1alpha1.json
+    kind: SecurityGroup
+    name: securitygroup_v1alpha1
+  - apiVersion: openstack.k-orc.cloud/v1alpha1
+    filename: openstack.k-orc.cloud/domain_v1alpha1.json
+    kind: Domain
+    name: domain_v1alpha1
+  - apiVersion: openstack.k-orc.cloud/v1alpha1
+    filename: openstack.k-orc.cloud/service_v1alpha1.json
+    kind: Service
+    name: service_v1alpha1
+  - apiVersion: openstack.k-orc.cloud/v1alpha1
+    filename: openstack.k-orc.cloud/volumetype_v1alpha1.json
+    kind: VolumeType
+    name: volumetype_v1alpha1
 opentelemetry.io:
   - apiVersion: opentelemetry.io/v1alpha1
     filename: opentelemetry.io/opampbridge_v1alpha1.json
