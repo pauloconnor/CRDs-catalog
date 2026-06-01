@@ -864,7 +864,7 @@ sources:
     changelog: "https://github.com/kubernetes-sigs/gateway-api/releases"
 
   - url: "https://github.com/kubernetes-sigs/karpenter"
-    tag: "v1.12.0"
+    tag: "v1.12.1"
     repo_path: "pkg/apis/crds"
     changelog: "https://github.com/kubernetes-sigs/karpenter/releases"
 
