@@ -255,7 +255,7 @@ sources:
     changelog: "https://github.com/aws-controllers-k8s/rds-controller/releases"
 
   - url: "https://github.com/aws-controllers-k8s/route53-controller"
-    tag: "v1.3.2"
+    tag: "v1.4.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/aws-controllers-k8s/route53-controller/releases"
 
