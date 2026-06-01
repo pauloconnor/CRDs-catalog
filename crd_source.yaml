@@ -120,7 +120,7 @@ sources:
     changelog: "https://github.com/aws-controllers-k8s/apigatewayv2-controller/releases"
 
   - url: "https://github.com/aws-controllers-k8s/applicationautoscaling-controller"
-    tag: "v1.2.3"
+    tag: "v1.3.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/aws-controllers-k8s/applicationautoscaling-controller/releases"
 
