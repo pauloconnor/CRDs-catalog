@@ -1164,7 +1164,7 @@ sources:
     changelog: "https://github.com/rancher/fleet/releases"
 
   - url: "https://github.com/rancher/rancher"
-    tag: "v2.14.0"
+    tag: "v2.14.2"
     repo_path: "pkg/crds/yaml/generated"
     changelog: "https://github.com/rancher/rancher/releases"
 
