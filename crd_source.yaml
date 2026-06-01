@@ -525,7 +525,7 @@ sources:
     changelog: "https://github.com/emissary-ingress/emissary/releases"
 
   - url: "https://github.com/emqx/emqx-operator"
-    tag: "2.3.0"
+    tag: "2.3.1"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/emqx/emqx-operator/releases"
 
