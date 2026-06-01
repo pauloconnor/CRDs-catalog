@@ -1180,7 +1180,7 @@ sources:
     changelog: "https://github.com/redhat-cop/vault-config-operator/releases"
 
   - url: "https://github.com/RedisLabs/redis-enterprise-k8s-docs"
-    tag: "v8.0.18-11"
+    tag: "v8.0.20-21"
     repo_path: "crds"
     changelog: "https://github.com/RedisLabs/redis-enterprise-k8s-docs/releases"
 
