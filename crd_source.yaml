@@ -814,7 +814,7 @@ sources:
     changelog: "https://github.com/kserve/kserve/releases"
 
   - url: "https://github.com/kube-logging/logging-operator"
-    tag: "6.5.0"
+    tag: "6.5.2"
     repo_path: "charts/logging-operator/crds"
     changelog: "https://github.com/kube-logging/logging-operator/releases"
 
