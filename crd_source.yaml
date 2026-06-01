@@ -135,7 +135,7 @@ sources:
     changelog: "https://github.com/aws-controllers-k8s/cloudtrail-controller/releases"
 
   - url: "https://github.com/aws-controllers-k8s/cloudwatch-controller"
-    tag: "v1.4.3"
+    tag: "v1.5.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/aws-controllers-k8s/cloudwatch-controller/releases"
 
