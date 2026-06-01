@@ -10232,6 +10232,19 @@ frontendobservability.grafana.o.crossplane.io:
     filename: frontendobservability.grafana.o.crossplane.io/app_v1alpha1.json
     kind: App
     name: app_v1alpha1
+frp.zufardhiyaulhaq.com:
+  - apiVersion: frp.zufardhiyaulhaq.com/v1alpha1
+    filename: frp.zufardhiyaulhaq.com/upstream_v1alpha1.json
+    kind: Upstream
+    name: upstream_v1alpha1
+  - apiVersion: frp.zufardhiyaulhaq.com/v1alpha1
+    filename: frp.zufardhiyaulhaq.com/client_v1alpha1.json
+    kind: Client
+    name: client_v1alpha1
+  - apiVersion: frp.zufardhiyaulhaq.com/v1alpha1
+    filename: frp.zufardhiyaulhaq.com/visitor_v1alpha1.json
+    kind: Visitor
+    name: visitor_v1alpha1
 gameservices.cnrm.cloud.google.com:
   - apiVersion: gameservices.cnrm.cloud.google.com/v1beta1
     filename: gameservices.cnrm.cloud.google.com/gameservicesrealm_v1beta1.json
