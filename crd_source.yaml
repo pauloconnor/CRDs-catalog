@@ -1331,7 +1331,7 @@ sources:
     changelog: "https://github.com/vmware-tanzu/pinniped/releases"
 
   - url: "https://github.com/vmware-tanzu/velero"
-    tag: "v1.18.0"
+    tag: "v1.18.1"
     repo_path: "config/crd/v1/bases"
     changelog: "https://github.com/vmware-tanzu/velero/releases"
 
