@@ -601,7 +601,7 @@ sources:
     changelog: "https://github.com/fluxcd/image-automation-controller/releases"
 
   - url: "https://github.com/fluxcd/kustomize-controller"
-    tag: "v1.8.4"
+    tag: "v1.8.5"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/fluxcd/kustomize-controller/releases"
 
