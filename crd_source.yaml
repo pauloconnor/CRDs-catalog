@@ -676,7 +676,7 @@ sources:
     changelog: "https://github.com/grafana/rollout-operator/releases"
 
   - url: "https://github.com/grafana/tempo-operator"
-    tag: "v0.20.0"
+    tag: "v0.21.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/grafana/tempo-operator/releases"
 
