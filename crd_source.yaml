@@ -783,7 +783,7 @@ sources:
     changelog: "https://github.com/kgateway-dev/kgateway/releases"
 
   - url: "https://github.com/kiali/kiali-operator"
-    tag: "v2.25.0"
+    tag: "v2.26.0"
     repo_path: "crd-docs/crd"
     changelog: "https://github.com/kiali/kiali-operator/releases"
 
