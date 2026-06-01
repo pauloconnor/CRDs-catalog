@@ -454,7 +454,7 @@ sources:
     changelog: "https://github.com/coroot/coroot-operator/releases"
 
   - url: "https://github.com/crossplane/crossplane"
-    tag: "v2.2.1"
+    tag: "v2.3.1"
     repo_path: "cluster/crds"
     changelog: "https://github.com/crossplane/crossplane/releases"
 
