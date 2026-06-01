@@ -205,7 +205,7 @@ sources:
     changelog: "https://github.com/aws-controllers-k8s/kms-controller/releases"
 
   - url: "https://github.com/aws-controllers-k8s/lambda-controller"
-    tag: "v1.12.2"
+    tag: "v1.13.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/aws-controllers-k8s/lambda-controller/releases"
 
