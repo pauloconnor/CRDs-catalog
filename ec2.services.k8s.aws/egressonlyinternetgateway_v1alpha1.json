@@ -1,5 +1,5 @@
 {
-  "description": "InternetGateway is the Schema for the InternetGateways API",
+  "description": "EgressOnlyInternetGateway is the Schema for the EgressOnlyInternetGateways API",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -13,37 +13,8 @@
       "type": "object"
     },
     "spec": {
-      "description": "InternetGatewaySpec defines the desired state of InternetGateway.\n\nDescribes an internet gateway.",
+      "description": "EgressOnlyInternetGatewaySpec defines the desired state of EgressOnlyInternetGateway.\n\nDescribes an egress-only internet gateway.",
       "properties": {
-        "routeTableRefs": {
-          "items": {
-            "description": "AWSResourceReferenceWrapper provides a wrapper around *AWSResourceReference\ntype to provide more user friendly syntax for references using 'from' field\nEx:\nAPIIDRef:\n\n\tfrom:\n\t  name: my-api",
-            "properties": {
-              "from": {
-                "description": "AWSResourceReference provides all the values necessary to reference another\nk8s resource for finding the identifier(Id/ARN/Name)",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "namespace": {
-                    "type": "string"
-                  }
-                },
-                "type": "object",
-                "additionalProperties": false
-              }
-            },
-            "type": "object",
-            "additionalProperties": false
-          },
-          "type": "array"
-        },
-        "routeTables": {
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
         "tags": {
           "description": "The tags. The value parameter is required, but if you don't want the tag\nto have a value, specify the parameter with no value, and we set the value\nto an empty string.",
           "items": {
@@ -61,9 +32,15 @@
           },
           "type": "array"
         },
-        "vpc": {
-          "description": "The ID of the VPC.",
-          "type": "string"
+        "vpcID": {
+          "description": "The ID of the VPC for which to create the egress-only internet gateway.",
+          "type": "string",
+          "x-kubernetes-validations": [
+            {
+              "message": "Value is immutable once set",
+              "rule": "self == oldSelf"
+            }
+          ]
         },
         "vpcRef": {
           "description": "AWSResourceReferenceWrapper provides a wrapper around *AWSResourceReference\ntype to provide more user friendly syntax for references using 'from' field\nEx:\nAPIIDRef:\n\n\tfrom:\n\t  name: my-api",
@@ -90,7 +67,7 @@
       "additionalProperties": false
     },
     "status": {
-      "description": "InternetGatewayStatus defines the observed state of InternetGateway",
+      "description": "EgressOnlyInternetGatewayStatus defines the observed state of EgressOnlyInternetGateway",
       "properties": {
         "ackResourceMetadata": {
           "description": "All CRs managed by ACK have a common `Status.ACKResourceMetadata` member\nthat is used to contain resource sync state, account ownership,\nconstructed ARN for the resource",
@@ -120,7 +97,7 @@
           "additionalProperties": false
         },
         "attachments": {
-          "description": "Any VPCs attached to the internet gateway.",
+          "description": "Information about the attachment of the egress-only internet gateway.",
           "items": {
             "description": "Describes the attachment of a VPC to an internet gateway or an egress-only\ninternet gateway.",
             "properties": {
@@ -172,12 +149,8 @@
           },
           "type": "array"
         },
-        "internetGatewayID": {
-          "description": "The ID of the internet gateway.",
-          "type": "string"
-        },
-        "ownerID": {
-          "description": "The ID of the Amazon Web Services account that owns the internet gateway.",
+        "id": {
+          "description": "The ID of the egress-only internet gateway.",
           "type": "string"
         }
       },
