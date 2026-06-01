@@ -25,6 +25,14 @@
           "minItems": 1,
           "type": "array",
           "x-kubernetes-list-type": "set"
+        },
+        "quotaManagement": {
+          "description": "quotaManagement specifies the management of ClusterQueue quotas\nin the manager cluster.\nSupported modes:\n- `Manual`: Quota automation is manual.\n- `Automated`: Quota automation is enabled (provided that the MultiKueueManagerQuotaAutomation feature gate is enabled).\nIf unspecified, defaults to `Manual`.",
+          "enum": [
+            "Manual",
+            "Automated"
+          ],
+          "type": "string"
         }
       },
       "required": [
