@@ -697,7 +697,7 @@ sources:
 
   # Issue #851 - app.terraform.io CRDs
   - url: "https://github.com/hashicorp/terraform-cloud-operator"
-    tag: ""
+    tag: "v2.11.5"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/hashicorp/terraform-cloud-operator/releases"
 
