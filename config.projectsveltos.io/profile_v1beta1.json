@@ -791,7 +791,7 @@
                 "type": "string"
               },
               "kind": {
-                "description": "Kind of the resource. Supported kinds are:\n- ConfigMap/Secret\n- flux GitRepository;OCIRepository;Bucket",
+                "description": "Kind of the resource. Supported kinds are:\n- ConfigMap/Secret\n- flux GitRepository;OCIRepository;Bucket\nRequired when RemoteURL is not set.",
                 "enum": [
                   "GitRepository",
                   "OCIRepository",
@@ -802,12 +802,11 @@
                 "type": "string"
               },
               "name": {
-                "description": "Name of the referenced resource.\nName can be expressed as a template and instantiate using any cluster field.",
-                "minLength": 1,
+                "description": "Name of the referenced resource.\nName can be expressed as a template and instantiate using any cluster field.\nRequired when RemoteURL is not set.",
                 "type": "string"
               },
               "namespace": {
-                "description": "Namespace of the referenced resource.\nFor ClusterProfile namespace can be left empty. In such a case, namespace will\nbe implicit set to cluster's namespace.\nFor Profile namespace must be left empty. Profile namespace will be used.\nNamespace can be expressed as a template and instantiate using any cluster field.",
+                "description": "Namespace of the referenced resource.\nFor ClusterProfile namespace can be left empty. In such a case, namespace will\nbe implicit set to cluster's namespace.\nFor Profile namespace must be left empty. Profile namespace will be used.\nNamespace can be expressed as a template and instantiate using any cluster field.\nNot used when RemoteURL is set.",
                 "type": "string"
               },
               "optional": {
@@ -818,6 +817,42 @@
               "path": {
                 "description": "Path to the directory containing the YAML files.\nDefaults to 'None', which translates to the root path of the SourceRef.\nUsed only for GitRepository;OCIRepository;Bucket",
                 "type": "string"
+              },
+              "remoteURL": {
+                "description": "RemoteURL configures fetching content from an HTTP/HTTPS endpoint.\nWhen set, Kind/Name/Namespace must be omitted.",
+                "properties": {
+                  "interval": {
+                    "description": "Interval defines how often Sveltos re-fetches the URL to detect changes.\nDefaults to 5 minutes.",
+                    "type": "string"
+                  },
+                  "secretRef": {
+                    "description": "SecretRef references a Secret in the management cluster containing optional\ncredentials for fetching the URL. Supported Secret keys:\n  \"token\"              \u2014 Bearer token (Authorization: Bearer <token>)\n  \"username\"+\"password\" \u2014 HTTP Basic Auth\n  \"caFile\"             \u2014 PEM-encoded CA certificate for TLS verification",
+                    "properties": {
+                      "name": {
+                        "default": "",
+                        "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+                        "type": "string"
+                      }
+                    },
+                    "type": "object",
+                    "x-kubernetes-map-type": "atomic",
+                    "additionalProperties": false
+                  },
+                  "template": {
+                    "description": "Template indicates that the content served at URL is a Go template that\nmust be instantiated using cluster fields and templateResourceRefs values\nbefore deployment. Equivalent to the projectsveltos.io/template annotation\non a ConfigMap or Secret.",
+                    "type": "boolean"
+                  },
+                  "url": {
+                    "description": "URL is an HTTP/HTTPS endpoint serving raw YAML/JSON/KYAML content.\nSveltos fetches the content on every reconciliation and redeploys if the\ncontent hash has changed.",
+                    "pattern": "^https?://",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "url"
+                ],
+                "type": "object",
+                "additionalProperties": false
               },
               "skipNamespaceCreation": {
                 "default": false,
@@ -832,18 +867,20 @@
                 "type": "integer"
               }
             },
-            "required": [
-              "kind",
-              "name"
-            ],
             "type": "object",
+            "x-kubernetes-validations": [
+              {
+                "message": "either remoteURL or kind must be set, but not both",
+                "rule": "has(self.remoteURL) != has(self.kind)"
+              }
+            ],
             "additionalProperties": false
           },
           "type": "array",
           "x-kubernetes-list-type": "atomic"
         },
         "postDeleteChecks": {
-          "description": "PostDeleteChecks is a slice of Lua functions to run against\nthe managed cluster *after* Sveltos has deleted all resources.\nThis ensures that the environment has reached the desired clean state.",
+          "description": "PostDeleteChecks is a slice of checks to run against the managed cluster\n*after* Sveltos has deleted all resources.\nThis ensures that the environment has reached the desired clean state.\nEach check can select resources and validate them using Lua scripts or CEL expressions.",
           "items": {
             "properties": {
               "evaluateCEL": {
@@ -950,7 +987,114 @@
           "x-kubernetes-list-type": "atomic"
         },
         "preDeleteChecks": {
-          "description": "PreDeleteChecks is a slice of Lua functions to run against\nthe managed cluster *before* Sveltos starts deleting resources.\nIf any of these fail, the deletion process is halted.",
+          "description": "PreDeleteChecks is a slice of checks to run against the managed cluster\n*before* Sveltos starts deleting resources.\nIf any of these fail, the deletion process is halted.\nEach check can select resources and validate them using Lua scripts or CEL expressions.",
+          "items": {
+            "properties": {
+              "evaluateCEL": {
+                "description": "EvaluateCEL contains a list of named CEL (Common Expression Language) rules.\nEach rule will be evaluated in order against each object selected based on\nthe criteria defined above. Each rule's expression must return a boolean value\nindicating whether the object is a match.\n\nEvaluation stops at the first rule that returns true; subsequent\nrules will not be evaluated.",
+                "items": {
+                  "description": "CELRule defines a named CEL rule used in EvaluateCEL.",
+                  "properties": {
+                    "name": {
+                      "description": "Name is a human-readable identifier for the rule.",
+                      "type": "string"
+                    },
+                    "rule": {
+                      "description": "Rule is the CEL (Common Expression Language) expression to evaluate.\nIt must return a bool",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "rule"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "type": "array"
+              },
+              "featureID": {
+                "description": "FeatureID is an indentifier of the feature (Helm/Kustomize/Resources)\nThis field indicates when to run this check.\nFor instance:\n- if set to Helm this check will be run after all helm\ncharts specified in the ClusterProfile are deployed.\n- if set to Resources this check will be run after the content\nof all the ConfigMaps/Secrets referenced by ClusterProfile in the\nPolicyRef sections is deployed",
+                "enum": [
+                  "Resources",
+                  "Helm",
+                  "Kustomize"
+                ],
+                "type": "string"
+              },
+              "group": {
+                "description": "Group of the resource to fetch in the managed Cluster.",
+                "type": "string"
+              },
+              "kind": {
+                "description": "Kind of the resource to fetch in the managed Cluster.",
+                "minLength": 1,
+                "type": "string"
+              },
+              "labelFilters": {
+                "description": "LabelFilters allows to filter resources based on current labels.",
+                "items": {
+                  "properties": {
+                    "key": {
+                      "description": "Key is the label key",
+                      "type": "string"
+                    },
+                    "operation": {
+                      "description": "Operation is the comparison operation",
+                      "enum": [
+                        "Equal",
+                        "Different",
+                        "Has",
+                        "DoesNotHave"
+                      ],
+                      "type": "string"
+                    },
+                    "value": {
+                      "description": "Value is the label value",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "key",
+                    "operation"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "type": "array"
+              },
+              "name": {
+                "description": "Name is the name of this check",
+                "type": "string"
+              },
+              "namespace": {
+                "description": "Namespace of the resource to fetch in the managed Cluster.\nEmpty for resources scoped at cluster level.",
+                "type": "string"
+              },
+              "script": {
+                "description": "Script is a text containing a lua script.\nMust return struct with field \"health\"\nrepresenting whether object is a match (true or false)",
+                "type": "string"
+              },
+              "version": {
+                "description": "Version of the resource to fetch in the managed Cluster.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "featureID",
+              "group",
+              "kind",
+              "name",
+              "version"
+            ],
+            "type": "object",
+            "additionalProperties": false
+          },
+          "type": "array",
+          "x-kubernetes-list-type": "atomic"
+        },
+        "preDeployChecks": {
+          "description": "PreDeployChecks is a slice of checks to run against the managed cluster\n*before* Sveltos starts deploying resources.\nEach check can use Lua scripts or CEL expressions to validate the cluster state.\nIf any check fails, the deployment of the associated feature is halted.",
           "items": {
             "properties": {
               "evaluateCEL": {
@@ -1141,6 +1285,13 @@
                 "type": "object",
                 "x-kubernetes-map-type": "atomic",
                 "additionalProperties": false
+              },
+              "watchFields": {
+                "description": "WatchFields is an optional list of dot-separated field paths to include\nwhen computing the hash for this resource (e.g. \"status.readyReplicas\",\n\"metadata.labels\"). When non-empty, only the listed fields are hashed and\nIgnoreStatusChanges is ignored. Use this when you need to react to a\nspecific field without being sensitive to every other change on the object.",
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
               }
             },
             "required": [
@@ -1164,7 +1315,7 @@
           "type": "integer"
         },
         "validateHealths": {
-          "description": "ValidateHealths is a slice of Lua functions to run against\nthe managed cluster to validate the state of those add-ons/applications\nis healthy",
+          "description": "ValidateHealths is a slice of checks to run against the managed cluster\n*after* resources are deployed to validate that the state of the\nadd-ons/applications is healthy.\nEach check can select resources and validate them using Lua scripts or CEL expressions.",
           "items": {
             "properties": {
               "evaluateCEL": {
