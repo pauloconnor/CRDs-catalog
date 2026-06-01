@@ -546,7 +546,7 @@ sources:
     changelog: "https://github.com/epam/edp-codebase-operator/releases"
 
   - url: "https://github.com/epam/edp-gerrit-operator"
-    tag: ""
+    tag: "v2.24.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/epam/edp-gerrit-operator/releases"
 
