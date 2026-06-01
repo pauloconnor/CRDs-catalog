@@ -15,6 +15,28 @@ aadpodidentity.k8s.io:
     filename: aadpodidentity.k8s.io/azureassignedidentity_v1.json
     kind: AzureAssignedIdentity
     name: azureassignedidentity_v1
+accessanalyzer.aws.m.upbound.io:
+  - apiVersion: accessanalyzer.aws.m.upbound.io/v1beta1
+    filename: accessanalyzer.aws.m.upbound.io/archiverule_v1beta1.json
+    kind: ArchiveRule
+    name: archiverule_v1beta1
+  - apiVersion: accessanalyzer.aws.m.upbound.io/v1beta1
+    filename: accessanalyzer.aws.m.upbound.io/analyzer_v1beta1.json
+    kind: Analyzer
+    name: analyzer_v1beta1
+accessanalyzer.aws.upbound.io:
+  - apiVersion: accessanalyzer.aws.upbound.io/v1beta2
+    filename: accessanalyzer.aws.upbound.io/analyzer_v1beta2.json
+    kind: Analyzer
+    name: analyzer_v1beta2
+  - apiVersion: accessanalyzer.aws.upbound.io/v1beta1
+    filename: accessanalyzer.aws.upbound.io/archiverule_v1beta1.json
+    kind: ArchiveRule
+    name: archiverule_v1beta1
+  - apiVersion: accessanalyzer.aws.upbound.io/v1beta1
+    filename: accessanalyzer.aws.upbound.io/analyzer_v1beta1.json
+    kind: Analyzer
+    name: analyzer_v1beta1
 accesscontextmanager.cnrm.cloud.google.com:
   - apiVersion: accesscontextmanager.cnrm.cloud.google.com/v1beta1
     filename: accesscontextmanager.cnrm.cloud.google.com/accesscontextmanagerserviceperimeter_v1beta1.json
@@ -44,6 +66,24 @@ accesscontextmanager.cnrm.cloud.google.com:
     filename: accesscontextmanager.cnrm.cloud.google.com/accesscontextmanagerserviceperimeterresource_v1beta1.json
     kind: accesscontextmanagerserviceperimeterresource
     name: accesscontextmanagerserviceperimeterresource_v1beta1
+account.aws.m.upbound.io:
+  - apiVersion: account.aws.m.upbound.io/v1beta1
+    filename: account.aws.m.upbound.io/alternatecontact_v1beta1.json
+    kind: AlternateContact
+    name: alternatecontact_v1beta1
+  - apiVersion: account.aws.m.upbound.io/v1beta1
+    filename: account.aws.m.upbound.io/region_v1beta1.json
+    kind: Region
+    name: region_v1beta1
+account.aws.upbound.io:
+  - apiVersion: account.aws.upbound.io/v1beta1
+    filename: account.aws.upbound.io/alternatecontact_v1beta1.json
+    kind: AlternateContact
+    name: alternatecontact_v1beta1
+  - apiVersion: account.aws.upbound.io/v1beta1
+    filename: account.aws.upbound.io/region_v1beta1.json
+    kind: Region
+    name: region_v1beta1
 acid.zalan.do:
   - apiVersion: acid.zalan.do/v1
     filename: acid.zalan.do/postgresql_v1.json
@@ -57,6 +97,28 @@ acid.zalan.do:
     filename: acid.zalan.do/postgresteam_v1.json
     kind: postgresteam
     name: postgresteam_v1
+acm.aws.m.upbound.io:
+  - apiVersion: acm.aws.m.upbound.io/v1beta1
+    filename: acm.aws.m.upbound.io/certificatevalidation_v1beta1.json
+    kind: CertificateValidation
+    name: certificatevalidation_v1beta1
+  - apiVersion: acm.aws.m.upbound.io/v1beta1
+    filename: acm.aws.m.upbound.io/certificate_v1beta1.json
+    kind: Certificate
+    name: certificate_v1beta1
+acm.aws.upbound.io:
+  - apiVersion: acm.aws.upbound.io/v1beta2
+    filename: acm.aws.upbound.io/certificate_v1beta2.json
+    kind: Certificate
+    name: certificate_v1beta2
+  - apiVersion: acm.aws.upbound.io/v1beta1
+    filename: acm.aws.upbound.io/certificatevalidation_v1beta1.json
+    kind: CertificateValidation
+    name: certificatevalidation_v1beta1
+  - apiVersion: acm.aws.upbound.io/v1beta1
+    filename: acm.aws.upbound.io/certificate_v1beta1.json
+    kind: Certificate
+    name: certificate_v1beta1
 acm.services.k8s.aws:
   - apiVersion: acm.services.k8s.aws/v1alpha1
     filename: acm.services.k8s.aws/certificate_v1alpha1.json
@@ -71,6 +133,56 @@ acme.cert-manager.io:
     filename: acme.cert-manager.io/order_v1.json
     kind: Order
     name: order_v1
+acmpca.aws.m.upbound.io:
+  - apiVersion: acmpca.aws.m.upbound.io/v1beta1
+    filename: acmpca.aws.m.upbound.io/certificateauthoritycertificate_v1beta1.json
+    kind: CertificateAuthorityCertificate
+    name: certificateauthoritycertificate_v1beta1
+  - apiVersion: acmpca.aws.m.upbound.io/v1beta1
+    filename: acmpca.aws.m.upbound.io/policy_v1beta1.json
+    kind: Policy
+    name: policy_v1beta1
+  - apiVersion: acmpca.aws.m.upbound.io/v1beta1
+    filename: acmpca.aws.m.upbound.io/certificate_v1beta1.json
+    kind: Certificate
+    name: certificate_v1beta1
+  - apiVersion: acmpca.aws.m.upbound.io/v1beta1
+    filename: acmpca.aws.m.upbound.io/permission_v1beta1.json
+    kind: Permission
+    name: permission_v1beta1
+  - apiVersion: acmpca.aws.m.upbound.io/v1beta1
+    filename: acmpca.aws.m.upbound.io/certificateauthority_v1beta1.json
+    kind: CertificateAuthority
+    name: certificateauthority_v1beta1
+acmpca.aws.upbound.io:
+  - apiVersion: acmpca.aws.upbound.io/v1beta1
+    filename: acmpca.aws.upbound.io/certificateauthoritycertificate_v1beta1.json
+    kind: CertificateAuthorityCertificate
+    name: certificateauthoritycertificate_v1beta1
+  - apiVersion: acmpca.aws.upbound.io/v1beta2
+    filename: acmpca.aws.upbound.io/certificate_v1beta2.json
+    kind: Certificate
+    name: certificate_v1beta2
+  - apiVersion: acmpca.aws.upbound.io/v1beta2
+    filename: acmpca.aws.upbound.io/certificateauthority_v1beta2.json
+    kind: CertificateAuthority
+    name: certificateauthority_v1beta2
+  - apiVersion: acmpca.aws.upbound.io/v1beta1
+    filename: acmpca.aws.upbound.io/policy_v1beta1.json
+    kind: Policy
+    name: policy_v1beta1
+  - apiVersion: acmpca.aws.upbound.io/v1beta1
+    filename: acmpca.aws.upbound.io/certificate_v1beta1.json
+    kind: Certificate
+    name: certificate_v1beta1
+  - apiVersion: acmpca.aws.upbound.io/v1beta1
+    filename: acmpca.aws.upbound.io/permission_v1beta1.json
+    kind: Permission
+    name: permission_v1beta1
+  - apiVersion: acmpca.aws.upbound.io/v1beta1
+    filename: acmpca.aws.upbound.io/certificateauthority_v1beta1.json
+    kind: CertificateAuthority
+    name: certificateauthority_v1beta1
 acmpca.services.k8s.aws:
   - apiVersion: acmpca.services.k8s.aws/v1alpha1
     filename: acmpca.services.k8s.aws/certificateauthority_v1alpha1.json
@@ -504,6 +616,82 @@ alloydb.cnrm.cloud.google.com:
     filename: alloydb.cnrm.cloud.google.com/alloydbinstance_v1beta1.json
     kind: alloydbinstance
     name: alloydbinstance_v1beta1
+amp.aws.m.upbound.io:
+  - apiVersion: amp.aws.m.upbound.io/v1beta1
+    filename: amp.aws.m.upbound.io/rulegroupnamespace_v1beta1.json
+    kind: RuleGroupNamespace
+    name: rulegroupnamespace_v1beta1
+  - apiVersion: amp.aws.m.upbound.io/v1beta1
+    filename: amp.aws.m.upbound.io/workspace_v1beta1.json
+    kind: Workspace
+    name: workspace_v1beta1
+  - apiVersion: amp.aws.m.upbound.io/v1beta1
+    filename: amp.aws.m.upbound.io/scraper_v1beta1.json
+    kind: Scraper
+    name: scraper_v1beta1
+  - apiVersion: amp.aws.m.upbound.io/v1beta1
+    filename: amp.aws.m.upbound.io/alertmanagerdefinition_v1beta1.json
+    kind: AlertManagerDefinition
+    name: alertmanagerdefinition_v1beta1
+amp.aws.upbound.io:
+  - apiVersion: amp.aws.upbound.io/v1beta2
+    filename: amp.aws.upbound.io/workspace_v1beta2.json
+    kind: Workspace
+    name: workspace_v1beta2
+  - apiVersion: amp.aws.upbound.io/v1beta1
+    filename: amp.aws.upbound.io/rulegroupnamespace_v1beta1.json
+    kind: RuleGroupNamespace
+    name: rulegroupnamespace_v1beta1
+  - apiVersion: amp.aws.upbound.io/v1beta1
+    filename: amp.aws.upbound.io/workspace_v1beta1.json
+    kind: Workspace
+    name: workspace_v1beta1
+  - apiVersion: amp.aws.upbound.io/v1beta1
+    filename: amp.aws.upbound.io/scraper_v1beta1.json
+    kind: Scraper
+    name: scraper_v1beta1
+  - apiVersion: amp.aws.upbound.io/v1beta1
+    filename: amp.aws.upbound.io/alertmanagerdefinition_v1beta1.json
+    kind: AlertManagerDefinition
+    name: alertmanagerdefinition_v1beta1
+amplify.aws.m.upbound.io:
+  - apiVersion: amplify.aws.m.upbound.io/v1beta1
+    filename: amplify.aws.m.upbound.io/app_v1beta1.json
+    kind: App
+    name: app_v1beta1
+  - apiVersion: amplify.aws.m.upbound.io/v1beta1
+    filename: amplify.aws.m.upbound.io/webhook_v1beta1.json
+    kind: Webhook
+    name: webhook_v1beta1
+  - apiVersion: amplify.aws.m.upbound.io/v1beta1
+    filename: amplify.aws.m.upbound.io/backendenvironment_v1beta1.json
+    kind: BackendEnvironment
+    name: backendenvironment_v1beta1
+  - apiVersion: amplify.aws.m.upbound.io/v1beta1
+    filename: amplify.aws.m.upbound.io/branch_v1beta1.json
+    kind: Branch
+    name: branch_v1beta1
+amplify.aws.upbound.io:
+  - apiVersion: amplify.aws.upbound.io/v1beta1
+    filename: amplify.aws.upbound.io/app_v1beta1.json
+    kind: App
+    name: app_v1beta1
+  - apiVersion: amplify.aws.upbound.io/v1beta1
+    filename: amplify.aws.upbound.io/webhook_v1beta1.json
+    kind: Webhook
+    name: webhook_v1beta1
+  - apiVersion: amplify.aws.upbound.io/v1beta1
+    filename: amplify.aws.upbound.io/backendenvironment_v1beta1.json
+    kind: BackendEnvironment
+    name: backendenvironment_v1beta1
+  - apiVersion: amplify.aws.upbound.io/v1beta1
+    filename: amplify.aws.upbound.io/branch_v1beta1.json
+    kind: Branch
+    name: branch_v1beta1
+  - apiVersion: amplify.aws.upbound.io/v1beta2
+    filename: amplify.aws.upbound.io/app_v1beta2.json
+    kind: App
+    name: app_v1beta2
 analysisservices.azure.m.upbound.io:
   - apiVersion: analysisservices.azure.m.upbound.io/v1beta1
     filename: analysisservices.azure.m.upbound.io/server_v1beta1.json
@@ -764,6 +952,228 @@ apiextensions.crossplane.io:
     filename: apiextensions.crossplane.io/compositeresourcedefinition_v2.json
     kind: CompositeResourceDefinition
     name: compositeresourcedefinition_v2
+apigateway.aws.m.upbound.io:
+  - apiVersion: apigateway.aws.m.upbound.io/v1beta1
+    filename: apigateway.aws.m.upbound.io/domainname_v1beta1.json
+    kind: DomainName
+    name: domainname_v1beta1
+  - apiVersion: apigateway.aws.m.upbound.io/v1beta1
+    filename: apigateway.aws.m.upbound.io/resource_v1beta1.json
+    kind: Resource
+    name: resource_v1beta1
+  - apiVersion: apigateway.aws.m.upbound.io/v1beta1
+    filename: apigateway.aws.m.upbound.io/authorizer_v1beta1.json
+    kind: Authorizer
+    name: authorizer_v1beta1
+  - apiVersion: apigateway.aws.m.upbound.io/v1beta1
+    filename: apigateway.aws.m.upbound.io/model_v1beta1.json
+    kind: Model
+    name: model_v1beta1
+  - apiVersion: apigateway.aws.m.upbound.io/v1beta1
+    filename: apigateway.aws.m.upbound.io/gatewayresponse_v1beta1.json
+    kind: GatewayResponse
+    name: gatewayresponse_v1beta1
+  - apiVersion: apigateway.aws.m.upbound.io/v1beta1
+    filename: apigateway.aws.m.upbound.io/integrationresponse_v1beta1.json
+    kind: IntegrationResponse
+    name: integrationresponse_v1beta1
+  - apiVersion: apigateway.aws.m.upbound.io/v1beta1
+    filename: apigateway.aws.m.upbound.io/methodresponse_v1beta1.json
+    kind: MethodResponse
+    name: methodresponse_v1beta1
+  - apiVersion: apigateway.aws.m.upbound.io/v1beta1
+    filename: apigateway.aws.m.upbound.io/integration_v1beta1.json
+    kind: Integration
+    name: integration_v1beta1
+  - apiVersion: apigateway.aws.m.upbound.io/v1beta1
+    filename: apigateway.aws.m.upbound.io/account_v1beta1.json
+    kind: Account
+    name: account_v1beta1
+  - apiVersion: apigateway.aws.m.upbound.io/v1beta1
+    filename: apigateway.aws.m.upbound.io/usageplankey_v1beta1.json
+    kind: UsagePlanKey
+    name: usageplankey_v1beta1
+  - apiVersion: apigateway.aws.m.upbound.io/v1beta1
+    filename: apigateway.aws.m.upbound.io/apikey_v1beta1.json
+    kind: APIKey
+    name: apikey_v1beta1
+  - apiVersion: apigateway.aws.m.upbound.io/v1beta1
+    filename: apigateway.aws.m.upbound.io/documentationpart_v1beta1.json
+    kind: DocumentationPart
+    name: documentationpart_v1beta1
+  - apiVersion: apigateway.aws.m.upbound.io/v1beta1
+    filename: apigateway.aws.m.upbound.io/usageplan_v1beta1.json
+    kind: UsagePlan
+    name: usageplan_v1beta1
+  - apiVersion: apigateway.aws.m.upbound.io/v1beta1
+    filename: apigateway.aws.m.upbound.io/clientcertificate_v1beta1.json
+    kind: ClientCertificate
+    name: clientcertificate_v1beta1
+  - apiVersion: apigateway.aws.m.upbound.io/v1beta1
+    filename: apigateway.aws.m.upbound.io/deployment_v1beta1.json
+    kind: Deployment
+    name: deployment_v1beta1
+  - apiVersion: apigateway.aws.m.upbound.io/v1beta1
+    filename: apigateway.aws.m.upbound.io/vpclink_v1beta1.json
+    kind: VPCLink
+    name: vpclink_v1beta1
+  - apiVersion: apigateway.aws.m.upbound.io/v1beta1
+    filename: apigateway.aws.m.upbound.io/documentationversion_v1beta1.json
+    kind: DocumentationVersion
+    name: documentationversion_v1beta1
+  - apiVersion: apigateway.aws.m.upbound.io/v1beta1
+    filename: apigateway.aws.m.upbound.io/restapi_v1beta1.json
+    kind: RestAPI
+    name: restapi_v1beta1
+  - apiVersion: apigateway.aws.m.upbound.io/v1beta1
+    filename: apigateway.aws.m.upbound.io/method_v1beta1.json
+    kind: Method
+    name: method_v1beta1
+  - apiVersion: apigateway.aws.m.upbound.io/v1beta1
+    filename: apigateway.aws.m.upbound.io/requestvalidator_v1beta1.json
+    kind: RequestValidator
+    name: requestvalidator_v1beta1
+  - apiVersion: apigateway.aws.m.upbound.io/v1beta1
+    filename: apigateway.aws.m.upbound.io/methodsettings_v1beta1.json
+    kind: MethodSettings
+    name: methodsettings_v1beta1
+  - apiVersion: apigateway.aws.m.upbound.io/v1beta1
+    filename: apigateway.aws.m.upbound.io/restapipolicy_v1beta1.json
+    kind: RestAPIPolicy
+    name: restapipolicy_v1beta1
+  - apiVersion: apigateway.aws.m.upbound.io/v1beta1
+    filename: apigateway.aws.m.upbound.io/basepathmapping_v1beta1.json
+    kind: BasePathMapping
+    name: basepathmapping_v1beta1
+  - apiVersion: apigateway.aws.m.upbound.io/v1beta1
+    filename: apigateway.aws.m.upbound.io/stage_v1beta1.json
+    kind: Stage
+    name: stage_v1beta1
+apigateway.aws.upbound.io:
+  - apiVersion: apigateway.aws.upbound.io/v1beta1
+    filename: apigateway.aws.upbound.io/domainname_v1beta1.json
+    kind: DomainName
+    name: domainname_v1beta1
+  - apiVersion: apigateway.aws.upbound.io/v1beta1
+    filename: apigateway.aws.upbound.io/resource_v1beta1.json
+    kind: Resource
+    name: resource_v1beta1
+  - apiVersion: apigateway.aws.upbound.io/v1beta2
+    filename: apigateway.aws.upbound.io/usageplan_v1beta2.json
+    kind: UsagePlan
+    name: usageplan_v1beta2
+  - apiVersion: apigateway.aws.upbound.io/v1beta1
+    filename: apigateway.aws.upbound.io/authorizer_v1beta1.json
+    kind: Authorizer
+    name: authorizer_v1beta1
+  - apiVersion: apigateway.aws.upbound.io/v1beta1
+    filename: apigateway.aws.upbound.io/model_v1beta1.json
+    kind: Model
+    name: model_v1beta1
+  - apiVersion: apigateway.aws.upbound.io/v1beta1
+    filename: apigateway.aws.upbound.io/gatewayresponse_v1beta1.json
+    kind: GatewayResponse
+    name: gatewayresponse_v1beta1
+  - apiVersion: apigateway.aws.upbound.io/v1beta1
+    filename: apigateway.aws.upbound.io/integrationresponse_v1beta1.json
+    kind: IntegrationResponse
+    name: integrationresponse_v1beta1
+  - apiVersion: apigateway.aws.upbound.io/v1beta2
+    filename: apigateway.aws.upbound.io/stage_v1beta2.json
+    kind: Stage
+    name: stage_v1beta2
+  - apiVersion: apigateway.aws.upbound.io/v1beta1
+    filename: apigateway.aws.upbound.io/methodresponse_v1beta1.json
+    kind: MethodResponse
+    name: methodresponse_v1beta1
+  - apiVersion: apigateway.aws.upbound.io/v1beta2
+    filename: apigateway.aws.upbound.io/restapi_v1beta2.json
+    kind: RestAPI
+    name: restapi_v1beta2
+  - apiVersion: apigateway.aws.upbound.io/v1beta1
+    filename: apigateway.aws.upbound.io/integration_v1beta1.json
+    kind: Integration
+    name: integration_v1beta1
+  - apiVersion: apigateway.aws.upbound.io/v1beta1
+    filename: apigateway.aws.upbound.io/account_v1beta1.json
+    kind: Account
+    name: account_v1beta1
+  - apiVersion: apigateway.aws.upbound.io/v1beta1
+    filename: apigateway.aws.upbound.io/usageplankey_v1beta1.json
+    kind: UsagePlanKey
+    name: usageplankey_v1beta1
+  - apiVersion: apigateway.aws.upbound.io/v1beta1
+    filename: apigateway.aws.upbound.io/apikey_v1beta1.json
+    kind: APIKey
+    name: apikey_v1beta1
+  - apiVersion: apigateway.aws.upbound.io/v1beta1
+    filename: apigateway.aws.upbound.io/documentationpart_v1beta1.json
+    kind: DocumentationPart
+    name: documentationpart_v1beta1
+  - apiVersion: apigateway.aws.upbound.io/v1beta1
+    filename: apigateway.aws.upbound.io/usageplan_v1beta1.json
+    kind: UsagePlan
+    name: usageplan_v1beta1
+  - apiVersion: apigateway.aws.upbound.io/v1beta1
+    filename: apigateway.aws.upbound.io/clientcertificate_v1beta1.json
+    kind: ClientCertificate
+    name: clientcertificate_v1beta1
+  - apiVersion: apigateway.aws.upbound.io/v1beta1
+    filename: apigateway.aws.upbound.io/deployment_v1beta1.json
+    kind: Deployment
+    name: deployment_v1beta1
+  - apiVersion: apigateway.aws.upbound.io/v1beta1
+    filename: apigateway.aws.upbound.io/vpclink_v1beta1.json
+    kind: VPCLink
+    name: vpclink_v1beta1
+  - apiVersion: apigateway.aws.upbound.io/v1beta2
+    filename: apigateway.aws.upbound.io/domainname_v1beta2.json
+    kind: DomainName
+    name: domainname_v1beta2
+  - apiVersion: apigateway.aws.upbound.io/v1beta1
+    filename: apigateway.aws.upbound.io/documentationversion_v1beta1.json
+    kind: DocumentationVersion
+    name: documentationversion_v1beta1
+  - apiVersion: apigateway.aws.upbound.io/v1beta1
+    filename: apigateway.aws.upbound.io/restapi_v1beta1.json
+    kind: RestAPI
+    name: restapi_v1beta1
+  - apiVersion: apigateway.aws.upbound.io/v1beta1
+    filename: apigateway.aws.upbound.io/method_v1beta1.json
+    kind: Method
+    name: method_v1beta1
+  - apiVersion: apigateway.aws.upbound.io/v1beta1
+    filename: apigateway.aws.upbound.io/requestvalidator_v1beta1.json
+    kind: RequestValidator
+    name: requestvalidator_v1beta1
+  - apiVersion: apigateway.aws.upbound.io/v1beta1
+    filename: apigateway.aws.upbound.io/methodsettings_v1beta1.json
+    kind: MethodSettings
+    name: methodsettings_v1beta1
+  - apiVersion: apigateway.aws.upbound.io/v1beta1
+    filename: apigateway.aws.upbound.io/restapipolicy_v1beta1.json
+    kind: RestAPIPolicy
+    name: restapipolicy_v1beta1
+  - apiVersion: apigateway.aws.upbound.io/v1beta1
+    filename: apigateway.aws.upbound.io/basepathmapping_v1beta1.json
+    kind: BasePathMapping
+    name: basepathmapping_v1beta1
+  - apiVersion: apigateway.aws.upbound.io/v1beta1
+    filename: apigateway.aws.upbound.io/stage_v1beta1.json
+    kind: Stage
+    name: stage_v1beta1
+  - apiVersion: apigateway.aws.upbound.io/v1beta2
+    filename: apigateway.aws.upbound.io/documentationpart_v1beta2.json
+    kind: DocumentationPart
+    name: documentationpart_v1beta2
+  - apiVersion: apigateway.aws.upbound.io/v1beta2
+    filename: apigateway.aws.upbound.io/integration_v1beta2.json
+    kind: Integration
+    name: integration_v1beta2
+  - apiVersion: apigateway.aws.upbound.io/v1beta2
+    filename: apigateway.aws.upbound.io/methodsettings_v1beta2.json
+    kind: MethodSettings
+    name: methodsettings_v1beta2
 apigateway.cnrm.cloud.google.com:
   - apiVersion: apigateway.cnrm.cloud.google.com/v1alpha1
     filename: apigateway.cnrm.cloud.google.com/apigatewayapiconfig_v1alpha1.json
@@ -781,6 +1191,124 @@ apigateway.cnrm.cloud.google.com:
     filename: apigateway.cnrm.cloud.google.com/apigatewayapi_v1beta1.json
     kind: APIGatewayAPI
     name: apigatewayapi_v1beta1
+apigatewayv2.aws.m.upbound.io:
+  - apiVersion: apigatewayv2.aws.m.upbound.io/v1beta1
+    filename: apigatewayv2.aws.m.upbound.io/domainname_v1beta1.json
+    kind: DomainName
+    name: domainname_v1beta1
+  - apiVersion: apigatewayv2.aws.m.upbound.io/v1beta1
+    filename: apigatewayv2.aws.m.upbound.io/apimapping_v1beta1.json
+    kind: APIMapping
+    name: apimapping_v1beta1
+  - apiVersion: apigatewayv2.aws.m.upbound.io/v1beta1
+    filename: apigatewayv2.aws.m.upbound.io/authorizer_v1beta1.json
+    kind: Authorizer
+    name: authorizer_v1beta1
+  - apiVersion: apigatewayv2.aws.m.upbound.io/v1beta1
+    filename: apigatewayv2.aws.m.upbound.io/route_v1beta1.json
+    kind: Route
+    name: route_v1beta1
+  - apiVersion: apigatewayv2.aws.m.upbound.io/v1beta1
+    filename: apigatewayv2.aws.m.upbound.io/model_v1beta1.json
+    kind: Model
+    name: model_v1beta1
+  - apiVersion: apigatewayv2.aws.m.upbound.io/v1beta1
+    filename: apigatewayv2.aws.m.upbound.io/integrationresponse_v1beta1.json
+    kind: IntegrationResponse
+    name: integrationresponse_v1beta1
+  - apiVersion: apigatewayv2.aws.m.upbound.io/v1beta1
+    filename: apigatewayv2.aws.m.upbound.io/integration_v1beta1.json
+    kind: Integration
+    name: integration_v1beta1
+  - apiVersion: apigatewayv2.aws.m.upbound.io/v1beta1
+    filename: apigatewayv2.aws.m.upbound.io/deployment_v1beta1.json
+    kind: Deployment
+    name: deployment_v1beta1
+  - apiVersion: apigatewayv2.aws.m.upbound.io/v1beta1
+    filename: apigatewayv2.aws.m.upbound.io/vpclink_v1beta1.json
+    kind: VPCLink
+    name: vpclink_v1beta1
+  - apiVersion: apigatewayv2.aws.m.upbound.io/v1beta1
+    filename: apigatewayv2.aws.m.upbound.io/api_v1beta1.json
+    kind: API
+    name: api_v1beta1
+  - apiVersion: apigatewayv2.aws.m.upbound.io/v1beta1
+    filename: apigatewayv2.aws.m.upbound.io/stage_v1beta1.json
+    kind: Stage
+    name: stage_v1beta1
+  - apiVersion: apigatewayv2.aws.m.upbound.io/v1beta1
+    filename: apigatewayv2.aws.m.upbound.io/routeresponse_v1beta1.json
+    kind: RouteResponse
+    name: routeresponse_v1beta1
+apigatewayv2.aws.upbound.io:
+  - apiVersion: apigatewayv2.aws.upbound.io/v1beta1
+    filename: apigatewayv2.aws.upbound.io/domainname_v1beta1.json
+    kind: DomainName
+    name: domainname_v1beta1
+  - apiVersion: apigatewayv2.aws.upbound.io/v1beta1
+    filename: apigatewayv2.aws.upbound.io/apimapping_v1beta1.json
+    kind: APIMapping
+    name: apimapping_v1beta1
+  - apiVersion: apigatewayv2.aws.upbound.io/v1beta1
+    filename: apigatewayv2.aws.upbound.io/authorizer_v1beta1.json
+    kind: Authorizer
+    name: authorizer_v1beta1
+  - apiVersion: apigatewayv2.aws.upbound.io/v1beta1
+    filename: apigatewayv2.aws.upbound.io/route_v1beta1.json
+    kind: Route
+    name: route_v1beta1
+  - apiVersion: apigatewayv2.aws.upbound.io/v1beta1
+    filename: apigatewayv2.aws.upbound.io/model_v1beta1.json
+    kind: Model
+    name: model_v1beta1
+  - apiVersion: apigatewayv2.aws.upbound.io/v1beta1
+    filename: apigatewayv2.aws.upbound.io/integrationresponse_v1beta1.json
+    kind: IntegrationResponse
+    name: integrationresponse_v1beta1
+  - apiVersion: apigatewayv2.aws.upbound.io/v1beta2
+    filename: apigatewayv2.aws.upbound.io/stage_v1beta2.json
+    kind: Stage
+    name: stage_v1beta2
+  - apiVersion: apigatewayv2.aws.upbound.io/v1beta1
+    filename: apigatewayv2.aws.upbound.io/integration_v1beta1.json
+    kind: Integration
+    name: integration_v1beta1
+  - apiVersion: apigatewayv2.aws.upbound.io/v1beta2
+    filename: apigatewayv2.aws.upbound.io/api_v1beta2.json
+    kind: API
+    name: api_v1beta2
+  - apiVersion: apigatewayv2.aws.upbound.io/v1beta1
+    filename: apigatewayv2.aws.upbound.io/deployment_v1beta1.json
+    kind: Deployment
+    name: deployment_v1beta1
+  - apiVersion: apigatewayv2.aws.upbound.io/v1beta2
+    filename: apigatewayv2.aws.upbound.io/authorizer_v1beta2.json
+    kind: Authorizer
+    name: authorizer_v1beta2
+  - apiVersion: apigatewayv2.aws.upbound.io/v1beta1
+    filename: apigatewayv2.aws.upbound.io/vpclink_v1beta1.json
+    kind: VPCLink
+    name: vpclink_v1beta1
+  - apiVersion: apigatewayv2.aws.upbound.io/v1beta1
+    filename: apigatewayv2.aws.upbound.io/api_v1beta1.json
+    kind: API
+    name: api_v1beta1
+  - apiVersion: apigatewayv2.aws.upbound.io/v1beta2
+    filename: apigatewayv2.aws.upbound.io/domainname_v1beta2.json
+    kind: DomainName
+    name: domainname_v1beta2
+  - apiVersion: apigatewayv2.aws.upbound.io/v1beta1
+    filename: apigatewayv2.aws.upbound.io/stage_v1beta1.json
+    kind: Stage
+    name: stage_v1beta1
+  - apiVersion: apigatewayv2.aws.upbound.io/v1beta2
+    filename: apigatewayv2.aws.upbound.io/integration_v1beta2.json
+    kind: Integration
+    name: integration_v1beta2
+  - apiVersion: apigatewayv2.aws.upbound.io/v1beta1
+    filename: apigatewayv2.aws.upbound.io/routeresponse_v1beta1.json
+    kind: RouteResponse
+    name: routeresponse_v1beta1
 apigatewayv2.services.k8s.aws:
   - apiVersion: apigatewayv2.services.k8s.aws/v1alpha1
     filename: apigatewayv2.services.k8s.aws/deployment_v1alpha1.json
@@ -1495,6 +2023,40 @@ app.redislabs.com:
     filename: app.redislabs.com/redisenterprisecluster_v1.json
     kind: RedisEnterpriseCluster
     name: redisenterprisecluster_v1
+appautoscaling.aws.m.upbound.io:
+  - apiVersion: appautoscaling.aws.m.upbound.io/v1beta1
+    filename: appautoscaling.aws.m.upbound.io/scheduledaction_v1beta1.json
+    kind: ScheduledAction
+    name: scheduledaction_v1beta1
+  - apiVersion: appautoscaling.aws.m.upbound.io/v1beta1
+    filename: appautoscaling.aws.m.upbound.io/target_v1beta1.json
+    kind: Target
+    name: target_v1beta1
+  - apiVersion: appautoscaling.aws.m.upbound.io/v1beta1
+    filename: appautoscaling.aws.m.upbound.io/policy_v1beta1.json
+    kind: Policy
+    name: policy_v1beta1
+appautoscaling.aws.upbound.io:
+  - apiVersion: appautoscaling.aws.upbound.io/v1beta1
+    filename: appautoscaling.aws.upbound.io/scheduledaction_v1beta1.json
+    kind: ScheduledAction
+    name: scheduledaction_v1beta1
+  - apiVersion: appautoscaling.aws.upbound.io/v1beta2
+    filename: appautoscaling.aws.upbound.io/policy_v1beta2.json
+    kind: Policy
+    name: policy_v1beta2
+  - apiVersion: appautoscaling.aws.upbound.io/v1beta1
+    filename: appautoscaling.aws.upbound.io/target_v1beta1.json
+    kind: Target
+    name: target_v1beta1
+  - apiVersion: appautoscaling.aws.upbound.io/v1beta2
+    filename: appautoscaling.aws.upbound.io/scheduledaction_v1beta2.json
+    kind: ScheduledAction
+    name: scheduledaction_v1beta2
+  - apiVersion: appautoscaling.aws.upbound.io/v1beta1
+    filename: appautoscaling.aws.upbound.io/policy_v1beta1.json
+    kind: Policy
+    name: policy_v1beta1
 appcat.vshn.io:
   - apiVersion: appcat.vshn.io/v1
     filename: appcat.vshn.io/xobjectbucket_v1.json
@@ -1504,6 +2066,72 @@ appcat.vshn.io:
     filename: appcat.vshn.io/objectbucket_v1.json
     kind: ObjectBucket
     name: objectbucket_v1
+appconfig.aws.m.upbound.io:
+  - apiVersion: appconfig.aws.m.upbound.io/v1beta1
+    filename: appconfig.aws.m.upbound.io/application_v1beta1.json
+    kind: Application
+    name: application_v1beta1
+  - apiVersion: appconfig.aws.m.upbound.io/v1beta1
+    filename: appconfig.aws.m.upbound.io/hostedconfigurationversion_v1beta1.json
+    kind: HostedConfigurationVersion
+    name: hostedconfigurationversion_v1beta1
+  - apiVersion: appconfig.aws.m.upbound.io/v1beta1
+    filename: appconfig.aws.m.upbound.io/deploymentstrategy_v1beta1.json
+    kind: DeploymentStrategy
+    name: deploymentstrategy_v1beta1
+  - apiVersion: appconfig.aws.m.upbound.io/v1beta1
+    filename: appconfig.aws.m.upbound.io/extensionassociation_v1beta1.json
+    kind: ExtensionAssociation
+    name: extensionassociation_v1beta1
+  - apiVersion: appconfig.aws.m.upbound.io/v1beta1
+    filename: appconfig.aws.m.upbound.io/environment_v1beta1.json
+    kind: Environment
+    name: environment_v1beta1
+  - apiVersion: appconfig.aws.m.upbound.io/v1beta1
+    filename: appconfig.aws.m.upbound.io/extension_v1beta1.json
+    kind: Extension
+    name: extension_v1beta1
+  - apiVersion: appconfig.aws.m.upbound.io/v1beta1
+    filename: appconfig.aws.m.upbound.io/deployment_v1beta1.json
+    kind: Deployment
+    name: deployment_v1beta1
+  - apiVersion: appconfig.aws.m.upbound.io/v1beta1
+    filename: appconfig.aws.m.upbound.io/configurationprofile_v1beta1.json
+    kind: ConfigurationProfile
+    name: configurationprofile_v1beta1
+appconfig.aws.upbound.io:
+  - apiVersion: appconfig.aws.upbound.io/v1beta1
+    filename: appconfig.aws.upbound.io/application_v1beta1.json
+    kind: Application
+    name: application_v1beta1
+  - apiVersion: appconfig.aws.upbound.io/v1beta1
+    filename: appconfig.aws.upbound.io/hostedconfigurationversion_v1beta1.json
+    kind: HostedConfigurationVersion
+    name: hostedconfigurationversion_v1beta1
+  - apiVersion: appconfig.aws.upbound.io/v1beta1
+    filename: appconfig.aws.upbound.io/deploymentstrategy_v1beta1.json
+    kind: DeploymentStrategy
+    name: deploymentstrategy_v1beta1
+  - apiVersion: appconfig.aws.upbound.io/v1beta1
+    filename: appconfig.aws.upbound.io/extensionassociation_v1beta1.json
+    kind: ExtensionAssociation
+    name: extensionassociation_v1beta1
+  - apiVersion: appconfig.aws.upbound.io/v1beta1
+    filename: appconfig.aws.upbound.io/environment_v1beta1.json
+    kind: Environment
+    name: environment_v1beta1
+  - apiVersion: appconfig.aws.upbound.io/v1beta1
+    filename: appconfig.aws.upbound.io/extension_v1beta1.json
+    kind: Extension
+    name: extension_v1beta1
+  - apiVersion: appconfig.aws.upbound.io/v1beta1
+    filename: appconfig.aws.upbound.io/deployment_v1beta1.json
+    kind: Deployment
+    name: deployment_v1beta1
+  - apiVersion: appconfig.aws.upbound.io/v1beta1
+    filename: appconfig.aws.upbound.io/configurationprofile_v1beta1.json
+    kind: ConfigurationProfile
+    name: configurationprofile_v1beta1
 appconfiguration.azure.com:
   - apiVersion: appconfiguration.azure.com/v1api20220501
     filename: appconfiguration.azure.com/configurationstore_v1api20220501.json
@@ -1544,6 +2172,20 @@ appengine.cnrm.cloud.google.com:
     filename: appengine.cnrm.cloud.google.com/appenginefirewallrule_v1alpha1.json
     kind: appenginefirewallrule
     name: appenginefirewallrule_v1alpha1
+appflow.aws.m.upbound.io:
+  - apiVersion: appflow.aws.m.upbound.io/v1beta1
+    filename: appflow.aws.m.upbound.io/flow_v1beta1.json
+    kind: Flow
+    name: flow_v1beta1
+appflow.aws.upbound.io:
+  - apiVersion: appflow.aws.upbound.io/v1beta2
+    filename: appflow.aws.upbound.io/flow_v1beta2.json
+    kind: Flow
+    name: flow_v1beta2
+  - apiVersion: appflow.aws.upbound.io/v1beta1
+    filename: appflow.aws.upbound.io/flow_v1beta1.json
+    kind: Flow
+    name: flow_v1beta1
 appgw.ingress.azure.io:
   - apiVersion: appgw.ingress.azure.io/v1beta1
     filename: appgw.ingress.azure.io/azureapplicationgatewayrewrite_v1beta1.json
@@ -1571,6 +2213,20 @@ apphub.cnrm.cloud.google.com:
     filename: apphub.cnrm.cloud.google.com/apphubapplication_v1beta1.json
     kind: AppHubApplication
     name: apphubapplication_v1beta1
+appintegrations.aws.m.upbound.io:
+  - apiVersion: appintegrations.aws.m.upbound.io/v1beta1
+    filename: appintegrations.aws.m.upbound.io/eventintegration_v1beta1.json
+    kind: EventIntegration
+    name: eventintegration_v1beta1
+appintegrations.aws.upbound.io:
+  - apiVersion: appintegrations.aws.upbound.io/v1beta1
+    filename: appintegrations.aws.upbound.io/eventintegration_v1beta1.json
+    kind: EventIntegration
+    name: eventintegration_v1beta1
+  - apiVersion: appintegrations.aws.upbound.io/v1beta2
+    filename: appintegrations.aws.upbound.io/eventintegration_v1beta2.json
+    kind: EventIntegration
+    name: eventintegration_v1beta2
 application-networking.k8s.aws:
   - apiVersion: application-networking.k8s.aws/v1alpha1
     filename: application-networking.k8s.aws/accesslogpolicy_v1alpha1.json
@@ -1601,6 +2257,102 @@ applicationautoscaling.services.k8s.aws:
     filename: applicationautoscaling.services.k8s.aws/scalingpolicy_v1alpha1.json
     kind: ScalingPolicy
     name: scalingpolicy_v1alpha1
+applicationinsights.aws.m.upbound.io:
+  - apiVersion: applicationinsights.aws.m.upbound.io/v1beta1
+    filename: applicationinsights.aws.m.upbound.io/application_v1beta1.json
+    kind: Application
+    name: application_v1beta1
+applicationinsights.aws.upbound.io:
+  - apiVersion: applicationinsights.aws.upbound.io/v1beta1
+    filename: applicationinsights.aws.upbound.io/application_v1beta1.json
+    kind: Application
+    name: application_v1beta1
+appmesh.aws.m.upbound.io:
+  - apiVersion: appmesh.aws.m.upbound.io/v1beta1
+    filename: appmesh.aws.m.upbound.io/virtualservice_v1beta1.json
+    kind: VirtualService
+    name: virtualservice_v1beta1
+  - apiVersion: appmesh.aws.m.upbound.io/v1beta1
+    filename: appmesh.aws.m.upbound.io/route_v1beta1.json
+    kind: Route
+    name: route_v1beta1
+  - apiVersion: appmesh.aws.m.upbound.io/v1beta1
+    filename: appmesh.aws.m.upbound.io/gatewayroute_v1beta1.json
+    kind: GatewayRoute
+    name: gatewayroute_v1beta1
+  - apiVersion: appmesh.aws.m.upbound.io/v1beta1
+    filename: appmesh.aws.m.upbound.io/mesh_v1beta1.json
+    kind: Mesh
+    name: mesh_v1beta1
+  - apiVersion: appmesh.aws.m.upbound.io/v1beta1
+    filename: appmesh.aws.m.upbound.io/virtualnode_v1beta1.json
+    kind: VirtualNode
+    name: virtualnode_v1beta1
+  - apiVersion: appmesh.aws.m.upbound.io/v1beta1
+    filename: appmesh.aws.m.upbound.io/virtualrouter_v1beta1.json
+    kind: VirtualRouter
+    name: virtualrouter_v1beta1
+  - apiVersion: appmesh.aws.m.upbound.io/v1beta1
+    filename: appmesh.aws.m.upbound.io/virtualgateway_v1beta1.json
+    kind: VirtualGateway
+    name: virtualgateway_v1beta1
+appmesh.aws.upbound.io:
+  - apiVersion: appmesh.aws.upbound.io/v1beta1
+    filename: appmesh.aws.upbound.io/virtualservice_v1beta1.json
+    kind: VirtualService
+    name: virtualservice_v1beta1
+  - apiVersion: appmesh.aws.upbound.io/v1beta2
+    filename: appmesh.aws.upbound.io/mesh_v1beta2.json
+    kind: Mesh
+    name: mesh_v1beta2
+  - apiVersion: appmesh.aws.upbound.io/v1beta1
+    filename: appmesh.aws.upbound.io/route_v1beta1.json
+    kind: Route
+    name: route_v1beta1
+  - apiVersion: appmesh.aws.upbound.io/v1beta1
+    filename: appmesh.aws.upbound.io/gatewayroute_v1beta1.json
+    kind: GatewayRoute
+    name: gatewayroute_v1beta1
+  - apiVersion: appmesh.aws.upbound.io/v1beta2
+    filename: appmesh.aws.upbound.io/virtualgateway_v1beta2.json
+    kind: VirtualGateway
+    name: virtualgateway_v1beta2
+  - apiVersion: appmesh.aws.upbound.io/v1beta1
+    filename: appmesh.aws.upbound.io/mesh_v1beta1.json
+    kind: Mesh
+    name: mesh_v1beta1
+  - apiVersion: appmesh.aws.upbound.io/v1beta2
+    filename: appmesh.aws.upbound.io/route_v1beta2.json
+    kind: Route
+    name: route_v1beta2
+  - apiVersion: appmesh.aws.upbound.io/v1beta1
+    filename: appmesh.aws.upbound.io/virtualnode_v1beta1.json
+    kind: VirtualNode
+    name: virtualnode_v1beta1
+  - apiVersion: appmesh.aws.upbound.io/v1beta1
+    filename: appmesh.aws.upbound.io/virtualrouter_v1beta1.json
+    kind: VirtualRouter
+    name: virtualrouter_v1beta1
+  - apiVersion: appmesh.aws.upbound.io/v1beta2
+    filename: appmesh.aws.upbound.io/gatewayroute_v1beta2.json
+    kind: GatewayRoute
+    name: gatewayroute_v1beta2
+  - apiVersion: appmesh.aws.upbound.io/v1beta2
+    filename: appmesh.aws.upbound.io/virtualnode_v1beta2.json
+    kind: VirtualNode
+    name: virtualnode_v1beta2
+  - apiVersion: appmesh.aws.upbound.io/v1beta2
+    filename: appmesh.aws.upbound.io/virtualservice_v1beta2.json
+    kind: VirtualService
+    name: virtualservice_v1beta2
+  - apiVersion: appmesh.aws.upbound.io/v1beta1
+    filename: appmesh.aws.upbound.io/virtualgateway_v1beta1.json
+    kind: VirtualGateway
+    name: virtualgateway_v1beta1
+  - apiVersion: appmesh.aws.upbound.io/v1beta2
+    filename: appmesh.aws.upbound.io/virtualrouter_v1beta2.json
+    kind: VirtualRouter
+    name: virtualrouter_v1beta2
 appplatform.azure.m.upbound.io:
   - apiVersion: appplatform.azure.m.upbound.io/v1beta1
     filename: appplatform.azure.m.upbound.io/springcloudactivedeployment_v1beta1.json
@@ -1849,6 +2601,56 @@ appprotectdos.f5.com:
     filename: appprotectdos.f5.com/dosprotectedresource_v1beta1.json
     kind: DosProtectedResource
     name: dosprotectedresource_v1beta1
+apprunner.aws.m.upbound.io:
+  - apiVersion: apprunner.aws.m.upbound.io/v1beta1
+    filename: apprunner.aws.m.upbound.io/service_v1beta1.json
+    kind: Service
+    name: service_v1beta1
+  - apiVersion: apprunner.aws.m.upbound.io/v1beta1
+    filename: apprunner.aws.m.upbound.io/autoscalingconfigurationversion_v1beta1.json
+    kind: AutoScalingConfigurationVersion
+    name: autoscalingconfigurationversion_v1beta1
+  - apiVersion: apprunner.aws.m.upbound.io/v1beta1
+    filename: apprunner.aws.m.upbound.io/vpcconnector_v1beta1.json
+    kind: VPCConnector
+    name: vpcconnector_v1beta1
+  - apiVersion: apprunner.aws.m.upbound.io/v1beta1
+    filename: apprunner.aws.m.upbound.io/connection_v1beta1.json
+    kind: Connection
+    name: connection_v1beta1
+  - apiVersion: apprunner.aws.m.upbound.io/v1beta1
+    filename: apprunner.aws.m.upbound.io/observabilityconfiguration_v1beta1.json
+    kind: ObservabilityConfiguration
+    name: observabilityconfiguration_v1beta1
+apprunner.aws.upbound.io:
+  - apiVersion: apprunner.aws.upbound.io/v1beta2
+    filename: apprunner.aws.upbound.io/observabilityconfiguration_v1beta2.json
+    kind: ObservabilityConfiguration
+    name: observabilityconfiguration_v1beta2
+  - apiVersion: apprunner.aws.upbound.io/v1beta1
+    filename: apprunner.aws.upbound.io/service_v1beta1.json
+    kind: Service
+    name: service_v1beta1
+  - apiVersion: apprunner.aws.upbound.io/v1beta1
+    filename: apprunner.aws.upbound.io/autoscalingconfigurationversion_v1beta1.json
+    kind: AutoScalingConfigurationVersion
+    name: autoscalingconfigurationversion_v1beta1
+  - apiVersion: apprunner.aws.upbound.io/v1beta2
+    filename: apprunner.aws.upbound.io/service_v1beta2.json
+    kind: Service
+    name: service_v1beta2
+  - apiVersion: apprunner.aws.upbound.io/v1beta1
+    filename: apprunner.aws.upbound.io/vpcconnector_v1beta1.json
+    kind: VPCConnector
+    name: vpcconnector_v1beta1
+  - apiVersion: apprunner.aws.upbound.io/v1beta1
+    filename: apprunner.aws.upbound.io/connection_v1beta1.json
+    kind: Connection
+    name: connection_v1beta1
+  - apiVersion: apprunner.aws.upbound.io/v1beta1
+    filename: apprunner.aws.upbound.io/observabilityconfiguration_v1beta1.json
+    kind: ObservabilityConfiguration
+    name: observabilityconfiguration_v1beta1
 apps.emqx.io:
   - apiVersion: apps.emqx.io/v1beta3
     filename: apps.emqx.io/emqxplugin_v1beta3.json
@@ -1950,6 +2752,146 @@ apps.projectsveltos.io:
     filename: apps.projectsveltos.io/cleaner_v1alpha1.json
     kind: Cleaner
     name: cleaner_v1alpha1
+appstream.aws.m.upbound.io:
+  - apiVersion: appstream.aws.m.upbound.io/v1beta1
+    filename: appstream.aws.m.upbound.io/fleetstackassociation_v1beta1.json
+    kind: FleetStackAssociation
+    name: fleetstackassociation_v1beta1
+  - apiVersion: appstream.aws.m.upbound.io/v1beta1
+    filename: appstream.aws.m.upbound.io/userstackassociation_v1beta1.json
+    kind: UserStackAssociation
+    name: userstackassociation_v1beta1
+  - apiVersion: appstream.aws.m.upbound.io/v1beta1
+    filename: appstream.aws.m.upbound.io/imagebuilder_v1beta1.json
+    kind: ImageBuilder
+    name: imagebuilder_v1beta1
+  - apiVersion: appstream.aws.m.upbound.io/v1beta1
+    filename: appstream.aws.m.upbound.io/directoryconfig_v1beta1.json
+    kind: DirectoryConfig
+    name: directoryconfig_v1beta1
+  - apiVersion: appstream.aws.m.upbound.io/v1beta1
+    filename: appstream.aws.m.upbound.io/fleet_v1beta1.json
+    kind: Fleet
+    name: fleet_v1beta1
+  - apiVersion: appstream.aws.m.upbound.io/v1beta1
+    filename: appstream.aws.m.upbound.io/user_v1beta1.json
+    kind: User
+    name: user_v1beta1
+  - apiVersion: appstream.aws.m.upbound.io/v1beta1
+    filename: appstream.aws.m.upbound.io/stack_v1beta1.json
+    kind: Stack
+    name: stack_v1beta1
+appstream.aws.upbound.io:
+  - apiVersion: appstream.aws.upbound.io/v1beta2
+    filename: appstream.aws.upbound.io/stack_v1beta2.json
+    kind: Stack
+    name: stack_v1beta2
+  - apiVersion: appstream.aws.upbound.io/v1beta1
+    filename: appstream.aws.upbound.io/fleetstackassociation_v1beta1.json
+    kind: FleetStackAssociation
+    name: fleetstackassociation_v1beta1
+  - apiVersion: appstream.aws.upbound.io/v1beta2
+    filename: appstream.aws.upbound.io/imagebuilder_v1beta2.json
+    kind: ImageBuilder
+    name: imagebuilder_v1beta2
+  - apiVersion: appstream.aws.upbound.io/v1beta2
+    filename: appstream.aws.upbound.io/fleet_v1beta2.json
+    kind: Fleet
+    name: fleet_v1beta2
+  - apiVersion: appstream.aws.upbound.io/v1beta1
+    filename: appstream.aws.upbound.io/userstackassociation_v1beta1.json
+    kind: UserStackAssociation
+    name: userstackassociation_v1beta1
+  - apiVersion: appstream.aws.upbound.io/v1beta2
+    filename: appstream.aws.upbound.io/directoryconfig_v1beta2.json
+    kind: DirectoryConfig
+    name: directoryconfig_v1beta2
+  - apiVersion: appstream.aws.upbound.io/v1beta1
+    filename: appstream.aws.upbound.io/imagebuilder_v1beta1.json
+    kind: ImageBuilder
+    name: imagebuilder_v1beta1
+  - apiVersion: appstream.aws.upbound.io/v1beta1
+    filename: appstream.aws.upbound.io/directoryconfig_v1beta1.json
+    kind: DirectoryConfig
+    name: directoryconfig_v1beta1
+  - apiVersion: appstream.aws.upbound.io/v1beta1
+    filename: appstream.aws.upbound.io/fleet_v1beta1.json
+    kind: Fleet
+    name: fleet_v1beta1
+  - apiVersion: appstream.aws.upbound.io/v1beta1
+    filename: appstream.aws.upbound.io/user_v1beta1.json
+    kind: User
+    name: user_v1beta1
+  - apiVersion: appstream.aws.upbound.io/v1beta1
+    filename: appstream.aws.upbound.io/stack_v1beta1.json
+    kind: Stack
+    name: stack_v1beta1
+appsync.aws.m.upbound.io:
+  - apiVersion: appsync.aws.m.upbound.io/v1beta1
+    filename: appsync.aws.m.upbound.io/graphqlapi_v1beta1.json
+    kind: GraphQLAPI
+    name: graphqlapi_v1beta1
+  - apiVersion: appsync.aws.m.upbound.io/v1beta1
+    filename: appsync.aws.m.upbound.io/function_v1beta1.json
+    kind: Function
+    name: function_v1beta1
+  - apiVersion: appsync.aws.m.upbound.io/v1beta1
+    filename: appsync.aws.m.upbound.io/datasource_v1beta1.json
+    kind: Datasource
+    name: datasource_v1beta1
+  - apiVersion: appsync.aws.m.upbound.io/v1beta1
+    filename: appsync.aws.m.upbound.io/apikey_v1beta1.json
+    kind: APIKey
+    name: apikey_v1beta1
+  - apiVersion: appsync.aws.m.upbound.io/v1beta1
+    filename: appsync.aws.m.upbound.io/resolver_v1beta1.json
+    kind: Resolver
+    name: resolver_v1beta1
+  - apiVersion: appsync.aws.m.upbound.io/v1beta1
+    filename: appsync.aws.m.upbound.io/apicache_v1beta1.json
+    kind: APICache
+    name: apicache_v1beta1
+appsync.aws.upbound.io:
+  - apiVersion: appsync.aws.upbound.io/v1beta2
+    filename: appsync.aws.upbound.io/graphqlapi_v1beta2.json
+    kind: GraphQLAPI
+    name: graphqlapi_v1beta2
+  - apiVersion: appsync.aws.upbound.io/v1beta1
+    filename: appsync.aws.upbound.io/graphqlapi_v1beta1.json
+    kind: GraphQLAPI
+    name: graphqlapi_v1beta1
+  - apiVersion: appsync.aws.upbound.io/v1beta1
+    filename: appsync.aws.upbound.io/function_v1beta1.json
+    kind: Function
+    name: function_v1beta1
+  - apiVersion: appsync.aws.upbound.io/v1beta1
+    filename: appsync.aws.upbound.io/datasource_v1beta1.json
+    kind: Datasource
+    name: datasource_v1beta1
+  - apiVersion: appsync.aws.upbound.io/v1beta2
+    filename: appsync.aws.upbound.io/datasource_v1beta2.json
+    kind: Datasource
+    name: datasource_v1beta2
+  - apiVersion: appsync.aws.upbound.io/v1beta1
+    filename: appsync.aws.upbound.io/apikey_v1beta1.json
+    kind: APIKey
+    name: apikey_v1beta1
+  - apiVersion: appsync.aws.upbound.io/v1beta1
+    filename: appsync.aws.upbound.io/resolver_v1beta1.json
+    kind: Resolver
+    name: resolver_v1beta1
+  - apiVersion: appsync.aws.upbound.io/v1beta2
+    filename: appsync.aws.upbound.io/function_v1beta2.json
+    kind: Function
+    name: function_v1beta2
+  - apiVersion: appsync.aws.upbound.io/v1beta2
+    filename: appsync.aws.upbound.io/resolver_v1beta2.json
+    kind: Resolver
+    name: resolver_v1beta2
+  - apiVersion: appsync.aws.upbound.io/v1beta1
+    filename: appsync.aws.upbound.io/apicache_v1beta1.json
+    kind: APICache
+    name: apicache_v1beta1
 aquasecurity.github.io:
   - apiVersion: aquasecurity.github.io/v1alpha1
     filename: aquasecurity.github.io/clustersbomreport_v1alpha1.json
@@ -2177,6 +3119,48 @@ asset.cnrm.cloud.google.com:
     filename: asset.cnrm.cloud.google.com/assetfeed_v1alpha1.json
     kind: AssetFeed
     name: assetfeed_v1alpha1
+athena.aws.m.upbound.io:
+  - apiVersion: athena.aws.m.upbound.io/v1beta1
+    filename: athena.aws.m.upbound.io/database_v1beta1.json
+    kind: Database
+    name: database_v1beta1
+  - apiVersion: athena.aws.m.upbound.io/v1beta1
+    filename: athena.aws.m.upbound.io/workgroup_v1beta1.json
+    kind: Workgroup
+    name: workgroup_v1beta1
+  - apiVersion: athena.aws.m.upbound.io/v1beta1
+    filename: athena.aws.m.upbound.io/datacatalog_v1beta1.json
+    kind: DataCatalog
+    name: datacatalog_v1beta1
+  - apiVersion: athena.aws.m.upbound.io/v1beta1
+    filename: athena.aws.m.upbound.io/namedquery_v1beta1.json
+    kind: NamedQuery
+    name: namedquery_v1beta1
+athena.aws.upbound.io:
+  - apiVersion: athena.aws.upbound.io/v1beta1
+    filename: athena.aws.upbound.io/database_v1beta1.json
+    kind: Database
+    name: database_v1beta1
+  - apiVersion: athena.aws.upbound.io/v1beta2
+    filename: athena.aws.upbound.io/database_v1beta2.json
+    kind: Database
+    name: database_v1beta2
+  - apiVersion: athena.aws.upbound.io/v1beta2
+    filename: athena.aws.upbound.io/workgroup_v1beta2.json
+    kind: Workgroup
+    name: workgroup_v1beta2
+  - apiVersion: athena.aws.upbound.io/v1beta1
+    filename: athena.aws.upbound.io/workgroup_v1beta1.json
+    kind: Workgroup
+    name: workgroup_v1beta1
+  - apiVersion: athena.aws.upbound.io/v1beta1
+    filename: athena.aws.upbound.io/datacatalog_v1beta1.json
+    kind: DataCatalog
+    name: datacatalog_v1beta1
+  - apiVersion: athena.aws.upbound.io/v1beta1
+    filename: athena.aws.upbound.io/namedquery_v1beta1.json
+    kind: NamedQuery
+    name: namedquery_v1beta1
 attestation.azure.m.upbound.io:
   - apiVersion: attestation.azure.m.upbound.io/v1beta1
     filename: attestation.azure.m.upbound.io/provider_v1beta1.json
@@ -2512,6 +3496,96 @@ autopilot.k0sproject.io:
     filename: autopilot.k0sproject.io/plan_v1beta2.json
     kind: Plan
     name: plan_v1beta2
+autoscaling.aws.m.upbound.io:
+  - apiVersion: autoscaling.aws.m.upbound.io/v1beta1
+    filename: autoscaling.aws.m.upbound.io/grouptag_v1beta1.json
+    kind: GroupTag
+    name: grouptag_v1beta1
+  - apiVersion: autoscaling.aws.m.upbound.io/v1beta1
+    filename: autoscaling.aws.m.upbound.io/attachment_v1beta1.json
+    kind: Attachment
+    name: attachment_v1beta1
+  - apiVersion: autoscaling.aws.m.upbound.io/v1beta1
+    filename: autoscaling.aws.m.upbound.io/lifecyclehook_v1beta1.json
+    kind: LifecycleHook
+    name: lifecyclehook_v1beta1
+  - apiVersion: autoscaling.aws.m.upbound.io/v1beta1
+    filename: autoscaling.aws.m.upbound.io/notification_v1beta1.json
+    kind: Notification
+    name: notification_v1beta1
+  - apiVersion: autoscaling.aws.m.upbound.io/v1beta1
+    filename: autoscaling.aws.m.upbound.io/autoscalinggroup_v1beta1.json
+    kind: AutoscalingGroup
+    name: autoscalinggroup_v1beta1
+  - apiVersion: autoscaling.aws.m.upbound.io/v1beta1
+    filename: autoscaling.aws.m.upbound.io/schedule_v1beta1.json
+    kind: Schedule
+    name: schedule_v1beta1
+  - apiVersion: autoscaling.aws.m.upbound.io/v1beta1
+    filename: autoscaling.aws.m.upbound.io/policy_v1beta1.json
+    kind: Policy
+    name: policy_v1beta1
+  - apiVersion: autoscaling.aws.m.upbound.io/v1beta1
+    filename: autoscaling.aws.m.upbound.io/launchconfiguration_v1beta1.json
+    kind: LaunchConfiguration
+    name: launchconfiguration_v1beta1
+autoscaling.aws.upbound.io:
+  - apiVersion: autoscaling.aws.upbound.io/v1beta1
+    filename: autoscaling.aws.upbound.io/grouptag_v1beta1.json
+    kind: GroupTag
+    name: grouptag_v1beta1
+  - apiVersion: autoscaling.aws.upbound.io/v1beta1
+    filename: autoscaling.aws.upbound.io/attachment_v1beta1.json
+    kind: Attachment
+    name: attachment_v1beta1
+  - apiVersion: autoscaling.aws.upbound.io/v1beta1
+    filename: autoscaling.aws.upbound.io/lifecyclehook_v1beta1.json
+    kind: LifecycleHook
+    name: lifecyclehook_v1beta1
+  - apiVersion: autoscaling.aws.upbound.io/v1beta1
+    filename: autoscaling.aws.upbound.io/notification_v1beta1.json
+    kind: Notification
+    name: notification_v1beta1
+  - apiVersion: autoscaling.aws.upbound.io/v1beta1
+    filename: autoscaling.aws.upbound.io/autoscalinggroup_v1beta1.json
+    kind: AutoscalingGroup
+    name: autoscalinggroup_v1beta1
+  - apiVersion: autoscaling.aws.upbound.io/v1beta1
+    filename: autoscaling.aws.upbound.io/schedule_v1beta1.json
+    kind: Schedule
+    name: schedule_v1beta1
+  - apiVersion: autoscaling.aws.upbound.io/v1beta2
+    filename: autoscaling.aws.upbound.io/policy_v1beta2.json
+    kind: Policy
+    name: policy_v1beta2
+  - apiVersion: autoscaling.aws.upbound.io/v1beta3
+    filename: autoscaling.aws.upbound.io/autoscalinggroup_v1beta3.json
+    kind: AutoscalingGroup
+    name: autoscalinggroup_v1beta3
+  - apiVersion: autoscaling.aws.upbound.io/v1beta2
+    filename: autoscaling.aws.upbound.io/autoscalinggroup_v1beta2.json
+    kind: AutoscalingGroup
+    name: autoscalinggroup_v1beta2
+  - apiVersion: autoscaling.aws.upbound.io/v1beta2
+    filename: autoscaling.aws.upbound.io/launchconfiguration_v1beta2.json
+    kind: LaunchConfiguration
+    name: launchconfiguration_v1beta2
+  - apiVersion: autoscaling.aws.upbound.io/v1beta2
+    filename: autoscaling.aws.upbound.io/grouptag_v1beta2.json
+    kind: GroupTag
+    name: grouptag_v1beta2
+  - apiVersion: autoscaling.aws.upbound.io/v1beta1
+    filename: autoscaling.aws.upbound.io/policy_v1beta1.json
+    kind: Policy
+    name: policy_v1beta1
+  - apiVersion: autoscaling.aws.upbound.io/v1beta2
+    filename: autoscaling.aws.upbound.io/attachment_v1beta2.json
+    kind: Attachment
+    name: attachment_v1beta2
+  - apiVersion: autoscaling.aws.upbound.io/v1beta1
+    filename: autoscaling.aws.upbound.io/launchconfiguration_v1beta1.json
+    kind: LaunchConfiguration
+    name: launchconfiguration_v1beta1
 autoscaling.cast.ai:
   - apiVersion: autoscaling.cast.ai/v1
     filename: autoscaling.cast.ai/recommendations_v1.json
@@ -2543,6 +3617,20 @@ autoscaling.k8s.io:
     filename: autoscaling.k8s.io/verticalpodautoscaler_v1beta1.json
     kind: verticalpodautoscaler
     name: verticalpodautoscaler_v1beta1
+autoscalingplans.aws.m.upbound.io:
+  - apiVersion: autoscalingplans.aws.m.upbound.io/v1beta1
+    filename: autoscalingplans.aws.m.upbound.io/scalingplan_v1beta1.json
+    kind: ScalingPlan
+    name: scalingplan_v1beta1
+autoscalingplans.aws.upbound.io:
+  - apiVersion: autoscalingplans.aws.upbound.io/v1beta1
+    filename: autoscalingplans.aws.upbound.io/scalingplan_v1beta1.json
+    kind: ScalingPlan
+    name: scalingplan_v1beta1
+  - apiVersion: autoscalingplans.aws.upbound.io/v1beta2
+    filename: autoscalingplans.aws.upbound.io/scalingplan_v1beta2.json
+    kind: ScalingPlan
+    name: scalingplan_v1beta2
 aws.m.upbound.io:
   - apiVersion: aws.m.upbound.io/v1beta1
     filename: aws.m.upbound.io/providerconfigusage_v1beta1.json
@@ -2690,6 +3778,100 @@ azurestackhci.azure.upbound.io:
     filename: azurestackhci.azure.upbound.io/cluster_v1beta1.json
     kind: Cluster
     name: cluster_v1beta1
+backup.aws.m.upbound.io:
+  - apiVersion: backup.aws.m.upbound.io/v1beta1
+    filename: backup.aws.m.upbound.io/vault_v1beta1.json
+    kind: Vault
+    name: vault_v1beta1
+  - apiVersion: backup.aws.m.upbound.io/v1beta1
+    filename: backup.aws.m.upbound.io/vaultnotifications_v1beta1.json
+    kind: VaultNotifications
+    name: vaultnotifications_v1beta1
+  - apiVersion: backup.aws.m.upbound.io/v1beta1
+    filename: backup.aws.m.upbound.io/plan_v1beta1.json
+    kind: Plan
+    name: plan_v1beta1
+  - apiVersion: backup.aws.m.upbound.io/v1beta1
+    filename: backup.aws.m.upbound.io/globalsettings_v1beta1.json
+    kind: GlobalSettings
+    name: globalsettings_v1beta1
+  - apiVersion: backup.aws.m.upbound.io/v1beta1
+    filename: backup.aws.m.upbound.io/vaultpolicy_v1beta1.json
+    kind: VaultPolicy
+    name: vaultpolicy_v1beta1
+  - apiVersion: backup.aws.m.upbound.io/v1beta1
+    filename: backup.aws.m.upbound.io/vaultlockconfiguration_v1beta1.json
+    kind: VaultLockConfiguration
+    name: vaultlockconfiguration_v1beta1
+  - apiVersion: backup.aws.m.upbound.io/v1beta1
+    filename: backup.aws.m.upbound.io/regionsettings_v1beta1.json
+    kind: RegionSettings
+    name: regionsettings_v1beta1
+  - apiVersion: backup.aws.m.upbound.io/v1beta1
+    filename: backup.aws.m.upbound.io/framework_v1beta1.json
+    kind: Framework
+    name: framework_v1beta1
+  - apiVersion: backup.aws.m.upbound.io/v1beta1
+    filename: backup.aws.m.upbound.io/selection_v1beta1.json
+    kind: Selection
+    name: selection_v1beta1
+  - apiVersion: backup.aws.m.upbound.io/v1beta1
+    filename: backup.aws.m.upbound.io/reportplan_v1beta1.json
+    kind: ReportPlan
+    name: reportplan_v1beta1
+backup.aws.upbound.io:
+  - apiVersion: backup.aws.upbound.io/v1beta1
+    filename: backup.aws.upbound.io/vault_v1beta1.json
+    kind: Vault
+    name: vault_v1beta1
+  - apiVersion: backup.aws.upbound.io/v1beta1
+    filename: backup.aws.upbound.io/vaultnotifications_v1beta1.json
+    kind: VaultNotifications
+    name: vaultnotifications_v1beta1
+  - apiVersion: backup.aws.upbound.io/v1beta2
+    filename: backup.aws.upbound.io/reportplan_v1beta2.json
+    kind: ReportPlan
+    name: reportplan_v1beta2
+  - apiVersion: backup.aws.upbound.io/v1beta1
+    filename: backup.aws.upbound.io/plan_v1beta1.json
+    kind: Plan
+    name: plan_v1beta1
+  - apiVersion: backup.aws.upbound.io/v1beta1
+    filename: backup.aws.upbound.io/globalsettings_v1beta1.json
+    kind: GlobalSettings
+    name: globalsettings_v1beta1
+  - apiVersion: backup.aws.upbound.io/v1beta1
+    filename: backup.aws.upbound.io/vaultpolicy_v1beta1.json
+    kind: VaultPolicy
+    name: vaultpolicy_v1beta1
+  - apiVersion: backup.aws.upbound.io/v1beta1
+    filename: backup.aws.upbound.io/vaultlockconfiguration_v1beta1.json
+    kind: VaultLockConfiguration
+    name: vaultlockconfiguration_v1beta1
+  - apiVersion: backup.aws.upbound.io/v1beta1
+    filename: backup.aws.upbound.io/regionsettings_v1beta1.json
+    kind: RegionSettings
+    name: regionsettings_v1beta1
+  - apiVersion: backup.aws.upbound.io/v1beta1
+    filename: backup.aws.upbound.io/framework_v1beta1.json
+    kind: Framework
+    name: framework_v1beta1
+  - apiVersion: backup.aws.upbound.io/v1beta1
+    filename: backup.aws.upbound.io/selection_v1beta1.json
+    kind: Selection
+    name: selection_v1beta1
+  - apiVersion: backup.aws.upbound.io/v1beta1
+    filename: backup.aws.upbound.io/reportplan_v1beta1.json
+    kind: ReportPlan
+    name: reportplan_v1beta1
+  - apiVersion: backup.aws.upbound.io/v1beta2
+    filename: backup.aws.upbound.io/plan_v1beta2.json
+    kind: Plan
+    name: plan_v1beta2
+  - apiVersion: backup.aws.upbound.io/v1beta2
+    filename: backup.aws.upbound.io/framework_v1beta2.json
+    kind: Framework
+    name: framework_v1beta2
 backupdr.cnrm.cloud.google.com:
   - apiVersion: backupdr.cnrm.cloud.google.com/v1beta1
     filename: backupdr.cnrm.cloud.google.com/backupdrbackupvault_v1beta1.json
@@ -2720,6 +3902,48 @@ barmancloud.cnpg.io:
     filename: barmancloud.cnpg.io/objectstore_v1.json
     kind: ObjectStore
     name: objectstore_v1
+batch.aws.m.upbound.io:
+  - apiVersion: batch.aws.m.upbound.io/v1beta1
+    filename: batch.aws.m.upbound.io/schedulingpolicy_v1beta1.json
+    kind: SchedulingPolicy
+    name: schedulingpolicy_v1beta1
+  - apiVersion: batch.aws.m.upbound.io/v1beta1
+    filename: batch.aws.m.upbound.io/jobqueue_v1beta1.json
+    kind: JobQueue
+    name: jobqueue_v1beta1
+  - apiVersion: batch.aws.m.upbound.io/v1beta1
+    filename: batch.aws.m.upbound.io/jobdefinition_v1beta1.json
+    kind: JobDefinition
+    name: jobdefinition_v1beta1
+  - apiVersion: batch.aws.m.upbound.io/v1beta1
+    filename: batch.aws.m.upbound.io/computeenvironment_v1beta1.json
+    kind: ComputeEnvironment
+    name: computeenvironment_v1beta1
+batch.aws.upbound.io:
+  - apiVersion: batch.aws.upbound.io/v1beta1
+    filename: batch.aws.upbound.io/schedulingpolicy_v1beta1.json
+    kind: SchedulingPolicy
+    name: schedulingpolicy_v1beta1
+  - apiVersion: batch.aws.upbound.io/v1beta1
+    filename: batch.aws.upbound.io/jobqueue_v1beta1.json
+    kind: JobQueue
+    name: jobqueue_v1beta1
+  - apiVersion: batch.aws.upbound.io/v1beta1
+    filename: batch.aws.upbound.io/jobdefinition_v1beta1.json
+    kind: JobDefinition
+    name: jobdefinition_v1beta1
+  - apiVersion: batch.aws.upbound.io/v1beta1
+    filename: batch.aws.upbound.io/computeenvironment_v1beta1.json
+    kind: ComputeEnvironment
+    name: computeenvironment_v1beta1
+  - apiVersion: batch.aws.upbound.io/v1beta2
+    filename: batch.aws.upbound.io/jobdefinition_v1beta2.json
+    kind: JobDefinition
+    name: jobdefinition_v1beta2
+  - apiVersion: batch.aws.upbound.io/v1beta2
+    filename: batch.aws.upbound.io/schedulingpolicy_v1beta2.json
+    kind: SchedulingPolicy
+    name: schedulingpolicy_v1beta2
 batch.azure.com:
   - apiVersion: batch.azure.com/v1api20210101
     filename: batch.azure.com/batchaccount_v1api20210101.json
@@ -2739,6 +3963,124 @@ beat.k8s.elastic.co:
     filename: beat.k8s.elastic.co/beat_v1beta1.json
     kind: Beat
     name: beat_v1beta1
+bedrock.aws.m.upbound.io:
+  - apiVersion: bedrock.aws.m.upbound.io/v1beta1
+    filename: bedrock.aws.m.upbound.io/inferenceprofile_v1beta1.json
+    kind: InferenceProfile
+    name: inferenceprofile_v1beta1
+bedrock.aws.upbound.io:
+  - apiVersion: bedrock.aws.upbound.io/v1beta1
+    filename: bedrock.aws.upbound.io/inferenceprofile_v1beta1.json
+    kind: InferenceProfile
+    name: inferenceprofile_v1beta1
+bedrockagent.aws.m.upbound.io:
+  - apiVersion: bedrockagent.aws.m.upbound.io/v1beta1
+    filename: bedrockagent.aws.m.upbound.io/agent_v1beta1.json
+    kind: Agent
+    name: agent_v1beta1
+bedrockagent.aws.upbound.io:
+  - apiVersion: bedrockagent.aws.upbound.io/v1beta1
+    filename: bedrockagent.aws.upbound.io/agent_v1beta1.json
+    kind: Agent
+    name: agent_v1beta1
+bedrockagentcore.aws.m.upbound.io:
+  - apiVersion: bedrockagentcore.aws.m.upbound.io/v1beta1
+    filename: bedrockagentcore.aws.m.upbound.io/workloadidentity_v1beta1.json
+    kind: WorkloadIdentity
+    name: workloadidentity_v1beta1
+  - apiVersion: bedrockagentcore.aws.m.upbound.io/v1beta1
+    filename: bedrockagentcore.aws.m.upbound.io/apikeycredentialprovider_v1beta1.json
+    kind: APIKeyCredentialProvider
+    name: apikeycredentialprovider_v1beta1
+  - apiVersion: bedrockagentcore.aws.m.upbound.io/v1beta1
+    filename: bedrockagentcore.aws.m.upbound.io/gatewaytarget_v1beta1.json
+    kind: GatewayTarget
+    name: gatewaytarget_v1beta1
+  - apiVersion: bedrockagentcore.aws.m.upbound.io/v1beta1
+    filename: bedrockagentcore.aws.m.upbound.io/agentruntime_v1beta1.json
+    kind: AgentRuntime
+    name: agentruntime_v1beta1
+  - apiVersion: bedrockagentcore.aws.m.upbound.io/v1beta1
+    filename: bedrockagentcore.aws.m.upbound.io/memorystrategy_v1beta1.json
+    kind: MemoryStrategy
+    name: memorystrategy_v1beta1
+  - apiVersion: bedrockagentcore.aws.m.upbound.io/v1beta1
+    filename: bedrockagentcore.aws.m.upbound.io/gateway_v1beta1.json
+    kind: Gateway
+    name: gateway_v1beta1
+  - apiVersion: bedrockagentcore.aws.m.upbound.io/v1beta1
+    filename: bedrockagentcore.aws.m.upbound.io/codeinterpreter_v1beta1.json
+    kind: CodeInterpreter
+    name: codeinterpreter_v1beta1
+  - apiVersion: bedrockagentcore.aws.m.upbound.io/v1beta1
+    filename: bedrockagentcore.aws.m.upbound.io/memory_v1beta1.json
+    kind: Memory
+    name: memory_v1beta1
+  - apiVersion: bedrockagentcore.aws.m.upbound.io/v1beta1
+    filename: bedrockagentcore.aws.m.upbound.io/tokenvaultcmk_v1beta1.json
+    kind: TokenVaultCmk
+    name: tokenvaultcmk_v1beta1
+  - apiVersion: bedrockagentcore.aws.m.upbound.io/v1beta1
+    filename: bedrockagentcore.aws.m.upbound.io/browser_v1beta1.json
+    kind: Browser
+    name: browser_v1beta1
+  - apiVersion: bedrockagentcore.aws.m.upbound.io/v1beta1
+    filename: bedrockagentcore.aws.m.upbound.io/oauth2credentialprovider_v1beta1.json
+    kind: Oauth2CredentialProvider
+    name: oauth2credentialprovider_v1beta1
+  - apiVersion: bedrockagentcore.aws.m.upbound.io/v1beta1
+    filename: bedrockagentcore.aws.m.upbound.io/agentruntimeendpoint_v1beta1.json
+    kind: AgentRuntimeEndpoint
+    name: agentruntimeendpoint_v1beta1
+bedrockagentcore.aws.upbound.io:
+  - apiVersion: bedrockagentcore.aws.upbound.io/v1beta1
+    filename: bedrockagentcore.aws.upbound.io/workloadidentity_v1beta1.json
+    kind: WorkloadIdentity
+    name: workloadidentity_v1beta1
+  - apiVersion: bedrockagentcore.aws.upbound.io/v1beta1
+    filename: bedrockagentcore.aws.upbound.io/apikeycredentialprovider_v1beta1.json
+    kind: APIKeyCredentialProvider
+    name: apikeycredentialprovider_v1beta1
+  - apiVersion: bedrockagentcore.aws.upbound.io/v1beta1
+    filename: bedrockagentcore.aws.upbound.io/gatewaytarget_v1beta1.json
+    kind: GatewayTarget
+    name: gatewaytarget_v1beta1
+  - apiVersion: bedrockagentcore.aws.upbound.io/v1beta1
+    filename: bedrockagentcore.aws.upbound.io/agentruntime_v1beta1.json
+    kind: AgentRuntime
+    name: agentruntime_v1beta1
+  - apiVersion: bedrockagentcore.aws.upbound.io/v1beta1
+    filename: bedrockagentcore.aws.upbound.io/memorystrategy_v1beta1.json
+    kind: MemoryStrategy
+    name: memorystrategy_v1beta1
+  - apiVersion: bedrockagentcore.aws.upbound.io/v1beta1
+    filename: bedrockagentcore.aws.upbound.io/gateway_v1beta1.json
+    kind: Gateway
+    name: gateway_v1beta1
+  - apiVersion: bedrockagentcore.aws.upbound.io/v1beta1
+    filename: bedrockagentcore.aws.upbound.io/codeinterpreter_v1beta1.json
+    kind: CodeInterpreter
+    name: codeinterpreter_v1beta1
+  - apiVersion: bedrockagentcore.aws.upbound.io/v1beta1
+    filename: bedrockagentcore.aws.upbound.io/memory_v1beta1.json
+    kind: Memory
+    name: memory_v1beta1
+  - apiVersion: bedrockagentcore.aws.upbound.io/v1beta1
+    filename: bedrockagentcore.aws.upbound.io/tokenvaultcmk_v1beta1.json
+    kind: TokenVaultCmk
+    name: tokenvaultcmk_v1beta1
+  - apiVersion: bedrockagentcore.aws.upbound.io/v1beta1
+    filename: bedrockagentcore.aws.upbound.io/browser_v1beta1.json
+    kind: Browser
+    name: browser_v1beta1
+  - apiVersion: bedrockagentcore.aws.upbound.io/v1beta1
+    filename: bedrockagentcore.aws.upbound.io/oauth2credentialprovider_v1beta1.json
+    kind: Oauth2CredentialProvider
+    name: oauth2credentialprovider_v1beta1
+  - apiVersion: bedrockagentcore.aws.upbound.io/v1beta1
+    filename: bedrockagentcore.aws.upbound.io/agentruntimeendpoint_v1beta1.json
+    kind: AgentRuntimeEndpoint
+    name: agentruntimeendpoint_v1beta1
 beyondcorp.cnrm.cloud.google.com:
   - apiVersion: beyondcorp.cnrm.cloud.google.com/v1alpha1
     filename: beyondcorp.cnrm.cloud.google.com/beyondcorpappgateway_v1alpha1.json
@@ -3075,6 +4417,32 @@ botservice.azure.upbound.io:
     filename: botservice.azure.upbound.io/botwebapp_v1beta1.json
     kind: BotWebApp
     name: botwebapp_v1beta1
+budgets.aws.m.upbound.io:
+  - apiVersion: budgets.aws.m.upbound.io/v1beta1
+    filename: budgets.aws.m.upbound.io/budgetaction_v1beta1.json
+    kind: BudgetAction
+    name: budgetaction_v1beta1
+  - apiVersion: budgets.aws.m.upbound.io/v1beta1
+    filename: budgets.aws.m.upbound.io/budget_v1beta1.json
+    kind: Budget
+    name: budget_v1beta1
+budgets.aws.upbound.io:
+  - apiVersion: budgets.aws.upbound.io/v1beta1
+    filename: budgets.aws.upbound.io/budgetaction_v1beta1.json
+    kind: BudgetAction
+    name: budgetaction_v1beta1
+  - apiVersion: budgets.aws.upbound.io/v1beta2
+    filename: budgets.aws.upbound.io/budgetaction_v1beta2.json
+    kind: BudgetAction
+    name: budgetaction_v1beta2
+  - apiVersion: budgets.aws.upbound.io/v1beta1
+    filename: budgets.aws.upbound.io/budget_v1beta1.json
+    kind: Budget
+    name: budget_v1beta1
+  - apiVersion: budgets.aws.upbound.io/v1beta2
+    filename: budgets.aws.upbound.io/budget_v1beta2.json
+    kind: Budget
+    name: budget_v1beta2
 bus.volcano.sh:
   - apiVersion: bus.volcano.sh/v1alpha1
     filename: bus.volcano.sh/command_v1alpha1.json
@@ -3502,6 +4870,16 @@ cdn.azure.upbound.io:
     filename: cdn.azure.upbound.io/frontdoorroute_v1beta1.json
     kind: FrontdoorRoute
     name: frontdoorroute_v1beta1
+ce.aws.m.upbound.io:
+  - apiVersion: ce.aws.m.upbound.io/v1beta1
+    filename: ce.aws.m.upbound.io/anomalymonitor_v1beta1.json
+    kind: AnomalyMonitor
+    name: anomalymonitor_v1beta1
+ce.aws.upbound.io:
+  - apiVersion: ce.aws.upbound.io/v1beta1
+    filename: ce.aws.upbound.io/anomalymonitor_v1beta1.json
+    kind: AnomalyMonitor
+    name: anomalymonitor_v1beta1
 ceph.rook.io:
   - apiVersion: ceph.rook.io/v1
     filename: ceph.rook.io/cephbucketnotification_v1.json
@@ -3659,6 +5037,68 @@ charts.nginx.org:
     filename: charts.nginx.org/nginxingress_v1alpha1.json
     kind: NginxIngress
     name: nginxingress_v1alpha1
+chime.aws.m.upbound.io:
+  - apiVersion: chime.aws.m.upbound.io/v1beta1
+    filename: chime.aws.m.upbound.io/voiceconnectororigination_v1beta1.json
+    kind: VoiceConnectorOrigination
+    name: voiceconnectororigination_v1beta1
+  - apiVersion: chime.aws.m.upbound.io/v1beta1
+    filename: chime.aws.m.upbound.io/voiceconnectorgroup_v1beta1.json
+    kind: VoiceConnectorGroup
+    name: voiceconnectorgroup_v1beta1
+  - apiVersion: chime.aws.m.upbound.io/v1beta1
+    filename: chime.aws.m.upbound.io/voiceconnectorterminationcredentials_v1beta1.json
+    kind: VoiceConnectorTerminationCredentials
+    name: voiceconnectorterminationcredentials_v1beta1
+  - apiVersion: chime.aws.m.upbound.io/v1beta1
+    filename: chime.aws.m.upbound.io/voiceconnectortermination_v1beta1.json
+    kind: VoiceConnectorTermination
+    name: voiceconnectortermination_v1beta1
+  - apiVersion: chime.aws.m.upbound.io/v1beta1
+    filename: chime.aws.m.upbound.io/voiceconnectorstreaming_v1beta1.json
+    kind: VoiceConnectorStreaming
+    name: voiceconnectorstreaming_v1beta1
+  - apiVersion: chime.aws.m.upbound.io/v1beta1
+    filename: chime.aws.m.upbound.io/voiceconnector_v1beta1.json
+    kind: VoiceConnector
+    name: voiceconnector_v1beta1
+  - apiVersion: chime.aws.m.upbound.io/v1beta1
+    filename: chime.aws.m.upbound.io/voiceconnectorlogging_v1beta1.json
+    kind: VoiceConnectorLogging
+    name: voiceconnectorlogging_v1beta1
+chime.aws.upbound.io:
+  - apiVersion: chime.aws.upbound.io/v1beta1
+    filename: chime.aws.upbound.io/voiceconnectororigination_v1beta1.json
+    kind: VoiceConnectorOrigination
+    name: voiceconnectororigination_v1beta1
+  - apiVersion: chime.aws.upbound.io/v1beta1
+    filename: chime.aws.upbound.io/voiceconnectorgroup_v1beta1.json
+    kind: VoiceConnectorGroup
+    name: voiceconnectorgroup_v1beta1
+  - apiVersion: chime.aws.upbound.io/v1beta1
+    filename: chime.aws.upbound.io/voiceconnectorterminationcredentials_v1beta1.json
+    kind: VoiceConnectorTerminationCredentials
+    name: voiceconnectorterminationcredentials_v1beta1
+  - apiVersion: chime.aws.upbound.io/v1beta2
+    filename: chime.aws.upbound.io/voiceconnectorstreaming_v1beta2.json
+    kind: VoiceConnectorStreaming
+    name: voiceconnectorstreaming_v1beta2
+  - apiVersion: chime.aws.upbound.io/v1beta1
+    filename: chime.aws.upbound.io/voiceconnectortermination_v1beta1.json
+    kind: VoiceConnectorTermination
+    name: voiceconnectortermination_v1beta1
+  - apiVersion: chime.aws.upbound.io/v1beta1
+    filename: chime.aws.upbound.io/voiceconnectorstreaming_v1beta1.json
+    kind: VoiceConnectorStreaming
+    name: voiceconnectorstreaming_v1beta1
+  - apiVersion: chime.aws.upbound.io/v1beta1
+    filename: chime.aws.upbound.io/voiceconnector_v1beta1.json
+    kind: VoiceConnector
+    name: voiceconnector_v1beta1
+  - apiVersion: chime.aws.upbound.io/v1beta1
+    filename: chime.aws.upbound.io/voiceconnectorlogging_v1beta1.json
+    kind: VoiceConnectorLogging
+    name: voiceconnectorlogging_v1beta1
 chisel-operator.io:
   - apiVersion: chisel-operator.io/v1
     filename: chisel-operator.io/exitnodeprovisioner_v1.json
@@ -3969,6 +5409,24 @@ cloud.grafana.o.crossplane.io:
     filename: cloud.grafana.o.crossplane.io/accesspolicies_v1alpha1.json
     kind: AccessPolicies
     name: accesspolicies_v1alpha1
+cloud9.aws.m.upbound.io:
+  - apiVersion: cloud9.aws.m.upbound.io/v1beta1
+    filename: cloud9.aws.m.upbound.io/environmentec2_v1beta1.json
+    kind: EnvironmentEC2
+    name: environmentec2_v1beta1
+  - apiVersion: cloud9.aws.m.upbound.io/v1beta1
+    filename: cloud9.aws.m.upbound.io/environmentmembership_v1beta1.json
+    kind: EnvironmentMembership
+    name: environmentmembership_v1beta1
+cloud9.aws.upbound.io:
+  - apiVersion: cloud9.aws.upbound.io/v1beta1
+    filename: cloud9.aws.upbound.io/environmentec2_v1beta1.json
+    kind: EnvironmentEC2
+    name: environmentec2_v1beta1
+  - apiVersion: cloud9.aws.upbound.io/v1beta1
+    filename: cloud9.aws.upbound.io/environmentmembership_v1beta1.json
+    kind: EnvironmentMembership
+    name: environmentmembership_v1beta1
 cloudasset.cnrm.cloud.google.com:
   - apiVersion: cloudasset.cnrm.cloud.google.com/v1alpha1
     filename: cloudasset.cnrm.cloud.google.com/cloudassetfolderfeed_v1alpha1.json
@@ -3995,6 +5453,16 @@ cloudbuild.cnrm.cloud.google.com:
     filename: cloudbuild.cnrm.cloud.google.com/cloudbuildworkerpool_v1beta1.json
     kind: CloudBuildWorkerPool
     name: cloudbuildworkerpool_v1beta1
+cloudcontrol.aws.m.upbound.io:
+  - apiVersion: cloudcontrol.aws.m.upbound.io/v1beta1
+    filename: cloudcontrol.aws.m.upbound.io/resource_v1beta1.json
+    kind: Resource
+    name: resource_v1beta1
+cloudcontrol.aws.upbound.io:
+  - apiVersion: cloudcontrol.aws.upbound.io/v1beta1
+    filename: cloudcontrol.aws.upbound.io/resource_v1beta1.json
+    kind: Resource
+    name: resource_v1beta1
 clouddeploy.cnrm.cloud.google.com:
   - apiVersion: clouddeploy.cnrm.cloud.google.com/v1beta1
     filename: clouddeploy.cnrm.cloud.google.com/clouddeploydeliverypipeline_v1beta1.json
@@ -4021,6 +5489,186 @@ cloudflare-operator.io:
     filename: cloudflare-operator.io/dnsrecord_v1.json
     kind: DNSRecord
     name: dnsrecord_v1
+cloudformation.aws.m.upbound.io:
+  - apiVersion: cloudformation.aws.m.upbound.io/v1beta1
+    filename: cloudformation.aws.m.upbound.io/stackset_v1beta1.json
+    kind: StackSet
+    name: stackset_v1beta1
+  - apiVersion: cloudformation.aws.m.upbound.io/v1beta1
+    filename: cloudformation.aws.m.upbound.io/stack_v1beta1.json
+    kind: Stack
+    name: stack_v1beta1
+  - apiVersion: cloudformation.aws.m.upbound.io/v1beta1
+    filename: cloudformation.aws.m.upbound.io/stacksetinstance_v1beta1.json
+    kind: StackSetInstance
+    name: stacksetinstance_v1beta1
+cloudformation.aws.upbound.io:
+  - apiVersion: cloudformation.aws.upbound.io/v1beta2
+    filename: cloudformation.aws.upbound.io/stacksetinstance_v1beta2.json
+    kind: StackSetInstance
+    name: stacksetinstance_v1beta2
+  - apiVersion: cloudformation.aws.upbound.io/v1beta1
+    filename: cloudformation.aws.upbound.io/stackset_v1beta1.json
+    kind: StackSet
+    name: stackset_v1beta1
+  - apiVersion: cloudformation.aws.upbound.io/v1beta1
+    filename: cloudformation.aws.upbound.io/stack_v1beta1.json
+    kind: Stack
+    name: stack_v1beta1
+  - apiVersion: cloudformation.aws.upbound.io/v1beta1
+    filename: cloudformation.aws.upbound.io/stacksetinstance_v1beta1.json
+    kind: StackSetInstance
+    name: stacksetinstance_v1beta1
+  - apiVersion: cloudformation.aws.upbound.io/v1beta2
+    filename: cloudformation.aws.upbound.io/stackset_v1beta2.json
+    kind: StackSet
+    name: stackset_v1beta2
+cloudfront.aws.m.upbound.io:
+  - apiVersion: cloudfront.aws.m.upbound.io/v1beta1
+    filename: cloudfront.aws.m.upbound.io/fieldlevelencryptionconfig_v1beta1.json
+    kind: FieldLevelEncryptionConfig
+    name: fieldlevelencryptionconfig_v1beta1
+  - apiVersion: cloudfront.aws.m.upbound.io/v1beta1
+    filename: cloudfront.aws.m.upbound.io/keygroup_v1beta1.json
+    kind: KeyGroup
+    name: keygroup_v1beta1
+  - apiVersion: cloudfront.aws.m.upbound.io/v1beta1
+    filename: cloudfront.aws.m.upbound.io/fieldlevelencryptionprofile_v1beta1.json
+    kind: FieldLevelEncryptionProfile
+    name: fieldlevelencryptionprofile_v1beta1
+  - apiVersion: cloudfront.aws.m.upbound.io/v1beta1
+    filename: cloudfront.aws.m.upbound.io/function_v1beta1.json
+    kind: Function
+    name: function_v1beta1
+  - apiVersion: cloudfront.aws.m.upbound.io/v1beta1
+    filename: cloudfront.aws.m.upbound.io/realtimelogconfig_v1beta1.json
+    kind: RealtimeLogConfig
+    name: realtimelogconfig_v1beta1
+  - apiVersion: cloudfront.aws.m.upbound.io/v1beta1
+    filename: cloudfront.aws.m.upbound.io/distribution_v1beta1.json
+    kind: Distribution
+    name: distribution_v1beta1
+  - apiVersion: cloudfront.aws.m.upbound.io/v1beta1
+    filename: cloudfront.aws.m.upbound.io/monitoringsubscription_v1beta1.json
+    kind: MonitoringSubscription
+    name: monitoringsubscription_v1beta1
+  - apiVersion: cloudfront.aws.m.upbound.io/v1beta1
+    filename: cloudfront.aws.m.upbound.io/originaccesscontrol_v1beta1.json
+    kind: OriginAccessControl
+    name: originaccesscontrol_v1beta1
+  - apiVersion: cloudfront.aws.m.upbound.io/v1beta1
+    filename: cloudfront.aws.m.upbound.io/publickey_v1beta1.json
+    kind: PublicKey
+    name: publickey_v1beta1
+  - apiVersion: cloudfront.aws.m.upbound.io/v1beta1
+    filename: cloudfront.aws.m.upbound.io/originaccessidentity_v1beta1.json
+    kind: OriginAccessIdentity
+    name: originaccessidentity_v1beta1
+  - apiVersion: cloudfront.aws.m.upbound.io/v1beta1
+    filename: cloudfront.aws.m.upbound.io/originrequestpolicy_v1beta1.json
+    kind: OriginRequestPolicy
+    name: originrequestpolicy_v1beta1
+  - apiVersion: cloudfront.aws.m.upbound.io/v1beta1
+    filename: cloudfront.aws.m.upbound.io/vpcorigin_v1beta1.json
+    kind: VPCOrigin
+    name: vpcorigin_v1beta1
+  - apiVersion: cloudfront.aws.m.upbound.io/v1beta1
+    filename: cloudfront.aws.m.upbound.io/cachepolicy_v1beta1.json
+    kind: CachePolicy
+    name: cachepolicy_v1beta1
+  - apiVersion: cloudfront.aws.m.upbound.io/v1beta1
+    filename: cloudfront.aws.m.upbound.io/responseheaderspolicy_v1beta1.json
+    kind: ResponseHeadersPolicy
+    name: responseheaderspolicy_v1beta1
+cloudfront.aws.upbound.io:
+  - apiVersion: cloudfront.aws.upbound.io/v1beta1
+    filename: cloudfront.aws.upbound.io/fieldlevelencryptionconfig_v1beta1.json
+    kind: FieldLevelEncryptionConfig
+    name: fieldlevelencryptionconfig_v1beta1
+  - apiVersion: cloudfront.aws.upbound.io/v1beta1
+    filename: cloudfront.aws.upbound.io/keygroup_v1beta1.json
+    kind: KeyGroup
+    name: keygroup_v1beta1
+  - apiVersion: cloudfront.aws.upbound.io/v1beta2
+    filename: cloudfront.aws.upbound.io/originrequestpolicy_v1beta2.json
+    kind: OriginRequestPolicy
+    name: originrequestpolicy_v1beta2
+  - apiVersion: cloudfront.aws.upbound.io/v1beta2
+    filename: cloudfront.aws.upbound.io/realtimelogconfig_v1beta2.json
+    kind: RealtimeLogConfig
+    name: realtimelogconfig_v1beta2
+  - apiVersion: cloudfront.aws.upbound.io/v1beta2
+    filename: cloudfront.aws.upbound.io/fieldlevelencryptionconfig_v1beta2.json
+    kind: FieldLevelEncryptionConfig
+    name: fieldlevelencryptionconfig_v1beta2
+  - apiVersion: cloudfront.aws.upbound.io/v1beta2
+    filename: cloudfront.aws.upbound.io/fieldlevelencryptionprofile_v1beta2.json
+    kind: FieldLevelEncryptionProfile
+    name: fieldlevelencryptionprofile_v1beta2
+  - apiVersion: cloudfront.aws.upbound.io/v1beta1
+    filename: cloudfront.aws.upbound.io/fieldlevelencryptionprofile_v1beta1.json
+    kind: FieldLevelEncryptionProfile
+    name: fieldlevelencryptionprofile_v1beta1
+  - apiVersion: cloudfront.aws.upbound.io/v1beta1
+    filename: cloudfront.aws.upbound.io/function_v1beta1.json
+    kind: Function
+    name: function_v1beta1
+  - apiVersion: cloudfront.aws.upbound.io/v1beta2
+    filename: cloudfront.aws.upbound.io/monitoringsubscription_v1beta2.json
+    kind: MonitoringSubscription
+    name: monitoringsubscription_v1beta2
+  - apiVersion: cloudfront.aws.upbound.io/v1beta2
+    filename: cloudfront.aws.upbound.io/responseheaderspolicy_v1beta2.json
+    kind: ResponseHeadersPolicy
+    name: responseheaderspolicy_v1beta2
+  - apiVersion: cloudfront.aws.upbound.io/v1beta2
+    filename: cloudfront.aws.upbound.io/distribution_v1beta2.json
+    kind: Distribution
+    name: distribution_v1beta2
+  - apiVersion: cloudfront.aws.upbound.io/v1beta2
+    filename: cloudfront.aws.upbound.io/cachepolicy_v1beta2.json
+    kind: CachePolicy
+    name: cachepolicy_v1beta2
+  - apiVersion: cloudfront.aws.upbound.io/v1beta1
+    filename: cloudfront.aws.upbound.io/realtimelogconfig_v1beta1.json
+    kind: RealtimeLogConfig
+    name: realtimelogconfig_v1beta1
+  - apiVersion: cloudfront.aws.upbound.io/v1beta1
+    filename: cloudfront.aws.upbound.io/distribution_v1beta1.json
+    kind: Distribution
+    name: distribution_v1beta1
+  - apiVersion: cloudfront.aws.upbound.io/v1beta1
+    filename: cloudfront.aws.upbound.io/monitoringsubscription_v1beta1.json
+    kind: MonitoringSubscription
+    name: monitoringsubscription_v1beta1
+  - apiVersion: cloudfront.aws.upbound.io/v1beta1
+    filename: cloudfront.aws.upbound.io/originaccesscontrol_v1beta1.json
+    kind: OriginAccessControl
+    name: originaccesscontrol_v1beta1
+  - apiVersion: cloudfront.aws.upbound.io/v1beta1
+    filename: cloudfront.aws.upbound.io/publickey_v1beta1.json
+    kind: PublicKey
+    name: publickey_v1beta1
+  - apiVersion: cloudfront.aws.upbound.io/v1beta1
+    filename: cloudfront.aws.upbound.io/originaccessidentity_v1beta1.json
+    kind: OriginAccessIdentity
+    name: originaccessidentity_v1beta1
+  - apiVersion: cloudfront.aws.upbound.io/v1beta1
+    filename: cloudfront.aws.upbound.io/originrequestpolicy_v1beta1.json
+    kind: OriginRequestPolicy
+    name: originrequestpolicy_v1beta1
+  - apiVersion: cloudfront.aws.upbound.io/v1beta1
+    filename: cloudfront.aws.upbound.io/vpcorigin_v1beta1.json
+    kind: VPCOrigin
+    name: vpcorigin_v1beta1
+  - apiVersion: cloudfront.aws.upbound.io/v1beta1
+    filename: cloudfront.aws.upbound.io/cachepolicy_v1beta1.json
+    kind: CachePolicy
+    name: cachepolicy_v1beta1
+  - apiVersion: cloudfront.aws.upbound.io/v1beta1
+    filename: cloudfront.aws.upbound.io/responseheaderspolicy_v1beta1.json
+    kind: ResponseHeadersPolicy
+    name: responseheaderspolicy_v1beta1
 cloudfront.services.k8s.aws:
   - apiVersion: cloudfront.services.k8s.aws/v1alpha1
     filename: cloudfront.services.k8s.aws/cachepolicy_v1alpha1.json
@@ -4156,6 +5804,28 @@ cloudscheduler.cnrm.cloud.google.com:
     filename: cloudscheduler.cnrm.cloud.google.com/cloudschedulerjob_v1beta1.json
     kind: cloudschedulerjob
     name: cloudschedulerjob_v1beta1
+cloudsearch.aws.m.upbound.io:
+  - apiVersion: cloudsearch.aws.m.upbound.io/v1beta1
+    filename: cloudsearch.aws.m.upbound.io/domain_v1beta1.json
+    kind: Domain
+    name: domain_v1beta1
+  - apiVersion: cloudsearch.aws.m.upbound.io/v1beta1
+    filename: cloudsearch.aws.m.upbound.io/domainserviceaccesspolicy_v1beta1.json
+    kind: DomainServiceAccessPolicy
+    name: domainserviceaccesspolicy_v1beta1
+cloudsearch.aws.upbound.io:
+  - apiVersion: cloudsearch.aws.upbound.io/v1beta1
+    filename: cloudsearch.aws.upbound.io/domain_v1beta1.json
+    kind: Domain
+    name: domain_v1beta1
+  - apiVersion: cloudsearch.aws.upbound.io/v1beta2
+    filename: cloudsearch.aws.upbound.io/domain_v1beta2.json
+    kind: Domain
+    name: domain_v1beta2
+  - apiVersion: cloudsearch.aws.upbound.io/v1beta1
+    filename: cloudsearch.aws.upbound.io/domainserviceaccesspolicy_v1beta1.json
+    kind: DomainServiceAccessPolicy
+    name: domainserviceaccesspolicy_v1beta1
 cloudsql.cloud.google.com:
   - apiVersion: cloudsql.cloud.google.com/v1
     filename: cloudsql.cloud.google.com/authproxyworkload_v1.json
@@ -4166,6 +5836,24 @@ cloudtasks.cnrm.cloud.google.com:
     filename: cloudtasks.cnrm.cloud.google.com/cloudtasksqueue_v1alpha1.json
     kind: cloudtasksqueue
     name: cloudtasksqueue_v1alpha1
+cloudtrail.aws.m.upbound.io:
+  - apiVersion: cloudtrail.aws.m.upbound.io/v1beta1
+    filename: cloudtrail.aws.m.upbound.io/trail_v1beta1.json
+    kind: Trail
+    name: trail_v1beta1
+  - apiVersion: cloudtrail.aws.m.upbound.io/v1beta1
+    filename: cloudtrail.aws.m.upbound.io/eventdatastore_v1beta1.json
+    kind: EventDataStore
+    name: eventdatastore_v1beta1
+cloudtrail.aws.upbound.io:
+  - apiVersion: cloudtrail.aws.upbound.io/v1beta1
+    filename: cloudtrail.aws.upbound.io/trail_v1beta1.json
+    kind: Trail
+    name: trail_v1beta1
+  - apiVersion: cloudtrail.aws.upbound.io/v1beta1
+    filename: cloudtrail.aws.upbound.io/eventdatastore_v1beta1.json
+    kind: EventDataStore
+    name: eventdatastore_v1beta1
 cloudtrail.services.k8s.aws:
   - apiVersion: cloudtrail.services.k8s.aws/v1alpha1
     filename: cloudtrail.services.k8s.aws/trail_v1alpha1.json
@@ -4175,6 +5863,48 @@ cloudtrail.services.k8s.aws:
     filename: cloudtrail.services.k8s.aws/eventdatastore_v1alpha1.json
     kind: EventDataStore
     name: eventdatastore_v1alpha1
+cloudwatch.aws.m.upbound.io:
+  - apiVersion: cloudwatch.aws.m.upbound.io/v1beta1
+    filename: cloudwatch.aws.m.upbound.io/dashboard_v1beta1.json
+    kind: Dashboard
+    name: dashboard_v1beta1
+  - apiVersion: cloudwatch.aws.m.upbound.io/v1beta1
+    filename: cloudwatch.aws.m.upbound.io/metricstream_v1beta1.json
+    kind: MetricStream
+    name: metricstream_v1beta1
+  - apiVersion: cloudwatch.aws.m.upbound.io/v1beta1
+    filename: cloudwatch.aws.m.upbound.io/compositealarm_v1beta1.json
+    kind: CompositeAlarm
+    name: compositealarm_v1beta1
+  - apiVersion: cloudwatch.aws.m.upbound.io/v1beta1
+    filename: cloudwatch.aws.m.upbound.io/metricalarm_v1beta1.json
+    kind: MetricAlarm
+    name: metricalarm_v1beta1
+cloudwatch.aws.upbound.io:
+  - apiVersion: cloudwatch.aws.upbound.io/v1beta1
+    filename: cloudwatch.aws.upbound.io/dashboard_v1beta1.json
+    kind: Dashboard
+    name: dashboard_v1beta1
+  - apiVersion: cloudwatch.aws.upbound.io/v1beta1
+    filename: cloudwatch.aws.upbound.io/metricstream_v1beta1.json
+    kind: MetricStream
+    name: metricstream_v1beta1
+  - apiVersion: cloudwatch.aws.upbound.io/v1beta2
+    filename: cloudwatch.aws.upbound.io/metricalarm_v1beta2.json
+    kind: MetricAlarm
+    name: metricalarm_v1beta2
+  - apiVersion: cloudwatch.aws.upbound.io/v1beta1
+    filename: cloudwatch.aws.upbound.io/compositealarm_v1beta1.json
+    kind: CompositeAlarm
+    name: compositealarm_v1beta1
+  - apiVersion: cloudwatch.aws.upbound.io/v1beta2
+    filename: cloudwatch.aws.upbound.io/compositealarm_v1beta2.json
+    kind: CompositeAlarm
+    name: compositealarm_v1beta2
+  - apiVersion: cloudwatch.aws.upbound.io/v1beta1
+    filename: cloudwatch.aws.upbound.io/metricalarm_v1beta1.json
+    kind: MetricAlarm
+    name: metricalarm_v1beta1
 cloudwatch.services.k8s.aws:
   - apiVersion: cloudwatch.services.k8s.aws/v1alpha1
     filename: cloudwatch.services.k8s.aws/metricalarm_v1alpha1.json
@@ -4188,6 +5918,154 @@ cloudwatch.services.k8s.aws:
     filename: cloudwatch.services.k8s.aws/dashboard_v1alpha1.json
     kind: Dashboard
     name: dashboard_v1alpha1
+cloudwatchevents.aws.m.upbound.io:
+  - apiVersion: cloudwatchevents.aws.m.upbound.io/v1beta1
+    filename: cloudwatchevents.aws.m.upbound.io/archive_v1beta1.json
+    kind: Archive
+    name: archive_v1beta1
+  - apiVersion: cloudwatchevents.aws.m.upbound.io/v1beta1
+    filename: cloudwatchevents.aws.m.upbound.io/bus_v1beta1.json
+    kind: Bus
+    name: bus_v1beta1
+  - apiVersion: cloudwatchevents.aws.m.upbound.io/v1beta1
+    filename: cloudwatchevents.aws.m.upbound.io/buspolicy_v1beta1.json
+    kind: BusPolicy
+    name: buspolicy_v1beta1
+  - apiVersion: cloudwatchevents.aws.m.upbound.io/v1beta1
+    filename: cloudwatchevents.aws.m.upbound.io/target_v1beta1.json
+    kind: Target
+    name: target_v1beta1
+  - apiVersion: cloudwatchevents.aws.m.upbound.io/v1beta1
+    filename: cloudwatchevents.aws.m.upbound.io/apidestination_v1beta1.json
+    kind: APIDestination
+    name: apidestination_v1beta1
+  - apiVersion: cloudwatchevents.aws.m.upbound.io/v1beta1
+    filename: cloudwatchevents.aws.m.upbound.io/connection_v1beta1.json
+    kind: Connection
+    name: connection_v1beta1
+  - apiVersion: cloudwatchevents.aws.m.upbound.io/v1beta1
+    filename: cloudwatchevents.aws.m.upbound.io/rule_v1beta1.json
+    kind: Rule
+    name: rule_v1beta1
+  - apiVersion: cloudwatchevents.aws.m.upbound.io/v1beta1
+    filename: cloudwatchevents.aws.m.upbound.io/permission_v1beta1.json
+    kind: Permission
+    name: permission_v1beta1
+cloudwatchevents.aws.upbound.io:
+  - apiVersion: cloudwatchevents.aws.upbound.io/v1beta1
+    filename: cloudwatchevents.aws.upbound.io/archive_v1beta1.json
+    kind: Archive
+    name: archive_v1beta1
+  - apiVersion: cloudwatchevents.aws.upbound.io/v1beta1
+    filename: cloudwatchevents.aws.upbound.io/bus_v1beta1.json
+    kind: Bus
+    name: bus_v1beta1
+  - apiVersion: cloudwatchevents.aws.upbound.io/v1beta2
+    filename: cloudwatchevents.aws.upbound.io/connection_v1beta2.json
+    kind: Connection
+    name: connection_v1beta2
+  - apiVersion: cloudwatchevents.aws.upbound.io/v1beta2
+    filename: cloudwatchevents.aws.upbound.io/target_v1beta2.json
+    kind: Target
+    name: target_v1beta2
+  - apiVersion: cloudwatchevents.aws.upbound.io/v1beta1
+    filename: cloudwatchevents.aws.upbound.io/buspolicy_v1beta1.json
+    kind: BusPolicy
+    name: buspolicy_v1beta1
+  - apiVersion: cloudwatchevents.aws.upbound.io/v1beta1
+    filename: cloudwatchevents.aws.upbound.io/target_v1beta1.json
+    kind: Target
+    name: target_v1beta1
+  - apiVersion: cloudwatchevents.aws.upbound.io/v1beta1
+    filename: cloudwatchevents.aws.upbound.io/apidestination_v1beta1.json
+    kind: APIDestination
+    name: apidestination_v1beta1
+  - apiVersion: cloudwatchevents.aws.upbound.io/v1beta1
+    filename: cloudwatchevents.aws.upbound.io/connection_v1beta1.json
+    kind: Connection
+    name: connection_v1beta1
+  - apiVersion: cloudwatchevents.aws.upbound.io/v1beta2
+    filename: cloudwatchevents.aws.upbound.io/permission_v1beta2.json
+    kind: Permission
+    name: permission_v1beta2
+  - apiVersion: cloudwatchevents.aws.upbound.io/v1beta1
+    filename: cloudwatchevents.aws.upbound.io/rule_v1beta1.json
+    kind: Rule
+    name: rule_v1beta1
+  - apiVersion: cloudwatchevents.aws.upbound.io/v1beta1
+    filename: cloudwatchevents.aws.upbound.io/permission_v1beta1.json
+    kind: Permission
+    name: permission_v1beta1
+cloudwatchlogs.aws.m.upbound.io:
+  - apiVersion: cloudwatchlogs.aws.m.upbound.io/v1beta1
+    filename: cloudwatchlogs.aws.m.upbound.io/destinationpolicy_v1beta1.json
+    kind: DestinationPolicy
+    name: destinationpolicy_v1beta1
+  - apiVersion: cloudwatchlogs.aws.m.upbound.io/v1beta1
+    filename: cloudwatchlogs.aws.m.upbound.io/definition_v1beta1.json
+    kind: Definition
+    name: definition_v1beta1
+  - apiVersion: cloudwatchlogs.aws.m.upbound.io/v1beta1
+    filename: cloudwatchlogs.aws.m.upbound.io/subscriptionfilter_v1beta1.json
+    kind: SubscriptionFilter
+    name: subscriptionfilter_v1beta1
+  - apiVersion: cloudwatchlogs.aws.m.upbound.io/v1beta1
+    filename: cloudwatchlogs.aws.m.upbound.io/metricfilter_v1beta1.json
+    kind: MetricFilter
+    name: metricfilter_v1beta1
+  - apiVersion: cloudwatchlogs.aws.m.upbound.io/v1beta1
+    filename: cloudwatchlogs.aws.m.upbound.io/resourcepolicy_v1beta1.json
+    kind: ResourcePolicy
+    name: resourcepolicy_v1beta1
+  - apiVersion: cloudwatchlogs.aws.m.upbound.io/v1beta1
+    filename: cloudwatchlogs.aws.m.upbound.io/stream_v1beta1.json
+    kind: Stream
+    name: stream_v1beta1
+  - apiVersion: cloudwatchlogs.aws.m.upbound.io/v1beta1
+    filename: cloudwatchlogs.aws.m.upbound.io/destination_v1beta1.json
+    kind: Destination
+    name: destination_v1beta1
+  - apiVersion: cloudwatchlogs.aws.m.upbound.io/v1beta1
+    filename: cloudwatchlogs.aws.m.upbound.io/group_v1beta1.json
+    kind: Group
+    name: group_v1beta1
+cloudwatchlogs.aws.upbound.io:
+  - apiVersion: cloudwatchlogs.aws.upbound.io/v1beta2
+    filename: cloudwatchlogs.aws.upbound.io/metricfilter_v1beta2.json
+    kind: MetricFilter
+    name: metricfilter_v1beta2
+  - apiVersion: cloudwatchlogs.aws.upbound.io/v1beta1
+    filename: cloudwatchlogs.aws.upbound.io/destinationpolicy_v1beta1.json
+    kind: DestinationPolicy
+    name: destinationpolicy_v1beta1
+  - apiVersion: cloudwatchlogs.aws.upbound.io/v1beta1
+    filename: cloudwatchlogs.aws.upbound.io/definition_v1beta1.json
+    kind: Definition
+    name: definition_v1beta1
+  - apiVersion: cloudwatchlogs.aws.upbound.io/v1beta1
+    filename: cloudwatchlogs.aws.upbound.io/subscriptionfilter_v1beta1.json
+    kind: SubscriptionFilter
+    name: subscriptionfilter_v1beta1
+  - apiVersion: cloudwatchlogs.aws.upbound.io/v1beta1
+    filename: cloudwatchlogs.aws.upbound.io/metricfilter_v1beta1.json
+    kind: MetricFilter
+    name: metricfilter_v1beta1
+  - apiVersion: cloudwatchlogs.aws.upbound.io/v1beta1
+    filename: cloudwatchlogs.aws.upbound.io/resourcepolicy_v1beta1.json
+    kind: ResourcePolicy
+    name: resourcepolicy_v1beta1
+  - apiVersion: cloudwatchlogs.aws.upbound.io/v1beta1
+    filename: cloudwatchlogs.aws.upbound.io/stream_v1beta1.json
+    kind: Stream
+    name: stream_v1beta1
+  - apiVersion: cloudwatchlogs.aws.upbound.io/v1beta1
+    filename: cloudwatchlogs.aws.upbound.io/destination_v1beta1.json
+    kind: Destination
+    name: destination_v1beta1
+  - apiVersion: cloudwatchlogs.aws.upbound.io/v1beta1
+    filename: cloudwatchlogs.aws.upbound.io/group_v1beta1.json
+    kind: Group
+    name: group_v1beta1
 cloudwatchlogs.services.k8s.aws:
   - apiVersion: cloudwatchlogs.services.k8s.aws/v1alpha1
     filename: cloudwatchlogs.services.k8s.aws/loggroup_v1alpha1.json
@@ -4443,6 +6321,188 @@ clustersecret.io:
     filename: clustersecret.io/clustersecret_v1.json
     kind: clustersecret
     name: clustersecret_v1
+codeartifact.aws.m.upbound.io:
+  - apiVersion: codeartifact.aws.m.upbound.io/v1beta1
+    filename: codeartifact.aws.m.upbound.io/domain_v1beta1.json
+    kind: Domain
+    name: domain_v1beta1
+  - apiVersion: codeartifact.aws.m.upbound.io/v1beta1
+    filename: codeartifact.aws.m.upbound.io/repository_v1beta1.json
+    kind: Repository
+    name: repository_v1beta1
+  - apiVersion: codeartifact.aws.m.upbound.io/v1beta1
+    filename: codeartifact.aws.m.upbound.io/domainpermissionspolicy_v1beta1.json
+    kind: DomainPermissionsPolicy
+    name: domainpermissionspolicy_v1beta1
+  - apiVersion: codeartifact.aws.m.upbound.io/v1beta1
+    filename: codeartifact.aws.m.upbound.io/repositorypermissionspolicy_v1beta1.json
+    kind: RepositoryPermissionsPolicy
+    name: repositorypermissionspolicy_v1beta1
+codeartifact.aws.upbound.io:
+  - apiVersion: codeartifact.aws.upbound.io/v1beta1
+    filename: codeartifact.aws.upbound.io/domain_v1beta1.json
+    kind: Domain
+    name: domain_v1beta1
+  - apiVersion: codeartifact.aws.upbound.io/v1beta1
+    filename: codeartifact.aws.upbound.io/repository_v1beta1.json
+    kind: Repository
+    name: repository_v1beta1
+  - apiVersion: codeartifact.aws.upbound.io/v1beta1
+    filename: codeartifact.aws.upbound.io/domainpermissionspolicy_v1beta1.json
+    kind: DomainPermissionsPolicy
+    name: domainpermissionspolicy_v1beta1
+  - apiVersion: codeartifact.aws.upbound.io/v1beta1
+    filename: codeartifact.aws.upbound.io/repositorypermissionspolicy_v1beta1.json
+    kind: RepositoryPermissionsPolicy
+    name: repositorypermissionspolicy_v1beta1
+codebuild.aws.m.upbound.io:
+  - apiVersion: codebuild.aws.m.upbound.io/v1beta1
+    filename: codebuild.aws.m.upbound.io/reportgroup_v1beta1.json
+    kind: ReportGroup
+    name: reportgroup_v1beta1
+  - apiVersion: codebuild.aws.m.upbound.io/v1beta1
+    filename: codebuild.aws.m.upbound.io/sourcecredential_v1beta1.json
+    kind: SourceCredential
+    name: sourcecredential_v1beta1
+  - apiVersion: codebuild.aws.m.upbound.io/v1beta1
+    filename: codebuild.aws.m.upbound.io/webhook_v1beta1.json
+    kind: Webhook
+    name: webhook_v1beta1
+  - apiVersion: codebuild.aws.m.upbound.io/v1beta1
+    filename: codebuild.aws.m.upbound.io/project_v1beta1.json
+    kind: Project
+    name: project_v1beta1
+codebuild.aws.upbound.io:
+  - apiVersion: codebuild.aws.upbound.io/v1beta1
+    filename: codebuild.aws.upbound.io/reportgroup_v1beta1.json
+    kind: ReportGroup
+    name: reportgroup_v1beta1
+  - apiVersion: codebuild.aws.upbound.io/v1beta1
+    filename: codebuild.aws.upbound.io/sourcecredential_v1beta1.json
+    kind: SourceCredential
+    name: sourcecredential_v1beta1
+  - apiVersion: codebuild.aws.upbound.io/v1beta1
+    filename: codebuild.aws.upbound.io/webhook_v1beta1.json
+    kind: Webhook
+    name: webhook_v1beta1
+  - apiVersion: codebuild.aws.upbound.io/v1beta1
+    filename: codebuild.aws.upbound.io/project_v1beta1.json
+    kind: Project
+    name: project_v1beta1
+codecommit.aws.m.upbound.io:
+  - apiVersion: codecommit.aws.m.upbound.io/v1beta1
+    filename: codecommit.aws.m.upbound.io/approvalruletemplate_v1beta1.json
+    kind: ApprovalRuleTemplate
+    name: approvalruletemplate_v1beta1
+  - apiVersion: codecommit.aws.m.upbound.io/v1beta1
+    filename: codecommit.aws.m.upbound.io/approvalruletemplateassociation_v1beta1.json
+    kind: ApprovalRuleTemplateAssociation
+    name: approvalruletemplateassociation_v1beta1
+  - apiVersion: codecommit.aws.m.upbound.io/v1beta1
+    filename: codecommit.aws.m.upbound.io/repository_v1beta1.json
+    kind: Repository
+    name: repository_v1beta1
+  - apiVersion: codecommit.aws.m.upbound.io/v1beta1
+    filename: codecommit.aws.m.upbound.io/trigger_v1beta1.json
+    kind: Trigger
+    name: trigger_v1beta1
+codecommit.aws.upbound.io:
+  - apiVersion: codecommit.aws.upbound.io/v1beta1
+    filename: codecommit.aws.upbound.io/approvalruletemplate_v1beta1.json
+    kind: ApprovalRuleTemplate
+    name: approvalruletemplate_v1beta1
+  - apiVersion: codecommit.aws.upbound.io/v1beta1
+    filename: codecommit.aws.upbound.io/approvalruletemplateassociation_v1beta1.json
+    kind: ApprovalRuleTemplateAssociation
+    name: approvalruletemplateassociation_v1beta1
+  - apiVersion: codecommit.aws.upbound.io/v1beta1
+    filename: codecommit.aws.upbound.io/repository_v1beta1.json
+    kind: Repository
+    name: repository_v1beta1
+  - apiVersion: codecommit.aws.upbound.io/v1beta1
+    filename: codecommit.aws.upbound.io/trigger_v1beta1.json
+    kind: Trigger
+    name: trigger_v1beta1
+codeguruprofiler.aws.m.upbound.io:
+  - apiVersion: codeguruprofiler.aws.m.upbound.io/v1beta1
+    filename: codeguruprofiler.aws.m.upbound.io/profilinggroup_v1beta1.json
+    kind: ProfilingGroup
+    name: profilinggroup_v1beta1
+codeguruprofiler.aws.upbound.io:
+  - apiVersion: codeguruprofiler.aws.upbound.io/v1beta1
+    filename: codeguruprofiler.aws.upbound.io/profilinggroup_v1beta1.json
+    kind: ProfilingGroup
+    name: profilinggroup_v1beta1
+codepipeline.aws.m.upbound.io:
+  - apiVersion: codepipeline.aws.m.upbound.io/v1beta1
+    filename: codepipeline.aws.m.upbound.io/codepipeline_v1beta1.json
+    kind: Codepipeline
+    name: codepipeline_v1beta1
+  - apiVersion: codepipeline.aws.m.upbound.io/v1beta1
+    filename: codepipeline.aws.m.upbound.io/webhook_v1beta1.json
+    kind: Webhook
+    name: webhook_v1beta1
+  - apiVersion: codepipeline.aws.m.upbound.io/v1beta1
+    filename: codepipeline.aws.m.upbound.io/customactiontype_v1beta1.json
+    kind: CustomActionType
+    name: customactiontype_v1beta1
+codepipeline.aws.upbound.io:
+  - apiVersion: codepipeline.aws.upbound.io/v1beta2
+    filename: codepipeline.aws.upbound.io/webhook_v1beta2.json
+    kind: Webhook
+    name: webhook_v1beta2
+  - apiVersion: codepipeline.aws.upbound.io/v1beta1
+    filename: codepipeline.aws.upbound.io/codepipeline_v1beta1.json
+    kind: Codepipeline
+    name: codepipeline_v1beta1
+  - apiVersion: codepipeline.aws.upbound.io/v1beta2
+    filename: codepipeline.aws.upbound.io/codepipeline_v1beta2.json
+    kind: Codepipeline
+    name: codepipeline_v1beta2
+  - apiVersion: codepipeline.aws.upbound.io/v1beta2
+    filename: codepipeline.aws.upbound.io/customactiontype_v1beta2.json
+    kind: CustomActionType
+    name: customactiontype_v1beta2
+  - apiVersion: codepipeline.aws.upbound.io/v1beta1
+    filename: codepipeline.aws.upbound.io/webhook_v1beta1.json
+    kind: Webhook
+    name: webhook_v1beta1
+  - apiVersion: codepipeline.aws.upbound.io/v1beta1
+    filename: codepipeline.aws.upbound.io/customactiontype_v1beta1.json
+    kind: CustomActionType
+    name: customactiontype_v1beta1
+codestarconnections.aws.m.upbound.io:
+  - apiVersion: codestarconnections.aws.m.upbound.io/v1beta1
+    filename: codestarconnections.aws.m.upbound.io/host_v1beta1.json
+    kind: Host
+    name: host_v1beta1
+  - apiVersion: codestarconnections.aws.m.upbound.io/v1beta1
+    filename: codestarconnections.aws.m.upbound.io/connection_v1beta1.json
+    kind: Connection
+    name: connection_v1beta1
+codestarconnections.aws.upbound.io:
+  - apiVersion: codestarconnections.aws.upbound.io/v1beta1
+    filename: codestarconnections.aws.upbound.io/host_v1beta1.json
+    kind: Host
+    name: host_v1beta1
+  - apiVersion: codestarconnections.aws.upbound.io/v1beta1
+    filename: codestarconnections.aws.upbound.io/connection_v1beta1.json
+    kind: Connection
+    name: connection_v1beta1
+  - apiVersion: codestarconnections.aws.upbound.io/v1beta2
+    filename: codestarconnections.aws.upbound.io/host_v1beta2.json
+    kind: Host
+    name: host_v1beta2
+codestarnotifications.aws.m.upbound.io:
+  - apiVersion: codestarnotifications.aws.m.upbound.io/v1beta1
+    filename: codestarnotifications.aws.m.upbound.io/notificationrule_v1beta1.json
+    kind: NotificationRule
+    name: notificationrule_v1beta1
+codestarnotifications.aws.upbound.io:
+  - apiVersion: codestarnotifications.aws.upbound.io/v1beta1
+    filename: codestarnotifications.aws.upbound.io/notificationrule_v1beta1.json
+    kind: NotificationRule
+    name: notificationrule_v1beta1
 cognitiveservices.azure.m.upbound.io:
   - apiVersion: cognitiveservices.azure.m.upbound.io/v1beta1
     filename: cognitiveservices.azure.m.upbound.io/deployment_v1beta1.json
@@ -4493,11 +6553,127 @@ cognitiveservices.azure.upbound.io:
     filename: cognitiveservices.azure.upbound.io/aiservices_v1beta1.json
     kind: AIServices
     name: aiservices_v1beta1
+cognitoidentity.aws.m.upbound.io:
+  - apiVersion: cognitoidentity.aws.m.upbound.io/v1beta1
+    filename: cognitoidentity.aws.m.upbound.io/poolrolesattachment_v1beta1.json
+    kind: PoolRolesAttachment
+    name: poolrolesattachment_v1beta1
+  - apiVersion: cognitoidentity.aws.m.upbound.io/v1beta1
+    filename: cognitoidentity.aws.m.upbound.io/pool_v1beta1.json
+    kind: Pool
+    name: pool_v1beta1
+  - apiVersion: cognitoidentity.aws.m.upbound.io/v1beta1
+    filename: cognitoidentity.aws.m.upbound.io/cognitoidentitypoolproviderprincipaltag_v1beta1.json
+    kind: CognitoIdentityPoolProviderPrincipalTag
+    name: cognitoidentitypoolproviderprincipaltag_v1beta1
+cognitoidentity.aws.upbound.io:
+  - apiVersion: cognitoidentity.aws.upbound.io/v1beta1
+    filename: cognitoidentity.aws.upbound.io/poolrolesattachment_v1beta1.json
+    kind: PoolRolesAttachment
+    name: poolrolesattachment_v1beta1
+  - apiVersion: cognitoidentity.aws.upbound.io/v1beta1
+    filename: cognitoidentity.aws.upbound.io/pool_v1beta1.json
+    kind: Pool
+    name: pool_v1beta1
+  - apiVersion: cognitoidentity.aws.upbound.io/v1beta1
+    filename: cognitoidentity.aws.upbound.io/cognitoidentitypoolproviderprincipaltag_v1beta1.json
+    kind: CognitoIdentityPoolProviderPrincipalTag
+    name: cognitoidentitypoolproviderprincipaltag_v1beta1
 cognitoidentityprovider.services.k8s.aws:
   - apiVersion: cognitoidentityprovider.services.k8s.aws/v1alpha1
     filename: cognitoidentityprovider.services.k8s.aws/userpool_v1alpha1.json
     kind: UserPool
     name: userpool_v1alpha1
+cognitoidp.aws.m.upbound.io:
+  - apiVersion: cognitoidp.aws.m.upbound.io/v1beta1
+    filename: cognitoidp.aws.m.upbound.io/resourceserver_v1beta1.json
+    kind: ResourceServer
+    name: resourceserver_v1beta1
+  - apiVersion: cognitoidp.aws.m.upbound.io/v1beta1
+    filename: cognitoidp.aws.m.upbound.io/usergroup_v1beta1.json
+    kind: UserGroup
+    name: usergroup_v1beta1
+  - apiVersion: cognitoidp.aws.m.upbound.io/v1beta1
+    filename: cognitoidp.aws.m.upbound.io/userpooldomain_v1beta1.json
+    kind: UserPoolDomain
+    name: userpooldomain_v1beta1
+  - apiVersion: cognitoidp.aws.m.upbound.io/v1beta1
+    filename: cognitoidp.aws.m.upbound.io/identityprovider_v1beta1.json
+    kind: IdentityProvider
+    name: identityprovider_v1beta1
+  - apiVersion: cognitoidp.aws.m.upbound.io/v1beta1
+    filename: cognitoidp.aws.m.upbound.io/userpoolclient_v1beta1.json
+    kind: UserPoolClient
+    name: userpoolclient_v1beta1
+  - apiVersion: cognitoidp.aws.m.upbound.io/v1beta1
+    filename: cognitoidp.aws.m.upbound.io/riskconfiguration_v1beta1.json
+    kind: RiskConfiguration
+    name: riskconfiguration_v1beta1
+  - apiVersion: cognitoidp.aws.m.upbound.io/v1beta1
+    filename: cognitoidp.aws.m.upbound.io/userpool_v1beta1.json
+    kind: UserPool
+    name: userpool_v1beta1
+  - apiVersion: cognitoidp.aws.m.upbound.io/v1beta1
+    filename: cognitoidp.aws.m.upbound.io/userpooluicustomization_v1beta1.json
+    kind: UserPoolUICustomization
+    name: userpooluicustomization_v1beta1
+  - apiVersion: cognitoidp.aws.m.upbound.io/v1beta1
+    filename: cognitoidp.aws.m.upbound.io/user_v1beta1.json
+    kind: User
+    name: user_v1beta1
+  - apiVersion: cognitoidp.aws.m.upbound.io/v1beta1
+    filename: cognitoidp.aws.m.upbound.io/useringroup_v1beta1.json
+    kind: UserInGroup
+    name: useringroup_v1beta1
+cognitoidp.aws.upbound.io:
+  - apiVersion: cognitoidp.aws.upbound.io/v1beta1
+    filename: cognitoidp.aws.upbound.io/resourceserver_v1beta1.json
+    kind: ResourceServer
+    name: resourceserver_v1beta1
+  - apiVersion: cognitoidp.aws.upbound.io/v1beta1
+    filename: cognitoidp.aws.upbound.io/usergroup_v1beta1.json
+    kind: UserGroup
+    name: usergroup_v1beta1
+  - apiVersion: cognitoidp.aws.upbound.io/v1beta1
+    filename: cognitoidp.aws.upbound.io/userpooldomain_v1beta1.json
+    kind: UserPoolDomain
+    name: userpooldomain_v1beta1
+  - apiVersion: cognitoidp.aws.upbound.io/v1beta1
+    filename: cognitoidp.aws.upbound.io/identityprovider_v1beta1.json
+    kind: IdentityProvider
+    name: identityprovider_v1beta1
+  - apiVersion: cognitoidp.aws.upbound.io/v1beta1
+    filename: cognitoidp.aws.upbound.io/userpoolclient_v1beta1.json
+    kind: UserPoolClient
+    name: userpoolclient_v1beta1
+  - apiVersion: cognitoidp.aws.upbound.io/v1beta2
+    filename: cognitoidp.aws.upbound.io/riskconfiguration_v1beta2.json
+    kind: RiskConfiguration
+    name: riskconfiguration_v1beta2
+  - apiVersion: cognitoidp.aws.upbound.io/v1beta1
+    filename: cognitoidp.aws.upbound.io/riskconfiguration_v1beta1.json
+    kind: RiskConfiguration
+    name: riskconfiguration_v1beta1
+  - apiVersion: cognitoidp.aws.upbound.io/v1beta1
+    filename: cognitoidp.aws.upbound.io/userpool_v1beta1.json
+    kind: UserPool
+    name: userpool_v1beta1
+  - apiVersion: cognitoidp.aws.upbound.io/v1beta1
+    filename: cognitoidp.aws.upbound.io/userpooluicustomization_v1beta1.json
+    kind: UserPoolUICustomization
+    name: userpooluicustomization_v1beta1
+  - apiVersion: cognitoidp.aws.upbound.io/v1beta1
+    filename: cognitoidp.aws.upbound.io/user_v1beta1.json
+    kind: User
+    name: user_v1beta1
+  - apiVersion: cognitoidp.aws.upbound.io/v1beta1
+    filename: cognitoidp.aws.upbound.io/useringroup_v1beta1.json
+    kind: UserInGroup
+    name: useringroup_v1beta1
+  - apiVersion: cognitoidp.aws.upbound.io/v1beta2
+    filename: cognitoidp.aws.upbound.io/userpool_v1beta2.json
+    kind: UserPool
+    name: userpool_v1beta2
 collectors.grafana.com:
   - apiVersion: collectors.grafana.com/v1alpha1
     filename: collectors.grafana.com/alloy_v1alpha1.json
@@ -5231,6 +7407,84 @@ configcontroller.cnrm.cloud.google.com:
     filename: configcontroller.cnrm.cloud.google.com/configcontrollerinstance_v1beta1.json
     kind: configcontrollerinstance
     name: configcontrollerinstance_v1beta1
+configservice.aws.m.upbound.io:
+  - apiVersion: configservice.aws.m.upbound.io/v1beta1
+    filename: configservice.aws.m.upbound.io/conformancepack_v1beta1.json
+    kind: ConformancePack
+    name: conformancepack_v1beta1
+  - apiVersion: configservice.aws.m.upbound.io/v1beta1
+    filename: configservice.aws.m.upbound.io/awsconfigurationrecorderstatus_v1beta1.json
+    kind: AWSConfigurationRecorderStatus
+    name: awsconfigurationrecorderstatus_v1beta1
+  - apiVersion: configservice.aws.m.upbound.io/v1beta1
+    filename: configservice.aws.m.upbound.io/configurationrecorder_v1beta1.json
+    kind: ConfigurationRecorder
+    name: configurationrecorder_v1beta1
+  - apiVersion: configservice.aws.m.upbound.io/v1beta1
+    filename: configservice.aws.m.upbound.io/configurationaggregator_v1beta1.json
+    kind: ConfigurationAggregator
+    name: configurationaggregator_v1beta1
+  - apiVersion: configservice.aws.m.upbound.io/v1beta1
+    filename: configservice.aws.m.upbound.io/remediationconfiguration_v1beta1.json
+    kind: RemediationConfiguration
+    name: remediationconfiguration_v1beta1
+  - apiVersion: configservice.aws.m.upbound.io/v1beta1
+    filename: configservice.aws.m.upbound.io/deliverychannel_v1beta1.json
+    kind: DeliveryChannel
+    name: deliverychannel_v1beta1
+  - apiVersion: configservice.aws.m.upbound.io/v1beta1
+    filename: configservice.aws.m.upbound.io/configrule_v1beta1.json
+    kind: ConfigRule
+    name: configrule_v1beta1
+configservice.aws.upbound.io:
+  - apiVersion: configservice.aws.upbound.io/v1beta2
+    filename: configservice.aws.upbound.io/remediationconfiguration_v1beta2.json
+    kind: RemediationConfiguration
+    name: remediationconfiguration_v1beta2
+  - apiVersion: configservice.aws.upbound.io/v1beta1
+    filename: configservice.aws.upbound.io/conformancepack_v1beta1.json
+    kind: ConformancePack
+    name: conformancepack_v1beta1
+  - apiVersion: configservice.aws.upbound.io/v1beta1
+    filename: configservice.aws.upbound.io/awsconfigurationrecorderstatus_v1beta1.json
+    kind: AWSConfigurationRecorderStatus
+    name: awsconfigurationrecorderstatus_v1beta1
+  - apiVersion: configservice.aws.upbound.io/v1beta1
+    filename: configservice.aws.upbound.io/configurationrecorder_v1beta1.json
+    kind: ConfigurationRecorder
+    name: configurationrecorder_v1beta1
+  - apiVersion: configservice.aws.upbound.io/v1beta2
+    filename: configservice.aws.upbound.io/deliverychannel_v1beta2.json
+    kind: DeliveryChannel
+    name: deliverychannel_v1beta2
+  - apiVersion: configservice.aws.upbound.io/v1beta2
+    filename: configservice.aws.upbound.io/configurationaggregator_v1beta2.json
+    kind: ConfigurationAggregator
+    name: configurationaggregator_v1beta2
+  - apiVersion: configservice.aws.upbound.io/v1beta1
+    filename: configservice.aws.upbound.io/configurationaggregator_v1beta1.json
+    kind: ConfigurationAggregator
+    name: configurationaggregator_v1beta1
+  - apiVersion: configservice.aws.upbound.io/v1beta2
+    filename: configservice.aws.upbound.io/configurationrecorder_v1beta2.json
+    kind: ConfigurationRecorder
+    name: configurationrecorder_v1beta2
+  - apiVersion: configservice.aws.upbound.io/v1beta1
+    filename: configservice.aws.upbound.io/remediationconfiguration_v1beta1.json
+    kind: RemediationConfiguration
+    name: remediationconfiguration_v1beta1
+  - apiVersion: configservice.aws.upbound.io/v1beta1
+    filename: configservice.aws.upbound.io/deliverychannel_v1beta1.json
+    kind: DeliveryChannel
+    name: deliverychannel_v1beta1
+  - apiVersion: configservice.aws.upbound.io/v1beta1
+    filename: configservice.aws.upbound.io/configrule_v1beta1.json
+    kind: ConfigRule
+    name: configrule_v1beta1
+  - apiVersion: configservice.aws.upbound.io/v1beta2
+    filename: configservice.aws.upbound.io/configrule_v1beta2.json
+    kind: ConfigRule
+    name: configrule_v1beta2
 configuration.konghq.com:
   - apiVersion: configuration.konghq.com/v1
     filename: configuration.konghq.com/kongclusterplugin_v1.json
@@ -5280,6 +7534,168 @@ configuration.konghq.com:
     filename: configuration.konghq.com/kongconsumergroup_v1beta1.json
     kind: KongConsumerGroup
     name: kongconsumergroup_v1beta1
+connect.aws.m.upbound.io:
+  - apiVersion: connect.aws.m.upbound.io/v1beta1
+    filename: connect.aws.m.upbound.io/botassociation_v1beta1.json
+    kind: BotAssociation
+    name: botassociation_v1beta1
+  - apiVersion: connect.aws.m.upbound.io/v1beta1
+    filename: connect.aws.m.upbound.io/contactflow_v1beta1.json
+    kind: ContactFlow
+    name: contactflow_v1beta1
+  - apiVersion: connect.aws.m.upbound.io/v1beta1
+    filename: connect.aws.m.upbound.io/phonenumber_v1beta1.json
+    kind: PhoneNumber
+    name: phonenumber_v1beta1
+  - apiVersion: connect.aws.m.upbound.io/v1beta1
+    filename: connect.aws.m.upbound.io/routingprofile_v1beta1.json
+    kind: RoutingProfile
+    name: routingprofile_v1beta1
+  - apiVersion: connect.aws.m.upbound.io/v1beta1
+    filename: connect.aws.m.upbound.io/securityprofile_v1beta1.json
+    kind: SecurityProfile
+    name: securityprofile_v1beta1
+  - apiVersion: connect.aws.m.upbound.io/v1beta1
+    filename: connect.aws.m.upbound.io/lambdafunctionassociation_v1beta1.json
+    kind: LambdaFunctionAssociation
+    name: lambdafunctionassociation_v1beta1
+  - apiVersion: connect.aws.m.upbound.io/v1beta1
+    filename: connect.aws.m.upbound.io/hoursofoperation_v1beta1.json
+    kind: HoursOfOperation
+    name: hoursofoperation_v1beta1
+  - apiVersion: connect.aws.m.upbound.io/v1beta1
+    filename: connect.aws.m.upbound.io/vocabulary_v1beta1.json
+    kind: Vocabulary
+    name: vocabulary_v1beta1
+  - apiVersion: connect.aws.m.upbound.io/v1beta1
+    filename: connect.aws.m.upbound.io/quickconnect_v1beta1.json
+    kind: QuickConnect
+    name: quickconnect_v1beta1
+  - apiVersion: connect.aws.m.upbound.io/v1beta1
+    filename: connect.aws.m.upbound.io/queue_v1beta1.json
+    kind: Queue
+    name: queue_v1beta1
+  - apiVersion: connect.aws.m.upbound.io/v1beta1
+    filename: connect.aws.m.upbound.io/userhierarchystructure_v1beta1.json
+    kind: UserHierarchyStructure
+    name: userhierarchystructure_v1beta1
+  - apiVersion: connect.aws.m.upbound.io/v1beta1
+    filename: connect.aws.m.upbound.io/contactflowmodule_v1beta1.json
+    kind: ContactFlowModule
+    name: contactflowmodule_v1beta1
+  - apiVersion: connect.aws.m.upbound.io/v1beta1
+    filename: connect.aws.m.upbound.io/user_v1beta1.json
+    kind: User
+    name: user_v1beta1
+  - apiVersion: connect.aws.m.upbound.io/v1beta1
+    filename: connect.aws.m.upbound.io/instancestorageconfig_v1beta1.json
+    kind: InstanceStorageConfig
+    name: instancestorageconfig_v1beta1
+  - apiVersion: connect.aws.m.upbound.io/v1beta1
+    filename: connect.aws.m.upbound.io/instance_v1beta1.json
+    kind: Instance
+    name: instance_v1beta1
+connect.aws.upbound.io:
+  - apiVersion: connect.aws.upbound.io/v1beta2
+    filename: connect.aws.upbound.io/quickconnect_v1beta2.json
+    kind: QuickConnect
+    name: quickconnect_v1beta2
+  - apiVersion: connect.aws.upbound.io/v1beta2
+    filename: connect.aws.upbound.io/botassociation_v1beta2.json
+    kind: BotAssociation
+    name: botassociation_v1beta2
+  - apiVersion: connect.aws.upbound.io/v1beta1
+    filename: connect.aws.upbound.io/botassociation_v1beta1.json
+    kind: BotAssociation
+    name: botassociation_v1beta1
+  - apiVersion: connect.aws.upbound.io/v1beta3
+    filename: connect.aws.upbound.io/hoursofoperation_v1beta3.json
+    kind: HoursOfOperation
+    name: hoursofoperation_v1beta3
+  - apiVersion: connect.aws.upbound.io/v1beta1
+    filename: connect.aws.upbound.io/contactflow_v1beta1.json
+    kind: ContactFlow
+    name: contactflow_v1beta1
+  - apiVersion: connect.aws.upbound.io/v1beta1
+    filename: connect.aws.upbound.io/phonenumber_v1beta1.json
+    kind: PhoneNumber
+    name: phonenumber_v1beta1
+  - apiVersion: connect.aws.upbound.io/v1beta2
+    filename: connect.aws.upbound.io/routingprofile_v1beta2.json
+    kind: RoutingProfile
+    name: routingprofile_v1beta2
+  - apiVersion: connect.aws.upbound.io/v1beta1
+    filename: connect.aws.upbound.io/routingprofile_v1beta1.json
+    kind: RoutingProfile
+    name: routingprofile_v1beta1
+  - apiVersion: connect.aws.upbound.io/v1beta2
+    filename: connect.aws.upbound.io/user_v1beta2.json
+    kind: User
+    name: user_v1beta2
+  - apiVersion: connect.aws.upbound.io/v1beta2
+    filename: connect.aws.upbound.io/instancestorageconfig_v1beta2.json
+    kind: InstanceStorageConfig
+    name: instancestorageconfig_v1beta2
+  - apiVersion: connect.aws.upbound.io/v1beta1
+    filename: connect.aws.upbound.io/securityprofile_v1beta1.json
+    kind: SecurityProfile
+    name: securityprofile_v1beta1
+  - apiVersion: connect.aws.upbound.io/v1beta1
+    filename: connect.aws.upbound.io/lambdafunctionassociation_v1beta1.json
+    kind: LambdaFunctionAssociation
+    name: lambdafunctionassociation_v1beta1
+  - apiVersion: connect.aws.upbound.io/v1beta2
+    filename: connect.aws.upbound.io/hoursofoperation_v1beta2.json
+    kind: HoursOfOperation
+    name: hoursofoperation_v1beta2
+  - apiVersion: connect.aws.upbound.io/v1beta3
+    filename: connect.aws.upbound.io/queue_v1beta3.json
+    kind: Queue
+    name: queue_v1beta3
+  - apiVersion: connect.aws.upbound.io/v1beta1
+    filename: connect.aws.upbound.io/hoursofoperation_v1beta1.json
+    kind: HoursOfOperation
+    name: hoursofoperation_v1beta1
+  - apiVersion: connect.aws.upbound.io/v1beta1
+    filename: connect.aws.upbound.io/vocabulary_v1beta1.json
+    kind: Vocabulary
+    name: vocabulary_v1beta1
+  - apiVersion: connect.aws.upbound.io/v1beta1
+    filename: connect.aws.upbound.io/quickconnect_v1beta1.json
+    kind: QuickConnect
+    name: quickconnect_v1beta1
+  - apiVersion: connect.aws.upbound.io/v1beta1
+    filename: connect.aws.upbound.io/queue_v1beta1.json
+    kind: Queue
+    name: queue_v1beta1
+  - apiVersion: connect.aws.upbound.io/v1beta1
+    filename: connect.aws.upbound.io/userhierarchystructure_v1beta1.json
+    kind: UserHierarchyStructure
+    name: userhierarchystructure_v1beta1
+  - apiVersion: connect.aws.upbound.io/v1beta2
+    filename: connect.aws.upbound.io/userhierarchystructure_v1beta2.json
+    kind: UserHierarchyStructure
+    name: userhierarchystructure_v1beta2
+  - apiVersion: connect.aws.upbound.io/v1beta1
+    filename: connect.aws.upbound.io/contactflowmodule_v1beta1.json
+    kind: ContactFlowModule
+    name: contactflowmodule_v1beta1
+  - apiVersion: connect.aws.upbound.io/v1beta1
+    filename: connect.aws.upbound.io/user_v1beta1.json
+    kind: User
+    name: user_v1beta1
+  - apiVersion: connect.aws.upbound.io/v1beta1
+    filename: connect.aws.upbound.io/instancestorageconfig_v1beta1.json
+    kind: InstanceStorageConfig
+    name: instancestorageconfig_v1beta1
+  - apiVersion: connect.aws.upbound.io/v1beta1
+    filename: connect.aws.upbound.io/instance_v1beta1.json
+    kind: Instance
+    name: instance_v1beta1
+  - apiVersion: connect.aws.upbound.io/v1beta2
+    filename: connect.aws.upbound.io/queue_v1beta2.json
+    kind: Queue
+    name: queue_v1beta2
 connection.gatekeeper.sh:
   - apiVersion: connection.gatekeeper.sh/v1alpha1
     filename: connection.gatekeeper.sh/connection_v1alpha1.json
@@ -6077,6 +8493,16 @@ csi.ceph.io:
     filename: csi.ceph.io/driver_v1alpha1.json
     kind: Driver
     name: driver_v1alpha1
+cur.aws.m.upbound.io:
+  - apiVersion: cur.aws.m.upbound.io/v1beta1
+    filename: cur.aws.m.upbound.io/reportdefinition_v1beta1.json
+    kind: ReportDefinition
+    name: reportdefinition_v1beta1
+cur.aws.upbound.io:
+  - apiVersion: cur.aws.upbound.io/v1beta1
+    filename: cur.aws.upbound.io/reportdefinition_v1beta1.json
+    kind: ReportDefinition
+    name: reportdefinition_v1beta1
 customize.core.cnrm.cloud.google.com:
   - apiVersion: customize.core.cnrm.cloud.google.com/v1alpha1
     filename: customize.core.cnrm.cloud.google.com/controllerresource_v1alpha1.json
@@ -6298,6 +8724,24 @@ datadoghq.com:
     filename: datadoghq.com/datadogagentinternal_v1alpha1.json
     kind: DatadogAgentInternal
     name: datadogagentinternal_v1alpha1
+dataexchange.aws.m.upbound.io:
+  - apiVersion: dataexchange.aws.m.upbound.io/v1beta1
+    filename: dataexchange.aws.m.upbound.io/dataset_v1beta1.json
+    kind: DataSet
+    name: dataset_v1beta1
+  - apiVersion: dataexchange.aws.m.upbound.io/v1beta1
+    filename: dataexchange.aws.m.upbound.io/revision_v1beta1.json
+    kind: Revision
+    name: revision_v1beta1
+dataexchange.aws.upbound.io:
+  - apiVersion: dataexchange.aws.upbound.io/v1beta1
+    filename: dataexchange.aws.upbound.io/dataset_v1beta1.json
+    kind: DataSet
+    name: dataset_v1beta1
+  - apiVersion: dataexchange.aws.upbound.io/v1beta1
+    filename: dataexchange.aws.upbound.io/revision_v1beta1.json
+    kind: Revision
+    name: revision_v1beta1
 datafactory.azure.com:
   - apiVersion: datafactory.azure.com/v1api20180601
     filename: datafactory.azure.com/factory_v1api20180601.json
@@ -6778,6 +9222,16 @@ datamigration.azure.upbound.io:
     filename: datamigration.azure.upbound.io/databasemigrationproject_v1beta1.json
     kind: DatabaseMigrationProject
     name: databasemigrationproject_v1beta1
+datapipeline.aws.m.upbound.io:
+  - apiVersion: datapipeline.aws.m.upbound.io/v1beta1
+    filename: datapipeline.aws.m.upbound.io/pipeline_v1beta1.json
+    kind: Pipeline
+    name: pipeline_v1beta1
+datapipeline.aws.upbound.io:
+  - apiVersion: datapipeline.aws.upbound.io/v1beta1
+    filename: datapipeline.aws.upbound.io/pipeline_v1beta1.json
+    kind: Pipeline
+    name: pipeline_v1beta1
 dataproc.cnrm.cloud.google.com:
   - apiVersion: dataproc.cnrm.cloud.google.com/v1beta1
     filename: dataproc.cnrm.cloud.google.com/dataproccluster_v1beta1.json
@@ -7002,6 +9456,62 @@ datastream.cnrm.cloud.google.com:
     filename: datastream.cnrm.cloud.google.com/datastreamconnectionprofile_v1alpha1.json
     kind: datastreamconnectionprofile
     name: datastreamconnectionprofile_v1alpha1
+datasync.aws.m.upbound.io:
+  - apiVersion: datasync.aws.m.upbound.io/v1beta1
+    filename: datasync.aws.m.upbound.io/locations3_v1beta1.json
+    kind: LocationS3
+    name: locations3_v1beta1
+  - apiVersion: datasync.aws.m.upbound.io/v1beta1
+    filename: datasync.aws.m.upbound.io/task_v1beta1.json
+    kind: Task
+    name: task_v1beta1
+datasync.aws.upbound.io:
+  - apiVersion: datasync.aws.upbound.io/v1beta1
+    filename: datasync.aws.upbound.io/locations3_v1beta1.json
+    kind: LocationS3
+    name: locations3_v1beta1
+  - apiVersion: datasync.aws.upbound.io/v1beta2
+    filename: datasync.aws.upbound.io/task_v1beta2.json
+    kind: Task
+    name: task_v1beta2
+  - apiVersion: datasync.aws.upbound.io/v1beta2
+    filename: datasync.aws.upbound.io/locations3_v1beta2.json
+    kind: LocationS3
+    name: locations3_v1beta2
+  - apiVersion: datasync.aws.upbound.io/v1beta1
+    filename: datasync.aws.upbound.io/task_v1beta1.json
+    kind: Task
+    name: task_v1beta1
+dax.aws.m.upbound.io:
+  - apiVersion: dax.aws.m.upbound.io/v1beta1
+    filename: dax.aws.m.upbound.io/subnetgroup_v1beta1.json
+    kind: SubnetGroup
+    name: subnetgroup_v1beta1
+  - apiVersion: dax.aws.m.upbound.io/v1beta1
+    filename: dax.aws.m.upbound.io/cluster_v1beta1.json
+    kind: Cluster
+    name: cluster_v1beta1
+  - apiVersion: dax.aws.m.upbound.io/v1beta1
+    filename: dax.aws.m.upbound.io/parametergroup_v1beta1.json
+    kind: ParameterGroup
+    name: parametergroup_v1beta1
+dax.aws.upbound.io:
+  - apiVersion: dax.aws.upbound.io/v1beta1
+    filename: dax.aws.upbound.io/subnetgroup_v1beta1.json
+    kind: SubnetGroup
+    name: subnetgroup_v1beta1
+  - apiVersion: dax.aws.upbound.io/v1beta1
+    filename: dax.aws.upbound.io/cluster_v1beta1.json
+    kind: Cluster
+    name: cluster_v1beta1
+  - apiVersion: dax.aws.upbound.io/v1beta1
+    filename: dax.aws.upbound.io/parametergroup_v1beta1.json
+    kind: ParameterGroup
+    name: parametergroup_v1beta1
+  - apiVersion: dax.aws.upbound.io/v1beta2
+    filename: dax.aws.upbound.io/cluster_v1beta2.json
+    kind: Cluster
+    name: cluster_v1beta2
 db.atlasgo.io:
   - apiVersion: db.atlasgo.io/v1alpha1
     filename: db.atlasgo.io/atlasschema_v1alpha1.json
@@ -7363,6 +9873,40 @@ dbforpostgresql.azure.upbound.io:
     filename: dbforpostgresql.azure.upbound.io/serverkey_v1beta1.json
     kind: ServerKey
     name: serverkey_v1beta1
+deploy.aws.m.upbound.io:
+  - apiVersion: deploy.aws.m.upbound.io/v1beta1
+    filename: deploy.aws.m.upbound.io/app_v1beta1.json
+    kind: App
+    name: app_v1beta1
+  - apiVersion: deploy.aws.m.upbound.io/v1beta1
+    filename: deploy.aws.m.upbound.io/deploymentconfig_v1beta1.json
+    kind: DeploymentConfig
+    name: deploymentconfig_v1beta1
+  - apiVersion: deploy.aws.m.upbound.io/v1beta1
+    filename: deploy.aws.m.upbound.io/deploymentgroup_v1beta1.json
+    kind: DeploymentGroup
+    name: deploymentgroup_v1beta1
+deploy.aws.upbound.io:
+  - apiVersion: deploy.aws.upbound.io/v1beta2
+    filename: deploy.aws.upbound.io/deploymentgroup_v1beta2.json
+    kind: DeploymentGroup
+    name: deploymentgroup_v1beta2
+  - apiVersion: deploy.aws.upbound.io/v1beta2
+    filename: deploy.aws.upbound.io/deploymentconfig_v1beta2.json
+    kind: DeploymentConfig
+    name: deploymentconfig_v1beta2
+  - apiVersion: deploy.aws.upbound.io/v1beta1
+    filename: deploy.aws.upbound.io/app_v1beta1.json
+    kind: App
+    name: app_v1beta1
+  - apiVersion: deploy.aws.upbound.io/v1beta1
+    filename: deploy.aws.upbound.io/deploymentconfig_v1beta1.json
+    kind: DeploymentConfig
+    name: deploymentconfig_v1beta1
+  - apiVersion: deploy.aws.upbound.io/v1beta1
+    filename: deploy.aws.upbound.io/deploymentgroup_v1beta1.json
+    kind: DeploymentGroup
+    name: deploymentgroup_v1beta1
 deploymentmanager.cnrm.cloud.google.com:
   - apiVersion: deploymentmanager.cnrm.cloud.google.com/v1alpha1
     filename: deploymentmanager.cnrm.cloud.google.com/deploymentmanagerdeployment_v1alpha1.json
@@ -7410,6 +9954,86 @@ desktopvirtualization.azure.upbound.io:
     filename: desktopvirtualization.azure.upbound.io/virtualdesktophostpoolregistrationinfo_v1beta1.json
     kind: VirtualDesktopHostPoolRegistrationInfo
     name: virtualdesktophostpoolregistrationinfo_v1beta1
+detective.aws.m.upbound.io:
+  - apiVersion: detective.aws.m.upbound.io/v1beta1
+    filename: detective.aws.m.upbound.io/invitationaccepter_v1beta1.json
+    kind: InvitationAccepter
+    name: invitationaccepter_v1beta1
+  - apiVersion: detective.aws.m.upbound.io/v1beta1
+    filename: detective.aws.m.upbound.io/member_v1beta1.json
+    kind: Member
+    name: member_v1beta1
+  - apiVersion: detective.aws.m.upbound.io/v1beta1
+    filename: detective.aws.m.upbound.io/graph_v1beta1.json
+    kind: Graph
+    name: graph_v1beta1
+detective.aws.upbound.io:
+  - apiVersion: detective.aws.upbound.io/v1beta1
+    filename: detective.aws.upbound.io/invitationaccepter_v1beta1.json
+    kind: InvitationAccepter
+    name: invitationaccepter_v1beta1
+  - apiVersion: detective.aws.upbound.io/v1beta1
+    filename: detective.aws.upbound.io/member_v1beta1.json
+    kind: Member
+    name: member_v1beta1
+  - apiVersion: detective.aws.upbound.io/v1beta1
+    filename: detective.aws.upbound.io/graph_v1beta1.json
+    kind: Graph
+    name: graph_v1beta1
+devicefarm.aws.m.upbound.io:
+  - apiVersion: devicefarm.aws.m.upbound.io/v1beta1
+    filename: devicefarm.aws.m.upbound.io/instanceprofile_v1beta1.json
+    kind: InstanceProfile
+    name: instanceprofile_v1beta1
+  - apiVersion: devicefarm.aws.m.upbound.io/v1beta1
+    filename: devicefarm.aws.m.upbound.io/networkprofile_v1beta1.json
+    kind: NetworkProfile
+    name: networkprofile_v1beta1
+  - apiVersion: devicefarm.aws.m.upbound.io/v1beta1
+    filename: devicefarm.aws.m.upbound.io/devicepool_v1beta1.json
+    kind: DevicePool
+    name: devicepool_v1beta1
+  - apiVersion: devicefarm.aws.m.upbound.io/v1beta1
+    filename: devicefarm.aws.m.upbound.io/project_v1beta1.json
+    kind: Project
+    name: project_v1beta1
+  - apiVersion: devicefarm.aws.m.upbound.io/v1beta1
+    filename: devicefarm.aws.m.upbound.io/upload_v1beta1.json
+    kind: Upload
+    name: upload_v1beta1
+  - apiVersion: devicefarm.aws.m.upbound.io/v1beta1
+    filename: devicefarm.aws.m.upbound.io/testgridproject_v1beta1.json
+    kind: TestGridProject
+    name: testgridproject_v1beta1
+devicefarm.aws.upbound.io:
+  - apiVersion: devicefarm.aws.upbound.io/v1beta1
+    filename: devicefarm.aws.upbound.io/instanceprofile_v1beta1.json
+    kind: InstanceProfile
+    name: instanceprofile_v1beta1
+  - apiVersion: devicefarm.aws.upbound.io/v1beta2
+    filename: devicefarm.aws.upbound.io/testgridproject_v1beta2.json
+    kind: TestGridProject
+    name: testgridproject_v1beta2
+  - apiVersion: devicefarm.aws.upbound.io/v1beta1
+    filename: devicefarm.aws.upbound.io/networkprofile_v1beta1.json
+    kind: NetworkProfile
+    name: networkprofile_v1beta1
+  - apiVersion: devicefarm.aws.upbound.io/v1beta1
+    filename: devicefarm.aws.upbound.io/devicepool_v1beta1.json
+    kind: DevicePool
+    name: devicepool_v1beta1
+  - apiVersion: devicefarm.aws.upbound.io/v1beta1
+    filename: devicefarm.aws.upbound.io/project_v1beta1.json
+    kind: Project
+    name: project_v1beta1
+  - apiVersion: devicefarm.aws.upbound.io/v1beta1
+    filename: devicefarm.aws.upbound.io/upload_v1beta1.json
+    kind: Upload
+    name: upload_v1beta1
+  - apiVersion: devicefarm.aws.upbound.io/v1beta1
+    filename: devicefarm.aws.upbound.io/testgridproject_v1beta1.json
+    kind: TestGridProject
+    name: testgridproject_v1beta1
 devices.azure.com:
   - apiVersion: devices.azure.com/v1api20210702
     filename: devices.azure.com/iothub_v1api20210702.json
@@ -7738,6 +10362,136 @@ digitaltwins.azure.upbound.io:
     filename: digitaltwins.azure.upbound.io/instance_v1beta2.json
     kind: Instance
     name: instance_v1beta2
+directconnect.aws.m.upbound.io:
+  - apiVersion: directconnect.aws.m.upbound.io/v1beta1
+    filename: directconnect.aws.m.upbound.io/privatevirtualinterface_v1beta1.json
+    kind: PrivateVirtualInterface
+    name: privatevirtualinterface_v1beta1
+  - apiVersion: directconnect.aws.m.upbound.io/v1beta1
+    filename: directconnect.aws.m.upbound.io/hostedtransitvirtualinterface_v1beta1.json
+    kind: HostedTransitVirtualInterface
+    name: hostedtransitvirtualinterface_v1beta1
+  - apiVersion: directconnect.aws.m.upbound.io/v1beta1
+    filename: directconnect.aws.m.upbound.io/hostedprivatevirtualinterface_v1beta1.json
+    kind: HostedPrivateVirtualInterface
+    name: hostedprivatevirtualinterface_v1beta1
+  - apiVersion: directconnect.aws.m.upbound.io/v1beta1
+    filename: directconnect.aws.m.upbound.io/transitvirtualinterface_v1beta1.json
+    kind: TransitVirtualInterface
+    name: transitvirtualinterface_v1beta1
+  - apiVersion: directconnect.aws.m.upbound.io/v1beta1
+    filename: directconnect.aws.m.upbound.io/lag_v1beta1.json
+    kind: Lag
+    name: lag_v1beta1
+  - apiVersion: directconnect.aws.m.upbound.io/v1beta1
+    filename: directconnect.aws.m.upbound.io/hostedprivatevirtualinterfaceaccepter_v1beta1.json
+    kind: HostedPrivateVirtualInterfaceAccepter
+    name: hostedprivatevirtualinterfaceaccepter_v1beta1
+  - apiVersion: directconnect.aws.m.upbound.io/v1beta1
+    filename: directconnect.aws.m.upbound.io/hostedpublicvirtualinterfaceaccepter_v1beta1.json
+    kind: HostedPublicVirtualInterfaceAccepter
+    name: hostedpublicvirtualinterfaceaccepter_v1beta1
+  - apiVersion: directconnect.aws.m.upbound.io/v1beta1
+    filename: directconnect.aws.m.upbound.io/hostedtransitvirtualinterfaceaccepter_v1beta1.json
+    kind: HostedTransitVirtualInterfaceAccepter
+    name: hostedtransitvirtualinterfaceaccepter_v1beta1
+  - apiVersion: directconnect.aws.m.upbound.io/v1beta1
+    filename: directconnect.aws.m.upbound.io/connectionassociation_v1beta1.json
+    kind: ConnectionAssociation
+    name: connectionassociation_v1beta1
+  - apiVersion: directconnect.aws.m.upbound.io/v1beta1
+    filename: directconnect.aws.m.upbound.io/hostedpublicvirtualinterface_v1beta1.json
+    kind: HostedPublicVirtualInterface
+    name: hostedpublicvirtualinterface_v1beta1
+  - apiVersion: directconnect.aws.m.upbound.io/v1beta1
+    filename: directconnect.aws.m.upbound.io/connection_v1beta1.json
+    kind: Connection
+    name: connection_v1beta1
+  - apiVersion: directconnect.aws.m.upbound.io/v1beta1
+    filename: directconnect.aws.m.upbound.io/gateway_v1beta1.json
+    kind: Gateway
+    name: gateway_v1beta1
+  - apiVersion: directconnect.aws.m.upbound.io/v1beta1
+    filename: directconnect.aws.m.upbound.io/gatewayassociation_v1beta1.json
+    kind: GatewayAssociation
+    name: gatewayassociation_v1beta1
+  - apiVersion: directconnect.aws.m.upbound.io/v1beta1
+    filename: directconnect.aws.m.upbound.io/gatewayassociationproposal_v1beta1.json
+    kind: GatewayAssociationProposal
+    name: gatewayassociationproposal_v1beta1
+  - apiVersion: directconnect.aws.m.upbound.io/v1beta1
+    filename: directconnect.aws.m.upbound.io/publicvirtualinterface_v1beta1.json
+    kind: PublicVirtualInterface
+    name: publicvirtualinterface_v1beta1
+  - apiVersion: directconnect.aws.m.upbound.io/v1beta1
+    filename: directconnect.aws.m.upbound.io/bgppeer_v1beta1.json
+    kind: BGPPeer
+    name: bgppeer_v1beta1
+directconnect.aws.upbound.io:
+  - apiVersion: directconnect.aws.upbound.io/v1beta1
+    filename: directconnect.aws.upbound.io/privatevirtualinterface_v1beta1.json
+    kind: PrivateVirtualInterface
+    name: privatevirtualinterface_v1beta1
+  - apiVersion: directconnect.aws.upbound.io/v1beta1
+    filename: directconnect.aws.upbound.io/hostedtransitvirtualinterface_v1beta1.json
+    kind: HostedTransitVirtualInterface
+    name: hostedtransitvirtualinterface_v1beta1
+  - apiVersion: directconnect.aws.upbound.io/v1beta1
+    filename: directconnect.aws.upbound.io/hostedprivatevirtualinterface_v1beta1.json
+    kind: HostedPrivateVirtualInterface
+    name: hostedprivatevirtualinterface_v1beta1
+  - apiVersion: directconnect.aws.upbound.io/v1beta1
+    filename: directconnect.aws.upbound.io/transitvirtualinterface_v1beta1.json
+    kind: TransitVirtualInterface
+    name: transitvirtualinterface_v1beta1
+  - apiVersion: directconnect.aws.upbound.io/v1beta1
+    filename: directconnect.aws.upbound.io/lag_v1beta1.json
+    kind: Lag
+    name: lag_v1beta1
+  - apiVersion: directconnect.aws.upbound.io/v1beta1
+    filename: directconnect.aws.upbound.io/hostedprivatevirtualinterfaceaccepter_v1beta1.json
+    kind: HostedPrivateVirtualInterfaceAccepter
+    name: hostedprivatevirtualinterfaceaccepter_v1beta1
+  - apiVersion: directconnect.aws.upbound.io/v1beta1
+    filename: directconnect.aws.upbound.io/hostedpublicvirtualinterfaceaccepter_v1beta1.json
+    kind: HostedPublicVirtualInterfaceAccepter
+    name: hostedpublicvirtualinterfaceaccepter_v1beta1
+  - apiVersion: directconnect.aws.upbound.io/v1beta1
+    filename: directconnect.aws.upbound.io/hostedtransitvirtualinterfaceaccepter_v1beta1.json
+    kind: HostedTransitVirtualInterfaceAccepter
+    name: hostedtransitvirtualinterfaceaccepter_v1beta1
+  - apiVersion: directconnect.aws.upbound.io/v1beta1
+    filename: directconnect.aws.upbound.io/connectionassociation_v1beta1.json
+    kind: ConnectionAssociation
+    name: connectionassociation_v1beta1
+  - apiVersion: directconnect.aws.upbound.io/v1beta1
+    filename: directconnect.aws.upbound.io/hostedpublicvirtualinterface_v1beta1.json
+    kind: HostedPublicVirtualInterface
+    name: hostedpublicvirtualinterface_v1beta1
+  - apiVersion: directconnect.aws.upbound.io/v1beta1
+    filename: directconnect.aws.upbound.io/connection_v1beta1.json
+    kind: Connection
+    name: connection_v1beta1
+  - apiVersion: directconnect.aws.upbound.io/v1beta1
+    filename: directconnect.aws.upbound.io/gateway_v1beta1.json
+    kind: Gateway
+    name: gateway_v1beta1
+  - apiVersion: directconnect.aws.upbound.io/v1beta1
+    filename: directconnect.aws.upbound.io/gatewayassociation_v1beta1.json
+    kind: GatewayAssociation
+    name: gatewayassociation_v1beta1
+  - apiVersion: directconnect.aws.upbound.io/v1beta1
+    filename: directconnect.aws.upbound.io/gatewayassociationproposal_v1beta1.json
+    kind: GatewayAssociationProposal
+    name: gatewayassociationproposal_v1beta1
+  - apiVersion: directconnect.aws.upbound.io/v1beta1
+    filename: directconnect.aws.upbound.io/publicvirtualinterface_v1beta1.json
+    kind: PublicVirtualInterface
+    name: publicvirtualinterface_v1beta1
+  - apiVersion: directconnect.aws.upbound.io/v1beta1
+    filename: directconnect.aws.upbound.io/bgppeer_v1beta1.json
+    kind: BGPPeer
+    name: bgppeer_v1beta1
 discoveryengine.cnrm.cloud.google.com:
   - apiVersion: discoveryengine.cnrm.cloud.google.com/v1alpha1
     filename: discoveryengine.cnrm.cloud.google.com/discoveryenginedatastore_v1alpha1.json
@@ -7748,6 +10502,20 @@ distro.eks.amazonaws.com:
     filename: distro.eks.amazonaws.com/release_v1alpha1.json
     kind: Release
     name: release_v1alpha1
+dlm.aws.m.upbound.io:
+  - apiVersion: dlm.aws.m.upbound.io/v1beta1
+    filename: dlm.aws.m.upbound.io/lifecyclepolicy_v1beta1.json
+    kind: LifecyclePolicy
+    name: lifecyclepolicy_v1beta1
+dlm.aws.upbound.io:
+  - apiVersion: dlm.aws.upbound.io/v1beta1
+    filename: dlm.aws.upbound.io/lifecyclepolicy_v1beta1.json
+    kind: LifecyclePolicy
+    name: lifecyclepolicy_v1beta1
+  - apiVersion: dlm.aws.upbound.io/v1beta2
+    filename: dlm.aws.upbound.io/lifecyclepolicy_v1beta2.json
+    kind: LifecyclePolicy
+    name: lifecyclepolicy_v1beta2
 dlp.cnrm.cloud.google.com:
   - apiVersion: dlp.cnrm.cloud.google.com/v1beta1
     filename: dlp.cnrm.cloud.google.com/dlpjobtrigger_v1beta1.json
@@ -7765,6 +10533,68 @@ dlp.cnrm.cloud.google.com:
     filename: dlp.cnrm.cloud.google.com/dlpdeidentifytemplate_v1beta1.json
     kind: dlpdeidentifytemplate
     name: dlpdeidentifytemplate_v1beta1
+dms.aws.m.upbound.io:
+  - apiVersion: dms.aws.m.upbound.io/v1beta1
+    filename: dms.aws.m.upbound.io/replicationsubnetgroup_v1beta1.json
+    kind: ReplicationSubnetGroup
+    name: replicationsubnetgroup_v1beta1
+  - apiVersion: dms.aws.m.upbound.io/v1beta1
+    filename: dms.aws.m.upbound.io/replicationinstance_v1beta1.json
+    kind: ReplicationInstance
+    name: replicationinstance_v1beta1
+  - apiVersion: dms.aws.m.upbound.io/v1beta1
+    filename: dms.aws.m.upbound.io/eventsubscription_v1beta1.json
+    kind: EventSubscription
+    name: eventsubscription_v1beta1
+  - apiVersion: dms.aws.m.upbound.io/v1beta1
+    filename: dms.aws.m.upbound.io/replicationtask_v1beta1.json
+    kind: ReplicationTask
+    name: replicationtask_v1beta1
+  - apiVersion: dms.aws.m.upbound.io/v1beta1
+    filename: dms.aws.m.upbound.io/certificate_v1beta1.json
+    kind: Certificate
+    name: certificate_v1beta1
+  - apiVersion: dms.aws.m.upbound.io/v1beta1
+    filename: dms.aws.m.upbound.io/s3endpoint_v1beta1.json
+    kind: S3Endpoint
+    name: s3endpoint_v1beta1
+  - apiVersion: dms.aws.m.upbound.io/v1beta1
+    filename: dms.aws.m.upbound.io/endpoint_v1beta1.json
+    kind: Endpoint
+    name: endpoint_v1beta1
+dms.aws.upbound.io:
+  - apiVersion: dms.aws.upbound.io/v1beta1
+    filename: dms.aws.upbound.io/replicationsubnetgroup_v1beta1.json
+    kind: ReplicationSubnetGroup
+    name: replicationsubnetgroup_v1beta1
+  - apiVersion: dms.aws.upbound.io/v1beta1
+    filename: dms.aws.upbound.io/replicationinstance_v1beta1.json
+    kind: ReplicationInstance
+    name: replicationinstance_v1beta1
+  - apiVersion: dms.aws.upbound.io/v1beta1
+    filename: dms.aws.upbound.io/eventsubscription_v1beta1.json
+    kind: EventSubscription
+    name: eventsubscription_v1beta1
+  - apiVersion: dms.aws.upbound.io/v1beta1
+    filename: dms.aws.upbound.io/replicationtask_v1beta1.json
+    kind: ReplicationTask
+    name: replicationtask_v1beta1
+  - apiVersion: dms.aws.upbound.io/v1beta1
+    filename: dms.aws.upbound.io/certificate_v1beta1.json
+    kind: Certificate
+    name: certificate_v1beta1
+  - apiVersion: dms.aws.upbound.io/v1beta2
+    filename: dms.aws.upbound.io/endpoint_v1beta2.json
+    kind: Endpoint
+    name: endpoint_v1beta2
+  - apiVersion: dms.aws.upbound.io/v1beta1
+    filename: dms.aws.upbound.io/s3endpoint_v1beta1.json
+    kind: S3Endpoint
+    name: s3endpoint_v1beta1
+  - apiVersion: dms.aws.upbound.io/v1beta1
+    filename: dms.aws.upbound.io/endpoint_v1beta1.json
+    kind: Endpoint
+    name: endpoint_v1beta1
 dns.cnrm.cloud.google.com:
   - apiVersion: dns.cnrm.cloud.google.com/v1beta1
     filename: dns.cnrm.cloud.google.com/dnspolicy_v1beta1.json
@@ -7786,6 +10616,64 @@ dns.cnrm.cloud.google.com:
     filename: dns.cnrm.cloud.google.com/dnsresponsepolicy_v1alpha1.json
     kind: dnsresponsepolicy
     name: dnsresponsepolicy_v1alpha1
+docdb.aws.m.upbound.io:
+  - apiVersion: docdb.aws.m.upbound.io/v1beta1
+    filename: docdb.aws.m.upbound.io/clustersnapshot_v1beta1.json
+    kind: ClusterSnapshot
+    name: clustersnapshot_v1beta1
+  - apiVersion: docdb.aws.m.upbound.io/v1beta1
+    filename: docdb.aws.m.upbound.io/eventsubscription_v1beta1.json
+    kind: EventSubscription
+    name: eventsubscription_v1beta1
+  - apiVersion: docdb.aws.m.upbound.io/v1beta1
+    filename: docdb.aws.m.upbound.io/subnetgroup_v1beta1.json
+    kind: SubnetGroup
+    name: subnetgroup_v1beta1
+  - apiVersion: docdb.aws.m.upbound.io/v1beta1
+    filename: docdb.aws.m.upbound.io/cluster_v1beta1.json
+    kind: Cluster
+    name: cluster_v1beta1
+  - apiVersion: docdb.aws.m.upbound.io/v1beta1
+    filename: docdb.aws.m.upbound.io/clusterparametergroup_v1beta1.json
+    kind: ClusterParameterGroup
+    name: clusterparametergroup_v1beta1
+  - apiVersion: docdb.aws.m.upbound.io/v1beta1
+    filename: docdb.aws.m.upbound.io/globalcluster_v1beta1.json
+    kind: GlobalCluster
+    name: globalcluster_v1beta1
+  - apiVersion: docdb.aws.m.upbound.io/v1beta1
+    filename: docdb.aws.m.upbound.io/clusterinstance_v1beta1.json
+    kind: ClusterInstance
+    name: clusterinstance_v1beta1
+docdb.aws.upbound.io:
+  - apiVersion: docdb.aws.upbound.io/v1beta1
+    filename: docdb.aws.upbound.io/clustersnapshot_v1beta1.json
+    kind: ClusterSnapshot
+    name: clustersnapshot_v1beta1
+  - apiVersion: docdb.aws.upbound.io/v1beta1
+    filename: docdb.aws.upbound.io/eventsubscription_v1beta1.json
+    kind: EventSubscription
+    name: eventsubscription_v1beta1
+  - apiVersion: docdb.aws.upbound.io/v1beta1
+    filename: docdb.aws.upbound.io/subnetgroup_v1beta1.json
+    kind: SubnetGroup
+    name: subnetgroup_v1beta1
+  - apiVersion: docdb.aws.upbound.io/v1beta1
+    filename: docdb.aws.upbound.io/cluster_v1beta1.json
+    kind: Cluster
+    name: cluster_v1beta1
+  - apiVersion: docdb.aws.upbound.io/v1beta1
+    filename: docdb.aws.upbound.io/clusterparametergroup_v1beta1.json
+    kind: ClusterParameterGroup
+    name: clusterparametergroup_v1beta1
+  - apiVersion: docdb.aws.upbound.io/v1beta1
+    filename: docdb.aws.upbound.io/globalcluster_v1beta1.json
+    kind: GlobalCluster
+    name: globalcluster_v1beta1
+  - apiVersion: docdb.aws.upbound.io/v1beta1
+    filename: docdb.aws.upbound.io/clusterinstance_v1beta1.json
+    kind: ClusterInstance
+    name: clusterinstance_v1beta1
 documentai.cnrm.cloud.google.com:
   - apiVersion: documentai.cnrm.cloud.google.com/v1alpha1
     filename: documentai.cnrm.cloud.google.com/documentaiprocessor_v1alpha1.json
@@ -7978,6 +10866,128 @@ druid.apache.org:
     filename: druid.apache.org/druidingestion_v1alpha1.json
     kind: druidingestion
     name: druidingestion_v1alpha1
+ds.aws.m.upbound.io:
+  - apiVersion: ds.aws.m.upbound.io/v1beta1
+    filename: ds.aws.m.upbound.io/shareddirectory_v1beta1.json
+    kind: SharedDirectory
+    name: shareddirectory_v1beta1
+  - apiVersion: ds.aws.m.upbound.io/v1beta1
+    filename: ds.aws.m.upbound.io/conditionalforwarder_v1beta1.json
+    kind: ConditionalForwarder
+    name: conditionalforwarder_v1beta1
+  - apiVersion: ds.aws.m.upbound.io/v1beta1
+    filename: ds.aws.m.upbound.io/directory_v1beta1.json
+    kind: Directory
+    name: directory_v1beta1
+ds.aws.upbound.io:
+  - apiVersion: ds.aws.upbound.io/v1beta1
+    filename: ds.aws.upbound.io/shareddirectory_v1beta1.json
+    kind: SharedDirectory
+    name: shareddirectory_v1beta1
+  - apiVersion: ds.aws.upbound.io/v1beta2
+    filename: ds.aws.upbound.io/directory_v1beta2.json
+    kind: Directory
+    name: directory_v1beta2
+  - apiVersion: ds.aws.upbound.io/v1beta1
+    filename: ds.aws.upbound.io/conditionalforwarder_v1beta1.json
+    kind: ConditionalForwarder
+    name: conditionalforwarder_v1beta1
+  - apiVersion: ds.aws.upbound.io/v1beta2
+    filename: ds.aws.upbound.io/shareddirectory_v1beta2.json
+    kind: SharedDirectory
+    name: shareddirectory_v1beta2
+  - apiVersion: ds.aws.upbound.io/v1beta1
+    filename: ds.aws.upbound.io/directory_v1beta1.json
+    kind: Directory
+    name: directory_v1beta1
+dsql.aws.m.upbound.io:
+  - apiVersion: dsql.aws.m.upbound.io/v1beta1
+    filename: dsql.aws.m.upbound.io/cluster_v1beta1.json
+    kind: Cluster
+    name: cluster_v1beta1
+  - apiVersion: dsql.aws.m.upbound.io/v1beta1
+    filename: dsql.aws.m.upbound.io/clusterpeering_v1beta1.json
+    kind: ClusterPeering
+    name: clusterpeering_v1beta1
+dsql.aws.upbound.io:
+  - apiVersion: dsql.aws.upbound.io/v1beta1
+    filename: dsql.aws.upbound.io/cluster_v1beta1.json
+    kind: Cluster
+    name: cluster_v1beta1
+  - apiVersion: dsql.aws.upbound.io/v1beta1
+    filename: dsql.aws.upbound.io/clusterpeering_v1beta1.json
+    kind: ClusterPeering
+    name: clusterpeering_v1beta1
+dynamodb.aws.m.upbound.io:
+  - apiVersion: dynamodb.aws.m.upbound.io/v1beta1
+    filename: dynamodb.aws.m.upbound.io/globaltable_v1beta1.json
+    kind: GlobalTable
+    name: globaltable_v1beta1
+  - apiVersion: dynamodb.aws.m.upbound.io/v1beta1
+    filename: dynamodb.aws.m.upbound.io/tableitem_v1beta1.json
+    kind: TableItem
+    name: tableitem_v1beta1
+  - apiVersion: dynamodb.aws.m.upbound.io/v1beta1
+    filename: dynamodb.aws.m.upbound.io/resourcepolicy_v1beta1.json
+    kind: ResourcePolicy
+    name: resourcepolicy_v1beta1
+  - apiVersion: dynamodb.aws.m.upbound.io/v1beta1
+    filename: dynamodb.aws.m.upbound.io/table_v1beta1.json
+    kind: Table
+    name: table_v1beta1
+  - apiVersion: dynamodb.aws.m.upbound.io/v1beta1
+    filename: dynamodb.aws.m.upbound.io/tag_v1beta1.json
+    kind: Tag
+    name: tag_v1beta1
+  - apiVersion: dynamodb.aws.m.upbound.io/v1beta1
+    filename: dynamodb.aws.m.upbound.io/kinesisstreamingdestination_v1beta1.json
+    kind: KinesisStreamingDestination
+    name: kinesisstreamingdestination_v1beta1
+  - apiVersion: dynamodb.aws.m.upbound.io/v1beta1
+    filename: dynamodb.aws.m.upbound.io/contributorinsights_v1beta1.json
+    kind: ContributorInsights
+    name: contributorinsights_v1beta1
+  - apiVersion: dynamodb.aws.m.upbound.io/v1beta1
+    filename: dynamodb.aws.m.upbound.io/tablereplica_v1beta1.json
+    kind: TableReplica
+    name: tablereplica_v1beta1
+dynamodb.aws.upbound.io:
+  - apiVersion: dynamodb.aws.upbound.io/v1beta1
+    filename: dynamodb.aws.upbound.io/globaltable_v1beta1.json
+    kind: GlobalTable
+    name: globaltable_v1beta1
+  - apiVersion: dynamodb.aws.upbound.io/v1beta1
+    filename: dynamodb.aws.upbound.io/tableitem_v1beta1.json
+    kind: TableItem
+    name: tableitem_v1beta1
+  - apiVersion: dynamodb.aws.upbound.io/v1beta1
+    filename: dynamodb.aws.upbound.io/resourcepolicy_v1beta1.json
+    kind: ResourcePolicy
+    name: resourcepolicy_v1beta1
+  - apiVersion: dynamodb.aws.upbound.io/v1beta2
+    filename: dynamodb.aws.upbound.io/table_v1beta2.json
+    kind: Table
+    name: table_v1beta2
+  - apiVersion: dynamodb.aws.upbound.io/v1beta1
+    filename: dynamodb.aws.upbound.io/table_v1beta1.json
+    kind: Table
+    name: table_v1beta1
+  - apiVersion: dynamodb.aws.upbound.io/v1beta1
+    filename: dynamodb.aws.upbound.io/tag_v1beta1.json
+    kind: Tag
+    name: tag_v1beta1
+  - apiVersion: dynamodb.aws.upbound.io/v1beta1
+    filename: dynamodb.aws.upbound.io/kinesisstreamingdestination_v1beta1.json
+    kind: KinesisStreamingDestination
+    name: kinesisstreamingdestination_v1beta1
+  - apiVersion: dynamodb.aws.upbound.io/v1beta1
+    filename: dynamodb.aws.upbound.io/contributorinsights_v1beta1.json
+    kind: ContributorInsights
+    name: contributorinsights_v1beta1
+  - apiVersion: dynamodb.aws.upbound.io/v1beta1
+    filename: dynamodb.aws.upbound.io/tablereplica_v1beta1.json
+    kind: TableReplica
+    name: tablereplica_v1beta1
 dynamodb.services.k8s.aws:
   - apiVersion: dynamodb.services.k8s.aws/v1alpha1
     filename: dynamodb.services.k8s.aws/backup_v1alpha1.json
@@ -8437,6 +11447,10 @@ ec2.aws.m.upbound.io:
     filename: ec2.aws.m.upbound.io/ebssnapshotimport_v1beta1.json
     kind: EBSSnapshotImport
     name: ebssnapshotimport_v1beta1
+  - apiVersion: ec2.aws.m.upbound.io/v1beta1
+    filename: ec2.aws.m.upbound.io/vpcendpointconnectionaccepter_v1beta1.json
+    kind: VPCEndpointConnectionAccepter
+    name: vpcendpointconnectionaccepter_v1beta1
 ec2.aws.upbound.io:
   - apiVersion: ec2.aws.upbound.io/v1beta1
     filename: ec2.aws.upbound.io/defaultroutetable_v1beta1.json
@@ -8898,6 +11912,10 @@ ec2.aws.upbound.io:
     filename: ec2.aws.upbound.io/ebssnapshotimport_v1beta1.json
     kind: EBSSnapshotImport
     name: ebssnapshotimport_v1beta1
+  - apiVersion: ec2.aws.upbound.io/v1beta1
+    filename: ec2.aws.upbound.io/vpcendpointconnectionaccepter_v1beta1.json
+    kind: VPCEndpointConnectionAccepter
+    name: vpcendpointconnectionaccepter_v1beta1
 ec2.services.k8s.aws:
   - apiVersion: ec2.services.k8s.aws/v1alpha1
     filename: ec2.services.k8s.aws/dhcpoptions_v1alpha1.json
@@ -8975,6 +11993,80 @@ ec2.services.k8s.aws:
     filename: ec2.services.k8s.aws/managedprefixlist_v1alpha1.json
     kind: ManagedPrefixList
     name: managedprefixlist_v1alpha1
+ecr.aws.m.upbound.io:
+  - apiVersion: ecr.aws.m.upbound.io/v1beta1
+    filename: ecr.aws.m.upbound.io/repositorypolicy_v1beta1.json
+    kind: RepositoryPolicy
+    name: repositorypolicy_v1beta1
+  - apiVersion: ecr.aws.m.upbound.io/v1beta1
+    filename: ecr.aws.m.upbound.io/pullthroughcacherule_v1beta1.json
+    kind: PullThroughCacheRule
+    name: pullthroughcacherule_v1beta1
+  - apiVersion: ecr.aws.m.upbound.io/v1beta1
+    filename: ecr.aws.m.upbound.io/repositorycreationtemplate_v1beta1.json
+    kind: RepositoryCreationTemplate
+    name: repositorycreationtemplate_v1beta1
+  - apiVersion: ecr.aws.m.upbound.io/v1beta1
+    filename: ecr.aws.m.upbound.io/replicationconfiguration_v1beta1.json
+    kind: ReplicationConfiguration
+    name: replicationconfiguration_v1beta1
+  - apiVersion: ecr.aws.m.upbound.io/v1beta1
+    filename: ecr.aws.m.upbound.io/repository_v1beta1.json
+    kind: Repository
+    name: repository_v1beta1
+  - apiVersion: ecr.aws.m.upbound.io/v1beta1
+    filename: ecr.aws.m.upbound.io/registrypolicy_v1beta1.json
+    kind: RegistryPolicy
+    name: registrypolicy_v1beta1
+  - apiVersion: ecr.aws.m.upbound.io/v1beta1
+    filename: ecr.aws.m.upbound.io/lifecyclepolicy_v1beta1.json
+    kind: LifecyclePolicy
+    name: lifecyclepolicy_v1beta1
+  - apiVersion: ecr.aws.m.upbound.io/v1beta1
+    filename: ecr.aws.m.upbound.io/registryscanningconfiguration_v1beta1.json
+    kind: RegistryScanningConfiguration
+    name: registryscanningconfiguration_v1beta1
+ecr.aws.upbound.io:
+  - apiVersion: ecr.aws.upbound.io/v1beta1
+    filename: ecr.aws.upbound.io/repositorypolicy_v1beta1.json
+    kind: RepositoryPolicy
+    name: repositorypolicy_v1beta1
+  - apiVersion: ecr.aws.upbound.io/v1beta1
+    filename: ecr.aws.upbound.io/pullthroughcacherule_v1beta1.json
+    kind: PullThroughCacheRule
+    name: pullthroughcacherule_v1beta1
+  - apiVersion: ecr.aws.upbound.io/v1beta2
+    filename: ecr.aws.upbound.io/repository_v1beta2.json
+    kind: Repository
+    name: repository_v1beta2
+  - apiVersion: ecr.aws.upbound.io/v1beta1
+    filename: ecr.aws.upbound.io/repositorycreationtemplate_v1beta1.json
+    kind: RepositoryCreationTemplate
+    name: repositorycreationtemplate_v1beta1
+  - apiVersion: ecr.aws.upbound.io/v1beta1
+    filename: ecr.aws.upbound.io/replicationconfiguration_v1beta1.json
+    kind: ReplicationConfiguration
+    name: replicationconfiguration_v1beta1
+  - apiVersion: ecr.aws.upbound.io/v1beta2
+    filename: ecr.aws.upbound.io/replicationconfiguration_v1beta2.json
+    kind: ReplicationConfiguration
+    name: replicationconfiguration_v1beta2
+  - apiVersion: ecr.aws.upbound.io/v1beta1
+    filename: ecr.aws.upbound.io/repository_v1beta1.json
+    kind: Repository
+    name: repository_v1beta1
+  - apiVersion: ecr.aws.upbound.io/v1beta1
+    filename: ecr.aws.upbound.io/registrypolicy_v1beta1.json
+    kind: RegistryPolicy
+    name: registrypolicy_v1beta1
+  - apiVersion: ecr.aws.upbound.io/v1beta1
+    filename: ecr.aws.upbound.io/lifecyclepolicy_v1beta1.json
+    kind: LifecyclePolicy
+    name: lifecyclepolicy_v1beta1
+  - apiVersion: ecr.aws.upbound.io/v1beta1
+    filename: ecr.aws.upbound.io/registryscanningconfiguration_v1beta1.json
+    kind: RegistryScanningConfiguration
+    name: registryscanningconfiguration_v1beta1
 ecr.services.k8s.aws:
   - apiVersion: ecr.services.k8s.aws/v1alpha1
     filename: ecr.services.k8s.aws/repository_v1alpha1.json
@@ -8988,6 +12080,94 @@ ecr.services.k8s.aws:
     filename: ecr.services.k8s.aws/repositorycreationtemplate_v1alpha1.json
     kind: RepositoryCreationTemplate
     name: repositorycreationtemplate_v1alpha1
+ecrpublic.aws.m.upbound.io:
+  - apiVersion: ecrpublic.aws.m.upbound.io/v1beta1
+    filename: ecrpublic.aws.m.upbound.io/repositorypolicy_v1beta1.json
+    kind: RepositoryPolicy
+    name: repositorypolicy_v1beta1
+  - apiVersion: ecrpublic.aws.m.upbound.io/v1beta1
+    filename: ecrpublic.aws.m.upbound.io/repository_v1beta1.json
+    kind: Repository
+    name: repository_v1beta1
+ecrpublic.aws.upbound.io:
+  - apiVersion: ecrpublic.aws.upbound.io/v1beta1
+    filename: ecrpublic.aws.upbound.io/repositorypolicy_v1beta1.json
+    kind: RepositoryPolicy
+    name: repositorypolicy_v1beta1
+  - apiVersion: ecrpublic.aws.upbound.io/v1beta2
+    filename: ecrpublic.aws.upbound.io/repository_v1beta2.json
+    kind: Repository
+    name: repository_v1beta2
+  - apiVersion: ecrpublic.aws.upbound.io/v1beta1
+    filename: ecrpublic.aws.upbound.io/repository_v1beta1.json
+    kind: Repository
+    name: repository_v1beta1
+ecs.aws.m.upbound.io:
+  - apiVersion: ecs.aws.m.upbound.io/v1beta1
+    filename: ecs.aws.m.upbound.io/accountsettingdefault_v1beta1.json
+    kind: AccountSettingDefault
+    name: accountsettingdefault_v1beta1
+  - apiVersion: ecs.aws.m.upbound.io/v1beta1
+    filename: ecs.aws.m.upbound.io/cluster_v1beta1.json
+    kind: Cluster
+    name: cluster_v1beta1
+  - apiVersion: ecs.aws.m.upbound.io/v1beta1
+    filename: ecs.aws.m.upbound.io/clustercapacityproviders_v1beta1.json
+    kind: ClusterCapacityProviders
+    name: clustercapacityproviders_v1beta1
+  - apiVersion: ecs.aws.m.upbound.io/v1beta1
+    filename: ecs.aws.m.upbound.io/service_v1beta1.json
+    kind: Service
+    name: service_v1beta1
+  - apiVersion: ecs.aws.m.upbound.io/v1beta1
+    filename: ecs.aws.m.upbound.io/capacityprovider_v1beta1.json
+    kind: CapacityProvider
+    name: capacityprovider_v1beta1
+  - apiVersion: ecs.aws.m.upbound.io/v1beta1
+    filename: ecs.aws.m.upbound.io/taskdefinition_v1beta1.json
+    kind: TaskDefinition
+    name: taskdefinition_v1beta1
+ecs.aws.upbound.io:
+  - apiVersion: ecs.aws.upbound.io/v1beta1
+    filename: ecs.aws.upbound.io/accountsettingdefault_v1beta1.json
+    kind: AccountSettingDefault
+    name: accountsettingdefault_v1beta1
+  - apiVersion: ecs.aws.upbound.io/v1beta1
+    filename: ecs.aws.upbound.io/cluster_v1beta1.json
+    kind: Cluster
+    name: cluster_v1beta1
+  - apiVersion: ecs.aws.upbound.io/v1beta1
+    filename: ecs.aws.upbound.io/clustercapacityproviders_v1beta1.json
+    kind: ClusterCapacityProviders
+    name: clustercapacityproviders_v1beta1
+  - apiVersion: ecs.aws.upbound.io/v1beta2
+    filename: ecs.aws.upbound.io/taskdefinition_v1beta2.json
+    kind: TaskDefinition
+    name: taskdefinition_v1beta2
+  - apiVersion: ecs.aws.upbound.io/v1beta1
+    filename: ecs.aws.upbound.io/service_v1beta1.json
+    kind: Service
+    name: service_v1beta1
+  - apiVersion: ecs.aws.upbound.io/v1beta1
+    filename: ecs.aws.upbound.io/capacityprovider_v1beta1.json
+    kind: CapacityProvider
+    name: capacityprovider_v1beta1
+  - apiVersion: ecs.aws.upbound.io/v1beta2
+    filename: ecs.aws.upbound.io/capacityprovider_v1beta2.json
+    kind: CapacityProvider
+    name: capacityprovider_v1beta2
+  - apiVersion: ecs.aws.upbound.io/v1beta1
+    filename: ecs.aws.upbound.io/taskdefinition_v1beta1.json
+    kind: TaskDefinition
+    name: taskdefinition_v1beta1
+  - apiVersion: ecs.aws.upbound.io/v1beta2
+    filename: ecs.aws.upbound.io/service_v1beta2.json
+    kind: Service
+    name: service_v1beta2
+  - apiVersion: ecs.aws.upbound.io/v1beta2
+    filename: ecs.aws.upbound.io/cluster_v1beta2.json
+    kind: Cluster
+    name: cluster_v1beta2
 edgecontainer.cnrm.cloud.google.com:
   - apiVersion: edgecontainer.cnrm.cloud.google.com/v1beta1
     filename: edgecontainer.cnrm.cloud.google.com/edgecontainernodepool_v1beta1.json
@@ -9010,6 +12190,72 @@ edgenetwork.cnrm.cloud.google.com:
     filename: edgenetwork.cnrm.cloud.google.com/edgenetworknetwork_v1beta1.json
     kind: edgenetworknetwork
     name: edgenetworknetwork_v1beta1
+efs.aws.m.upbound.io:
+  - apiVersion: efs.aws.m.upbound.io/v1beta1
+    filename: efs.aws.m.upbound.io/filesystempolicy_v1beta1.json
+    kind: FileSystemPolicy
+    name: filesystempolicy_v1beta1
+  - apiVersion: efs.aws.m.upbound.io/v1beta1
+    filename: efs.aws.m.upbound.io/replicationconfiguration_v1beta1.json
+    kind: ReplicationConfiguration
+    name: replicationconfiguration_v1beta1
+  - apiVersion: efs.aws.m.upbound.io/v1beta1
+    filename: efs.aws.m.upbound.io/backuppolicy_v1beta1.json
+    kind: BackupPolicy
+    name: backuppolicy_v1beta1
+  - apiVersion: efs.aws.m.upbound.io/v1beta1
+    filename: efs.aws.m.upbound.io/mounttarget_v1beta1.json
+    kind: MountTarget
+    name: mounttarget_v1beta1
+  - apiVersion: efs.aws.m.upbound.io/v1beta1
+    filename: efs.aws.m.upbound.io/accesspoint_v1beta1.json
+    kind: AccessPoint
+    name: accesspoint_v1beta1
+  - apiVersion: efs.aws.m.upbound.io/v1beta1
+    filename: efs.aws.m.upbound.io/filesystem_v1beta1.json
+    kind: FileSystem
+    name: filesystem_v1beta1
+efs.aws.upbound.io:
+  - apiVersion: efs.aws.upbound.io/v1beta2
+    filename: efs.aws.upbound.io/accesspoint_v1beta2.json
+    kind: AccessPoint
+    name: accesspoint_v1beta2
+  - apiVersion: efs.aws.upbound.io/v1beta1
+    filename: efs.aws.upbound.io/filesystempolicy_v1beta1.json
+    kind: FileSystemPolicy
+    name: filesystempolicy_v1beta1
+  - apiVersion: efs.aws.upbound.io/v1beta1
+    filename: efs.aws.upbound.io/replicationconfiguration_v1beta1.json
+    kind: ReplicationConfiguration
+    name: replicationconfiguration_v1beta1
+  - apiVersion: efs.aws.upbound.io/v1beta2
+    filename: efs.aws.upbound.io/filesystem_v1beta2.json
+    kind: FileSystem
+    name: filesystem_v1beta2
+  - apiVersion: efs.aws.upbound.io/v1beta1
+    filename: efs.aws.upbound.io/backuppolicy_v1beta1.json
+    kind: BackupPolicy
+    name: backuppolicy_v1beta1
+  - apiVersion: efs.aws.upbound.io/v1beta2
+    filename: efs.aws.upbound.io/backuppolicy_v1beta2.json
+    kind: BackupPolicy
+    name: backuppolicy_v1beta2
+  - apiVersion: efs.aws.upbound.io/v1beta1
+    filename: efs.aws.upbound.io/mounttarget_v1beta1.json
+    kind: MountTarget
+    name: mounttarget_v1beta1
+  - apiVersion: efs.aws.upbound.io/v1beta2
+    filename: efs.aws.upbound.io/replicationconfiguration_v1beta2.json
+    kind: ReplicationConfiguration
+    name: replicationconfiguration_v1beta2
+  - apiVersion: efs.aws.upbound.io/v1beta1
+    filename: efs.aws.upbound.io/accesspoint_v1beta1.json
+    kind: AccessPoint
+    name: accesspoint_v1beta1
+  - apiVersion: efs.aws.upbound.io/v1beta1
+    filename: efs.aws.upbound.io/filesystem_v1beta1.json
+    kind: FileSystem
+    name: filesystem_v1beta1
 eks.amazonaws.com:
   - apiVersion: eks.amazonaws.com/v1
     filename: eks.amazonaws.com/targetgroupbinding_v1.json
@@ -9271,6 +12517,70 @@ elasticache.services.k8s.aws:
     filename: elasticache.services.k8s.aws/serverlesscache_v1alpha1.json
     kind: ServerlessCache
     name: serverlesscache_v1alpha1
+elasticbeanstalk.aws.m.upbound.io:
+  - apiVersion: elasticbeanstalk.aws.m.upbound.io/v1beta1
+    filename: elasticbeanstalk.aws.m.upbound.io/application_v1beta1.json
+    kind: Application
+    name: application_v1beta1
+  - apiVersion: elasticbeanstalk.aws.m.upbound.io/v1beta1
+    filename: elasticbeanstalk.aws.m.upbound.io/configurationtemplate_v1beta1.json
+    kind: ConfigurationTemplate
+    name: configurationtemplate_v1beta1
+  - apiVersion: elasticbeanstalk.aws.m.upbound.io/v1beta1
+    filename: elasticbeanstalk.aws.m.upbound.io/applicationversion_v1beta1.json
+    kind: ApplicationVersion
+    name: applicationversion_v1beta1
+elasticbeanstalk.aws.upbound.io:
+  - apiVersion: elasticbeanstalk.aws.upbound.io/v1beta2
+    filename: elasticbeanstalk.aws.upbound.io/application_v1beta2.json
+    kind: Application
+    name: application_v1beta2
+  - apiVersion: elasticbeanstalk.aws.upbound.io/v1beta1
+    filename: elasticbeanstalk.aws.upbound.io/application_v1beta1.json
+    kind: Application
+    name: application_v1beta1
+  - apiVersion: elasticbeanstalk.aws.upbound.io/v1beta1
+    filename: elasticbeanstalk.aws.upbound.io/configurationtemplate_v1beta1.json
+    kind: ConfigurationTemplate
+    name: configurationtemplate_v1beta1
+  - apiVersion: elasticbeanstalk.aws.upbound.io/v1beta1
+    filename: elasticbeanstalk.aws.upbound.io/applicationversion_v1beta1.json
+    kind: ApplicationVersion
+    name: applicationversion_v1beta1
+elasticsearch.aws.m.upbound.io:
+  - apiVersion: elasticsearch.aws.m.upbound.io/v1beta1
+    filename: elasticsearch.aws.m.upbound.io/domain_v1beta1.json
+    kind: Domain
+    name: domain_v1beta1
+  - apiVersion: elasticsearch.aws.m.upbound.io/v1beta1
+    filename: elasticsearch.aws.m.upbound.io/domainpolicy_v1beta1.json
+    kind: DomainPolicy
+    name: domainpolicy_v1beta1
+  - apiVersion: elasticsearch.aws.m.upbound.io/v1beta1
+    filename: elasticsearch.aws.m.upbound.io/domainsamloptions_v1beta1.json
+    kind: DomainSAMLOptions
+    name: domainsamloptions_v1beta1
+elasticsearch.aws.upbound.io:
+  - apiVersion: elasticsearch.aws.upbound.io/v1beta1
+    filename: elasticsearch.aws.upbound.io/domain_v1beta1.json
+    kind: Domain
+    name: domain_v1beta1
+  - apiVersion: elasticsearch.aws.upbound.io/v1beta1
+    filename: elasticsearch.aws.upbound.io/domainpolicy_v1beta1.json
+    kind: DomainPolicy
+    name: domainpolicy_v1beta1
+  - apiVersion: elasticsearch.aws.upbound.io/v1beta1
+    filename: elasticsearch.aws.upbound.io/domainsamloptions_v1beta1.json
+    kind: DomainSAMLOptions
+    name: domainsamloptions_v1beta1
+  - apiVersion: elasticsearch.aws.upbound.io/v1beta2
+    filename: elasticsearch.aws.upbound.io/domain_v1beta2.json
+    kind: Domain
+    name: domain_v1beta2
+  - apiVersion: elasticsearch.aws.upbound.io/v1beta2
+    filename: elasticsearch.aws.upbound.io/domainsamloptions_v1beta2.json
+    kind: DomainSAMLOptions
+    name: domainsamloptions_v1beta2
 elasticsearch.k8s.elastic.co:
   - apiVersion: elasticsearch.k8s.elastic.co/v1alpha1
     filename: elasticsearch.k8s.elastic.co/elasticsearch_v1alpha1.json
@@ -9284,6 +12594,110 @@ elasticsearch.k8s.elastic.co:
     filename: elasticsearch.k8s.elastic.co/elasticsearch_v1.json
     kind: Elasticsearch
     name: elasticsearch_v1
+elastictranscoder.aws.m.upbound.io:
+  - apiVersion: elastictranscoder.aws.m.upbound.io/v1beta1
+    filename: elastictranscoder.aws.m.upbound.io/pipeline_v1beta1.json
+    kind: Pipeline
+    name: pipeline_v1beta1
+  - apiVersion: elastictranscoder.aws.m.upbound.io/v1beta1
+    filename: elastictranscoder.aws.m.upbound.io/preset_v1beta1.json
+    kind: Preset
+    name: preset_v1beta1
+elastictranscoder.aws.upbound.io:
+  - apiVersion: elastictranscoder.aws.upbound.io/v1beta2
+    filename: elastictranscoder.aws.upbound.io/preset_v1beta2.json
+    kind: Preset
+    name: preset_v1beta2
+  - apiVersion: elastictranscoder.aws.upbound.io/v1beta1
+    filename: elastictranscoder.aws.upbound.io/pipeline_v1beta1.json
+    kind: Pipeline
+    name: pipeline_v1beta1
+  - apiVersion: elastictranscoder.aws.upbound.io/v1beta1
+    filename: elastictranscoder.aws.upbound.io/preset_v1beta1.json
+    kind: Preset
+    name: preset_v1beta1
+  - apiVersion: elastictranscoder.aws.upbound.io/v1beta2
+    filename: elastictranscoder.aws.upbound.io/pipeline_v1beta2.json
+    kind: Pipeline
+    name: pipeline_v1beta2
+elb.aws.m.upbound.io:
+  - apiVersion: elb.aws.m.upbound.io/v1beta1
+    filename: elb.aws.m.upbound.io/attachment_v1beta1.json
+    kind: Attachment
+    name: attachment_v1beta1
+  - apiVersion: elb.aws.m.upbound.io/v1beta1
+    filename: elb.aws.m.upbound.io/listenerpolicy_v1beta1.json
+    kind: ListenerPolicy
+    name: listenerpolicy_v1beta1
+  - apiVersion: elb.aws.m.upbound.io/v1beta1
+    filename: elb.aws.m.upbound.io/proxyprotocolpolicy_v1beta1.json
+    kind: ProxyProtocolPolicy
+    name: proxyprotocolpolicy_v1beta1
+  - apiVersion: elb.aws.m.upbound.io/v1beta1
+    filename: elb.aws.m.upbound.io/backendserverpolicy_v1beta1.json
+    kind: BackendServerPolicy
+    name: backendserverpolicy_v1beta1
+  - apiVersion: elb.aws.m.upbound.io/v1beta1
+    filename: elb.aws.m.upbound.io/lbcookiestickinesspolicy_v1beta1.json
+    kind: LBCookieStickinessPolicy
+    name: lbcookiestickinesspolicy_v1beta1
+  - apiVersion: elb.aws.m.upbound.io/v1beta1
+    filename: elb.aws.m.upbound.io/policy_v1beta1.json
+    kind: Policy
+    name: policy_v1beta1
+  - apiVersion: elb.aws.m.upbound.io/v1beta1
+    filename: elb.aws.m.upbound.io/appcookiestickinesspolicy_v1beta1.json
+    kind: AppCookieStickinessPolicy
+    name: appcookiestickinesspolicy_v1beta1
+  - apiVersion: elb.aws.m.upbound.io/v1beta1
+    filename: elb.aws.m.upbound.io/lbsslnegotiationpolicy_v1beta1.json
+    kind: LBSSLNegotiationPolicy
+    name: lbsslnegotiationpolicy_v1beta1
+  - apiVersion: elb.aws.m.upbound.io/v1beta1
+    filename: elb.aws.m.upbound.io/elb_v1beta1.json
+    kind: ELB
+    name: elb_v1beta1
+elb.aws.upbound.io:
+  - apiVersion: elb.aws.upbound.io/v1beta1
+    filename: elb.aws.upbound.io/attachment_v1beta1.json
+    kind: Attachment
+    name: attachment_v1beta1
+  - apiVersion: elb.aws.upbound.io/v1beta1
+    filename: elb.aws.upbound.io/listenerpolicy_v1beta1.json
+    kind: ListenerPolicy
+    name: listenerpolicy_v1beta1
+  - apiVersion: elb.aws.upbound.io/v1beta1
+    filename: elb.aws.upbound.io/proxyprotocolpolicy_v1beta1.json
+    kind: ProxyProtocolPolicy
+    name: proxyprotocolpolicy_v1beta1
+  - apiVersion: elb.aws.upbound.io/v1beta1
+    filename: elb.aws.upbound.io/backendserverpolicy_v1beta1.json
+    kind: BackendServerPolicy
+    name: backendserverpolicy_v1beta1
+  - apiVersion: elb.aws.upbound.io/v1beta2
+    filename: elb.aws.upbound.io/elb_v1beta2.json
+    kind: ELB
+    name: elb_v1beta2
+  - apiVersion: elb.aws.upbound.io/v1beta1
+    filename: elb.aws.upbound.io/lbcookiestickinesspolicy_v1beta1.json
+    kind: LBCookieStickinessPolicy
+    name: lbcookiestickinesspolicy_v1beta1
+  - apiVersion: elb.aws.upbound.io/v1beta1
+    filename: elb.aws.upbound.io/policy_v1beta1.json
+    kind: Policy
+    name: policy_v1beta1
+  - apiVersion: elb.aws.upbound.io/v1beta1
+    filename: elb.aws.upbound.io/appcookiestickinesspolicy_v1beta1.json
+    kind: AppCookieStickinessPolicy
+    name: appcookiestickinesspolicy_v1beta1
+  - apiVersion: elb.aws.upbound.io/v1beta1
+    filename: elb.aws.upbound.io/lbsslnegotiationpolicy_v1beta1.json
+    kind: LBSSLNegotiationPolicy
+    name: lbsslnegotiationpolicy_v1beta1
+  - apiVersion: elb.aws.upbound.io/v1beta1
+    filename: elb.aws.upbound.io/elb_v1beta1.json
+    kind: ELB
+    name: elb_v1beta1
 elbv2.aws.m.upbound.io:
   - apiVersion: elbv2.aws.m.upbound.io/v1beta1
     filename: elbv2.aws.m.upbound.io/lblistener_v1beta1.json
@@ -9375,6 +12789,26 @@ elbv2.k8s.aws:
     filename: elbv2.k8s.aws/albtargetcontrolconfig_v1beta1.json
     kind: ALBTargetControlConfig
     name: albtargetcontrolconfig_v1beta1
+emr.aws.m.upbound.io:
+  - apiVersion: emr.aws.m.upbound.io/v1beta1
+    filename: emr.aws.m.upbound.io/securityconfiguration_v1beta1.json
+    kind: SecurityConfiguration
+    name: securityconfiguration_v1beta1
+emr.aws.upbound.io:
+  - apiVersion: emr.aws.upbound.io/v1beta1
+    filename: emr.aws.upbound.io/securityconfiguration_v1beta1.json
+    kind: SecurityConfiguration
+    name: securityconfiguration_v1beta1
+emrcontainers.aws.m.upbound.io:
+  - apiVersion: emrcontainers.aws.m.upbound.io/v1beta1
+    filename: emrcontainers.aws.m.upbound.io/virtualcluster_v1beta1.json
+    kind: VirtualCluster
+    name: virtualcluster_v1beta1
+emrcontainers.aws.upbound.io:
+  - apiVersion: emrcontainers.aws.upbound.io/v1beta1
+    filename: emrcontainers.aws.upbound.io/virtualcluster_v1beta1.json
+    kind: VirtualCluster
+    name: virtualcluster_v1beta1
 emrcontainers.services.k8s.aws:
   - apiVersion: emrcontainers.services.k8s.aws/v1alpha1
     filename: emrcontainers.services.k8s.aws/jobrun_v1alpha1.json
@@ -9384,6 +12818,20 @@ emrcontainers.services.k8s.aws:
     filename: emrcontainers.services.k8s.aws/virtualcluster_v1alpha1.json
     kind: VirtualCluster
     name: virtualcluster_v1alpha1
+emrserverless.aws.m.upbound.io:
+  - apiVersion: emrserverless.aws.m.upbound.io/v1beta1
+    filename: emrserverless.aws.m.upbound.io/application_v1beta1.json
+    kind: Application
+    name: application_v1beta1
+emrserverless.aws.upbound.io:
+  - apiVersion: emrserverless.aws.upbound.io/v1beta2
+    filename: emrserverless.aws.upbound.io/application_v1beta2.json
+    kind: Application
+    name: application_v1beta2
+  - apiVersion: emrserverless.aws.upbound.io/v1beta1
+    filename: emrserverless.aws.upbound.io/application_v1beta1.json
+    kind: Application
+    name: application_v1beta1
 enterprise.gloo.solo.io:
   - apiVersion: enterprise.gloo.solo.io/v1
     filename: enterprise.gloo.solo.io/authconfig_v1.json
@@ -9790,6 +13238,40 @@ eventing.keda.sh:
     filename: eventing.keda.sh/clustercloudeventsource_v1alpha1.json
     kind: clustercloudeventsource
     name: clustercloudeventsource_v1alpha1
+evidently.aws.m.upbound.io:
+  - apiVersion: evidently.aws.m.upbound.io/v1beta1
+    filename: evidently.aws.m.upbound.io/segment_v1beta1.json
+    kind: Segment
+    name: segment_v1beta1
+  - apiVersion: evidently.aws.m.upbound.io/v1beta1
+    filename: evidently.aws.m.upbound.io/project_v1beta1.json
+    kind: Project
+    name: project_v1beta1
+  - apiVersion: evidently.aws.m.upbound.io/v1beta1
+    filename: evidently.aws.m.upbound.io/feature_v1beta1.json
+    kind: Feature
+    name: feature_v1beta1
+evidently.aws.upbound.io:
+  - apiVersion: evidently.aws.upbound.io/v1beta2
+    filename: evidently.aws.upbound.io/feature_v1beta2.json
+    kind: Feature
+    name: feature_v1beta2
+  - apiVersion: evidently.aws.upbound.io/v1beta2
+    filename: evidently.aws.upbound.io/project_v1beta2.json
+    kind: Project
+    name: project_v1beta2
+  - apiVersion: evidently.aws.upbound.io/v1beta1
+    filename: evidently.aws.upbound.io/segment_v1beta1.json
+    kind: Segment
+    name: segment_v1beta1
+  - apiVersion: evidently.aws.upbound.io/v1beta1
+    filename: evidently.aws.upbound.io/project_v1beta1.json
+    kind: Project
+    name: project_v1beta1
+  - apiVersion: evidently.aws.upbound.io/v1beta1
+    filename: evidently.aws.upbound.io/feature_v1beta1.json
+    kind: Feature
+    name: feature_v1beta1
 executor.testkube.io:
   - apiVersion: executor.testkube.io/v1
     filename: executor.testkube.io/executor_v1.json
@@ -9964,6 +13446,20 @@ firebasestorage.cnrm.cloud.google.com:
     filename: firebasestorage.cnrm.cloud.google.com/firebasestoragebucket_v1alpha1.json
     kind: firebasestoragebucket
     name: firebasestoragebucket_v1alpha1
+firehose.aws.m.upbound.io:
+  - apiVersion: firehose.aws.m.upbound.io/v1beta1
+    filename: firehose.aws.m.upbound.io/deliverystream_v1beta1.json
+    kind: DeliveryStream
+    name: deliverystream_v1beta1
+firehose.aws.upbound.io:
+  - apiVersion: firehose.aws.upbound.io/v1beta1
+    filename: firehose.aws.upbound.io/deliverystream_v1beta1.json
+    kind: DeliveryStream
+    name: deliverystream_v1beta1
+  - apiVersion: firehose.aws.upbound.io/v1beta2
+    filename: firehose.aws.upbound.io/deliverystream_v1beta2.json
+    kind: DeliveryStream
+    name: deliverystream_v1beta2
 firestore.cnrm.cloud.google.com:
   - apiVersion: firestore.cnrm.cloud.google.com/v1beta1
     filename: firestore.cnrm.cloud.google.com/firestoreindex_v1beta1.json
@@ -9977,6 +13473,20 @@ firestore.cnrm.cloud.google.com:
     filename: firestore.cnrm.cloud.google.com/firestoredatabase_v1beta1.json
     kind: FirestoreDatabase
     name: firestoredatabase_v1beta1
+fis.aws.m.upbound.io:
+  - apiVersion: fis.aws.m.upbound.io/v1beta1
+    filename: fis.aws.m.upbound.io/experimenttemplate_v1beta1.json
+    kind: ExperimentTemplate
+    name: experimenttemplate_v1beta1
+fis.aws.upbound.io:
+  - apiVersion: fis.aws.upbound.io/v1beta1
+    filename: fis.aws.upbound.io/experimenttemplate_v1beta1.json
+    kind: ExperimentTemplate
+    name: experimenttemplate_v1beta1
+  - apiVersion: fis.aws.upbound.io/v1beta2
+    filename: fis.aws.upbound.io/experimenttemplate_v1beta2.json
+    kind: ExperimentTemplate
+    name: experimenttemplate_v1beta2
 flagger.app:
   - apiVersion: flagger.app/v1beta1
     filename: flagger.app/metrictemplate_v1beta1.json
@@ -10232,6 +13742,134 @@ frontendobservability.grafana.o.crossplane.io:
     filename: frontendobservability.grafana.o.crossplane.io/app_v1alpha1.json
     kind: App
     name: app_v1alpha1
+fsx.aws.m.upbound.io:
+  - apiVersion: fsx.aws.m.upbound.io/v1beta1
+    filename: fsx.aws.m.upbound.io/datarepositoryassociation_v1beta1.json
+    kind: DataRepositoryAssociation
+    name: datarepositoryassociation_v1beta1
+  - apiVersion: fsx.aws.m.upbound.io/v1beta1
+    filename: fsx.aws.m.upbound.io/ontapfilesystem_v1beta1.json
+    kind: OntapFileSystem
+    name: ontapfilesystem_v1beta1
+  - apiVersion: fsx.aws.m.upbound.io/v1beta1
+    filename: fsx.aws.m.upbound.io/backup_v1beta1.json
+    kind: Backup
+    name: backup_v1beta1
+  - apiVersion: fsx.aws.m.upbound.io/v1beta1
+    filename: fsx.aws.m.upbound.io/windowsfilesystem_v1beta1.json
+    kind: WindowsFileSystem
+    name: windowsfilesystem_v1beta1
+  - apiVersion: fsx.aws.m.upbound.io/v1beta1
+    filename: fsx.aws.m.upbound.io/ontapstoragevirtualmachine_v1beta1.json
+    kind: OntapStorageVirtualMachine
+    name: ontapstoragevirtualmachine_v1beta1
+  - apiVersion: fsx.aws.m.upbound.io/v1beta1
+    filename: fsx.aws.m.upbound.io/lustrefilesystem_v1beta1.json
+    kind: LustreFileSystem
+    name: lustrefilesystem_v1beta1
+fsx.aws.upbound.io:
+  - apiVersion: fsx.aws.upbound.io/v1beta1
+    filename: fsx.aws.upbound.io/datarepositoryassociation_v1beta1.json
+    kind: DataRepositoryAssociation
+    name: datarepositoryassociation_v1beta1
+  - apiVersion: fsx.aws.upbound.io/v1beta1
+    filename: fsx.aws.upbound.io/ontapfilesystem_v1beta1.json
+    kind: OntapFileSystem
+    name: ontapfilesystem_v1beta1
+  - apiVersion: fsx.aws.upbound.io/v1beta2
+    filename: fsx.aws.upbound.io/windowsfilesystem_v1beta2.json
+    kind: WindowsFileSystem
+    name: windowsfilesystem_v1beta2
+  - apiVersion: fsx.aws.upbound.io/v1beta1
+    filename: fsx.aws.upbound.io/backup_v1beta1.json
+    kind: Backup
+    name: backup_v1beta1
+  - apiVersion: fsx.aws.upbound.io/v1beta1
+    filename: fsx.aws.upbound.io/windowsfilesystem_v1beta1.json
+    kind: WindowsFileSystem
+    name: windowsfilesystem_v1beta1
+  - apiVersion: fsx.aws.upbound.io/v1beta2
+    filename: fsx.aws.upbound.io/datarepositoryassociation_v1beta2.json
+    kind: DataRepositoryAssociation
+    name: datarepositoryassociation_v1beta2
+  - apiVersion: fsx.aws.upbound.io/v1beta2
+    filename: fsx.aws.upbound.io/lustrefilesystem_v1beta2.json
+    kind: LustreFileSystem
+    name: lustrefilesystem_v1beta2
+  - apiVersion: fsx.aws.upbound.io/v1beta2
+    filename: fsx.aws.upbound.io/ontapfilesystem_v1beta2.json
+    kind: OntapFileSystem
+    name: ontapfilesystem_v1beta2
+  - apiVersion: fsx.aws.upbound.io/v1beta1
+    filename: fsx.aws.upbound.io/ontapstoragevirtualmachine_v1beta1.json
+    kind: OntapStorageVirtualMachine
+    name: ontapstoragevirtualmachine_v1beta1
+  - apiVersion: fsx.aws.upbound.io/v1beta1
+    filename: fsx.aws.upbound.io/lustrefilesystem_v1beta1.json
+    kind: LustreFileSystem
+    name: lustrefilesystem_v1beta1
+  - apiVersion: fsx.aws.upbound.io/v1beta2
+    filename: fsx.aws.upbound.io/ontapstoragevirtualmachine_v1beta2.json
+    kind: OntapStorageVirtualMachine
+    name: ontapstoragevirtualmachine_v1beta2
+gamelift.aws.m.upbound.io:
+  - apiVersion: gamelift.aws.m.upbound.io/v1beta1
+    filename: gamelift.aws.m.upbound.io/build_v1beta1.json
+    kind: Build
+    name: build_v1beta1
+  - apiVersion: gamelift.aws.m.upbound.io/v1beta1
+    filename: gamelift.aws.m.upbound.io/alias_v1beta1.json
+    kind: Alias
+    name: alias_v1beta1
+  - apiVersion: gamelift.aws.m.upbound.io/v1beta1
+    filename: gamelift.aws.m.upbound.io/gamesessionqueue_v1beta1.json
+    kind: GameSessionQueue
+    name: gamesessionqueue_v1beta1
+  - apiVersion: gamelift.aws.m.upbound.io/v1beta1
+    filename: gamelift.aws.m.upbound.io/script_v1beta1.json
+    kind: Script
+    name: script_v1beta1
+  - apiVersion: gamelift.aws.m.upbound.io/v1beta1
+    filename: gamelift.aws.m.upbound.io/fleet_v1beta1.json
+    kind: Fleet
+    name: fleet_v1beta1
+gamelift.aws.upbound.io:
+  - apiVersion: gamelift.aws.upbound.io/v1beta2
+    filename: gamelift.aws.upbound.io/build_v1beta2.json
+    kind: Build
+    name: build_v1beta2
+  - apiVersion: gamelift.aws.upbound.io/v1beta2
+    filename: gamelift.aws.upbound.io/script_v1beta2.json
+    kind: Script
+    name: script_v1beta2
+  - apiVersion: gamelift.aws.upbound.io/v1beta2
+    filename: gamelift.aws.upbound.io/alias_v1beta2.json
+    kind: Alias
+    name: alias_v1beta2
+  - apiVersion: gamelift.aws.upbound.io/v1beta1
+    filename: gamelift.aws.upbound.io/build_v1beta1.json
+    kind: Build
+    name: build_v1beta1
+  - apiVersion: gamelift.aws.upbound.io/v1beta2
+    filename: gamelift.aws.upbound.io/fleet_v1beta2.json
+    kind: Fleet
+    name: fleet_v1beta2
+  - apiVersion: gamelift.aws.upbound.io/v1beta1
+    filename: gamelift.aws.upbound.io/alias_v1beta1.json
+    kind: Alias
+    name: alias_v1beta1
+  - apiVersion: gamelift.aws.upbound.io/v1beta1
+    filename: gamelift.aws.upbound.io/gamesessionqueue_v1beta1.json
+    kind: GameSessionQueue
+    name: gamesessionqueue_v1beta1
+  - apiVersion: gamelift.aws.upbound.io/v1beta1
+    filename: gamelift.aws.upbound.io/script_v1beta1.json
+    kind: Script
+    name: script_v1beta1
+  - apiVersion: gamelift.aws.upbound.io/v1beta1
+    filename: gamelift.aws.upbound.io/fleet_v1beta1.json
+    kind: Fleet
+    name: fleet_v1beta1
 gameservices.cnrm.cloud.google.com:
   - apiVersion: gameservices.cnrm.cloud.google.com/v1beta1
     filename: gameservices.cnrm.cloud.google.com/gameservicesrealm_v1beta1.json
@@ -10769,6 +14407,58 @@ gkehub.cnrm.cloud.google.com:
     filename: gkehub.cnrm.cloud.google.com/gkehubmembership_v1beta1.json
     kind: gkehubmembership
     name: gkehubmembership_v1beta1
+glacier.aws.m.upbound.io:
+  - apiVersion: glacier.aws.m.upbound.io/v1beta1
+    filename: glacier.aws.m.upbound.io/vault_v1beta1.json
+    kind: Vault
+    name: vault_v1beta1
+  - apiVersion: glacier.aws.m.upbound.io/v1beta1
+    filename: glacier.aws.m.upbound.io/vaultlock_v1beta1.json
+    kind: VaultLock
+    name: vaultlock_v1beta1
+glacier.aws.upbound.io:
+  - apiVersion: glacier.aws.upbound.io/v1beta1
+    filename: glacier.aws.upbound.io/vault_v1beta1.json
+    kind: Vault
+    name: vault_v1beta1
+  - apiVersion: glacier.aws.upbound.io/v1beta2
+    filename: glacier.aws.upbound.io/vault_v1beta2.json
+    kind: Vault
+    name: vault_v1beta2
+  - apiVersion: glacier.aws.upbound.io/v1beta1
+    filename: glacier.aws.upbound.io/vaultlock_v1beta1.json
+    kind: VaultLock
+    name: vaultlock_v1beta1
+globalaccelerator.aws.m.upbound.io:
+  - apiVersion: globalaccelerator.aws.m.upbound.io/v1beta1
+    filename: globalaccelerator.aws.m.upbound.io/accelerator_v1beta1.json
+    kind: Accelerator
+    name: accelerator_v1beta1
+  - apiVersion: globalaccelerator.aws.m.upbound.io/v1beta1
+    filename: globalaccelerator.aws.m.upbound.io/listener_v1beta1.json
+    kind: Listener
+    name: listener_v1beta1
+  - apiVersion: globalaccelerator.aws.m.upbound.io/v1beta1
+    filename: globalaccelerator.aws.m.upbound.io/endpointgroup_v1beta1.json
+    kind: EndpointGroup
+    name: endpointgroup_v1beta1
+globalaccelerator.aws.upbound.io:
+  - apiVersion: globalaccelerator.aws.upbound.io/v1beta2
+    filename: globalaccelerator.aws.upbound.io/accelerator_v1beta2.json
+    kind: Accelerator
+    name: accelerator_v1beta2
+  - apiVersion: globalaccelerator.aws.upbound.io/v1beta1
+    filename: globalaccelerator.aws.upbound.io/accelerator_v1beta1.json
+    kind: Accelerator
+    name: accelerator_v1beta1
+  - apiVersion: globalaccelerator.aws.upbound.io/v1beta1
+    filename: globalaccelerator.aws.upbound.io/listener_v1beta1.json
+    kind: Listener
+    name: listener_v1beta1
+  - apiVersion: globalaccelerator.aws.upbound.io/v1beta1
+    filename: globalaccelerator.aws.upbound.io/endpointgroup_v1beta1.json
+    kind: EndpointGroup
+    name: endpointgroup_v1beta1
 gloo.solo.io:
   - apiVersion: gloo.solo.io/v1
     filename: gloo.solo.io/upstreamgroup_v1.json
@@ -10786,6 +14476,11 @@ gloo.solo.io:
     filename: gloo.solo.io/upstream_v1.json
     kind: upstream
     name: upstream_v1
+glue.aws.m.upbound.io:
+  - apiVersion: glue.aws.m.upbound.io/v1beta1
+    filename: glue.aws.m.upbound.io/catalogdatabase_v1beta1.json
+    kind: CatalogDatabase
+    name: catalogdatabase_v1beta1
 grafana.crossplane.io:
   - apiVersion: grafana.crossplane.io/v1alpha1
     filename: grafana.crossplane.io/storeconfig_v1alpha1.json

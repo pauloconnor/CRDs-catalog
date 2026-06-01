@@ -250,6 +250,109 @@
               "type": "object",
               "additionalProperties": false
             },
+            "sourceResource": {
+              "description": "Resource to use to use to configure a resource planning IPAM Pool. If configured, the locale of the parent pool must match the region that the vpc resides in.",
+              "properties": {
+                "resourceId": {
+                  "description": "ID of the resource.",
+                  "type": "string"
+                },
+                "resourceIdRef": {
+                  "description": "Reference to a VPC in ec2 to populate resourceId.",
+                  "properties": {
+                    "name": {
+                      "description": "Name of the referenced object.",
+                      "type": "string"
+                    },
+                    "policy": {
+                      "description": "Policies for referencing.",
+                      "properties": {
+                        "resolution": {
+                          "default": "Required",
+                          "description": "Resolution specifies whether resolution of this reference is required.\nThe default is 'Required', which means the reconcile will fail if the\nreference cannot be resolved. 'Optional' means this reference will be\na no-op if it cannot be resolved.",
+                          "enum": [
+                            "Required",
+                            "Optional"
+                          ],
+                          "type": "string"
+                        },
+                        "resolve": {
+                          "description": "Resolve specifies when this reference should be resolved. The default\nis 'IfNotPresent', which will attempt to resolve the reference only when\nthe corresponding field is not present. Use 'Always' to resolve the\nreference on every reconcile.",
+                          "enum": [
+                            "Always",
+                            "IfNotPresent"
+                          ],
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "name"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "resourceIdSelector": {
+                  "description": "Selector for a VPC in ec2 to populate resourceId.",
+                  "properties": {
+                    "matchControllerRef": {
+                      "description": "MatchControllerRef ensures an object with the same controller reference\nas the selecting object is selected.",
+                      "type": "boolean"
+                    },
+                    "matchLabels": {
+                      "additionalProperties": {
+                        "type": "string"
+                      },
+                      "description": "MatchLabels ensures an object with matching labels is selected.",
+                      "type": "object"
+                    },
+                    "policy": {
+                      "description": "Policies for selection.",
+                      "properties": {
+                        "resolution": {
+                          "default": "Required",
+                          "description": "Resolution specifies whether resolution of this reference is required.\nThe default is 'Required', which means the reconcile will fail if the\nreference cannot be resolved. 'Optional' means this reference will be\na no-op if it cannot be resolved.",
+                          "enum": [
+                            "Required",
+                            "Optional"
+                          ],
+                          "type": "string"
+                        },
+                        "resolve": {
+                          "description": "Resolve specifies when this reference should be resolved. The default\nis 'IfNotPresent', which will attempt to resolve the reference only when\nthe corresponding field is not present. Use 'Always' to resolve the\nreference on every reconcile.",
+                          "enum": [
+                            "Always",
+                            "IfNotPresent"
+                          ],
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "resourceOwner": {
+                  "description": "Owner of the resource.",
+                  "type": "string"
+                },
+                "resourceRegion": {
+                  "description": "Region where the resource exists. Must match the locale of the parent IPAM Pool.",
+                  "type": "string"
+                },
+                "resourceType": {
+                  "description": "Type of the resource. (vpc)",
+                  "type": "string"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
             "tags": {
               "additionalProperties": {
                 "type": "string"
@@ -488,6 +591,109 @@
               "type": "object",
               "additionalProperties": false
             },
+            "sourceResource": {
+              "description": "Resource to use to use to configure a resource planning IPAM Pool. If configured, the locale of the parent pool must match the region that the vpc resides in.",
+              "properties": {
+                "resourceId": {
+                  "description": "ID of the resource.",
+                  "type": "string"
+                },
+                "resourceIdRef": {
+                  "description": "Reference to a VPC in ec2 to populate resourceId.",
+                  "properties": {
+                    "name": {
+                      "description": "Name of the referenced object.",
+                      "type": "string"
+                    },
+                    "policy": {
+                      "description": "Policies for referencing.",
+                      "properties": {
+                        "resolution": {
+                          "default": "Required",
+                          "description": "Resolution specifies whether resolution of this reference is required.\nThe default is 'Required', which means the reconcile will fail if the\nreference cannot be resolved. 'Optional' means this reference will be\na no-op if it cannot be resolved.",
+                          "enum": [
+                            "Required",
+                            "Optional"
+                          ],
+                          "type": "string"
+                        },
+                        "resolve": {
+                          "description": "Resolve specifies when this reference should be resolved. The default\nis 'IfNotPresent', which will attempt to resolve the reference only when\nthe corresponding field is not present. Use 'Always' to resolve the\nreference on every reconcile.",
+                          "enum": [
+                            "Always",
+                            "IfNotPresent"
+                          ],
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "name"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "resourceIdSelector": {
+                  "description": "Selector for a VPC in ec2 to populate resourceId.",
+                  "properties": {
+                    "matchControllerRef": {
+                      "description": "MatchControllerRef ensures an object with the same controller reference\nas the selecting object is selected.",
+                      "type": "boolean"
+                    },
+                    "matchLabels": {
+                      "additionalProperties": {
+                        "type": "string"
+                      },
+                      "description": "MatchLabels ensures an object with matching labels is selected.",
+                      "type": "object"
+                    },
+                    "policy": {
+                      "description": "Policies for selection.",
+                      "properties": {
+                        "resolution": {
+                          "default": "Required",
+                          "description": "Resolution specifies whether resolution of this reference is required.\nThe default is 'Required', which means the reconcile will fail if the\nreference cannot be resolved. 'Optional' means this reference will be\na no-op if it cannot be resolved.",
+                          "enum": [
+                            "Required",
+                            "Optional"
+                          ],
+                          "type": "string"
+                        },
+                        "resolve": {
+                          "description": "Resolve specifies when this reference should be resolved. The default\nis 'IfNotPresent', which will attempt to resolve the reference only when\nthe corresponding field is not present. Use 'Always' to resolve the\nreference on every reconcile.",
+                          "enum": [
+                            "Always",
+                            "IfNotPresent"
+                          ],
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "resourceOwner": {
+                  "description": "Owner of the resource.",
+                  "type": "string"
+                },
+                "resourceRegion": {
+                  "description": "Region where the resource exists. Must match the locale of the parent IPAM Pool.",
+                  "type": "string"
+                },
+                "resourceType": {
+                  "description": "Type of the resource. (vpc)",
+                  "type": "string"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
             "tags": {
               "additionalProperties": {
                 "type": "string"
@@ -674,6 +880,29 @@
             "sourceIpamPoolId": {
               "description": "The ID of the source IPAM pool. Use this argument to create a child pool within an existing pool.",
               "type": "string"
+            },
+            "sourceResource": {
+              "description": "Resource to use to use to configure a resource planning IPAM Pool. If configured, the locale of the parent pool must match the region that the vpc resides in.",
+              "properties": {
+                "resourceId": {
+                  "description": "ID of the resource.",
+                  "type": "string"
+                },
+                "resourceOwner": {
+                  "description": "Owner of the resource.",
+                  "type": "string"
+                },
+                "resourceRegion": {
+                  "description": "Region where the resource exists. Must match the locale of the parent IPAM Pool.",
+                  "type": "string"
+                },
+                "resourceType": {
+                  "description": "Type of the resource. (vpc)",
+                  "type": "string"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
             },
             "state": {
               "description": "The ID of the IPAM",
