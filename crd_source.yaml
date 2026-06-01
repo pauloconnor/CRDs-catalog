@@ -566,7 +566,7 @@ sources:
     changelog: "https://github.com/eraser-dev/eraser/releases"
 
   - url: "https://github.com/external-secrets/external-secrets"
-    tag: "helm-chart-2.4.0"
+    tag: "helm-chart-2.5.0"
     repo_path: "deploy/crds"
     changelog: "https://github.com/external-secrets/external-secrets/releases"
 
