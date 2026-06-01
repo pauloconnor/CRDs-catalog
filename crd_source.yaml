@@ -1138,7 +1138,7 @@ sources:
     changelog: "https://github.com/projectsveltos/addon-controller/releases"
 
   - url: "https://github.com/prometheus-operator/prometheus-operator"
-    tag: "v0.90.1"
+    tag: "v0.91.0"
     repo_path: "example/prometheus-operator-crd"
     changelog: "https://github.com/prometheus-operator/prometheus-operator/releases"
 
