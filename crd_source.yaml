@@ -1078,7 +1078,7 @@ sources:
     changelog: "https://github.com/oracle/oci-native-ingress-controller/releases"
 
   - url: "https://github.com/OT-CONTAINER-KIT/redis-operator"
-    tag: "v0.24.0"
+    tag: "v0.25.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/OT-CONTAINER-KIT/redis-operator/releases"
 
