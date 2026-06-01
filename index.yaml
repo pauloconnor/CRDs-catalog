@@ -21031,6 +21031,23 @@ workflows.cnrm.cloud.google.com:
     filename: workflows.cnrm.cloud.google.com/workflowsworkflow_v1alpha1.json
     kind: workflowsworkflow
     name: workflowsworkflow_v1alpha1
+workspace.devfile.io:
+  - apiVersion: workspace.devfile.io/v1alpha2
+    filename: workspace.devfile.io/devworkspacetemplate_v1alpha2.json
+    kind: DevWorkspaceTemplate
+    name: devworkspacetemplate_v1alpha2
+  - apiVersion: workspace.devfile.io/v1alpha1
+    filename: workspace.devfile.io/devworkspace_v1alpha1.json
+    kind: DevWorkspace
+    name: devworkspace_v1alpha1
+  - apiVersion: workspace.devfile.io/v1alpha2
+    filename: workspace.devfile.io/devworkspace_v1alpha2.json
+    kind: DevWorkspace
+    name: devworkspace_v1alpha2
+  - apiVersion: workspace.devfile.io/v1alpha1
+    filename: workspace.devfile.io/devworkspacetemplate_v1alpha1.json
+    kind: DevWorkspaceTemplate
+    name: devworkspacetemplate_v1alpha1
 workstations.cnrm.cloud.google.com:
   - apiVersion: workstations.cnrm.cloud.google.com/v1alpha1
     filename: workstations.cnrm.cloud.google.com/workstationcluster_v1alpha1.json
