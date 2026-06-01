@@ -556,7 +556,7 @@ sources:
     changelog: "https://github.com/epam/edp-nexus-operator/releases"
 
   - url: "https://github.com/epam/edp-sonar-operator"
-    tag: ""
+    tag: "v3.3.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/epam/edp-sonar-operator/releases"
 

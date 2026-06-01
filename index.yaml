@@ -9010,6 +9010,31 @@ edgenetwork.cnrm.cloud.google.com:
     filename: edgenetwork.cnrm.cloud.google.com/edgenetworknetwork_v1beta1.json
     kind: edgenetworknetwork
     name: edgenetworknetwork_v1beta1
+edp.epam.com:
+  - apiVersion: edp.epam.com/v1alpha1
+    filename: edp.epam.com/sonargroup_v1alpha1.json
+    kind: SonarGroup
+    name: sonargroup_v1alpha1
+  - apiVersion: edp.epam.com/v1alpha1
+    filename: edp.epam.com/sonar_v1alpha1.json
+    kind: Sonar
+    name: sonar_v1alpha1
+  - apiVersion: edp.epam.com/v1alpha1
+    filename: edp.epam.com/sonarqualitygate_v1alpha1.json
+    kind: SonarQualityGate
+    name: sonarqualitygate_v1alpha1
+  - apiVersion: edp.epam.com/v1alpha1
+    filename: edp.epam.com/sonaruser_v1alpha1.json
+    kind: SonarUser
+    name: sonaruser_v1alpha1
+  - apiVersion: edp.epam.com/v1alpha1
+    filename: edp.epam.com/sonarpermissiontemplate_v1alpha1.json
+    kind: SonarPermissionTemplate
+    name: sonarpermissiontemplate_v1alpha1
+  - apiVersion: edp.epam.com/v1alpha1
+    filename: edp.epam.com/sonarqualityprofile_v1alpha1.json
+    kind: SonarQualityProfile
+    name: sonarqualityprofile_v1alpha1
 eks.amazonaws.com:
   - apiVersion: eks.amazonaws.com/v1
     filename: eks.amazonaws.com/targetgroupbinding_v1.json
