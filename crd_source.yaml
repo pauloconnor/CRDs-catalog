@@ -515,7 +515,7 @@ sources:
     changelog: "https://github.com/Dynatrace/dynatrace-operator/releases"
 
   - url: "https://github.com/elastic/cloud-on-k8s"
-    tag: "v3.3.2"
+    tag: "v3.4.0"
     repo_path: "config/crds/v1"
     changelog: "https://github.com/elastic/cloud-on-k8s/releases"
 
