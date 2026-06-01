@@ -1,5 +1,5 @@
 {
-  "description": "PlaylistV1 is the Schema for the PlaylistV1s API. Manages Grafana playlists using the new Grafana APIs. Official documentation https://grafana.com/docs/grafana/latest/dashboards/create-manage-playlists/HTTP API https://grafana.com/docs/grafana/latest/developers/http_api/apis/",
+  "description": "Dbo11YconfigV1Alpha1 is the Schema for the Dbo11YconfigV1Alpha1s API. Manages Grafana Database Observability configurations using the Grafana APIs. This resource allows you to enable or disable database observability features. Note: This is a singleton resource. The UID is automatically set to \"global\" and there can only be one per namespace.",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -13,7 +13,7 @@
       "type": "object"
     },
     "spec": {
-      "description": "PlaylistV1Spec defines the desired state of PlaylistV1",
+      "description": "Dbo11YconfigV1Alpha1Spec defines the desired state of Dbo11YconfigV1Alpha1",
       "properties": {
         "deletionPolicy": {
           "default": "Delete",
@@ -59,31 +59,9 @@
             "spec": {
               "description": "(Block, Optional) The spec of the resource. (see below for nested schema)\nThe spec of the resource.",
               "properties": {
-                "interval": {
-                  "description": "(String) The interval of the playlist.\nThe interval of the playlist.",
-                  "type": "string"
-                },
-                "items": {
-                  "description": "(List of Object) The items of the playlist. (see below for nested schema)\nThe items of the playlist.",
-                  "items": {
-                    "properties": {
-                      "type": {
-                        "description": "(String)",
-                        "type": "string"
-                      },
-                      "value": {
-                        "description": "(String)",
-                        "type": "string"
-                      }
-                    },
-                    "type": "object",
-                    "additionalProperties": false
-                  },
-                  "type": "array"
-                },
-                "title": {
-                  "description": "(String) The title of the playlist.\nThe title of the playlist.",
-                  "type": "string"
+                "enabled": {
+                  "description": "(Boolean) Whether database observability is enabled.\nWhether database observability is enabled.",
+                  "type": "boolean"
                 }
               },
               "type": "object",
@@ -129,31 +107,9 @@
             "spec": {
               "description": "(Block, Optional) The spec of the resource. (see below for nested schema)\nThe spec of the resource.",
               "properties": {
-                "interval": {
-                  "description": "(String) The interval of the playlist.\nThe interval of the playlist.",
-                  "type": "string"
-                },
-                "items": {
-                  "description": "(List of Object) The items of the playlist. (see below for nested schema)\nThe items of the playlist.",
-                  "items": {
-                    "properties": {
-                      "type": {
-                        "description": "(String)",
-                        "type": "string"
-                      },
-                      "value": {
-                        "description": "(String)",
-                        "type": "string"
-                      }
-                    },
-                    "type": "object",
-                    "additionalProperties": false
-                  },
-                  "type": "array"
-                },
-                "title": {
-                  "description": "(String) The title of the playlist.\nThe title of the playlist.",
-                  "type": "string"
+                "enabled": {
+                  "description": "(Boolean) Whether database observability is enabled.\nWhether database observability is enabled.",
+                  "type": "boolean"
                 }
               },
               "type": "object",
@@ -260,7 +216,7 @@
       "additionalProperties": false
     },
     "status": {
-      "description": "PlaylistV1Status defines the observed state of PlaylistV1.",
+      "description": "Dbo11YconfigV1Alpha1Status defines the observed state of Dbo11YconfigV1Alpha1.",
       "properties": {
         "atProvider": {
           "properties": {
@@ -321,31 +277,9 @@
             "spec": {
               "description": "(Block, Optional) The spec of the resource. (see below for nested schema)\nThe spec of the resource.",
               "properties": {
-                "interval": {
-                  "description": "(String) The interval of the playlist.\nThe interval of the playlist.",
-                  "type": "string"
-                },
-                "items": {
-                  "description": "(List of Object) The items of the playlist. (see below for nested schema)\nThe items of the playlist.",
-                  "items": {
-                    "properties": {
-                      "type": {
-                        "description": "(String)",
-                        "type": "string"
-                      },
-                      "value": {
-                        "description": "(String)",
-                        "type": "string"
-                      }
-                    },
-                    "type": "object",
-                    "additionalProperties": false
-                  },
-                  "type": "array"
-                },
-                "title": {
-                  "description": "(String) The title of the playlist.\nThe title of the playlist.",
-                  "type": "string"
+                "enabled": {
+                  "description": "(Boolean) Whether database observability is enabled.\nWhether database observability is enabled.",
+                  "type": "boolean"
                 }
               },
               "type": "object",

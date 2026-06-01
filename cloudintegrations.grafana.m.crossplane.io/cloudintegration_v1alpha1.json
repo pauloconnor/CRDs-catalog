@@ -1,5 +1,5 @@
 {
-  "description": "Role is an observe-only resource backed by the grafana_role Terraform data source.",
+  "description": "CloudIntegration is the Schema for the CloudIntegrations API. Manages Grafana Cloud integrations. Official documentation https://grafana.com/docs/grafana-cloud/data-configuration/integrations/ This provider lets you manage Grafana Cloud Integrations. Alerts can optionally be disabled. Please note: Grafana Cloud Integrations do not support in-place upgrades, and require a teardown and reapply to resolve version drift. As such it is recommended to have a separate TF plan for integrations to cleanly destroy them as needed. Update, only triggered on config change, is implemented as a complete uninstall, then reinstall of the integration in question. Required access policy scopes: folders:readfolders:writedashboards:readdashboards:writerules:readrules:write Based on: https://grafana.com/docs/grafana/latest/alerting/alerting-rules/alerting-migration/#import-rules-with-grafana-alerting Note: This resource creates folders and dashboards as part of the integration installation process, which requires additional permissions beyond the basic integration scopes.",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -13,18 +13,34 @@
       "type": "object"
     },
     "spec": {
+      "description": "CloudIntegrationSpec defines the desired state of CloudIntegration",
       "properties": {
         "forProvider": {
-          "description": "RoleParameters defines the input parameters for the grafana_role data source.",
           "properties": {
-            "name": {
-              "description": "Name of the role",
+            "alertsEnabled": {
+              "description": "(Boolean) Whether alerts are enabled for this integration.\nWhether alerts are enabled for this integration.",
+              "type": "boolean"
+            },
+            "slug": {
+              "description": "node').\nThe slug of the integration to install (e.g., 'docker', 'linux-node').",
               "type": "string"
             }
           },
-          "required": [
-            "name"
-          ],
+          "type": "object",
+          "additionalProperties": false
+        },
+        "initProvider": {
+          "description": "THIS IS A BETA FIELD. It will be honored\nunless the Management Policies feature flag is disabled.\nInitProvider holds the same fields as ForProvider, with the exception\nof Identifier and other resource reference fields. The fields that are\nin InitProvider are merged into ForProvider when the resource is created.\nThe same fields are also added to the terraform ignore_changes hook, to\navoid updating them after creation. This is useful for fields that are\nrequired on creation, but we do not desire to update them after creation,\nfor example because of an external controller is managing them, like an\nautoscaler.",
+          "properties": {
+            "alertsEnabled": {
+              "description": "(Boolean) Whether alerts are enabled for this integration.\nWhether alerts are enabled for this integration.",
+              "type": "boolean"
+            },
+            "slug": {
+              "description": "node').\nThe slug of the integration to install (e.g., 'docker', 'linux-node').",
+              "type": "string"
+            }
+          },
           "type": "object",
           "additionalProperties": false
         },
@@ -89,63 +105,46 @@
         "forProvider"
       ],
       "type": "object",
+      "x-kubernetes-validations": [
+        {
+          "message": "spec.forProvider.slug is a required parameter",
+          "rule": "!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.slug) || (has(self.initProvider) && has(self.initProvider.slug))"
+        }
+      ],
       "additionalProperties": false
     },
     "status": {
+      "description": "CloudIntegrationStatus defines the observed state of CloudIntegration.",
       "properties": {
         "atProvider": {
-          "description": "RoleObservation holds the observed (computed) fields from the grafana_role data source.",
           "properties": {
-            "description": {
-              "description": "Description of the role.",
-              "type": "string"
-            },
-            "displayName": {
-              "description": "Display name of the role. Available with Grafana 8.5+.",
-              "type": "string"
-            },
-            "global": {
-              "description": "Boolean to state whether the role is available across all organizations or not.",
+            "alertsEnabled": {
+              "description": "(Boolean) Whether alerts are enabled for this integration.\nWhether alerts are enabled for this integration.",
               "type": "boolean"
             },
-            "group": {
-              "description": "Group of the role. Available with Grafana 8.5+.",
+            "dashboardFolder": {
+              "description": "(String) The dashboard folder associated with this integration.\nThe dashboard folder associated with this integration.",
               "type": "string"
             },
-            "hidden": {
-              "description": "Boolean to state whether the role should be visible in the Grafana UI or not. Available with Grafana 8.5+.",
-              "type": "boolean"
-            },
-            "orgID": {
-              "description": "The Organization ID. If not set, the Org ID defined in the provider block will be used.",
+            "id": {
+              "description": "Set to the integration slug.",
               "type": "string"
             },
-            "permissions": {
-              "description": "Specific set of actions granted by the role.",
-              "items": {
-                "properties": {
-                  "action": {
-                    "description": "Specific action users granted with the role will be allowed to perform (for example: `users:read`)",
-                    "type": "string"
-                  },
-                  "scope": {
-                    "description": "Scope to restrict the action to a set of resources (for example: `users:*` or `roles:customrole1`)",
-                    "type": "string"
-                  }
-                },
-                "type": "object",
-                "additionalProperties": false
-              },
-              "type": "array"
-            },
-            "uid": {
-              "description": "Unique identifier of the role. Used for assignments.",
+            "installedVersion": {
+              "description": "(String) The version of the installed integration.\nThe version of the installed integration.",
               "type": "string"
             },
-            "version": {
-              "description": "Version of the role. The server manages this automatically.",
-              "format": "int64",
-              "type": "integer"
+            "latestVersion": {
+              "description": "(String) The latest version available for this integration.\nThe latest version available for this integration.",
+              "type": "string"
+            },
+            "name": {
+              "description": "(String) The display name of the integration.\nThe display name of the integration.",
+              "type": "string"
+            },
+            "slug": {
+              "description": "node').\nThe slug of the integration to install (e.g., 'docker', 'linux-node').",
+              "type": "string"
             }
           },
           "type": "object",

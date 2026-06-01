@@ -3895,6 +3895,10 @@ cloud.grafana.crossplane.io:
     filename: cloud.grafana.crossplane.io/stackserviceaccountrotatingtoken_v1alpha1.json
     kind: StackServiceAccountRotatingToken
     name: stackserviceaccountrotatingtoken_v1alpha1
+  - apiVersion: cloud.grafana.crossplane.io/v1alpha1
+    filename: cloud.grafana.crossplane.io/dbo11yconfigv1alpha1_v1alpha1.json
+    kind: Dbo11YconfigV1Alpha1
+    name: dbo11yconfigv1alpha1_v1alpha1
 cloud.grafana.m.crossplane.io:
   - apiVersion: cloud.grafana.m.crossplane.io/v1alpha1
     filename: cloud.grafana.m.crossplane.io/accesspolicyrotatingtoken_v1alpha1.json
@@ -3948,6 +3952,10 @@ cloud.grafana.m.crossplane.io:
     filename: cloud.grafana.m.crossplane.io/stackserviceaccountrotatingtoken_v1alpha1.json
     kind: StackServiceAccountRotatingToken
     name: stackserviceaccountrotatingtoken_v1alpha1
+  - apiVersion: cloud.grafana.m.crossplane.io/v1alpha1
+    filename: cloud.grafana.m.crossplane.io/dbo11yconfigv1alpha1_v1alpha1.json
+    kind: Dbo11YconfigV1Alpha1
+    name: dbo11yconfigv1alpha1_v1alpha1
 cloud.grafana.o.crossplane.io:
   - apiVersion: cloud.grafana.o.crossplane.io/v1alpha1
     filename: cloud.grafana.o.crossplane.io/organization_v1alpha1.json
@@ -4078,6 +4086,16 @@ cloudids.cnrm.cloud.google.com:
     filename: cloudids.cnrm.cloud.google.com/cloudidsendpoint_v1beta1.json
     kind: cloudidsendpoint
     name: cloudidsendpoint_v1beta1
+cloudintegrations.grafana.crossplane.io:
+  - apiVersion: cloudintegrations.grafana.crossplane.io/v1alpha1
+    filename: cloudintegrations.grafana.crossplane.io/cloudintegration_v1alpha1.json
+    kind: CloudIntegration
+    name: cloudintegration_v1alpha1
+cloudintegrations.grafana.m.crossplane.io:
+  - apiVersion: cloudintegrations.grafana.m.crossplane.io/v1alpha1
+    filename: cloudintegrations.grafana.m.crossplane.io/cloudintegration_v1alpha1.json
+    kind: CloudIntegration
+    name: cloudintegration_v1alpha1
 cloudiot.cnrm.cloud.google.com:
   - apiVersion: cloudiot.cnrm.cloud.google.com/v1alpha1
     filename: cloudiot.cnrm.cloud.google.com/cloudiotdeviceregistry_v1alpha1.json
@@ -17167,6 +17185,10 @@ oss.grafana.o.crossplane.io:
     filename: oss.grafana.o.crossplane.io/datasource_v1alpha1.json
     kind: DataSource
     name: datasource_v1alpha1
+  - apiVersion: oss.grafana.o.crossplane.io/v1alpha1
+    filename: oss.grafana.o.crossplane.io/teamset_v1alpha1.json
+    kind: TeamSet
+    name: teamset_v1alpha1
 packageregistry.k8s.elastic.co:
   - apiVersion: packageregistry.k8s.elastic.co/v1alpha1
     filename: packageregistry.k8s.elastic.co/packageregistry_v1alpha1.json

@@ -1,5 +1,5 @@
 {
-  "description": "Role is an observe-only resource backed by the grafana_role Terraform data source.",
+  "description": "TeamSet is an observe-only resource backed by the grafana_teams Terraform data source.",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -15,16 +15,17 @@
     "spec": {
       "properties": {
         "forProvider": {
-          "description": "RoleParameters defines the input parameters for the grafana_role data source.",
+          "description": "TeamSetParameters defines the input parameters for the grafana_teams data source.",
           "properties": {
-            "name": {
-              "description": "Name of the role",
+            "orgID": {
+              "description": "The Organization ID. If not set, the default organization is used for basic authentication, or the one that owns your service account for token authentication.",
+              "type": "string"
+            },
+            "query": {
+              "description": "A keyword to filter teams by name (substring match). If omitted, all teams are returned.",
               "type": "string"
             }
           },
-          "required": [
-            "name"
-          ],
           "type": "object",
           "additionalProperties": false
         },
@@ -94,58 +95,22 @@
     "status": {
       "properties": {
         "atProvider": {
-          "description": "RoleObservation holds the observed (computed) fields from the grafana_role data source.",
+          "description": "TeamSetObservation holds the observed (computed) fields from the grafana_teams data source.",
           "properties": {
-            "description": {
-              "description": "Description of the role.",
-              "type": "string"
-            },
-            "displayName": {
-              "description": "Display name of the role. Available with Grafana 8.5+.",
-              "type": "string"
-            },
-            "global": {
-              "description": "Boolean to state whether the role is available across all organizations or not.",
-              "type": "boolean"
-            },
-            "group": {
-              "description": "Group of the role. Available with Grafana 8.5+.",
-              "type": "string"
-            },
-            "hidden": {
-              "description": "Boolean to state whether the role should be visible in the Grafana UI or not. Available with Grafana 8.5+.",
-              "type": "boolean"
-            },
             "orgID": {
-              "description": "The Organization ID. If not set, the Org ID defined in the provider block will be used.",
+              "description": "The Organization ID. If not set, the default organization is used for basic authentication, or the one that owns your service account for token authentication.",
               "type": "string"
             },
-            "permissions": {
-              "description": "Specific set of actions granted by the role.",
+            "query": {
+              "description": "A keyword to filter teams by name (substring match). If omitted, all teams are returned.",
+              "type": "string"
+            },
+            "teams": {
+              "description": "The list of matching Grafana teams.",
               "items": {
-                "properties": {
-                  "action": {
-                    "description": "Specific action users granted with the role will be allowed to perform (for example: `users:read`)",
-                    "type": "string"
-                  },
-                  "scope": {
-                    "description": "Scope to restrict the action to a set of resources (for example: `users:*` or `roles:customrole1`)",
-                    "type": "string"
-                  }
-                },
-                "type": "object",
-                "additionalProperties": false
+                "type": "string"
               },
               "type": "array"
-            },
-            "uid": {
-              "description": "Unique identifier of the role. Used for assignments.",
-              "type": "string"
-            },
-            "version": {
-              "description": "Version of the role. The server manages this automatically.",
-              "format": "int64",
-              "type": "integer"
             }
           },
           "type": "object",
