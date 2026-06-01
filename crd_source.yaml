@@ -265,7 +265,7 @@ sources:
     changelog: "https://github.com/aws-controllers-k8s/runtime/releases"
 
   - url: "https://github.com/aws-controllers-k8s/s3-controller"
-    tag: "v1.3.4"
+    tag: "v1.6.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/aws-controllers-k8s/s3-controller/releases"
 
