@@ -18395,6 +18395,31 @@ redpanda.vectorized.io:
     filename: redpanda.vectorized.io/console_v1alpha1.json
     kind: Console
     name: console_v1alpha1
+registries.mittwald.de:
+  - apiVersion: registries.mittwald.de/v1alpha2
+    filename: registries.mittwald.de/project_v1alpha2.json
+    kind: project
+    name: project_v1alpha2
+  - apiVersion: registries.mittwald.de/v1alpha2
+    filename: registries.mittwald.de/instance_v1alpha2.json
+    kind: Instance
+    name: instance_v1alpha2
+  - apiVersion: registries.mittwald.de/v1alpha2
+    filename: registries.mittwald.de/user_v1alpha2.json
+    kind: user
+    name: user_v1alpha2
+  - apiVersion: registries.mittwald.de/v1alpha2
+    filename: registries.mittwald.de/registry_v1alpha2.json
+    kind: registry
+    name: registry_v1alpha2
+  - apiVersion: registries.mittwald.de/v1alpha2
+    filename: registries.mittwald.de/instancechartrepository_v1alpha2.json
+    kind: instancechartrepository
+    name: instancechartrepository_v1alpha2
+  - apiVersion: registries.mittwald.de/v1alpha2
+    filename: registries.mittwald.de/replication_v1alpha2.json
+    kind: replication
+    name: replication_v1alpha2
 renovate-operator.mogenius.com:
   - apiVersion: renovate-operator.mogenius.com/v1alpha1
     filename: renovate-operator.mogenius.com/renovatejob_v1alpha1.json
