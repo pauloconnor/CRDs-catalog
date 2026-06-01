@@ -1113,7 +1113,7 @@ sources:
     changelog: "https://github.com/pingcap/tidb-operator/releases"
 
   - url: "https://github.com/piraeusdatastore/piraeus-operator"
-    tag: "v2.10.5"
+    tag: "v2.10.7"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/piraeusdatastore/piraeus-operator/releases"
 
