@@ -260,7 +260,7 @@ sources:
     changelog: "https://github.com/aws-controllers-k8s/route53-controller/releases"
 
   - url: "https://github.com/aws-controllers-k8s/runtime"
-    tag: "v0.58.0"
+    tag: "v0.59.1"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/aws-controllers-k8s/runtime/releases"
 
