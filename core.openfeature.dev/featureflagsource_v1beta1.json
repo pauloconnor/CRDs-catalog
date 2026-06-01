@@ -30,6 +30,7 @@
           "type": "array"
         },
         "debugLogging": {
+          "default": false,
           "description": "DebugLogging defines whether to enable --debug flag of flagd sidecar. Default false (disabled).",
           "type": "boolean"
         },
@@ -210,6 +211,7 @@
           "type": "integer"
         },
         "probesEnabled": {
+          "default": true,
           "description": "ProbesEnabled defines whether to enable liveness and readiness probes of flagd sidecar. Default true (enabled).",
           "type": "boolean"
         },
@@ -279,6 +281,7 @@
           "additionalProperties": false
         },
         "rolloutOnChange": {
+          "default": false,
           "description": "RolloutOnChange dictates whether annotated deployments will be restarted when configuration changes are\ndetected in this CR, defaults to false",
           "type": "boolean"
         },
@@ -304,7 +307,7 @@
                 "type": "integer"
               },
               "provider": {
-                "description": "Provider type - kubernetes, http(s), grpc(s) or file",
+                "description": "Provider type - kubernetes, file, http(s), grpc(s), gcs, azblob, s3 or flagd-proxy",
                 "type": "string"
               },
               "providerID": {
