@@ -661,7 +661,7 @@ sources:
     changelog: "https://github.com/grafana/crossplane-provider-grafana/releases"
 
   - url: "https://github.com/grafana/grafana-operator"
-    tag: "v5.22.2"
+    tag: "v5.23.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/grafana/grafana-operator/releases"
 
