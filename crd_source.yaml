@@ -591,7 +591,7 @@ sources:
     changelog: "https://github.com/fluxcd/flagger/releases"
 
   - url: "https://github.com/fluxcd/helm-controller"
-    tag: "v1.5.4"
+    tag: "v1.5.5"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/fluxcd/helm-controller/releases"
 
