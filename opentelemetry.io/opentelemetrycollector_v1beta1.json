@@ -5646,6 +5646,9 @@
                   },
                   "type": "array"
                 },
+                "denyFSAccessThroughSMs": {
+                  "type": "boolean"
+                },
                 "denyNamespaces": {
                   "items": {
                     "type": "string"
@@ -5917,6 +5920,12 @@
                   "type": "string"
                 },
                 "scrapeProtocols": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "secretNamespaces": {
                   "items": {
                     "type": "string"
                   },
