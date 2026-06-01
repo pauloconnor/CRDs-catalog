@@ -3075,6 +3075,31 @@ botservice.azure.upbound.io:
     filename: botservice.azure.upbound.io/botwebapp_v1beta1.json
     kind: BotWebApp
     name: botwebapp_v1beta1
+br.pingcap.com:
+  - apiVersion: br.pingcap.com/v1alpha1
+    filename: br.pingcap.com/compactbackup_v1alpha1.json
+    kind: compactbackup
+    name: compactbackup_v1alpha1
+  - apiVersion: br.pingcap.com/v1alpha1
+    filename: br.pingcap.com/tibrgc_v1alpha1.json
+    kind: TiBRGC
+    name: tibrgc_v1alpha1
+  - apiVersion: br.pingcap.com/v1alpha1
+    filename: br.pingcap.com/backupschedule_v1alpha1.json
+    kind: BackupSchedule
+    name: backupschedule_v1alpha1
+  - apiVersion: br.pingcap.com/v1alpha1
+    filename: br.pingcap.com/backup_v1alpha1.json
+    kind: Backup
+    name: backup_v1alpha1
+  - apiVersion: br.pingcap.com/v1alpha1
+    filename: br.pingcap.com/tibr_v1alpha1.json
+    kind: TiBR
+    name: tibr_v1alpha1
+  - apiVersion: br.pingcap.com/v1alpha1
+    filename: br.pingcap.com/restore_v1alpha1.json
+    kind: Restore
+    name: restore_v1alpha1
 bus.volcano.sh:
   - apiVersion: bus.volcano.sh/v1alpha1
     filename: bus.volcano.sh/command_v1alpha1.json
@@ -5769,6 +5794,83 @@ core.openfeature.dev:
     filename: core.openfeature.dev/featureflagconfiguration_v1alpha1.json
     kind: FeatureFlagConfiguration
     name: featureflagconfiguration_v1alpha1
+core.pingcap.com:
+  - apiVersion: core.pingcap.com/v1alpha1
+    filename: core.pingcap.com/schedulinggroup_v1alpha1.json
+    kind: SchedulingGroup
+    name: schedulinggroup_v1alpha1
+  - apiVersion: core.pingcap.com/v1alpha1
+    filename: core.pingcap.com/pdgroup_v1alpha1.json
+    kind: PDGroup
+    name: pdgroup_v1alpha1
+  - apiVersion: core.pingcap.com/v1alpha1
+    filename: core.pingcap.com/ticdc_v1alpha1.json
+    kind: TiCDC
+    name: ticdc_v1alpha1
+  - apiVersion: core.pingcap.com/v1alpha1
+    filename: core.pingcap.com/tiproxy_v1alpha1.json
+    kind: TiProxy
+    name: tiproxy_v1alpha1
+  - apiVersion: core.pingcap.com/v1alpha1
+    filename: core.pingcap.com/tikvgroup_v1alpha1.json
+    kind: TiKVGroup
+    name: tikvgroup_v1alpha1
+  - apiVersion: core.pingcap.com/v1alpha1
+    filename: core.pingcap.com/tsogroup_v1alpha1.json
+    kind: TSOGroup
+    name: tsogroup_v1alpha1
+  - apiVersion: core.pingcap.com/v1alpha1
+    filename: core.pingcap.com/tiproxygroup_v1alpha1.json
+    kind: TiProxyGroup
+    name: tiproxygroup_v1alpha1
+  - apiVersion: core.pingcap.com/v1alpha1
+    filename: core.pingcap.com/tikv_v1alpha1.json
+    kind: TiKV
+    name: tikv_v1alpha1
+  - apiVersion: core.pingcap.com/v1alpha1
+    filename: core.pingcap.com/tiflashgroup_v1alpha1.json
+    kind: TiFlashGroup
+    name: tiflashgroup_v1alpha1
+  - apiVersion: core.pingcap.com/v1alpha1
+    filename: core.pingcap.com/schedulergroup_v1alpha1.json
+    kind: SchedulerGroup
+    name: schedulergroup_v1alpha1
+  - apiVersion: core.pingcap.com/v1alpha1
+    filename: core.pingcap.com/pd_v1alpha1.json
+    kind: PD
+    name: pd_v1alpha1
+  - apiVersion: core.pingcap.com/v1alpha1
+    filename: core.pingcap.com/ticdcgroup_v1alpha1.json
+    kind: TiCDCGroup
+    name: ticdcgroup_v1alpha1
+  - apiVersion: core.pingcap.com/v1alpha1
+    filename: core.pingcap.com/tidbgroup_v1alpha1.json
+    kind: TiDBGroup
+    name: tidbgroup_v1alpha1
+  - apiVersion: core.pingcap.com/v1alpha1
+    filename: core.pingcap.com/cluster_v1alpha1.json
+    kind: Cluster
+    name: cluster_v1alpha1
+  - apiVersion: core.pingcap.com/v1alpha1
+    filename: core.pingcap.com/tidb_v1alpha1.json
+    kind: TiDB
+    name: tidb_v1alpha1
+  - apiVersion: core.pingcap.com/v1alpha1
+    filename: core.pingcap.com/scheduler_v1alpha1.json
+    kind: Scheduler
+    name: scheduler_v1alpha1
+  - apiVersion: core.pingcap.com/v1alpha1
+    filename: core.pingcap.com/scheduling_v1alpha1.json
+    kind: Scheduling
+    name: scheduling_v1alpha1
+  - apiVersion: core.pingcap.com/v1alpha1
+    filename: core.pingcap.com/tiflash_v1alpha1.json
+    kind: TiFlash
+    name: tiflash_v1alpha1
+  - apiVersion: core.pingcap.com/v1alpha1
+    filename: core.pingcap.com/tso_v1alpha1.json
+    kind: TSO
+    name: tso_v1alpha1
 core.strimzi.io:
   - apiVersion: core.strimzi.io/v1beta2
     filename: core.strimzi.io/strimzipodset_v1beta2.json
