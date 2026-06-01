@@ -110,7 +110,7 @@ sources:
     changelog: "https://github.com/aws-controllers-k8s/acm-controller/releases"
 
   - url: "https://github.com/aws-controllers-k8s/acmpca-controller"
-    tag: "v1.2.3"
+    tag: "v1.3.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/aws-controllers-k8s/acmpca-controller/releases"
 
