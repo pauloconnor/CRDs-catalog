@@ -185,7 +185,7 @@ sources:
     changelog: "https://github.com/aws-controllers-k8s/eventbridge-controller/releases"
 
   - url: "https://github.com/aws-controllers-k8s/iam-controller"
-    tag: "v1.6.3"
+    tag: "v1.7.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/aws-controllers-k8s/iam-controller/releases"
 
