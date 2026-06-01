@@ -156,7 +156,6 @@
         }
       },
       "required": [
-        "backup",
         "deletionProtected",
         "instance",
         "secretName"
