@@ -1261,7 +1261,7 @@ sources:
     changelog: "https://github.com/spotahome/redis-operator/releases"
 
   - url: "https://github.com/streamnative/pulsar-resources-operator"
-    tag: "pulsar-resources-operator-v0.19.1-rc.1-rc.1"
+    tag: "pulsar-resources-operator-v0.19.2-rc.1-rc.1"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/streamnative/pulsar-resources-operator/releases"
 
