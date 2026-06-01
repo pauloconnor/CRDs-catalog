@@ -320,7 +320,7 @@ sources:
     changelog: "https://github.com/aws/eks-anywhere/releases"
 
   - url: "https://github.com/aws/karpenter-provider-aws"
-    tag: "v1.12.0"
+    tag: "v1.12.1"
     repo_path: "pkg/apis/crds"
     changelog: "https://github.com/aws/karpenter-provider-aws/releases"
 
