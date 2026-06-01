@@ -19526,6 +19526,39 @@ shard.volcano.sh:
     filename: shard.volcano.sh/nodeshard_v1alpha1.json
     kind: NodeShard
     name: nodeshard_v1alpha1
+shipwright.io:
+  - apiVersion: shipwright.io/v1beta1
+    filename: shipwright.io/clusterbuildstrategy_v1beta1.json
+    kind: ClusterBuildStrategy
+    name: clusterbuildstrategy_v1beta1
+  - apiVersion: shipwright.io/v1alpha1
+    filename: shipwright.io/buildstrategy_v1alpha1.json
+    kind: BuildStrategy
+    name: buildstrategy_v1alpha1
+  - apiVersion: shipwright.io/v1beta1
+    filename: shipwright.io/build_v1beta1.json
+    kind: Build
+    name: build_v1beta1
+  - apiVersion: shipwright.io/v1alpha1
+    filename: shipwright.io/build_v1alpha1.json
+    kind: Build
+    name: build_v1alpha1
+  - apiVersion: shipwright.io/v1beta1
+    filename: shipwright.io/buildstrategy_v1beta1.json
+    kind: BuildStrategy
+    name: buildstrategy_v1beta1
+  - apiVersion: shipwright.io/v1alpha1
+    filename: shipwright.io/buildrun_v1alpha1.json
+    kind: BuildRun
+    name: buildrun_v1alpha1
+  - apiVersion: shipwright.io/v1beta1
+    filename: shipwright.io/buildrun_v1beta1.json
+    kind: BuildRun
+    name: buildrun_v1beta1
+  - apiVersion: shipwright.io/v1alpha1
+    filename: shipwright.io/clusterbuildstrategy_v1alpha1.json
+    kind: ClusterBuildStrategy
+    name: clusterbuildstrategy_v1alpha1
 signalrservice.azure.com:
   - apiVersion: signalrservice.azure.com/v1api20240301
     filename: signalrservice.azure.com/customdomain_v1api20240301.json
