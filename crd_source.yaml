@@ -1108,7 +1108,7 @@ sources:
     changelog: "https://github.com/percona/percona-xtradb-cluster-operator/releases"
 
   - url: "https://github.com/pingcap/tidb-operator"
-    tag: ""
+    tag: "v2.0.1"
     repo_path: "manifests/crd"
     changelog: "https://github.com/pingcap/tidb-operator/releases"
 
