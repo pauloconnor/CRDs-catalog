@@ -469,7 +469,7 @@ sources:
     changelog: "https://github.com/dapr/dapr/releases"
 
   - url: "https://github.com/DataDog/datadog-operator"
-    tag: "v1.25.0"
+    tag: "v1.26.0"
     repo_path: "config/crd/bases/v1"
     changelog: "https://github.com/DataDog/datadog-operator/releases"
 
