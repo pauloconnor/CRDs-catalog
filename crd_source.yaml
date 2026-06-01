@@ -45,7 +45,7 @@ sources:
     changelog: "https://github.com/aenix-io/etcd-operator/releases"
 
   - url: "https://github.com/aiven/aiven-operator"
-    tag: "v0.37.0"
+    tag: "v0.38.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/aiven/aiven-operator/releases"
 
