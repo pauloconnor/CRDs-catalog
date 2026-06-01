@@ -82,15 +82,15 @@
               "description": "CertManager references a cert-manager Issuer or ClusterIssuer.\nIf set, a Certificate resource will be created, provisioning the secret references in SecretName using the\nissuer configured here.",
               "properties": {
                 "group": {
-                  "description": "Group of the resource being referred to.",
+                  "description": "Group of the issuer being referred to.\nDefaults to 'cert-manager.io'.",
                   "type": "string"
                 },
                 "kind": {
-                  "description": "Kind of the resource being referred to.",
+                  "description": "Kind of the issuer being referred to.\nDefaults to 'Issuer'.",
                   "type": "string"
                 },
                 "name": {
-                  "description": "Name of the resource being referred to.",
+                  "description": "Name of the issuer being referred to.",
                   "type": "string"
                 }
               },
