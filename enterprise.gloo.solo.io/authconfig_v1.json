@@ -1498,6 +1498,20 @@
                   },
                   "http": {
                     "properties": {
+                      "connectionPool": {
+                        "properties": {
+                          "idleTimeout": {
+                            "type": "string"
+                          },
+                          "maxConns": {
+                            "maximum": 4294967295,
+                            "minimum": 0,
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object",
+                        "additionalProperties": false
+                      },
                       "connectionTimeout": {
                         "type": "string"
                       },
@@ -1554,6 +1568,9 @@
                         },
                         "type": "object",
                         "additionalProperties": false
+                      },
+                      "responseHeaderTimeout": {
+                        "type": "string"
                       },
                       "tlsConfig": {
                         "properties": {
