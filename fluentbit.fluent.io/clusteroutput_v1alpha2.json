@@ -1723,6 +1723,10 @@
               "description": "Specify the name of the time key in the output record.\nTo disable the time key just set the value to false.",
               "type": "string"
             },
+            "logResponsePayload": {
+              "description": "Specify if the response paylod should be logged or not.",
+              "type": "boolean"
+            },
             "networking": {
               "description": "Include fluentbit networking options for this output-plugin",
               "properties": {
@@ -4649,6 +4653,11 @@
             "totalLimitSize": {
               "description": "Limit the maximum number of Chunks in the filesystem for the current output logical destination.",
               "type": "string"
+            },
+            "workers": {
+              "description": "Enables dedicated thread(s) for this output. Default value is set since version 1.8.13. For previous versions is 0.",
+              "format": "int32",
+              "type": "integer"
             }
           },
           "type": "object",

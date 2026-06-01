@@ -576,7 +576,7 @@ sources:
     changelog: "https://github.com/FairwindsOps/rbac-manager/releases"
 
   - url: "https://github.com/fluent/fluent-operator"
-    tag: "v3.7.0"
+    tag: "v3.8.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/fluent/fluent-operator/releases"
 
