@@ -1271,7 +1271,7 @@ sources:
     changelog: "https://github.com/strimzi/strimzi-kafka-operator/releases"
 
   - url: "https://github.com/tailscale/tailscale"
-    tag: "v1.96.4"
+    tag: "v1.98.3"
     repo_path: "cmd/k8s-operator/deploy/crds"
     changelog: "https://github.com/tailscale/tailscale/releases"
 
