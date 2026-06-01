@@ -1013,7 +1013,7 @@ sources:
     changelog: "https://github.com/nginxinc/nginx-ingress-helm-operator/releases"
 
   - url: "https://github.com/NVIDIA/gpu-operator"
-    tag: "v26.3.1"
+    tag: "v26.3.2"
     repo_path: "deployments/gpu-operator/crds"
     changelog: "https://github.com/NVIDIA/gpu-operator/releases"
 
