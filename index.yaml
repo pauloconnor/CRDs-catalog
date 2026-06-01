@@ -20696,6 +20696,23 @@ upgrade.cattle.io:
     filename: upgrade.cattle.io/plan_v1.json
     kind: plan
     name: plan_v1
+upstream.pgv2.percona.com:
+  - apiVersion: upstream.pgv2.percona.com/v1beta1
+    filename: upstream.pgv2.percona.com/pgupgrade_v1beta1.json
+    kind: PGUpgrade
+    name: pgupgrade_v1beta1
+  - apiVersion: upstream.pgv2.percona.com/v1beta1
+    filename: upstream.pgv2.percona.com/crunchybridgecluster_v1beta1.json
+    kind: CrunchyBridgeCluster
+    name: crunchybridgecluster_v1beta1
+  - apiVersion: upstream.pgv2.percona.com/v1beta1
+    filename: upstream.pgv2.percona.com/postgrescluster_v1beta1.json
+    kind: PostgresCluster
+    name: postgrescluster_v1beta1
+  - apiVersion: upstream.pgv2.percona.com/v1beta1
+    filename: upstream.pgv2.percona.com/pgadmin_v1beta1.json
+    kind: PGAdmin
+    name: pgadmin_v1beta1
 v1.edp.epam.com:
   - apiVersion: v1.edp.epam.com/v1
     filename: v1.edp.epam.com/keycloakclientscope_v1.json
