@@ -2022,6 +2022,18 @@
                             "actions": {
                               "items": {
                                 "properties": {
+                                  "cel": {
+                                    "properties": {
+                                      "expression": {
+                                        "type": "string"
+                                      },
+                                      "key": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "type": "object",
+                                    "additionalProperties": false
+                                  },
                                   "destinationCluster": {
                                     "type": "object"
                                   },
@@ -2190,6 +2202,18 @@
                             "setActions": {
                               "items": {
                                 "properties": {
+                                  "cel": {
+                                    "properties": {
+                                      "expression": {
+                                        "type": "string"
+                                      },
+                                      "key": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "type": "object",
+                                    "additionalProperties": false
+                                  },
                                   "destinationCluster": {
                                     "type": "object"
                                   },
@@ -2321,6 +2345,10 @@
                                 "additionalProperties": false
                               },
                               "type": "array"
+                            },
+                            "type": {
+                              "type": "string",
+                              "x-kubernetes-int-or-string": true
                             }
                           },
                           "type": "object",
@@ -2399,6 +2427,18 @@
                             "actions": {
                               "items": {
                                 "properties": {
+                                  "cel": {
+                                    "properties": {
+                                      "expression": {
+                                        "type": "string"
+                                      },
+                                      "key": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "type": "object",
+                                    "additionalProperties": false
+                                  },
                                   "destinationCluster": {
                                     "type": "object"
                                   },
@@ -2567,6 +2607,18 @@
                             "setActions": {
                               "items": {
                                 "properties": {
+                                  "cel": {
+                                    "properties": {
+                                      "expression": {
+                                        "type": "string"
+                                      },
+                                      "key": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "type": "object",
+                                    "additionalProperties": false
+                                  },
                                   "destinationCluster": {
                                     "type": "object"
                                   },
@@ -2698,6 +2750,10 @@
                                 "additionalProperties": false
                               },
                               "type": "array"
+                            },
+                            "type": {
+                              "type": "string",
+                              "x-kubernetes-int-or-string": true
                             }
                           },
                           "type": "object",
@@ -2740,6 +2796,18 @@
                             "actions": {
                               "items": {
                                 "properties": {
+                                  "cel": {
+                                    "properties": {
+                                      "expression": {
+                                        "type": "string"
+                                      },
+                                      "key": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "type": "object",
+                                    "additionalProperties": false
+                                  },
                                   "destinationCluster": {
                                     "type": "object"
                                   },
@@ -2908,6 +2976,18 @@
                             "setActions": {
                               "items": {
                                 "properties": {
+                                  "cel": {
+                                    "properties": {
+                                      "expression": {
+                                        "type": "string"
+                                      },
+                                      "key": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "type": "object",
+                                    "additionalProperties": false
+                                  },
                                   "destinationCluster": {
                                     "type": "object"
                                   },
@@ -3039,6 +3119,10 @@
                                 "additionalProperties": false
                               },
                               "type": "array"
+                            },
+                            "type": {
+                              "type": "string",
+                              "x-kubernetes-int-or-string": true
                             }
                           },
                           "type": "object",
