@@ -150,6 +150,7 @@
               "additionalProperties": false
             },
             "spec": {
+              "default": {},
               "description": "Specification of the desired state of a core node.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status",
               "properties": {
                 "affinity": {
