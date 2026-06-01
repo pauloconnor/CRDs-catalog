@@ -90,7 +90,7 @@ sources:
     changelog: "https://github.com/argoproj-labs/gitops-promoter/releases"
 
   - url: "https://github.com/argoproj/argo-cd"
-    tag: "v3.3.8"
+    tag: "v3.4.3"
     repo_path: "manifests/crds"
     changelog: "https://github.com/argoproj/argo-cd/releases"
 
