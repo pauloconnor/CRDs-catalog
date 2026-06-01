@@ -250,7 +250,7 @@ sources:
     changelog: "https://github.com/aws-controllers-k8s/ram-controller/releases"
 
   - url: "https://github.com/aws-controllers-k8s/rds-controller"
-    tag: "v1.7.10"
+    tag: "v1.8.1"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/aws-controllers-k8s/rds-controller/releases"
 
