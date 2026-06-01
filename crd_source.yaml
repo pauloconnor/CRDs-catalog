@@ -656,7 +656,7 @@ sources:
     changelog: "https://github.com/grafana/alloy/releases"
 
   - url: "https://github.com/grafana/crossplane-provider-grafana"
-    tag: "v2.9.0"
+    tag: "v2.10.0"
     repo_path: "package/crds"
     changelog: "https://github.com/grafana/crossplane-provider-grafana/releases"
 

@@ -1,5 +1,5 @@
 {
-  "description": "Team is the Schema for the Teams API. Official documentation https://grafana.com/docs/grafana/latest/administration/team-management/HTTP API https://grafana.com/docs/grafana/latest/developers/http_api/team/",
+  "description": "Team is the Schema for the Teams API. Official documentation https://grafana.com/docs/grafana/latest/administration/team-management/HTTP API https://grafana.com/docs/grafana/latest/developer-resources/api-reference/http-api/api-legacy/team/",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -241,7 +241,7 @@
               "type": "array"
             },
             "teamSync": {
-              "description": "(Block List) Sync external auth provider groups with this Grafana team. Only available in Grafana Enterprise.\nSync external auth provider groups with this Grafana team. Only available in Grafana Enterprise.\n* [Official documentation](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-team-sync/)\n* [HTTP API](https://grafana.com/docs/grafana/latest/developers/http_api/team_sync/)",
+              "description": "(Block List) Sync external auth provider groups with this Grafana team. Only available in Grafana Enterprise.\nSync external auth provider groups with this Grafana team. Only available in Grafana Enterprise.\n* [Official documentation](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-team-sync/)\n* [HTTP API](https://grafana.com/docs/grafana/latest/developer-resources/api-reference/http-api/api-legacy/team_sync/)",
               "items": {
                 "properties": {
                   "groups": {
@@ -480,7 +480,7 @@
               "type": "array"
             },
             "teamSync": {
-              "description": "(Block List) Sync external auth provider groups with this Grafana team. Only available in Grafana Enterprise.\nSync external auth provider groups with this Grafana team. Only available in Grafana Enterprise.\n* [Official documentation](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-team-sync/)\n* [HTTP API](https://grafana.com/docs/grafana/latest/developers/http_api/team_sync/)",
+              "description": "(Block List) Sync external auth provider groups with this Grafana team. Only available in Grafana Enterprise.\nSync external auth provider groups with this Grafana team. Only available in Grafana Enterprise.\n* [Official documentation](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-team-sync/)\n* [HTTP API](https://grafana.com/docs/grafana/latest/developer-resources/api-reference/http-api/api-legacy/team_sync/)",
               "items": {
                 "properties": {
                   "groups": {
@@ -657,7 +657,7 @@
               "type": "number"
             },
             "teamSync": {
-              "description": "(Block List) Sync external auth provider groups with this Grafana team. Only available in Grafana Enterprise.\nSync external auth provider groups with this Grafana team. Only available in Grafana Enterprise.\n* [Official documentation](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-team-sync/)\n* [HTTP API](https://grafana.com/docs/grafana/latest/developers/http_api/team_sync/)",
+              "description": "(Block List) Sync external auth provider groups with this Grafana team. Only available in Grafana Enterprise.\nSync external auth provider groups with this Grafana team. Only available in Grafana Enterprise.\n* [Official documentation](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-team-sync/)\n* [HTTP API](https://grafana.com/docs/grafana/latest/developer-resources/api-reference/http-api/api-legacy/team_sync/)",
               "items": {
                 "properties": {
                   "groups": {
