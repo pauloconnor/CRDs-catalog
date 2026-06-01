@@ -280,7 +280,7 @@ sources:
     changelog: "https://github.com/aws-controllers-k8s/secretsmanager-controller/releases"
 
   - url: "https://github.com/aws-controllers-k8s/sfn-controller"
-    tag: "v1.2.3"
+    tag: "v1.3.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/aws-controllers-k8s/sfn-controller/releases"
 
