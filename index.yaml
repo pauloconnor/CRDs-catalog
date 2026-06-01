@@ -1495,6 +1495,31 @@ app.redislabs.com:
     filename: app.redislabs.com/redisenterprisecluster_v1.json
     kind: RedisEnterpriseCluster
     name: redisenterprisecluster_v1
+app.terraform.io:
+  - apiVersion: app.terraform.io/v1alpha2
+    filename: app.terraform.io/workspace_v1alpha2.json
+    kind: Workspace
+    name: workspace_v1alpha2
+  - apiVersion: app.terraform.io/v1alpha2
+    filename: app.terraform.io/project_v1alpha2.json
+    kind: Project
+    name: project_v1alpha2
+  - apiVersion: app.terraform.io/v1alpha2
+    filename: app.terraform.io/module_v1alpha2.json
+    kind: Module
+    name: module_v1alpha2
+  - apiVersion: app.terraform.io/v1alpha2
+    filename: app.terraform.io/agenttoken_v1alpha2.json
+    kind: AgentToken
+    name: agenttoken_v1alpha2
+  - apiVersion: app.terraform.io/v1alpha2
+    filename: app.terraform.io/runscollector_v1alpha2.json
+    kind: RunsCollector
+    name: runscollector_v1alpha2
+  - apiVersion: app.terraform.io/v1alpha2
+    filename: app.terraform.io/agentpool_v1alpha2.json
+    kind: AgentPool
+    name: agentpool_v1alpha2
 appcat.vshn.io:
   - apiVersion: appcat.vshn.io/v1
     filename: appcat.vshn.io/xobjectbucket_v1.json
