@@ -50,7 +50,7 @@ sources:
     changelog: "https://github.com/aiven/aiven-operator/releases"
 
   - url: "https://github.com/akuity/kargo"
-    tag: "v1.10.2"
+    tag: "v1.10.4"
     repo_path: "charts/kargo/resources/crds"
     changelog: "https://github.com/akuity/kargo/releases"
 
