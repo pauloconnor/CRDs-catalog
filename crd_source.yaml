@@ -1068,7 +1068,7 @@ sources:
     changelog: "https://github.com/openshift/cluster-logging-operator/releases"
 
   - url: "https://github.com/operator-framework/operator-lifecycle-manager"
-    tag: "v0.42.0"
+    tag: "v0.43.0"
     repo_path: "deploy/chart/crds"
     changelog: "https://github.com/operator-framework/operator-lifecycle-manager/releases"
 
