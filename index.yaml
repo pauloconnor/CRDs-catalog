@@ -15180,6 +15180,27 @@ netapp.azure.upbound.io:
     filename: netapp.azure.upbound.io/snapshotpolicy_v1beta1.json
     kind: SnapshotPolicy
     name: snapshotpolicy_v1beta1
+netbird.io:
+  - apiVersion: netbird.io/v1
+    filename: netbird.io/nbsetupkey_v1.json
+    kind: NBSetupKey
+    name: nbsetupkey_v1
+  - apiVersion: netbird.io/v1
+    filename: netbird.io/nbresource_v1.json
+    kind: NBResource
+    name: nbresource_v1
+  - apiVersion: netbird.io/v1
+    filename: netbird.io/nbpolicy_v1.json
+    kind: NBPolicy
+    name: nbpolicy_v1
+  - apiVersion: netbird.io/v1
+    filename: netbird.io/nbgroup_v1.json
+    kind: NBGroup
+    name: nbgroup_v1
+  - apiVersion: netbird.io/v1
+    filename: netbird.io/nbroutingpeer_v1.json
+    kind: NBRoutingPeer
+    name: nbroutingpeer_v1
 network.azure.com:
   - apiVersion: network.azure.com/v1api20220701
     filename: network.azure.com/dnsforwardingrulesetsforwardingrule_v1api20220701.json
