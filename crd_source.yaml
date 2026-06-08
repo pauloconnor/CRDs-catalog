@@ -40,7 +40,7 @@ sources:
 
   # Issue #595 - etcd operator CRDs (etcd.aenix.io)
   - url: "https://github.com/aenix-io/etcd-operator"
-    tag: "v0.4.3"
+    tag: "v0.4.5"
     repo_path: "charts/etcd-operator/crds"
     changelog: "https://github.com/aenix-io/etcd-operator/releases"
 
