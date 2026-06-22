@@ -1286,7 +1286,7 @@ sources:
     changelog: "https://github.com/temporalio/temporal-operator/releases"
 
   - url: "https://github.com/tigera/operator"
-    tag: "v1.40.9"
+    tag: "v1.40.13"
     repo_path: "pkg/crds/operator"
     changelog: "https://github.com/tigera/operator/releases"
 
