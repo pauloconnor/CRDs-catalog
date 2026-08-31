@@ -315,7 +315,7 @@ sources:
     changelog: "https://github.com/aws/aws-application-networking-k8s/releases"
 
   - url: "https://github.com/aws/eks-anywhere"
-    tag: "v0.25.2"
+    tag: "v0.26.1"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/aws/eks-anywhere/releases"
 
