@@ -586,7 +586,7 @@ sources:
     changelog: "https://github.com/flux-iac/tofu-controller/releases"
 
   - url: "https://github.com/fluxcd/flagger"
-    tag: "v1.43.0"
+    tag: "v1.44.0"
     repo_path: "charts/flagger/crds"
     changelog: "https://github.com/fluxcd/flagger/releases"
 
