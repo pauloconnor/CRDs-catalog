@@ -1495,6 +1495,30 @@ app.redislabs.com:
     filename: app.redislabs.com/redisenterprisecluster_v1.json
     kind: RedisEnterpriseCluster
     name: redisenterprisecluster_v1
+  - apiVersion: app.redislabs.com/v1alpha1
+    filename: app.redislabs.com/redisenterpriserole_v1alpha1.json
+    kind: RedisEnterpriseRole
+    name: redisenterpriserole_v1alpha1
+  - apiVersion: app.redislabs.com/v1alpha1
+    filename: app.redislabs.com/redisenterpriseclusterrolebinding_v1alpha1.json
+    kind: RedisEnterpriseClusterRoleBinding
+    name: redisenterpriseclusterrolebinding_v1alpha1
+  - apiVersion: app.redislabs.com/v1alpha1
+    filename: app.redislabs.com/redisenterpriseacl_v1alpha1.json
+    kind: RedisEnterpriseACL
+    name: redisenterpriseacl_v1alpha1
+  - apiVersion: app.redislabs.com/v1alpha1
+    filename: app.redislabs.com/redisenterpriseclusterrole_v1alpha1.json
+    kind: RedisEnterpriseClusterRole
+    name: redisenterpriseclusterrole_v1alpha1
+  - apiVersion: app.redislabs.com/v1alpha1
+    filename: app.redislabs.com/redisenterpriseuser_v1alpha1.json
+    kind: RedisEnterpriseUser
+    name: redisenterpriseuser_v1alpha1
+  - apiVersion: app.redislabs.com/v1alpha1
+    filename: app.redislabs.com/redisenterpriserolebinding_v1alpha1.json
+    kind: RedisEnterpriseRoleBinding
+    name: redisenterpriserolebinding_v1alpha1
 appcat.vshn.io:
   - apiVersion: appcat.vshn.io/v1
     filename: appcat.vshn.io/xobjectbucket_v1.json
