@@ -429,7 +429,7 @@ sources:
 
   # Issue #607 - barmancloud.cnpg.io CRDs
   - url: "https://github.com/cloudnative-pg/plugin-barman-cloud"
-    tag: "v0.12.0"
+    tag: "v0.14.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/cloudnative-pg/plugin-barman-cloud/releases"
 
