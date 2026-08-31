@@ -22,8 +22,14 @@
               "description": "ClusterRef is a reference to the cluster where the object should be created.\nIt is used in constructing the client created to configure a cluster.\nThis takes precedence over StaticConfigurationSource.",
               "properties": {
                 "group": {
-                  "description": "Group is used to override the object group that this reference points to.\nIf unspecified, defaults to \"cluster.redpanda.com\".",
-                  "type": "string"
+                  "description": "Group is used to override the object group that this reference points to.\nIf unspecified, defaults to \"cluster.redpanda.com\".\nA bare API group only \u2014 controllers match it by string comparison, so a\n\"group/version\" value (e.g. \"cluster.redpanda.com/v1alpha2\") would\nsilently match nothing and the referencing object would never bind.",
+                  "type": "string",
+                  "x-kubernetes-validations": [
+                    {
+                      "message": "group must be a bare API group without a version suffix (e.g. cluster.redpanda.com, not cluster.redpanda.com/v1alpha2)",
+                      "rule": "!self.contains('/')"
+                    }
+                  ]
                 },
                 "kind": {
                   "description": "Kind is used to override the object kind that this reference points to.\nIf unspecified, defaults to \"Redpanda\".",
@@ -31,6 +37,10 @@
                 },
                 "name": {
                   "description": "Name specifies the name of the cluster being referenced.",
+                  "type": "string"
+                },
+                "namespace": {
+                  "description": "Namespace specifies the namespace of the cluster being referenced.\nIf unspecified, defaults to the namespace of the referencing object.\nSetting this allows referencing a cluster that resides in a different\nnamespace, e.g. a ShadowLink whose source and shadow Redpanda clusters\nlive in separate namespaces on the same Kubernetes cluster.",
                   "type": "string"
                 }
               },
