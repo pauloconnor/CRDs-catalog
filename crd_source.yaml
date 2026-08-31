@@ -1251,7 +1251,7 @@ sources:
     changelog: "https://github.com/solo-io/gloo/releases"
 
   - url: "https://github.com/SparebankenVest/azure-key-vault-to-kubernetes"
-    tag: "1.8.0"
+    tag: "vaultenv-1.8.4"
     repo_path: "crds"
     changelog: "https://github.com/SparebankenVest/azure-key-vault-to-kubernetes/releases"
 
