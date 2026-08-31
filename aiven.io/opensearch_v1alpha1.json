@@ -277,6 +277,16 @@
                   "pattern": "^[^\\r\\n]*$",
                   "type": "string"
                 },
+                "max_restore_bytes_per_sec": {
+                  "description": "Throttles the restore rate per node. Defaults to unlimited. Note that if the recovery settings for managed services are set, this value is overridden by the recovery settings. Value should be a byte size with unit, e.g. 40mb, 100kb, 1gb",
+                  "pattern": "^\\d+\\s*(?:[bB]|[kKmMgGtTpP][bB])$",
+                  "type": "string"
+                },
+                "max_snapshot_bytes_per_sec": {
+                  "description": "Throttles the snapshot rate per node. Defaults to 40mb. Note that if the recovery settings for managed services are set, this value is overridden by the recovery settings. Value should be a byte size with unit, e.g. 40mb, 100kb, 1gb",
+                  "pattern": "^\\d+\\s*(?:[bB]|[kKmMgGtTpP][bB])$",
+                  "type": "string"
+                },
                 "readonly": {
                   "description": "Whether the repository is read-only.",
                   "type": "boolean"
@@ -349,6 +359,16 @@
                 "indices": {
                   "description": "A comma-delimited list of indices to restore from the snapshot. Multi-index syntax is supported.",
                   "pattern": "^(\\*?[a-z0-9._-]*\\*?|-\\*?[a-z0-9._-]*\\*?)(,(\\*?[a-z0-9._-]*\\*?|-\\*?[a-z0-9._-]*\\*?))*[,]?$",
+                  "type": "string"
+                },
+                "max_restore_bytes_per_sec": {
+                  "description": "Throttles the restore rate per node. Defaults to unlimited. Note that if the recovery settings for managed services are set, this value is overridden by the recovery settings. Value should be a byte size with unit, e.g. 40mb, 100kb, 1gb",
+                  "pattern": "^\\d+\\s*(?:[bB]|[kKmMgGtTpP][bB])$",
+                  "type": "string"
+                },
+                "max_snapshot_bytes_per_sec": {
+                  "description": "Throttles the snapshot rate per node. Defaults to 40mb. Note that if the recovery settings for managed services are set, this value is overridden by the recovery settings. Value should be a byte size with unit, e.g. 40mb, 100kb, 1gb",
+                  "pattern": "^\\d+\\s*(?:[bB]|[kKmMgGtTpP][bB])$",
                   "type": "string"
                 },
                 "readonly": {
@@ -853,7 +873,7 @@
                 "cluster_max_shards_per_node": {
                   "description": "Controls the number of shards allowed in the cluster per data node",
                   "maximum": 10000,
-                  "minimum": 100,
+                  "minimum": 10,
                   "type": "integer"
                 },
                 "cluster_routing_allocation_node_concurrent_recoveries": {
@@ -923,7 +943,7 @@
                 "http_max_content_length": {
                   "description": "Maximum content length for HTTP requests to the OpenSearch HTTP API, in bytes.",
                   "maximum": 2147483647,
-                  "minimum": 1,
+                  "minimum": 1048576,
                   "type": "integer"
                 },
                 "http_max_header_size": {
@@ -1519,7 +1539,7 @@
               "additionalProperties": false
             },
             "opensearch_version": {
-              "description": "Available versions: `1`, `2`, `2.19`, `3.3`. Newer versions may also be available.\nOpenSearch version",
+              "description": "Available versions: `2`, `2.19`, `3.3`, `3.6`. Newer versions may also be available.\nOpenSearch version. Deprecated values: `2`",
               "type": "string"
             },
             "private_access": {
@@ -1636,6 +1656,16 @@
                 "indices": {
                   "description": "A comma-delimited list of indices to restore from the snapshot. Multi-index syntax is supported.",
                   "pattern": "^(\\*?[a-z0-9._-]*\\*?|-\\*?[a-z0-9._-]*\\*?)(,(\\*?[a-z0-9._-]*\\*?|-\\*?[a-z0-9._-]*\\*?))*[,]?$",
+                  "type": "string"
+                },
+                "max_restore_bytes_per_sec": {
+                  "description": "Throttles the restore rate per node. Defaults to unlimited. Note that if the recovery settings for managed services are set, this value is overridden by the recovery settings. Value should be a byte size with unit, e.g. 40mb, 100kb, 1gb",
+                  "pattern": "^\\d+\\s*(?:[bB]|[kKmMgGtTpP][bB])$",
+                  "type": "string"
+                },
+                "max_snapshot_bytes_per_sec": {
+                  "description": "Throttles the snapshot rate per node. Defaults to 40mb. Note that if the recovery settings for managed services are set, this value is overridden by the recovery settings. Value should be a byte size with unit, e.g. 40mb, 100kb, 1gb",
+                  "pattern": "^\\d+\\s*(?:[bB]|[kKmMgGtTpP][bB])$",
                   "type": "string"
                 },
                 "readonly": {

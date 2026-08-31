@@ -1,5 +1,5 @@
 {
-  "description": "KafkaSchema is the Schema for the kafkaschemas API.\n\nSelf-references (A -> A) are blocked at admission; transitive cycles\n(A -> B -> A) are not detected at admission time.\n\nDeletion: the operator performs a soft delete followed by a hard delete on\nthe subject. The subject disappears from the registry's listing, re-applying a KafkaSchema with the same subjectName\nafter deletion starts a brand-new subject at version 1.\n\nUpdate ordering: when schema and compatibilityLevel change in the same apply, the\ncompatibility level is set first, because the registry validates a new version against the\nlevel currently configured for the subject. A rejected schema leaves the new level applied.",
+  "description": "KafkaQuota is the Schema for the kafkaquotas API.",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -13,7 +13,7 @@
       "type": "object"
     },
     "spec": {
-      "description": "KafkaSchemaSpec defines the desired state of KafkaSchema",
+      "description": "KafkaQuotaSpec defines the desired state of KafkaQuota",
       "properties": {
         "authSecretRef": {
           "description": "Authentication reference to Aiven token in a secret",
@@ -34,18 +34,31 @@
           "type": "object",
           "additionalProperties": false
         },
-        "compatibilityLevel": {
-          "description": "Kafka Schemas compatibility level.\nWhen set, it is applied as the subject-level compatibility override.\nRemoving this field does not change the subject: an existing override stays in place\nand is not reverted to the registry's global default.",
-          "enum": [
-            "BACKWARD",
-            "BACKWARD_TRANSITIVE",
-            "FORWARD",
-            "FORWARD_TRANSITIVE",
-            "FULL",
-            "FULL_TRANSITIVE",
-            "NONE"
-          ],
-          "type": "string"
+        "clientId": {
+          "description": "Represents a logical group of clients, assigned a unique name by the client application.\nQuotas can be applied based on user, client-id, or both.\nThe most relevant quota is chosen for each connection. All connections within a quota group share the same quota.\nIt is possible to set default quotas for each (user, client-id), user or client-id group by specifying 'default'.",
+          "maxLength": 255,
+          "minLength": 1,
+          "type": "string",
+          "x-kubernetes-validations": [
+            {
+              "message": "Value is immutable",
+              "rule": "self == oldSelf"
+            }
+          ]
+        },
+        "consumerByteRate": {
+          "description": "Defines the bandwidth limit in bytes/sec for each group of clients sharing a quota.\nEvery distinct client group is allocated a specific quota, as defined by the cluster, on a per-broker basis.\nExceeding this limit results in client throttling.",
+          "format": "int64",
+          "maximum": 1073741824,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "producerByteRate": {
+          "description": "Defines the bandwidth limit in bytes/sec for each group of clients sharing a quota.\nEvery distinct client group is allocated a specific quota, as defined by the cluster, on a per-broker basis.\nExceeding this limit results in client throttling.",
+          "format": "int64",
+          "maximum": 1073741824,
+          "minimum": 0,
+          "type": "integer"
         },
         "project": {
           "description": "Identifies the project this resource belongs to",
@@ -59,82 +72,11 @@
             }
           ]
         },
-        "references": {
-          "description": "Schema references for Protobuf or JSON schemas that import other schemas.\nReferences must form a directed acyclic graph (DAG); cycles are not allowed.",
-          "items": {
-            "description": "SchemaReference is a reference to another schema in the registry.\nExactly one of {subject+version} or kafkaSchemaRef must be set.",
-            "properties": {
-              "kafkaSchemaRef": {
-                "description": "Reference to another KafkaSchema resource in the same namespace.\nMutually exclusive with subject/version.\n\nCleanup order matters: delete the dependent before the referent.",
-                "properties": {
-                  "name": {
-                    "description": "Name of the KafkaSchema resource in the same namespace.",
-                    "maxLength": 253,
-                    "minLength": 1,
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "name"
-                ],
-                "type": "object",
-                "additionalProperties": false
-              },
-              "name": {
-                "description": "Name used to reference the schema (e.g., the import path in Protobuf)",
-                "maxLength": 512,
-                "minLength": 1,
-                "type": "string"
-              },
-              "subject": {
-                "description": "Subject name of the referenced schema in the registry. Mutually exclusive with kafkaSchemaRef.",
-                "maxLength": 512,
-                "minLength": 1,
-                "type": "string"
-              },
-              "version": {
-                "description": "Version of the referenced schema. Mutually exclusive with kafkaSchemaRef.",
-                "minimum": 1,
-                "type": "integer"
-              }
-            },
-            "required": [
-              "name"
-            ],
-            "type": "object",
-            "x-kubernetes-validations": [
-              {
-                "message": "set both subject and version, or set kafkaSchemaRef, but not both",
-                "rule": "(has(self.subject) && has(self.version) && !has(self.kafkaSchemaRef)) || (!has(self.subject) && !has(self.version) && has(self.kafkaSchemaRef))"
-              }
-            ],
-            "additionalProperties": false
-          },
-          "maxItems": 100,
-          "type": "array",
-          "x-kubernetes-list-map-keys": [
-            "name"
-          ],
-          "x-kubernetes-list-type": "map"
-        },
-        "schema": {
-          "description": "Kafka Schema definition. Format depends on schemaType (AVRO/JSON/PROTOBUF)",
-          "type": "string"
-        },
-        "schemaType": {
-          "description": "Schema type",
-          "enum": [
-            "AVRO",
-            "JSON",
-            "PROTOBUF"
-          ],
-          "type": "string",
-          "x-kubernetes-validations": [
-            {
-              "message": "Value is immutable",
-              "rule": "self == oldSelf"
-            }
-          ]
+        "requestPercentage": {
+          "description": "Sets the maximum percentage of CPU time that a client group can use on request handler I/O and network threads per broker within a quota window.\nExceeding this limit triggers throttling. The quota, expressed as a percentage, also indicates the total allowable CPU usage\nfor the client groups sharing the quota.",
+          "maximum": 100,
+          "minimum": 0,
+          "type": "number"
         },
         "serviceName": {
           "description": "Specifies the name of the service that this resource belongs to",
@@ -148,8 +90,10 @@
             }
           ]
         },
-        "subjectName": {
-          "description": "Kafka Schema Subject name",
+        "user": {
+          "description": "Represents a logical group of clients, assigned a unique name by the client application.\nQuotas can be applied based on user, client-id, or both.\nThe most relevant quota is chosen for each connection. All connections within a quota group share the same quota.\nIt is possible to set default quotas for each (user, client-id), user or client-id group by specifying 'default'.",
+          "maxLength": 64,
+          "minLength": 1,
           "type": "string",
           "x-kubernetes-validations": [
             {
@@ -161,24 +105,26 @@
       },
       "required": [
         "project",
-        "schema",
-        "serviceName",
-        "subjectName"
+        "serviceName"
       ],
       "type": "object",
       "x-kubernetes-validations": [
         {
-          "message": "references are only supported for PROTOBUF and JSON schema types",
-          "rule": "!has(self.references) || size(self.references) == 0 || self.schemaType in ['PROTOBUF', 'JSON']"
+          "message": "At least one of user or clientId must be set",
+          "rule": "has(self.user) || has(self.clientId)"
+        },
+        {
+          "message": "At least one of consumerByteRate, producerByteRate or requestPercentage must be set",
+          "rule": "has(self.consumerByteRate) || has(self.producerByteRate) || has(self.requestPercentage)"
         }
       ],
       "additionalProperties": false
     },
     "status": {
-      "description": "KafkaSchemaStatus defines the observed state of KafkaSchema",
+      "description": "KafkaQuotaStatus defines the observed state of KafkaQuota",
       "properties": {
         "conditions": {
-          "description": "Conditions represent the latest available observations of an KafkaSchema state",
+          "description": "Conditions represent the latest available observations of a KafkaQuota state",
           "items": {
             "description": "Condition contains details for one aspect of the current state of this API Resource.",
             "properties": {
@@ -232,30 +178,14 @@
             "additionalProperties": false
           },
           "type": "array"
-        },
-        "id": {
-          "description": "Schema ID",
-          "type": "integer"
-        },
-        "version": {
-          "description": "Kafka Schema configuration version",
-          "type": "integer"
         }
       },
       "required": [
-        "conditions",
-        "id",
-        "version"
+        "conditions"
       ],
       "type": "object",
       "additionalProperties": false
     }
   },
-  "type": "object",
-  "x-kubernetes-validations": [
-    {
-      "message": "kafkaSchemaRef cannot point to the KafkaSchema itself",
-      "rule": "!has(self.spec.references) || self.spec.references.all(r, !has(r.kafkaSchemaRef) || r.kafkaSchemaRef.name != self.metadata.name)"
-    }
-  ]
+  "type": "object"
 }

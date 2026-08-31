@@ -337,6 +337,18 @@ aiven.io:
     filename: aiven.io/alloydbomni_v1alpha1.json
     kind: AlloyDBOmni
     name: alloydbomni_v1alpha1
+  - apiVersion: aiven.io/v1alpha1
+    filename: aiven.io/upgradepipelinestep_v1alpha1.json
+    kind: UpgradePipelineStep
+    name: upgradepipelinestep_v1alpha1
+  - apiVersion: aiven.io/v1alpha1
+    filename: aiven.io/organizationproject_v1alpha1.json
+    kind: OrganizationProject
+    name: organizationproject_v1alpha1
+  - apiVersion: aiven.io/v1alpha1
+    filename: aiven.io/kafkaquota_v1alpha1.json
+    kind: KafkaQuota
+    name: kafkaquota_v1alpha1
 akri.sh:
   - apiVersion: akri.sh/v0
     filename: akri.sh/configuration_v0.json
