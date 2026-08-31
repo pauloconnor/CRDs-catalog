@@ -1,5 +1,9 @@
 {
   "description": "ChangeTransferPolicy is the Schema for the changetransferpolicies API",
+  "externalDocs": {
+    "description": "CRD reference (examples and behavior)",
+    "url": "https://gitops-promoter.readthedocs.io/en/stable/crd-specs/#changetransferpolicy"
+  },
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -16,9 +20,24 @@
       "description": "ChangeTransferPolicySpec defines the desired state of ChangeTransferPolicy",
       "properties": {
         "activeBranch": {
-          "description": "ActiveBranch staging hydrated branch",
+          "description": "ActiveBranch staging hydrated branch\nMust not start with '-', contain ':', or contain '..'.",
+          "maxLength": 100,
           "minLength": 1,
-          "type": "string"
+          "type": "string",
+          "x-kubernetes-validations": [
+            {
+              "message": "branch must not start with '-'",
+              "rule": "!self.startsWith('-')"
+            },
+            {
+              "message": "branch must not contain ':'",
+              "rule": "!self.contains(':')"
+            },
+            {
+              "message": "branch must not contain '..'",
+              "rule": "!self.contains('..')"
+            }
+          ]
         },
         "activeCommitStatuses": {
           "description": "ActiveCommitStatuses lists the statuses to be monitored on the active branch",
@@ -44,6 +63,11 @@
           ],
           "x-kubernetes-list-type": "map"
         },
+        "activePath": {
+          "description": "ActivePath is an optional repository subpath for this policy's active state.\nWhen set, hydrator metadata is read from <activePath>/hydrator.metadata.",
+          "minLength": 1,
+          "type": "string"
+        },
         "autoMerge": {
           "default": true,
           "type": "boolean"
@@ -66,9 +90,24 @@
           "additionalProperties": false
         },
         "proposedBranch": {
-          "description": "ProposedBranch staging hydrated branch",
+          "description": "ProposedBranch staging hydrated branch\nMust not start with '-', contain ':', or contain '..'.",
+          "maxLength": 100,
           "minLength": 1,
-          "type": "string"
+          "type": "string",
+          "x-kubernetes-validations": [
+            {
+              "message": "branch must not start with '-'",
+              "rule": "!self.startsWith('-')"
+            },
+            {
+              "message": "branch must not contain ':'",
+              "rule": "!self.contains(':')"
+            },
+            {
+              "message": "branch must not contain '..'",
+              "rule": "!self.contains('..')"
+            }
+          ]
         },
         "proposedCommitStatuses": {
           "description": "ProposedCommitStatuses lists the statuses to be monitored on the proposed branch",
@@ -93,6 +132,29 @@
             "key"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "pullRequest": {
+          "description": "PullRequest configures SCM pull request behavior for this change transfer policy.\nCopied from the owning PromotionStrategy by the PromotionStrategy controller.",
+          "properties": {
+            "labels": {
+              "description": "Labels configures dynamic SCM labels applied to promotion pull requests.",
+              "properties": {
+                "expression": {
+                  "description": "Expression is evaluated using the expr library (github.com/expr-lang/expr) against\nChangeTransferPolicy status and spec. It must return a list of SCM label name strings.\n\nAvailable variables:\n  - Status: ChangeTransferPolicy status (Proposed/Active commit statuses, branch SHAs, etc.)\n  - Spec: ChangeTransferPolicy spec (ActiveBranch, ProposedBranch, etc.)\n  - PromotionStrategy: owning PromotionStrategy spec and status when available\n\nEach returned label name must satisfy the same validation as PullRequest.spec.labels\n(non-empty, max 50 characters, no newlines, max 10 labels, unique).",
+                  "maxLength": 8192,
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "expression"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
         }
       },
       "required": [
@@ -1025,6 +1087,13 @@
             "additionalProperties": false
           },
           "type": "array"
+        },
+        "instanceID": {
+          "description": "InstanceID mirrors metadata.labels[promoter.argoproj.io/instance-id] stamped on each\nreconcile attempt by this install's controller, including when Ready=False; omitted\nwhen the resource has no instance-id label (default install).",
+          "maxLength": 63,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9]([a-zA-Z0-9._-]*[a-zA-Z0-9])?$",
+          "type": "string"
         },
         "observedGeneration": {
           "description": "ObservedGeneration is the .metadata.generation that this status was reconciled from.\nBecause status is written via Server-Side Apply with ForceOwnership (which has no\noptimistic-concurrency check), this field is the canonical way to detect stale\nstatus writes: compare status.observedGeneration with metadata.generation.",
