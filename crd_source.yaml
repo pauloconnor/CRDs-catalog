@@ -1118,7 +1118,7 @@ sources:
     changelog: "https://github.com/piraeusdatastore/piraeus-operator/releases"
 
   - url: "https://github.com/project-akri/akri"
-    tag: "v0.13.8"
+    tag: "v0.13.26"
     repo_path: "deployment/helm/crds"
     changelog: "https://github.com/project-akri/akri/releases"
 
