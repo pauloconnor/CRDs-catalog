@@ -17961,6 +17961,10 @@ ps.percona.com:
     filename: ps.percona.com/perconaservermysqlbackup_v1.json
     kind: perconaservermysqlbackup
     name: perconaservermysqlbackup_v1
+  - apiVersion: ps.percona.com/v1
+    filename: ps.percona.com/perconaservermysqlclusterset_v1.json
+    kind: perconaservermysqlclusterset
+    name: perconaservermysqlclusterset_v1
 psmdb.percona.com:
   - apiVersion: psmdb.percona.com/v1
     filename: psmdb.percona.com/perconaservermongodbrestore_v1.json
