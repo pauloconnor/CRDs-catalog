@@ -1,5 +1,5 @@
 {
-  "description": "WindowsVirtualMachine is the Schema for the WindowsVirtualMachines API. Manages a Windows Virtual Machine within a Dev Test Lab.",
+  "description": "WindowsVirtualMachine is the Schema for the WindowsVirtualMachines API. Manages a Windows Virtual Machine within a Dev Test Lab.\nDeprecated: This API version (v1beta1) has been deprecated in release v2.6.0.",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -451,7 +451,7 @@
               "additionalProperties": false
             },
             "size": {
-              "description": "The Machine Size to use for this Virtual Machine, such as Standard_F2. Changing this forces a new resource to be created.",
+              "description": "The Machine Size to use for this Virtual Machine, such as Standard_D4_v5. Changing this forces a new resource to be created.",
               "type": "string"
             },
             "storageType": {
@@ -793,6 +793,30 @@
               "description": "Any notes about the Virtual Machine.",
               "type": "string"
             },
+            "passwordSecretRef": {
+              "description": "The Password associated with the username used to login to this Virtual Machine. Changing this forces a new resource to be created.",
+              "properties": {
+                "key": {
+                  "description": "The key to select.",
+                  "type": "string"
+                },
+                "name": {
+                  "description": "Name of the secret.",
+                  "type": "string"
+                },
+                "namespace": {
+                  "description": "Namespace of the secret.",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "key",
+                "name",
+                "namespace"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            },
             "resourceGroupName": {
               "description": "The name of the resource group in which the Dev Test Lab resource exists. Changing this forces a new resource to be created.",
               "type": "string"
@@ -878,7 +902,7 @@
               "additionalProperties": false
             },
             "size": {
-              "description": "The Machine Size to use for this Virtual Machine, such as Standard_F2. Changing this forces a new resource to be created.",
+              "description": "The Machine Size to use for this Virtual Machine, such as Standard_D4_v5. Changing this forces a new resource to be created.",
               "type": "string"
             },
             "storageType": {
@@ -898,6 +922,9 @@
               "type": "string"
             }
           },
+          "required": [
+            "passwordSecretRef"
+          ],
           "type": "object",
           "additionalProperties": false
         },
@@ -1115,7 +1142,7 @@
               "type": "string"
             },
             "size": {
-              "description": "The Machine Size to use for this Virtual Machine, such as Standard_F2. Changing this forces a new resource to be created.",
+              "description": "The Machine Size to use for this Virtual Machine, such as Standard_D4_v5. Changing this forces a new resource to be created.",
               "type": "string"
             },
             "storageType": {
@@ -1188,6 +1215,10 @@
             "type"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "lastHandledReconcileAt": {
+          "description": "LastHandledReconcileAt holds the value of the most recent\nreconcile-requested-at annotation token that the controller has\nprocessed. Users can compare this to the annotation to determine\nwhether a reconcile request has been handled.",
+          "type": "string"
         },
         "observedGeneration": {
           "description": "ObservedGeneration is the latest metadata.generation\nwhich resulted in either a ready state, or stalled due to error\nit can not recover from without human intervention.",
