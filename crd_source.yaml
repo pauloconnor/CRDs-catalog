@@ -879,7 +879,7 @@ sources:
     changelog: "https://github.com/kubernetes-sigs/node-feature-discovery/releases"
 
   - url: "https://github.com/kubernetes-sigs/secrets-store-csi-driver"
-    tag: "v1.5.6"
+    tag: "v1.6.0"
     repo_path: "charts/secrets-store-csi-driver/crds"
     changelog: "https://github.com/kubernetes-sigs/secrets-store-csi-driver/releases"
 
