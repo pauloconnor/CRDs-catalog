@@ -30,7 +30,7 @@
               "description": "(Block, Optional) The metadata of the resource. (see below for nested schema)\nThe metadata of the resource.",
               "properties": {
                 "folderUid": {
-                  "description": "(String) The UID of the folder to save the resource in.\nThe UID of the folder to save the resource in.",
+                  "description": "(String) The UID of the folder to save the resource in. For example, it's supported for dashboards and folders. To know if it's supported for the specific resource you're using check the documentation.\nThe UID of the folder to save the resource in. For example, it's supported for dashboards and folders. To know if it's supported for the specific resource you're using check the documentation.",
                   "type": "string"
                 },
                 "uid": {
@@ -44,6 +44,10 @@
             "options": {
               "description": "(Block, Optional) Options for applying the resource. (see below for nested schema)\nOptions for applying the resource.",
               "properties": {
+                "managerIdentity": {
+                  "description": "Override the identity stamped on this resource's manager metadata.",
+                  "type": "string"
+                },
                 "overwrite": {
                   "description": "(Boolean) Set to true if you want to overwrite existing resource with newer version, same resource title in folder or same resource uid.\nSet to true if you want to overwrite existing resource with newer version, same resource title in folder or same resource uid.",
                   "type": "boolean"
@@ -74,7 +78,7 @@
               "description": "(Block, Optional) The metadata of the resource. (see below for nested schema)\nThe metadata of the resource.",
               "properties": {
                 "folderUid": {
-                  "description": "(String) The UID of the folder to save the resource in.\nThe UID of the folder to save the resource in.",
+                  "description": "(String) The UID of the folder to save the resource in. For example, it's supported for dashboards and folders. To know if it's supported for the specific resource you're using check the documentation.\nThe UID of the folder to save the resource in. For example, it's supported for dashboards and folders. To know if it's supported for the specific resource you're using check the documentation.",
                   "type": "string"
                 },
                 "uid": {
@@ -88,6 +92,10 @@
             "options": {
               "description": "(Block, Optional) Options for applying the resource. (see below for nested schema)\nOptions for applying the resource.",
               "properties": {
+                "managerIdentity": {
+                  "description": "Override the identity stamped on this resource's manager metadata.",
+                  "type": "string"
+                },
                 "overwrite": {
                   "description": "(Boolean) Set to true if you want to overwrite existing resource with newer version, same resource title in folder or same resource uid.\nSet to true if you want to overwrite existing resource with newer version, same resource title in folder or same resource uid.",
                   "type": "boolean"
@@ -228,7 +236,7 @@
                   "x-kubernetes-map-type": "granular"
                 },
                 "folderUid": {
-                  "description": "(String) The UID of the folder to save the resource in.\nThe UID of the folder to save the resource in.",
+                  "description": "(String) The UID of the folder to save the resource in. For example, it's supported for dashboards and folders. To know if it's supported for the specific resource you're using check the documentation.\nThe UID of the folder to save the resource in. For example, it's supported for dashboards and folders. To know if it's supported for the specific resource you're using check the documentation.",
                   "type": "string"
                 },
                 "uid": {
@@ -254,6 +262,10 @@
             "options": {
               "description": "(Block, Optional) Options for applying the resource. (see below for nested schema)\nOptions for applying the resource.",
               "properties": {
+                "managerIdentity": {
+                  "description": "Override the identity stamped on this resource's manager metadata.",
+                  "type": "string"
+                },
                 "overwrite": {
                   "description": "(Boolean) Set to true if you want to overwrite existing resource with newer version, same resource title in folder or same resource uid.\nSet to true if you want to overwrite existing resource with newer version, same resource title in folder or same resource uid.",
                   "type": "boolean"
