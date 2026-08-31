@@ -34,6 +34,22 @@
           ],
           "type": "string"
         },
+        "gpu": {
+          "description": "gpu contains configuration for GPU-enabled nodes.",
+          "properties": {
+            "mode": {
+              "default": "Driver",
+              "description": "mode controls GPU driver management on GPU-enabled nodes.\nWhen set to Driver (or not specified), GPU drivers are installed by AKS\nand only GPU SKUs with managed driver installation support are considered for scheduling.\nCurrently, only NVIDIA GPUs support managed driver installation.\nWhen set to None, GPU driver installation is skipped \u2014 use this when\nmanaging GPU drivers via a GPU Operator or other external mechanism.\nAll GPU SKUs are available for scheduling in this mode.\nThis field is ignored for non-GPU VM sizes.",
+              "enum": [
+                "Driver",
+                "None"
+              ],
+              "type": "string"
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
         "imageFamily": {
           "default": "Ubuntu",
           "description": "imageFamily is the image family that instances use.",
@@ -817,6 +833,14 @@
         },
         "kubernetesVersion": {
           "description": "kubernetesVersion contains the current kubernetes version which should be\nused for nodes provisioned for the NodeClass",
+          "type": "string"
+        },
+        "localDNSState": {
+          "description": "localDNSState is the resolved enable/disable decision for LocalDNS.\nIt is the source of truth for whether LocalDNS is enabled on nodes\nspawned from this NodeClass. When spec.mode=Required this is always Enabled;\nwhen spec.mode=Disabled this is always Disabled; when spec.mode=Preferred this is\ndetermined based on the current Kubernetes version and other cluster configuration.\nOnce Mode=Preferred resolves to Enabled,\nit remains Enabled as long as spec.mode stays Preferred; it does not flip back\nto Disabled if cluster-side conflicts later appear. The user can opt\nout by changing Mode to Disabled.",
+          "enum": [
+            "Enabled",
+            "Disabled"
+          ],
           "type": "string"
         }
       },
