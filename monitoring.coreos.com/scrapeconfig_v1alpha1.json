@@ -60,7 +60,8 @@
                 "enum": [
                   "OAuth",
                   "ManagedIdentity",
-                  "SDK"
+                  "SDK",
+                  "WorkloadIdentity"
                 ],
                 "type": "string"
               },
@@ -512,7 +513,7 @@
                   },
                   "tokenUrl": {
                     "description": "tokenUrl defines the URL to fetch the token from.",
-                    "minLength": 1,
+                    "pattern": "^(http|https)://.+$",
                     "type": "string"
                   }
                 },
@@ -593,7 +594,7 @@
                 "type": "string"
               },
               "tlsConfig": {
-                "description": "tlsConfig defies the TLS configuration applying to the target HTTP endpoint.",
+                "description": "tlsConfig defines the TLS configuration applying to the target HTTP endpoint.",
                 "properties": {
                   "ca": {
                     "description": "ca defines the Certificate authority used when verifying server certificates.",
@@ -939,13 +940,18 @@
                 "type": "boolean"
               },
               "filter": {
-                "description": "filter defines the filter expression used to filter the catalog results.\nSee https://www.consul.io/api-docs/catalog#list-services\nIt requires Prometheus >= 3.0.0.",
+                "description": "filter defines the filter expression used to filter the catalog results.\nSee https://developer.hashicorp.com/consul/api-docs/catalog#filtering\nIt requires Prometheus >= 3.0.0.",
                 "minLength": 1,
                 "type": "string"
               },
               "followRedirects": {
                 "description": "followRedirects defines whether HTTP requests follow HTTP 3xx redirects.",
                 "type": "boolean"
+              },
+              "healthFilter": {
+                "description": "healthFilter defines the filter expression used to filter the health results.\nSee https://developer.hashicorp.com/consul/api-docs/health#filtering\nIt requires Prometheus >= 3.11.2.",
+                "minLength": 1,
+                "type": "string"
               },
               "namespace": {
                 "description": "namespace are only supported in Consul Enterprise.\n\nIt requires Prometheus >= 2.28.0.",
@@ -1276,7 +1282,7 @@
                   },
                   "tokenUrl": {
                     "description": "tokenUrl defines the URL to fetch the token from.",
-                    "minLength": 1,
+                    "pattern": "^(http|https)://.+$",
                     "type": "string"
                   }
                 },
@@ -1950,7 +1956,7 @@
                   },
                   "tokenUrl": {
                     "description": "tokenUrl defines the URL to fetch the token from.",
-                    "minLength": 1,
+                    "pattern": "^(http|https)://.+$",
                     "type": "string"
                   }
                 },
@@ -2704,7 +2710,7 @@
                   },
                   "tokenUrl": {
                     "description": "tokenUrl defines the URL to fetch the token from.",
-                    "minLength": 1,
+                    "pattern": "^(http|https)://.+$",
                     "type": "string"
                   }
                 },
@@ -3405,7 +3411,7 @@
                   },
                   "tokenUrl": {
                     "description": "tokenUrl defines the URL to fetch the token from.",
-                    "minLength": 1,
+                    "pattern": "^(http|https)://.+$",
                     "type": "string"
                   }
                 },
@@ -4422,7 +4428,7 @@
                   },
                   "tokenUrl": {
                     "description": "tokenUrl defines the URL to fetch the token from.",
-                    "minLength": 1,
+                    "pattern": "^(http|https)://.+$",
                     "type": "string"
                   }
                 },
@@ -5175,7 +5181,7 @@
                   },
                   "tokenUrl": {
                     "description": "tokenUrl defines the URL to fetch the token from.",
-                    "minLength": 1,
+                    "pattern": "^(http|https)://.+$",
                     "type": "string"
                   }
                 },
@@ -5855,7 +5861,7 @@
                   },
                   "tokenUrl": {
                     "description": "tokenUrl defines the URL to fetch the token from.",
-                    "minLength": 1,
+                    "pattern": "^(http|https)://.+$",
                     "type": "string"
                   }
                 },
@@ -6465,7 +6471,7 @@
                   },
                   "tokenUrl": {
                     "description": "tokenUrl defines the URL to fetch the token from.",
-                    "minLength": 1,
+                    "pattern": "^(http|https)://.+$",
                     "type": "string"
                   }
                 },
@@ -6717,6 +6723,7 @@
         "keepDroppedTargets": {
           "description": "keepDroppedTargets defines the per-scrape limit on the number of targets dropped by relabeling\nthat will be kept in memory. 0 means no limit.\n\nIt requires Prometheus >= v2.47.0.",
           "format": "int64",
+          "minimum": 0,
           "type": "integer"
         },
         "kubernetesSDConfigs": {
@@ -7173,7 +7180,7 @@
                   },
                   "tokenUrl": {
                     "description": "tokenUrl defines the URL to fetch the token from.",
-                    "minLength": 1,
+                    "pattern": "^(http|https)://.+$",
                     "type": "string"
                   }
                 },
@@ -7885,7 +7892,7 @@
                   },
                   "tokenUrl": {
                     "description": "tokenUrl defines the URL to fetch the token from.",
-                    "minLength": 1,
+                    "pattern": "^(http|https)://.+$",
                     "type": "string"
                   }
                 },
@@ -8129,16 +8136,19 @@
         "labelLimit": {
           "description": "labelLimit defines the per-scrape limit on number of labels that will be accepted for a sample.\nOnly valid in Prometheus versions 2.27.0 and newer.",
           "format": "int64",
+          "minimum": 0,
           "type": "integer"
         },
         "labelNameLengthLimit": {
           "description": "labelNameLengthLimit defines the per-scrape limit on length of labels name that will be accepted for a sample.\nOnly valid in Prometheus versions 2.27.0 and newer.",
           "format": "int64",
+          "minimum": 0,
           "type": "integer"
         },
         "labelValueLengthLimit": {
           "description": "labelValueLengthLimit defines the per-scrape limit on length of labels value that will be accepted for a sample.\nOnly valid in Prometheus versions 2.27.0 and newer.",
           "format": "int64",
+          "minimum": 0,
           "type": "integer"
         },
         "lightSailSDConfigs": {
@@ -8589,7 +8599,7 @@
                   },
                   "tokenUrl": {
                     "description": "tokenUrl defines the URL to fetch the token from.",
-                    "minLength": 1,
+                    "pattern": "^(http|https)://.+$",
                     "type": "string"
                   }
                 },
@@ -8661,6 +8671,7 @@
               },
               "roleARN": {
                 "description": "roleARN defines the AWS Role ARN, an alternative to using AWS API keys.",
+                "minLength": 1,
                 "type": "string"
               },
               "secretKey": {
@@ -9226,7 +9237,7 @@
                   },
                   "tokenUrl": {
                     "description": "tokenUrl defines the URL to fetch the token from.",
-                    "minLength": 1,
+                    "pattern": "^(http|https)://.+$",
                     "type": "string"
                   }
                 },
@@ -9513,6 +9524,7 @@
               "modulus": {
                 "description": "modulus to take of the hash of the source label values.\n\nOnly applicable when the action is `HashMod`.",
                 "format": "int64",
+                "minimum": 0,
                 "type": "integer"
               },
               "regex": {
@@ -9572,6 +9584,7 @@
         "nativeHistogramBucketLimit": {
           "description": "nativeHistogramBucketLimit defines ff there are more than this many buckets in a native histogram,\nbuckets will be merged to stay within the limit.\nIt requires Prometheus >= v2.45.0.",
           "format": "int64",
+          "minimum": 0,
           "type": "integer"
         },
         "nativeHistogramMinBucketFactor": {
@@ -9700,6 +9713,7 @@
               },
               "namespace": {
                 "description": "namespace defines the Nomad namespace to query for service discovery.\nWhen specified, only resources within this namespace will be discovered.",
+                "minLength": 1,
                 "type": "string"
               },
               "noProxy": {
@@ -10018,7 +10032,7 @@
                   },
                   "tokenUrl": {
                     "description": "tokenUrl defines the URL to fetch the token from.",
-                    "minLength": 1,
+                    "pattern": "^(http|https)://.+$",
                     "type": "string"
                   }
                 },
@@ -10078,6 +10092,7 @@
               },
               "region": {
                 "description": "region defines the Nomad region to query for service discovery.\nWhen specified, only resources within this region will be discovered.",
+                "minLength": 1,
                 "type": "string"
               },
               "server": {
@@ -10087,6 +10102,7 @@
               },
               "tagSeparator": {
                 "description": "tagSeparator defines the separator used to join multiple tags.\nThis determines how Nomad service tags are concatenated into Prometheus labels.",
+                "minLength": 1,
                 "type": "string"
               },
               "tlsConfig": {
@@ -10579,7 +10595,7 @@
             },
             "tokenUrl": {
               "description": "tokenUrl defines the URL to fetch the token from.",
-              "minLength": 1,
+              "pattern": "^(http|https)://.+$",
               "type": "string"
             }
           },
@@ -10602,6 +10618,7 @@
               },
               "applicationCredentialId": {
                 "description": "applicationCredentialId defines the OpenStack applicationCredentialId.",
+                "minLength": 1,
                 "type": "string"
               },
               "applicationCredentialName": {
@@ -11472,7 +11489,7 @@
                   },
                   "tokenUrl": {
                     "description": "tokenUrl defines the URL to fetch the token from.",
-                    "minLength": 1,
+                    "pattern": "^(http|https)://.+$",
                     "type": "string"
                   }
                 },
@@ -11763,6 +11780,7 @@
               "modulus": {
                 "description": "modulus to take of the hash of the source label values.\n\nOnly applicable when the action is `HashMod`.",
                 "format": "int64",
+                "minimum": 0,
                 "type": "integer"
               },
               "regex": {
@@ -11799,12 +11817,13 @@
         "sampleLimit": {
           "description": "sampleLimit defines per-scrape limit on number of scraped samples that will be accepted.",
           "format": "int64",
+          "minimum": 0,
           "type": "integer"
         },
         "scalewaySDConfigs": {
           "description": "scalewaySDConfigs defines a list of Scaleway instances and baremetal service discovery configurations.",
           "items": {
-            "description": "ScalewaySDConfig configurations allow retrieving scrape targets from Scaleway instances and baremetal services.\nSee https://prometheus.io/docs/prometheus/latest/configuration/configuration/#scaleway_sd_config",
+            "description": "ScalewaySDConfig configurations allow retrieving scrape targets from Scaleway instances and baremetal services.\nSee https://prometheus.io/docs/prometheus/latest/configuration/configuration/#scaleway_sd_config\n\nNote: The `_file` variants of credential fields (e.g. `secret_key_file`)\nfrom the Prometheus configuration are not supported. Use Kubernetes secrets via `secretKey` instead.",
             "properties": {
               "accessKey": {
                 "description": "accessKey defines the access key to use. https://console.scaleway.com/project/credentials",
@@ -12205,6 +12224,7 @@
         "targetLimit": {
           "description": "targetLimit defines a limit on the number of scraped targets that will be accepted.",
           "format": "int64",
+          "minimum": 0,
           "type": "integer"
         },
         "tlsConfig": {
@@ -12382,6 +12402,12 @@
         }
       },
       "type": "object",
+      "x-kubernetes-validations": [
+        {
+          "message": "at most one of basicAuth, authorization, or oauth2 can be configured",
+          "rule": "[has(self.basicAuth), has(self.authorization), has(self.oauth2)].filter(x, x).size() <= 1"
+        }
+      ],
       "additionalProperties": false
     },
     "status": {
