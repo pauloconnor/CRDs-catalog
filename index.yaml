@@ -10406,6 +10406,14 @@ gateway.networking.k8s.io:
     filename: gateway.networking.k8s.io/tlsroute_v1alpha3.json
     kind: TLSRoute
     name: tlsroute_v1alpha3
+  - apiVersion: gateway.networking.k8s.io/v1
+    filename: gateway.networking.k8s.io/tcproute_v1.json
+    kind: TCPRoute
+    name: tcproute_v1
+  - apiVersion: gateway.networking.k8s.io/v1
+    filename: gateway.networking.k8s.io/udproute_v1.json
+    kind: UDPRoute
+    name: udproute_v1
 gateway.networking.x-k8s.io:
   - apiVersion: gateway.networking.x-k8s.io/v1alpha1
     filename: gateway.networking.x-k8s.io/xmesh_v1alpha1.json
