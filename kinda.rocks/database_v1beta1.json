@@ -23,6 +23,9 @@
             },
             "enable": {
               "type": "boolean"
+            },
+            "envFromSecret": {
+              "type": "string"
             }
           },
           "required": [
@@ -156,7 +159,6 @@
         }
       },
       "required": [
-        "backup",
         "deletionProtected",
         "instance",
         "secretName"
