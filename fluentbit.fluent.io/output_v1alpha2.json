@@ -85,6 +85,10 @@
                   "description": "Prioritize IPv4 DNS results when trying to establish a connection.",
                   "type": "boolean"
                 },
+                "DNSPreferIPv6": {
+                  "description": "Prioritize IPv6 DNS results when trying to establish a connection.",
+                  "type": "boolean"
+                },
                 "DNSResolver": {
                   "description": "Select the primary DNS resolver type (LEGACY or ASYNC).",
                   "enum": [
@@ -102,8 +106,13 @@
                   "description": "On connection timeout, specify if it should log an error. When disabled, the timeout is logged as a debug message.",
                   "type": "boolean"
                 },
+                "ioTimeout": {
+                  "description": "Set maximum time a connection can stay idle while assigned.",
+                  "format": "int32",
+                  "type": "integer"
+                },
                 "keepalive": {
-                  "description": "Enable or disable connection keepalive support. Accepts a boolean value: on / off.",
+                  "description": "Enable or disable connection keepalive support. Accepts string enum values: on / off.",
                   "enum": [
                     "on",
                     "off"
@@ -125,9 +134,36 @@
                   "format": "int32",
                   "type": "integer"
                 },
+                "proxyEnvIgnore": {
+                  "description": "Ignore the environment variables HTTP_PROXY, HTTPS_PROXY and NO_PROXY when set.",
+                  "type": "boolean"
+                },
                 "sourceAddress": {
                   "description": "Specify network address to bind for data traffic.",
                   "type": "string"
+                },
+                "tcpKeepalive": {
+                  "description": "Enable or disable Keepalive support. Accepts string enum values: on / off.",
+                  "enum": [
+                    "on",
+                    "off"
+                  ],
+                  "type": "string"
+                },
+                "tcpKeepaliveInterval": {
+                  "description": "Interval between TCP keepalive probes when no response is received on a keepidle probe.",
+                  "format": "int32",
+                  "type": "integer"
+                },
+                "tcpKeepaliveProbes": {
+                  "description": "Number of unacknowledged probes to consider a connection dead.",
+                  "format": "int32",
+                  "type": "integer"
+                },
+                "tcpKeepaliveTime": {
+                  "description": "Interval between the last data packet sent and the first TCP keepalive probe.",
+                  "format": "int32",
+                  "type": "integer"
                 }
               },
               "type": "object",
@@ -835,6 +871,10 @@
                   "description": "Prioritize IPv4 DNS results when trying to establish a connection.",
                   "type": "boolean"
                 },
+                "DNSPreferIPv6": {
+                  "description": "Prioritize IPv6 DNS results when trying to establish a connection.",
+                  "type": "boolean"
+                },
                 "DNSResolver": {
                   "description": "Select the primary DNS resolver type (LEGACY or ASYNC).",
                   "enum": [
@@ -852,8 +892,13 @@
                   "description": "On connection timeout, specify if it should log an error. When disabled, the timeout is logged as a debug message.",
                   "type": "boolean"
                 },
+                "ioTimeout": {
+                  "description": "Set maximum time a connection can stay idle while assigned.",
+                  "format": "int32",
+                  "type": "integer"
+                },
                 "keepalive": {
-                  "description": "Enable or disable connection keepalive support. Accepts a boolean value: on / off.",
+                  "description": "Enable or disable connection keepalive support. Accepts string enum values: on / off.",
                   "enum": [
                     "on",
                     "off"
@@ -875,9 +920,36 @@
                   "format": "int32",
                   "type": "integer"
                 },
+                "proxyEnvIgnore": {
+                  "description": "Ignore the environment variables HTTP_PROXY, HTTPS_PROXY and NO_PROXY when set.",
+                  "type": "boolean"
+                },
                 "sourceAddress": {
                   "description": "Specify network address to bind for data traffic.",
                   "type": "string"
+                },
+                "tcpKeepalive": {
+                  "description": "Enable or disable Keepalive support. Accepts string enum values: on / off.",
+                  "enum": [
+                    "on",
+                    "off"
+                  ],
+                  "type": "string"
+                },
+                "tcpKeepaliveInterval": {
+                  "description": "Interval between TCP keepalive probes when no response is received on a keepidle probe.",
+                  "format": "int32",
+                  "type": "integer"
+                },
+                "tcpKeepaliveProbes": {
+                  "description": "Number of unacknowledged probes to consider a connection dead.",
+                  "format": "int32",
+                  "type": "integer"
+                },
+                "tcpKeepaliveTime": {
+                  "description": "Interval between the last data packet sent and the first TCP keepalive probe.",
+                  "format": "int32",
+                  "type": "integer"
                 }
               },
               "type": "object",
@@ -1072,6 +1144,16 @@
               "description": "Immediately retry failed requests to AWS services once. This option does not affect the normal Fluent Bit retry mechanism with backoff. Instead, it enables an immediate retry with no delay for networking errors, which may help improve throughput when there are transient/random networking issues.",
               "type": "boolean"
             },
+            "compression": {
+              "description": "Compression type to use when compressing the data. Valid values are: gzip, snappy, lz4, zstd. If you do not specify a compression type, the data will be sent uncompressed.",
+              "enum": [
+                "gzip",
+                "snappy",
+                "lz4",
+                "zstd"
+              ],
+              "type": "string"
+            },
             "dataKeys": {
               "description": "By default, the whole log record will be sent to Kinesis. If you specify a key name(s) with this option, then only those keys and values will be sent to Kinesis. For example, if you are using the Fluentd Docker log driver, you can specify data_keys log and only the log message will be sent to Kinesis. If you specify multiple keys, they should be comma delimited.",
               "type": "string"
@@ -1084,8 +1166,16 @@
               "description": "Specify a custom endpoint for the Kinesis Firehose API.",
               "type": "string"
             },
+            "externalID": {
+              "description": "Specify an external ID for the STS API, can be used with the role_arn parameter if your role requires an external ID.",
+              "type": "string"
+            },
             "logKey": {
               "description": "By default, the whole log record will be sent to Firehose. If you specify a key name with this option, then only the value of that key will be sent to Firehose. For example, if you are using the Fluentd Docker log driver, you can specify log_key log and only the log message will be sent to Firehose.",
+              "type": "string"
+            },
+            "profile": {
+              "description": "Option to specify an AWS Profile for credentials.",
               "type": "string"
             },
             "region": {
@@ -1095,6 +1185,10 @@
             "roleARN": {
               "description": "ARN of an IAM role to assume (for cross account access).",
               "type": "string"
+            },
+            "simpleAggregation": {
+              "description": "Option to enable simple aggregation for the Firehose output plugin.",
+              "type": "boolean"
             },
             "stsEndpoint": {
               "description": "Specify a custom endpoint for the STS API; used to assume your custom role provided with role_arn.",
@@ -1107,6 +1201,11 @@
             "timeKeyFormat": {
               "description": "strftime compliant format string for the timestamp; for example, %Y-%m-%dT%H *string This option is used with time_key. You can also use %L for milliseconds and %f for microseconds. If you are using ECS FireLens, make sure you are running Amazon ECS Container Agent v1.42.0 or later, otherwise the timestamps associated with your container logs will only have second precision.",
               "type": "string"
+            },
+            "workers": {
+              "description": "Specify number of worker threads to use to output to Firehose",
+              "format": "int32",
+              "type": "integer"
             }
           },
           "required": [
@@ -1142,6 +1241,10 @@
                   "description": "Prioritize IPv4 DNS results when trying to establish a connection.",
                   "type": "boolean"
                 },
+                "DNSPreferIPv6": {
+                  "description": "Prioritize IPv6 DNS results when trying to establish a connection.",
+                  "type": "boolean"
+                },
                 "DNSResolver": {
                   "description": "Select the primary DNS resolver type (LEGACY or ASYNC).",
                   "enum": [
@@ -1159,8 +1262,13 @@
                   "description": "On connection timeout, specify if it should log an error. When disabled, the timeout is logged as a debug message.",
                   "type": "boolean"
                 },
+                "ioTimeout": {
+                  "description": "Set maximum time a connection can stay idle while assigned.",
+                  "format": "int32",
+                  "type": "integer"
+                },
                 "keepalive": {
-                  "description": "Enable or disable connection keepalive support. Accepts a boolean value: on / off.",
+                  "description": "Enable or disable connection keepalive support. Accepts string enum values: on / off.",
                   "enum": [
                     "on",
                     "off"
@@ -1182,9 +1290,36 @@
                   "format": "int32",
                   "type": "integer"
                 },
+                "proxyEnvIgnore": {
+                  "description": "Ignore the environment variables HTTP_PROXY, HTTPS_PROXY and NO_PROXY when set.",
+                  "type": "boolean"
+                },
                 "sourceAddress": {
                   "description": "Specify network address to bind for data traffic.",
                   "type": "string"
+                },
+                "tcpKeepalive": {
+                  "description": "Enable or disable Keepalive support. Accepts string enum values: on / off.",
+                  "enum": [
+                    "on",
+                    "off"
+                  ],
+                  "type": "string"
+                },
+                "tcpKeepaliveInterval": {
+                  "description": "Interval between TCP keepalive probes when no response is received on a keepidle probe.",
+                  "format": "int32",
+                  "type": "integer"
+                },
+                "tcpKeepaliveProbes": {
+                  "description": "Number of unacknowledged probes to consider a connection dead.",
+                  "format": "int32",
+                  "type": "integer"
+                },
+                "tcpKeepaliveTime": {
+                  "description": "Interval between the last data packet sent and the first TCP keepalive probe.",
+                  "format": "int32",
+                  "type": "integer"
                 }
               },
               "type": "object",
@@ -1237,6 +1372,10 @@
             },
             "requireAckResponse": {
               "description": "Send \"chunk\"-option and wait for \"ack\" response from server.\nEnables at-least-once and receiving server can control rate of traffic.\n(Requires Fluentd v0.14.0+ server)",
+              "type": "boolean"
+            },
+            "retainMetadataInForwardMode": {
+              "description": "Retain metadata when forwarding in forward mode.",
               "type": "boolean"
             },
             "selfHostname": {
@@ -1429,6 +1568,10 @@
                   "description": "Prioritize IPv4 DNS results when trying to establish a connection.",
                   "type": "boolean"
                 },
+                "DNSPreferIPv6": {
+                  "description": "Prioritize IPv6 DNS results when trying to establish a connection.",
+                  "type": "boolean"
+                },
                 "DNSResolver": {
                   "description": "Select the primary DNS resolver type (LEGACY or ASYNC).",
                   "enum": [
@@ -1446,8 +1589,13 @@
                   "description": "On connection timeout, specify if it should log an error. When disabled, the timeout is logged as a debug message.",
                   "type": "boolean"
                 },
+                "ioTimeout": {
+                  "description": "Set maximum time a connection can stay idle while assigned.",
+                  "format": "int32",
+                  "type": "integer"
+                },
                 "keepalive": {
-                  "description": "Enable or disable connection keepalive support. Accepts a boolean value: on / off.",
+                  "description": "Enable or disable connection keepalive support. Accepts string enum values: on / off.",
                   "enum": [
                     "on",
                     "off"
@@ -1469,9 +1617,36 @@
                   "format": "int32",
                   "type": "integer"
                 },
+                "proxyEnvIgnore": {
+                  "description": "Ignore the environment variables HTTP_PROXY, HTTPS_PROXY and NO_PROXY when set.",
+                  "type": "boolean"
+                },
                 "sourceAddress": {
                   "description": "Specify network address to bind for data traffic.",
                   "type": "string"
+                },
+                "tcpKeepalive": {
+                  "description": "Enable or disable Keepalive support. Accepts string enum values: on / off.",
+                  "enum": [
+                    "on",
+                    "off"
+                  ],
+                  "type": "string"
+                },
+                "tcpKeepaliveInterval": {
+                  "description": "Interval between TCP keepalive probes when no response is received on a keepidle probe.",
+                  "format": "int32",
+                  "type": "integer"
+                },
+                "tcpKeepaliveProbes": {
+                  "description": "Number of unacknowledged probes to consider a connection dead.",
+                  "format": "int32",
+                  "type": "integer"
+                },
+                "tcpKeepaliveTime": {
+                  "description": "Interval between the last data packet sent and the first TCP keepalive probe.",
+                  "format": "int32",
+                  "type": "integer"
                 }
               },
               "type": "object",
@@ -1723,6 +1898,10 @@
               "description": "Specify the name of the time key in the output record.\nTo disable the time key just set the value to false.",
               "type": "string"
             },
+            "logResponsePayload": {
+              "description": "Specify if the response paylod should be logged or not.",
+              "type": "boolean"
+            },
             "networking": {
               "description": "Include fluentbit networking options for this output-plugin",
               "properties": {
@@ -1736,6 +1915,10 @@
                 },
                 "DNSPreferIPv4": {
                   "description": "Prioritize IPv4 DNS results when trying to establish a connection.",
+                  "type": "boolean"
+                },
+                "DNSPreferIPv6": {
+                  "description": "Prioritize IPv6 DNS results when trying to establish a connection.",
                   "type": "boolean"
                 },
                 "DNSResolver": {
@@ -1755,8 +1938,13 @@
                   "description": "On connection timeout, specify if it should log an error. When disabled, the timeout is logged as a debug message.",
                   "type": "boolean"
                 },
+                "ioTimeout": {
+                  "description": "Set maximum time a connection can stay idle while assigned.",
+                  "format": "int32",
+                  "type": "integer"
+                },
                 "keepalive": {
-                  "description": "Enable or disable connection keepalive support. Accepts a boolean value: on / off.",
+                  "description": "Enable or disable connection keepalive support. Accepts string enum values: on / off.",
                   "enum": [
                     "on",
                     "off"
@@ -1778,9 +1966,36 @@
                   "format": "int32",
                   "type": "integer"
                 },
+                "proxyEnvIgnore": {
+                  "description": "Ignore the environment variables HTTP_PROXY, HTTPS_PROXY and NO_PROXY when set.",
+                  "type": "boolean"
+                },
                 "sourceAddress": {
                   "description": "Specify network address to bind for data traffic.",
                   "type": "string"
+                },
+                "tcpKeepalive": {
+                  "description": "Enable or disable Keepalive support. Accepts string enum values: on / off.",
+                  "enum": [
+                    "on",
+                    "off"
+                  ],
+                  "type": "string"
+                },
+                "tcpKeepaliveInterval": {
+                  "description": "Interval between TCP keepalive probes when no response is received on a keepidle probe.",
+                  "format": "int32",
+                  "type": "integer"
+                },
+                "tcpKeepaliveProbes": {
+                  "description": "Number of unacknowledged probes to consider a connection dead.",
+                  "format": "int32",
+                  "type": "integer"
+                },
+                "tcpKeepaliveTime": {
+                  "description": "Interval between the last data packet sent and the first TCP keepalive probe.",
+                  "format": "int32",
+                  "type": "integer"
                 }
               },
               "type": "object",
@@ -2038,6 +2253,10 @@
                   "description": "Prioritize IPv4 DNS results when trying to establish a connection.",
                   "type": "boolean"
                 },
+                "DNSPreferIPv6": {
+                  "description": "Prioritize IPv6 DNS results when trying to establish a connection.",
+                  "type": "boolean"
+                },
                 "DNSResolver": {
                   "description": "Select the primary DNS resolver type (LEGACY or ASYNC).",
                   "enum": [
@@ -2055,8 +2274,13 @@
                   "description": "On connection timeout, specify if it should log an error. When disabled, the timeout is logged as a debug message.",
                   "type": "boolean"
                 },
+                "ioTimeout": {
+                  "description": "Set maximum time a connection can stay idle while assigned.",
+                  "format": "int32",
+                  "type": "integer"
+                },
                 "keepalive": {
-                  "description": "Enable or disable connection keepalive support. Accepts a boolean value: on / off.",
+                  "description": "Enable or disable connection keepalive support. Accepts string enum values: on / off.",
                   "enum": [
                     "on",
                     "off"
@@ -2078,9 +2302,36 @@
                   "format": "int32",
                   "type": "integer"
                 },
+                "proxyEnvIgnore": {
+                  "description": "Ignore the environment variables HTTP_PROXY, HTTPS_PROXY and NO_PROXY when set.",
+                  "type": "boolean"
+                },
                 "sourceAddress": {
                   "description": "Specify network address to bind for data traffic.",
                   "type": "string"
+                },
+                "tcpKeepalive": {
+                  "description": "Enable or disable Keepalive support. Accepts string enum values: on / off.",
+                  "enum": [
+                    "on",
+                    "off"
+                  ],
+                  "type": "string"
+                },
+                "tcpKeepaliveInterval": {
+                  "description": "Interval between TCP keepalive probes when no response is received on a keepidle probe.",
+                  "format": "int32",
+                  "type": "integer"
+                },
+                "tcpKeepaliveProbes": {
+                  "description": "Number of unacknowledged probes to consider a connection dead.",
+                  "format": "int32",
+                  "type": "integer"
+                },
+                "tcpKeepaliveTime": {
+                  "description": "Interval between the last data packet sent and the first TCP keepalive probe.",
+                  "format": "int32",
+                  "type": "integer"
                 }
               },
               "type": "object",
@@ -2216,7 +2467,7 @@
               "type": "boolean"
             },
             "format": {
-              "description": "Specify data format, options available: json, msgpack.",
+              "description": "Specify data format, options available: json, msgpack, raw.",
               "type": "string"
             },
             "messageKey": {
@@ -2231,6 +2482,10 @@
               "description": "Fluent Bit queues data into rdkafka library,\nif for some reason the underlying library cannot flush the records the queue might fills up blocking new addition of records.\nThe queue_full_retries option set the number of local retries to enqueue the data.\nThe default value is 10 times, the interval between each retry is 1 second.\nSetting the queue_full_retries value to 0 set's an unlimited number of retries.",
               "format": "int64",
               "type": "integer"
+            },
+            "rawLogKey": {
+              "description": "When using format: raw, the value of the record field specified by rawLogKey\n(Fluent Bit option: Raw_Log_Key) is sent to Kafka as the payload.",
+              "type": "string"
             },
             "rdkafka": {
               "additionalProperties": {
@@ -2510,6 +2765,10 @@
                   "description": "Prioritize IPv4 DNS results when trying to establish a connection.",
                   "type": "boolean"
                 },
+                "DNSPreferIPv6": {
+                  "description": "Prioritize IPv6 DNS results when trying to establish a connection.",
+                  "type": "boolean"
+                },
                 "DNSResolver": {
                   "description": "Select the primary DNS resolver type (LEGACY or ASYNC).",
                   "enum": [
@@ -2527,8 +2786,13 @@
                   "description": "On connection timeout, specify if it should log an error. When disabled, the timeout is logged as a debug message.",
                   "type": "boolean"
                 },
+                "ioTimeout": {
+                  "description": "Set maximum time a connection can stay idle while assigned.",
+                  "format": "int32",
+                  "type": "integer"
+                },
                 "keepalive": {
-                  "description": "Enable or disable connection keepalive support. Accepts a boolean value: on / off.",
+                  "description": "Enable or disable connection keepalive support. Accepts string enum values: on / off.",
                   "enum": [
                     "on",
                     "off"
@@ -2550,9 +2814,36 @@
                   "format": "int32",
                   "type": "integer"
                 },
+                "proxyEnvIgnore": {
+                  "description": "Ignore the environment variables HTTP_PROXY, HTTPS_PROXY and NO_PROXY when set.",
+                  "type": "boolean"
+                },
                 "sourceAddress": {
                   "description": "Specify network address to bind for data traffic.",
                   "type": "string"
+                },
+                "tcpKeepalive": {
+                  "description": "Enable or disable Keepalive support. Accepts string enum values: on / off.",
+                  "enum": [
+                    "on",
+                    "off"
+                  ],
+                  "type": "string"
+                },
+                "tcpKeepaliveInterval": {
+                  "description": "Interval between TCP keepalive probes when no response is received on a keepidle probe.",
+                  "format": "int32",
+                  "type": "integer"
+                },
+                "tcpKeepaliveProbes": {
+                  "description": "Number of unacknowledged probes to consider a connection dead.",
+                  "format": "int32",
+                  "type": "integer"
+                },
+                "tcpKeepaliveTime": {
+                  "description": "Interval between the last data packet sent and the first TCP keepalive probe.",
+                  "format": "int32",
+                  "type": "integer"
                 }
               },
               "type": "object",
@@ -2906,6 +3197,10 @@
                   "description": "Prioritize IPv4 DNS results when trying to establish a connection.",
                   "type": "boolean"
                 },
+                "DNSPreferIPv6": {
+                  "description": "Prioritize IPv6 DNS results when trying to establish a connection.",
+                  "type": "boolean"
+                },
                 "DNSResolver": {
                   "description": "Select the primary DNS resolver type (LEGACY or ASYNC).",
                   "enum": [
@@ -2923,8 +3218,13 @@
                   "description": "On connection timeout, specify if it should log an error. When disabled, the timeout is logged as a debug message.",
                   "type": "boolean"
                 },
+                "ioTimeout": {
+                  "description": "Set maximum time a connection can stay idle while assigned.",
+                  "format": "int32",
+                  "type": "integer"
+                },
                 "keepalive": {
-                  "description": "Enable or disable connection keepalive support. Accepts a boolean value: on / off.",
+                  "description": "Enable or disable connection keepalive support. Accepts string enum values: on / off.",
                   "enum": [
                     "on",
                     "off"
@@ -2946,9 +3246,36 @@
                   "format": "int32",
                   "type": "integer"
                 },
+                "proxyEnvIgnore": {
+                  "description": "Ignore the environment variables HTTP_PROXY, HTTPS_PROXY and NO_PROXY when set.",
+                  "type": "boolean"
+                },
                 "sourceAddress": {
                   "description": "Specify network address to bind for data traffic.",
                   "type": "string"
+                },
+                "tcpKeepalive": {
+                  "description": "Enable or disable Keepalive support. Accepts string enum values: on / off.",
+                  "enum": [
+                    "on",
+                    "off"
+                  ],
+                  "type": "string"
+                },
+                "tcpKeepaliveInterval": {
+                  "description": "Interval between TCP keepalive probes when no response is received on a keepidle probe.",
+                  "format": "int32",
+                  "type": "integer"
+                },
+                "tcpKeepaliveProbes": {
+                  "description": "Number of unacknowledged probes to consider a connection dead.",
+                  "format": "int32",
+                  "type": "integer"
+                },
+                "tcpKeepaliveTime": {
+                  "description": "Interval between the last data packet sent and the first TCP keepalive probe.",
+                  "format": "int32",
+                  "type": "integer"
                 }
               },
               "type": "object",
@@ -3113,6 +3440,12 @@
               "description": "This allows you to add custom labels to all metrics exposed through the OpenTelemetry exporter. You may have multiple of these fields.",
               "type": "object"
             },
+            "batchSize": {
+              "description": "Set the maximum number of log records to be flushed at a time.",
+              "format": "int32",
+              "minimum": 0,
+              "type": "integer"
+            },
             "header": {
               "additionalProperties": {
                 "type": "string"
@@ -3235,6 +3568,10 @@
                   "description": "Prioritize IPv4 DNS results when trying to establish a connection.",
                   "type": "boolean"
                 },
+                "DNSPreferIPv6": {
+                  "description": "Prioritize IPv6 DNS results when trying to establish a connection.",
+                  "type": "boolean"
+                },
                 "DNSResolver": {
                   "description": "Select the primary DNS resolver type (LEGACY or ASYNC).",
                   "enum": [
@@ -3252,8 +3589,13 @@
                   "description": "On connection timeout, specify if it should log an error. When disabled, the timeout is logged as a debug message.",
                   "type": "boolean"
                 },
+                "ioTimeout": {
+                  "description": "Set maximum time a connection can stay idle while assigned.",
+                  "format": "int32",
+                  "type": "integer"
+                },
                 "keepalive": {
-                  "description": "Enable or disable connection keepalive support. Accepts a boolean value: on / off.",
+                  "description": "Enable or disable connection keepalive support. Accepts string enum values: on / off.",
                   "enum": [
                     "on",
                     "off"
@@ -3275,9 +3617,36 @@
                   "format": "int32",
                   "type": "integer"
                 },
+                "proxyEnvIgnore": {
+                  "description": "Ignore the environment variables HTTP_PROXY, HTTPS_PROXY and NO_PROXY when set.",
+                  "type": "boolean"
+                },
                 "sourceAddress": {
                   "description": "Specify network address to bind for data traffic.",
                   "type": "string"
+                },
+                "tcpKeepalive": {
+                  "description": "Enable or disable Keepalive support. Accepts string enum values: on / off.",
+                  "enum": [
+                    "on",
+                    "off"
+                  ],
+                  "type": "string"
+                },
+                "tcpKeepaliveInterval": {
+                  "description": "Interval between TCP keepalive probes when no response is received on a keepidle probe.",
+                  "format": "int32",
+                  "type": "integer"
+                },
+                "tcpKeepaliveProbes": {
+                  "description": "Number of unacknowledged probes to consider a connection dead.",
+                  "format": "int32",
+                  "type": "integer"
+                },
+                "tcpKeepaliveTime": {
+                  "description": "Interval between the last data packet sent and the first TCP keepalive probe.",
+                  "format": "int32",
+                  "type": "integer"
                 }
               },
               "type": "object",
@@ -3536,6 +3905,10 @@
                   "description": "Prioritize IPv4 DNS results when trying to establish a connection.",
                   "type": "boolean"
                 },
+                "DNSPreferIPv6": {
+                  "description": "Prioritize IPv6 DNS results when trying to establish a connection.",
+                  "type": "boolean"
+                },
                 "DNSResolver": {
                   "description": "Select the primary DNS resolver type (LEGACY or ASYNC).",
                   "enum": [
@@ -3553,8 +3926,13 @@
                   "description": "On connection timeout, specify if it should log an error. When disabled, the timeout is logged as a debug message.",
                   "type": "boolean"
                 },
+                "ioTimeout": {
+                  "description": "Set maximum time a connection can stay idle while assigned.",
+                  "format": "int32",
+                  "type": "integer"
+                },
                 "keepalive": {
-                  "description": "Enable or disable connection keepalive support. Accepts a boolean value: on / off.",
+                  "description": "Enable or disable connection keepalive support. Accepts string enum values: on / off.",
                   "enum": [
                     "on",
                     "off"
@@ -3576,9 +3954,36 @@
                   "format": "int32",
                   "type": "integer"
                 },
+                "proxyEnvIgnore": {
+                  "description": "Ignore the environment variables HTTP_PROXY, HTTPS_PROXY and NO_PROXY when set.",
+                  "type": "boolean"
+                },
                 "sourceAddress": {
                   "description": "Specify network address to bind for data traffic.",
                   "type": "string"
+                },
+                "tcpKeepalive": {
+                  "description": "Enable or disable Keepalive support. Accepts string enum values: on / off.",
+                  "enum": [
+                    "on",
+                    "off"
+                  ],
+                  "type": "string"
+                },
+                "tcpKeepaliveInterval": {
+                  "description": "Interval between TCP keepalive probes when no response is received on a keepidle probe.",
+                  "format": "int32",
+                  "type": "integer"
+                },
+                "tcpKeepaliveProbes": {
+                  "description": "Number of unacknowledged probes to consider a connection dead.",
+                  "format": "int32",
+                  "type": "integer"
+                },
+                "tcpKeepaliveTime": {
+                  "description": "Interval between the last data packet sent and the first TCP keepalive probe.",
+                  "format": "int32",
+                  "type": "integer"
                 }
               },
               "type": "object",
@@ -3812,6 +4217,105 @@
               "description": "Specify number of worker threads to use to output to S3",
               "format": "int32",
               "type": "integer"
+            },
+            "networking": {
+              "description": "Configure Fluent Bit unified networking options for this output plugin.",
+              "properties": {
+                "DNSMode": {
+                  "description": "Select the primary DNS connection type (TCP or UDP).",
+                  "enum": [
+                    "TCP",
+                    "UDP"
+                  ],
+                  "type": "string"
+                },
+                "DNSPreferIPv4": {
+                  "description": "Prioritize IPv4 DNS results when trying to establish a connection.",
+                  "type": "boolean"
+                },
+                "DNSPreferIPv6": {
+                  "description": "Prioritize IPv6 DNS results when trying to establish a connection.",
+                  "type": "boolean"
+                },
+                "DNSResolver": {
+                  "description": "Select the primary DNS resolver type (LEGACY or ASYNC).",
+                  "enum": [
+                    "LEGACY",
+                    "ASYNC"
+                  ],
+                  "type": "string"
+                },
+                "connectTimeout": {
+                  "description": "Set maximum time expressed in seconds to wait for a TCP connection to be established, this include the TLS handshake time.",
+                  "format": "int32",
+                  "type": "integer"
+                },
+                "connectTimeoutLogError": {
+                  "description": "On connection timeout, specify if it should log an error. When disabled, the timeout is logged as a debug message.",
+                  "type": "boolean"
+                },
+                "ioTimeout": {
+                  "description": "Set maximum time a connection can stay idle while assigned.",
+                  "format": "int32",
+                  "type": "integer"
+                },
+                "keepalive": {
+                  "description": "Enable or disable connection keepalive support. Accepts string enum values: on / off.",
+                  "enum": [
+                    "on",
+                    "off"
+                  ],
+                  "type": "string"
+                },
+                "keepaliveIdleTimeout": {
+                  "description": "Set maximum time expressed in seconds for an idle keepalive connection.",
+                  "format": "int32",
+                  "type": "integer"
+                },
+                "keepaliveMaxRecycle": {
+                  "description": "Set maximum number of times a keepalive connection can be used before it is retired.",
+                  "format": "int32",
+                  "type": "integer"
+                },
+                "maxWorkerConnections": {
+                  "description": "Set maximum number of TCP connections that can be established per worker.",
+                  "format": "int32",
+                  "type": "integer"
+                },
+                "proxyEnvIgnore": {
+                  "description": "Ignore the environment variables HTTP_PROXY, HTTPS_PROXY and NO_PROXY when set.",
+                  "type": "boolean"
+                },
+                "sourceAddress": {
+                  "description": "Specify network address to bind for data traffic.",
+                  "type": "string"
+                },
+                "tcpKeepalive": {
+                  "description": "Enable or disable Keepalive support. Accepts string enum values: on / off.",
+                  "enum": [
+                    "on",
+                    "off"
+                  ],
+                  "type": "string"
+                },
+                "tcpKeepaliveInterval": {
+                  "description": "Interval between TCP keepalive probes when no response is received on a keepidle probe.",
+                  "format": "int32",
+                  "type": "integer"
+                },
+                "tcpKeepaliveProbes": {
+                  "description": "Number of unacknowledged probes to consider a connection dead.",
+                  "format": "int32",
+                  "type": "integer"
+                },
+                "tcpKeepaliveTime": {
+                  "description": "Interval between the last data packet sent and the first TCP keepalive probe.",
+                  "format": "int32",
+                  "type": "integer"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
             },
             "tls": {
               "description": "Fluent Bit provides integrated support for Transport Layer Security (TLS) and it predecessor Secure Sockets Layer (SSL) respectively.",
@@ -4057,6 +4561,10 @@
                   "description": "Prioritize IPv4 DNS results when trying to establish a connection.",
                   "type": "boolean"
                 },
+                "DNSPreferIPv6": {
+                  "description": "Prioritize IPv6 DNS results when trying to establish a connection.",
+                  "type": "boolean"
+                },
                 "DNSResolver": {
                   "description": "Select the primary DNS resolver type (LEGACY or ASYNC).",
                   "enum": [
@@ -4074,8 +4582,13 @@
                   "description": "On connection timeout, specify if it should log an error. When disabled, the timeout is logged as a debug message.",
                   "type": "boolean"
                 },
+                "ioTimeout": {
+                  "description": "Set maximum time a connection can stay idle while assigned.",
+                  "format": "int32",
+                  "type": "integer"
+                },
                 "keepalive": {
-                  "description": "Enable or disable connection keepalive support. Accepts a boolean value: on / off.",
+                  "description": "Enable or disable connection keepalive support. Accepts string enum values: on / off.",
                   "enum": [
                     "on",
                     "off"
@@ -4097,9 +4610,36 @@
                   "format": "int32",
                   "type": "integer"
                 },
+                "proxyEnvIgnore": {
+                  "description": "Ignore the environment variables HTTP_PROXY, HTTPS_PROXY and NO_PROXY when set.",
+                  "type": "boolean"
+                },
                 "sourceAddress": {
                   "description": "Specify network address to bind for data traffic.",
                   "type": "string"
+                },
+                "tcpKeepalive": {
+                  "description": "Enable or disable Keepalive support. Accepts string enum values: on / off.",
+                  "enum": [
+                    "on",
+                    "off"
+                  ],
+                  "type": "string"
+                },
+                "tcpKeepaliveInterval": {
+                  "description": "Interval between TCP keepalive probes when no response is received on a keepidle probe.",
+                  "format": "int32",
+                  "type": "integer"
+                },
+                "tcpKeepaliveProbes": {
+                  "description": "Number of unacknowledged probes to consider a connection dead.",
+                  "format": "int32",
+                  "type": "integer"
+                },
+                "tcpKeepaliveTime": {
+                  "description": "Interval between the last data packet sent and the first TCP keepalive probe.",
+                  "format": "int32",
+                  "type": "integer"
                 }
               },
               "type": "object",
@@ -4234,6 +4774,10 @@
               },
               "type": "object",
               "additionalProperties": false
+            },
+            "totalLimitSize": {
+              "description": "Limit the maximum number of Chunks in the filesystem for the current output logical destination.",
+              "type": "string"
             }
           },
           "type": "object",
@@ -4469,6 +5013,10 @@
                   "description": "Prioritize IPv4 DNS results when trying to establish a connection.",
                   "type": "boolean"
                 },
+                "DNSPreferIPv6": {
+                  "description": "Prioritize IPv6 DNS results when trying to establish a connection.",
+                  "type": "boolean"
+                },
                 "DNSResolver": {
                   "description": "Select the primary DNS resolver type (LEGACY or ASYNC).",
                   "enum": [
@@ -4486,8 +5034,13 @@
                   "description": "On connection timeout, specify if it should log an error. When disabled, the timeout is logged as a debug message.",
                   "type": "boolean"
                 },
+                "ioTimeout": {
+                  "description": "Set maximum time a connection can stay idle while assigned.",
+                  "format": "int32",
+                  "type": "integer"
+                },
                 "keepalive": {
-                  "description": "Enable or disable connection keepalive support. Accepts a boolean value: on / off.",
+                  "description": "Enable or disable connection keepalive support. Accepts string enum values: on / off.",
                   "enum": [
                     "on",
                     "off"
@@ -4509,9 +5062,36 @@
                   "format": "int32",
                   "type": "integer"
                 },
+                "proxyEnvIgnore": {
+                  "description": "Ignore the environment variables HTTP_PROXY, HTTPS_PROXY and NO_PROXY when set.",
+                  "type": "boolean"
+                },
                 "sourceAddress": {
                   "description": "Specify network address to bind for data traffic.",
                   "type": "string"
+                },
+                "tcpKeepalive": {
+                  "description": "Enable or disable Keepalive support. Accepts string enum values: on / off.",
+                  "enum": [
+                    "on",
+                    "off"
+                  ],
+                  "type": "string"
+                },
+                "tcpKeepaliveInterval": {
+                  "description": "Interval between TCP keepalive probes when no response is received on a keepidle probe.",
+                  "format": "int32",
+                  "type": "integer"
+                },
+                "tcpKeepaliveProbes": {
+                  "description": "Number of unacknowledged probes to consider a connection dead.",
+                  "format": "int32",
+                  "type": "integer"
+                },
+                "tcpKeepaliveTime": {
+                  "description": "Interval between the last data packet sent and the first TCP keepalive probe.",
+                  "format": "int32",
+                  "type": "integer"
                 }
               },
               "type": "object",
@@ -4649,6 +5229,11 @@
             "totalLimitSize": {
               "description": "Limit the maximum number of Chunks in the filesystem for the current output logical destination.",
               "type": "string"
+            },
+            "workers": {
+              "description": "Enables dedicated thread(s) for this output. Default value is set since version 1.8.13. For previous versions is 0.",
+              "format": "int32",
+              "type": "integer"
             }
           },
           "type": "object",
@@ -4699,6 +5284,10 @@
                   "description": "Prioritize IPv4 DNS results when trying to establish a connection.",
                   "type": "boolean"
                 },
+                "DNSPreferIPv6": {
+                  "description": "Prioritize IPv6 DNS results when trying to establish a connection.",
+                  "type": "boolean"
+                },
                 "DNSResolver": {
                   "description": "Select the primary DNS resolver type (LEGACY or ASYNC).",
                   "enum": [
@@ -4716,8 +5305,13 @@
                   "description": "On connection timeout, specify if it should log an error. When disabled, the timeout is logged as a debug message.",
                   "type": "boolean"
                 },
+                "ioTimeout": {
+                  "description": "Set maximum time a connection can stay idle while assigned.",
+                  "format": "int32",
+                  "type": "integer"
+                },
                 "keepalive": {
-                  "description": "Enable or disable connection keepalive support. Accepts a boolean value: on / off.",
+                  "description": "Enable or disable connection keepalive support. Accepts string enum values: on / off.",
                   "enum": [
                     "on",
                     "off"
@@ -4739,9 +5333,36 @@
                   "format": "int32",
                   "type": "integer"
                 },
+                "proxyEnvIgnore": {
+                  "description": "Ignore the environment variables HTTP_PROXY, HTTPS_PROXY and NO_PROXY when set.",
+                  "type": "boolean"
+                },
                 "sourceAddress": {
                   "description": "Specify network address to bind for data traffic.",
                   "type": "string"
+                },
+                "tcpKeepalive": {
+                  "description": "Enable or disable Keepalive support. Accepts string enum values: on / off.",
+                  "enum": [
+                    "on",
+                    "off"
+                  ],
+                  "type": "string"
+                },
+                "tcpKeepaliveInterval": {
+                  "description": "Interval between TCP keepalive probes when no response is received on a keepidle probe.",
+                  "format": "int32",
+                  "type": "integer"
+                },
+                "tcpKeepaliveProbes": {
+                  "description": "Number of unacknowledged probes to consider a connection dead.",
+                  "format": "int32",
+                  "type": "integer"
+                },
+                "tcpKeepaliveTime": {
+                  "description": "Interval between the last data packet sent and the first TCP keepalive probe.",
+                  "format": "int32",
+                  "type": "integer"
                 }
               },
               "type": "object",
