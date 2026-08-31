@@ -1,5 +1,5 @@
 {
-  "description": "OriginAccessControl is the Schema for the OriginAccessControls API",
+  "description": "ConnectionGroup is the Schema for the ConnectionGroups API",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -13,39 +13,57 @@
       "type": "object"
     },
     "spec": {
-      "description": "OriginAccessControlSpec defines the desired state of OriginAccessControl.\n\nA CloudFront origin access control, including its unique identifier.",
+      "description": "ConnectionGroupSpec defines the desired state of ConnectionGroup.\n\nThe connection group for your distribution tenants. When you first create\na distribution tenant and you don't specify a connection group, CloudFront\nwill automatically create a default connection group for you. When you create\na new distribution tenant and don't specify a connection group, the default\none will be associated with your distribution tenant.",
       "properties": {
-        "originAccessControlConfig": {
-          "description": "Contains the origin access control.",
-          "properties": {
-            "description": {
-              "type": "string"
-            },
-            "name": {
-              "type": "string"
-            },
-            "originAccessControlOriginType": {
-              "type": "string"
-            },
-            "signingBehavior": {
-              "type": "string"
-            },
-            "signingProtocol": {
-              "type": "string"
+        "anycastIPListID": {
+          "description": "The ID of the Anycast static IP list.",
+          "type": "string"
+        },
+        "enabled": {
+          "description": "Enable the connection group.",
+          "type": "boolean"
+        },
+        "ipv6Enabled": {
+          "description": "Enable IPv6 for the connection group. The default is true. For more information,\nsee Enable IPv6 (https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/distribution-web-values-specify.html#DownloadDistValuesEnableIPv6)\nin the Amazon CloudFront Developer Guide.",
+          "type": "boolean"
+        },
+        "name": {
+          "description": "The name of the connection group. Enter a friendly identifier that is unique\nwithin your Amazon Web Services account. This name can't be updated after\nyou create the connection group.",
+          "type": "string",
+          "x-kubernetes-validations": [
+            {
+              "message": "Value is immutable once set",
+              "rule": "self == oldSelf"
             }
+          ]
+        },
+        "tags": {
+          "description": "A complex type that contains Tag elements.",
+          "items": {
+            "description": "A complex type that contains Tag key and Tag value.",
+            "properties": {
+              "key": {
+                "description": "A string that contains Tag key.\n\nThe string length should be between 1 and 128 characters. Valid characters\ninclude a-z, A-Z, 0-9, space, and the special characters _ - . : / = + @.",
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            },
+            "type": "object",
+            "additionalProperties": false
           },
-          "type": "object",
-          "additionalProperties": false
+          "type": "array"
         }
       },
       "required": [
-        "originAccessControlConfig"
+        "name"
       ],
       "type": "object",
       "additionalProperties": false
     },
     "status": {
-      "description": "OriginAccessControlStatus defines the observed state of OriginAccessControl",
+      "description": "ConnectionGroupStatus defines the observed state of ConnectionGroup",
       "properties": {
         "ackResourceMetadata": {
           "description": "All CRs managed by ACK have a common `Status.ACKResourceMetadata` member\nthat is used to contain resource sync state, account ownership,\nconstructed ARN for the resource",
@@ -110,14 +128,33 @@
           },
           "type": "array"
         },
+        "createdTime": {
+          "description": "The date and time when the connection group was created.",
+          "format": "date-time",
+          "type": "string"
+        },
         "eTag": {
           "type": "string"
         },
         "id": {
-          "description": "The unique identifier of the origin access control.",
+          "description": "The ID of the connection group.",
           "type": "string"
         },
-        "location": {
+        "isDefault": {
+          "description": "Whether the connection group is the default connection group for the distribution\ntenants.",
+          "type": "boolean"
+        },
+        "lastModifiedTime": {
+          "description": "The date and time when the connection group was updated.",
+          "format": "date-time",
+          "type": "string"
+        },
+        "routingEndpoint": {
+          "description": "The routing endpoint (also known as the DNS name) that is assigned to the\nconnection group, such as d111111abcdef8.cloudfront.net.",
+          "type": "string"
+        },
+        "status": {
+          "description": "The status of the connection group.",
           "type": "string"
         }
       },
