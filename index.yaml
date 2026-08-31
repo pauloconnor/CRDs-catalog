@@ -13069,6 +13069,10 @@ kafka.services.k8s.aws:
     filename: kafka.services.k8s.aws/configuration_v1alpha1.json
     kind: Configuration
     name: configuration_v1alpha1
+  - apiVersion: kafka.services.k8s.aws/v1alpha1
+    filename: kafka.services.k8s.aws/vpcconnection_v1alpha1.json
+    kind: VPCConnection
+    name: vpcconnection_v1alpha1
 kafka.strimzi.io:
   - apiVersion: kafka.strimzi.io/v1beta2
     filename: kafka.strimzi.io/kafka_v1beta2.json
