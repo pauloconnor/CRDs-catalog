@@ -221,7 +221,7 @@
           "type": "boolean"
         },
         "userConfig": {
-          "description": "Cassandra specific user configuration options",
+          "description": "Grafana specific user configuration options",
           "properties": {
             "additional_backup_regions": {
               "description": "Additional Cloud Regions for Backup Replication",
@@ -691,6 +691,10 @@
               "description": "Google Analytics ID",
               "maxLength": 64,
               "pattern": "^(G|UA|YT|MO)-[a-zA-Z0-9-]+$",
+              "type": "string"
+            },
+            "grafana_version": {
+              "description": "Available versions: `11`. Newer versions may also be available.\nGrafana major version",
               "type": "string"
             },
             "ip_filter": {

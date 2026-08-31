@@ -271,6 +271,10 @@
                   "minimum": 1,
                   "type": "integer"
                 },
+                "prefer_ipv6_address_enable": {
+                  "description": "When enabled, connectors will automatically resolve IPv6 addresses from external server names configured with dual-stack.",
+                  "type": "boolean"
+                },
                 "producer_batch_size": {
                   "description": "This setting gives the upper bound of the batch size to be sent. If there are fewer than this many bytes accumulated for this partition, the producer will 'linger' for the linger.ms time waiting for more records to show up. A batch size of zero will disable batching entirely (defaults to 16384).",
                   "maximum": 5242880,
@@ -349,6 +353,14 @@
               },
               "type": "array"
             },
+            "preferred_zones": {
+              "description": "List of preferred zone IDs for service node placement. Nodes will be placed in these zones when available. If a specified zone is unavailable (e.g., due to capacity constraints), nodes will be placed in other available zones to maintain the configured number of zones for availability. Invalid zone IDs are rejected at configuration time. Zone IDs are cloud-specific: AWS uses zone IDs like 'euc1-az1', GCP uses zone names like 'europe-west1-a', and Azure uses 'location/zone' format like 'germanywestcentral/1'. If single_zone is enabled with an availability_zone, that setting takes precedence over preferred_zones. Changes take effect on next node recreation (e.g., maintenance or plan change). For eligible plans, nodes outside preferred zones are automatically rebalanced once per day.",
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 10,
+              "type": "array"
+            },
             "private_access": {
               "description": "Allow access to selected service ports from private networks",
               "properties": {
@@ -408,7 +420,7 @@
             "secret_providers": {
               "description": "Configure external secret providers in order to reference external secrets in connector configuration. Currently Hashicorp Vault (provider: vault, auth_method: token) and AWS Secrets Manager (provider: aws, auth_method: credentials) are supported. Secrets can be referenced in connector config with ${<provider_name>:<secret_path>:<key_name>}",
               "items": {
-                "description": "Configure external secret providers in order to reference external secrets in connector configuration. Currently Hashicorp Vault and AWS Secrets Manager are supported.",
+                "description": "Configure external secret providers in order to reference external secrets in connector configuration. Currently Hashicorp Vault, AWS Secrets Manager, Azure KeyVault, and ENV secret providers are supported.",
                 "properties": {
                   "aws": {
                     "description": "AWS secret provider configuration",
@@ -443,8 +455,55 @@
                     "type": "object",
                     "additionalProperties": false
                   },
+                  "azure": {
+                    "description": "Azure KeyVault secret provider configuration",
+                    "properties": {
+                      "auth_method": {
+                        "description": "Auth method of the Azure KeyVault secret provider",
+                        "enum": [
+                          "credentials"
+                        ],
+                        "type": "string"
+                      },
+                      "client_id": {
+                        "description": "Azure client ID for the service principal.",
+                        "maxLength": 128,
+                        "type": "string"
+                      },
+                      "secret": {
+                        "description": "Azure client secret for the service principal.",
+                        "maxLength": 256,
+                        "type": "string"
+                      },
+                      "tenant_id": {
+                        "description": "Azure tenant ID for the service principal.",
+                        "maxLength": 128,
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "auth_method"
+                    ],
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "env": {
+                    "description": "ENV secret provider configuration",
+                    "properties": {
+                      "secrets": {
+                        "description": "Key/value map of secrets for ENV secret provider",
+                        "type": "object"
+                      }
+                    },
+                    "required": [
+                      "secrets"
+                    ],
+                    "type": "object",
+                    "additionalProperties": false
+                  },
                   "name": {
                     "description": "Name of the secret provider. Used to reference secrets in connector config.",
+                    "pattern": "^[A-Za-z0-9_-]+$",
                     "type": "string"
                   },
                   "vault": {
@@ -470,6 +529,11 @@
                       "prefix_path_depth": {
                         "description": "Prefix path depth of the secrets Engine. Default is 1. If the secrets engine path has more than one segment it has to be increased to the number of segments.",
                         "type": "integer"
+                      },
+                      "server_pem": {
+                        "description": "PEM encoded certificate of the Vault server. Required if the vault server uses a self-signed certificate.",
+                        "maxLength": 4096,
+                        "type": "string"
                       },
                       "token": {
                         "description": "Token used to authenticate with vault and auth method `token`.",
