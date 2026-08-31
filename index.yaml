@@ -62,6 +62,14 @@ acm.services.k8s.aws:
     filename: acm.services.k8s.aws/certificate_v1alpha1.json
     kind: Certificate
     name: certificate_v1alpha1
+  - apiVersion: acm.services.k8s.aws/v1alpha1
+    filename: acm.services.k8s.aws/acmeendpoint_v1alpha1.json
+    kind: AcmeEndpoint
+    name: acmeendpoint_v1alpha1
+  - apiVersion: acm.services.k8s.aws/v1alpha1
+    filename: acm.services.k8s.aws/acmedomainvalidation_v1alpha1.json
+    kind: AcmeDomainValidation
+    name: acmedomainvalidation_v1alpha1
 acme.cert-manager.io:
   - apiVersion: acme.cert-manager.io/v1
     filename: acme.cert-manager.io/challenge_v1.json
