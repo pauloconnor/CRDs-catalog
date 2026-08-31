@@ -1,0 +1,164 @@
+{
+  "properties": {
+    "apiVersion": {
+      "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+      "type": "string"
+    },
+    "kind": {
+      "description": "Kind is a string value representing the REST resource this object represents.\nServers may infer this from the endpoint the client submits requests to.\nCannot be updated.\nIn CamelCase.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object"
+    },
+    "spec": {
+      "description": "ReplicationSpec defines the desired state of Replication",
+      "properties": {
+        "creator": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "destNamespace": {
+          "description": "The destination namespace\nIf left empty, the resource will be but in the same namespace as the source",
+          "type": "string"
+        },
+        "destRegistry": {
+          "description": "Destination Registry\nReference to a registry cr",
+          "properties": {
+            "name": {
+              "description": "Name of the referent.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names\nTODO: Add other useful fields. apiVersion, kind, uid?",
+              "type": "string"
+            }
+          },
+          "type": "object",
+          "x-kubernetes-map-type": "atomic",
+          "additionalProperties": false
+        },
+        "enabled": {
+          "description": "Whether the policy is enabled or not",
+          "type": "boolean"
+        },
+        "filters": {
+          "description": "The replication policy filter array",
+          "items": {
+            "description": "ReplicationFilter holds the specifications of a replication filter",
+            "properties": {
+              "type": {
+                "description": "The replication policy filter type.",
+                "type": "string"
+              },
+              "value": {
+                "description": "The value of replication policy filter.",
+                "type": "string"
+              }
+            },
+            "type": "object",
+            "additionalProperties": false
+          },
+          "type": "array"
+        },
+        "name": {
+          "description": "The name of the replication",
+          "type": "string"
+        },
+        "override": {
+          "description": "Whether to override the resources on the destination registry or not",
+          "type": "boolean"
+        },
+        "parentInstance": {
+          "description": "ParentInstance is a LocalObjectReference to the\nname of the harbor instance the replication policy gets created for",
+          "properties": {
+            "name": {
+              "description": "Name of the referent.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names\nTODO: Add other useful fields. apiVersion, kind, uid?",
+              "type": "string"
+            }
+          },
+          "type": "object",
+          "x-kubernetes-map-type": "atomic",
+          "additionalProperties": false
+        },
+        "replicateDeletion": {
+          "description": "Whether to replicate the deletion operation",
+          "type": "boolean"
+        },
+        "srcRegistry": {
+          "description": "Source Registry\nReference to a registry cr",
+          "properties": {
+            "name": {
+              "description": "Name of the referent.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names\nTODO: Add other useful fields. apiVersion, kind, uid?",
+              "type": "string"
+            }
+          },
+          "type": "object",
+          "x-kubernetes-map-type": "atomic",
+          "additionalProperties": false
+        },
+        "trigger": {
+          "description": "The replication policy trigger type",
+          "properties": {
+            "triggerSettings": {
+              "description": "TriggerSettings holds the settings of a trigger",
+              "properties": {
+                "cron": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "cron"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            },
+            "type": {
+              "type": "string"
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
+        "triggerAfterCreation": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "name",
+        "override",
+        "parentInstance"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    },
+    "status": {
+      "description": "ReplicationStatus defines the observed state of Replication",
+      "properties": {
+        "destination": {
+          "type": "string"
+        },
+        "id": {
+          "description": "The replication ID is written back from the held replication ID.",
+          "format": "int64",
+          "type": "integer"
+        },
+        "message": {
+          "type": "string"
+        },
+        "phase": {
+          "type": "string"
+        },
+        "source": {
+          "description": "The respective source and destination registries",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "phase"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  "type": "object"
+}
