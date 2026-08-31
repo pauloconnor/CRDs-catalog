@@ -1166,6 +1166,10 @@ apimanagement.azure.m.upbound.io:
     filename: apimanagement.azure.m.upbound.io/customdomain_v1beta1.json
     kind: CustomDomain
     name: customdomain_v1beta1
+  - apiVersion: apimanagement.azure.m.upbound.io/v1beta1
+    filename: apimanagement.azure.m.upbound.io/groupuser_v1beta1.json
+    kind: GroupUser
+    name: groupuser_v1beta1
 apimanagement.azure.upbound.io:
   - apiVersion: apimanagement.azure.upbound.io/v1beta2
     filename: apimanagement.azure.upbound.io/api_v1beta2.json
@@ -1371,6 +1375,10 @@ apimanagement.azure.upbound.io:
     filename: apimanagement.azure.upbound.io/customdomain_v1beta1.json
     kind: CustomDomain
     name: customdomain_v1beta1
+  - apiVersion: apimanagement.azure.upbound.io/v1beta1
+    filename: apimanagement.azure.upbound.io/groupuser_v1beta1.json
+    kind: GroupUser
+    name: groupuser_v1beta1
 apisix.apache.org:
   - apiVersion: apisix.apache.org/v2
     filename: apisix.apache.org/apisixroute_v2.json
@@ -1514,6 +1522,10 @@ appconfiguration.azure.m.upbound.io:
     filename: appconfiguration.azure.m.upbound.io/configuration_v1beta1.json
     kind: Configuration
     name: configuration_v1beta1
+  - apiVersion: appconfiguration.azure.m.upbound.io/v1beta1
+    filename: appconfiguration.azure.m.upbound.io/key_v1beta1.json
+    kind: Key
+    name: key_v1beta1
 appconfiguration.azure.upbound.io:
   - apiVersion: appconfiguration.azure.upbound.io/v1beta1
     filename: appconfiguration.azure.upbound.io/configuration_v1beta1.json
@@ -1523,6 +1535,10 @@ appconfiguration.azure.upbound.io:
     filename: appconfiguration.azure.upbound.io/configuration_v1beta2.json
     kind: Configuration
     name: configuration_v1beta2
+  - apiVersion: appconfiguration.azure.upbound.io/v1beta1
+    filename: appconfiguration.azure.upbound.io/key_v1beta1.json
+    kind: Key
+    name: key_v1beta1
 appengine.cnrm.cloud.google.com:
   - apiVersion: appengine.cnrm.cloud.google.com/v1alpha1
     filename: appengine.cnrm.cloud.google.com/appenginestandardappversion_v1alpha1.json
@@ -3178,6 +3194,10 @@ cache.azure.m.upbound.io:
     filename: cache.azure.m.upbound.io/rediscache_v1beta1.json
     kind: RedisCache
     name: rediscache_v1beta1
+  - apiVersion: cache.azure.m.upbound.io/v1beta1
+    filename: cache.azure.m.upbound.io/managedredisaccesspolicyassignment_v1beta1.json
+    kind: ManagedRedisAccessPolicyAssignment
+    name: managedredisaccesspolicyassignment_v1beta1
 cache.azure.upbound.io:
   - apiVersion: cache.azure.upbound.io/v1beta1
     filename: cache.azure.upbound.io/managedredis_v1beta1.json
@@ -3215,6 +3235,10 @@ cache.azure.upbound.io:
     filename: cache.azure.upbound.io/rediscache_v1beta1.json
     kind: RedisCache
     name: rediscache_v1beta1
+  - apiVersion: cache.azure.upbound.io/v1beta1
+    filename: cache.azure.upbound.io/managedredisaccesspolicyassignment_v1beta1.json
+    kind: ManagedRedisAccessPolicyAssignment
+    name: managedredisaccesspolicyassignment_v1beta1
 capi.weave.works:
   - apiVersion: capi.weave.works/v1alpha1
     filename: capi.weave.works/clusterbootstrapconfig_v1alpha1.json
@@ -5482,6 +5506,10 @@ containerregistry.azure.m.upbound.io:
     filename: containerregistry.azure.m.upbound.io/scopemap_v1beta1.json
     kind: ScopeMap
     name: scopemap_v1beta1
+  - apiVersion: containerregistry.azure.m.upbound.io/v1beta1
+    filename: containerregistry.azure.m.upbound.io/cacherule_v1beta1.json
+    kind: CacheRule
+    name: cacherule_v1beta1
 containerregistry.azure.upbound.io:
   - apiVersion: containerregistry.azure.upbound.io/v1beta1
     filename: containerregistry.azure.upbound.io/webhook_v1beta1.json
@@ -5523,6 +5551,10 @@ containerregistry.azure.upbound.io:
     filename: containerregistry.azure.upbound.io/scopemap_v1beta1.json
     kind: ScopeMap
     name: scopemap_v1beta1
+  - apiVersion: containerregistry.azure.upbound.io/v1beta1
+    filename: containerregistry.azure.upbound.io/cacherule_v1beta1.json
+    kind: CacheRule
+    name: cacherule_v1beta1
 containerservice.azure.com:
   - apiVersion: containerservice.azure.com/v1api20230201
     filename: containerservice.azure.com/managedclustersagentpool_v1api20230201.json
@@ -7123,6 +7155,10 @@ dbformysql.azure.m.upbound.io:
     filename: dbformysql.azure.m.upbound.io/flexibledatabase_v1beta1.json
     kind: FlexibleDatabase
     name: flexibledatabase_v1beta1
+  - apiVersion: dbformysql.azure.m.upbound.io/v1beta1
+    filename: dbformysql.azure.m.upbound.io/flexibleserveractivedirectoryadministrator_v1beta1.json
+    kind: FlexibleServerActiveDirectoryAdministrator
+    name: flexibleserveractivedirectoryadministrator_v1beta1
 dbformysql.azure.upbound.io:
   - apiVersion: dbformysql.azure.upbound.io/v1beta1
     filename: dbformysql.azure.upbound.io/flexibleserverconfiguration_v1beta1.json
@@ -7144,6 +7180,10 @@ dbformysql.azure.upbound.io:
     filename: dbformysql.azure.upbound.io/flexibledatabase_v1beta1.json
     kind: FlexibleDatabase
     name: flexibledatabase_v1beta1
+  - apiVersion: dbformysql.azure.upbound.io/v1beta1
+    filename: dbformysql.azure.upbound.io/flexibleserveractivedirectoryadministrator_v1beta1.json
+    kind: FlexibleServerActiveDirectoryAdministrator
+    name: flexibleserveractivedirectoryadministrator_v1beta1
 dbforpostgresql.azure.com:
   - apiVersion: dbforpostgresql.azure.com/v1api20240801
     filename: dbforpostgresql.azure.com/flexibleserversbackup_v1api20240801.json
@@ -7410,6 +7450,24 @@ desktopvirtualization.azure.upbound.io:
     filename: desktopvirtualization.azure.upbound.io/virtualdesktophostpoolregistrationinfo_v1beta1.json
     kind: VirtualDesktopHostPoolRegistrationInfo
     name: virtualdesktophostpoolregistrationinfo_v1beta1
+devcenter.azure.m.upbound.io:
+  - apiVersion: devcenter.azure.m.upbound.io/v1beta1
+    filename: devcenter.azure.m.upbound.io/project_v1beta1.json
+    kind: Project
+    name: project_v1beta1
+  - apiVersion: devcenter.azure.m.upbound.io/v1beta1
+    filename: devcenter.azure.m.upbound.io/center_v1beta1.json
+    kind: Center
+    name: center_v1beta1
+devcenter.azure.upbound.io:
+  - apiVersion: devcenter.azure.upbound.io/v1beta1
+    filename: devcenter.azure.upbound.io/project_v1beta1.json
+    kind: Project
+    name: project_v1beta1
+  - apiVersion: devcenter.azure.upbound.io/v1beta1
+    filename: devcenter.azure.upbound.io/center_v1beta1.json
+    kind: Center
+    name: center_v1beta1
 devices.azure.com:
   - apiVersion: devices.azure.com/v1api20210702
     filename: devices.azure.com/iothub_v1api20210702.json
@@ -7563,6 +7621,16 @@ deviceupdate.azure.upbound.io:
     filename: deviceupdate.azure.upbound.io/iothubdeviceupdateaccount_v1beta1.json
     kind: IOTHubDeviceUpdateAccount
     name: iothubdeviceupdateaccount_v1beta1
+devopsinfrastructure.azure.m.upbound.io:
+  - apiVersion: devopsinfrastructure.azure.m.upbound.io/v1beta1
+    filename: devopsinfrastructure.azure.m.upbound.io/manageddevopspool_v1beta1.json
+    kind: ManagedDevopsPool
+    name: manageddevopspool_v1beta1
+devopsinfrastructure.azure.upbound.io:
+  - apiVersion: devopsinfrastructure.azure.upbound.io/v1beta1
+    filename: devopsinfrastructure.azure.upbound.io/manageddevopspool_v1beta1.json
+    kind: ManagedDevopsPool
+    name: manageddevopspool_v1beta1
 devtestlab.azure.m.upbound.io:
   - apiVersion: devtestlab.azure.m.upbound.io/v1beta1
     filename: devtestlab.azure.m.upbound.io/linuxvirtualmachine_v1beta1.json
@@ -9744,6 +9812,10 @@ eventhub.azure.m.upbound.io:
     filename: eventhub.azure.m.upbound.io/authorizationrule_v1beta1.json
     kind: AuthorizationRule
     name: authorizationrule_v1beta1
+  - apiVersion: eventhub.azure.m.upbound.io/v1beta1
+    filename: eventhub.azure.m.upbound.io/cluster_v1beta1.json
+    kind: Cluster
+    name: cluster_v1beta1
 eventhub.azure.upbound.io:
   - apiVersion: eventhub.azure.upbound.io/v1beta1
     filename: eventhub.azure.upbound.io/eventhubnamespace_v1beta1.json
@@ -9781,6 +9853,10 @@ eventhub.azure.upbound.io:
     filename: eventhub.azure.upbound.io/authorizationrule_v1beta1.json
     kind: AuthorizationRule
     name: authorizationrule_v1beta1
+  - apiVersion: eventhub.azure.upbound.io/v1beta1
+    filename: eventhub.azure.upbound.io/cluster_v1beta1.json
+    kind: Cluster
+    name: cluster_v1beta1
 eventing.keda.sh:
   - apiVersion: eventing.keda.sh/v1alpha1
     filename: eventing.keda.sh/cloudeventsource_v1alpha1.json
