@@ -1088,7 +1088,7 @@ sources:
     changelog: "https://github.com/percona/dbaas-operator/releases"
 
   - url: "https://github.com/percona/percona-postgresql-operator"
-    tag: "v2.9.0"
+    tag: "v3.0.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/percona/percona-postgresql-operator/releases"
 
