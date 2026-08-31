@@ -859,7 +859,7 @@ sources:
     changelog: "https://github.com/kubernetes-sigs/external-dns/releases"
 
   - url: "https://github.com/kubernetes-sigs/gateway-api"
-    tag: "v1.5.1"
+    tag: "v1.6.1"
     repo_path: "config/crd/standard"
     changelog: "https://github.com/kubernetes-sigs/gateway-api/releases"
 
