@@ -41,6 +41,10 @@
               "description": "Whether DNS support is enabled. Valid values: disable, enable. Default value: enable.",
               "type": "string"
             },
+            "encryptionSupport": {
+              "description": "Whether encryption support for VPC Encryption Control is enabled. Valid values: disable, enable. Default value: disable. Once set, switching to disable requires explicitly specifying disable rather than removing the argument.",
+              "type": "string"
+            },
             "multicastSupport": {
               "description": "Whether Multicast support is enabled. Required to use ec2_transit_gateway_multicast_domain. Valid values: disable, enable. Default value: disable.",
               "type": "string"
@@ -105,6 +109,10 @@
             },
             "dnsSupport": {
               "description": "Whether DNS support is enabled. Valid values: disable, enable. Default value: enable.",
+              "type": "string"
+            },
+            "encryptionSupport": {
+              "description": "Whether encryption support for VPC Encryption Control is enabled. Valid values: disable, enable. Default value: disable. Once set, switching to disable requires explicitly specifying disable rather than removing the argument.",
               "type": "string"
             },
             "multicastSupport": {
@@ -239,6 +247,10 @@
               "description": "Whether DNS support is enabled. Valid values: disable, enable. Default value: enable.",
               "type": "string"
             },
+            "encryptionSupport": {
+              "description": "Whether encryption support for VPC Encryption Control is enabled. Valid values: disable, enable. Default value: disable. Once set, switching to disable requires explicitly specifying disable rather than removing the argument.",
+              "type": "string"
+            },
             "id": {
               "description": "EC2 Transit Gateway identifier",
               "type": "string"
@@ -341,6 +353,10 @@
             "type"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "lastHandledReconcileAt": {
+          "description": "LastHandledReconcileAt holds the value of the most recent\nreconcile-requested-at annotation token that the controller has\nprocessed. Users can compare this to the annotation to determine\nwhether a reconcile request has been handled.",
+          "type": "string"
         },
         "observedGeneration": {
           "description": "ObservedGeneration is the latest metadata.generation\nwhich resulted in either a ready state, or stalled due to error\nit can not recover from without human intervention.",
