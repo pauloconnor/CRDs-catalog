@@ -392,7 +392,7 @@ sources:
     changelog: "https://github.com/cert-manager/approver-policy/releases"
 
   - url: "https://github.com/cert-manager/aws-privateca-issuer"
-    tag: "v1.8.1"
+    tag: "v1.9.1"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/cert-manager/aws-privateca-issuer/releases"
 
