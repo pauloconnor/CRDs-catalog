@@ -29,7 +29,7 @@ sources:
     changelog: "https://github.com/1Password/onepassword-operator/releases"
 
   - url: "https://github.com/actions/actions-runner-controller"
-    tag: "gha-runner-scale-set-0.14.1"
+    tag: "gha-runner-scale-set-0.14.2"
     repo_path: "charts/gha-runner-scale-set-controller/crds"
     changelog: "https://github.com/actions/actions-runner-controller/releases"
 
