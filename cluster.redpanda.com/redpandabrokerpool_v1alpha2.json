@@ -15,7 +15,7 @@
       "description": "NodePoolSpec contains the node pool spec for the given node pool.\nNote that the defaulting behavior comes from the underlying Redpanda\nchart renderer, the attributes specified here will get merged in and\noverride the defaults.",
       "properties": {
         "additionalRedpandaCmdFlags": {
-          "description": "Chart default: []",
+          "description": "AdditionalRedpandaCmdFlags are extra flags appended to the\n`rpk redpanda start` command line for every broker in this pool.",
           "items": {
             "type": "string"
           },
@@ -25,8 +25,12 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Chart default: {}",
+          "description": "AdditionalSelectorLabels are extra labels added to the StatefulSet's\npod selector and pod template. Lets operators bucket pods by custom\ndimensions (e.g. team, environment) without affecting the operator-\nmanaged labels.",
           "type": "object"
+        },
+        "clusterDomain": {
+          "description": "ClusterDomain customizes the Kubernetes cluster DNS domain used to\ngenerate internal pod hostnames (`<pod>.<svc>.<ns>.svc.<domain>`).\nDefaults to `cluster.local`. Per-pool to support clusters that span\nk8s environments with different DNS roots.",
+          "type": "string"
         },
         "clusterRef": {
           "description": "ClusterRef represents a reference to a cluster that is being targeted.",
@@ -60,8 +64,125 @@
           "type": "object",
           "additionalProperties": false
         },
+        "external": {
+          "description": "External configures external access (NodePort / LoadBalancer types,\nadvertised addresses, ExternalDNS hookup). Per-pool so pools in\ndifferent regions/clouds can expose themselves differently.",
+          "properties": {
+            "addresses": {
+              "description": "Specifies addresses for the external listeners to advertise.Provide one entry for each broker in order of StatefulSet replicas. The number of brokers is defined in `statefulset.replicas`. The values can be IP addresses or DNS names. If `external.domain` is set, the domain is appended to these values.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "annotations": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "description": "Adds custom annotations to the external Service.",
+              "type": "object"
+            },
+            "domain": {
+              "description": "Specifies the domain to advertise to external clients. If specified, then it will be appended to the `external.addresses` values as each broker's advertised address.",
+              "type": "string"
+            },
+            "enabled": {
+              "description": "Specifies whether the external access is enabled.",
+              "type": "boolean"
+            },
+            "externalDns": {
+              "description": "Defines externalDNS configurations.",
+              "properties": {
+                "enabled": {
+                  "description": "Specifies whether externalDNS annotations are added to LoadBalancer Services. If you enable externalDns, each LoadBalancer Service defined in `external.type` will be annotated with an external-dns hostname that matches `external.addresses[i]`.`external.domain`.",
+                  "type": "boolean"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
+            "gateway": {
+              "description": "Configures Gateway API TLSRoute-based external access. When enabled, ClusterIP services and TLSRoute resources are created instead of NodePort/LoadBalancer services. The Gateway itself must be managed externally.",
+              "properties": {
+                "advertisedPort": {
+                  "description": "The port advertised to clients. Defaults to 443.",
+                  "format": "int32",
+                  "type": "integer"
+                },
+                "enabled": {
+                  "description": "Enables Gateway API TLSRoute-based external access.",
+                  "type": "boolean"
+                },
+                "parentRefs": {
+                  "description": "Defines which Gateway(s) handle the TLSRoutes. At least one parent reference must be provided.",
+                  "items": {
+                    "description": "GatewayParentRefConfig identifies a Gateway (or ListenerSet) that should handle the TLSRoute traffic. Schema mirrors the upstream Gateway API ParentReference.",
+                    "properties": {
+                      "group": {
+                        "description": "API group of the referent. Defaults to \"gateway.networking.k8s.io\".",
+                        "type": "string"
+                      },
+                      "kind": {
+                        "description": "Kind of the referent. Defaults to \"Gateway\".",
+                        "type": "string"
+                      },
+                      "name": {
+                        "description": "Name of the referent.",
+                        "type": "string"
+                      },
+                      "namespace": {
+                        "description": "Namespace of the referent.",
+                        "type": "string"
+                      },
+                      "sectionName": {
+                        "description": "Name of a section within the target resource.",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "name"
+                    ],
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "minItems": 1,
+                  "type": "array"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
+            "prefixTemplate": {
+              "description": "Specifies a naming prefix template for external Services.",
+              "type": "string"
+            },
+            "service": {
+              "description": "Configures the external Service resource.",
+              "properties": {
+                "enabled": {
+                  "description": "Specifies whether to create the external Service. If set to `false`, the external Service type is not created. You can still set your cluster with external access but not create the supporting Service. Set this to `false` to manage your own Service.",
+                  "type": "boolean"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
+            "sourceRanges": {
+              "description": "Source range for external access. Only applicable when `external.type` is LoadBalancer.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "type": {
+              "description": "Specifies the external Service type. Only NodePort and LoadBalancer are supported. If undefined, then advertised listeners will be configured in Redpanda, but the Helm chart will not create a Service. NodePort is recommended in cases where latency is a priority.",
+              "type": "string"
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
         "image": {
-          "description": "Default:\n    repository: docker.redpanda.com/redpandadata/redpanda\n    tag: {{.redpandaVersion}}",
+          "description": "Image is the Redpanda container image (repository + tag) for this\npool. Defaults to the operator's built-in chart-pinned image when\nunset.",
           "properties": {
             "pullPolicy": {
               "description": "Specifies the strategy used for pulling images from the repository. For available values, see https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy.",
@@ -79,8 +200,25 @@
           "type": "object",
           "additionalProperties": false
         },
+        "imagePullSecrets": {
+          "description": "ImagePullSecrets are private-registry credentials for pulling the\nRedpanda / sidecar / init-container images. When non-empty, this\nlist fully overrides any list set on StretchClusterSpec; when\nempty/nil, the cluster's list is inherited. See\nBrokerPoolSpec.MergeFromCluster.",
+          "items": {
+            "description": "LocalObjectReference contains enough information to let you locate the\nreferenced object inside the same namespace.",
+            "properties": {
+              "name": {
+                "default": "",
+                "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+                "type": "string"
+              }
+            },
+            "type": "object",
+            "x-kubernetes-map-type": "atomic",
+            "additionalProperties": false
+          },
+          "type": "array"
+        },
         "initContainerImage": {
-          "description": "Chart default:\n    repository: busybox\n    tag: latest",
+          "description": "InitContainerImage is the image used for init containers that don't\nneed the full Redpanda binary (e.g. busybox for fs-validator,\nchown). Defaults to busybox:latest.",
           "properties": {
             "repository": {
               "type": "string"
@@ -93,6 +231,7 @@
           "additionalProperties": false
         },
         "initContainers": {
+          "description": "InitContainers controls the init containers the operator renders\n(fs-validator, set-data-dir-ownership, configurator). Lets users\ntoggle them on/off and tune flags.",
           "properties": {
             "configurator": {
               "properties": {
@@ -135,6 +274,1040 @@
           "type": "object",
           "additionalProperties": false
         },
+        "listeners": {
+          "description": "Listeners configures the Admin / Kafka / HTTP-Proxy / Schema-Registry\n/ RPC listeners (ports, TLS cert references, external listener\nblocks). Per-pool to permit heterogeneous listener layouts.",
+          "properties": {
+            "admin": {
+              "description": "Configures settings for the Admin API listeners.",
+              "properties": {
+                "appProtocol": {
+                  "type": "string"
+                },
+                "authenticationMethod": {
+                  "description": "Specifies the authentication method for this listener.",
+                  "type": "string"
+                },
+                "enabled": {
+                  "description": "Specifies whether this Listener is enabled.",
+                  "type": "boolean"
+                },
+                "external": {
+                  "additionalProperties": {
+                    "description": "StretchExternalListener configures an external listener in stretch clusters.\n\nForked from ExternalListener: embeds StretchListener instead of Listener.",
+                    "properties": {
+                      "advertisedPorts": {
+                        "description": "Specifies the network port that the external Service listens on.",
+                        "items": {
+                          "format": "int32",
+                          "type": "integer"
+                        },
+                        "type": "array"
+                      },
+                      "appProtocol": {
+                        "type": "string"
+                      },
+                      "authenticationMethod": {
+                        "description": "Specifies the authentication method for this listener.",
+                        "type": "string"
+                      },
+                      "enabled": {
+                        "description": "Specifies whether this Listener is enabled.",
+                        "type": "boolean"
+                      },
+                      "nodePort": {
+                        "format": "int32",
+                        "type": "integer"
+                      },
+                      "port": {
+                        "description": "Specifies the container port number for this listener.",
+                        "format": "int32",
+                        "type": "integer"
+                      },
+                      "prefixTemplate": {
+                        "description": "Specifies the template used for generating the advertised addresses of Services.",
+                        "type": "string"
+                      },
+                      "tls": {
+                        "description": "Configures TLS settings for the internal listener.",
+                        "properties": {
+                          "cert": {
+                            "description": "References a specific certificate for the listener.",
+                            "type": "string"
+                          },
+                          "enabled": {
+                            "description": "Specifies whether TLS is enabled for the listener.",
+                            "type": "boolean"
+                          },
+                          "requireClientAuth": {
+                            "description": "Indicates whether client authentication (mTLS) is required.",
+                            "type": "boolean"
+                          },
+                          "trustStore": {
+                            "description": "TrustStore allows setting the `truststore_path` on this listener.",
+                            "maxProperties": 1,
+                            "minProperties": 1,
+                            "properties": {
+                              "configMapKeyRef": {
+                                "description": "Selects a key from a ConfigMap.",
+                                "properties": {
+                                  "key": {
+                                    "description": "The key to select.",
+                                    "type": "string"
+                                  },
+                                  "name": {
+                                    "default": "",
+                                    "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+                                    "type": "string"
+                                  },
+                                  "optional": {
+                                    "description": "Specify whether the ConfigMap or its key must be defined",
+                                    "type": "boolean"
+                                  }
+                                },
+                                "required": [
+                                  "key"
+                                ],
+                                "type": "object",
+                                "x-kubernetes-map-type": "atomic",
+                                "additionalProperties": false
+                              },
+                              "secretKeyRef": {
+                                "description": "SecretKeySelector selects a key of a Secret.",
+                                "properties": {
+                                  "key": {
+                                    "description": "The key of the secret to select from.  Must be a valid secret key.",
+                                    "type": "string"
+                                  },
+                                  "name": {
+                                    "default": "",
+                                    "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+                                    "type": "string"
+                                  },
+                                  "optional": {
+                                    "description": "Specify whether the Secret or its key must be defined",
+                                    "type": "boolean"
+                                  }
+                                },
+                                "required": [
+                                  "key"
+                                ],
+                                "type": "object",
+                                "x-kubernetes-map-type": "atomic",
+                                "additionalProperties": false
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          }
+                        },
+                        "type": "object",
+                        "additionalProperties": false
+                      }
+                    },
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "description": "Defines settings for the external listeners.",
+                  "type": "object"
+                },
+                "port": {
+                  "description": "Specifies the container port number for this listener.",
+                  "format": "int32",
+                  "type": "integer"
+                },
+                "prefixTemplate": {
+                  "description": "Specifies the template used for generating the advertised addresses of Services.",
+                  "type": "string"
+                },
+                "tls": {
+                  "description": "Configures TLS settings for the internal listener.",
+                  "properties": {
+                    "cert": {
+                      "description": "References a specific certificate for the listener.",
+                      "type": "string"
+                    },
+                    "enabled": {
+                      "description": "Specifies whether TLS is enabled for the listener.",
+                      "type": "boolean"
+                    },
+                    "requireClientAuth": {
+                      "description": "Indicates whether client authentication (mTLS) is required.",
+                      "type": "boolean"
+                    },
+                    "trustStore": {
+                      "description": "TrustStore allows setting the `truststore_path` on this listener.",
+                      "maxProperties": 1,
+                      "minProperties": 1,
+                      "properties": {
+                        "configMapKeyRef": {
+                          "description": "Selects a key from a ConfigMap.",
+                          "properties": {
+                            "key": {
+                              "description": "The key to select.",
+                              "type": "string"
+                            },
+                            "name": {
+                              "default": "",
+                              "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+                              "type": "string"
+                            },
+                            "optional": {
+                              "description": "Specify whether the ConfigMap or its key must be defined",
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "key"
+                          ],
+                          "type": "object",
+                          "x-kubernetes-map-type": "atomic",
+                          "additionalProperties": false
+                        },
+                        "secretKeyRef": {
+                          "description": "SecretKeySelector selects a key of a Secret.",
+                          "properties": {
+                            "key": {
+                              "description": "The key of the secret to select from.  Must be a valid secret key.",
+                              "type": "string"
+                            },
+                            "name": {
+                              "default": "",
+                              "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+                              "type": "string"
+                            },
+                            "optional": {
+                              "description": "Specify whether the Secret or its key must be defined",
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "key"
+                          ],
+                          "type": "object",
+                          "x-kubernetes-map-type": "atomic",
+                          "additionalProperties": false
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
+            "http": {
+              "description": "Configures settings for the HTTP Proxy listeners.",
+              "properties": {
+                "appProtocol": {
+                  "type": "string"
+                },
+                "authenticationMethod": {
+                  "description": "Specifies the authentication method for this listener.",
+                  "type": "string"
+                },
+                "enabled": {
+                  "description": "Specifies whether this Listener is enabled.",
+                  "type": "boolean"
+                },
+                "external": {
+                  "additionalProperties": {
+                    "description": "StretchExternalListener configures an external listener in stretch clusters.\n\nForked from ExternalListener: embeds StretchListener instead of Listener.",
+                    "properties": {
+                      "advertisedPorts": {
+                        "description": "Specifies the network port that the external Service listens on.",
+                        "items": {
+                          "format": "int32",
+                          "type": "integer"
+                        },
+                        "type": "array"
+                      },
+                      "appProtocol": {
+                        "type": "string"
+                      },
+                      "authenticationMethod": {
+                        "description": "Specifies the authentication method for this listener.",
+                        "type": "string"
+                      },
+                      "enabled": {
+                        "description": "Specifies whether this Listener is enabled.",
+                        "type": "boolean"
+                      },
+                      "nodePort": {
+                        "format": "int32",
+                        "type": "integer"
+                      },
+                      "port": {
+                        "description": "Specifies the container port number for this listener.",
+                        "format": "int32",
+                        "type": "integer"
+                      },
+                      "prefixTemplate": {
+                        "description": "Specifies the template used for generating the advertised addresses of Services.",
+                        "type": "string"
+                      },
+                      "tls": {
+                        "description": "Configures TLS settings for the internal listener.",
+                        "properties": {
+                          "cert": {
+                            "description": "References a specific certificate for the listener.",
+                            "type": "string"
+                          },
+                          "enabled": {
+                            "description": "Specifies whether TLS is enabled for the listener.",
+                            "type": "boolean"
+                          },
+                          "requireClientAuth": {
+                            "description": "Indicates whether client authentication (mTLS) is required.",
+                            "type": "boolean"
+                          },
+                          "trustStore": {
+                            "description": "TrustStore allows setting the `truststore_path` on this listener.",
+                            "maxProperties": 1,
+                            "minProperties": 1,
+                            "properties": {
+                              "configMapKeyRef": {
+                                "description": "Selects a key from a ConfigMap.",
+                                "properties": {
+                                  "key": {
+                                    "description": "The key to select.",
+                                    "type": "string"
+                                  },
+                                  "name": {
+                                    "default": "",
+                                    "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+                                    "type": "string"
+                                  },
+                                  "optional": {
+                                    "description": "Specify whether the ConfigMap or its key must be defined",
+                                    "type": "boolean"
+                                  }
+                                },
+                                "required": [
+                                  "key"
+                                ],
+                                "type": "object",
+                                "x-kubernetes-map-type": "atomic",
+                                "additionalProperties": false
+                              },
+                              "secretKeyRef": {
+                                "description": "SecretKeySelector selects a key of a Secret.",
+                                "properties": {
+                                  "key": {
+                                    "description": "The key of the secret to select from.  Must be a valid secret key.",
+                                    "type": "string"
+                                  },
+                                  "name": {
+                                    "default": "",
+                                    "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+                                    "type": "string"
+                                  },
+                                  "optional": {
+                                    "description": "Specify whether the Secret or its key must be defined",
+                                    "type": "boolean"
+                                  }
+                                },
+                                "required": [
+                                  "key"
+                                ],
+                                "type": "object",
+                                "x-kubernetes-map-type": "atomic",
+                                "additionalProperties": false
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          }
+                        },
+                        "type": "object",
+                        "additionalProperties": false
+                      }
+                    },
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "description": "Defines settings for the external listeners.",
+                  "type": "object"
+                },
+                "port": {
+                  "description": "Specifies the container port number for this listener.",
+                  "format": "int32",
+                  "type": "integer"
+                },
+                "prefixTemplate": {
+                  "description": "Specifies the template used for generating the advertised addresses of Services.",
+                  "type": "string"
+                },
+                "tls": {
+                  "description": "Configures TLS settings for the internal listener.",
+                  "properties": {
+                    "cert": {
+                      "description": "References a specific certificate for the listener.",
+                      "type": "string"
+                    },
+                    "enabled": {
+                      "description": "Specifies whether TLS is enabled for the listener.",
+                      "type": "boolean"
+                    },
+                    "requireClientAuth": {
+                      "description": "Indicates whether client authentication (mTLS) is required.",
+                      "type": "boolean"
+                    },
+                    "trustStore": {
+                      "description": "TrustStore allows setting the `truststore_path` on this listener.",
+                      "maxProperties": 1,
+                      "minProperties": 1,
+                      "properties": {
+                        "configMapKeyRef": {
+                          "description": "Selects a key from a ConfigMap.",
+                          "properties": {
+                            "key": {
+                              "description": "The key to select.",
+                              "type": "string"
+                            },
+                            "name": {
+                              "default": "",
+                              "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+                              "type": "string"
+                            },
+                            "optional": {
+                              "description": "Specify whether the ConfigMap or its key must be defined",
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "key"
+                          ],
+                          "type": "object",
+                          "x-kubernetes-map-type": "atomic",
+                          "additionalProperties": false
+                        },
+                        "secretKeyRef": {
+                          "description": "SecretKeySelector selects a key of a Secret.",
+                          "properties": {
+                            "key": {
+                              "description": "The key of the secret to select from.  Must be a valid secret key.",
+                              "type": "string"
+                            },
+                            "name": {
+                              "default": "",
+                              "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+                              "type": "string"
+                            },
+                            "optional": {
+                              "description": "Specify whether the Secret or its key must be defined",
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "key"
+                          ],
+                          "type": "object",
+                          "x-kubernetes-map-type": "atomic",
+                          "additionalProperties": false
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
+            "kafka": {
+              "description": "Configures settings for the Kafka API listeners.",
+              "properties": {
+                "appProtocol": {
+                  "type": "string"
+                },
+                "authenticationMethod": {
+                  "description": "Specifies the authentication method for this listener.",
+                  "type": "string"
+                },
+                "enabled": {
+                  "description": "Specifies whether this Listener is enabled.",
+                  "type": "boolean"
+                },
+                "external": {
+                  "additionalProperties": {
+                    "description": "StretchExternalListener configures an external listener in stretch clusters.\n\nForked from ExternalListener: embeds StretchListener instead of Listener.",
+                    "properties": {
+                      "advertisedPorts": {
+                        "description": "Specifies the network port that the external Service listens on.",
+                        "items": {
+                          "format": "int32",
+                          "type": "integer"
+                        },
+                        "type": "array"
+                      },
+                      "appProtocol": {
+                        "type": "string"
+                      },
+                      "authenticationMethod": {
+                        "description": "Specifies the authentication method for this listener.",
+                        "type": "string"
+                      },
+                      "enabled": {
+                        "description": "Specifies whether this Listener is enabled.",
+                        "type": "boolean"
+                      },
+                      "nodePort": {
+                        "format": "int32",
+                        "type": "integer"
+                      },
+                      "port": {
+                        "description": "Specifies the container port number for this listener.",
+                        "format": "int32",
+                        "type": "integer"
+                      },
+                      "prefixTemplate": {
+                        "description": "Specifies the template used for generating the advertised addresses of Services.",
+                        "type": "string"
+                      },
+                      "tls": {
+                        "description": "Configures TLS settings for the internal listener.",
+                        "properties": {
+                          "cert": {
+                            "description": "References a specific certificate for the listener.",
+                            "type": "string"
+                          },
+                          "enabled": {
+                            "description": "Specifies whether TLS is enabled for the listener.",
+                            "type": "boolean"
+                          },
+                          "requireClientAuth": {
+                            "description": "Indicates whether client authentication (mTLS) is required.",
+                            "type": "boolean"
+                          },
+                          "trustStore": {
+                            "description": "TrustStore allows setting the `truststore_path` on this listener.",
+                            "maxProperties": 1,
+                            "minProperties": 1,
+                            "properties": {
+                              "configMapKeyRef": {
+                                "description": "Selects a key from a ConfigMap.",
+                                "properties": {
+                                  "key": {
+                                    "description": "The key to select.",
+                                    "type": "string"
+                                  },
+                                  "name": {
+                                    "default": "",
+                                    "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+                                    "type": "string"
+                                  },
+                                  "optional": {
+                                    "description": "Specify whether the ConfigMap or its key must be defined",
+                                    "type": "boolean"
+                                  }
+                                },
+                                "required": [
+                                  "key"
+                                ],
+                                "type": "object",
+                                "x-kubernetes-map-type": "atomic",
+                                "additionalProperties": false
+                              },
+                              "secretKeyRef": {
+                                "description": "SecretKeySelector selects a key of a Secret.",
+                                "properties": {
+                                  "key": {
+                                    "description": "The key of the secret to select from.  Must be a valid secret key.",
+                                    "type": "string"
+                                  },
+                                  "name": {
+                                    "default": "",
+                                    "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+                                    "type": "string"
+                                  },
+                                  "optional": {
+                                    "description": "Specify whether the Secret or its key must be defined",
+                                    "type": "boolean"
+                                  }
+                                },
+                                "required": [
+                                  "key"
+                                ],
+                                "type": "object",
+                                "x-kubernetes-map-type": "atomic",
+                                "additionalProperties": false
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          }
+                        },
+                        "type": "object",
+                        "additionalProperties": false
+                      }
+                    },
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "description": "Defines settings for the external listeners.",
+                  "type": "object"
+                },
+                "port": {
+                  "description": "Specifies the container port number for this listener.",
+                  "format": "int32",
+                  "type": "integer"
+                },
+                "prefixTemplate": {
+                  "description": "Specifies the template used for generating the advertised addresses of Services.",
+                  "type": "string"
+                },
+                "tls": {
+                  "description": "Configures TLS settings for the internal listener.",
+                  "properties": {
+                    "cert": {
+                      "description": "References a specific certificate for the listener.",
+                      "type": "string"
+                    },
+                    "enabled": {
+                      "description": "Specifies whether TLS is enabled for the listener.",
+                      "type": "boolean"
+                    },
+                    "requireClientAuth": {
+                      "description": "Indicates whether client authentication (mTLS) is required.",
+                      "type": "boolean"
+                    },
+                    "trustStore": {
+                      "description": "TrustStore allows setting the `truststore_path` on this listener.",
+                      "maxProperties": 1,
+                      "minProperties": 1,
+                      "properties": {
+                        "configMapKeyRef": {
+                          "description": "Selects a key from a ConfigMap.",
+                          "properties": {
+                            "key": {
+                              "description": "The key to select.",
+                              "type": "string"
+                            },
+                            "name": {
+                              "default": "",
+                              "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+                              "type": "string"
+                            },
+                            "optional": {
+                              "description": "Specify whether the ConfigMap or its key must be defined",
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "key"
+                          ],
+                          "type": "object",
+                          "x-kubernetes-map-type": "atomic",
+                          "additionalProperties": false
+                        },
+                        "secretKeyRef": {
+                          "description": "SecretKeySelector selects a key of a Secret.",
+                          "properties": {
+                            "key": {
+                              "description": "The key of the secret to select from.  Must be a valid secret key.",
+                              "type": "string"
+                            },
+                            "name": {
+                              "default": "",
+                              "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+                              "type": "string"
+                            },
+                            "optional": {
+                              "description": "Specify whether the Secret or its key must be defined",
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "key"
+                          ],
+                          "type": "object",
+                          "x-kubernetes-map-type": "atomic",
+                          "additionalProperties": false
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
+            "rpc": {
+              "description": "Configures settings for the RPC API listener.",
+              "properties": {
+                "port": {
+                  "description": "Specifies the container port number for the internal listener.",
+                  "type": "integer"
+                },
+                "tls": {
+                  "description": "Configures TLS settings for the internal listener.",
+                  "properties": {
+                    "cert": {
+                      "description": "References a specific certificate for the listener.",
+                      "type": "string"
+                    },
+                    "enabled": {
+                      "description": "Specifies whether TLS is enabled for the listener.",
+                      "type": "boolean"
+                    },
+                    "requireClientAuth": {
+                      "description": "Indicates whether client authentication (mTLS) is required.",
+                      "type": "boolean"
+                    },
+                    "trustStore": {
+                      "description": "TrustStore allows setting the `truststore_path` on this listener.",
+                      "maxProperties": 1,
+                      "minProperties": 1,
+                      "properties": {
+                        "configMapKeyRef": {
+                          "description": "Selects a key from a ConfigMap.",
+                          "properties": {
+                            "key": {
+                              "description": "The key to select.",
+                              "type": "string"
+                            },
+                            "name": {
+                              "default": "",
+                              "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+                              "type": "string"
+                            },
+                            "optional": {
+                              "description": "Specify whether the ConfigMap or its key must be defined",
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "key"
+                          ],
+                          "type": "object",
+                          "x-kubernetes-map-type": "atomic",
+                          "additionalProperties": false
+                        },
+                        "secretKeyRef": {
+                          "description": "SecretKeySelector selects a key of a Secret.",
+                          "properties": {
+                            "key": {
+                              "description": "The key of the secret to select from.  Must be a valid secret key.",
+                              "type": "string"
+                            },
+                            "name": {
+                              "default": "",
+                              "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+                              "type": "string"
+                            },
+                            "optional": {
+                              "description": "Specify whether the Secret or its key must be defined",
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "key"
+                          ],
+                          "type": "object",
+                          "x-kubernetes-map-type": "atomic",
+                          "additionalProperties": false
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
+            "schemaRegistry": {
+              "description": "Configures settings for the Schema Registry listeners.",
+              "properties": {
+                "appProtocol": {
+                  "type": "string"
+                },
+                "authenticationMethod": {
+                  "description": "Specifies the authentication method for this listener.",
+                  "type": "string"
+                },
+                "enabled": {
+                  "description": "Specifies whether this Listener is enabled.",
+                  "type": "boolean"
+                },
+                "external": {
+                  "additionalProperties": {
+                    "description": "StretchExternalListener configures an external listener in stretch clusters.\n\nForked from ExternalListener: embeds StretchListener instead of Listener.",
+                    "properties": {
+                      "advertisedPorts": {
+                        "description": "Specifies the network port that the external Service listens on.",
+                        "items": {
+                          "format": "int32",
+                          "type": "integer"
+                        },
+                        "type": "array"
+                      },
+                      "appProtocol": {
+                        "type": "string"
+                      },
+                      "authenticationMethod": {
+                        "description": "Specifies the authentication method for this listener.",
+                        "type": "string"
+                      },
+                      "enabled": {
+                        "description": "Specifies whether this Listener is enabled.",
+                        "type": "boolean"
+                      },
+                      "nodePort": {
+                        "format": "int32",
+                        "type": "integer"
+                      },
+                      "port": {
+                        "description": "Specifies the container port number for this listener.",
+                        "format": "int32",
+                        "type": "integer"
+                      },
+                      "prefixTemplate": {
+                        "description": "Specifies the template used for generating the advertised addresses of Services.",
+                        "type": "string"
+                      },
+                      "tls": {
+                        "description": "Configures TLS settings for the internal listener.",
+                        "properties": {
+                          "cert": {
+                            "description": "References a specific certificate for the listener.",
+                            "type": "string"
+                          },
+                          "enabled": {
+                            "description": "Specifies whether TLS is enabled for the listener.",
+                            "type": "boolean"
+                          },
+                          "requireClientAuth": {
+                            "description": "Indicates whether client authentication (mTLS) is required.",
+                            "type": "boolean"
+                          },
+                          "trustStore": {
+                            "description": "TrustStore allows setting the `truststore_path` on this listener.",
+                            "maxProperties": 1,
+                            "minProperties": 1,
+                            "properties": {
+                              "configMapKeyRef": {
+                                "description": "Selects a key from a ConfigMap.",
+                                "properties": {
+                                  "key": {
+                                    "description": "The key to select.",
+                                    "type": "string"
+                                  },
+                                  "name": {
+                                    "default": "",
+                                    "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+                                    "type": "string"
+                                  },
+                                  "optional": {
+                                    "description": "Specify whether the ConfigMap or its key must be defined",
+                                    "type": "boolean"
+                                  }
+                                },
+                                "required": [
+                                  "key"
+                                ],
+                                "type": "object",
+                                "x-kubernetes-map-type": "atomic",
+                                "additionalProperties": false
+                              },
+                              "secretKeyRef": {
+                                "description": "SecretKeySelector selects a key of a Secret.",
+                                "properties": {
+                                  "key": {
+                                    "description": "The key of the secret to select from.  Must be a valid secret key.",
+                                    "type": "string"
+                                  },
+                                  "name": {
+                                    "default": "",
+                                    "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+                                    "type": "string"
+                                  },
+                                  "optional": {
+                                    "description": "Specify whether the Secret or its key must be defined",
+                                    "type": "boolean"
+                                  }
+                                },
+                                "required": [
+                                  "key"
+                                ],
+                                "type": "object",
+                                "x-kubernetes-map-type": "atomic",
+                                "additionalProperties": false
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          }
+                        },
+                        "type": "object",
+                        "additionalProperties": false
+                      }
+                    },
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "description": "Defines settings for the external listeners.",
+                  "type": "object"
+                },
+                "port": {
+                  "description": "Specifies the container port number for this listener.",
+                  "format": "int32",
+                  "type": "integer"
+                },
+                "prefixTemplate": {
+                  "description": "Specifies the template used for generating the advertised addresses of Services.",
+                  "type": "string"
+                },
+                "tls": {
+                  "description": "Configures TLS settings for the internal listener.",
+                  "properties": {
+                    "cert": {
+                      "description": "References a specific certificate for the listener.",
+                      "type": "string"
+                    },
+                    "enabled": {
+                      "description": "Specifies whether TLS is enabled for the listener.",
+                      "type": "boolean"
+                    },
+                    "requireClientAuth": {
+                      "description": "Indicates whether client authentication (mTLS) is required.",
+                      "type": "boolean"
+                    },
+                    "trustStore": {
+                      "description": "TrustStore allows setting the `truststore_path` on this listener.",
+                      "maxProperties": 1,
+                      "minProperties": 1,
+                      "properties": {
+                        "configMapKeyRef": {
+                          "description": "Selects a key from a ConfigMap.",
+                          "properties": {
+                            "key": {
+                              "description": "The key to select.",
+                              "type": "string"
+                            },
+                            "name": {
+                              "default": "",
+                              "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+                              "type": "string"
+                            },
+                            "optional": {
+                              "description": "Specify whether the ConfigMap or its key must be defined",
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "key"
+                          ],
+                          "type": "object",
+                          "x-kubernetes-map-type": "atomic",
+                          "additionalProperties": false
+                        },
+                        "secretKeyRef": {
+                          "description": "SecretKeySelector selects a key of a Secret.",
+                          "properties": {
+                            "key": {
+                              "description": "The key of the secret to select from.  Must be a valid secret key.",
+                              "type": "string"
+                            },
+                            "name": {
+                              "default": "",
+                              "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+                              "type": "string"
+                            },
+                            "optional": {
+                              "description": "Specify whether the Secret or its key must be defined",
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "key"
+                          ],
+                          "type": "object",
+                          "x-kubernetes-map-type": "atomic",
+                          "additionalProperties": false
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
+        "logging": {
+          "description": "Logging overrides the log level and usage-stats settings for brokers\nin this pool. Per-pool so a noisy debug pool doesn't force the\nwhole cluster into verbose logging.",
+          "properties": {
+            "logLevel": {
+              "description": "Specifies the log level.",
+              "type": "string"
+            },
+            "usageStats": {
+              "description": "Defines settings for usage statistics reporting.",
+              "properties": {
+                "enabled": {
+                  "description": "Specifies whether usage statistics are enabled.",
+                  "type": "boolean"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
+        "monitoring": {
+          "description": "Monitoring toggles the per-pool ServiceMonitor. Per-pool so different\npools can opt in/out of Prometheus scraping independently.",
+          "properties": {
+            "enableHttp2": {
+              "type": "boolean"
+            },
+            "enabled": {
+              "description": "Specifies whether to create a ServiceMonitor that can be used by Prometheus Operator or VictoriaMetrics Operator to scrape the metrics.",
+              "type": "boolean"
+            },
+            "labels": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "description": "Adds custom labels to the ServiceMonitor resource.",
+              "type": "object"
+            },
+            "scrapeInterval": {
+              "description": "Specifies how often to scrape metrics.",
+              "type": "string"
+            },
+            "tlsConfig": {
+              "description": "Specifies tls configuration properties.",
+              "type": "object",
+              "x-kubernetes-preserve-unknown-fields": true
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
         "persistentVolumeClaimRetentionPolicy": {
           "description": "PersistentVolumeClaimRetentionPolicy overrides the lifecycle policy for\nPersistentVolumeClaims on this NodePool's StatefulSet. When set, it replaces\nany value inherited from the parent Redpanda CRD's\n`statefulset.persistentVolumeClaimRetentionPolicy`. When unset, the cluster-level\nvalue (or the Kubernetes default of `Retain`/`Retain` if also unset) is used.\nSet `whenScaled: Delete` to delete a broker's PVC when it is decommissioned via\nscale-down, and `whenDeleted: Delete` to delete all PVCs when the NodePool's\nStatefulSet is deleted.",
           "properties": {
@@ -151,7 +1324,7 @@
           "additionalProperties": false
         },
         "podTemplate": {
-          "description": "Chart default:\n    labels: {}\n    annotations: {}\n    spec:\n      securityContext: {}\n      affinity:\n        podAntiAffinity:\n          requiredDuringSchedulingIgnoredDuringExecution:\n          - topologyKey: kubernetes.io/hostname\n            labelSelector:\n              matchLabels:\n                \"app.kubernetes.io/component\": '{{ include \"redpanda.name\" . }}-{{pool.name}}-statefulset'\n                \"app.kubernetes.io/instance\":  '{{ .Release.Name }}'\n                \"app.kubernetes.io/name\":      '{{ include \"redpanda.name\" . }}'\n      terminationGracePeriodSeconds: 90\n      nodeSelector: {}\n      priorityClassName: \"\"\n      tolerations: []\n      topologySpreadConstraints:\n      - maxSkew: 1\n        topologyKey: topology.kubernetes.io/zone\n        whenUnsatisfiable: ScheduleAnyway\n        labelSelector:\n          matchLabels:\n            \"app.kubernetes.io/component\": '{{ include \"redpanda.name\" . }}-{{pool.name}}-statefulset'\n            \"app.kubernetes.io/instance\":  '{{ .Release.Name }}'\n            \"app.kubernetes.io/name\":      '{{ include \"redpanda.name\" . }}'",
+          "description": "PodTemplate is a strategic-merge patch applied on top of the\noperator-rendered Pod template. Common uses: nodeSelector,\ntolerations, custom volumes, sidecar containers, security context\noverrides.",
           "properties": {
             "annotations": {
               "additionalProperties": {
@@ -6541,13 +7714,215 @@
           "type": "object",
           "additionalProperties": false
         },
+        "rackAwareness": {
+          "description": "RackAwareness configures the Kubernetes node-label that's mapped to\nthe broker's `rack` config so Redpanda places replicas across racks/\nzones. Per-pool because rack labels can differ between K8s clusters.",
+          "properties": {
+            "enabled": {
+              "description": "Specifies whether rack awareness is enabled. When enabled, Kubernetes failure zones are treated as racks. Redpanda maps each rack to a failure zone and places partition replicas across them. Requires `rbac.enabled` set to `true`.",
+              "type": "boolean"
+            },
+            "nodeAnnotation": {
+              "description": "Specifies the key in Node labels or annotations to use to denote failure zones.",
+              "type": "string"
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
+        "rbac": {
+          "description": "RBAC toggles operator-managed Roles / ClusterRoles for this pool\n(sidecar perms, rpk-debug-bundle perms, metrics-reader). Per-pool\nbecause the bound ServiceAccount is per-pool.",
+          "properties": {
+            "annotations": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "description": "Adds custom annotations to the RBAC resources.",
+              "type": "object"
+            },
+            "enabled": {
+              "description": "Whether RBAC is enabled. Enable for features that need extra privileges, such as rack awareness. If you use the Redpanda Operator, you must deploy it with the `--set rbac.createRPKBundleCRs=true` flag to give it the required ClusterRoles.",
+              "type": "boolean"
+            },
+            "rpkDebugBundle": {
+              "type": "boolean"
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
         "replicas": {
-          "description": "Chart default: 3",
+          "description": "Replicas is the desired number of broker pods in this pool. Defaults\nto 1 if unset.",
           "format": "int32",
           "type": "integer"
         },
+        "resources": {
+          "description": "Resources configures container resource requests/limits (and the\nlegacy CPU/Memory shorthand). When also set on StretchClusterSpec,\nthe pool's value wins on a deep field-by-field merge, with\nper-key merging on the Limits/Requests maps. See\nBrokerPoolSpec.MergeFromCluster.",
+          "properties": {
+            "cpu": {
+              "description": "Specifies the number of CPU cores.",
+              "properties": {
+                "cores": {
+                  "anyOf": [
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ],
+                  "description": "Specifies the number of CPU cores available to the application. Redpanda makes use of a thread per core model. For details, see https://docs.redpanda.com/current/get-started/architecture/#thread-per-core-model. For this reason, Redpanda should only be given full cores. Note: You can increase cores, but decreasing cores is not currently supported. See the GitHub issue:https://github.com/redpanda-data/redpanda/issues/350. This setting is equivalent to `--smp`, `resources.requests.cpu`, and `resources.limits.cpu`. For production, use `4` or greater.",
+                  "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                  "x-kubernetes-int-or-string": true
+                },
+                "overprovisioned": {
+                  "description": "Specifies whether Redpanda assumes it has all of the provisioned CPU. This should be `true` unless the container has CPU affinity. Equivalent to: `--idle-poll-time-us 0`, `--thread-affinity 0`, and `--poll-aio 0`. If the value of full cores in `resources.cpu.cores` is less than `1`, this setting is set to `true`.",
+                  "type": "boolean"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
+            "limits": {
+              "additionalProperties": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ],
+                "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                "x-kubernetes-int-or-string": true
+              },
+              "description": "Standard K8s resource limits.",
+              "type": "object"
+            },
+            "memory": {
+              "description": "Specifies the amount of memory.",
+              "properties": {
+                "container": {
+                  "description": "Defines resource limits for containers.",
+                  "properties": {
+                    "max": {
+                      "anyOf": [
+                        {
+                          "type": "integer"
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ],
+                      "description": "Specifies the maximum resources that can be allocated to a container.",
+                      "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                      "x-kubernetes-int-or-string": true
+                    },
+                    "min": {
+                      "anyOf": [
+                        {
+                          "type": "integer"
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ],
+                      "description": "Specifies the minimum resources required for a container.",
+                      "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                      "x-kubernetes-int-or-string": true
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "enable_memory_locking": {
+                  "description": "Enables memory locking. For production, set to `true`.",
+                  "type": "boolean"
+                },
+                "redpanda": {
+                  "description": "Allows you to optionally specify the memory size for both the Redpanda process and the underlying reserved memory used by Seastar.",
+                  "properties": {
+                    "memory": {
+                      "anyOf": [
+                        {
+                          "type": "integer"
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ],
+                      "description": "Memory for the Redpanda process. This must be lower than the container's memory (`resources.memory.container.min` if provided, otherwise `resources.memory.container.max`). Equivalent to `--memory`. For production, use 8Gi or greater.",
+                      "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                      "x-kubernetes-int-or-string": true
+                    },
+                    "reserveMemory": {
+                      "anyOf": [
+                        {
+                          "type": "integer"
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ],
+                      "description": "Memory reserved for the OS. Any value above 1Gi will provide diminishing performance benefits. Equivalent to `--reserve-memory`. For production, use 1Gi.",
+                      "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                      "x-kubernetes-int-or-string": true
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
+            "requests": {
+              "additionalProperties": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ],
+                "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                "x-kubernetes-int-or-string": true
+              },
+              "description": "Standard K8s resource requests.",
+              "type": "object"
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
+        "serviceAccount": {
+          "description": "ServiceAccount controls creation and naming of the per-pool\nServiceAccount used by broker / sidecar pods. Per-pool so users can\npre-create SAs with their own IAM bindings (workload identity, etc.).",
+          "properties": {
+            "annotations": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "description": "Adds custom annotations to the ServiceAccount resources.",
+              "type": "object"
+            },
+            "automountServiceAccountToken": {
+              "description": "Specifies whether a service account should automount API-Credentials",
+              "type": "boolean"
+            },
+            "create": {
+              "description": "Specifies whether a ServiceAccount should be created.",
+              "type": "boolean"
+            },
+            "name": {
+              "description": "Specifies the name of the ServiceAccount.",
+              "type": "string"
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
         "services": {
-          "description": "Services configures overrides for Services created by the operator.",
+          "description": "Services configures overrides for the per-pod Services created by\nthe operator (e.g. selector/annotation tweaks, remote-Service\nsuppression).",
           "properties": {
             "perPod": {
               "description": "PerPod configures overrides for per-pod ClusterIP Services.",
@@ -6927,7 +8302,7 @@
           "additionalProperties": false
         },
         "sidecarImage": {
-          "description": "Default:\n    repository: docker.redpanda.com/redpandadata/redpanda-operator\n    tag: {{.operatorVersion}}",
+          "description": "SidecarImage is the operator sidecar container image for this pool.\nDefaults to the operator's own image at build time.",
           "properties": {
             "pullPolicy": {
               "description": "Specifies the strategy used for pulling images from the repository. For available values, see https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy.",
@@ -6940,6 +8315,335 @@
             "tag": {
               "description": "Specifies the image tag.",
               "type": "string"
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
+        "storage": {
+          "description": "Storage configures the Redpanda data directory and tiered-storage\ncache (hostPath / PVC / emptyDir). When also set on\nStretchClusterSpec, the pool's value wins on a deep field-by-field\nmerge \u2014 pool's non-nil subfields override, cluster fills any\nsubfields the pool didn't set. See BrokerPoolSpec.MergeFromCluster.",
+          "properties": {
+            "hostPath": {
+              "description": "Specifies the absolute path on the worker node to store the Redpanda data directory.",
+              "type": "string"
+            },
+            "persistentVolume": {
+              "description": "Configures a PersistentVolumeClaim (PVC) template to create for each Pod.",
+              "properties": {
+                "annotations": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "description": "Adds annotations to the PersistentVolumeClaims to provide additional information or metadata that can be used by other tools or libraries.",
+                  "type": "object"
+                },
+                "enabled": {
+                  "description": "Specifies whether to enable the Helm chart to create PersistentVolumeClaims for Pods.",
+                  "type": "boolean"
+                },
+                "labels": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "description": "Applies labels to the PersistentVolumeClaims to facilitate identification and selection based on custom criteria.",
+                  "type": "object"
+                },
+                "nameOverwrite": {
+                  "description": "Option to change volume claim template name for tiered storage persistent volume if tiered.mountType is set to `persistentVolume`",
+                  "type": "string"
+                },
+                "size": {
+                  "anyOf": [
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ],
+                  "description": "Specifies the storage capacity required.",
+                  "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                  "x-kubernetes-int-or-string": true
+                },
+                "storageClass": {
+                  "description": "Specifies the StorageClass for the PersistentVolumeClaims to determine how PersistentVolumes are provisioned and managed.",
+                  "type": "string"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
+            "tiered": {
+              "description": "Configures storage for the Tiered Storage cache.",
+              "properties": {
+                "config": {
+                  "description": "Configures Tiered Storage properties.",
+                  "properties": {
+                    "cloud_storage_api_endpoint": {
+                      "type": "string"
+                    },
+                    "cloud_storage_api_endpoint_port": {
+                      "type": "integer"
+                    },
+                    "cloud_storage_azure_adls_endpoint": {
+                      "type": "string"
+                    },
+                    "cloud_storage_azure_adls_port": {
+                      "type": "integer"
+                    },
+                    "cloud_storage_azure_container": {
+                      "type": "string"
+                    },
+                    "cloud_storage_azure_managed_identity_id": {
+                      "type": "string"
+                    },
+                    "cloud_storage_azure_shared_key": {
+                      "type": "string"
+                    },
+                    "cloud_storage_azure_storage_account": {
+                      "type": "string"
+                    },
+                    "cloud_storage_bucket": {
+                      "type": "string"
+                    },
+                    "cloud_storage_cache_check_interval": {
+                      "type": "integer"
+                    },
+                    "cloud_storage_cache_directory": {
+                      "type": "string"
+                    },
+                    "cloud_storage_cache_size": {
+                      "type": "string"
+                    },
+                    "cloud_storage_credentials_source": {
+                      "type": "string"
+                    },
+                    "cloud_storage_disable_tls": {
+                      "type": "boolean"
+                    },
+                    "cloud_storage_enable_remote_read": {
+                      "type": "boolean"
+                    },
+                    "cloud_storage_enable_remote_write": {
+                      "type": "boolean"
+                    },
+                    "cloud_storage_enabled": {
+                      "type": "boolean"
+                    },
+                    "cloud_storage_initial_backoff_ms": {
+                      "type": "integer"
+                    },
+                    "cloud_storage_manifest_upload_timeout_ms": {
+                      "type": "integer"
+                    },
+                    "cloud_storage_max_connection_idle_time_ms": {
+                      "type": "integer"
+                    },
+                    "cloud_storage_max_connections": {
+                      "type": "integer"
+                    },
+                    "cloud_storage_region": {
+                      "type": "string"
+                    },
+                    "cloud_storage_segment_max_upload_interval_sec": {
+                      "type": "integer"
+                    },
+                    "cloud_storage_segment_upload_timeout_ms": {
+                      "type": "integer"
+                    },
+                    "cloud_storage_trust_file": {
+                      "type": "string"
+                    },
+                    "cloud_storage_upload_ctrl_d_coeff": {
+                      "type": "integer"
+                    },
+                    "cloud_storage_upload_ctrl_max_shares": {
+                      "type": "integer"
+                    },
+                    "cloud_storage_upload_ctrl_min_shares": {
+                      "type": "integer"
+                    },
+                    "cloud_storage_upload_ctrl_p_coeff": {
+                      "type": "integer"
+                    },
+                    "cloud_storage_upload_ctrl_update_interval_ms": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "credentialsSecretRef": {
+                  "description": "CredentialsSecretRef sets cloud_storage_secret_key and/or cloud_storage_access_key from a referenced Secret.",
+                  "properties": {
+                    "accessKey": {
+                      "properties": {
+                        "configurationKey": {
+                          "type": "string"
+                        },
+                        "key": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "secretKey": {
+                      "properties": {
+                        "configurationKey": {
+                          "type": "string"
+                        },
+                        "key": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "hostPath": {
+                  "description": "Specifies the absolute path on the worker node to store the Tiered Storage cache.",
+                  "type": "string"
+                },
+                "mountType": {
+                  "description": "mountType: \"none\", \"hostPath\", \"emptyDir\", or \"persistentVolume\".",
+                  "type": "string"
+                },
+                "persistentVolume": {
+                  "description": "Configures a PersistentVolumeClaim (PVC) template for the Tiered Storage cache.",
+                  "properties": {
+                    "annotations": {
+                      "additionalProperties": {
+                        "type": "string"
+                      },
+                      "description": "Adds annotations to the PersistentVolumeClaims to provide additional information or metadata that can be used by other tools or libraries.",
+                      "type": "object"
+                    },
+                    "enabled": {
+                      "description": "Specifies whether to enable the Helm chart to create PersistentVolumeClaims for Pods.",
+                      "type": "boolean"
+                    },
+                    "labels": {
+                      "additionalProperties": {
+                        "type": "string"
+                      },
+                      "description": "Applies labels to the PersistentVolumeClaims to facilitate identification and selection based on custom criteria.",
+                      "type": "object"
+                    },
+                    "nameOverwrite": {
+                      "description": "Option to change volume claim template name for tiered storage persistent volume if tiered.mountType is set to `persistentVolume`",
+                      "type": "string"
+                    },
+                    "size": {
+                      "anyOf": [
+                        {
+                          "type": "integer"
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ],
+                      "description": "Specifies the storage capacity required.",
+                      "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                      "x-kubernetes-int-or-string": true
+                    },
+                    "storageClass": {
+                      "description": "Specifies the StorageClass for the PersistentVolumeClaims to determine how PersistentVolumes are provisioned and managed.",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
+        "tls": {
+          "description": "TLS configures the listener cert set (server certs, optional client\ncerts, CA toggles, custom issuers). Per-pool so different pools can\nrun different listener TLS configurations while sharing the\ncluster-wide root CA managed by the operator.",
+          "properties": {
+            "certs": {
+              "additionalProperties": {
+                "description": "Certificate configures TLS certificates.",
+                "properties": {
+                  "applyInternalDNSNames": {
+                    "description": "Specifies you wish to have Kubernetes internal dns names (IE the headless service of the redpanda StatefulSet) included in `dnsNames` of the  certificate even, when supplying an issuer.",
+                    "type": "boolean"
+                  },
+                  "caEnabled": {
+                    "description": "Specifies whether to include the `ca.crt` file in the trust stores of all listeners. Set to `true` only for certificates that are not authenticated using public certificate authorities (CAs).",
+                    "type": "boolean"
+                  },
+                  "clientSecretRef": {
+                    "description": "Specify the name of an existing Secret resource that contains your client TLS certificate.",
+                    "properties": {
+                      "name": {
+                        "description": "Specifies the name of the Secret resource.",
+                        "type": "string"
+                      }
+                    },
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "duration": {
+                    "description": "Specifies the validity duration of certificates generated with `issuerRef`.",
+                    "type": "string"
+                  },
+                  "enabled": {
+                    "type": "boolean"
+                  },
+                  "issuerRef": {
+                    "description": "Specify the name of an existing Issuer or ClusterIssuer resource to use to generate certificates. Requires cert-manager. See https://cert-manager.io/v1.1-docs.",
+                    "properties": {
+                      "group": {
+                        "type": "string"
+                      },
+                      "kind": {
+                        "description": "Specifies the kind of resource. One of `Issuer` or `ClusterIssuer`.",
+                        "type": "string"
+                      },
+                      "name": {
+                        "description": "Specifies the name of the resource.",
+                        "type": "string"
+                      }
+                    },
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "secretRef": {
+                    "description": "Specify the name of an existing Secret resource that contains your TLS certificate.",
+                    "properties": {
+                      "name": {
+                        "description": "Specifies the name of the Secret resource.",
+                        "type": "string"
+                      }
+                    },
+                    "type": "object",
+                    "additionalProperties": false
+                  }
+                },
+                "type": "object",
+                "additionalProperties": false
+              },
+              "description": "Lists all available certificates in the cluster. You can reference a specific certificate\u2019s name in each listener\u2019s `listeners.<listener name>.tls.cert` setting.",
+              "type": "object"
+            },
+            "enabled": {
+              "description": "Enables TLS globally for all listeners. Each listener must include a certificate name in its `<listener>.tls` object. To allow you to enable TLS for individual listeners, certificates are always loaded, even if TLS is disabled.",
+              "type": "boolean"
             }
           },
           "type": "object",
@@ -6985,7 +8689,7 @@
           }
         ]
       },
-      "description": "NodePoolStatus defines the observed state of any node pools tied to this cluster",
+      "description": "BrokerPoolStatus defines the observed state of any node pools tied to this cluster",
       "properties": {
         "condemnedReplicas": {
           "description": "CondemnedReplicas is the number of replicas that will be decommissioned\nas part of a scaling down operation.",
