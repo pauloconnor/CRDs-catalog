@@ -216,7 +216,7 @@
                   "type": "object",
                   "additionalProperties": false
                 },
-                "maxItems": 16,
+                "maxItems": 64,
                 "type": "array",
                 "x-kubernetes-list-map-keys": [
                   "name"
@@ -231,7 +231,7 @@
             "type": "object",
             "additionalProperties": false
           },
-          "maxItems": 16,
+          "maxItems": 64,
           "type": "array",
           "x-kubernetes-list-map-keys": [
             "name"
@@ -276,7 +276,7 @@
                   "type": "object",
                   "additionalProperties": false
                 },
-                "maxItems": 16,
+                "maxItems": 64,
                 "type": "array",
                 "x-kubernetes-list-map-keys": [
                   "name"
@@ -291,7 +291,7 @@
             "type": "object",
             "additionalProperties": false
           },
-          "maxItems": 16,
+          "maxItems": 64,
           "type": "array",
           "x-kubernetes-list-map-keys": [
             "name"
