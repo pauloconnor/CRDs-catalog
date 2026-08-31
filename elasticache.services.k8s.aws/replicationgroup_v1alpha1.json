@@ -16,7 +16,7 @@
       "description": "ReplicationGroupSpec defines the desired state of ReplicationGroup.\n\nContains all of the attributes of a specific Valkey or Redis OSS replication\ngroup.",
       "properties": {
         "atRestEncryptionEnabled": {
-          "description": "A flag that enables encryption at rest when set to true.\n\nYou cannot modify the value of AtRestEncryptionEnabled after the replication\ngroup is created. To enable encryption at rest on a replication group you\nmust set AtRestEncryptionEnabled to true when you create the replication\ngroup.\n\nRequired: Only available when creating a replication group in an Amazon VPC\nusing Valkey 7.2 and later, Redis OSS version 3.2.6, or Redis OSS 4.x and\nlater.\n\nDefault: true when using Valkey, false when using Redis OSS",
+          "description": "A flag that enables encryption at-rest on the replication group when set\nto true. In some cases, encryption at-rest may be enabled even when this\nvalue is false. Use StorageEncryptionType to view the effective encryption\nstate of a cluster.\n\nYou cannot modify the value of AtRestEncryptionEnabled after the replication\ngroup is created.\n\nDefault: true when using Valkey, false when using Redis OSS",
           "type": "boolean"
         },
         "authToken": {
@@ -113,6 +113,10 @@
           "description": "A user-created description for the replication group.",
           "type": "string"
         },
+        "durability": {
+          "description": "Specifies the durability setting for the replication group. When set to default,\nthe service determines the effective durability based on the engine version,\ncluster mode, and other parameters. The resolved setting is reflected in\nthe EffectiveDurability property of the replication group. For more information,\nsee Durability (http://docs.aws.amazon.com/AmazonElastiCache/latest/dg/Durability.html).",
+          "type": "string"
+        },
         "engine": {
           "description": "The name of the cache engine to be used for the clusters in this replication\ngroup. The value must be set to valkey or redis.",
           "type": "string"
@@ -127,7 +131,33 @@
         },
         "kmsKeyID": {
           "description": "The ID of the KMS key used to encrypt the disk in the cluster.",
-          "type": "string"
+          "type": "string",
+          "x-kubernetes-validations": [
+            {
+              "message": "Value is immutable once set",
+              "rule": "self == oldSelf"
+            }
+          ]
+        },
+        "kmsKeyRef": {
+          "description": "AWSResourceReferenceWrapper provides a wrapper around *AWSResourceReference\ntype to provide more user friendly syntax for references using 'from' field\nEx:\nAPIIDRef:\n\n\tfrom:\n\t  name: my-api",
+          "properties": {
+            "from": {
+              "description": "AWSResourceReference provides all the values necessary to reference another\nk8s resource for finding the identifier(Id/ARN/Name)",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "namespace": {
+                  "type": "string"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
         },
         "logDeliveryConfigurations": {
           "description": "Specifies the destination, format and type of the logs.",
@@ -236,6 +266,26 @@
           "description": "The Amazon Resource Name (ARN) of the Amazon Simple Notification Service\n(SNS) topic to which notifications are sent.\n\nThe Amazon SNS topic owner must be the same as the cluster owner.",
           "type": "string"
         },
+        "notificationTopicRef": {
+          "description": "AWSResourceReferenceWrapper provides a wrapper around *AWSResourceReference\ntype to provide more user friendly syntax for references using 'from' field\nEx:\nAPIIDRef:\n\n\tfrom:\n\t  name: my-api",
+          "properties": {
+            "from": {
+              "description": "AWSResourceReference provides all the values necessary to reference another\nk8s resource for finding the identifier(Id/ARN/Name)",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "namespace": {
+                  "type": "string"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
         "numNodeGroups": {
           "description": "An optional parameter that specifies the number of node groups (shards) for\nthis Valkey or Redis OSS (cluster mode enabled) replication group. For Valkey\nor Redis OSS (cluster mode disabled) either omit this parameter or set it\nto 1.\n\nDefault: 1",
           "format": "int64",
@@ -309,7 +359,33 @@
         },
         "snapshotName": {
           "description": "The name of a snapshot from which to restore data into the new replication\ngroup. The snapshot status changes to restoring while the new replication\ngroup is being created.",
-          "type": "string"
+          "type": "string",
+          "x-kubernetes-validations": [
+            {
+              "message": "Value is immutable once set",
+              "rule": "self == oldSelf"
+            }
+          ]
+        },
+        "snapshotRef": {
+          "description": "AWSResourceReferenceWrapper provides a wrapper around *AWSResourceReference\ntype to provide more user friendly syntax for references using 'from' field\nEx:\nAPIIDRef:\n\n\tfrom:\n\t  name: my-api",
+          "properties": {
+            "from": {
+              "description": "AWSResourceReference provides all the values necessary to reference another\nk8s resource for finding the identifier(Id/ARN/Name)",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "namespace": {
+                  "type": "string"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
         },
         "snapshotRetentionLimit": {
           "description": "The number of days for which ElastiCache retains automatic snapshots before\ndeleting them. For example, if you set SnapshotRetentionLimit to 5, a snapshot\nthat was taken today is retained for 5 days before being deleted.\n\nDefault: 0 (i.e., automatic backups are disabled for this cluster).",
@@ -347,6 +423,29 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "userGroupRefs": {
+          "items": {
+            "description": "AWSResourceReferenceWrapper provides a wrapper around *AWSResourceReference\ntype to provide more user friendly syntax for references using 'from' field\nEx:\nAPIIDRef:\n\n\tfrom:\n\t  name: my-api",
+            "properties": {
+              "from": {
+                "description": "AWSResourceReference provides all the values necessary to reference another\nk8s resource for finding the identifier(Id/ARN/Name)",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "namespace": {
+                    "type": "string"
+                  }
+                },
+                "type": "object",
+                "additionalProperties": false
+              }
+            },
+            "type": "object",
+            "additionalProperties": false
+          },
+          "type": "array"
         }
       },
       "required": [
@@ -368,6 +467,10 @@
             },
             "ownerAccountID": {
               "description": "OwnerAccountID is the AWS Account ID of the account that owns the\nbackend AWS service API resource.",
+              "type": "string"
+            },
+            "partition": {
+              "description": "Partition is the AWS partition in which the resource exists or will exist",
               "type": "string"
             },
             "region": {
@@ -469,6 +572,10 @@
         },
         "dataTiering": {
           "description": "Enables data tiering. Data tiering is only supported for replication groups\nusing the r6gd node type. This parameter must be set to true when using r6gd\nnodes. For more information, see Data tiering (https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/data-tiering.html).",
+          "type": "string"
+        },
+        "effectiveDurability": {
+          "description": "The effective durability of the replication group. When Durability is set\nto default, the service resolves the actual durability based on the engine\nversion, cluster mode, and other parameters. This field reflects the resolved\nvalue. For more information, see Configuring Durability (http://docs.aws.amazon.com/AmazonElastiCache/latest/dg/ConfiguringDurability.html).",
           "type": "string"
         },
         "events": {
@@ -775,6 +882,10 @@
         },
         "status": {
           "description": "The current state of this replication group - creating, available, modifying,\ndeleting, create-failed, snapshotting.",
+          "type": "string"
+        },
+        "storageEncryptionType": {
+          "description": "Indicates the type of encryption for data stored at rest in the replication\ngroup. The value is none if at-rest encryption is not enabled, sse-elasticache\nif an ElastiCache service-managed key is used, or sse-kms if a customer-managed\nKMS key is used.",
           "type": "string"
         }
       },
