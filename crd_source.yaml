@@ -606,7 +606,7 @@ sources:
     changelog: "https://github.com/fluxcd/kustomize-controller/releases"
 
   - url: "https://github.com/fluxcd/notification-controller"
-    tag: "v1.8.4"
+    tag: "v1.9.3"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/fluxcd/notification-controller/releases"
 
