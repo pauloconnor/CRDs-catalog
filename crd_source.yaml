@@ -397,7 +397,7 @@ sources:
     changelog: "https://github.com/cert-manager/aws-privateca-issuer/releases"
 
   - url: "https://github.com/cert-manager/cert-manager"
-    tag: "v1.20.2"
+    tag: "v1.21.1"
     fetch_strategy: release_asset
     asset_name: "cert-manager.crds.yaml"
     changelog: "https://github.com/cert-manager/cert-manager/releases"
