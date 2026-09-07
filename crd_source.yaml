@@ -952,7 +952,7 @@ sources:
 
   # Issue #593 - registries.mittwald.de CRDs
   - url: "https://github.com/mittwald/harbor-operator"
-    tag: ""
+    tag: "v1.6.7"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/mittwald/harbor-operator/releases"
 
