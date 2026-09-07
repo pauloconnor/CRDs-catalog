@@ -25,6 +25,10 @@
               "description": "The port on which targets receive traffic.",
               "type": "number"
             },
+            "quicServerId": {
+              "description": "Server ID for the targets, consisting of the 0x prefix followed by 16 hexadecimal characters. The value must be unique at the listener level. Required if aws_lb_target_group protocol is QUIC or TCP_QUIC. Not valid with other protocols. Forces replacement if modified.",
+              "type": "string"
+            },
             "region": {
               "description": "Region where this resource will be managed. Defaults to the Region set in the provider configuration.\nRegion is the region you'd like your resource to be created in.",
               "type": "string"
@@ -142,6 +146,10 @@
             "port": {
               "description": "The port on which targets receive traffic.",
               "type": "number"
+            },
+            "quicServerId": {
+              "description": "Server ID for the targets, consisting of the 0x prefix followed by 16 hexadecimal characters. The value must be unique at the listener level. Required if aws_lb_target_group protocol is QUIC or TCP_QUIC. Not valid with other protocols. Forces replacement if modified.",
+              "type": "string"
             },
             "targetGroupArn": {
               "description": "The ARN of the target group with which to register targets.",
@@ -329,6 +337,10 @@
               "description": "The port on which targets receive traffic.",
               "type": "number"
             },
+            "quicServerId": {
+              "description": "Server ID for the targets, consisting of the 0x prefix followed by 16 hexadecimal characters. The value must be unique at the listener level. Required if aws_lb_target_group protocol is QUIC or TCP_QUIC. Not valid with other protocols. Forces replacement if modified.",
+              "type": "string"
+            },
             "region": {
               "description": "Region where this resource will be managed. Defaults to the Region set in the provider configuration.\nRegion is the region you'd like your resource to be created in.",
               "type": "string"
@@ -391,6 +403,10 @@
             "type"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "lastHandledReconcileAt": {
+          "description": "LastHandledReconcileAt holds the value of the most recent\nreconcile-requested-at annotation token that the controller has\nprocessed. Users can compare this to the annotation to determine\nwhether a reconcile request has been handled.",
+          "type": "string"
         },
         "observedGeneration": {
           "description": "ObservedGeneration is the latest metadata.generation\nwhich resulted in either a ready state, or stalled due to error\nit can not recover from without human intervention.",

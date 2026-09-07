@@ -176,6 +176,10 @@
               "description": "The version of the cache engine that will be used to create the serverless cache.\nSee Describe Cache Engine Versions in the AWS Documentation for supported versions.",
               "type": "string"
             },
+            "networkType": {
+              "description": "IP protocol version used by the serverless cache. Valid values are ipv4, ipv6, or dual_stack. ipv6 is only supported with IPv6-only subnets. If not specified, defaults to ipv4, unless all provided subnets are IPv6-only, in which case it defaults to ipv6.",
+              "type": "string"
+            },
             "region": {
               "description": "Region where this resource will be managed. Defaults to the Region set in the provider configuration.\nRegion is the region you'd like your resource to be created in.",
               "type": "string"
@@ -273,14 +277,14 @@
               "x-kubernetes-list-type": "set"
             },
             "snapshotArnsToRestore": {
-              "description": "The list of ARN(s) of the snapshot that the new serverless cache will be created from. Available for Redis only.",
+              "description": "The list of ARN(s) of the snapshot that the new serverless cache will be created from. Only supported for engine types \"redis\" or \"valkey\".",
               "items": {
                 "type": "string"
               },
               "type": "array"
             },
             "snapshotRetentionLimit": {
-              "description": "The number of snapshots that will be retained for the serverless cache that is being created. As new snapshots beyond this limit are added, the oldest snapshots will be deleted on a rolling basis. Available for Redis only.",
+              "description": "The number of snapshots that will be retained for the serverless cache that is being created. As new snapshots beyond this limit are added, the oldest snapshots will be deleted on a rolling basis. Only supported for engine types \"redis\" or \"valkey\".",
               "type": "number"
             },
             "subnetIdRefs": {
@@ -384,7 +388,7 @@
               "x-kubernetes-map-type": "granular"
             },
             "userGroupId": {
-              "description": "The identifier of the UserGroup to be associated with the serverless cache. Available for Redis only. Default is NULL.",
+              "description": "The identifier of the UserGroup to be associated with the serverless cache. Available for Redis and Valkey. Default is NULL.",
               "type": "string"
             }
           },
@@ -547,6 +551,10 @@
               "description": "The version of the cache engine that will be used to create the serverless cache.\nSee Describe Cache Engine Versions in the AWS Documentation for supported versions.",
               "type": "string"
             },
+            "networkType": {
+              "description": "IP protocol version used by the serverless cache. Valid values are ipv4, ipv6, or dual_stack. ipv6 is only supported with IPv6-only subnets. If not specified, defaults to ipv4, unless all provided subnets are IPv6-only, in which case it defaults to ipv6.",
+              "type": "string"
+            },
             "securityGroupIdRefs": {
               "description": "References to SecurityGroup in ec2 to populate securityGroupIds.",
               "items": {
@@ -640,14 +648,14 @@
               "x-kubernetes-list-type": "set"
             },
             "snapshotArnsToRestore": {
-              "description": "The list of ARN(s) of the snapshot that the new serverless cache will be created from. Available for Redis only.",
+              "description": "The list of ARN(s) of the snapshot that the new serverless cache will be created from. Only supported for engine types \"redis\" or \"valkey\".",
               "items": {
                 "type": "string"
               },
               "type": "array"
             },
             "snapshotRetentionLimit": {
-              "description": "The number of snapshots that will be retained for the serverless cache that is being created. As new snapshots beyond this limit are added, the oldest snapshots will be deleted on a rolling basis. Available for Redis only.",
+              "description": "The number of snapshots that will be retained for the serverless cache that is being created. As new snapshots beyond this limit are added, the oldest snapshots will be deleted on a rolling basis. Only supported for engine types \"redis\" or \"valkey\".",
               "type": "number"
             },
             "subnetIdRefs": {
@@ -751,7 +759,7 @@
               "x-kubernetes-map-type": "granular"
             },
             "userGroupId": {
-              "description": "The identifier of the UserGroup to be associated with the serverless cache. Available for Redis only. Default is NULL.",
+              "description": "The identifier of the UserGroup to be associated with the serverless cache. Available for Redis and Valkey. Default is NULL.",
               "type": "string"
             }
           },
@@ -958,6 +966,10 @@
               "description": "The version of the cache engine that will be used to create the serverless cache.\nSee Describe Cache Engine Versions in the AWS Documentation for supported versions.",
               "type": "string"
             },
+            "networkType": {
+              "description": "IP protocol version used by the serverless cache. Valid values are ipv4, ipv6, or dual_stack. ipv6 is only supported with IPv6-only subnets. If not specified, defaults to ipv4, unless all provided subnets are IPv6-only, in which case it defaults to ipv6.",
+              "type": "string"
+            },
             "readerEndpoint": {
               "description": "Represents the information required for client programs to connect to a cache node. See reader_endpoint Block for details.",
               "items": {
@@ -989,14 +1001,14 @@
               "x-kubernetes-list-type": "set"
             },
             "snapshotArnsToRestore": {
-              "description": "The list of ARN(s) of the snapshot that the new serverless cache will be created from. Available for Redis only.",
+              "description": "The list of ARN(s) of the snapshot that the new serverless cache will be created from. Only supported for engine types \"redis\" or \"valkey\".",
               "items": {
                 "type": "string"
               },
               "type": "array"
             },
             "snapshotRetentionLimit": {
-              "description": "The number of snapshots that will be retained for the serverless cache that is being created. As new snapshots beyond this limit are added, the oldest snapshots will be deleted on a rolling basis. Available for Redis only.",
+              "description": "The number of snapshots that will be retained for the serverless cache that is being created. As new snapshots beyond this limit are added, the oldest snapshots will be deleted on a rolling basis. Only supported for engine types \"redis\" or \"valkey\".",
               "type": "number"
             },
             "status": {
@@ -1027,7 +1039,7 @@
               "x-kubernetes-map-type": "granular"
             },
             "userGroupId": {
-              "description": "The identifier of the UserGroup to be associated with the serverless cache. Available for Redis only. Default is NULL.",
+              "description": "The identifier of the UserGroup to be associated with the serverless cache. Available for Redis and Valkey. Default is NULL.",
               "type": "string"
             }
           },
@@ -1080,6 +1092,10 @@
             "type"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "lastHandledReconcileAt": {
+          "description": "LastHandledReconcileAt holds the value of the most recent\nreconcile-requested-at annotation token that the controller has\nprocessed. Users can compare this to the annotation to determine\nwhether a reconcile request has been handled.",
+          "type": "string"
         },
         "observedGeneration": {
           "description": "ObservedGeneration is the latest metadata.generation\nwhich resulted in either a ready state, or stalled due to error\nit can not recover from without human intervention.",
