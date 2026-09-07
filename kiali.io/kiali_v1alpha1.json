@@ -168,6 +168,10 @@
                       "type": "string",
                       "description": "The URL of the provider's authorization endpoint."
                     },
+                    "end_session_endpoint": {
+                      "type": "string",
+                      "description": "The URL of the provider's RP-Initiated Logout endpoint. If set, logout will terminate both the local Kiali session and the IdP session. If not set, logout will only clear the local Kiali session."
+                    },
                     "jwks_uri": {
                       "type": "string",
                       "description": "The URL of the provider's JWK Set document."
@@ -182,6 +186,10 @@
                     }
                   },
                   "additionalProperties": false
+                },
+                "post_logout_redirect_uri": {
+                  "type": "string",
+                  "description": "The URL to redirect the browser to after the IdP terminates the session during RP-Initiated Logout. Must be registered in the IdP's client configuration. If not set, defaults to the Kiali root URL."
                 },
                 "username_claim": {
                   "type": "string",
@@ -201,6 +209,32 @@
                 "client_id_prefix": {
                   "description": "DEPRECATED AFTER v1.73: A prefix that will be applied to the OpenShift OAuth client identifier.",
                   "type": "string"
+                },
+                "impersonation": {
+                  "description": "Settings for Kubernetes API impersonation. When enabled, users authenticate once to the home cluster and Kiali uses its service account to impersonate the user on all clusters (including home).",
+                  "type": "object",
+                  "properties": {
+                    "allowed_groups": {
+                      "description": "When set, only these groups will be included in impersonation headers (in addition to system:authenticated and system:authenticated:oauth which are always included). If empty, all of the user's groups are impersonated. This also restricts the Kiali SA's ClusterRole via resourceNames. Must not contain system: prefixed groups. For full RBAC defense-in-depth, configure both allowed_users and allowed_groups.",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "allowed_users": {
+                      "description": "When set, only users in this list are permitted to use Kiali with impersonation. Users not in this list will be denied access (HTTP 403). This also restricts the Kiali SA's ClusterRole via resourceNames, limiting which identities the SA can impersonate even at the Kubernetes RBAC level. Must not contain system: prefixed identities. For full RBAC defense-in-depth, configure both allowed_users and allowed_groups.",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "enabled": {
+                      "description": "When true, Kiali will use Kubernetes API impersonation for accessing all clusters instead of requiring per-cluster OAuth login. The user logs in once to the home cluster, and Kiali uses its service account credentials with impersonation headers carrying the user's identity. Requires the Kiali service account on each cluster to have ClusterRole permissions to impersonate users and groups. SECURITY NOTE: Enabling this grants the Kiali service account the ability to impersonate any user. Protect the service account token accordingly.",
+                      "type": "boolean",
+                      "default": false
+                    }
+                  },
+                  "additionalProperties": false
                 },
                 "insecure_skip_verify_tls": {
                   "description": "Set true to skip verifying certificate validity when Kiali contacts OpenShift over https.",
@@ -240,6 +274,11 @@
               "type": "boolean",
               "default": false
             },
+            "max_tool_iterations": {
+              "description": "Maximum number of tool-call iterations (LLM call + tool execution round) allowed per request before the loop is force-aborted. Must be between 1 and 20.",
+              "type": "integer",
+              "default": 5
+            },
             "providers": {
               "description": "A list of providers that can be used for the ChatAI feature. This is the list of providers that will be available to the user to choose from.",
               "type": "array",
@@ -247,7 +286,7 @@
                 "type": "object",
                 "properties": {
                   "config": {
-                    "description": "The type of the config needed by the AI models provider. Available values are `default`, `gemini`, and `azure`. Default value is `default`.",
+                    "description": "The provider configuration variant. Valid values depend on `type`: `anthropic` requires `default`; `google` requires `gemini`; `openai` supports `default`, `gemini`, or `azure`. Default value is `default`.",
                     "type": "string"
                   },
                   "default_model": {
@@ -261,6 +300,15 @@
                   "enabled": {
                     "description": "Enable or disable the provider.",
                     "type": "boolean"
+                  },
+                  "endpoint": {
+                    "description": "The endpoint of the provider. This is only used if a model has no endpoint specified.",
+                    "type": "string"
+                  },
+                  "insecure_skip_verify": {
+                    "description": "Set true to skip verifying certificate validity when Kiali contacts the AI provider over https. When false (the default), the provider's TLS certificate is validated against the Kiali CA bundle.",
+                    "type": "boolean",
+                    "default": false
                   },
                   "key": {
                     "description": "The key of the provider. May refer to a secret using the pattern `secret:<secretName>:<secretKey>`. When using a secret, the token is cached and automatically refreshed when the secret changes, enabling rotation without pod restart.",
@@ -288,12 +336,12 @@
                           "description": "The key of the model. May refer to a secret using the pattern `secret:<secretName>:<secretKey>`. When using a secret, the token is cached and automatically refreshed when the secret changes, enabling rotation without pod restart.",
                           "type": "string"
                         },
-                        "name": {
-                          "description": "The name of the model.",
-                          "type": "string"
-                        },
                         "model": {
                           "description": "The model of the model.",
+                          "type": "string"
+                        },
+                        "name": {
+                          "description": "The name of the model.",
                           "type": "string"
                         }
                       },
@@ -304,8 +352,29 @@
                     "description": "The name of the provider.",
                     "type": "string"
                   },
+                  "tools": {
+                    "description": "Optional provider-specific filter for the ChatAI toolset. Applied after the global `chat_ai.tools` filter. It can further restrict tools for this provider, but it cannot re-enable tools that were already filtered out globally or by feature availability.",
+                    "type": "object",
+                    "properties": {
+                      "disabled_tools": {
+                        "description": "A denylist of tool names to hide from this ChatAI provider. Applied after `enabled_tools`.",
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "enabled_tools": {
+                        "description": "An allowlist of tool names to expose to this ChatAI provider. If set, only the listed tool names remain available for this provider.",
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "additionalProperties": false
+                  },
                   "type": {
-                    "description": "The type of the AI models provider. Available values are `openai`. Default value is `openai`.",
+                    "description": "The type of the AI models provider. Available values are `openai`, `anthropic`, and `google`. Default value is `openai`.",
                     "type": "string"
                   }
                 },
@@ -321,6 +390,11 @@
                   "type": "boolean",
                   "default": true
                 },
+                "inactivity_timeout": {
+                  "description": "Idle time allowed before the conversation is deleted due to inactivity.",
+                  "type": "string",
+                  "default": "30m"
+                },
                 "max_cache_memory_mb": {
                   "description": "The maximum cache memory for the ChatAI store.",
                   "type": "integer",
@@ -335,6 +409,27 @@
                   "description": "Enable or disable the ChatAI store reduction with AI.",
                   "type": "boolean",
                   "default": false
+                }
+              },
+              "additionalProperties": false
+            },
+            "tools": {
+              "description": "Optional global filter for the ChatAI toolset. `enabled_tools` acts as an allowlist. `disabled_tools` acts as a denylist and is applied afterwards.",
+              "type": "object",
+              "properties": {
+                "disabled_tools": {
+                  "description": "A denylist of tool names to hide from all ChatAI providers. Applied after `enabled_tools`.",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "enabled_tools": {
+                  "description": "An allowlist of tool names to expose to ChatAI providers. If set, only the listed tool names remain available.",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 }
               },
               "additionalProperties": false
@@ -439,7 +534,7 @@
               }
             },
             "additional_pod_containers_yaml": {
-              "description": "Additional containers to add to the list of pod containers. Use this to add container(s) to the Kiali pod. SECURITY: By default, the operator will forcibly apply a restrictive security context to all containers (allowPrivilegeEscalation: false, privileged: false, readOnlyRootFilesystem: true, runAsNonRoot: true, capabilities dropped). However, if the operator's ALLOW_SECURITY_CONTEXT_OVERRIDE environment variable is set to 'true', containers can define their own security contexts which will be preserved. Secret-backed volumes are automatically forced to read-only regardless of the security context override setting. Use with care since containers may cause the Kiali container itself to operate incorrectly. It is up to the user who added the additional containers to ensure it works properly inside the Kiali pod; Kiali makes no guarantee additional containers will work.",
+              "description": "Additional containers to add to the list of pod containers. Use this to add container(s) to the Kiali pod. SECURITY: By default, the operator will forcibly apply a restrictive security context to all containers (allowPrivilegeEscalation: false, privileged: false, readOnlyRootFilesystem: true, runAsNonRoot: true, seccompProfile: RuntimeDefault, capabilities dropped). However, if the operator's ALLOW_SECURITY_CONTEXT_OVERRIDE environment variable is set to 'true', containers can define their own security contexts which will be preserved. Secret-backed volumes are automatically forced to read-only regardless of the security context override setting. Use with care since containers may cause the Kiali container itself to operate incorrectly. It is up to the user who added the additional containers to ensure it works properly inside the Kiali pod; Kiali makes no guarantee additional containers will work.",
               "type": "array",
               "items": {
                 "type": "object",
@@ -447,7 +542,7 @@
               }
             },
             "additional_pod_init_containers_yaml": {
-              "description": "Additional initContainers to add to the list of pod initContainers. Use this to add initContainer(s) to the Kiali pod. SECURITY: By default, the operator will forcibly apply a restrictive security context to all initContainers (allowPrivilegeEscalation: false, privileged: false, readOnlyRootFilesystem: true, runAsNonRoot: true, capabilities dropped). However, if the operator's ALLOW_SECURITY_CONTEXT_OVERRIDE environment variable is set to 'true', initContainers can define their own security contexts which will be preserved. Secret-backed volumes are automatically forced to read-only regardless of the security context override setting. Use with care since initContainers may cause the Kiali container itself to operate incorrectly. It is up to the user who added the additional initContainers to ensure it works properly inside the Kiali pod; Kiali makes no guarantee additional initContainers will work.",
+              "description": "Additional initContainers to add to the list of pod initContainers. Use this to add initContainer(s) to the Kiali pod. SECURITY: By default, the operator will forcibly apply a restrictive security context to all initContainers (allowPrivilegeEscalation: false, privileged: false, readOnlyRootFilesystem: true, runAsNonRoot: true, seccompProfile: RuntimeDefault, capabilities dropped). However, if the operator's ALLOW_SECURITY_CONTEXT_OVERRIDE environment variable is set to 'true', initContainers can define their own security contexts which will be preserved. Secret-backed volumes are automatically forced to read-only regardless of the security context override setting. Use with care since initContainers may cause the Kiali container itself to operate incorrectly. It is up to the user who added the additional initContainers to ensure it works properly inside the Kiali pod; Kiali makes no guarantee additional initContainers will work.",
               "type": "array",
               "items": {
                 "type": "object",
@@ -872,6 +967,22 @@
                 "type": "string"
               }
             },
+            "pod_disruption_budget": {
+              "description": "Determines what (if any) PodDisruptionBudget should be created for the Kiali pod.\nA typical way to configure PDB for Kiali is,\n```\nspec:\n  deployment:\n    pod_disruption_budget:\n      api_version: \"policy/v1\"\n      spec:\n        minAvailable: 1\n```\n",
+              "type": "object",
+              "properties": {
+                "api_version": {
+                  "description": "A specific PDB API version that can be specified in case there is some PDB feature you want to use that is only supported in that specific version. If value is an empty string, the default version of 'policy/v1' will be used.",
+                  "type": "string"
+                },
+                "spec": {
+                  "description": "The `spec` specified here will be placed in the created PDB resource's 'spec' section. If `spec` is left empty, no PDB resource will be created. Note that you must not specify the 'selector' section in `spec`; the Kiali Operator will populate that for you.",
+                  "type": "object",
+                  "x-kubernetes-preserve-unknown-fields": true
+                }
+              },
+              "additionalProperties": false
+            },
             "pod_labels": {
               "description": "Custom labels to be created on the Kiali pod.\nAn example use for this setting is to inject an Istio sidecar such as,\n```\nsidecar.istio.io/inject: \"true\"\n```\n",
               "type": "object",
@@ -987,6 +1098,13 @@
               "properties": {
                 "cipher_suites": {
                   "description": "Explicit TLS cipher suites (OpenSSL names). Ignored for TLS 1.3.",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "groups": {
+                  "description": "Explicit TLS groups (supported key exchange mechanisms, e.g., X25519, secp256r1).",
                   "type": "array",
                   "items": {
                     "type": "string"
@@ -1125,6 +1243,45 @@
                           "description": "The client private key file to use when accessing Prometheus using https with mTLS. An empty string means no client private key is used. May refer to a secret using the pattern `secret:<secretName>:<secretKey>`. When using a secret, the key is cached and automatically refreshed when the secret changes, enabling rotation without pod restart.",
                           "type": "string"
                         },
+                        "oauth2": {
+                          "description": "Settings for OAuth2 client_credentials authentication. When auth.type is `oauth2`, these settings are used to obtain an access token.",
+                          "type": "object",
+                          "properties": {
+                            "audience": {
+                              "description": "The audience parameter sent with the token request. Some providers require this to scope the token.",
+                              "type": "string"
+                            },
+                            "auth_style": {
+                              "description": "How to send client credentials to the token endpoint. Use `params` to send in the request body or `header` to send as HTTP Basic Auth (default).",
+                              "type": "string",
+                              "default": "header",
+                              "enum": [
+                                "header",
+                                "params"
+                              ]
+                            },
+                            "client_id": {
+                              "description": "The OAuth2 client ID (a public identifier per RFC 6749 \u00a72.2).",
+                              "type": "string"
+                            },
+                            "client_secret": {
+                              "description": "The OAuth2 client secret. May refer to a secret using the pattern `secret:<secretName>:<secretKey>`. When using a secret, the value is cached and automatically refreshed when the secret changes, enabling rotation without pod restart.",
+                              "type": "string"
+                            },
+                            "scopes": {
+                              "description": "A list of scopes to request with the token.",
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "token_url": {
+                              "description": "The URL of the OAuth2 token endpoint.",
+                              "type": "string"
+                            }
+                          },
+                          "additionalProperties": false
+                        },
                         "password": {
                           "description": "Password to be used when making requests to Prometheus, for basic authentication. May refer to a secret using the pattern `secret:<secretName>:<secretKey>`. When using a secret, the password is cached and automatically refreshed when the secret changes, enabling rotation without pod restart.",
                           "type": "string"
@@ -1134,7 +1291,7 @@
                           "type": "string"
                         },
                         "type": {
-                          "description": "The type of authentication to use when contacting the server. Use `bearer` to send the token to the Prometheus server. Use `basic` to connect with username and password credentials. Use `none` to not use any authentication.",
+                          "description": "The type of authentication to use when contacting the server. Use `bearer` to send the token to the Prometheus server. Use `basic` to connect with username and password credentials. Use `oauth2` to use OAuth2 client_credentials flow. Use `none` to not use any authentication.",
                           "type": "string",
                           "default": "none"
                         },
@@ -1245,6 +1402,45 @@
                       "description": "The client private key file to use when accessing Grafana using https with mTLS. An empty string means no client private key is used. May refer to a secret using the pattern `secret:<secretName>:<secretKey>`. When using a secret, the key is cached and automatically refreshed when the secret changes, enabling rotation without pod restart.",
                       "type": "string"
                     },
+                    "oauth2": {
+                      "description": "Settings for OAuth2 client_credentials authentication. When auth.type is `oauth2`, these settings are used to obtain an access token.",
+                      "type": "object",
+                      "properties": {
+                        "audience": {
+                          "description": "The audience parameter sent with the token request. Some providers require this to scope the token.",
+                          "type": "string"
+                        },
+                        "auth_style": {
+                          "description": "How to send client credentials to the token endpoint. Use `params` to send in the request body or `header` to send as HTTP Basic Auth (default).",
+                          "type": "string",
+                          "default": "header",
+                          "enum": [
+                            "header",
+                            "params"
+                          ]
+                        },
+                        "client_id": {
+                          "description": "The OAuth2 client ID (a public identifier per RFC 6749 \u00a72.2).",
+                          "type": "string"
+                        },
+                        "client_secret": {
+                          "description": "The OAuth2 client secret. May refer to a secret using the pattern `secret:<secretName>:<secretKey>`. When using a secret, the value is cached and automatically refreshed when the secret changes, enabling rotation without pod restart.",
+                          "type": "string"
+                        },
+                        "scopes": {
+                          "description": "A list of scopes to request with the token.",
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "token_url": {
+                          "description": "The URL of the OAuth2 token endpoint.",
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
                     "password": {
                       "description": "Password to be used when making requests to Grafana, for basic authentication. May refer to a secret using the pattern `secret:<secretName>:<secretKey>`. When using a secret, the password is cached and automatically refreshed when the secret changes, enabling rotation without pod restart.",
                       "type": "string"
@@ -1254,7 +1450,7 @@
                       "type": "string"
                     },
                     "type": {
-                      "description": "The type of authentication to use when contacting the server. Use `bearer` to send the token to the Grafana server. Use `basic` to connect with username and password credentials. Use `none` to not use any authentication.",
+                      "description": "The type of authentication to use when contacting the server. Use `bearer` to send the token to the Grafana server. Use `basic` to connect with username and password credentials. Use `oauth2` to use OAuth2 client_credentials flow. Use `none` to not use any authentication.",
                       "type": "string",
                       "default": "none"
                     },
@@ -1465,9 +1661,9 @@
                   "type": "string"
                 },
                 "istio_identity_domain": {
-                  "description": "The Kubernetes cluster DNS domain suffix used to construct fully qualified service hostnames (e.g. reviews.bookinfo.svc.cluster.local) and service account identity strings for validation.",
+                  "description": "The Kubernetes cluster DNS domain suffix used to construct fully qualified service hostnames (e.g. reviews.bookinfo.svc.cluster.local) and service account identity strings for validation. When empty, it is auto-detected from the Istio mesh trustDomain (as 'svc.' + trustDomain). Set explicitly only if you need to override the auto-detected value.",
                   "type": "string",
-                  "default": "svc.cluster.local"
+                  "default": ""
                 },
                 "istiod_polling_interval_seconds": {
                   "description": "How often in seconds Kiali will poll istiod(s) for proxy status. Polling is not performed if istio_api_enabled is false.",
@@ -1539,12 +1735,51 @@
                       "description": "The client private key file to use when accessing Perses using https with mTLS. An empty string means no client private key is used. May refer to a secret using the pattern `secret:<secretName>:<secretKey>`. When using a secret, the key is cached and automatically refreshed when the secret changes, enabling rotation without pod restart.",
                       "type": "string"
                     },
+                    "oauth2": {
+                      "description": "Settings for OAuth2 client_credentials authentication. When auth.type is `oauth2`, these settings are used to obtain an access token.",
+                      "type": "object",
+                      "properties": {
+                        "audience": {
+                          "description": "The audience parameter sent with the token request. Some providers require this to scope the token.",
+                          "type": "string"
+                        },
+                        "auth_style": {
+                          "description": "How to send client credentials to the token endpoint. Use `params` to send in the request body or `header` to send as HTTP Basic Auth (default).",
+                          "type": "string",
+                          "default": "header",
+                          "enum": [
+                            "header",
+                            "params"
+                          ]
+                        },
+                        "client_id": {
+                          "description": "The OAuth2 client ID (a public identifier per RFC 6749 \u00a72.2).",
+                          "type": "string"
+                        },
+                        "client_secret": {
+                          "description": "The OAuth2 client secret. May refer to a secret using the pattern `secret:<secretName>:<secretKey>`. When using a secret, the value is cached and automatically refreshed when the secret changes, enabling rotation without pod restart.",
+                          "type": "string"
+                        },
+                        "scopes": {
+                          "description": "A list of scopes to request with the token.",
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "token_url": {
+                          "description": "The URL of the OAuth2 token endpoint.",
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
                     "password": {
                       "description": "Password to be used when making requests to Perses, for basic authentication. May refer to a secret using the pattern `secret:<secretName>:<secretKey>`. When using a secret, the password is cached and automatically refreshed when the secret changes, enabling rotation without pod restart.",
                       "type": "string"
                     },
                     "type": {
-                      "description": "The type of authentication to use when contacting the server. Use `bearer` to send the token to the Perses server. Use `basic` to connect with username and password credentials. Use `none` to not use any authentication.",
+                      "description": "The type of authentication to use when contacting the server. Use `bearer` to send the token to the Perses server. Use `basic` to connect with username and password credentials. Use `oauth2` to use OAuth2 client_credentials flow. Use `none` to not use any authentication.",
                       "type": "string",
                       "default": "none"
                     },
@@ -1668,6 +1903,45 @@
                       "description": "The client private key file to use when accessing Prometheus using https with mTLS. An empty string means no client private key is used. May refer to a secret using the pattern `secret:<secretName>:<secretKey>`. When using a secret, the key is cached and automatically refreshed when the secret changes, enabling rotation without pod restart.",
                       "type": "string"
                     },
+                    "oauth2": {
+                      "description": "Settings for OAuth2 client_credentials authentication. When auth.type is `oauth2`, these settings are used to obtain an access token.",
+                      "type": "object",
+                      "properties": {
+                        "audience": {
+                          "description": "The audience parameter sent with the token request. Some providers require this to scope the token.",
+                          "type": "string"
+                        },
+                        "auth_style": {
+                          "description": "How to send client credentials to the token endpoint. Use `params` to send in the request body or `header` to send as HTTP Basic Auth (default).",
+                          "type": "string",
+                          "default": "header",
+                          "enum": [
+                            "header",
+                            "params"
+                          ]
+                        },
+                        "client_id": {
+                          "description": "The OAuth2 client ID (a public identifier per RFC 6749 \u00a72.2).",
+                          "type": "string"
+                        },
+                        "client_secret": {
+                          "description": "The OAuth2 client secret. May refer to a secret using the pattern `secret:<secretName>:<secretKey>`. When using a secret, the value is cached and automatically refreshed when the secret changes, enabling rotation without pod restart.",
+                          "type": "string"
+                        },
+                        "scopes": {
+                          "description": "A list of scopes to request with the token.",
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "token_url": {
+                          "description": "The URL of the OAuth2 token endpoint.",
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
                     "password": {
                       "description": "Password to be used when making requests to Prometheus, for basic authentication. May refer to a secret using the pattern `secret:<secretName>:<secretKey>`. When using a secret, the password is cached and automatically refreshed when the secret changes, enabling rotation without pod restart.",
                       "type": "string"
@@ -1677,7 +1951,7 @@
                       "type": "string"
                     },
                     "type": {
-                      "description": "The type of authentication to use when contacting the server. Use `bearer` to send the token to the Prometheus server. Use `basic` to connect with username and password credentials. Use `none` to not use any authentication (this is the default).",
+                      "description": "The type of authentication to use when contacting the server. Use `bearer` to send the token to the Prometheus server. Use `basic` to connect with username and password credentials. Use `oauth2` to use OAuth2 client_credentials flow. Use `none` to not use any authentication (this is the default).",
                       "type": "string",
                       "default": "none"
                     },
@@ -1714,6 +1988,11 @@
                   "additionalProperties": {
                     "type": "string"
                   }
+                },
+                "enabled": {
+                  "description": "When true, Kiali will connect to the Prometheus instance for Istio telemetry metrics. When false, Kiali will run without metrics support - the graph, health based on request rates, and metrics displays will be unavailable.",
+                  "type": "boolean",
+                  "default": true
                 },
                 "health_check_url": {
                   "description": "Used in the Components health feature. This is the url which Kiali will ping to determine whether the component is reachable or not. It defaults to `url` when not provided.",
@@ -1785,6 +2064,45 @@
                       "description": "The client private key file to use when accessing the Tracing server using https with mTLS. An empty string means no client private key is used. May refer to a secret using the pattern `secret:<secretName>:<secretKey>`. When using a secret, the key is cached and automatically refreshed when the secret changes, enabling rotation without pod restart.",
                       "type": "string"
                     },
+                    "oauth2": {
+                      "description": "Settings for OAuth2 client_credentials authentication. When auth.type is `oauth2`, these settings are used to obtain an access token.",
+                      "type": "object",
+                      "properties": {
+                        "audience": {
+                          "description": "The audience parameter sent with the token request. Some providers require this to scope the token.",
+                          "type": "string"
+                        },
+                        "auth_style": {
+                          "description": "How to send client credentials to the token endpoint. Use `params` to send in the request body or `header` to send as HTTP Basic Auth (default).",
+                          "type": "string",
+                          "default": "header",
+                          "enum": [
+                            "header",
+                            "params"
+                          ]
+                        },
+                        "client_id": {
+                          "description": "The OAuth2 client ID (a public identifier per RFC 6749 \u00a72.2).",
+                          "type": "string"
+                        },
+                        "client_secret": {
+                          "description": "The OAuth2 client secret. May refer to a secret using the pattern `secret:<secretName>:<secretKey>`. When using a secret, the value is cached and automatically refreshed when the secret changes, enabling rotation without pod restart.",
+                          "type": "string"
+                        },
+                        "scopes": {
+                          "description": "A list of scopes to request with the token.",
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "token_url": {
+                          "description": "The URL of the OAuth2 token endpoint.",
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
                     "password": {
                       "description": "Password to be used when making requests to the Tracing server, for basic authentication. May refer to a secret using the pattern `secret:<secretName>:<secretKey>`. When using a secret, the password is cached and automatically refreshed when the secret changes, enabling rotation without pod restart.",
                       "type": "string"
@@ -1794,7 +2112,7 @@
                       "type": "string"
                     },
                     "type": {
-                      "description": "The type of authentication to use when contacting the server. Use `bearer` to send the token to the Tracing server. Use `basic` to connect with username and password credentials. Use `none` to not use any authentication (this is the default).",
+                      "description": "The type of authentication to use when contacting the server. Use `bearer` to send the token to the Tracing server. Use `basic` to connect with username and password credentials. Use `oauth2` to use OAuth2 client_credentials flow (only supported when use_grpc is false). Use `none` to not use any authentication (this is the default).",
                       "type": "string",
                       "default": "none"
                     },
@@ -2072,24 +2390,20 @@
               "type": "string"
             },
             "egress_gateway_label": {
-              "description": "The selector label for Egress Gateway workload. This is typically `istio=egressgateway`.",
-              "type": "string",
-              "default": "istio=egressgateway"
+              "description": "DEPRECATED AFTER v2.27: This setting is deprecated and will be ignored.",
+              "type": "string"
             },
             "ingress_gateway_label": {
-              "description": "The selector label for Ingress Gateway workload. This is typically `istio=ingressgateway`.",
-              "type": "string",
-              "default": "istio=ingressgateway"
+              "description": "DEPRECATED AFTER v2.27: This setting is deprecated and will be ignored.",
+              "type": "string"
             },
             "injection_label_name": {
-              "description": "The name of the label used to instruct Istio to automatically inject sidecar proxies when applications are deployed.",
-              "type": "string",
-              "default": "istio-injection"
+              "description": "DEPRECATED AFTER v2.27: This setting is deprecated and will be ignored. The injection label name is now hardcoded to the standard value.",
+              "type": "string"
             },
             "injection_label_rev": {
-              "description": "The label used to identify the Istio revision.",
-              "type": "string",
-              "default": "istio.io/rev"
+              "description": "DEPRECATED AFTER v2.27: This setting is deprecated and will be ignored. The injection label revision is now hardcoded to the standard value.",
+              "type": "string"
             },
             "version_label_name": {
               "description": "If using a single scheme for app/version labeling, set this to the version label name being used. This is typically `version` or `app.kubernetes.io/version`. The default is unset, and Kiali will handle mixed schemes.",
