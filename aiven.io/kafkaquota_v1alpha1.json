@@ -1,5 +1,5 @@
 {
-  "description": "ConnectionPool is the Schema for the connectionpools API.\nInfo \"Exposes secret keys\": `CONNECTIONPOOL_NAME`, `CONNECTIONPOOL_HOST`, `CONNECTIONPOOL_PORT`, `CONNECTIONPOOL_DATABASE`, `CONNECTIONPOOL_USER`, `CONNECTIONPOOL_PASSWORD`, `CONNECTIONPOOL_SSLMODE`, `CONNECTIONPOOL_DATABASE_URI`, `CONNECTIONPOOL_CA_CERT`",
+  "description": "KafkaQuota is the Schema for the kafkaquotas API.",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -13,7 +13,7 @@
       "type": "object"
     },
     "spec": {
-      "description": "ConnectionPoolSpec defines the desired state of ConnectionPool",
+      "description": "KafkaQuotaSpec defines the desired state of KafkaQuota",
       "properties": {
         "authSecretRef": {
           "description": "Authentication reference to Aiven token in a secret",
@@ -34,78 +34,30 @@
           "type": "object",
           "additionalProperties": false
         },
-        "connInfoSecretTarget": {
-          "description": "Secret configuration.",
-          "properties": {
-            "annotations": {
-              "additionalProperties": {
-                "type": "string"
-              },
-              "description": "Annotations added to the secret",
-              "type": "object",
-              "x-kubernetes-preserve-unknown-fields": true
-            },
-            "labels": {
-              "additionalProperties": {
-                "type": "string"
-              },
-              "description": "Labels added to the secret",
-              "type": "object",
-              "x-kubernetes-preserve-unknown-fields": true
-            },
-            "name": {
-              "description": "Name of the secret resource to be created. By default, it is equal to the resource name",
-              "type": "string",
-              "x-kubernetes-validations": [
-                {
-                  "message": "Value is immutable",
-                  "rule": "self == oldSelf"
-                }
-              ]
-            },
-            "prefix": {
-              "description": "Prefix for the secret's keys.\nAdded \"as is\" without any transformations.\nBy default, is equal to the kind name in uppercase + underscore, e.g. `KAFKA_`, `REDIS_`, etc.",
-              "type": "string"
-            }
-          },
-          "required": [
-            "name"
-          ],
-          "type": "object",
-          "additionalProperties": false
-        },
-        "connInfoSecretTargetDisabled": {
-          "description": "When true, the secret containing connection information will not be created, defaults to false. This field cannot be changed after resource creation.",
-          "type": "boolean",
-          "x-kubernetes-validations": [
-            {
-              "message": "connInfoSecretTargetDisabled is immutable.",
-              "rule": "self == oldSelf"
-            }
-          ]
-        },
-        "databaseName": {
-          "description": "Name of the database the pool connects to",
-          "maxLength": 40,
+        "clientId": {
+          "description": "Represents a logical group of clients, assigned a unique name by the client application.\nQuotas can be applied based on user, client-id, or both.\nThe most relevant quota is chosen for each connection. All connections within a quota group share the same quota.\nIt is possible to set default quotas for each (user, client-id), user or client-id group by specifying 'default'.",
+          "maxLength": 255,
+          "minLength": 1,
           "type": "string",
           "x-kubernetes-validations": [
             {
-              "message": "databaseName is immutable",
+              "message": "Value is immutable",
               "rule": "self == oldSelf"
             }
           ]
         },
-        "poolMode": {
-          "description": "Mode the pool operates in (session, transaction, statement)",
-          "enum": [
-            "session",
-            "transaction",
-            "statement"
-          ],
-          "type": "string"
+        "consumerByteRate": {
+          "description": "Defines the bandwidth limit in bytes/sec for each group of clients sharing a quota.\nEvery distinct client group is allocated a specific quota, as defined by the cluster, on a per-broker basis.\nExceeding this limit results in client throttling.",
+          "format": "int64",
+          "maximum": 1073741824,
+          "minimum": 0,
+          "type": "integer"
         },
-        "poolSize": {
-          "description": "Number of connections the pool may create towards the backend server",
+        "producerByteRate": {
+          "description": "Defines the bandwidth limit in bytes/sec for each group of clients sharing a quota.\nEvery distinct client group is allocated a specific quota, as defined by the cluster, on a per-broker basis.\nExceeding this limit results in client throttling.",
+          "format": "int64",
+          "maximum": 1073741824,
+          "minimum": 0,
           "type": "integer"
         },
         "project": {
@@ -120,6 +72,12 @@
             }
           ]
         },
+        "requestPercentage": {
+          "description": "Sets the maximum percentage of CPU time that a client group can use on request handler I/O and network threads per broker within a quota window.\nExceeding this limit triggers throttling. The quota, expressed as a percentage, also indicates the total allowable CPU usage\nfor the client groups sharing the quota.",
+          "maximum": 100,
+          "minimum": 0,
+          "type": "number"
+        },
         "serviceName": {
           "description": "Specifies the name of the service that this resource belongs to",
           "maxLength": 63,
@@ -132,41 +90,41 @@
             }
           ]
         },
-        "username": {
-          "description": "Name of the service user used to connect to the database",
+        "user": {
+          "description": "Represents a logical group of clients, assigned a unique name by the client application.\nQuotas can be applied based on user, client-id, or both.\nThe most relevant quota is chosen for each connection. All connections within a quota group share the same quota.\nIt is possible to set default quotas for each (user, client-id), user or client-id group by specifying 'default'.",
           "maxLength": 64,
+          "minLength": 1,
           "type": "string",
           "x-kubernetes-validations": [
             {
-              "message": "username is immutable",
+              "message": "Value is immutable",
               "rule": "self == oldSelf"
             }
           ]
         }
       },
       "required": [
-        "databaseName",
         "project",
         "serviceName"
       ],
       "type": "object",
       "x-kubernetes-validations": [
         {
-          "message": "username is immutable",
-          "rule": "((!has(oldSelf.username) || size(oldSelf.username) == 0) && (!has(self.username) || size(self.username) == 0)) || (has(oldSelf.username) && size(oldSelf.username) > 0 && has(self.username) && self.username == oldSelf.username)"
+          "message": "At least one of user or clientId must be set",
+          "rule": "has(self.user) || has(self.clientId)"
         },
         {
-          "message": "connInfoSecretTargetDisabled can only be set during resource creation.",
-          "rule": "has(oldSelf.connInfoSecretTargetDisabled) == has(self.connInfoSecretTargetDisabled)"
+          "message": "At least one of consumerByteRate, producerByteRate or requestPercentage must be set",
+          "rule": "has(self.consumerByteRate) || has(self.producerByteRate) || has(self.requestPercentage)"
         }
       ],
       "additionalProperties": false
     },
     "status": {
-      "description": "ConnectionPoolStatus defines the observed state of ConnectionPool",
+      "description": "KafkaQuotaStatus defines the observed state of KafkaQuota",
       "properties": {
         "conditions": {
-          "description": "Conditions represent the latest available observations of an ConnectionPool state",
+          "description": "Conditions represent the latest available observations of a KafkaQuota state",
           "items": {
             "description": "Condition contains details for one aspect of the current state of this API Resource.",
             "properties": {

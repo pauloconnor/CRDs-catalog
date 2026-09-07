@@ -1,5 +1,5 @@
 {
-  "description": "ServiceUser is the Schema for the serviceusers API.\nCreates a service user for accessing Aiven services. The ServiceUser resource name becomes the username in Aiven, unless spec.username overrides it.\nBuilt-in users like 'avnadmin' cannot be deleted but their passwords can be modified using connInfoSecretSource.\nInfo \"Exposes secret keys\": `SERVICEUSER_HOST`, `SERVICEUSER_PORT`, `SERVICEUSER_USERNAME`, `SERVICEUSER_PASSWORD`, `SERVICEUSER_CA_CERT`, `SERVICEUSER_ACCESS_CERT`, `SERVICEUSER_ACCESS_KEY`, `SERVICEUSER_SASL_HOST`, `SERVICEUSER_SASL_PORT`, `SERVICEUSER_SCHEMA_REGISTRY_HOST`, `SERVICEUSER_SCHEMA_REGISTRY_PORT`",
+  "description": "OrganizationProject is the Schema for the organizationprojects API.\nWarning \"Adoption of existing projects\":\nIf `projectId` refers to a project that already exists in the organization, the operator adopts it:\nthe remote state is overwritten to match the spec (billing group, parent, tags, technical emails, base port),\nand deleting the resource deletes the project in Aiven.\n\nInfo \"Exposes secret keys\": `ORGANIZATIONPROJECT_CA_CERT`",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -13,43 +13,8 @@
       "type": "object"
     },
     "spec": {
-      "description": "ServiceUserSpec defines the desired state of ServiceUser",
+      "description": "OrganizationProjectSpec defines the desired state of OrganizationProject.",
       "properties": {
-        "accessControl": {
-          "description": "AccessControl Service type specific access control rules for user.\nWhen this block is present, the operator manages the full access-control scope it contains.",
-          "properties": {
-            "valkeyAclCategories": {
-              "description": "Command category rules. Order matters.",
-              "items": {
-                "type": "string"
-              },
-              "type": "array"
-            },
-            "valkeyAclChannels": {
-              "description": "Glob-style patterns defining which pub/sub channels can be accessed.",
-              "items": {
-                "type": "string"
-              },
-              "type": "array"
-            },
-            "valkeyAclCommands": {
-              "description": "Rules for individual commands. Order matters.",
-              "items": {
-                "type": "string"
-              },
-              "type": "array"
-            },
-            "valkeyAclKeys": {
-              "description": "Key access rules.",
-              "items": {
-                "type": "string"
-              },
-              "type": "array"
-            }
-          },
-          "type": "object",
-          "additionalProperties": false
-        },
         "authSecretRef": {
           "description": "Authentication reference to Aiven token in a secret",
           "properties": {
@@ -69,34 +34,16 @@
           "type": "object",
           "additionalProperties": false
         },
-        "authentication": {
-          "description": "Authentication details",
-          "enum": [
-            "caching_sha2_password",
-            "mysql_native_password"
-          ],
-          "type": "string"
+        "basePort": {
+          "description": "BasePort is the valid port number range for the project, from 10000 to 30000.\nWhen omitted, the field is unmanaged: Aiven assigns the value and changes made\noutside Kubernetes are left as is.",
+          "maximum": 30000,
+          "minimum": 10000,
+          "type": "integer"
         },
-        "connInfoSecretSource": {
-          "description": "ConnInfoSecretSource declares the password the operator should enforce on the user.\nDirect password changes in the database will be reverted on the next reconcile cycle.\nTo rotate, update the source secret.\nWhen unset, the Operator does not manage the password:\nthe target secret holds whatever password the Aiven API returns.\nIf the password is later changed directly in the database,\nthe API returns an empty value and the target secret is emptied on the next reconcile.\nPassword must be 8-256 characters long.",
-          "properties": {
-            "name": {
-              "description": "Name of the secret resource to read connection parameters from.\nThe secret must be in the same namespace as the resource.",
-              "minLength": 1,
-              "type": "string"
-            },
-            "passwordKey": {
-              "description": "Key in the secret containing the password to use for authentication",
-              "minLength": 1,
-              "type": "string"
-            }
-          },
-          "required": [
-            "name",
-            "passwordKey"
-          ],
-          "type": "object",
-          "additionalProperties": false
+        "billingGroupId": {
+          "description": "BillingGroupID is the ID of the billing group the project is assigned to.",
+          "minLength": 1,
+          "type": "string"
         },
         "connInfoSecretTarget": {
           "description": "Secret configuration.",
@@ -148,9 +95,26 @@
             }
           ]
         },
-        "project": {
-          "description": "Identifies the project this resource belongs to",
+        "organizationId": {
+          "description": "OrganizationID is the Aiven organization ID that owns the project.\nIt is the addressing key for the project and cannot be changed (moving a project\nbetween organizations is not supported).",
+          "minLength": 1,
+          "type": "string",
+          "x-kubernetes-validations": [
+            {
+              "message": "Value is immutable",
+              "rule": "self == oldSelf"
+            }
+          ]
+        },
+        "parentId": {
+          "description": "ParentID is the ID of the organization or organizational unit the project belongs to.\nMoving a project between organizational units within the same organization is supported.",
+          "minLength": 1,
+          "type": "string"
+        },
+        "projectId": {
+          "description": "ProjectID is the name of the project. It is immutable once set.",
           "maxLength": 63,
+          "minLength": 1,
           "pattern": "^[a-zA-Z0-9_-]+$",
           "type": "string",
           "x-kubernetes-validations": [
@@ -160,41 +124,37 @@
             }
           ]
         },
-        "serviceName": {
-          "description": "Specifies the name of the service that this resource belongs to",
-          "maxLength": 63,
-          "pattern": "^[a-z][-a-z0-9]+$",
-          "type": "string",
-          "x-kubernetes-validations": [
-            {
-              "message": "Value is immutable",
-              "rule": "self == oldSelf"
-            }
-          ]
+        "tags": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Tags are key-value pairs that allow you to categorize projects.\nThis map is authoritative: when omitted, tags added outside\nKubernetes are removed.",
+          "type": "object"
         },
-        "username": {
-          "description": "Username of the service user on Aiven.\nDefaults to the K8S resource name. Aiven accepts usernames that are not valid\nKubernetes object names (e.g. containing underscores or uppercase characters);\nset this field to manage such users.\nCan only be set at creation and is immutable afterward.\nTo use a different username, delete the resource and create a new one.\nMultiple ServiceUser resources referencing the same username are not supported.\nEnsure each Aiven service user is managed by at most one resource.",
-          "maxLength": 64,
-          "minLength": 1,
-          "type": "string",
+        "technicalEmails": {
+          "description": "TechnicalEmails are the technical contact emails of the project.\nThis list is authoritative: when omitted, emails added outside Kubernetes are removed.\nDuplicates are rejected.",
+          "items": {
+            "maxLength": 254,
+            "type": "string"
+          },
+          "maxItems": 10,
+          "type": "array",
           "x-kubernetes-validations": [
             {
-              "message": "username is immutable.",
-              "rule": "self == oldSelf"
+              "message": "Emails must be unique",
+              "rule": "self.all(x, self.exists_one(y, y == x))"
             }
           ]
         }
       },
       "required": [
-        "project",
-        "serviceName"
+        "billingGroupId",
+        "organizationId",
+        "parentId",
+        "projectId"
       ],
       "type": "object",
       "x-kubernetes-validations": [
-        {
-          "message": "username can only be set during resource creation.",
-          "rule": "has(self.username) == has(oldSelf.username)"
-        },
         {
           "message": "connInfoSecretTargetDisabled can only be set during resource creation.",
           "rule": "has(oldSelf.connInfoSecretTargetDisabled) == has(self.connInfoSecretTargetDisabled)"
@@ -203,10 +163,10 @@
       "additionalProperties": false
     },
     "status": {
-      "description": "ServiceUserStatus defines the observed state of ServiceUser",
+      "description": "OrganizationProjectStatus defines the observed state of OrganizationProject.",
       "properties": {
         "conditions": {
-          "description": "Conditions represent the latest available observations of an ServiceUser state",
+          "description": "Conditions represent the latest available observations of an OrganizationProject state.",
           "items": {
             "description": "Condition contains details for one aspect of the current state of this API Resource.",
             "properties": {
@@ -260,10 +220,6 @@
             "additionalProperties": false
           },
           "type": "array"
-        },
-        "type": {
-          "description": "Type of the user account",
-          "type": "string"
         }
       },
       "required": [
