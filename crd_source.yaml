@@ -1038,7 +1038,7 @@ sources:
     changelog: "https://github.com/open-feature/open-feature-operator/releases"
 
   - url: "https://github.com/open-policy-agent/gatekeeper"
-    tag: "v3.22.1"
+    tag: "v3.23.1"
     repo_path: "charts/gatekeeper/crds"
     changelog: "https://github.com/open-policy-agent/gatekeeper/releases"
 
