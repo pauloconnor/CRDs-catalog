@@ -31,7 +31,7 @@
               "items": {
                 "properties": {
                   "advancedOptions": {
-                    "description": "(Block List, Max: 1) Advanced Options for Alert Rules (see below for nested schema)\nAdvanced Options for Alert Rules",
+                    "description": "(Block List) Advanced Options for Alert Rules (see below for nested schema)\nAdvanced Options for Alert Rules",
                     "items": {
                       "properties": {
                         "minFailures": {
@@ -53,7 +53,7 @@
                           "type": "string"
                         },
                         "value": {
-                          "description": "(Number) Value between 0 and 1. If the value of the query is above the objective, the SLO is met.\nTemplatable value",
+                          "description": "(String) Templatable value\nTemplatable value",
                           "type": "string"
                         }
                       },
@@ -63,7 +63,7 @@
                     "type": "array"
                   },
                   "fastburn": {
-                    "description": "(Block List, Max: 1) Alerting Rules generated for Fast Burn alerts (see below for nested schema)\nAlerting Rules generated for Fast Burn alerts",
+                    "description": "(Block List) Alerting Rules generated for Fast Burn alerts (see below for nested schema)\nAlerting Rules generated for Fast Burn alerts",
                     "items": {
                       "properties": {
                         "annotation": {
@@ -75,7 +75,7 @@
                                 "type": "string"
                               },
                               "value": {
-                                "description": "(Number) Value between 0 and 1. If the value of the query is above the objective, the SLO is met.\nTemplatable value",
+                                "description": "(String) Templatable value\nTemplatable value",
                                 "type": "string"
                               }
                             },
@@ -89,7 +89,7 @@
                           "items": {
                             "properties": {
                               "type": {
-                                "description": "(String) Query type must be one of: \"freeform\", \"query\", \"ratio\", \"grafana_queries\" or \"threshold\"\nType of the alert enrichment. Currently only \"assistantInvestigation\" is supported.",
+                                "description": "(String) Type of the alert enrichment. Currently only \"assistantInvestigation\" is supported.\nType of the alert enrichment. Currently only \"assistantInvestigation\" is supported.",
                                 "type": "string"
                               }
                             },
@@ -107,7 +107,7 @@
                                 "type": "string"
                               },
                               "value": {
-                                "description": "(Number) Value between 0 and 1. If the value of the query is above the objective, the SLO is met.\nTemplatable value",
+                                "description": "(String) Templatable value\nTemplatable value",
                                 "type": "string"
                               }
                             },
@@ -131,7 +131,7 @@
                           "type": "string"
                         },
                         "value": {
-                          "description": "(Number) Value between 0 and 1. If the value of the query is above the objective, the SLO is met.\nTemplatable value",
+                          "description": "(String) Templatable value\nTemplatable value",
                           "type": "string"
                         }
                       },
@@ -141,7 +141,7 @@
                     "type": "array"
                   },
                   "slowburn": {
-                    "description": "(Block List, Max: 1) Alerting Rules generated for Slow Burn alerts (see below for nested schema)\nAlerting Rules generated for Slow Burn alerts",
+                    "description": "(Block List) Alerting Rules generated for Slow Burn alerts (see below for nested schema)\nAlerting Rules generated for Slow Burn alerts",
                     "items": {
                       "properties": {
                         "annotation": {
@@ -153,7 +153,7 @@
                                 "type": "string"
                               },
                               "value": {
-                                "description": "(Number) Value between 0 and 1. If the value of the query is above the objective, the SLO is met.\nTemplatable value",
+                                "description": "(String) Templatable value\nTemplatable value",
                                 "type": "string"
                               }
                             },
@@ -167,7 +167,7 @@
                           "items": {
                             "properties": {
                               "type": {
-                                "description": "(String) Query type must be one of: \"freeform\", \"query\", \"ratio\", \"grafana_queries\" or \"threshold\"\nType of the alert enrichment. Currently only \"assistantInvestigation\" is supported.",
+                                "description": "(String) Type of the alert enrichment. Currently only \"assistantInvestigation\" is supported.\nType of the alert enrichment. Currently only \"assistantInvestigation\" is supported.",
                                 "type": "string"
                               }
                             },
@@ -185,7 +185,7 @@
                                 "type": "string"
                               },
                               "value": {
-                                "description": "(Number) Value between 0 and 1. If the value of the query is above the objective, the SLO is met.\nTemplatable value",
+                                "description": "(String) Templatable value\nTemplatable value",
                                 "type": "string"
                               }
                             },
@@ -211,7 +211,7 @@
               "type": "string"
             },
             "destinationDatasource": {
-              "description": "(Block List, Min: 1, Max: 1) Destination Datasource sets the datasource defined for an SLO (see below for nested schema)\nDestination Datasource sets the datasource defined for an SLO",
+              "description": "(Block List) Required. Destination Datasource sets the datasource defined for an SLO. (see below for nested schema)\n**Required.** Destination Datasource sets the datasource defined for an SLO.",
               "items": {
                 "properties": {
                   "ref": {
@@ -305,7 +305,7 @@
               "type": "array"
             },
             "folderUid": {
-              "description": "(String) UID for the SLO folder\nUID for the SLO folder",
+              "description": "empty if set; omit the attribute entirely to associate the SLO with the default Grafana SLO folder.\nUID for the SLO folder. Must be non-empty if set; omit the attribute entirely to associate the SLO with the default Grafana SLO folder.",
               "type": "string"
             },
             "label": {
@@ -317,7 +317,7 @@
                     "type": "string"
                   },
                   "value": {
-                    "description": "(Number) Value between 0 and 1. If the value of the query is above the objective, the SLO is met.\nTemplatable value",
+                    "description": "(String) Templatable value\nTemplatable value",
                     "type": "string"
                   }
                 },
@@ -331,11 +331,11 @@
               "type": "string"
             },
             "objectives": {
-              "description": "(Block List, Min: 1) Over each rolling time window, the remaining error budget will be calculated, and separate alerts can be generated for each time window based on the SLO burn rate or remaining error budget. (see below for nested schema)\nOver each rolling time window, the remaining error budget will be calculated, and separate alerts can be generated for each time window based on the SLO burn rate or remaining error budget.",
+              "description": "(Block List) Required. Over each rolling time window, the remaining error budget will be calculated, and separate alerts can be generated for each time window based on the SLO burn rate or remaining error budget. (see below for nested schema)\n**Required.** Over each rolling time window, the remaining error budget will be calculated, and separate alerts can be generated for each time window based on the SLO burn rate or remaining error budget.",
               "items": {
                 "properties": {
                   "value": {
-                    "description": "(Number) Value between 0 and 1. If the value of the query is above the objective, the SLO is met.\nValue between 0 and 1. If the value of the query is above the objective, the SLO is met.",
+                    "description": "(String) Templatable value\nValue between 0 and 1. If the value of the query is above the objective, the SLO is met.",
                     "type": "number"
                   },
                   "window": {
@@ -349,15 +349,15 @@
               "type": "array"
             },
             "query": {
-              "description": "(Block List, Min: 1) Query describes the indicator that will be measured against the objective. Freeform Query types are currently supported. (see below for nested schema)\nQuery describes the indicator that will be measured against the objective. Freeform Query types are currently supported.",
+              "description": "(Block List) Required. Query describes the indicator that will be measured against the objective. Freeform Query types are currently supported. (see below for nested schema)\n**Required.** Query describes the indicator that will be measured against the objective. Freeform Query types are currently supported.",
               "items": {
                 "properties": {
                   "freeform": {
-                    "description": "(Block List, Max: 1) (see below for nested schema)",
+                    "description": "(Block List) Freeform query configuration. (see below for nested schema)\nFreeform query configuration.",
                     "items": {
                       "properties": {
                         "query": {
-                          "description": "(Block List, Min: 1) Query describes the indicator that will be measured against the objective. Freeform Query types are currently supported. (see below for nested schema)\nFreeform Query Field - valid promQl",
+                          "description": "(Block List) Required. Query describes the indicator that will be measured against the objective. Freeform Query types are currently supported. (see below for nested schema)\nFreeform Query Field - valid promQl",
                           "type": "string"
                         }
                       },
@@ -367,11 +367,11 @@
                     "type": "array"
                   },
                   "grafanaQueries": {
-                    "description": "(Block List, Max: 1) Array for holding a set of grafana queries (see below for nested schema)\nArray for holding a set of grafana queries",
+                    "description": "(Block List) Array for holding a set of grafana queries (see below for nested schema)\nArray for holding a set of grafana queries",
                     "items": {
                       "properties": {
                         "grafanaQueries": {
-                          "description": "(Block List, Max: 1) Array for holding a set of grafana queries (see below for nested schema)\nQuery Object - Array of Grafana Query JSON objects",
+                          "description": "(Block List) Array for holding a set of grafana queries (see below for nested schema)\nQuery Object - Array of Grafana Query JSON objects",
                           "type": "string"
                         }
                       },
@@ -381,7 +381,7 @@
                     "type": "array"
                   },
                   "ratio": {
-                    "description": "(Block List, Max: 1) (see below for nested schema)",
+                    "description": "(Block List) Ratio query configuration. (see below for nested schema)\nRatio query configuration.",
                     "items": {
                       "properties": {
                         "groupByLabels": {
@@ -406,7 +406,7 @@
                     "type": "array"
                   },
                   "type": {
-                    "description": "(String) Query type must be one of: \"freeform\", \"query\", \"ratio\", \"grafana_queries\" or \"threshold\"\nQuery type must be one of: \"freeform\", \"query\", \"ratio\", \"grafana_queries\" or \"threshold\"",
+                    "description": "(String) Type of the alert enrichment. Currently only \"assistantInvestigation\" is supported.\nQuery type must be one of: \"freeform\", \"query\", \"ratio\", \"grafana_queries\" or \"threshold\"",
                     "type": "string"
                   }
                 },
@@ -416,7 +416,7 @@
               "type": "array"
             },
             "searchExpression": {
-              "description": "(String) The name of a search expression in Grafana Asserts. This is used in the SLO UI to open the Asserts RCA workbench and in alerts to link to the RCA workbench.\nThe name of a search expression in Grafana Asserts. This is used in the SLO UI to open the Asserts RCA workbench and in alerts to link to the RCA workbench.",
+              "description": "empty if set; omit the attribute entirely to leave it unset. This is used in the SLO UI to open the Asserts RCA workbench and in alerts to link to the RCA workbench.\nThe name of a search expression in Grafana Asserts. Must be non-empty if set; omit the attribute entirely to leave it unset. This is used in the SLO UI to open the Asserts RCA workbench and in alerts to link to the RCA workbench.",
               "type": "string"
             },
             "uuid": {
@@ -435,7 +435,7 @@
               "items": {
                 "properties": {
                   "advancedOptions": {
-                    "description": "(Block List, Max: 1) Advanced Options for Alert Rules (see below for nested schema)\nAdvanced Options for Alert Rules",
+                    "description": "(Block List) Advanced Options for Alert Rules (see below for nested schema)\nAdvanced Options for Alert Rules",
                     "items": {
                       "properties": {
                         "minFailures": {
@@ -457,7 +457,7 @@
                           "type": "string"
                         },
                         "value": {
-                          "description": "(Number) Value between 0 and 1. If the value of the query is above the objective, the SLO is met.\nTemplatable value",
+                          "description": "(String) Templatable value\nTemplatable value",
                           "type": "string"
                         }
                       },
@@ -467,7 +467,7 @@
                     "type": "array"
                   },
                   "fastburn": {
-                    "description": "(Block List, Max: 1) Alerting Rules generated for Fast Burn alerts (see below for nested schema)\nAlerting Rules generated for Fast Burn alerts",
+                    "description": "(Block List) Alerting Rules generated for Fast Burn alerts (see below for nested schema)\nAlerting Rules generated for Fast Burn alerts",
                     "items": {
                       "properties": {
                         "annotation": {
@@ -479,7 +479,7 @@
                                 "type": "string"
                               },
                               "value": {
-                                "description": "(Number) Value between 0 and 1. If the value of the query is above the objective, the SLO is met.\nTemplatable value",
+                                "description": "(String) Templatable value\nTemplatable value",
                                 "type": "string"
                               }
                             },
@@ -493,7 +493,7 @@
                           "items": {
                             "properties": {
                               "type": {
-                                "description": "(String) Query type must be one of: \"freeform\", \"query\", \"ratio\", \"grafana_queries\" or \"threshold\"\nType of the alert enrichment. Currently only \"assistantInvestigation\" is supported.",
+                                "description": "(String) Type of the alert enrichment. Currently only \"assistantInvestigation\" is supported.\nType of the alert enrichment. Currently only \"assistantInvestigation\" is supported.",
                                 "type": "string"
                               }
                             },
@@ -511,7 +511,7 @@
                                 "type": "string"
                               },
                               "value": {
-                                "description": "(Number) Value between 0 and 1. If the value of the query is above the objective, the SLO is met.\nTemplatable value",
+                                "description": "(String) Templatable value\nTemplatable value",
                                 "type": "string"
                               }
                             },
@@ -535,7 +535,7 @@
                           "type": "string"
                         },
                         "value": {
-                          "description": "(Number) Value between 0 and 1. If the value of the query is above the objective, the SLO is met.\nTemplatable value",
+                          "description": "(String) Templatable value\nTemplatable value",
                           "type": "string"
                         }
                       },
@@ -545,7 +545,7 @@
                     "type": "array"
                   },
                   "slowburn": {
-                    "description": "(Block List, Max: 1) Alerting Rules generated for Slow Burn alerts (see below for nested schema)\nAlerting Rules generated for Slow Burn alerts",
+                    "description": "(Block List) Alerting Rules generated for Slow Burn alerts (see below for nested schema)\nAlerting Rules generated for Slow Burn alerts",
                     "items": {
                       "properties": {
                         "annotation": {
@@ -557,7 +557,7 @@
                                 "type": "string"
                               },
                               "value": {
-                                "description": "(Number) Value between 0 and 1. If the value of the query is above the objective, the SLO is met.\nTemplatable value",
+                                "description": "(String) Templatable value\nTemplatable value",
                                 "type": "string"
                               }
                             },
@@ -571,7 +571,7 @@
                           "items": {
                             "properties": {
                               "type": {
-                                "description": "(String) Query type must be one of: \"freeform\", \"query\", \"ratio\", \"grafana_queries\" or \"threshold\"\nType of the alert enrichment. Currently only \"assistantInvestigation\" is supported.",
+                                "description": "(String) Type of the alert enrichment. Currently only \"assistantInvestigation\" is supported.\nType of the alert enrichment. Currently only \"assistantInvestigation\" is supported.",
                                 "type": "string"
                               }
                             },
@@ -589,7 +589,7 @@
                                 "type": "string"
                               },
                               "value": {
-                                "description": "(Number) Value between 0 and 1. If the value of the query is above the objective, the SLO is met.\nTemplatable value",
+                                "description": "(String) Templatable value\nTemplatable value",
                                 "type": "string"
                               }
                             },
@@ -615,7 +615,7 @@
               "type": "string"
             },
             "destinationDatasource": {
-              "description": "(Block List, Min: 1, Max: 1) Destination Datasource sets the datasource defined for an SLO (see below for nested schema)\nDestination Datasource sets the datasource defined for an SLO",
+              "description": "(Block List) Required. Destination Datasource sets the datasource defined for an SLO. (see below for nested schema)\n**Required.** Destination Datasource sets the datasource defined for an SLO.",
               "items": {
                 "properties": {
                   "ref": {
@@ -709,7 +709,7 @@
               "type": "array"
             },
             "folderUid": {
-              "description": "(String) UID for the SLO folder\nUID for the SLO folder",
+              "description": "empty if set; omit the attribute entirely to associate the SLO with the default Grafana SLO folder.\nUID for the SLO folder. Must be non-empty if set; omit the attribute entirely to associate the SLO with the default Grafana SLO folder.",
               "type": "string"
             },
             "label": {
@@ -721,7 +721,7 @@
                     "type": "string"
                   },
                   "value": {
-                    "description": "(Number) Value between 0 and 1. If the value of the query is above the objective, the SLO is met.\nTemplatable value",
+                    "description": "(String) Templatable value\nTemplatable value",
                     "type": "string"
                   }
                 },
@@ -735,11 +735,11 @@
               "type": "string"
             },
             "objectives": {
-              "description": "(Block List, Min: 1) Over each rolling time window, the remaining error budget will be calculated, and separate alerts can be generated for each time window based on the SLO burn rate or remaining error budget. (see below for nested schema)\nOver each rolling time window, the remaining error budget will be calculated, and separate alerts can be generated for each time window based on the SLO burn rate or remaining error budget.",
+              "description": "(Block List) Required. Over each rolling time window, the remaining error budget will be calculated, and separate alerts can be generated for each time window based on the SLO burn rate or remaining error budget. (see below for nested schema)\n**Required.** Over each rolling time window, the remaining error budget will be calculated, and separate alerts can be generated for each time window based on the SLO burn rate or remaining error budget.",
               "items": {
                 "properties": {
                   "value": {
-                    "description": "(Number) Value between 0 and 1. If the value of the query is above the objective, the SLO is met.\nValue between 0 and 1. If the value of the query is above the objective, the SLO is met.",
+                    "description": "(String) Templatable value\nValue between 0 and 1. If the value of the query is above the objective, the SLO is met.",
                     "type": "number"
                   },
                   "window": {
@@ -753,15 +753,15 @@
               "type": "array"
             },
             "query": {
-              "description": "(Block List, Min: 1) Query describes the indicator that will be measured against the objective. Freeform Query types are currently supported. (see below for nested schema)\nQuery describes the indicator that will be measured against the objective. Freeform Query types are currently supported.",
+              "description": "(Block List) Required. Query describes the indicator that will be measured against the objective. Freeform Query types are currently supported. (see below for nested schema)\n**Required.** Query describes the indicator that will be measured against the objective. Freeform Query types are currently supported.",
               "items": {
                 "properties": {
                   "freeform": {
-                    "description": "(Block List, Max: 1) (see below for nested schema)",
+                    "description": "(Block List) Freeform query configuration. (see below for nested schema)\nFreeform query configuration.",
                     "items": {
                       "properties": {
                         "query": {
-                          "description": "(Block List, Min: 1) Query describes the indicator that will be measured against the objective. Freeform Query types are currently supported. (see below for nested schema)\nFreeform Query Field - valid promQl",
+                          "description": "(Block List) Required. Query describes the indicator that will be measured against the objective. Freeform Query types are currently supported. (see below for nested schema)\nFreeform Query Field - valid promQl",
                           "type": "string"
                         }
                       },
@@ -771,11 +771,11 @@
                     "type": "array"
                   },
                   "grafanaQueries": {
-                    "description": "(Block List, Max: 1) Array for holding a set of grafana queries (see below for nested schema)\nArray for holding a set of grafana queries",
+                    "description": "(Block List) Array for holding a set of grafana queries (see below for nested schema)\nArray for holding a set of grafana queries",
                     "items": {
                       "properties": {
                         "grafanaQueries": {
-                          "description": "(Block List, Max: 1) Array for holding a set of grafana queries (see below for nested schema)\nQuery Object - Array of Grafana Query JSON objects",
+                          "description": "(Block List) Array for holding a set of grafana queries (see below for nested schema)\nQuery Object - Array of Grafana Query JSON objects",
                           "type": "string"
                         }
                       },
@@ -785,7 +785,7 @@
                     "type": "array"
                   },
                   "ratio": {
-                    "description": "(Block List, Max: 1) (see below for nested schema)",
+                    "description": "(Block List) Ratio query configuration. (see below for nested schema)\nRatio query configuration.",
                     "items": {
                       "properties": {
                         "groupByLabels": {
@@ -810,7 +810,7 @@
                     "type": "array"
                   },
                   "type": {
-                    "description": "(String) Query type must be one of: \"freeform\", \"query\", \"ratio\", \"grafana_queries\" or \"threshold\"\nQuery type must be one of: \"freeform\", \"query\", \"ratio\", \"grafana_queries\" or \"threshold\"",
+                    "description": "(String) Type of the alert enrichment. Currently only \"assistantInvestigation\" is supported.\nQuery type must be one of: \"freeform\", \"query\", \"ratio\", \"grafana_queries\" or \"threshold\"",
                     "type": "string"
                   }
                 },
@@ -820,7 +820,7 @@
               "type": "array"
             },
             "searchExpression": {
-              "description": "(String) The name of a search expression in Grafana Asserts. This is used in the SLO UI to open the Asserts RCA workbench and in alerts to link to the RCA workbench.\nThe name of a search expression in Grafana Asserts. This is used in the SLO UI to open the Asserts RCA workbench and in alerts to link to the RCA workbench.",
+              "description": "empty if set; omit the attribute entirely to leave it unset. This is used in the SLO UI to open the Asserts RCA workbench and in alerts to link to the RCA workbench.\nThe name of a search expression in Grafana Asserts. Must be non-empty if set; omit the attribute entirely to leave it unset. This is used in the SLO UI to open the Asserts RCA workbench and in alerts to link to the RCA workbench.",
               "type": "string"
             },
             "uuid": {
@@ -921,20 +921,8 @@
           "rule": "!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.description) || (has(self.initProvider) && has(self.initProvider.description))"
         },
         {
-          "message": "spec.forProvider.destinationDatasource is a required parameter",
-          "rule": "!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.destinationDatasource) || (has(self.initProvider) && has(self.initProvider.destinationDatasource))"
-        },
-        {
           "message": "spec.forProvider.name is a required parameter",
           "rule": "!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))"
-        },
-        {
-          "message": "spec.forProvider.objectives is a required parameter",
-          "rule": "!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.objectives) || (has(self.initProvider) && has(self.initProvider.objectives))"
-        },
-        {
-          "message": "spec.forProvider.query is a required parameter",
-          "rule": "!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.query) || (has(self.initProvider) && has(self.initProvider.query))"
         }
       ],
       "additionalProperties": false
@@ -949,7 +937,7 @@
               "items": {
                 "properties": {
                   "advancedOptions": {
-                    "description": "(Block List, Max: 1) Advanced Options for Alert Rules (see below for nested schema)\nAdvanced Options for Alert Rules",
+                    "description": "(Block List) Advanced Options for Alert Rules (see below for nested schema)\nAdvanced Options for Alert Rules",
                     "items": {
                       "properties": {
                         "minFailures": {
@@ -971,7 +959,7 @@
                           "type": "string"
                         },
                         "value": {
-                          "description": "(Number) Value between 0 and 1. If the value of the query is above the objective, the SLO is met.\nTemplatable value",
+                          "description": "(String) Templatable value\nTemplatable value",
                           "type": "string"
                         }
                       },
@@ -981,7 +969,7 @@
                     "type": "array"
                   },
                   "fastburn": {
-                    "description": "(Block List, Max: 1) Alerting Rules generated for Fast Burn alerts (see below for nested schema)\nAlerting Rules generated for Fast Burn alerts",
+                    "description": "(Block List) Alerting Rules generated for Fast Burn alerts (see below for nested schema)\nAlerting Rules generated for Fast Burn alerts",
                     "items": {
                       "properties": {
                         "annotation": {
@@ -993,7 +981,7 @@
                                 "type": "string"
                               },
                               "value": {
-                                "description": "(Number) Value between 0 and 1. If the value of the query is above the objective, the SLO is met.\nTemplatable value",
+                                "description": "(String) Templatable value\nTemplatable value",
                                 "type": "string"
                               }
                             },
@@ -1007,7 +995,7 @@
                           "items": {
                             "properties": {
                               "type": {
-                                "description": "(String) Query type must be one of: \"freeform\", \"query\", \"ratio\", \"grafana_queries\" or \"threshold\"\nType of the alert enrichment. Currently only \"assistantInvestigation\" is supported.",
+                                "description": "(String) Type of the alert enrichment. Currently only \"assistantInvestigation\" is supported.\nType of the alert enrichment. Currently only \"assistantInvestigation\" is supported.",
                                 "type": "string"
                               }
                             },
@@ -1025,7 +1013,7 @@
                                 "type": "string"
                               },
                               "value": {
-                                "description": "(Number) Value between 0 and 1. If the value of the query is above the objective, the SLO is met.\nTemplatable value",
+                                "description": "(String) Templatable value\nTemplatable value",
                                 "type": "string"
                               }
                             },
@@ -1049,7 +1037,7 @@
                           "type": "string"
                         },
                         "value": {
-                          "description": "(Number) Value between 0 and 1. If the value of the query is above the objective, the SLO is met.\nTemplatable value",
+                          "description": "(String) Templatable value\nTemplatable value",
                           "type": "string"
                         }
                       },
@@ -1059,7 +1047,7 @@
                     "type": "array"
                   },
                   "slowburn": {
-                    "description": "(Block List, Max: 1) Alerting Rules generated for Slow Burn alerts (see below for nested schema)\nAlerting Rules generated for Slow Burn alerts",
+                    "description": "(Block List) Alerting Rules generated for Slow Burn alerts (see below for nested schema)\nAlerting Rules generated for Slow Burn alerts",
                     "items": {
                       "properties": {
                         "annotation": {
@@ -1071,7 +1059,7 @@
                                 "type": "string"
                               },
                               "value": {
-                                "description": "(Number) Value between 0 and 1. If the value of the query is above the objective, the SLO is met.\nTemplatable value",
+                                "description": "(String) Templatable value\nTemplatable value",
                                 "type": "string"
                               }
                             },
@@ -1085,7 +1073,7 @@
                           "items": {
                             "properties": {
                               "type": {
-                                "description": "(String) Query type must be one of: \"freeform\", \"query\", \"ratio\", \"grafana_queries\" or \"threshold\"\nType of the alert enrichment. Currently only \"assistantInvestigation\" is supported.",
+                                "description": "(String) Type of the alert enrichment. Currently only \"assistantInvestigation\" is supported.\nType of the alert enrichment. Currently only \"assistantInvestigation\" is supported.",
                                 "type": "string"
                               }
                             },
@@ -1103,7 +1091,7 @@
                                 "type": "string"
                               },
                               "value": {
-                                "description": "(Number) Value between 0 and 1. If the value of the query is above the objective, the SLO is met.\nTemplatable value",
+                                "description": "(String) Templatable value\nTemplatable value",
                                 "type": "string"
                               }
                             },
@@ -1129,7 +1117,7 @@
               "type": "string"
             },
             "destinationDatasource": {
-              "description": "(Block List, Min: 1, Max: 1) Destination Datasource sets the datasource defined for an SLO (see below for nested schema)\nDestination Datasource sets the datasource defined for an SLO",
+              "description": "(Block List) Required. Destination Datasource sets the datasource defined for an SLO. (see below for nested schema)\n**Required.** Destination Datasource sets the datasource defined for an SLO.",
               "items": {
                 "properties": {
                   "uid": {
@@ -1143,11 +1131,10 @@
               "type": "array"
             },
             "folderUid": {
-              "description": "(String) UID for the SLO folder\nUID for the SLO folder",
+              "description": "empty if set; omit the attribute entirely to associate the SLO with the default Grafana SLO folder.\nUID for the SLO folder. Must be non-empty if set; omit the attribute entirely to associate the SLO with the default Grafana SLO folder.",
               "type": "string"
             },
             "id": {
-              "description": "(String) The ID of this resource.",
               "type": "string"
             },
             "label": {
@@ -1159,7 +1146,7 @@
                     "type": "string"
                   },
                   "value": {
-                    "description": "(Number) Value between 0 and 1. If the value of the query is above the objective, the SLO is met.\nTemplatable value",
+                    "description": "(String) Templatable value\nTemplatable value",
                     "type": "string"
                   }
                 },
@@ -1173,11 +1160,11 @@
               "type": "string"
             },
             "objectives": {
-              "description": "(Block List, Min: 1) Over each rolling time window, the remaining error budget will be calculated, and separate alerts can be generated for each time window based on the SLO burn rate or remaining error budget. (see below for nested schema)\nOver each rolling time window, the remaining error budget will be calculated, and separate alerts can be generated for each time window based on the SLO burn rate or remaining error budget.",
+              "description": "(Block List) Required. Over each rolling time window, the remaining error budget will be calculated, and separate alerts can be generated for each time window based on the SLO burn rate or remaining error budget. (see below for nested schema)\n**Required.** Over each rolling time window, the remaining error budget will be calculated, and separate alerts can be generated for each time window based on the SLO burn rate or remaining error budget.",
               "items": {
                 "properties": {
                   "value": {
-                    "description": "(Number) Value between 0 and 1. If the value of the query is above the objective, the SLO is met.\nValue between 0 and 1. If the value of the query is above the objective, the SLO is met.",
+                    "description": "(String) Templatable value\nValue between 0 and 1. If the value of the query is above the objective, the SLO is met.",
                     "type": "number"
                   },
                   "window": {
@@ -1191,15 +1178,15 @@
               "type": "array"
             },
             "query": {
-              "description": "(Block List, Min: 1) Query describes the indicator that will be measured against the objective. Freeform Query types are currently supported. (see below for nested schema)\nQuery describes the indicator that will be measured against the objective. Freeform Query types are currently supported.",
+              "description": "(Block List) Required. Query describes the indicator that will be measured against the objective. Freeform Query types are currently supported. (see below for nested schema)\n**Required.** Query describes the indicator that will be measured against the objective. Freeform Query types are currently supported.",
               "items": {
                 "properties": {
                   "freeform": {
-                    "description": "(Block List, Max: 1) (see below for nested schema)",
+                    "description": "(Block List) Freeform query configuration. (see below for nested schema)\nFreeform query configuration.",
                     "items": {
                       "properties": {
                         "query": {
-                          "description": "(Block List, Min: 1) Query describes the indicator that will be measured against the objective. Freeform Query types are currently supported. (see below for nested schema)\nFreeform Query Field - valid promQl",
+                          "description": "(Block List) Required. Query describes the indicator that will be measured against the objective. Freeform Query types are currently supported. (see below for nested schema)\nFreeform Query Field - valid promQl",
                           "type": "string"
                         }
                       },
@@ -1209,11 +1196,11 @@
                     "type": "array"
                   },
                   "grafanaQueries": {
-                    "description": "(Block List, Max: 1) Array for holding a set of grafana queries (see below for nested schema)\nArray for holding a set of grafana queries",
+                    "description": "(Block List) Array for holding a set of grafana queries (see below for nested schema)\nArray for holding a set of grafana queries",
                     "items": {
                       "properties": {
                         "grafanaQueries": {
-                          "description": "(Block List, Max: 1) Array for holding a set of grafana queries (see below for nested schema)\nQuery Object - Array of Grafana Query JSON objects",
+                          "description": "(Block List) Array for holding a set of grafana queries (see below for nested schema)\nQuery Object - Array of Grafana Query JSON objects",
                           "type": "string"
                         }
                       },
@@ -1223,7 +1210,7 @@
                     "type": "array"
                   },
                   "ratio": {
-                    "description": "(Block List, Max: 1) (see below for nested schema)",
+                    "description": "(Block List) Ratio query configuration. (see below for nested schema)\nRatio query configuration.",
                     "items": {
                       "properties": {
                         "groupByLabels": {
@@ -1248,7 +1235,7 @@
                     "type": "array"
                   },
                   "type": {
-                    "description": "(String) Query type must be one of: \"freeform\", \"query\", \"ratio\", \"grafana_queries\" or \"threshold\"\nQuery type must be one of: \"freeform\", \"query\", \"ratio\", \"grafana_queries\" or \"threshold\"",
+                    "description": "(String) Type of the alert enrichment. Currently only \"assistantInvestigation\" is supported.\nQuery type must be one of: \"freeform\", \"query\", \"ratio\", \"grafana_queries\" or \"threshold\"",
                     "type": "string"
                   }
                 },
@@ -1258,7 +1245,7 @@
               "type": "array"
             },
             "searchExpression": {
-              "description": "(String) The name of a search expression in Grafana Asserts. This is used in the SLO UI to open the Asserts RCA workbench and in alerts to link to the RCA workbench.\nThe name of a search expression in Grafana Asserts. This is used in the SLO UI to open the Asserts RCA workbench and in alerts to link to the RCA workbench.",
+              "description": "empty if set; omit the attribute entirely to leave it unset. This is used in the SLO UI to open the Asserts RCA workbench and in alerts to link to the RCA workbench.\nThe name of a search expression in Grafana Asserts. Must be non-empty if set; omit the attribute entirely to leave it unset. This is used in the SLO UI to open the Asserts RCA workbench and in alerts to link to the RCA workbench.",
               "type": "string"
             },
             "uuid": {
