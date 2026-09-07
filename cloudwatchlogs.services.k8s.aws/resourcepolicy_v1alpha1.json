@@ -1,5 +1,5 @@
 {
-  "description": "LogGroup is the Schema for the LogGroups API",
+  "description": "ResourcePolicy is the Schema for the ResourcePolicies API",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -13,81 +13,38 @@
       "type": "object"
     },
     "spec": {
-      "description": "LogGroupSpec defines the desired state of LogGroup.\n\nRepresents a log group.",
+      "description": "ResourcePolicySpec defines the desired state of ResourcePolicy.\n\nA policy enabling one or more entities to put logs to a log group in this\naccount.",
       "properties": {
-        "kmsKeyID": {
-          "description": "The Amazon Resource Name (ARN) of the KMS key to use when encrypting log\ndata. For more information, see Amazon Resource Names (https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#arn-syntax-kms).",
+        "policyDocument": {
+          "description": "Details of the new policy, including the identity of the principal that is\nenabled to put logs to this account. This is formatted as a JSON string.\nThis parameter is required.\n\nThe following example creates a resource policy enabling the Route 53 service\nto put DNS query logs in to the specified log group. Replace \"logArn\" with\nthe ARN of your CloudWatch Logs resource, such as a log group or log stream.\n\nCloudWatch Logs also supports aws:SourceArn (https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html#condition-keys-sourcearn)\nand aws:SourceAccount (https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html#condition-keys-sourceaccount)\ncondition context keys.\n\nIn the example resource policy, you would replace the value of SourceArn\nwith the resource making the call from Route 53 to CloudWatch Logs. You would\nalso replace the value of SourceAccount with the Amazon Web Services account\nID making that call.\n\n{ \"Version\": \"2012-10-17\", \"Statement\": [ { \"Sid\": \"Route53LogsToCloudWatchLogs\",\n\"Effect\": \"Allow\", \"Principal\": { \"Service\": [ \"route53.amazonaws.com\" ]\n}, \"Action\": \"logs:PutLogEvents\", \"Resource\": \"logArn\", \"Condition\": { \"ArnLike\":\n{ \"aws:SourceArn\": \"myRoute53ResourceArn\" }, \"StringEquals\": { \"aws:SourceAccount\":\n\"myAwsAccountId\" } } } ] }",
           "type": "string"
         },
-        "kmsKeyRef": {
-          "description": "AWSResourceReferenceWrapper provides a wrapper around *AWSResourceReference\ntype to provide more user friendly syntax for references using 'from' field\nEx:\nAPIIDRef:\n\n\tfrom:\n\t  name: my-api",
-          "properties": {
-            "from": {
-              "description": "AWSResourceReference provides all the values necessary to reference another\nk8s resource for finding the identifier(Id/ARN/Name)",
-              "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "namespace": {
-                  "type": "string"
-                }
-              },
-              "type": "object",
-              "additionalProperties": false
+        "policyName": {
+          "description": "Name of the new policy. This parameter is required.",
+          "type": "string",
+          "x-kubernetes-validations": [
+            {
+              "message": "Value is immutable once set",
+              "rule": "self == oldSelf"
             }
-          },
-          "type": "object",
-          "additionalProperties": false
+          ]
         },
-        "name": {
-          "type": "string"
-        },
-        "retentionDays": {
-          "format": "int64",
-          "type": "integer"
-        },
-        "subscriptionFilters": {
-          "items": {
-            "properties": {
-              "destinationARN": {
-                "type": "string"
-              },
-              "distribution": {
-                "description": "The method used to distribute log data to the destination, which can be either\nrandom or grouped by log stream.",
-                "type": "string"
-              },
-              "filterName": {
-                "type": "string"
-              },
-              "filterPattern": {
-                "description": "A symbolic description of how CloudWatch Logs should interpret the data in\neach log event. For example, a log event can contain timestamps, IP addresses,\nstrings, and so on. You use the filter pattern to specify what to look for\nin the log event message.",
-                "type": "string"
-              },
-              "roleARN": {
-                "type": "string"
-              }
-            },
-            "type": "object",
-            "additionalProperties": false
-          },
-          "type": "array"
-        },
-        "tags": {
-          "additionalProperties": {
-            "type": "string"
-          },
-          "description": "The key-value pairs to use for the tags.\n\nYou can grant users access to certain log groups while preventing them from\naccessing other log groups. To do so, tag your groups and use IAM policies\nthat refer to those tags. To assign tags when you create a log group, you\nmust have either the logs:TagResource or logs:TagLogGroup permission. For\nmore information about tagging, see Tagging Amazon Web Services resources\n(https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html). For more\ninformation about using tags to control access, see Controlling access to\nAmazon Web Services resources using tags (https://docs.aws.amazon.com/IAM/latest/UserGuide/access_tags.html).",
-          "type": "object"
+        "resourceARN": {
+          "description": "The ARN of the CloudWatch Logs resource to which the resource policy needs\nto be added or attached. Currently only supports LogGroup ARN.",
+          "type": "string",
+          "x-kubernetes-validations": [
+            {
+              "message": "Value is immutable once set",
+              "rule": "self == oldSelf"
+            }
+          ]
         }
       },
-      "required": [
-        "name"
-      ],
       "type": "object",
       "additionalProperties": false
     },
     "status": {
-      "description": "LogGroupStatus defines the observed state of LogGroup",
+      "description": "ResourcePolicyStatus defines the observed state of ResourcePolicy",
       "properties": {
         "ackResourceMetadata": {
           "description": "All CRs managed by ACK have a common `Status.ACKResourceMetadata` member\nthat is used to contain resource sync state, account ownership,\nconstructed ARN for the resource",
@@ -152,28 +109,18 @@
           },
           "type": "array"
         },
-        "creationTime": {
-          "description": "The creation time of the log group, expressed as the number of milliseconds\nafter Jan 1, 1970 00:00:00 UTC.",
+        "lastUpdatedTime": {
+          "description": "Timestamp showing when this policy was last updated, expressed as the number\nof milliseconds after Jan 1, 1970 00:00:00 UTC.",
           "format": "int64",
           "type": "integer"
         },
-        "dataProtectionStatus": {
-          "description": "Displays whether this log group has a protection policy, or whether it had\none in the past. For more information, see PutDataProtectionPolicy (https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDataProtectionPolicy.html).",
+        "policyScope": {
+          "description": "Specifies scope of the resource policy. Valid values are ACCOUNT or RESOURCE.",
           "type": "string"
         },
-        "metricFilterCount": {
-          "description": "The number of metric filters.",
-          "format": "int64",
-          "type": "integer"
-        },
-        "retentionInDays": {
-          "format": "int64",
-          "type": "integer"
-        },
-        "storedBytes": {
-          "description": "The number of bytes stored.",
-          "format": "int64",
-          "type": "integer"
+        "revisionID": {
+          "description": "The revision ID of the resource policy. Only populated for resource-scoped\npolicies.",
+          "type": "string"
         }
       },
       "type": "object",
