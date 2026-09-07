@@ -763,7 +763,7 @@ sources:
     changelog: "https://github.com/k8up-io/k8up/releases"
 
   - url: "https://github.com/kedacore/http-add-on"
-    tag: "v0.14.0"
+    tag: "v0.15.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/kedacore/http-add-on/releases"
 
