@@ -226,6 +226,9 @@
             "endpointUrl": {
               "type": "string"
             },
+            "prefix": {
+              "type": "string"
+            },
             "storageClass": {
               "type": "string"
             }
@@ -470,14 +473,34 @@
               "x-kubernetes-map-type": "atomic",
               "additionalProperties": false
             },
+            "checksumAlgorithm": {
+              "enum": [
+                "CRC64NVME",
+                "CRC32",
+                "CRC32C",
+                "SHA1",
+                "SHA256",
+                "MD5"
+              ],
+              "type": "string"
+            },
             "credentialsSecret": {
               "type": "string"
             },
             "endpointUrl": {
               "type": "string"
             },
+            "forcePathStyle": {
+              "type": "boolean"
+            },
+            "prefix": {
+              "type": "string"
+            },
             "region": {
               "type": "string"
+            },
+            "skipBucketExistsCheck": {
+              "type": "boolean"
             }
           },
           "type": "object",
