@@ -1,5 +1,5 @@
 {
-  "description": "PerconaPGUpgrade is the Schema for the perconapgupgrades API",
+  "description": "PGUpgrade is the Schema for the pgupgrades API",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -13,6 +13,7 @@
       "type": "object"
     },
     "spec": {
+      "description": "PGUpgradeSpec defines the desired state of PGUpgrade",
       "properties": {
         "affinity": {
           "description": "Scheduling constraints of the PGUpgrade pod.\nMore info: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node",
@@ -805,7 +806,7 @@
         },
         "fromPostgresVersion": {
           "description": "The major version of PostgreSQL before the upgrade.",
-          "maximum": 17,
+          "maximum": 18,
           "minimum": 12,
           "type": "integer"
         },
@@ -829,7 +830,7 @@
             "properties": {
               "name": {
                 "default": "",
-                "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+                "description": "Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
                 "type": "string"
               }
             },
@@ -2326,16 +2327,8 @@
           "type": "object",
           "additionalProperties": false
         },
-        "toPgBackRestImage": {
-          "description": "The image to use for PgBackRest containers after upgrade.",
-          "type": "string"
-        },
-        "toPgBouncerImage": {
-          "description": "The image to use for PgBouncer containers after upgrade.",
-          "type": "string"
-        },
         "toPostgresImage": {
-          "description": "The image to use for PostgreSQL containers after upgrade.",
+          "description": "The image name to use for PostgreSQL containers after upgrade.\nWhen omitted, the value comes from an operator environment variable.",
           "type": "string"
         },
         "toPostgresVersion": {
@@ -2422,17 +2415,14 @@
       },
       "required": [
         "fromPostgresVersion",
-        "image",
         "postgresClusterName",
-        "toPgBackRestImage",
-        "toPgBouncerImage",
-        "toPostgresImage",
         "toPostgresVersion"
       ],
       "type": "object",
       "additionalProperties": false
     },
     "status": {
+      "description": "PGUpgradeStatus defines the observed state of PGUpgrade",
       "properties": {
         "conditions": {
           "description": "conditions represent the observations of PGUpgrade's current state.",
@@ -2505,9 +2495,5 @@
       "additionalProperties": false
     }
   },
-  "required": [
-    "metadata",
-    "spec"
-  ],
   "type": "object"
 }
