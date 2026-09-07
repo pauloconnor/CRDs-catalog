@@ -18,18 +18,18 @@
         "forProvider": {
           "properties": {
             "ipConfigurations": {
-              "description": "One ip_configurations block as defined below. Changing this forces a new Private DNS Resolver Inbound Endpoint to be created.",
+              "description": "One ip_configurations block as defined below. Changing this forces a new resource to be created.",
               "properties": {
                 "privateIpAddress": {
-                  "description": "Private IP address of the IP configuration.",
+                  "description": "Private IP address of the IP configuration. Changing this forces a new resource to be created.",
                   "type": "string"
                 },
                 "privateIpAllocationMethod": {
-                  "description": "Private IP address allocation method. Allowed value is Dynamic and Static. Defaults to Dynamic.",
+                  "description": "Private IP address allocation method. Possible values are Dynamic and Static. Defaults to Dynamic. Changing this forces a new resource to be created.",
                   "type": "string"
                 },
                 "subnetId": {
-                  "description": "The subnet ID of the IP configuration.",
+                  "description": "The subnet ID of the IP configuration. Changing this forces a new resource to be created.",
                   "type": "string"
                 },
                 "subnetIdRef": {
@@ -125,11 +125,11 @@
               "additionalProperties": false
             },
             "location": {
-              "description": "Specifies the Azure Region where the Private DNS Resolver Inbound Endpoint should exist. Changing this forces a new Private DNS Resolver Inbound Endpoint to be created.",
+              "description": "Specifies the Azure Region where the Private DNS Resolver Inbound Endpoint should exist. Changing this forces a new resource to be created.",
               "type": "string"
             },
             "privateDnsResolverId": {
-              "description": "Specifies the ID of the Private DNS Resolver Inbound Endpoint. Changing this forces a new Private DNS Resolver Inbound Endpoint to be created.",
+              "description": "Specifies the ID of the Private DNS Resolver Inbound Endpoint. Changing this forces a new resource to be created.",
               "type": "string"
             },
             "privateDnsResolverIdRef": {
@@ -236,18 +236,18 @@
           "description": "THIS IS A BETA FIELD. It will be honored\nunless the Management Policies feature flag is disabled.\nInitProvider holds the same fields as ForProvider, with the exception\nof Identifier and other resource reference fields. The fields that are\nin InitProvider are merged into ForProvider when the resource is created.\nThe same fields are also added to the terraform ignore_changes hook, to\navoid updating them after creation. This is useful for fields that are\nrequired on creation, but we do not desire to update them after creation,\nfor example because of an external controller is managing them, like an\nautoscaler.",
           "properties": {
             "ipConfigurations": {
-              "description": "One ip_configurations block as defined below. Changing this forces a new Private DNS Resolver Inbound Endpoint to be created.",
+              "description": "One ip_configurations block as defined below. Changing this forces a new resource to be created.",
               "properties": {
                 "privateIpAddress": {
-                  "description": "Private IP address of the IP configuration.",
+                  "description": "Private IP address of the IP configuration. Changing this forces a new resource to be created.",
                   "type": "string"
                 },
                 "privateIpAllocationMethod": {
-                  "description": "Private IP address allocation method. Allowed value is Dynamic and Static. Defaults to Dynamic.",
+                  "description": "Private IP address allocation method. Possible values are Dynamic and Static. Defaults to Dynamic. Changing this forces a new resource to be created.",
                   "type": "string"
                 },
                 "subnetId": {
-                  "description": "The subnet ID of the IP configuration.",
+                  "description": "The subnet ID of the IP configuration. Changing this forces a new resource to be created.",
                   "type": "string"
                 },
                 "subnetIdRef": {
@@ -343,7 +343,7 @@
               "additionalProperties": false
             },
             "location": {
-              "description": "Specifies the Azure Region where the Private DNS Resolver Inbound Endpoint should exist. Changing this forces a new Private DNS Resolver Inbound Endpoint to be created.",
+              "description": "Specifies the Azure Region where the Private DNS Resolver Inbound Endpoint should exist. Changing this forces a new resource to be created.",
               "type": "string"
             },
             "tags": {
@@ -441,18 +441,18 @@
               "type": "string"
             },
             "ipConfigurations": {
-              "description": "One ip_configurations block as defined below. Changing this forces a new Private DNS Resolver Inbound Endpoint to be created.",
+              "description": "One ip_configurations block as defined below. Changing this forces a new resource to be created.",
               "properties": {
                 "privateIpAddress": {
-                  "description": "Private IP address of the IP configuration.",
+                  "description": "Private IP address of the IP configuration. Changing this forces a new resource to be created.",
                   "type": "string"
                 },
                 "privateIpAllocationMethod": {
-                  "description": "Private IP address allocation method. Allowed value is Dynamic and Static. Defaults to Dynamic.",
+                  "description": "Private IP address allocation method. Possible values are Dynamic and Static. Defaults to Dynamic. Changing this forces a new resource to be created.",
                   "type": "string"
                 },
                 "subnetId": {
-                  "description": "The subnet ID of the IP configuration.",
+                  "description": "The subnet ID of the IP configuration. Changing this forces a new resource to be created.",
                   "type": "string"
                 }
               },
@@ -460,11 +460,11 @@
               "additionalProperties": false
             },
             "location": {
-              "description": "Specifies the Azure Region where the Private DNS Resolver Inbound Endpoint should exist. Changing this forces a new Private DNS Resolver Inbound Endpoint to be created.",
+              "description": "Specifies the Azure Region where the Private DNS Resolver Inbound Endpoint should exist. Changing this forces a new resource to be created.",
               "type": "string"
             },
             "privateDnsResolverId": {
-              "description": "Specifies the ID of the Private DNS Resolver Inbound Endpoint. Changing this forces a new Private DNS Resolver Inbound Endpoint to be created.",
+              "description": "Specifies the ID of the Private DNS Resolver Inbound Endpoint. Changing this forces a new resource to be created.",
               "type": "string"
             },
             "tags": {
@@ -525,6 +525,10 @@
             "type"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "lastHandledReconcileAt": {
+          "description": "LastHandledReconcileAt holds the value of the most recent\nreconcile-requested-at annotation token that the controller has\nprocessed. Users can compare this to the annotation to determine\nwhether a reconcile request has been handled.",
+          "type": "string"
         },
         "observedGeneration": {
           "description": "ObservedGeneration is the latest metadata.generation\nwhich resulted in either a ready state, or stalled due to error\nit can not recover from without human intervention.",

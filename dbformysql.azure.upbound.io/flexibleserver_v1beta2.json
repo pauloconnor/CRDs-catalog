@@ -211,6 +211,90 @@
                   "type": "array",
                   "x-kubernetes-list-type": "set"
                 },
+                "identityIdsRefs": {
+                  "description": "References to UserAssignedIdentity in managedidentity to populate identityIds.",
+                  "items": {
+                    "description": "A Reference to a named object.",
+                    "properties": {
+                      "name": {
+                        "description": "Name of the referenced object.",
+                        "type": "string"
+                      },
+                      "policy": {
+                        "description": "Policies for referencing.",
+                        "properties": {
+                          "resolution": {
+                            "default": "Required",
+                            "description": "Resolution specifies whether resolution of this reference is required.\nThe default is 'Required', which means the reconcile will fail if the\nreference cannot be resolved. 'Optional' means this reference will be\na no-op if it cannot be resolved.",
+                            "enum": [
+                              "Required",
+                              "Optional"
+                            ],
+                            "type": "string"
+                          },
+                          "resolve": {
+                            "description": "Resolve specifies when this reference should be resolved. The default\nis 'IfNotPresent', which will attempt to resolve the reference only when\nthe corresponding field is not present. Use 'Always' to resolve the\nreference on every reconcile.",
+                            "enum": [
+                              "Always",
+                              "IfNotPresent"
+                            ],
+                            "type": "string"
+                          }
+                        },
+                        "type": "object",
+                        "additionalProperties": false
+                      }
+                    },
+                    "required": [
+                      "name"
+                    ],
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "type": "array"
+                },
+                "identityIdsSelector": {
+                  "description": "Selector for a list of UserAssignedIdentity in managedidentity to populate identityIds.",
+                  "properties": {
+                    "matchControllerRef": {
+                      "description": "MatchControllerRef ensures an object with the same controller reference\nas the selecting object is selected.",
+                      "type": "boolean"
+                    },
+                    "matchLabels": {
+                      "additionalProperties": {
+                        "type": "string"
+                      },
+                      "description": "MatchLabels ensures an object with matching labels is selected.",
+                      "type": "object"
+                    },
+                    "policy": {
+                      "description": "Policies for selection.",
+                      "properties": {
+                        "resolution": {
+                          "default": "Required",
+                          "description": "Resolution specifies whether resolution of this reference is required.\nThe default is 'Required', which means the reconcile will fail if the\nreference cannot be resolved. 'Optional' means this reference will be\na no-op if it cannot be resolved.",
+                          "enum": [
+                            "Required",
+                            "Optional"
+                          ],
+                          "type": "string"
+                        },
+                        "resolve": {
+                          "description": "Resolve specifies when this reference should be resolved. The default\nis 'IfNotPresent', which will attempt to resolve the reference only when\nthe corresponding field is not present. Use 'Always' to resolve the\nreference on every reconcile.",
+                          "enum": [
+                            "Always",
+                            "IfNotPresent"
+                          ],
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
                 "type": {
                   "description": "Specifies the type of Managed Service Identity that should be configured on this MySQL Flexible Server. The only possible value is UserAssigned.",
                   "type": "string"
@@ -466,7 +550,7 @@
               "x-kubernetes-map-type": "granular"
             },
             "version": {
-              "description": "The version of the MySQL Flexible Server to use. Possible values are 5.7, and 8.0.21.",
+              "description": "The version of the MySQL Flexible Server to use. Possible values are 5.7, 8.0.21 and 8.4.",
               "type": "string"
             },
             "zone": {
@@ -665,6 +749,90 @@
                   "type": "array",
                   "x-kubernetes-list-type": "set"
                 },
+                "identityIdsRefs": {
+                  "description": "References to UserAssignedIdentity in managedidentity to populate identityIds.",
+                  "items": {
+                    "description": "A Reference to a named object.",
+                    "properties": {
+                      "name": {
+                        "description": "Name of the referenced object.",
+                        "type": "string"
+                      },
+                      "policy": {
+                        "description": "Policies for referencing.",
+                        "properties": {
+                          "resolution": {
+                            "default": "Required",
+                            "description": "Resolution specifies whether resolution of this reference is required.\nThe default is 'Required', which means the reconcile will fail if the\nreference cannot be resolved. 'Optional' means this reference will be\na no-op if it cannot be resolved.",
+                            "enum": [
+                              "Required",
+                              "Optional"
+                            ],
+                            "type": "string"
+                          },
+                          "resolve": {
+                            "description": "Resolve specifies when this reference should be resolved. The default\nis 'IfNotPresent', which will attempt to resolve the reference only when\nthe corresponding field is not present. Use 'Always' to resolve the\nreference on every reconcile.",
+                            "enum": [
+                              "Always",
+                              "IfNotPresent"
+                            ],
+                            "type": "string"
+                          }
+                        },
+                        "type": "object",
+                        "additionalProperties": false
+                      }
+                    },
+                    "required": [
+                      "name"
+                    ],
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "type": "array"
+                },
+                "identityIdsSelector": {
+                  "description": "Selector for a list of UserAssignedIdentity in managedidentity to populate identityIds.",
+                  "properties": {
+                    "matchControllerRef": {
+                      "description": "MatchControllerRef ensures an object with the same controller reference\nas the selecting object is selected.",
+                      "type": "boolean"
+                    },
+                    "matchLabels": {
+                      "additionalProperties": {
+                        "type": "string"
+                      },
+                      "description": "MatchLabels ensures an object with matching labels is selected.",
+                      "type": "object"
+                    },
+                    "policy": {
+                      "description": "Policies for selection.",
+                      "properties": {
+                        "resolution": {
+                          "default": "Required",
+                          "description": "Resolution specifies whether resolution of this reference is required.\nThe default is 'Required', which means the reconcile will fail if the\nreference cannot be resolved. 'Optional' means this reference will be\na no-op if it cannot be resolved.",
+                          "enum": [
+                            "Required",
+                            "Optional"
+                          ],
+                          "type": "string"
+                        },
+                        "resolve": {
+                          "description": "Resolve specifies when this reference should be resolved. The default\nis 'IfNotPresent', which will attempt to resolve the reference only when\nthe corresponding field is not present. Use 'Always' to resolve the\nreference on every reconcile.",
+                          "enum": [
+                            "Always",
+                            "IfNotPresent"
+                          ],
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
                 "type": {
                   "description": "Specifies the type of Managed Service Identity that should be configured on this MySQL Flexible Server. The only possible value is UserAssigned.",
                   "type": "string"
@@ -836,7 +1004,7 @@
               "x-kubernetes-map-type": "granular"
             },
             "version": {
-              "description": "The version of the MySQL Flexible Server to use. Possible values are 5.7, and 8.0.21.",
+              "description": "The version of the MySQL Flexible Server to use. Possible values are 5.7, 8.0.21 and 8.4.",
               "type": "string"
             },
             "zone": {
@@ -1135,7 +1303,7 @@
               "x-kubernetes-map-type": "granular"
             },
             "version": {
-              "description": "The version of the MySQL Flexible Server to use. Possible values are 5.7, and 8.0.21.",
+              "description": "The version of the MySQL Flexible Server to use. Possible values are 5.7, 8.0.21 and 8.4.",
               "type": "string"
             },
             "zone": {
@@ -1192,6 +1360,10 @@
             "type"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "lastHandledReconcileAt": {
+          "description": "LastHandledReconcileAt holds the value of the most recent\nreconcile-requested-at annotation token that the controller has\nprocessed. Users can compare this to the annotation to determine\nwhether a reconcile request has been handled.",
+          "type": "string"
         },
         "observedGeneration": {
           "description": "ObservedGeneration is the latest metadata.generation\nwhich resulted in either a ready state, or stalled due to error\nit can not recover from without human intervention.",

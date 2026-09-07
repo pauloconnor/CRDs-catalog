@@ -1,5 +1,5 @@
 {
-  "description": "FlexibleServer is the Schema for the FlexibleServers API. Manages a PostgreSQL Flexible Server.",
+  "description": "FlexibleServer is the Schema for the FlexibleServers API. Manages a PostgreSQL Flexible Server.\nDeprecated: This API version (v1beta1) has been deprecated in release v2.6.0.",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -96,6 +96,24 @@
               "description": "The backup retention days for the PostgreSQL Flexible Server. Possible values are between 7 and 35 days.",
               "type": "number"
             },
+            "cluster": {
+              "description": "A cluster block as defined below.",
+              "items": {
+                "properties": {
+                  "defaultDatabaseName": {
+                    "description": "The default database name to be created. Changing this forces a new PostgreSQL Flexible Server to be created.",
+                    "type": "string"
+                  },
+                  "size": {
+                    "description": "The number of nodes in the cluster. Must be at least 1 and no greater than 32.",
+                    "type": "number"
+                  }
+                },
+                "type": "object",
+                "additionalProperties": false
+              },
+              "type": "array"
+            },
             "createMode": {
               "description": "The creation mode which can be used to restore or replicate existing servers. Possible values are Default, GeoRestore, PointInTimeRestore, Replica, ReviveDropped and Update.",
               "type": "string"
@@ -105,7 +123,7 @@
               "items": {
                 "properties": {
                   "geoBackupKeyVaultKeyId": {
-                    "description": "The versioned ID of the geo backup Key Vault Key.",
+                    "description": "The versioned/versionless ID of the geo backup Key Vault Key.",
                     "type": "string"
                   },
                   "geoBackupUserAssignedIdentityId": {
@@ -553,7 +571,7 @@
               "type": "number"
             },
             "storageTier": {
-              "description": "The name of storage performance tier for IOPS of the PostgreSQL Flexible Server. Possible values are P4, P6, P10, P15,P20, P30,P40, P50,P60, P70 or P80. Default value is dependant on the storage_mb value. Please see the storage_tier defaults based on storage_mb table below.",
+              "description": "The name of storage performance tier for IOPS of the PostgreSQL Flexible Server. Possible values are P4, P6, P10, P15,P20, P30,P40, P50,P60, P70 or P80. Default value is dependent on the storage_mb value. Please see the storage_tier defaults based on storage_mb table below.",
               "type": "string"
             },
             "tags": {
@@ -565,7 +583,7 @@
               "x-kubernetes-map-type": "granular"
             },
             "version": {
-              "description": "The version of PostgreSQL Flexible Server to use. Possible values are 11,12, 13, 14, 15 and 16. Required when create_mode is Default.",
+              "description": "The version of PostgreSQL Flexible Server to use. Possible values are 11,12, 13, 14, 15, 16, 17, and 18. Required when create_mode is Default.",
               "type": "string"
             },
             "zone": {
@@ -645,6 +663,24 @@
               "description": "The backup retention days for the PostgreSQL Flexible Server. Possible values are between 7 and 35 days.",
               "type": "number"
             },
+            "cluster": {
+              "description": "A cluster block as defined below.",
+              "items": {
+                "properties": {
+                  "defaultDatabaseName": {
+                    "description": "The default database name to be created. Changing this forces a new PostgreSQL Flexible Server to be created.",
+                    "type": "string"
+                  },
+                  "size": {
+                    "description": "The number of nodes in the cluster. Must be at least 1 and no greater than 32.",
+                    "type": "number"
+                  }
+                },
+                "type": "object",
+                "additionalProperties": false
+              },
+              "type": "array"
+            },
             "createMode": {
               "description": "The creation mode which can be used to restore or replicate existing servers. Possible values are Default, GeoRestore, PointInTimeRestore, Replica, ReviveDropped and Update.",
               "type": "string"
@@ -654,7 +690,7 @@
               "items": {
                 "properties": {
                   "geoBackupKeyVaultKeyId": {
-                    "description": "The versioned ID of the geo backup Key Vault Key.",
+                    "description": "The versioned/versionless ID of the geo backup Key Vault Key.",
                     "type": "string"
                   },
                   "geoBackupUserAssignedIdentityId": {
@@ -1018,7 +1054,7 @@
               "type": "number"
             },
             "storageTier": {
-              "description": "The name of storage performance tier for IOPS of the PostgreSQL Flexible Server. Possible values are P4, P6, P10, P15,P20, P30,P40, P50,P60, P70 or P80. Default value is dependant on the storage_mb value. Please see the storage_tier defaults based on storage_mb table below.",
+              "description": "The name of storage performance tier for IOPS of the PostgreSQL Flexible Server. Possible values are P4, P6, P10, P15,P20, P30,P40, P50,P60, P70 or P80. Default value is dependent on the storage_mb value. Please see the storage_tier defaults based on storage_mb table below.",
               "type": "string"
             },
             "tags": {
@@ -1030,7 +1066,7 @@
               "x-kubernetes-map-type": "granular"
             },
             "version": {
-              "description": "The version of PostgreSQL Flexible Server to use. Possible values are 11,12, 13, 14, 15 and 16. Required when create_mode is Default.",
+              "description": "The version of PostgreSQL Flexible Server to use. Possible values are 11,12, 13, 14, 15, 16, 17, and 18. Required when create_mode is Default.",
               "type": "string"
             },
             "zone": {
@@ -1180,6 +1216,24 @@
               "description": "The backup retention days for the PostgreSQL Flexible Server. Possible values are between 7 and 35 days.",
               "type": "number"
             },
+            "cluster": {
+              "description": "A cluster block as defined below.",
+              "items": {
+                "properties": {
+                  "defaultDatabaseName": {
+                    "description": "The default database name to be created. Changing this forces a new PostgreSQL Flexible Server to be created.",
+                    "type": "string"
+                  },
+                  "size": {
+                    "description": "The number of nodes in the cluster. Must be at least 1 and no greater than 32.",
+                    "type": "number"
+                  }
+                },
+                "type": "object",
+                "additionalProperties": false
+              },
+              "type": "array"
+            },
             "createMode": {
               "description": "The creation mode which can be used to restore or replicate existing servers. Possible values are Default, GeoRestore, PointInTimeRestore, Replica, ReviveDropped and Update.",
               "type": "string"
@@ -1189,7 +1243,7 @@
               "items": {
                 "properties": {
                   "geoBackupKeyVaultKeyId": {
-                    "description": "The versioned ID of the geo backup Key Vault Key.",
+                    "description": "The versioned/versionless ID of the geo backup Key Vault Key.",
                     "type": "string"
                   },
                   "geoBackupUserAssignedIdentityId": {
@@ -1333,7 +1387,7 @@
               "type": "number"
             },
             "storageTier": {
-              "description": "The name of storage performance tier for IOPS of the PostgreSQL Flexible Server. Possible values are P4, P6, P10, P15,P20, P30,P40, P50,P60, P70 or P80. Default value is dependant on the storage_mb value. Please see the storage_tier defaults based on storage_mb table below.",
+              "description": "The name of storage performance tier for IOPS of the PostgreSQL Flexible Server. Possible values are P4, P6, P10, P15,P20, P30,P40, P50,P60, P70 or P80. Default value is dependent on the storage_mb value. Please see the storage_tier defaults based on storage_mb table below.",
               "type": "string"
             },
             "tags": {
@@ -1345,7 +1399,7 @@
               "x-kubernetes-map-type": "granular"
             },
             "version": {
-              "description": "The version of PostgreSQL Flexible Server to use. Possible values are 11,12, 13, 14, 15 and 16. Required when create_mode is Default.",
+              "description": "The version of PostgreSQL Flexible Server to use. Possible values are 11,12, 13, 14, 15, 16, 17, and 18. Required when create_mode is Default.",
               "type": "string"
             },
             "zone": {
@@ -1402,6 +1456,10 @@
             "type"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "lastHandledReconcileAt": {
+          "description": "LastHandledReconcileAt holds the value of the most recent\nreconcile-requested-at annotation token that the controller has\nprocessed. Users can compare this to the annotation to determine\nwhether a reconcile request has been handled.",
+          "type": "string"
         },
         "observedGeneration": {
           "description": "ObservedGeneration is the latest metadata.generation\nwhich resulted in either a ready state, or stalled due to error\nit can not recover from without human intervention.",
