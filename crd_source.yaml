@@ -1357,7 +1357,7 @@ sources:
     changelog: "https://github.com/wiz-sec/wiz-kubernetes-connector/releases"
 
   - url: "https://github.com/zalando/postgres-operator"
-    tag: "v1.15.1"
+    tag: "v2.0.2"
     repo_path: "charts/postgres-operator/crds"
     changelog: "https://github.com/zalando/postgres-operator/releases"
 
