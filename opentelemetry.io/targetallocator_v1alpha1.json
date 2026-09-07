@@ -1866,6 +1866,9 @@
           ],
           "type": "string"
         },
+        "allowInsecureAuthSecrets": {
+          "type": "boolean"
+        },
         "args": {
           "additionalProperties": {
             "type": "string"
@@ -3641,6 +3644,148 @@
           ],
           "type": "string"
         },
+        "mtls": {
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "tls": {
+              "properties": {
+                "certificateAuthorityCertificate": {
+                  "properties": {
+                    "configMap": {
+                      "properties": {
+                        "key": {
+                          "default": "ca.crt",
+                          "type": "string"
+                        },
+                        "name": {
+                          "minLength": 1,
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "secret": {
+                      "properties": {
+                        "key": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "minLength": 1,
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "clientCertificate": {
+                  "properties": {
+                    "certificateSecret": {
+                      "properties": {
+                        "key": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "minLength": 1,
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "keySecret": {
+                      "properties": {
+                        "key": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "minLength": 1,
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "certificateSecret",
+                    "keySecret"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "serverCertificate": {
+                  "properties": {
+                    "certificateSecret": {
+                      "properties": {
+                        "key": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "minLength": 1,
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "keySecret": {
+                      "properties": {
+                        "key": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "minLength": 1,
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "certificateSecret",
+                    "keySecret"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
+            "useCertManager": {
+              "default": true,
+              "type": "boolean"
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
         "networkPolicy": {
           "properties": {
             "enabled": {
@@ -3933,6 +4078,9 @@
               },
               "type": "array"
             },
+            "denyFSAccessThroughSMs": {
+              "type": "boolean"
+            },
             "denyNamespaces": {
               "items": {
                 "type": "string"
@@ -4204,6 +4352,12 @@
               "type": "string"
             },
             "scrapeProtocols": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "secretNamespaces": {
               "items": {
                 "type": "string"
               },
@@ -4614,6 +4768,25 @@
         },
         "serviceAccount": {
           "type": "string"
+        },
+        "sessionAffinity": {
+          "type": "string"
+        },
+        "sessionAffinityConfig": {
+          "properties": {
+            "clientIP": {
+              "properties": {
+                "timeoutSeconds": {
+                  "format": "int32",
+                  "type": "integer"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
         },
         "shareProcessNamespace": {
           "type": "boolean"
