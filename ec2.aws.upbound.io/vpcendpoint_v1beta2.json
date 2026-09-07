@@ -38,8 +38,20 @@
                   "type": "string"
                 },
                 "privateDnsOnlyForInboundResolverEndpoint": {
-                  "description": "Indicates whether to enable private DNS only for inbound endpoints. This option is available only for services that support both gateway and interface endpoints. It routes traffic that originates from the VPC to the gateway endpoint and traffic that originates from on-premises to the interface endpoint. Default is false. Can only be specified if private_dns_enabled is true.",
+                  "description": "Boolean indicating whether to enable private DNS only for inbound endpoints. This option is available only for interface endpoints of services that support both gateway and interface endpoints. A gateway endpoint for the same service must be created before an interface endpoint is created. Traffic originating from the VPC is routed to the gateway endpoint, while traffic originating from on-premises is routed to the interface endpoint. Defaults to false. This argument can be specified only if private_dns_enabled is true.",
                   "type": "boolean"
+                },
+                "privateDnsPreference": {
+                  "description": "Preference for which private domains have a private hosted zone created for and associated with the specified VPC. Valid values are ALL_DOMAINS, VERIFIED_DOMAINS_ONLY, VERIFIED_DOMAINS_AND_SPECIFIED_DOMAINS, and SPECIFIED_DOMAINS_ONLY. Only supported when private_dns_enabled is true and when the vpc_endpoint_type is ServiceNetwork or Resource.",
+                  "type": "string"
+                },
+                "privateDnsSpecifiedDomains": {
+                  "description": "List of private domains to create private hosted zones for and associate with the specified VPC. Must be specified when private_dns_enabled is true and private_dns_preference is set to either VERIFIED_DOMAINS_AND_SPECIFIED_DOMAINS or SPECIFIED_DOMAINS_ONLY. In all other cases, this argument must not be specified.",
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array",
+                  "x-kubernetes-list-type": "set"
                 }
               },
               "type": "object",
@@ -54,7 +66,7 @@
               "type": "string"
             },
             "privateDnsEnabled": {
-              "description": "Whether or not to associate a private hosted zone with the specified VPC. Applicable for endpoints of type Interface. Most users will want this enabled to allow services within the VPC to automatically use the endpoint.\nDefaults to false.",
+              "description": "Whether or not to associate a private hosted zone with the specified VPC. Applicable for endpoints of type Interface. Most users will want this enabled to allow services within the VPC to automatically use the endpoint.\nDefaults to false. If vpc_endpoint_type is anything other than Interface, changing this value forces a new resource to be created.",
               "type": "boolean"
             },
             "region": {
@@ -537,8 +549,20 @@
                   "type": "string"
                 },
                 "privateDnsOnlyForInboundResolverEndpoint": {
-                  "description": "Indicates whether to enable private DNS only for inbound endpoints. This option is available only for services that support both gateway and interface endpoints. It routes traffic that originates from the VPC to the gateway endpoint and traffic that originates from on-premises to the interface endpoint. Default is false. Can only be specified if private_dns_enabled is true.",
+                  "description": "Boolean indicating whether to enable private DNS only for inbound endpoints. This option is available only for interface endpoints of services that support both gateway and interface endpoints. A gateway endpoint for the same service must be created before an interface endpoint is created. Traffic originating from the VPC is routed to the gateway endpoint, while traffic originating from on-premises is routed to the interface endpoint. Defaults to false. This argument can be specified only if private_dns_enabled is true.",
                   "type": "boolean"
+                },
+                "privateDnsPreference": {
+                  "description": "Preference for which private domains have a private hosted zone created for and associated with the specified VPC. Valid values are ALL_DOMAINS, VERIFIED_DOMAINS_ONLY, VERIFIED_DOMAINS_AND_SPECIFIED_DOMAINS, and SPECIFIED_DOMAINS_ONLY. Only supported when private_dns_enabled is true and when the vpc_endpoint_type is ServiceNetwork or Resource.",
+                  "type": "string"
+                },
+                "privateDnsSpecifiedDomains": {
+                  "description": "List of private domains to create private hosted zones for and associate with the specified VPC. Must be specified when private_dns_enabled is true and private_dns_preference is set to either VERIFIED_DOMAINS_AND_SPECIFIED_DOMAINS or SPECIFIED_DOMAINS_ONLY. In all other cases, this argument must not be specified.",
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array",
+                  "x-kubernetes-list-type": "set"
                 }
               },
               "type": "object",
@@ -553,7 +577,7 @@
               "type": "string"
             },
             "privateDnsEnabled": {
-              "description": "Whether or not to associate a private hosted zone with the specified VPC. Applicable for endpoints of type Interface. Most users will want this enabled to allow services within the VPC to automatically use the endpoint.\nDefaults to false.",
+              "description": "Whether or not to associate a private hosted zone with the specified VPC. Applicable for endpoints of type Interface. Most users will want this enabled to allow services within the VPC to automatically use the endpoint.\nDefaults to false. If vpc_endpoint_type is anything other than Interface, changing this value forces a new resource to be created.",
               "type": "boolean"
             },
             "resourceConfigurationArn": {
@@ -1146,8 +1170,20 @@
                   "type": "string"
                 },
                 "privateDnsOnlyForInboundResolverEndpoint": {
-                  "description": "Indicates whether to enable private DNS only for inbound endpoints. This option is available only for services that support both gateway and interface endpoints. It routes traffic that originates from the VPC to the gateway endpoint and traffic that originates from on-premises to the interface endpoint. Default is false. Can only be specified if private_dns_enabled is true.",
+                  "description": "Boolean indicating whether to enable private DNS only for inbound endpoints. This option is available only for interface endpoints of services that support both gateway and interface endpoints. A gateway endpoint for the same service must be created before an interface endpoint is created. Traffic originating from the VPC is routed to the gateway endpoint, while traffic originating from on-premises is routed to the interface endpoint. Defaults to false. This argument can be specified only if private_dns_enabled is true.",
                   "type": "boolean"
+                },
+                "privateDnsPreference": {
+                  "description": "Preference for which private domains have a private hosted zone created for and associated with the specified VPC. Valid values are ALL_DOMAINS, VERIFIED_DOMAINS_ONLY, VERIFIED_DOMAINS_AND_SPECIFIED_DOMAINS, and SPECIFIED_DOMAINS_ONLY. Only supported when private_dns_enabled is true and when the vpc_endpoint_type is ServiceNetwork or Resource.",
+                  "type": "string"
+                },
+                "privateDnsSpecifiedDomains": {
+                  "description": "List of private domains to create private hosted zones for and associate with the specified VPC. Must be specified when private_dns_enabled is true and private_dns_preference is set to either VERIFIED_DOMAINS_AND_SPECIFIED_DOMAINS or SPECIFIED_DOMAINS_ONLY. In all other cases, this argument must not be specified.",
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array",
+                  "x-kubernetes-list-type": "set"
                 }
               },
               "type": "object",
@@ -1182,7 +1218,7 @@
               "type": "string"
             },
             "privateDnsEnabled": {
-              "description": "Whether or not to associate a private hosted zone with the specified VPC. Applicable for endpoints of type Interface. Most users will want this enabled to allow services within the VPC to automatically use the endpoint.\nDefaults to false.",
+              "description": "Whether or not to associate a private hosted zone with the specified VPC. Applicable for endpoints of type Interface. Most users will want this enabled to allow services within the VPC to automatically use the endpoint.\nDefaults to false. If vpc_endpoint_type is anything other than Interface, changing this value forces a new resource to be created.",
               "type": "boolean"
             },
             "region": {
@@ -1333,6 +1369,10 @@
             "type"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "lastHandledReconcileAt": {
+          "description": "LastHandledReconcileAt holds the value of the most recent\nreconcile-requested-at annotation token that the controller has\nprocessed. Users can compare this to the annotation to determine\nwhether a reconcile request has been handled.",
+          "type": "string"
         },
         "observedGeneration": {
           "description": "ObservedGeneration is the latest metadata.generation\nwhich resulted in either a ready state, or stalled due to error\nit can not recover from without human intervention.",
