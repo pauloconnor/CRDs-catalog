@@ -17922,6 +17922,10 @@ promoter.argoproj.io:
     filename: promoter.argoproj.io/gitcommitstatus_v1alpha1.json
     kind: GitCommitStatus
     name: gitcommitstatus_v1alpha1
+  - apiVersion: promoter.argoproj.io/v1alpha1
+    filename: promoter.argoproj.io/scheduledcommitstatus_v1alpha1.json
+    kind: ScheduledCommitStatus
+    name: scheduledcommitstatus_v1alpha1
 protection.crossplane.io:
   - apiVersion: protection.crossplane.io/v1beta1
     filename: protection.crossplane.io/clusterusage_v1beta1.json

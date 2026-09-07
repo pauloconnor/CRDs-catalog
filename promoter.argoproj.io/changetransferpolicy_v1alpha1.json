@@ -1,5 +1,9 @@
 {
   "description": "ChangeTransferPolicy is the Schema for the changetransferpolicies API",
+  "externalDocs": {
+    "description": "CRD reference (examples and behavior)",
+    "url": "https://gitops-promoter.readthedocs.io/en/stable/crd-specs/#changetransferpolicy"
+  },
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -16,9 +20,24 @@
       "description": "ChangeTransferPolicySpec defines the desired state of ChangeTransferPolicy",
       "properties": {
         "activeBranch": {
-          "description": "ActiveBranch staging hydrated branch",
+          "description": "ActiveBranch staging hydrated branch\nMust not start with '-', contain ':', or contain '..'.",
+          "maxLength": 100,
           "minLength": 1,
-          "type": "string"
+          "type": "string",
+          "x-kubernetes-validations": [
+            {
+              "message": "branch must not start with '-'",
+              "rule": "!self.startsWith('-')"
+            },
+            {
+              "message": "branch must not contain ':'",
+              "rule": "!self.contains(':')"
+            },
+            {
+              "message": "branch must not contain '..'",
+              "rule": "!self.contains('..')"
+            }
+          ]
         },
         "activeCommitStatuses": {
           "description": "ActiveCommitStatuses lists the statuses to be monitored on the active branch",
@@ -44,6 +63,11 @@
           ],
           "x-kubernetes-list-type": "map"
         },
+        "activePath": {
+          "description": "ActivePath is an optional repository subpath for this policy's active state.\nWhen set, hydrator metadata is read from <activePath>/hydrator.metadata.",
+          "minLength": 1,
+          "type": "string"
+        },
         "autoMerge": {
           "default": true,
           "type": "boolean"
@@ -66,9 +90,24 @@
           "additionalProperties": false
         },
         "proposedBranch": {
-          "description": "ProposedBranch staging hydrated branch",
+          "description": "ProposedBranch staging hydrated branch\nMust not start with '-', contain ':', or contain '..'.",
+          "maxLength": 100,
           "minLength": 1,
-          "type": "string"
+          "type": "string",
+          "x-kubernetes-validations": [
+            {
+              "message": "branch must not start with '-'",
+              "rule": "!self.startsWith('-')"
+            },
+            {
+              "message": "branch must not contain ':'",
+              "rule": "!self.contains(':')"
+            },
+            {
+              "message": "branch must not contain '..'",
+              "rule": "!self.contains('..')"
+            }
+          ]
         },
         "proposedCommitStatuses": {
           "description": "ProposedCommitStatuses lists the statuses to be monitored on the proposed branch",
@@ -93,6 +132,29 @@
             "key"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "pullRequest": {
+          "description": "PullRequest configures SCM pull request behavior for this change transfer policy.\nCopied from the owning PromotionStrategy by the PromotionStrategy controller.",
+          "properties": {
+            "labels": {
+              "description": "Labels configures dynamic SCM labels applied to promotion pull requests.",
+              "properties": {
+                "expression": {
+                  "description": "Expression is evaluated using the expr library (github.com/expr-lang/expr) against\nChangeTransferPolicy status and spec. It must return a list of SCM label name strings.\n\nAvailable variables:\n  - Status: ChangeTransferPolicy status (Proposed/Active commit statuses, branch SHAs, etc.)\n  - Spec: ChangeTransferPolicy spec (ActiveBranch, ProposedBranch, etc.)\n  - PromotionStrategy: owning PromotionStrategy spec and status when available\n\nEach returned label name must satisfy the same validation as PullRequest.spec.labels\n(non-empty, max 50 characters, no newlines, max 10 labels, unique).",
+                  "maxLength": 8192,
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "expression"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
         }
       },
       "required": [
@@ -501,7 +563,7 @@
             "description": "History describes a particular change that was promoted by the ChangeTransferPolicy.",
             "properties": {
               "active": {
-                "description": "Active is the state of the active branch at the time the PR was merged.",
+                "description": "Active is the state of the active branch at the time the PR was merged. Its dry state is read back from\n<activePath>/hydrator.metadata on the merge commit and its hydrated state from that commit itself, so both\ndescribe what actually merged regardless of merge style. Its commitStatuses, by contrast, come from the\nsnapshot trailers and may be stale when mergeCommitSnapshotMismatch is true.",
                 "properties": {
                   "commitStatuses": {
                     "description": "CommitStatuses is a list of commit statuses that are being monitored for this branch.",
@@ -829,11 +891,15 @@
                 "type": "object",
                 "additionalProperties": false
               },
+              "mergeCommitSnapshotMismatch": {
+                "description": "MergeCommitSnapshotMismatch indicates hydrator metadata on the SCM-reported merge commit disagreed with\nthe promoter's last snapshot (typically an external merge after the proposed branch advanced). When true,\nthe fields this entry rebuilds from the snapshot trailers \u2014 proposed.commitStatuses and\nactive.commitStatuses, plus proposed.hydrated when the merge was a squash (a single-parent squash commit\ngives the controller nothing to reconstruct the hydrated sha from) \u2014 may describe the earlier proposed\nrevision rather than what actually merged.",
+                "type": "boolean"
+              },
               "proposed": {
                 "description": "Proposed is the state of the proposed branch at the time the PR was merged.",
                 "properties": {
                   "commitStatuses": {
-                    "description": "CommitStatuses is a list of commit statuses that were being monitored for this branch.\nThis contains the state frozen at the moment the PR was merged.",
+                    "description": "CommitStatuses is a list of commit statuses that were being monitored for this branch.\nThis contains the state frozen at the moment the PR was merged. When the entry's\nmergeCommitSnapshotMismatch is true, these phases come from snapshot trailers describing the proposed\nrevision the promoter last saw, which is not necessarily the revision that merged.",
                     "items": {
                       "description": "ChangeRequestPolicyCommitStatusPhase defines the phase of a commit status in a ChangeTransferPolicy.",
                       "properties": {
@@ -879,7 +945,7 @@
                     "type": "array"
                   },
                   "hydrated": {
-                    "description": "Hydrated is the hydrated state of the branch, which is the commit that is currently being worked on.",
+                    "description": "Hydrated is the hydrated state of the branch, which is the commit that is currently being worked on.\nRead from the snapshot trailers. On a regular merge it is corrected to the merge commit's second parent,\nbut a squash commit has only one parent, so when the entry's mergeCommitSnapshotMismatch is true and the\nmerge was a squash the stale snapshot value is kept.",
                     "properties": {
                       "author": {
                         "description": "Author is the author of the commit",
@@ -979,11 +1045,18 @@
                 "description": "PullRequest is the state of the pull request that was created for this ChangeTransferPolicy.",
                 "properties": {
                   "externallyMergedOrClosed": {
-                    "description": "ExternallyMergedOrClosed indicates that the pull request is no longer open on the SCM while the\nPullRequest still desired it open: merged or closed outside the controller, or closed on the SCM\nbecause the PullRequest resource was deleted (finalizer) before this status was reconciled.\nWhen true, the State field will be empty (\"\") since we cannot tell merge vs. close from the provider.\nThis status is preserved even after the PullRequest resource is deleted, maintaining a historical\nrecord until a new pull request is created for this environment.",
+                    "description": "ExternallyMergedOrClosed indicated that the pull request was no longer open on the SCM while\npromotion still desired it open. The PullRequest controller no longer sets this field.\n\nDeprecated: Use status.state merged-or-closed or unknown instead. Existing values may still\nappear when mirrored from older PullRequest status. This field may be removed in a future API\nrevision.",
                     "type": "boolean"
                   },
                   "id": {
                     "description": "ID is the unique identifier of the pull request, set by the SCM.",
+                    "type": "string"
+                  },
+                  "mergedTargetSha": {
+                    "description": "MergedTargetSha is the SHA that the target branch points at after the merge. It is a merge commit\nonly when the SCM created one; squash and fast-forward merges report the resulting commit on the\ntarget branch instead. In the live pull request status it is mirrored from the PullRequest resource\nand is empty until the merge is observed; in a History entry it is the active-branch commit the\nentry describes.",
+                    "maxLength": 64,
+                    "minLength": 40,
+                    "pattern": "^([a-f0-9]{40}|[a-f0-9]{64})$",
                     "type": "string"
                   },
                   "prCreationTime": {
@@ -1001,7 +1074,9 @@
                     "enum": [
                       "closed",
                       "merged",
-                      "open"
+                      "open",
+                      "merged-or-closed",
+                      "unknown"
                     ],
                     "type": "string"
                   },
@@ -1025,6 +1100,13 @@
             "additionalProperties": false
           },
           "type": "array"
+        },
+        "instanceID": {
+          "description": "InstanceID mirrors metadata.labels[promoter.argoproj.io/instance-id] stamped on each\nreconcile attempt by this install's controller, including when Ready=False; omitted\nwhen the resource has no instance-id label (default install).",
+          "maxLength": 63,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9]([a-zA-Z0-9._-]*[a-zA-Z0-9])?$",
+          "type": "string"
         },
         "observedGeneration": {
           "description": "ObservedGeneration is the .metadata.generation that this status was reconciled from.\nBecause status is written via Server-Side Apply with ForceOwnership (which has no\noptimistic-concurrency check), this field is the canonical way to detect stale\nstatus writes: compare status.observedGeneration with metadata.generation.",
@@ -1364,11 +1446,18 @@
           "description": "PullRequest is the state of the pull request that was created for this ChangeTransferPolicy.",
           "properties": {
             "externallyMergedOrClosed": {
-              "description": "ExternallyMergedOrClosed indicates that the pull request is no longer open on the SCM while the\nPullRequest still desired it open: merged or closed outside the controller, or closed on the SCM\nbecause the PullRequest resource was deleted (finalizer) before this status was reconciled.\nWhen true, the State field will be empty (\"\") since we cannot tell merge vs. close from the provider.\nThis status is preserved even after the PullRequest resource is deleted, maintaining a historical\nrecord until a new pull request is created for this environment.",
+              "description": "ExternallyMergedOrClosed indicated that the pull request was no longer open on the SCM while\npromotion still desired it open. The PullRequest controller no longer sets this field.\n\nDeprecated: Use status.state merged-or-closed or unknown instead. Existing values may still\nappear when mirrored from older PullRequest status. This field may be removed in a future API\nrevision.",
               "type": "boolean"
             },
             "id": {
               "description": "ID is the unique identifier of the pull request, set by the SCM.",
+              "type": "string"
+            },
+            "mergedTargetSha": {
+              "description": "MergedTargetSha is the SHA that the target branch points at after the merge. It is a merge commit\nonly when the SCM created one; squash and fast-forward merges report the resulting commit on the\ntarget branch instead. In the live pull request status it is mirrored from the PullRequest resource\nand is empty until the merge is observed; in a History entry it is the active-branch commit the\nentry describes.",
+              "maxLength": 64,
+              "minLength": 40,
+              "pattern": "^([a-f0-9]{40}|[a-f0-9]{64})$",
               "type": "string"
             },
             "prCreationTime": {
@@ -1386,7 +1475,9 @@
               "enum": [
                 "closed",
                 "merged",
-                "open"
+                "open",
+                "merged-or-closed",
+                "unknown"
               ],
               "type": "string"
             },
