@@ -1,0 +1,280 @@
+{
+  "description": "Instance is the Schema for the instances API",
+  "properties": {
+    "apiVersion": {
+      "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+      "type": "string"
+    },
+    "kind": {
+      "description": "Kind is a string value representing the REST resource this object represents.\nServers may infer this from the endpoint the client submits requests to.\nCannot be updated.\nIn CamelCase.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object"
+    },
+    "spec": {
+      "description": "InstanceSpec defines the desired state of Instance.",
+      "properties": {
+        "garbageCollection": {
+          "description": "GarbageCollection holds request information for a garbage collection schedule.",
+          "properties": {
+            "cron": {
+              "type": "string"
+            },
+            "deleteUntagged": {
+              "type": "boolean"
+            },
+            "scheduleType": {
+              "type": "string"
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
+        "helmChart": {
+          "properties": {
+            "atomic": {
+              "description": "Atomic indicates whether to install resources atomically.\n'Wait' will automatically be set to true when using Atomic.",
+              "type": "boolean"
+            },
+            "chart": {
+              "type": "string"
+            },
+            "cleanupOnFail": {
+              "description": "CleanupOnFail indicates whether to cleanup the release on failure.",
+              "type": "boolean"
+            },
+            "createNamespace": {
+              "description": "CreateNamespace indicates whether to create the namespace if it does not exist.",
+              "type": "boolean"
+            },
+            "dependencyUpdate": {
+              "description": "DependencyUpdate indicates whether to update the chart release if the dependencies have changed.",
+              "type": "boolean"
+            },
+            "description": {
+              "description": "Description specifies a custom description for the uninstalled release",
+              "type": "string"
+            },
+            "disableHooks": {
+              "description": "DisableHooks indicates whether to disable hooks.",
+              "type": "boolean"
+            },
+            "dryRun": {
+              "description": "DryRun indicates whether to perform a dry run.",
+              "type": "boolean"
+            },
+            "dryRunOption": {
+              "description": "DryRunOption controls whether the operation is prepared, but not executed with options on whether or not to interact with the remote cluster.",
+              "type": "string"
+            },
+            "force": {
+              "description": "Force indicates whether to force the operation.",
+              "type": "boolean"
+            },
+            "generateName": {
+              "description": "GenerateName indicates that the release name should be generated.",
+              "type": "boolean"
+            },
+            "keepHistory": {
+              "description": "KeepHistory indicates whether to retain or purge the release history during uninstall",
+              "type": "boolean"
+            },
+            "maxHistory": {
+              "description": "MaxHistory limits the maximum number of revisions saved per release.",
+              "type": "integer"
+            },
+            "nameTemplate": {
+              "description": "NameTemplate is the template used to generate the release name if GenerateName is configured.",
+              "type": "string"
+            },
+            "namespace": {
+              "description": "Namespace where the chart release is deployed.\nNote that helmclient.Options.Namespace should ideally match the namespace configured here.",
+              "type": "string"
+            },
+            "recreate": {
+              "description": "Recreate indicates whether to recreate the release if it already exists.",
+              "type": "boolean"
+            },
+            "release": {
+              "type": "string"
+            },
+            "replace": {
+              "description": "Replace indicates whether to replace the chart release if it already exists.",
+              "type": "boolean"
+            },
+            "resetValues": {
+              "description": "ResetValues indicates whether to reset the values.yaml file during installation.",
+              "type": "boolean"
+            },
+            "reuseValues": {
+              "description": "ReuseValues indicates whether to reuse the values.yaml file during installation.",
+              "type": "boolean"
+            },
+            "secretValues": {
+              "description": "set additional chart values from secret",
+              "properties": {
+                "key": {
+                  "type": "string"
+                },
+                "secretRef": {
+                  "description": "LocalObjectReference contains enough information to let you locate the\nreferenced object inside the same namespace.",
+                  "properties": {
+                    "name": {
+                      "description": "Name of the referent.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names\nTODO: Add other useful fields. apiVersion, kind, uid?",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "x-kubernetes-map-type": "atomic",
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "key",
+                "secretRef"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            },
+            "skipCRDs": {
+              "description": "SkipCRDs indicates whether to skip CRDs during installation.",
+              "type": "boolean"
+            },
+            "subNotes": {
+              "description": "SubNotes indicates whether to print sub-notes.",
+              "type": "boolean"
+            },
+            "timeout": {
+              "description": "Timeout configures the time to wait for any individual Kubernetes operation (like Jobs for hooks).",
+              "format": "int64",
+              "type": "integer"
+            },
+            "upgradeCRDs": {
+              "description": "Upgrade indicates whether to perform a CRD upgrade during installation.",
+              "type": "boolean"
+            },
+            "valuesOptions": {
+              "description": "Specify values similar to the cli",
+              "properties": {
+                "fileValues": {
+                  "description": "--set-file",
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "jsonValues": {
+                  "description": "--set-json",
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "stringValues": {
+                  "description": "--set-string",
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "valueFiles": {
+                  "description": "-f/--values",
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "values": {
+                  "description": "--set",
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
+            "valuesYaml": {
+              "description": "ValuesYaml is the values.yaml content.\nuse string instead of map[string]interface{}\nhttps://github.com/kubernetes-sigs/kubebuilder/issues/528#issuecomment-466449483\nand https://github.com/kubernetes-sigs/controller-tools/pull/317",
+              "type": "string"
+            },
+            "version": {
+              "description": "Version of the chart release.",
+              "type": "string"
+            },
+            "wait": {
+              "description": "Wait indicates whether to wait for the release to be deployed or not.",
+              "type": "boolean"
+            },
+            "waitForJobs": {
+              "description": "WaitForJobs indicates whether to wait for completion of release Jobs before marking the release as successful.\n'Wait' has to be specified for this to take effect.\nThe timeout may be specified via the 'Timeout' field.",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "chart",
+            "namespace",
+            "release"
+          ],
+          "type": "object",
+          "additionalProperties": false
+        },
+        "instanceURL": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "description": "can't use the resulting string-type so this is a simple string and will be casted to an OperatorType in the resolver:\nerror: Hit an unsupported type invalid type for invalid type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "helmChart",
+        "instanceURL",
+        "name",
+        "type"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    },
+    "status": {
+      "description": "InstanceStatus defines the observed state of Instance.",
+      "properties": {
+        "phase": {
+          "properties": {
+            "lastTransition": {
+              "description": "Time of last observed transition into this state.",
+              "format": "date-time",
+              "type": "string"
+            },
+            "message": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "message",
+            "name"
+          ],
+          "type": "object",
+          "additionalProperties": false
+        },
+        "specHash": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "phase"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  "type": "object"
+}
