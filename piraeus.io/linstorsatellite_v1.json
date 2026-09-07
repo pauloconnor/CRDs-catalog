@@ -144,15 +144,15 @@
               "description": "CertManager references a cert-manager Issuer or ClusterIssuer.\nIf set, a Certificate resource will be created, provisioning the secret references in SecretName using the\nissuer configured here.",
               "properties": {
                 "group": {
-                  "description": "Group of the resource being referred to.",
+                  "description": "Group of the issuer being referred to.\nDefaults to 'cert-manager.io'.",
                   "type": "string"
                 },
                 "kind": {
-                  "description": "Kind of the resource being referred to.",
+                  "description": "Kind of the issuer being referred to.\nDefaults to 'Issuer'.",
                   "type": "string"
                 },
                 "name": {
-                  "description": "Name of the resource being referred to.",
+                  "description": "Name of the issuer being referred to.",
                   "type": "string"
                 }
               },
@@ -328,6 +328,14 @@
           "description": "Repository used to pull workload images.",
           "type": "string"
         },
+        "resourceNameSuffixSeparator": {
+          "description": "ResourceNameSuffixSeparator is inserted between the base resource name and the Satellite name.\n\nDefaults to \".\".",
+          "enum": [
+            ".",
+            "-"
+          ],
+          "type": "string"
+        },
         "storagePools": {
           "description": "StoragePools is a list of storage pools to configure on the node.",
           "items": {
@@ -357,8 +365,23 @@
               "lvmPool": {
                 "description": "Configures a LVM Volume Group as storage pool.",
                 "properties": {
+                  "physicalVolumeCreateArguments": {
+                    "description": "PhysicalVolumeCreateArguments are arguments to pass to \"pvcreate\".\nThis has no effect on an existing VG, it only applies when the VG initially gets created.",
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
                   "volumeGroup": {
+                    "description": "VolumeGroup is the name of the Volume Group (VG) to use.",
                     "type": "string"
+                  },
+                  "volumeGroupCreateArguments": {
+                    "description": "VolumeGroupCreateArguments are arguments to pass to \"vgcreate\".\nThis has no effect on an existing VG, it only applies when the VG initially gets created.",
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
                   }
                 },
                 "type": "object",
@@ -367,12 +390,33 @@
               "lvmThinPool": {
                 "description": "Configures a LVM Thin Pool as storage pool.",
                 "properties": {
+                  "logicalVolumeCreateArguments": {
+                    "description": "LogicalVolumeCreateArguments are arguments to pass to \"lvcreate\".\nThis has no effect on an existing thinpool, it only applies when the thinpool initially gets created.",
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "physicalVolumeCreateArguments": {
+                    "description": "PhysicalVolumeCreateArguments are arguments to pass to \"pvcreate\".\nThis has no effect on an existing VG, it only applies when the VG initially gets created.",
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
                   "thinPool": {
                     "description": "ThinPool is the name of the thinpool LV (without VG prefix).",
                     "type": "string"
                   },
                   "volumeGroup": {
                     "type": "string"
+                  },
+                  "volumeGroupCreateArguments": {
+                    "description": "VolumeGroupCreateArguments are arguments to pass to \"vgcreate\".\nThis has no effect on an existing VG, it only applies when the VG initially gets created.",
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
                   }
                 },
                 "type": "object",
@@ -475,6 +519,13 @@
                   "zPool": {
                     "description": "ZPool is the name of the ZFS zpool.",
                     "type": "string"
+                  },
+                  "zpoolCreateArguments": {
+                    "description": "ZpoolCreateArguments are arguments to pass to \"zpool create\".\nThis has no effect on an existing zpool, it only applies when the zpool initially gets created.\n\nIf not set, \"-o failmode=continue\" is automatically added to ensure a failed zpool does not stop replication\nto and from other nodes in the cluster.",
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
                   }
                 },
                 "type": "object",
@@ -486,6 +537,13 @@
                   "zPool": {
                     "description": "ZPool is the name of the ZFS zpool.",
                     "type": "string"
+                  },
+                  "zpoolCreateArguments": {
+                    "description": "ZpoolCreateArguments are arguments to pass to \"zpool create\".\nThis has no effect on an existing zpool, it only applies when the zpool initially gets created.\n\nIf not set, \"-o failmode=continue\" is automatically added to ensure a failed zpool does not stop replication\nto and from other nodes in the cluster.",
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
                   }
                 },
                 "type": "object",
