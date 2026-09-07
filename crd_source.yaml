@@ -799,7 +799,7 @@ sources:
 
   # Issue #596 - tackle.konveyor.io CRDs
   - url: "https://github.com/konveyor/operator"
-    tag: ""
+    tag: "v0.11.0-alpha.2"
     repo_path: "helm/templates/crds"
     changelog: "https://github.com/konveyor/operator/releases"
 
