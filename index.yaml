@@ -19521,6 +19521,10 @@ sfn.services.k8s.aws:
     filename: sfn.services.k8s.aws/statemachine_v1alpha1.json
     kind: StateMachine
     name: statemachine_v1alpha1
+  - apiVersion: sfn.services.k8s.aws/v1alpha1
+    filename: sfn.services.k8s.aws/statemachinealias_v1alpha1.json
+    kind: StateMachineAlias
+    name: statemachinealias_v1alpha1
 shard.volcano.sh:
   - apiVersion: shard.volcano.sh/v1alpha1
     filename: shard.volcano.sh/nodeshard_v1alpha1.json
