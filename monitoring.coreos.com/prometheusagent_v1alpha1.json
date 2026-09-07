@@ -2262,7 +2262,7 @@
                     "type": "boolean"
                   },
                   "procMount": {
-                    "description": "procMount denotes the type of proc mount to use for the containers.\nThe default value is Default which uses the container runtime defaults for\nreadonly paths and masked paths.\nThis requires the ProcMountType feature flag to be enabled.\nNote that this field cannot be set when spec.os.name is windows.",
+                    "description": "procMount denotes the type of proc mount to use for the containers.\nThe default value is Default which uses the container runtime defaults for\nreadonly paths and masked paths.\nNote that this field cannot be set when spec.os.name is windows.",
                     "type": "string"
                   },
                   "readOnlyRootFilesystem": {
@@ -2709,21 +2709,25 @@
         "enforcedKeepDroppedTargets": {
           "description": "enforcedKeepDroppedTargets when defined specifies a global limit on the number of targets\ndropped by relabeling that will be kept in memory. The value overrides\nany `spec.keepDroppedTargets` set by\nServiceMonitor, PodMonitor, Probe objects unless `spec.keepDroppedTargets` is\ngreater than zero and less than `spec.enforcedKeepDroppedTargets`.\n\nIt requires Prometheus >= v2.47.0.\n\nWhen both `enforcedKeepDroppedTargets` and `keepDroppedTargets` are defined and greater than zero, the following rules apply:\n* Scrape objects without a defined keepDroppedTargets value will inherit the global keepDroppedTargets value (Prometheus >= 2.45.0) or the enforcedKeepDroppedTargets value (Prometheus < v2.45.0).\n  If Prometheus version is >= 2.45.0 and the `enforcedKeepDroppedTargets` is greater than the `keepDroppedTargets`, the `keepDroppedTargets` will be set to `enforcedKeepDroppedTargets`.\n* Scrape objects with a keepDroppedTargets value less than or equal to enforcedKeepDroppedTargets keep their specific value.\n* Scrape objects with a keepDroppedTargets value greater than enforcedKeepDroppedTargets are set to enforcedKeepDroppedTargets.",
           "format": "int64",
+          "minimum": 0,
           "type": "integer"
         },
         "enforcedLabelLimit": {
           "description": "enforcedLabelLimit when defined specifies a global limit on the number\nof labels per sample. The value overrides any `spec.labelLimit` set by\nServiceMonitor, PodMonitor, Probe objects unless `spec.labelLimit` is\ngreater than zero and less than `spec.enforcedLabelLimit`.\n\nIt requires Prometheus >= v2.27.0.\n\nWhen both `enforcedLabelLimit` and `labelLimit` are defined and greater than zero, the following rules apply:\n* Scrape objects without a defined labelLimit value will inherit the global labelLimit value (Prometheus >= 2.45.0) or the enforcedLabelLimit value (Prometheus < v2.45.0).\n  If Prometheus version is >= 2.45.0 and the `enforcedLabelLimit` is greater than the `labelLimit`, the `labelLimit` will be set to `enforcedLabelLimit`.\n* Scrape objects with a labelLimit value less than or equal to enforcedLabelLimit keep their specific value.\n* Scrape objects with a labelLimit value greater than enforcedLabelLimit are set to enforcedLabelLimit.",
           "format": "int64",
+          "minimum": 0,
           "type": "integer"
         },
         "enforcedLabelNameLengthLimit": {
           "description": "enforcedLabelNameLengthLimit when defined specifies a global limit on the length\nof labels name per sample. The value overrides any `spec.labelNameLengthLimit` set by\nServiceMonitor, PodMonitor, Probe objects unless `spec.labelNameLengthLimit` is\ngreater than zero and less than `spec.enforcedLabelNameLengthLimit`.\n\nIt requires Prometheus >= v2.27.0.\n\nWhen both `enforcedLabelNameLengthLimit` and `labelNameLengthLimit` are defined and greater than zero, the following rules apply:\n* Scrape objects without a defined labelNameLengthLimit value will inherit the global labelNameLengthLimit value (Prometheus >= 2.45.0) or the enforcedLabelNameLengthLimit value (Prometheus < v2.45.0).\n  If Prometheus version is >= 2.45.0 and the `enforcedLabelNameLengthLimit` is greater than the `labelNameLengthLimit`, the `labelNameLengthLimit` will be set to `enforcedLabelNameLengthLimit`.\n* Scrape objects with a labelNameLengthLimit value less than or equal to enforcedLabelNameLengthLimit keep their specific value.\n* Scrape objects with a labelNameLengthLimit value greater than enforcedLabelNameLengthLimit are set to enforcedLabelNameLengthLimit.",
           "format": "int64",
+          "minimum": 0,
           "type": "integer"
         },
         "enforcedLabelValueLengthLimit": {
           "description": "enforcedLabelValueLengthLimit when not null defines a global limit on the length\nof labels value per sample. The value overrides any `spec.labelValueLengthLimit` set by\nServiceMonitor, PodMonitor, Probe objects unless `spec.labelValueLengthLimit` is\ngreater than zero and less than `spec.enforcedLabelValueLengthLimit`.\n\nIt requires Prometheus >= v2.27.0.\n\nWhen both `enforcedLabelValueLengthLimit` and `labelValueLengthLimit` are defined and greater than zero, the following rules apply:\n* Scrape objects without a defined labelValueLengthLimit value will inherit the global labelValueLengthLimit value (Prometheus >= 2.45.0) or the enforcedLabelValueLengthLimit value (Prometheus < v2.45.0).\n  If Prometheus version is >= 2.45.0 and the `enforcedLabelValueLengthLimit` is greater than the `labelValueLengthLimit`, the `labelValueLengthLimit` will be set to `enforcedLabelValueLengthLimit`.\n* Scrape objects with a labelValueLengthLimit value less than or equal to enforcedLabelValueLengthLimit keep their specific value.\n* Scrape objects with a labelValueLengthLimit value greater than enforcedLabelValueLengthLimit are set to enforcedLabelValueLengthLimit.",
           "format": "int64",
+          "minimum": 0,
           "type": "integer"
         },
         "enforcedNamespaceLabel": {
@@ -2733,11 +2737,13 @@
         "enforcedSampleLimit": {
           "description": "enforcedSampleLimit when defined specifies a global limit on the number\nof scraped samples that will be accepted. This overrides any\n`spec.sampleLimit` set by ServiceMonitor, PodMonitor, Probe objects\nunless `spec.sampleLimit` is greater than zero and less than\n`spec.enforcedSampleLimit`.\n\nIt is meant to be used by admins to keep the overall number of\nsamples/series under a desired limit.\n\nWhen both `enforcedSampleLimit` and `sampleLimit` are defined and greater than zero, the following rules apply:\n* Scrape objects without a defined sampleLimit value will inherit the global sampleLimit value (Prometheus >= 2.45.0) or the enforcedSampleLimit value (Prometheus < v2.45.0).\n  If Prometheus version is >= 2.45.0 and the `enforcedSampleLimit` is greater than the `sampleLimit`, the `sampleLimit` will be set to `enforcedSampleLimit`.\n* Scrape objects with a sampleLimit value less than or equal to enforcedSampleLimit keep their specific value.\n* Scrape objects with a sampleLimit value greater than enforcedSampleLimit are set to enforcedSampleLimit.",
           "format": "int64",
+          "minimum": 0,
           "type": "integer"
         },
         "enforcedTargetLimit": {
           "description": "enforcedTargetLimit when defined specifies a global limit on the number\nof scraped targets. The value overrides any `spec.targetLimit` set by\nServiceMonitor, PodMonitor, Probe objects unless `spec.targetLimit` is\ngreater than zero and less than `spec.enforcedTargetLimit`.\n\nIt is meant to be used by admins to to keep the overall number of\ntargets under a desired limit.\n\nWhen both `enforcedTargetLimit` and `targetLimit` are defined and greater than zero, the following rules apply:\n* Scrape objects without a defined targetLimit value will inherit the global targetLimit value (Prometheus >= 2.45.0) or the enforcedTargetLimit value (Prometheus < v2.45.0).\n  If Prometheus version is >= 2.45.0 and the `enforcedTargetLimit` is greater than the `targetLimit`, the `targetLimit` will be set to `enforcedTargetLimit`.\n* Scrape objects with a targetLimit value less than or equal to enforcedTargetLimit keep their specific value.\n* Scrape objects with a targetLimit value greater than enforcedTargetLimit are set to enforcedTargetLimit.",
           "format": "int64",
+          "minimum": 0,
           "type": "integer"
         },
         "excludedFromEnforcement": {
@@ -3909,7 +3915,7 @@
                     "type": "boolean"
                   },
                   "procMount": {
-                    "description": "procMount denotes the type of proc mount to use for the containers.\nThe default value is Default which uses the container runtime defaults for\nreadonly paths and masked paths.\nThis requires the ProcMountType feature flag to be enabled.\nNote that this field cannot be set when spec.os.name is windows.",
+                    "description": "procMount denotes the type of proc mount to use for the containers.\nThe default value is Default which uses the container runtime defaults for\nreadonly paths and masked paths.\nNote that this field cannot be set when spec.os.name is windows.",
                     "type": "string"
                   },
                   "readOnlyRootFilesystem": {
@@ -4264,21 +4270,25 @@
         "keepDroppedTargets": {
           "description": "keepDroppedTargets defines the per-scrape limit on the number of targets dropped by relabeling\nthat will be kept in memory. 0 means no limit.\n\nIt requires Prometheus >= v2.47.0.\n\nNote that the global limit only applies to scrape objects that don't specify an explicit limit value.\nIf you want to enforce a maximum limit for all scrape objects, refer to enforcedKeepDroppedTargets.",
           "format": "int64",
+          "minimum": 0,
           "type": "integer"
         },
         "labelLimit": {
           "description": "labelLimit defines per-scrape limit on number of labels that will be accepted for a sample.\nOnly valid in Prometheus versions 2.45.0 and newer.\n\nNote that the global limit only applies to scrape objects that don't specify an explicit limit value.\nIf you want to enforce a maximum limit for all scrape objects, refer to enforcedLabelLimit.",
           "format": "int64",
+          "minimum": 0,
           "type": "integer"
         },
         "labelNameLengthLimit": {
           "description": "labelNameLengthLimit defines the per-scrape limit on length of labels name that will be accepted for a sample.\nOnly valid in Prometheus versions 2.45.0 and newer.\n\nNote that the global limit only applies to scrape objects that don't specify an explicit limit value.\nIf you want to enforce a maximum limit for all scrape objects, refer to enforcedLabelNameLengthLimit.",
           "format": "int64",
+          "minimum": 0,
           "type": "integer"
         },
         "labelValueLengthLimit": {
           "description": "labelValueLengthLimit defines the per-scrape limit on length of labels value that will be accepted for a sample.\nOnly valid in Prometheus versions 2.45.0 and newer.\n\nNote that the global limit only applies to scrape objects that don't specify an explicit limit value.\nIf you want to enforce a maximum limit for all scrape objects, refer to enforcedLabelValueLengthLimit.",
           "format": "int64",
+          "minimum": 0,
           "type": "integer"
         },
         "listenLocal": {
@@ -4369,6 +4379,14 @@
             },
             "keepIdentifyingResourceAttributes": {
               "description": "keepIdentifyingResourceAttributes enables adding `service.name`, `service.namespace` and `service.instance.id`\nresource attributes to the `target_info` metric, on top of converting them into the `instance` and `job` labels.\n\nIt requires Prometheus >= v3.1.0.",
+              "type": "boolean"
+            },
+            "labelNamePreserveMultipleUnderscores": {
+              "description": "labelNamePreserveMultipleUnderscores enables preserving of multiple consecutive underscores in label names when translation_strategy uses\nunderscore escaping.\nWhen true (default), multiple consecutive underscores are preserved during label name sanitization.\n\nNotice: This one has no impact if `nameEscapingScheme` is `AllowUTF8`.\n\nIt requires Prometheus >= v3.8.0.",
+              "type": "boolean"
+            },
+            "labelNameUnderscoreSanitization": {
+              "description": "labelNameUnderscoreSanitization controls whether to enable prepending of 'key_' to labels starting with '_'.\nReserved labels starting with '__' are not modified.\nThis is only relevant when translation_strategy uses underscore escaping (e.g., \"UnderscoreEscapingWithSuffixes\" or \"UnderscoreEscapingWithoutSuffixes\").\n\nNotice: This one has no impact if `nameEscapingScheme` is `AllowUTF8`.\n\nIt requires Prometheus >= v3.8.0.",
               "type": "boolean"
             },
             "promoteAllResourceAttributes": {
@@ -4932,7 +4950,7 @@
                     "type": "integer"
                   },
                   "send": {
-                    "description": "send defines whether metric metadata is sent to the remote storage or not.",
+                    "description": "send defines whether metric metadata is sent to the remote storage or not.\n\nThe setting is ignored when Remote Write message's version 2.0 is used.",
                     "type": "boolean"
                   },
                   "sendInterval": {
@@ -5264,7 +5282,7 @@
                   },
                   "tokenUrl": {
                     "description": "tokenUrl defines the URL to fetch the token from.",
-                    "minLength": 1,
+                    "pattern": "^(http|https)://.+$",
                     "type": "string"
                   }
                 },
@@ -5412,6 +5430,11 @@
                     "x-kubernetes-map-type": "atomic",
                     "additionalProperties": false
                   },
+                  "externalId": {
+                    "description": "externalId defines the external ID used when assuming an AWS role. Can only be used with roleArn.\nIt requires Prometheus >= v3.11.0 or Alertmanager >= v0.33.0. Currently not supported by Thanos.",
+                    "minLength": 1,
+                    "type": "string"
+                  },
                   "profile": {
                     "description": "profile defines the named AWS profile used to authenticate.",
                     "type": "string"
@@ -5454,6 +5477,12 @@
                   }
                 },
                 "type": "object",
+                "x-kubernetes-validations": [
+                  {
+                    "message": "externalId can only be used when roleArn is specified",
+                    "rule": "!has(self.externalId) || has(self.roleArn)"
+                  }
+                ],
                 "additionalProperties": false
               },
               "tlsConfig": {
@@ -5679,6 +5708,7 @@
                     "modulus": {
                       "description": "modulus to take of the hash of the source label values.\n\nOnly applicable when the action is `HashMod`.",
                       "format": "int64",
+                      "minimum": 0,
                       "type": "integer"
                     },
                     "regex": {
@@ -5827,6 +5857,7 @@
         "sampleLimit": {
           "description": "sampleLimit defines per-scrape limit on number of scraped samples that will be accepted.\nOnly valid in Prometheus versions 2.45.0 and newer.\n\nNote that the global limit only applies to scrape objects that don't specify an explicit limit value.\nIf you want to enforce a maximum limit for all scrape objects, refer to enforcedSampleLimit.",
           "format": "int64",
+          "minimum": 0,
           "type": "integer"
         },
         "schedulerName": {
@@ -5842,7 +5873,7 @@
                 "description": "attachMetadata defines additional metadata to the discovered targets.\nWhen the scrape object defines its own configuration, it takes\nprecedence over the scrape class configuration.",
                 "properties": {
                   "node": {
-                    "description": "node when set to true, Prometheus attaches node metadata to the discovered\ntargets.\n\nThe Prometheus service account must have the `list` and `watch`\npermissions on the `Nodes` objects.",
+                    "description": "node when set to true, Prometheus attaches node metadata to the discovered\ntargets.\n\nThe Prometheus service account must have the `list` and `watch`\npermissions on the `Nodes` objects.\n\nNode metadata labels are not automatically added to scraped metrics. They are\nexposed as `__meta_kubernetes_node_*` labels and can be copied to timeseries\nwith relabeling configuration.",
                     "type": "boolean"
                   }
                 },
@@ -5940,6 +5971,7 @@
                     "modulus": {
                       "description": "modulus to take of the hash of the source label values.\n\nOnly applicable when the action is `HashMod`.",
                       "format": "int64",
+                      "minimum": 0,
                       "type": "integer"
                     },
                     "regex": {
@@ -6014,6 +6046,7 @@
                     "modulus": {
                       "description": "modulus to take of the hash of the source label values.\n\nOnly applicable when the action is `HashMod`.",
                       "format": "int64",
+                      "minimum": 0,
                       "type": "integer"
                     },
                     "regex": {
@@ -6245,7 +6278,7 @@
           "type": "boolean"
         },
         "scrapeConfigNamespaceSelector": {
-          "description": "scrapeConfigNamespaceSelector defines the namespaces to match for ScrapeConfig discovery. An empty label selector\nmatches all namespaces. A null label selector matches the current\nnamespace only.\n\nNote that the ScrapeConfig custom resource definition is currently at Alpha level.",
+          "description": "scrapeConfigNamespaceSelector defines the namespaces to match for ScrapeConfig discovery. An empty label selector\nmatches all namespaces. A null label selector matches the current\nnamespace only.\n\nNote that the ScrapeConfig custom resource definition is currently at Alpha level\nand will be graduated to Beta in a future release.",
           "properties": {
             "matchExpressions": {
               "description": "matchExpressions is a list of label selector requirements. The requirements are ANDed.",
@@ -6292,7 +6325,7 @@
           "additionalProperties": false
         },
         "scrapeConfigSelector": {
-          "description": "scrapeConfigSelector defines the scrapeConfigs to be selected for target discovery. An empty label\nselector matches all objects. A null label selector matches no objects.\n\nIf `spec.serviceMonitorSelector`, `spec.podMonitorSelector`, `spec.probeSelector`\nand `spec.scrapeConfigSelector` are null, the Prometheus configuration is unmanaged.\nThe Prometheus operator will ensure that the Prometheus configuration's\nSecret exists, but it is the responsibility of the user to provide the raw\ngzipped Prometheus configuration under the `prometheus.yaml.gz` key.\nThis behavior is *deprecated* and will be removed in the next major version\nof the custom resource definition. It is recommended to use\n`spec.additionalScrapeConfigs` instead.\n\nNote that the ScrapeConfig custom resource definition is currently at Alpha level.",
+          "description": "scrapeConfigSelector defines the scrapeConfigs to be selected for target discovery. An empty label\nselector matches all objects. A null label selector matches no objects.\n\nIf `spec.serviceMonitorSelector`, `spec.podMonitorSelector`, `spec.probeSelector`\nand `spec.scrapeConfigSelector` are null, the Prometheus configuration is unmanaged.\nThe Prometheus operator will ensure that the Prometheus configuration's\nSecret exists, but it is the responsibility of the user to provide the raw\ngzipped Prometheus configuration under the `prometheus.yaml.gz` key.\nThis behavior is *deprecated* and will be removed in the next major version\nof the custom resource definition. It is recommended to use\n`spec.additionalScrapeConfigs` instead.\n\nNote that the ScrapeConfig custom resource definition is currently at Alpha level\nand will be graduated to Beta in a future release.",
           "properties": {
             "matchExpressions": {
               "description": "matchExpressions is a list of label selector requirements. The requirements are ANDed.",
@@ -6646,8 +6679,49 @@
           "minLength": 1,
           "type": "string"
         },
+        "shardingStrategy": {
+          "description": "shardingStrategy defines the sharding strategy for distributing scraped targets across Prometheus shards.\n\nWhen not defined, the operator defaults to the 'Address' mode which distributes\ntargets based on a hash of the target address.",
+          "properties": {
+            "mode": {
+              "description": "mode defines the sharding mode. Can be 'Address' or 'Topology'.\n\n'Address' is the default mode and distributes targets across shards\nbased on a hash of the target address.\n\n'Topology' enables zone-aware sharding where each shard is assigned to a\nspecific topology zone and only scrapes targets in that zone.\n(Alpha) Using the 'Topology' mode requires the `PrometheusTopologySharding`\nfeature gate to be enabled.",
+              "enum": [
+                "Address",
+                "Topology"
+              ],
+              "type": "string"
+            },
+            "topology": {
+              "description": "topology defines the configuration for topology-aware sharding.\nThis field is only valid when mode is set to 'Topology'.",
+              "properties": {
+                "externalLabelName": {
+                  "description": "externalLabelName defines the name of the Prometheus external label used\nto communicate the topology zone assigned to the Prometheus instance.\nIf not defined, it defaults to \"zone\".\nIf set to the empty string, no external label is added to the Prometheus configuration.",
+                  "type": "string"
+                },
+                "values": {
+                  "description": "values defines the list of topology values (e.g. zone names) to be used\nfor sharding. The configured number of shards must be greater than or\nequal to the number of values.",
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array",
+                  "x-kubernetes-list-type": "atomic"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "type": "object",
+          "x-kubernetes-validations": [
+            {
+              "message": "topology can only be defined when mode is set to 'Topology'",
+              "rule": "!has(self.topology) || (has(self.mode) && self.mode == 'Topology')"
+            }
+          ],
+          "additionalProperties": false
+        },
         "shards": {
-          "description": "shards defines the number of shards to distribute the scraped targets onto.\n\n`spec.replicas` multiplied by `spec.shards` is the total number of Pods\nbeing created.\n\nWhen not defined, the operator assumes only one shard.\n\nNote that scaling down shards will not reshard data onto the remaining\ninstances, it must be manually moved. Increasing shards will not reshard\ndata either but it will continue to be available from the same\ninstances. To query globally, use either\n* Thanos sidecar + querier for query federation and Thanos Ruler for rules.\n* Remote-write to send metrics to a central location.\n\nBy default, the sharding of targets is performed on:\n* The `__address__` target's metadata label for PodMonitor,\nServiceMonitor and ScrapeConfig resources.\n* The `__param_target__` label for Probe resources.\n\nUsers can define their own sharding implementation by setting the\n`__tmp_hash` label during the target discovery with relabeling\nconfiguration (either in the monitoring resources or via scrape class).\n\nYou can also disable sharding on a specific target by setting the\n`__tmp_disable_sharding` label with relabeling configuration. When\nthe label value isn't empty, all Prometheus shards will scrape the target.",
+          "default": 1,
+          "description": "shards defines the number of shards to distribute the scraped targets onto.\n\n`spec.replicas` multiplied by `spec.shards` is the total number of Pods\nbeing created.\n\nWhen not defined, the operator assumes only one shard.\n\nNote that scaling down shards will not reshard data onto the remaining\ninstances, it must be manually moved. Increasing shards will not reshard\ndata either but it will continue to be available from the same\ninstances. To query globally, use either\n* Thanos sidecar + querier for query federation and Thanos Ruler for rules.\n* Remote-write to send metrics to a central location.\n\nBy default, the sharding of targets is performed on:\n* The `__address__` target's metadata label for PodMonitor,\nServiceMonitor and ScrapeConfig resources.\n* The `__param_target__` label for Probe resources.\n\nUsers can define their own sharding implementation by setting the\n`__tmp_hash` label during the target discovery with relabeling\nconfiguration (either in the monitoring resources or via scrape class).\n\nYou can also disable sharding on a specific target by setting the\n`__tmp_disable_sharding` label with relabeling configuration. When\nthe label value isn't empty, all Prometheus shards will scrape the target.\n\nDefault: 1",
           "format": "int32",
           "type": "integer"
         },
@@ -7213,6 +7287,7 @@
         "targetLimit": {
           "description": "targetLimit defines a limit on the number of scraped targets that will be accepted.\nOnly valid in Prometheus versions 2.45.0 and newer.\n\nNote that the global limit only applies to scrape objects that don't specify an explicit limit value.\nIf you want to enforce a maximum limit for all scrape objects, refer to enforcedTargetLimit.",
           "format": "int64",
+          "minimum": 0,
           "type": "integer"
         },
         "terminationGracePeriodSeconds": {
@@ -7603,10 +7678,38 @@
         "tsdb": {
           "description": "tsdb defines the runtime reloadable configuration of the timeseries database(TSDB).\nIt requires Prometheus >= v2.39.0 or PrometheusAgent >= v2.54.0.",
           "properties": {
+            "chunkEncoding": {
+              "description": "chunkEncoding configures per-chunk-type encoding overrides.\n\nIt requires Prometheus >= v3.13.0.\n\nNotice: Setting \"Xor\" is incompatible with --enable-feature=st-storage\n(XOR chunks do not store start timestamps).",
+              "properties": {
+                "floats": {
+                  "description": "floats selects the encoding used for float chunks.\nValid values are \"Xor\" and \"Xor2\".\n\nNotice:\n * Setting \"Xor\" is incompatible with --enable-feature=st-storage\n(XOR chunks do not store start timestamps).\n * Setting \"Xor2\" automatically adds the `xor2-encoding` feature flag.\n\nIt requires Prometheus >= v3.13.0.",
+                  "enum": [
+                    "Xor",
+                    "Xor2"
+                  ],
+                  "type": "string"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
             "outOfOrderTimeWindow": {
               "description": "outOfOrderTimeWindow defines how old an out-of-order/out-of-bounds sample can be with\nrespect to the TSDB max time.\n\nAn out-of-order/out-of-bounds sample is ingested into the TSDB as long as\nthe timestamp of the sample is >= (TSDB.MaxTime - outOfOrderTimeWindow).\n\nThis is an *experimental feature*, it may change in any upcoming release\nin a breaking way.\n\nIt requires Prometheus >= v2.39.0 or PrometheusAgent >= v2.54.0.",
               "pattern": "^(0|(([0-9]+)y)?(([0-9]+)w)?(([0-9]+)d)?(([0-9]+)h)?(([0-9]+)m)?(([0-9]+)s)?(([0-9]+)ms)?)$",
               "type": "string"
+            },
+            "staleSeriesCompactionThreshold": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "string"
+                }
+              ],
+              "description": "staleSeriesCompactionThreshold configures the trigger point for compacting\nstale series from memory into persistent blocks and removing those stale\nseries from memory.\n\nThe threshold is a number between 0.0 and 1.0. It represents the ratio of\nstale series in memory to the total series in memory. The stale series\ncompaction is triggered when this ratio crosses the configured threshold.\nIt may not trigger the stale series compaction if the usual head compaction\nis about to happen soon.\n\nIf set to 0, stale series compaction is disabled.\n\nIt requires Prometheus >= v3.10.0.",
+              "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+              "x-kubernetes-int-or-string": true
             }
           },
           "type": "object",
@@ -8453,7 +8556,7 @@
                 "additionalProperties": false
               },
               "image": {
-                "description": "image represents an OCI object (a container image or artifact) pulled and mounted on the kubelet's host machine.\nThe volume is resolved at pod startup depending on which PullPolicy value is provided:\n\n- Always: the kubelet always attempts to pull the reference. Container creation will fail If the pull fails.\n- Never: the kubelet never pulls the reference and only uses a local image or artifact. Container creation will fail if the reference isn't present.\n- IfNotPresent: the kubelet pulls if the reference isn't already present on disk. Container creation will fail if the reference isn't present and the pull fails.\n\nThe volume gets re-resolved if the pod gets deleted and recreated, which means that new remote content will become available on pod recreation.\nA failure to resolve or pull the image during pod startup will block containers from starting and may add significant latency. Failures will be retried using normal volume backoff and will be reported on the pod reason and message.\nThe types of objects that may be mounted by this volume are defined by the container runtime implementation on a host machine and at minimum must include all valid types supported by the container image field.\nThe OCI object gets mounted in a single directory (spec.containers[*].volumeMounts.mountPath) by merging the manifest layers in the same way as for container images.\nThe volume will be mounted read-only (ro) and non-executable files (noexec).\nSub path mounts for containers are not supported (spec.containers[*].volumeMounts.subpath) before 1.33.\nThe field spec.securityContext.fsGroupChangePolicy has no effect on this volume type.",
+                "description": "image represents an OCI object (a container image or artifact) pulled and mounted on the kubelet's host machine.\nThe volume is resolved at pod startup depending on which PullPolicy value is provided:\n\n- Always: the kubelet always attempts to pull the reference. Container creation will fail If the pull fails.\n- Never: the kubelet never pulls the reference and only uses a local image or artifact. Container creation will fail if the reference isn't present.\n- IfNotPresent: the kubelet pulls if the reference isn't already present on disk. Container creation will fail if the reference isn't present and the pull fails.\n\nThe volume gets re-resolved if the pod gets deleted and recreated, which means that new remote content will become available on pod recreation.\nA failure to resolve or pull the image during pod startup will block containers from starting and may add significant latency. Failures will be retried using normal volume backoff and will be reported on the pod reason and message.\nThe types of objects that may be mounted by this volume are defined by the container runtime implementation on a host machine and at minimum must include all valid types supported by the container image field.\nThe OCI object gets mounted in a single directory (spec.containers[*].volumeMounts.mountPath) by merging the manifest layers in the same way as for container images.\nThe volume will be mounted read-only (ro).\nSub path mounts for containers are not supported (spec.containers[*].volumeMounts.subpath) before 1.33.\nThe field spec.securityContext.fsGroupChangePolicy has no effect on this volume type.",
                 "properties": {
                   "pullPolicy": {
                     "description": "Policy for pulling OCI objects. Possible values are:\nAlways: the kubelet always attempts to pull the reference. Container creation will fail If the pull fails.\nNever: the kubelet never pulls the reference and only uses a local image or artifact. Container creation will fail if the reference isn't present.\nIfNotPresent: the kubelet pulls if the reference isn't already present on disk. Container creation will fail if the reference isn't present and the pull fails.\nDefaults to Always if :latest tag is specified, or IfNotPresent otherwise.",
@@ -8602,7 +8705,7 @@
                 "additionalProperties": false
               },
               "portworxVolume": {
-                "description": "portworxVolume represents a portworx volume attached and mounted on kubelets host machine.\nDeprecated: PortworxVolume is deprecated. All operations for the in-tree portworxVolume type\nare redirected to the pxd.portworx.com CSI driver when the CSIMigrationPortworx feature-gate\nis on.",
+                "description": "portworxVolume represents a portworx volume attached and mounted on kubelets host machine.\nDeprecated: PortworxVolume is deprecated. All operations for the in-tree portworxVolume type\nare redirected to the pxd.portworx.com CSI driver.",
                 "properties": {
                   "fsType": {
                     "description": "fSType represents the filesystem type to mount\nMust be a filesystem type supported by the host operating system.\nEx. \"ext4\", \"xfs\". Implicitly inferred to be \"ext4\" if unspecified.",
@@ -9534,6 +9637,14 @@
         {
           "message": "additionalScrapeConfigs cannot be set when mode is DaemonSet",
           "rule": "!(has(self.mode) && self.mode == 'DaemonSet' && has(self.additionalScrapeConfigs))"
+        },
+        {
+          "message": "shardingStrategy cannot be set when mode is DaemonSet",
+          "rule": "!(has(self.mode) && self.mode == 'DaemonSet' && has(self.shardingStrategy))"
+        },
+        {
+          "message": "shards must be greater than or equal to the number of topology values when sharding strategy mode is Topology",
+          "rule": "!has(self.shardingStrategy) || !has(self.shardingStrategy.mode) || self.shardingStrategy.mode != 'Topology' || !has(self.shardingStrategy.topology) || !has(self.shardingStrategy.topology.values) || self.shardingStrategy.topology.values.size() == 0 || (has(self.shards) ? self.shards : 1) >= self.shardingStrategy.topology.values.size()"
         }
       ],
       "additionalProperties": false
