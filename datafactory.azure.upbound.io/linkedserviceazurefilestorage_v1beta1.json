@@ -1,5 +1,5 @@
 {
-  "description": "LinkedServiceAzureFileStorage is the Schema for the LinkedServiceAzureFileStorages API. Manages a Linked Service (connection) between an Azure File Storage Account and Azure Data Factory.",
+  "description": "LinkedServiceAzureFileStorage is the Schema for the LinkedServiceAzureFileStorages API. Manages a Linked Service (connection) between an Azure File Storage Account and Azure Data Factory.\nDeprecated: This API version (v1beta1) has been deprecated in release v2.6.0.",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -241,6 +241,30 @@
               },
               "type": "array"
             },
+            "connectionStringSecretRef": {
+              "description": "The connection string.",
+              "properties": {
+                "key": {
+                  "description": "The key to select.",
+                  "type": "string"
+                },
+                "name": {
+                  "description": "Name of the secret.",
+                  "type": "string"
+                },
+                "namespace": {
+                  "description": "Namespace of the secret.",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "key",
+                "name",
+                "namespace"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            },
             "description": {
               "description": "The description for the Data Factory Linked Service.",
               "type": "string"
@@ -283,11 +307,38 @@
               "type": "object",
               "x-kubernetes-map-type": "granular"
             },
+            "passwordSecretRef": {
+              "description": "The password to log in the server.",
+              "properties": {
+                "key": {
+                  "description": "The key to select.",
+                  "type": "string"
+                },
+                "name": {
+                  "description": "Name of the secret.",
+                  "type": "string"
+                },
+                "namespace": {
+                  "description": "Namespace of the secret.",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "key",
+                "name",
+                "namespace"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            },
             "userId": {
               "description": "The user ID to log in the server.",
               "type": "string"
             }
           },
+          "required": [
+            "connectionStringSecretRef"
+          ],
           "type": "object",
           "additionalProperties": false
         },
@@ -507,6 +558,10 @@
             "type"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "lastHandledReconcileAt": {
+          "description": "LastHandledReconcileAt holds the value of the most recent\nreconcile-requested-at annotation token that the controller has\nprocessed. Users can compare this to the annotation to determine\nwhether a reconcile request has been handled.",
+          "type": "string"
         },
         "observedGeneration": {
           "description": "ObservedGeneration is the latest metadata.generation\nwhich resulted in either a ready state, or stalled due to error\nit can not recover from without human intervention.",
