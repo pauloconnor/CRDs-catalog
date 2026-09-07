@@ -931,7 +931,7 @@ sources:
     changelog: "https://github.com/longhorn/longhorn/releases"
 
   - url: "https://github.com/mariadb-operator/mariadb-operator"
-    tag: "mariadb-operator-crds-26.3.0"
+    tag: "mariadb-operator-crds-26.6.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/mariadb-operator/mariadb-operator/releases"
 
