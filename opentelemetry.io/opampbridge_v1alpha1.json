@@ -1313,6 +1313,18 @@
         "serviceAccount": {
           "type": "string"
         },
+        "tls": {
+          "properties": {
+            "insecure": {
+              "type": "boolean"
+            },
+            "insecure_skip_verify": {
+              "type": "boolean"
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
         "tolerations": {
           "items": {
             "properties": {
