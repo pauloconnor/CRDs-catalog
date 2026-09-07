@@ -696,6 +696,9 @@
         },
         "bufferStorage": {
           "properties": {
+            "storage.backlog.flush_on_shutdown": {
+              "type": "string"
+            },
             "storage.backlog.mem_limit": {
               "type": "string"
             },
@@ -1205,6 +1208,9 @@
         },
         "bufferVolumeMetrics": {
           "properties": {
+            "bind": {
+              "type": "string"
+            },
             "enabled": {
               "type": "boolean"
             },
@@ -1324,6 +1330,7 @@
                       },
                       "modulus": {
                         "format": "int64",
+                        "minimum": 0,
                         "type": "integer"
                       },
                       "regex": {
@@ -1383,6 +1390,7 @@
                       },
                       "modulus": {
                         "format": "int64",
+                        "minimum": 0,
                         "type": "integer"
                       },
                       "regex": {
@@ -2372,6 +2380,9 @@
             "Require_ack_response": {
               "type": "boolean"
             },
+            "Retain_Metadata_In_Forward_Mode": {
+              "type": "boolean"
+            },
             "Retry_Limit": {
               "type": "string"
             },
@@ -2693,6 +2704,9 @@
         },
         "metrics": {
           "properties": {
+            "bind": {
+              "type": "string"
+            },
             "enabled": {
               "type": "boolean"
             },
@@ -2812,6 +2826,7 @@
                       },
                       "modulus": {
                         "format": "int64",
+                        "minimum": 0,
                         "type": "integer"
                       },
                       "regex": {
@@ -2871,6 +2886,7 @@
                       },
                       "modulus": {
                         "format": "int64",
+                        "minimum": 0,
                         "type": "integer"
                       },
                       "regex": {

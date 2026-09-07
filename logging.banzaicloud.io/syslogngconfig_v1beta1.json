@@ -13,6 +13,9 @@
       "properties": {
         "bufferVolumeMetrics": {
           "properties": {
+            "bind": {
+              "type": "string"
+            },
             "enabled": {
               "type": "boolean"
             },
@@ -135,6 +138,7 @@
                       },
                       "modulus": {
                         "format": "int64",
+                        "minimum": 0,
                         "type": "integer"
                       },
                       "regex": {
@@ -194,6 +198,7 @@
                       },
                       "modulus": {
                         "format": "int64",
+                        "minimum": 0,
                         "type": "integer"
                       },
                       "regex": {
@@ -6671,6 +6676,9 @@
             "log_level": {
               "type": "string"
             },
+            "log_msg_size": {
+              "type": "integer"
+            },
             "stats": {
               "properties": {
                 "freq": {
@@ -6707,6 +6715,9 @@
         },
         "metrics": {
           "properties": {
+            "bind": {
+              "type": "string"
+            },
             "enabled": {
               "type": "boolean"
             },
@@ -6826,6 +6837,7 @@
                       },
                       "modulus": {
                         "format": "int64",
+                        "minimum": 0,
                         "type": "integer"
                       },
                       "regex": {
@@ -6885,6 +6897,7 @@
                       },
                       "modulus": {
                         "format": "int64",
+                        "minimum": 0,
                         "type": "integer"
                       },
                       "regex": {
