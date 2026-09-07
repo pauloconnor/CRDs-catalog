@@ -4574,6 +4574,15 @@
                   ],
                   "x-kubernetes-list-type": "map"
                 },
+                "schedulingGroup": {
+                  "properties": {
+                    "podGroupName": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
                 "securityContext": {
                   "properties": {
                     "appArmorProfile": {
@@ -5793,6 +5802,12 @@
                                     },
                                     "signerName": {
                                       "type": "string"
+                                    },
+                                    "userAnnotations": {
+                                      "additionalProperties": {
+                                        "type": "string"
+                                      },
+                                      "type": "object"
                                     }
                                   },
                                   "required": [
@@ -6238,7 +6253,11 @@
             "type": "object",
             "additionalProperties": false
           },
-          "type": "array"
+          "type": "array",
+          "x-kubernetes-list-map-keys": [
+            "type"
+          ],
+          "x-kubernetes-list-type": "map"
         }
       },
       "type": "object",
