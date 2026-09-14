@@ -1,5 +1,5 @@
 {
-  "description": "LinkedServiceAzureFunction is the Schema for the LinkedServiceAzureFunctions API. Manages a Linked Service (connection) between an Azure Function Account and Azure Data Factory.",
+  "description": "LinkedServiceAzureFunction is the Schema for the LinkedServiceAzureFunctions API. Manages a Linked Service (connection) between an Azure Function Account and Azure Data Factory.\nDeprecated: This API version (v1beta1) has been deprecated in release v2.6.0.",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -216,6 +216,30 @@
             "integrationRuntimeName": {
               "description": "The integration runtime reference to associate with the Data Factory Linked Service.",
               "type": "string"
+            },
+            "keySecretRef": {
+              "description": "The system key of the Azure Function. Exactly one of either key or key_vault_key is required.",
+              "properties": {
+                "key": {
+                  "description": "The key to select.",
+                  "type": "string"
+                },
+                "name": {
+                  "description": "Name of the secret.",
+                  "type": "string"
+                },
+                "namespace": {
+                  "description": "Namespace of the secret.",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "key",
+                "name",
+                "namespace"
+              ],
+              "type": "object",
+              "additionalProperties": false
             },
             "keyVaultKey": {
               "description": "A key_vault_key block as defined below. Use this Argument to store the system key of the Azure Function in an existing Key Vault. It needs an existing Key Vault Data Factory Linked Service. Exactly one of either key or key_vault_key is required.",
@@ -459,6 +483,10 @@
             "type"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "lastHandledReconcileAt": {
+          "description": "LastHandledReconcileAt holds the value of the most recent\nreconcile-requested-at annotation token that the controller has\nprocessed. Users can compare this to the annotation to determine\nwhether a reconcile request has been handled.",
+          "type": "string"
         },
         "observedGeneration": {
           "description": "ObservedGeneration is the latest metadata.generation\nwhich resulted in either a ready state, or stalled due to error\nit can not recover from without human intervention.",
