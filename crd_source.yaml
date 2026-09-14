@@ -854,7 +854,7 @@ sources:
     changelog: "https://github.com/kubernetes-sigs/cluster-api-provider-azure/releases"
 
   - url: "https://github.com/kubernetes-sigs/external-dns"
-    tag: "v0.21.0"
+    tag: "v0.22.0"
     repo_path: "charts/external-dns/crds"
     changelog: "https://github.com/kubernetes-sigs/external-dns/releases"
 
