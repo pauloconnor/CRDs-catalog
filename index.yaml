@@ -20786,6 +20786,14 @@ v2.edp.epam.com:
     filename: v2.edp.epam.com/codebasebranch_v1.json
     kind: CodebaseBranch
     name: codebasebranch_v1
+  - apiVersion: v2.edp.epam.com/v1
+    filename: v2.edp.epam.com/cdpipeline_v1.json
+    kind: CDPipeline
+    name: cdpipeline_v1
+  - apiVersion: v2.edp.epam.com/v1
+    filename: v2.edp.epam.com/stage_v1.json
+    kind: Stage
+    name: stage_v1
 vault.banzaicloud.com:
   - apiVersion: vault.banzaicloud.com/v1alpha1
     filename: vault.banzaicloud.com/vault_v1alpha1.json
