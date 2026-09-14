@@ -844,7 +844,7 @@ sources:
     changelog: "https://github.com/kubernetes-sigs/cluster-api/releases"
 
   - url: "https://github.com/kubernetes-sigs/cluster-api-provider-aws"
-    tag: "v2.11.1"
+    tag: "v2.13.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/kubernetes-sigs/cluster-api-provider-aws/releases"
 
