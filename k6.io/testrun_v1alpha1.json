@@ -11,6 +11,13 @@
     },
     "spec": {
       "properties": {
+        "args": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "x-kubernetes-list-type": "atomic"
+        },
         "arguments": {
           "type": "string"
         },
@@ -1658,6 +1665,9 @@
               "type": "object",
               "additionalProperties": false
             },
+            "schedulerName": {
+              "type": "string"
+            },
             "securityContext": {
               "properties": {
                 "appArmorProfile": {
@@ -2889,6 +2899,12 @@
                                 },
                                 "signerName": {
                                   "type": "string"
+                                },
+                                "userAnnotations": {
+                                  "additionalProperties": {
+                                    "type": "string"
+                                  },
+                                  "type": "object"
                                 }
                               },
                               "required": [
@@ -4877,6 +4893,9 @@
               "type": "object",
               "additionalProperties": false
             },
+            "schedulerName": {
+              "type": "string"
+            },
             "securityContext": {
               "properties": {
                 "appArmorProfile": {
@@ -6108,6 +6127,12 @@
                                 },
                                 "signerName": {
                                   "type": "string"
+                                },
+                                "userAnnotations": {
+                                  "additionalProperties": {
+                                    "type": "string"
+                                  },
+                                  "type": "object"
                                 }
                               },
                               "required": [
@@ -8135,6 +8160,9 @@
               "type": "object",
               "additionalProperties": false
             },
+            "schedulerName": {
+              "type": "string"
+            },
             "securityContext": {
               "properties": {
                 "appArmorProfile": {
@@ -9366,6 +9394,12 @@
                                 },
                                 "signerName": {
                                   "type": "string"
+                                },
+                                "userAnnotations": {
+                                  "additionalProperties": {
+                                    "type": "string"
+                                  },
+                                  "type": "object"
                                 }
                               },
                               "required": [
@@ -9739,7 +9773,11 @@
             "type": "object",
             "additionalProperties": false
           },
-          "type": "array"
+          "type": "array",
+          "x-kubernetes-list-map-keys": [
+            "type"
+          ],
+          "x-kubernetes-list-type": "map"
         },
         "stage": {
           "enum": [
