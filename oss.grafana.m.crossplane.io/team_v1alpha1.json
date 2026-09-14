@@ -1,5 +1,5 @@
 {
-  "description": "Team is the Schema for the Teams API. Official documentation https://grafana.com/docs/grafana/latest/administration/team-management/HTTP API https://grafana.com/docs/grafana/latest/developers/http_api/team/",
+  "description": "Team is the Schema for the Teams API. Official documentation https://grafana.com/docs/grafana/latest/administration/team-management/HTTP API https://grafana.com/docs/grafana/latest/developer-resources/api-reference/http-api/api-legacy/team/",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -17,6 +17,14 @@
       "properties": {
         "forProvider": {
           "properties": {
+            "admins": {
+              "description": "(Set of String) A set of email addresses corresponding to users who should be given administrator membership to the team. Note: users specified here must already exist in Grafana. When omitted after being set, users moved into members are demoted; administrators only present in state (for example from the UI) are preserved until admins is set explicitly, including to [].\nA set of email addresses corresponding to users who should be given administrator membership to the team. Note: users specified here must already exist in Grafana. When omitted after being set, users moved into `members` are demoted; administrators only present in state (for example from the UI) are preserved until `admins` is set explicitly, including to `[]`.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array",
+              "x-kubernetes-list-type": "set"
+            },
             "email": {
               "description": "(String) An email address for the team.\nAn email address for the team.",
               "type": "string"
@@ -118,7 +126,7 @@
               "additionalProperties": false
             },
             "members": {
-              "description": "(Set of String) A set of email addresses corresponding to users who should be given membership to the team. Note: users specified here must already exist in Grafana.\nA set of email addresses corresponding to users who should be given membership to the team. Note: users specified here must already exist in Grafana.",
+              "description": "(Set of String) A set of email addresses corresponding to users who should be given ordinary membership to the team. Use admins to grant team administrator rights. Note: users specified here must already exist in Grafana.\nA set of email addresses corresponding to users who should be given ordinary membership to the team. Use `admins` to grant team administrator rights. Note: users specified here must already exist in Grafana.",
               "items": {
                 "type": "string"
               },
@@ -248,7 +256,7 @@
               "type": "array"
             },
             "teamSync": {
-              "description": "(Block List) Sync external auth provider groups with this Grafana team. Only available in Grafana Enterprise.\nSync external auth provider groups with this Grafana team. Only available in Grafana Enterprise.\n* [Official documentation](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-team-sync/)\n* [HTTP API](https://grafana.com/docs/grafana/latest/developers/http_api/team_sync/)",
+              "description": "(Block List) Sync external auth provider groups with this Grafana team. Only available in Grafana Enterprise.\nSync external auth provider groups with this Grafana team. Only available in Grafana Enterprise.\n* [Official documentation](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-team-sync/)\n* [HTTP API](https://grafana.com/docs/grafana/latest/developer-resources/api-reference/http-api/api-legacy/team_sync/)",
               "items": {
                 "properties": {
                   "groups": {
@@ -272,6 +280,14 @@
         "initProvider": {
           "description": "THIS IS A BETA FIELD. It will be honored\nunless the Management Policies feature flag is disabled.\nInitProvider holds the same fields as ForProvider, with the exception\nof Identifier and other resource reference fields. The fields that are\nin InitProvider are merged into ForProvider when the resource is created.\nThe same fields are also added to the terraform ignore_changes hook, to\navoid updating them after creation. This is useful for fields that are\nrequired on creation, but we do not desire to update them after creation,\nfor example because of an external controller is managing them, like an\nautoscaler.",
           "properties": {
+            "admins": {
+              "description": "(Set of String) A set of email addresses corresponding to users who should be given administrator membership to the team. Note: users specified here must already exist in Grafana. When omitted after being set, users moved into members are demoted; administrators only present in state (for example from the UI) are preserved until admins is set explicitly, including to [].\nA set of email addresses corresponding to users who should be given administrator membership to the team. Note: users specified here must already exist in Grafana. When omitted after being set, users moved into `members` are demoted; administrators only present in state (for example from the UI) are preserved until `admins` is set explicitly, including to `[]`.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array",
+              "x-kubernetes-list-type": "set"
+            },
             "email": {
               "description": "(String) An email address for the team.\nAn email address for the team.",
               "type": "string"
@@ -373,7 +389,7 @@
               "additionalProperties": false
             },
             "members": {
-              "description": "(Set of String) A set of email addresses corresponding to users who should be given membership to the team. Note: users specified here must already exist in Grafana.\nA set of email addresses corresponding to users who should be given membership to the team. Note: users specified here must already exist in Grafana.",
+              "description": "(Set of String) A set of email addresses corresponding to users who should be given ordinary membership to the team. Use admins to grant team administrator rights. Note: users specified here must already exist in Grafana.\nA set of email addresses corresponding to users who should be given ordinary membership to the team. Use `admins` to grant team administrator rights. Note: users specified here must already exist in Grafana.",
               "items": {
                 "type": "string"
               },
@@ -503,7 +519,7 @@
               "type": "array"
             },
             "teamSync": {
-              "description": "(Block List) Sync external auth provider groups with this Grafana team. Only available in Grafana Enterprise.\nSync external auth provider groups with this Grafana team. Only available in Grafana Enterprise.\n* [Official documentation](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-team-sync/)\n* [HTTP API](https://grafana.com/docs/grafana/latest/developers/http_api/team_sync/)",
+              "description": "(Block List) Sync external auth provider groups with this Grafana team. Only available in Grafana Enterprise.\nSync external auth provider groups with this Grafana team. Only available in Grafana Enterprise.\n* [Official documentation](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-team-sync/)\n* [HTTP API](https://grafana.com/docs/grafana/latest/developer-resources/api-reference/http-api/api-legacy/team_sync/)",
               "items": {
                 "properties": {
                   "groups": {
@@ -598,6 +614,14 @@
       "properties": {
         "atProvider": {
           "properties": {
+            "admins": {
+              "description": "(Set of String) A set of email addresses corresponding to users who should be given administrator membership to the team. Note: users specified here must already exist in Grafana. When omitted after being set, users moved into members are demoted; administrators only present in state (for example from the UI) are preserved until admins is set explicitly, including to [].\nA set of email addresses corresponding to users who should be given administrator membership to the team. Note: users specified here must already exist in Grafana. When omitted after being set, users moved into `members` are demoted; administrators only present in state (for example from the UI) are preserved until `admins` is set explicitly, including to `[]`.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array",
+              "x-kubernetes-list-type": "set"
+            },
             "email": {
               "description": "(String) An email address for the team.\nAn email address for the team.",
               "type": "string"
@@ -611,7 +635,7 @@
               "type": "boolean"
             },
             "members": {
-              "description": "(Set of String) A set of email addresses corresponding to users who should be given membership to the team. Note: users specified here must already exist in Grafana.\nA set of email addresses corresponding to users who should be given membership to the team. Note: users specified here must already exist in Grafana.",
+              "description": "(Set of String) A set of email addresses corresponding to users who should be given ordinary membership to the team. Use admins to grant team administrator rights. Note: users specified here must already exist in Grafana.\nA set of email addresses corresponding to users who should be given ordinary membership to the team. Use `admins` to grant team administrator rights. Note: users specified here must already exist in Grafana.",
               "items": {
                 "type": "string"
               },
@@ -657,7 +681,7 @@
               "type": "number"
             },
             "teamSync": {
-              "description": "(Block List) Sync external auth provider groups with this Grafana team. Only available in Grafana Enterprise.\nSync external auth provider groups with this Grafana team. Only available in Grafana Enterprise.\n* [Official documentation](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-team-sync/)\n* [HTTP API](https://grafana.com/docs/grafana/latest/developers/http_api/team_sync/)",
+              "description": "(Block List) Sync external auth provider groups with this Grafana team. Only available in Grafana Enterprise.\nSync external auth provider groups with this Grafana team. Only available in Grafana Enterprise.\n* [Official documentation](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-team-sync/)\n* [HTTP API](https://grafana.com/docs/grafana/latest/developer-resources/api-reference/http-api/api-legacy/team_sync/)",
               "items": {
                 "properties": {
                   "groups": {

@@ -39,6 +39,10 @@
             "name": {
               "description": "(String) Name of the pipeline which is the unique identifier for the pipeline\nName of the pipeline which is the unique identifier for the pipeline",
               "type": "string"
+            },
+            "terraformSourceNamespace": {
+              "description": "If omitted, the namespace default is used. If omitted, the namespace `default` is used.",
+              "type": "string"
             }
           },
           "type": "object",
@@ -68,6 +72,10 @@
             },
             "name": {
               "description": "(String) Name of the pipeline which is the unique identifier for the pipeline\nName of the pipeline which is the unique identifier for the pipeline",
+              "type": "string"
+            },
+            "terraformSourceNamespace": {
+              "description": "If omitted, the namespace default is used. If omitted, the namespace `default` is used.",
               "type": "string"
             }
           },
@@ -177,6 +185,10 @@
             },
             "name": {
               "description": "(String) Name of the pipeline which is the unique identifier for the pipeline\nName of the pipeline which is the unique identifier for the pipeline",
+              "type": "string"
+            },
+            "terraformSourceNamespace": {
+              "description": "If omitted, the namespace default is used. If omitted, the namespace `default` is used.",
               "type": "string"
             }
           },
