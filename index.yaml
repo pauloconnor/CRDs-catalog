@@ -6161,6 +6161,14 @@ dapr.io:
     filename: dapr.io/httpendpoint_v1alpha1.json
     kind: HTTPEndpoint
     name: httpendpoint_v1alpha1
+  - apiVersion: dapr.io/v1alpha1
+    filename: dapr.io/workflowaccesspolicy_v1alpha1.json
+    kind: WorkflowAccessPolicy
+    name: workflowaccesspolicy_v1alpha1
+  - apiVersion: dapr.io/v1alpha1
+    filename: dapr.io/mcpserver_v1alpha1.json
+    kind: MCPServer
+    name: mcpserver_v1alpha1
 dashboard.azure.m.upbound.io:
   - apiVersion: dashboard.azure.m.upbound.io/v1beta1
     filename: dashboard.azure.m.upbound.io/grafanamanagedprivateendpoint_v1beta1.json
