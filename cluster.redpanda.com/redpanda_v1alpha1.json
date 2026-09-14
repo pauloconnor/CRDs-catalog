@@ -906,15 +906,19 @@
                       "description": "Specifies configuration about the bootstrap user.",
                       "properties": {
                         "mechanism": {
-                          "description": "Specifies the authentication mechanism to use for the bootstrap user. Options are `SCRAM-SHA-256` and `SCRAM-SHA-512`.",
+                          "description": "Specifies the authentication mechanism to use for the bootstrap user. Options are `SCRAM-SHA-256` and `SCRAM-SHA-512`.\nNOTE: for the StretchCluster kind this field is currently ignored; the mechanism is\ntaken from sasl.mechanism.",
+                          "enum": [
+                            "SCRAM-SHA-256",
+                            "SCRAM-SHA-512"
+                          ],
                           "type": "string"
                         },
                         "name": {
-                          "description": "Name specifies the name of the bootstrap user created for the cluster, if unspecified\ndefaults to \"kubernetes-controller\".",
+                          "description": "Name specifies the name of the bootstrap user created for the cluster, if unspecified\ndefaults to \"kubernetes-controller\".\nNOTE: for the StretchCluster kind this field is currently ignored; the bootstrap\nusername is fixed to \"kubernetes-controller\". Only secretKeyRef is honored there.",
                           "type": "string"
                         },
                         "secretKeyRef": {
-                          "description": "Specifies the location where the generated password will be written or a pre-existing\npassword will be read from.",
+                          "description": "Specifies the location where the generated password will be written or a pre-existing\npassword will be read from. For the StretchCluster kind the referenced key is required\n(there is no default key at the CRD level).\n\nFor the StretchCluster kind the referenced Secret is read and replicated by the\noperator to every member cluster in the same namespace, so whoever can set this field\nis trusted to name a Secret whose contents may be copied across all member clusters of\nthe mesh. The operator never overwrites an existing Secret of that name on a member\ncluster.\n\nIMPORTANT: for the StretchCluster kind the bootstrap password is consumed only when the\ncluster is first bootstrapped and cannot be rotated afterwards by editing this Secret,\nchanging secretKeyRef to a different location, or removing secretKeyRef. Redpanda keeps\nthe SCRAM credential it was bootstrapped with, so changing the source after bootstrap\nmakes the operator and brokers authenticate with a credential the cluster never learned.\nRotate the bootstrap user out of band (via the admin API) instead.",
                           "properties": {
                             "key": {
                               "description": "The key of the secret to select from.  Must be a valid secret key.",
@@ -947,6 +951,10 @@
                     },
                     "mechanism": {
                       "description": "Specifies the default authentication mechanism to use for superusers. Options are `SCRAM-SHA-256` and `SCRAM-SHA-512`.",
+                      "enum": [
+                        "SCRAM-SHA-256",
+                        "SCRAM-SHA-512"
+                      ],
                       "type": "string"
                     },
                     "secretRef": {
@@ -960,6 +968,10 @@
                         "properties": {
                           "mechanism": {
                             "description": "Specifies the authentication mechanism to use for superusers. Overrides the default in `SASL`. Options are `SCRAM-SHA-256` and `SCRAM-SHA-512`.",
+                            "enum": [
+                              "SCRAM-SHA-256",
+                              "SCRAM-SHA-512"
+                            ],
                             "type": "string"
                           },
                           "name": {
@@ -1439,6 +1451,11 @@
                   "description": "Specifies a full custom name, which overrides the entire naming convention including release name and chart name.",
                   "type": "string"
                 },
+                "gateway": {
+                  "description": "Configures a Gateway API HTTPRoute for Redpanda Console.",
+                  "type": "object",
+                  "x-kubernetes-preserve-unknown-fields": true
+                },
                 "image": {
                   "description": "Defines the container image for the Redpanda Console, including the repository, name, and tag.",
                   "type": "object",
@@ -1719,6 +1736,57 @@
                   "type": "object",
                   "additionalProperties": false
                 },
+                "gateway": {
+                  "description": "Configures Gateway API TLSRoute-based external access. When enabled, ClusterIP services and TLSRoute resources are created instead of NodePort/LoadBalancer services. The Gateway itself must be managed externally.",
+                  "properties": {
+                    "advertisedPort": {
+                      "description": "The port advertised to clients. Defaults to 443.",
+                      "format": "int32",
+                      "type": "integer"
+                    },
+                    "enabled": {
+                      "description": "Enables Gateway API TLSRoute-based external access.",
+                      "type": "boolean"
+                    },
+                    "parentRefs": {
+                      "description": "Defines which Gateway(s) handle the TLSRoutes. At least one parent reference must be provided.",
+                      "items": {
+                        "description": "GatewayParentRefConfig identifies a Gateway (or ListenerSet) that should handle the TLSRoute traffic. Schema mirrors the upstream Gateway API ParentReference.",
+                        "properties": {
+                          "group": {
+                            "description": "API group of the referent. Defaults to \"gateway.networking.k8s.io\".",
+                            "type": "string"
+                          },
+                          "kind": {
+                            "description": "Kind of the referent. Defaults to \"Gateway\".",
+                            "type": "string"
+                          },
+                          "name": {
+                            "description": "Name of the referent.",
+                            "type": "string"
+                          },
+                          "namespace": {
+                            "description": "Namespace of the referent.",
+                            "type": "string"
+                          },
+                          "sectionName": {
+                            "description": "Name of a section within the target resource.",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "name"
+                        ],
+                        "type": "object",
+                        "additionalProperties": false
+                      },
+                      "minItems": 1,
+                      "type": "array"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
                 "prefixTemplate": {
                   "description": "Specifies a naming prefix template for external Services.",
                   "type": "string"
@@ -1856,6 +1924,14 @@
                             "description": "Specifies whether this Listener is enabled.",
                             "type": "boolean"
                           },
+                          "host": {
+                            "description": "Host is the SNI hostname for the bootstrap TLSRoute when using Gateway API external access.",
+                            "type": "string"
+                          },
+                          "hostTemplate": {
+                            "description": "HostTemplate is a Go template for per-broker TLSRoute SNI hostnames. Supports $POD_ORDINAL and $POD_NAME variables.",
+                            "type": "string"
+                          },
                           "nodePort": {
                             "format": "int32",
                             "type": "integer"
@@ -1948,6 +2024,13 @@
                             },
                             "type": "object",
                             "additionalProperties": false
+                          },
+                          "type": {
+                            "description": "Selects how this listener is exposed externally. Unset inherits the cluster-wide external.type (NodePort/LoadBalancer). Set to \"tlsroute\" to route this listener via Gateway API: a TLSRoute is created for it (requires external.gateway with parentRefs) and it is excluded from the NodePort/LoadBalancer Service.",
+                            "enum": [
+                              "tlsroute"
+                            ],
+                            "type": "string"
                           }
                         },
                         "type": "object",
@@ -2086,6 +2169,14 @@
                             "description": "Specifies whether this Listener is enabled.",
                             "type": "boolean"
                           },
+                          "host": {
+                            "description": "Host is the SNI hostname for the bootstrap TLSRoute when using Gateway API external access.",
+                            "type": "string"
+                          },
+                          "hostTemplate": {
+                            "description": "HostTemplate is a Go template for per-broker TLSRoute SNI hostnames. Supports $POD_ORDINAL and $POD_NAME variables.",
+                            "type": "string"
+                          },
                           "nodePort": {
                             "format": "int32",
                             "type": "integer"
@@ -2178,6 +2269,13 @@
                             },
                             "type": "object",
                             "additionalProperties": false
+                          },
+                          "type": {
+                            "description": "Selects how this listener is exposed externally. Unset inherits the cluster-wide external.type (NodePort/LoadBalancer). Set to \"tlsroute\" to route this listener via Gateway API: a TLSRoute is created for it (requires external.gateway with parentRefs) and it is excluded from the NodePort/LoadBalancer Service.",
+                            "enum": [
+                              "tlsroute"
+                            ],
+                            "type": "string"
                           }
                         },
                         "type": "object",
@@ -2320,6 +2418,14 @@
                             "description": "Specifies whether this Listener is enabled.",
                             "type": "boolean"
                           },
+                          "host": {
+                            "description": "Host is the SNI hostname for the bootstrap TLSRoute when using Gateway API external access.",
+                            "type": "string"
+                          },
+                          "hostTemplate": {
+                            "description": "HostTemplate is a Go template for per-broker TLSRoute SNI hostnames. Supports $POD_ORDINAL and $POD_NAME variables.",
+                            "type": "string"
+                          },
                           "nodePort": {
                             "format": "int32",
                             "type": "integer"
@@ -2412,6 +2518,13 @@
                             },
                             "type": "object",
                             "additionalProperties": false
+                          },
+                          "type": {
+                            "description": "Selects how this listener is exposed externally. Unset inherits the cluster-wide external.type (NodePort/LoadBalancer). Set to \"tlsroute\" to route this listener via Gateway API: a TLSRoute is created for it (requires external.gateway with parentRefs) and it is excluded from the NodePort/LoadBalancer Service.",
+                            "enum": [
+                              "tlsroute"
+                            ],
+                            "type": "string"
                           }
                         },
                         "type": "object",
@@ -2641,6 +2754,14 @@
                             "description": "Specifies whether this Listener is enabled.",
                             "type": "boolean"
                           },
+                          "host": {
+                            "description": "Host is the SNI hostname for the bootstrap TLSRoute when using Gateway API external access.",
+                            "type": "string"
+                          },
+                          "hostTemplate": {
+                            "description": "HostTemplate is a Go template for per-broker TLSRoute SNI hostnames. Supports $POD_ORDINAL and $POD_NAME variables.",
+                            "type": "string"
+                          },
                           "nodePort": {
                             "format": "int32",
                             "type": "integer"
@@ -2733,6 +2854,13 @@
                             },
                             "type": "object",
                             "additionalProperties": false
+                          },
+                          "type": {
+                            "description": "Selects how this listener is exposed externally. Unset inherits the cluster-wide external.type (NodePort/LoadBalancer). Set to \"tlsroute\" to route this listener via Gateway API: a TLSRoute is created for it (requires external.gateway with parentRefs) and it is excluded from the NodePort/LoadBalancer Service.",
+                            "enum": [
+                              "tlsroute"
+                            ],
+                            "type": "string"
                           }
                         },
                         "type": "object",
@@ -18555,6 +18683,10 @@
                     "tuning": {
                       "description": "Defines settings for the autotuner tool in Redpanda. The autotuner identifies the hardware configuration in the container and optimizes the Linux kernel to give you the best performance.",
                       "properties": {
+                        "apply_host_tuners": {
+                          "description": "ApplyHostTuners enables a chroot-based tuning init container that\ngives `rpk redpanda tune all` access to the host's /sys, /proc,\nNICs and block devices so tuners like disk_irq, disk_scheduler,\ndisk_nomerges and net actually apply. Enabling it default-enables\nthose tuners plus fstrim, disk_write_cache (GCP-only) and cpu; an\nexplicit `config.rpk.tune_*: false` overrides any of the defaults.\nRequires `tune_aio_events: true` (rendering fails otherwise).\nOpt-in: defaults to false. Enabling requires a privileged SCC/PSA\non the namespace (the pod adds twelve hostPath mounts) and MUST be\ncombined with one-pod-per-node anti-affinity to avoid\nkernel-parameter races. Disabling does not revert tuning already\napplied: settings persist until node reboot and the fstrim systemd\ntimer keeps firing until removed.",
+                          "type": "boolean"
+                        },
                         "ballast_file_path": {
                           "description": "Specifies the file path for ballast file. A ballast file is an empty file that takes up disk space. If Redpanda runs out of disk space and becomes unavailable, you can delete the ballast file as a last resort. This clears up some space and gives you time to delete topics or records and change your retention properties.",
                           "type": "string"
@@ -18687,6 +18819,21 @@
                   },
                   "description": "Applies node selectors to schedule Pods on specific nodes based on labels.",
                   "type": "object"
+                },
+                "persistentVolumeClaimRetentionPolicy": {
+                  "description": "PersistentVolumeClaimRetentionPolicy controls the lifecycle of PersistentVolumeClaims\ncreated from the StatefulSet's volume claim templates. Setting `whenScaled: Delete`\ncauses a broker's PVC to be deleted by the StatefulSet controller when the broker is\ndecommissioned via scale-down; `whenDeleted: Delete` causes all PVCs to be deleted\nwhen the StatefulSet is deleted. When unset, the Kubernetes default (`Retain` for\nboth fields) applies. This value is the cluster-level default for all NodePools;\nindividual NodePools may override it via their own `persistentVolumeClaimRetentionPolicy`.",
+                  "properties": {
+                    "whenDeleted": {
+                      "description": "WhenDeleted specifies what happens to PVCs created from StatefulSet\nVolumeClaimTemplates when the StatefulSet is deleted. The default policy\nof `Retain` causes PVCs to not be affected by StatefulSet deletion. The\n`Delete` policy causes those PVCs to be deleted.",
+                      "type": "string"
+                    },
+                    "whenScaled": {
+                      "description": "WhenScaled specifies what happens to PVCs created from StatefulSet\nVolumeClaimTemplates when the StatefulSet is scaled down. The default\npolicy of `Retain` causes PVCs to not be affected by a scaledown. The\n`Delete` policy causes the associated PVCs for any excess pods above\nthe replica count to be deleted.",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
                 },
                 "podAffinity": {
                   "description": "Defines Pod affinity rules to influence the scheduling and placement of Pods relative to other Pods.",
@@ -27033,6 +27180,10 @@
             "tuning": {
               "description": "Defines settings for the autotuner tool in Redpanda. The autotuner identifies the hardware configuration in the container and optimizes the Linux kernel to give you the best performance.",
               "properties": {
+                "apply_host_tuners": {
+                  "description": "ApplyHostTuners enables a chroot-based tuning init container that\ngives `rpk redpanda tune all` access to the host's /sys, /proc,\nNICs and block devices so tuners like disk_irq, disk_scheduler,\ndisk_nomerges and net actually apply. Enabling it default-enables\nthose tuners plus fstrim, disk_write_cache (GCP-only) and cpu; an\nexplicit `config.rpk.tune_*: false` overrides any of the defaults.\nRequires `tune_aio_events: true` (rendering fails otherwise).\nOpt-in: defaults to false. Enabling requires a privileged SCC/PSA\non the namespace (the pod adds twelve hostPath mounts) and MUST be\ncombined with one-pod-per-node anti-affinity to avoid\nkernel-parameter races. Disabling does not revert tuning already\napplied: settings persist until node reboot and the fstrim systemd\ntimer keeps firing until removed.",
+                  "type": "boolean"
+                },
                 "ballast_file_path": {
                   "description": "Specifies the file path for ballast file. A ballast file is an empty file that takes up disk space. If Redpanda runs out of disk space and becomes unavailable, you can delete the ballast file as a last resort. This clears up some space and gives you time to delete topics or records and change your retention properties.",
                   "type": "string"
