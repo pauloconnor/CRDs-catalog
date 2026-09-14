@@ -13496,6 +13496,35 @@ kms.services.k8s.aws:
     filename: kms.services.k8s.aws/alias_v1alpha1.json
     kind: Alias
     name: alias_v1alpha1
+konveyor.io:
+  - apiVersion: konveyor.io/v1alpha1
+    filename: konveyor.io/agent_v1alpha1.json
+    kind: Agent
+    name: agent_v1alpha1
+  - apiVersion: konveyor.io/v1alpha1
+    filename: konveyor.io/skillcollection_v1alpha1.json
+    kind: SkillCollection
+    name: skillcollection_v1alpha1
+  - apiVersion: konveyor.io/v1alpha1
+    filename: konveyor.io/agentworkflowrun_v1alpha1.json
+    kind: AgentWorkflowRun
+    name: agentworkflowrun_v1alpha1
+  - apiVersion: konveyor.io/v1alpha1
+    filename: konveyor.io/skillcard_v1alpha1.json
+    kind: SkillCard
+    name: skillcard_v1alpha1
+  - apiVersion: konveyor.io/v1alpha1
+    filename: konveyor.io/gateway_v1alpha1.json
+    kind: Gateway
+    name: gateway_v1alpha1
+  - apiVersion: konveyor.io/v1alpha1
+    filename: konveyor.io/agentworkflow_v1alpha1.json
+    kind: AgentWorkflow
+    name: agentworkflow_v1alpha1
+  - apiVersion: konveyor.io/v1alpha1
+    filename: konveyor.io/agentrun_v1alpha1.json
+    kind: AgentRun
+    name: agentrun_v1alpha1
 kro.run:
   - apiVersion: kro.run/v1alpha1
     filename: kro.run/resourcegraphdefinition_v1alpha1.json
