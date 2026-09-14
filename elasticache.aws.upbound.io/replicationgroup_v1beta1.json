@@ -100,12 +100,20 @@
               },
               "type": "array"
             },
+            "clusterOperationMode": {
+              "description": "Specifies whether cluster mode is enabled or disabled. Valid values are enabled or disabled or compatible\nTo modify cluster mode from Disabled to Enabled, you must\nfirst set the cluster mode to Compatible. Compatible mode allows your Valkey or\nRedis OSS clients to connect using both cluster mode enabled and cluster mode\ndisabled. After you migrate all Valkey or Redis OSS clients to use cluster mode\nenabled, you can then complete cluster mode configuration and set the cluster\nmode to Enabled.",
+              "type": "string"
+            },
             "dataTieringEnabled": {
               "description": "Enables data tiering. Data tiering is only supported for replication groups using the r6gd node type. This parameter must be set to true when using r6gd nodes.",
               "type": "boolean"
             },
             "description": {
               "description": "created description for the replication group. Must not be empty.",
+              "type": "string"
+            },
+            "durability": {
+              "description": "Specifies the durability mode for the replication group. Valid values are default, async, sync, or disabled. Requires cluster mode enabled and Valkey 9.0 or higher.",
               "type": "string"
             },
             "engine": {
@@ -329,6 +337,50 @@
             "networkType": {
               "description": "The IP versions for cache cluster connections. Valid values are ipv4, ipv6 or dual_stack.",
               "type": "string"
+            },
+            "nodeGroupConfiguration": {
+              "description": "Configuration block for node groups (shards). Can be specified only if num_node_groups is set. Conflicts with preferred_cache_cluster_azs. See Node Group Configuration below for more details.",
+              "items": {
+                "properties": {
+                  "nodeGroupId": {
+                    "description": "ID for the node group. Redis (cluster mode disabled) replication groups don't have node group IDs, so this value is ignored. For Redis (cluster mode enabled) replication groups, the node group ID is a 1 to 4 character alphanumeric string.",
+                    "type": "string"
+                  },
+                  "primaryAvailabilityZone": {
+                    "description": "Availability zone for the primary node.",
+                    "type": "string"
+                  },
+                  "primaryOutpostArn": {
+                    "description": "ARN of the Outpost for the primary node.",
+                    "type": "string"
+                  },
+                  "replicaAvailabilityZones": {
+                    "description": "List of availability zones for the replica nodes.",
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "replicaCount": {
+                    "description": "Number of replica nodes in this node group.",
+                    "type": "number"
+                  },
+                  "replicaOutpostArns": {
+                    "description": "List of ARNs of the Outposts for the replica nodes.",
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "slots": {
+                    "description": "Keyspace for this node group. Format is start-end (e.g., 0-5460). For Redis (cluster mode disabled) replication groups, this value is ignored.",
+                    "type": "string"
+                  }
+                },
+                "type": "object",
+                "additionalProperties": false
+              },
+              "type": "array"
             },
             "nodeType": {
               "description": "Instance class to be used. See AWS documentation for information on supported node types and guidance on selecting node types. Required unless global_replication_group_id is set. Cannot be set if global_replication_group_id is set.",
@@ -685,12 +737,20 @@
               },
               "type": "array"
             },
+            "clusterOperationMode": {
+              "description": "Specifies whether cluster mode is enabled or disabled. Valid values are enabled or disabled or compatible\nTo modify cluster mode from Disabled to Enabled, you must\nfirst set the cluster mode to Compatible. Compatible mode allows your Valkey or\nRedis OSS clients to connect using both cluster mode enabled and cluster mode\ndisabled. After you migrate all Valkey or Redis OSS clients to use cluster mode\nenabled, you can then complete cluster mode configuration and set the cluster\nmode to Enabled.",
+              "type": "string"
+            },
             "dataTieringEnabled": {
               "description": "Enables data tiering. Data tiering is only supported for replication groups using the r6gd node type. This parameter must be set to true when using r6gd nodes.",
               "type": "boolean"
             },
             "description": {
               "description": "created description for the replication group. Must not be empty.",
+              "type": "string"
+            },
+            "durability": {
+              "description": "Specifies the durability mode for the replication group. Valid values are default, async, sync, or disabled. Requires cluster mode enabled and Valkey 9.0 or higher.",
               "type": "string"
             },
             "engine": {
@@ -914,6 +974,50 @@
             "networkType": {
               "description": "The IP versions for cache cluster connections. Valid values are ipv4, ipv6 or dual_stack.",
               "type": "string"
+            },
+            "nodeGroupConfiguration": {
+              "description": "Configuration block for node groups (shards). Can be specified only if num_node_groups is set. Conflicts with preferred_cache_cluster_azs. See Node Group Configuration below for more details.",
+              "items": {
+                "properties": {
+                  "nodeGroupId": {
+                    "description": "ID for the node group. Redis (cluster mode disabled) replication groups don't have node group IDs, so this value is ignored. For Redis (cluster mode enabled) replication groups, the node group ID is a 1 to 4 character alphanumeric string.",
+                    "type": "string"
+                  },
+                  "primaryAvailabilityZone": {
+                    "description": "Availability zone for the primary node.",
+                    "type": "string"
+                  },
+                  "primaryOutpostArn": {
+                    "description": "ARN of the Outpost for the primary node.",
+                    "type": "string"
+                  },
+                  "replicaAvailabilityZones": {
+                    "description": "List of availability zones for the replica nodes.",
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "replicaCount": {
+                    "description": "Number of replica nodes in this node group.",
+                    "type": "number"
+                  },
+                  "replicaOutpostArns": {
+                    "description": "List of ARNs of the Outposts for the replica nodes.",
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "slots": {
+                    "description": "Keyspace for this node group. Format is start-end (e.g., 0-5460). For Redis (cluster mode disabled) replication groups, this value is ignored.",
+                    "type": "string"
+                  }
+                },
+                "type": "object",
+                "additionalProperties": false
+              },
+              "type": "array"
             },
             "nodeType": {
               "description": "Instance class to be used. See AWS documentation for information on supported node types and guidance on selecting node types. Required unless global_replication_group_id is set. Cannot be set if global_replication_group_id is set.",
@@ -1335,6 +1439,10 @@
               },
               "type": "array"
             },
+            "clusterOperationMode": {
+              "description": "Specifies whether cluster mode is enabled or disabled. Valid values are enabled or disabled or compatible\nTo modify cluster mode from Disabled to Enabled, you must\nfirst set the cluster mode to Compatible. Compatible mode allows your Valkey or\nRedis OSS clients to connect using both cluster mode enabled and cluster mode\ndisabled. After you migrate all Valkey or Redis OSS clients to use cluster mode\nenabled, you can then complete cluster mode configuration and set the cluster\nmode to Enabled.",
+              "type": "string"
+            },
             "configurationEndpointAddress": {
               "description": "Address of the replication group configuration endpoint when cluster mode is enabled.",
               "type": "string"
@@ -1345,6 +1453,10 @@
             },
             "description": {
               "description": "created description for the replication group. Must not be empty.",
+              "type": "string"
+            },
+            "durability": {
+              "description": "Specifies the durability mode for the replication group. Valid values are default, async, sync, or disabled. Requires cluster mode enabled and Valkey 9.0 or higher.",
               "type": "string"
             },
             "engine": {
@@ -1424,6 +1536,50 @@
             "networkType": {
               "description": "The IP versions for cache cluster connections. Valid values are ipv4, ipv6 or dual_stack.",
               "type": "string"
+            },
+            "nodeGroupConfiguration": {
+              "description": "Configuration block for node groups (shards). Can be specified only if num_node_groups is set. Conflicts with preferred_cache_cluster_azs. See Node Group Configuration below for more details.",
+              "items": {
+                "properties": {
+                  "nodeGroupId": {
+                    "description": "ID for the node group. Redis (cluster mode disabled) replication groups don't have node group IDs, so this value is ignored. For Redis (cluster mode enabled) replication groups, the node group ID is a 1 to 4 character alphanumeric string.",
+                    "type": "string"
+                  },
+                  "primaryAvailabilityZone": {
+                    "description": "Availability zone for the primary node.",
+                    "type": "string"
+                  },
+                  "primaryOutpostArn": {
+                    "description": "ARN of the Outpost for the primary node.",
+                    "type": "string"
+                  },
+                  "replicaAvailabilityZones": {
+                    "description": "List of availability zones for the replica nodes.",
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "replicaCount": {
+                    "description": "Number of replica nodes in this node group.",
+                    "type": "number"
+                  },
+                  "replicaOutpostArns": {
+                    "description": "List of ARNs of the Outposts for the replica nodes.",
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "slots": {
+                    "description": "Keyspace for this node group. Format is start-end (e.g., 0-5460). For Redis (cluster mode disabled) replication groups, this value is ignored.",
+                    "type": "string"
+                  }
+                },
+                "type": "object",
+                "additionalProperties": false
+              },
+              "type": "array"
             },
             "nodeType": {
               "description": "Instance class to be used. See AWS documentation for information on supported node types and guidance on selecting node types. Required unless global_replication_group_id is set. Cannot be set if global_replication_group_id is set.",
@@ -1602,6 +1758,10 @@
             "type"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "lastHandledReconcileAt": {
+          "description": "LastHandledReconcileAt holds the value of the most recent\nreconcile-requested-at annotation token that the controller has\nprocessed. Users can compare this to the annotation to determine\nwhether a reconcile request has been handled.",
+          "type": "string"
         },
         "observedGeneration": {
           "description": "ObservedGeneration is the latest metadata.generation\nwhich resulted in either a ready state, or stalled due to error\nit can not recover from without human intervention.",
