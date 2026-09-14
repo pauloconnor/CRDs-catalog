@@ -892,6 +892,9 @@
                       "endpointUrl": {
                         "type": "string"
                       },
+                      "prefix": {
+                        "type": "string"
+                      },
                       "storageClass": {
                         "type": "string"
                       }
@@ -1402,14 +1405,34 @@
                         "x-kubernetes-map-type": "atomic",
                         "additionalProperties": false
                       },
+                      "checksumAlgorithm": {
+                        "enum": [
+                          "CRC64NVME",
+                          "CRC32",
+                          "CRC32C",
+                          "SHA1",
+                          "SHA256",
+                          "MD5"
+                        ],
+                        "type": "string"
+                      },
                       "credentialsSecret": {
                         "type": "string"
                       },
                       "endpointUrl": {
                         "type": "string"
                       },
+                      "forcePathStyle": {
+                        "type": "boolean"
+                      },
+                      "prefix": {
+                        "type": "string"
+                      },
                       "region": {
                         "type": "string"
+                      },
+                      "skipBucketExistsCheck": {
+                        "type": "boolean"
                       }
                     },
                     "type": "object",
@@ -2592,9 +2615,6 @@
                   },
                   "type": "array"
                 },
-                "trafficPolicy": {
-                  "type": "string"
-                },
                 "type": {
                   "type": "string"
                 }
@@ -2646,9 +2666,6 @@
                 "onlyReaders": {
                   "type": "boolean"
                 },
-                "trafficPolicy": {
-                  "type": "string"
-                },
                 "type": {
                   "type": "string"
                 }
@@ -2661,9 +2678,6 @@
                 }
               ],
               "additionalProperties": false
-            },
-            "externalTrafficPolicy": {
-              "type": "string"
             },
             "extraPVCs": {
               "items": {
@@ -3104,12 +3118,6 @@
               "type": "object",
               "additionalProperties": false
             },
-            "loadBalancerSourceRanges": {
-              "items": {
-                "type": "string"
-              },
-              "type": "array"
-            },
             "nodeSelector": {
               "additionalProperties": {
                 "type": "string"
@@ -3407,32 +3415,14 @@
               "type": "object",
               "additionalProperties": false
             },
-            "replicasExternalTrafficPolicy": {
-              "type": "string"
-            },
             "replicasLoadBalancerSourceRanges": {
               "items": {
                 "type": "string"
               },
               "type": "array"
             },
-            "replicasServiceAnnotations": {
-              "additionalProperties": {
-                "type": "string"
-              },
-              "type": "object"
-            },
             "replicasServiceEnabled": {
               "type": "boolean"
-            },
-            "replicasServiceLabels": {
-              "additionalProperties": {
-                "type": "string"
-              },
-              "type": "object"
-            },
-            "replicasServiceType": {
-              "type": "string"
             },
             "resources": {
               "properties": {
@@ -3499,21 +3489,6 @@
               "type": "string"
             },
             "serviceAccountName": {
-              "type": "string"
-            },
-            "serviceAnnotations": {
-              "additionalProperties": {
-                "type": "string"
-              },
-              "type": "object"
-            },
-            "serviceLabels": {
-              "additionalProperties": {
-                "type": "string"
-              },
-              "type": "object"
-            },
-            "serviceType": {
               "type": "string"
             },
             "sidecarPVCs": {
@@ -6983,6 +6958,30 @@
             "imagePullPolicy": {
               "type": "string"
             },
+            "logRotate": {
+              "properties": {
+                "configuration": {
+                  "type": "string"
+                },
+                "extraConfig": {
+                  "properties": {
+                    "name": {
+                      "default": "",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "x-kubernetes-map-type": "atomic",
+                  "additionalProperties": false
+                },
+                "schedule": {
+                  "default": "0 0 * * *",
+                  "type": "string"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
             "resources": {
               "properties": {
                 "claims": {
@@ -8407,9 +8406,6 @@
                   },
                   "type": "array"
                 },
-                "trafficPolicy": {
-                  "type": "string"
-                },
                 "type": {
                   "type": "string"
                 }
@@ -8422,9 +8418,6 @@
                 }
               ],
               "additionalProperties": false
-            },
-            "externalTrafficPolicy": {
-              "type": "string"
             },
             "extraPVCs": {
               "items": {
@@ -8844,12 +8837,6 @@
               "type": "object",
               "additionalProperties": false
             },
-            "loadBalancerSourceRanges": {
-              "items": {
-                "type": "string"
-              },
-              "type": "array"
-            },
             "nodeSelector": {
               "additionalProperties": {
                 "type": "string"
@@ -9147,24 +9134,6 @@
               "type": "object",
               "additionalProperties": false
             },
-            "replicasExternalTrafficPolicy": {
-              "type": "string"
-            },
-            "replicasServiceAnnotations": {
-              "additionalProperties": {
-                "type": "string"
-              },
-              "type": "object"
-            },
-            "replicasServiceLabels": {
-              "additionalProperties": {
-                "type": "string"
-              },
-              "type": "object"
-            },
-            "replicasServiceType": {
-              "type": "string"
-            },
             "resources": {
               "properties": {
                 "claims": {
@@ -9273,21 +9242,6 @@
               "type": "string"
             },
             "serviceAccountName": {
-              "type": "string"
-            },
-            "serviceAnnotations": {
-              "additionalProperties": {
-                "type": "string"
-              },
-              "type": "object"
-            },
-            "serviceLabels": {
-              "additionalProperties": {
-                "type": "string"
-              },
-              "type": "object"
-            },
-            "serviceType": {
               "type": "string"
             },
             "sidecarPVCs": {
@@ -13278,9 +13232,6 @@
                   },
                   "type": "array"
                 },
-                "trafficPolicy": {
-                  "type": "string"
-                },
                 "type": {
                   "type": "string"
                 }
@@ -13293,9 +13244,6 @@
                 }
               ],
               "additionalProperties": false
-            },
-            "externalTrafficPolicy": {
-              "type": "string"
             },
             "extraPVCs": {
               "items": {
@@ -13715,12 +13663,6 @@
               "type": "object",
               "additionalProperties": false
             },
-            "loadBalancerSourceRanges": {
-              "items": {
-                "type": "string"
-              },
-              "type": "array"
-            },
             "mysqlAllocator": {
               "enum": [
                 "jemalloc",
@@ -14025,24 +13967,6 @@
               "type": "object",
               "additionalProperties": false
             },
-            "replicasExternalTrafficPolicy": {
-              "type": "string"
-            },
-            "replicasServiceAnnotations": {
-              "additionalProperties": {
-                "type": "string"
-              },
-              "type": "object"
-            },
-            "replicasServiceLabels": {
-              "additionalProperties": {
-                "type": "string"
-              },
-              "type": "object"
-            },
-            "replicasServiceType": {
-              "type": "string"
-            },
             "replicationChannels": {
               "items": {
                 "properties": {
@@ -14162,21 +14086,6 @@
               "type": "string"
             },
             "serviceAccountName": {
-              "type": "string"
-            },
-            "serviceAnnotations": {
-              "additionalProperties": {
-                "type": "string"
-              },
-              "type": "object"
-            },
-            "serviceLabels": {
-              "additionalProperties": {
-                "type": "string"
-              },
-              "type": "object"
-            },
-            "serviceType": {
               "type": "string"
             },
             "sidecarPVCs": {
@@ -17016,6 +16925,11 @@
             "sslSecretName": {
               "type": "string"
             },
+            "sstRetryCount": {
+              "format": "int32",
+              "minimum": 1,
+              "type": "integer"
+            },
             "tolerations": {
               "items": {
                 "properties": {
@@ -17322,6 +17236,64 @@
         },
         "sslSecretName": {
           "type": "string"
+        },
+        "storageScaling": {
+          "properties": {
+            "autoscaling": {
+              "properties": {
+                "enabled": {
+                  "type": "boolean"
+                },
+                "growthStep": {
+                  "anyOf": [
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ],
+                  "default": "2Gi",
+                  "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                  "x-kubernetes-int-or-string": true
+                },
+                "maxSize": {
+                  "anyOf": [
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ],
+                  "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                  "x-kubernetes-int-or-string": true
+                },
+                "triggerThresholdPercent": {
+                  "default": 80,
+                  "maximum": 95,
+                  "minimum": 50,
+                  "type": "integer"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
+            "enableExternalAutoscaling": {
+              "type": "boolean"
+            },
+            "enableVolumeScaling": {
+              "type": "boolean"
+            }
+          },
+          "type": "object",
+          "x-kubernetes-validations": [
+            {
+              "message": "autoscaling cannot be enabled when enableVolumeScaling is disabled",
+              "rule": "!has(self.autoscaling) || !has(self.autoscaling.enabled) || !self.autoscaling.enabled || self.enableVolumeScaling"
+            }
+          ],
+          "additionalProperties": false
         },
         "tls": {
           "properties": {
@@ -17677,12 +17649,55 @@
           "format": "int32",
           "type": "integer"
         },
+        "recovery": {
+          "properties": {
+            "clusterUUID": {
+              "type": "string"
+            },
+            "lastRecoveryPod": {
+              "type": "string"
+            },
+            "lastRecoverySeqNo": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "lastRecoveryTime": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
         "size": {
           "format": "int32",
           "type": "integer"
         },
         "state": {
           "type": "string"
+        },
+        "storageAutoscaling": {
+          "additionalProperties": {
+            "properties": {
+              "currentSize": {
+                "type": "string"
+              },
+              "lastError": {
+                "type": "string"
+              },
+              "lastResizeTime": {
+                "format": "date-time",
+                "type": "string"
+              },
+              "resizeCount": {
+                "format": "int32",
+                "type": "integer"
+              }
+            },
+            "type": "object",
+            "additionalProperties": false
+          },
+          "type": "object"
         }
       },
       "type": "object",
