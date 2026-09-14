@@ -19,7 +19,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Adds extra topic configurations. This is a free-form map of any configuration options that topics can have.\nExamples:\n`cleanup.policy=compact`\n`redpanda.remote.write=true`\n`redpanda.remote.read=true`\n`redpanda.remote.recovery=true`\n`redpanda.remote.delete=true`",
+          "description": "Adds extra topic configurations. This is a free-form map of any configuration options that topics can have.\nExamples:\n`cleanup.policy=compact`\n`redpanda.remote.write=true`\n`redpanda.remote.read=true`\n`redpanda.remote.recovery=true`\n`redpanda.remote.delete=true`\n\nThe map is reconciled declaratively against the live topic configuration:\n\n- A key with a string value is kept in sync on the topic: whenever the\n  live value differs from the desired one, the operator sets it back.\n- A key absent from the map is not managed; if the topic carries a\n  non-default value for it, the operator resets it to the cluster\n  default. (Exceptions: `cleanup.policy` and `redpanda.storage.mode`\n  are never reset.)\n- A key with a null value is exempt from both: the operator neither\n  updates it nor resets it to the cluster default. Use this for a\n  configuration that is managed outside the operator (e.g. set via\n  `rpk` or another client) and should be left untouched.",
           "type": "object"
         },
         "cluster": {
@@ -29,8 +29,14 @@
               "description": "ClusterRef is a reference to the cluster where the object should be created.\nIt is used in constructing the client created to configure a cluster.\nThis takes precedence over StaticConfigurationSource.",
               "properties": {
                 "group": {
-                  "description": "Group is used to override the object group that this reference points to.\nIf unspecified, defaults to \"cluster.redpanda.com\".",
-                  "type": "string"
+                  "description": "Group is used to override the object group that this reference points to.\nIf unspecified, defaults to \"cluster.redpanda.com\".\nA bare API group only \u2014 controllers match it by string comparison, so a\n\"group/version\" value (e.g. \"cluster.redpanda.com/v1alpha2\") would\nsilently match nothing and the referencing object would never bind.",
+                  "type": "string",
+                  "x-kubernetes-validations": [
+                    {
+                      "message": "group must be a bare API group without a version suffix (e.g. cluster.redpanda.com, not cluster.redpanda.com/v1alpha2)",
+                      "rule": "!self.contains('/')"
+                    }
+                  ]
                 },
                 "kind": {
                   "description": "Kind is used to override the object kind that this reference points to.\nIf unspecified, defaults to \"Redpanda\".",
@@ -38,6 +44,10 @@
                 },
                 "name": {
                   "description": "Name specifies the name of the cluster being referenced.",
+                  "type": "string"
+                },
+                "namespace": {
+                  "description": "Namespace specifies the namespace of the cluster being referenced.\nIf unspecified, defaults to the namespace of the referencing object.\nSetting this allows referencing a cluster that resides in a different\nnamespace, e.g. a ShadowLink whose source and shadow Redpanda clusters\nlive in separate namespaces on the same Kubernetes cluster.",
                   "type": "string"
                 }
               },
@@ -2365,8 +2375,7 @@
           "additionalProperties": false
         },
         "interval": {
-          "default": "3s",
-          "description": "Defines when the topic controller will schedule the next reconciliation.\nDefault is 3 seconds.",
+          "description": "Defines when the topic controller will schedule the next reconciliation.\nIf unset, the operator-wide default is used (the operator's\n--topic-sync-interval flag, 30s by default). A per-CR value here always\ntakes precedence over the operator default.\n\nNB: the CRD no longer carries a baked-in default (previously \"3s\"). Pinning\nthe default in the operator instead of the CRD lets cluster operators tune\nreconcile pressure without editing every Topic. This is introduced in the\nv26.2 operator; on that upgrade, Topics that never set this field move from\nthe old 3s cadence to the operator default.",
           "format": "duration",
           "type": "string"
         },
