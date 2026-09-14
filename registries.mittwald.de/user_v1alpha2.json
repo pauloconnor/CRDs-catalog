@@ -1,0 +1,99 @@
+{
+  "properties": {
+    "apiVersion": {
+      "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+      "type": "string"
+    },
+    "kind": {
+      "description": "Kind is a string value representing the REST resource this object represents.\nServers may infer this from the endpoint the client submits requests to.\nCannot be updated.\nIn CamelCase.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object"
+    },
+    "spec": {
+      "properties": {
+        "comments": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "parentInstance": {
+          "description": "ParentInstance is a LocalObjectReference to the\nname of the harbor instance the user is created for",
+          "properties": {
+            "name": {
+              "description": "Name of the referent.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names\nTODO: Add other useful fields. apiVersion, kind, uid?",
+              "type": "string"
+            }
+          },
+          "type": "object",
+          "x-kubernetes-map-type": "atomic",
+          "additionalProperties": false
+        },
+        "passwordStrength": {
+          "description": "The effective length of the generated user password",
+          "format": "int32",
+          "maximum": 128,
+          "minimum": 8,
+          "type": "integer"
+        },
+        "realname": {
+          "type": "string"
+        },
+        "sysAdmin": {
+          "type": "boolean"
+        },
+        "userSecretRef": {
+          "description": "LocalObjectReference contains enough information to let you locate the\nreferenced object inside the same namespace.",
+          "properties": {
+            "name": {
+              "description": "Name of the referent.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names\nTODO: Add other useful fields. apiVersion, kind, uid?",
+              "type": "string"
+            }
+          },
+          "type": "object",
+          "x-kubernetes-map-type": "atomic",
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "email",
+        "name",
+        "parentInstance",
+        "realname",
+        "userSecretRef"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    },
+    "status": {
+      "description": "UserStatus defines the state of a single user",
+      "properties": {
+        "lastTransition": {
+          "description": "Time of last observed transition into this state",
+          "format": "date-time",
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "passwordHash": {
+          "type": "string"
+        },
+        "phase": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "phase"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  "type": "object"
+}
