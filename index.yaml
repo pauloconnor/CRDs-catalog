@@ -4498,6 +4498,14 @@ cognitoidentityprovider.services.k8s.aws:
     filename: cognitoidentityprovider.services.k8s.aws/userpool_v1alpha1.json
     kind: UserPool
     name: userpool_v1alpha1
+  - apiVersion: cognitoidentityprovider.services.k8s.aws/v1alpha1
+    filename: cognitoidentityprovider.services.k8s.aws/resourceserver_v1alpha1.json
+    kind: ResourceServer
+    name: resourceserver_v1alpha1
+  - apiVersion: cognitoidentityprovider.services.k8s.aws/v1alpha1
+    filename: cognitoidentityprovider.services.k8s.aws/userpoolclient_v1alpha1.json
+    kind: UserPoolClient
+    name: userpoolclient_v1alpha1
 collectors.grafana.com:
   - apiVersion: collectors.grafana.com/v1alpha1
     filename: collectors.grafana.com/alloy_v1alpha1.json
