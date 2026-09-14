@@ -16479,6 +16479,10 @@ opensearchservice.services.k8s.aws:
     filename: opensearchservice.services.k8s.aws/domain_v1alpha1.json
     kind: Domain
     name: domain_v1alpha1
+  - apiVersion: opensearchservice.services.k8s.aws/v1alpha1
+    filename: opensearchservice.services.k8s.aws/vpcendpoint_v1alpha1.json
+    kind: VPCEndpoint
+    name: vpcendpoint_v1alpha1
 opentelemetry.io:
   - apiVersion: opentelemetry.io/v1alpha1
     filename: opentelemetry.io/opampbridge_v1alpha1.json
