@@ -69,7 +69,7 @@
           "properties": {
             "name": {
               "default": "",
-              "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nTODO: Add other useful fields. apiVersion, kind, uid?\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names\nTODO: Drop `kubebuilder:default` when controller-gen doesn't need it https://github.com/kubernetes-sigs/kubebuilder/issues/3896.",
+              "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
               "type": "string"
             }
           },
@@ -133,7 +133,7 @@
             "properties": {
               "name": {
                 "default": "",
-                "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nTODO: Add other useful fields. apiVersion, kind, uid?\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names\nTODO: Drop `kubebuilder:default` when controller-gen doesn't need it https://github.com/kubernetes-sigs/kubebuilder/issues/3896.",
+                "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
                 "type": "string"
               }
             },
@@ -222,9 +222,39 @@
         "offloadPolicies": {
           "description": "OffloadPolicies defines the offload policies for the topic.\nThis controls how data is offloaded to external storage systems.",
           "properties": {
+            "fileSystemProfilePath": {
+              "type": "string"
+            },
+            "fileSystemURI": {
+              "type": "string"
+            },
+            "gcsManagedLedgerOffloadBucket": {
+              "type": "string"
+            },
+            "gcsManagedLedgerOffloadMaxBlockSizeInBytes": {
+              "type": "integer"
+            },
+            "gcsManagedLedgerOffloadReadBufferSizeInBytes": {
+              "type": "integer"
+            },
+            "gcsManagedLedgerOffloadRegion": {
+              "type": "string"
+            },
+            "gcsManagedLedgerOffloadServiceAccountKeyFile": {
+              "type": "string"
+            },
+            "managedLedgerExtraConfigurations": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
+            },
             "managedLedgerOffloadAutoTriggerSizeThresholdBytes": {
               "format": "int64",
               "type": "integer"
+            },
+            "managedLedgerOffloadBucket": {
+              "type": "string"
             },
             "managedLedgerOffloadDeletionLagInMillis": {
               "format": "int64",
@@ -239,12 +269,37 @@
               },
               "type": "object"
             },
+            "managedLedgerOffloadMaxBlockSizeInBytes": {
+              "type": "integer"
+            },
             "managedLedgerOffloadMaxThreads": {
               "type": "integer"
+            },
+            "managedLedgerOffloadPrefetchRounds": {
+              "type": "integer"
+            },
+            "managedLedgerOffloadReadBufferSizeInBytes": {
+              "type": "integer"
+            },
+            "managedLedgerOffloadReadThreads": {
+              "type": "integer"
+            },
+            "managedLedgerOffloadRegion": {
+              "type": "string"
+            },
+            "managedLedgerOffloadServiceEndpoint": {
+              "type": "string"
             },
             "managedLedgerOffloadThresholdInBytes": {
               "format": "int64",
               "type": "integer"
+            },
+            "managedLedgerOffloadThresholdInSeconds": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "managedLedgerOffloadedReadPriority": {
+              "type": "string"
             },
             "offloadersDirectory": {
               "type": "string"
@@ -257,6 +312,12 @@
             },
             "s3ManagedLedgerOffloadCredentialSecret": {
               "type": "string"
+            },
+            "s3ManagedLedgerOffloadMaxBlockSizeInBytes": {
+              "type": "integer"
+            },
+            "s3ManagedLedgerOffloadReadBufferSizeInBytes": {
+              "type": "integer"
             },
             "s3ManagedLedgerOffloadRegion": {
               "type": "string"
@@ -486,7 +547,7 @@
         "conditions": {
           "description": "Conditions represent the latest available observations of the PulsarTopic's current state.\nIt follows the Kubernetes conventions for condition types and status.\nThe \"Ready\" condition type indicates the overall status of the topic.\nThe \"PolicyReady\" condition type indicates whether the topic policies have been successfully applied.",
           "items": {
-            "description": "Condition contains details for one aspect of the current state of this API Resource.\n---\nThis struct is intended for direct use as an array at the field path .status.conditions.  For example,\n\n\n\ttype FooStatus struct{\n\t    // Represents the observations of a foo's current state.\n\t    // Known .status.conditions.type are: \"Available\", \"Progressing\", and \"Degraded\"\n\t    // +patchMergeKey=type\n\t    // +patchStrategy=merge\n\t    // +listType=map\n\t    // +listMapKey=type\n\t    Conditions []metav1.Condition `json:\"conditions,omitempty\" patchStrategy:\"merge\" patchMergeKey:\"type\" protobuf:\"bytes,1,rep,name=conditions\"`\n\n\n\t    // other fields\n\t}",
+            "description": "Condition contains details for one aspect of the current state of this API Resource.",
             "properties": {
               "lastTransitionTime": {
                 "description": "lastTransitionTime is the last time the condition transitioned from one status to another.\nThis should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.",
@@ -521,7 +582,7 @@
                 "type": "string"
               },
               "type": {
-                "description": "type of condition in CamelCase or in foo.example.com/CamelCase.\n---\nMany .condition.type values are consistent across resources like Available, but because arbitrary conditions can be\nuseful (see .node.status.conditions), the ability to deconflict is important.\nThe regex it matches is (dns1123SubdomainFmt/)?(qualifiedNameFmt)",
+                "description": "type of condition in CamelCase or in foo.example.com/CamelCase.",
                 "maxLength": 316,
                 "pattern": "^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$",
                 "type": "string"
