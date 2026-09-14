@@ -96,6 +96,10 @@
         "atProvider": {
           "description": "StackObservation holds the observed (computed) fields from the grafana_cloud_stack data source.",
           "properties": {
+            "alertmanagerAllowlistURL": {
+              "description": "Allowlist API endpoint that returns the source IP addresses to allow for the Alertmanager instances.",
+              "type": "string"
+            },
             "alertmanagerIPAllowListCname": {
               "description": "Comma-separated list of CNAMEs that can be whitelisted to access the Alertmanager instances (Optional)",
               "type": "string"
@@ -117,6 +121,10 @@
               "format": "int64",
               "type": "integer"
             },
+            "cloudProviderURL": {
+              "description": "Base URL of the Cloud Provider API for this stack's cluster. This can be used with the `cloud_provider_url` provider config option to manage Cloud Provider resources for this stack.",
+              "type": "string"
+            },
             "clusterName": {
               "description": "Name of the cluster where this stack resides.",
               "type": "string"
@@ -125,12 +133,20 @@
               "description": "Slug of the cluster where this stack resides.",
               "type": "string"
             },
+            "connectionsAPIURL": {
+              "description": "Base URL of the Connections API for this stack's cluster. This can be used with the `connections_api_url` provider config option to manage Connections resources for this stack.",
+              "type": "string"
+            },
             "deleteProtection": {
               "description": "Whether to enable delete protection for the stack, preventing accidental deletion.",
               "type": "boolean"
             },
             "description": {
               "description": "Description of stack.",
+              "type": "string"
+            },
+            "fleetManagementAllowlistURL": {
+              "description": "Allowlist API endpoint that returns the source IP addresses to allow for the Fleet Management instance.",
               "type": "string"
             },
             "fleetManagementName": {
@@ -179,8 +195,16 @@
               "format": "int64",
               "type": "integer"
             },
+            "grafanasAllowlistURL": {
+              "description": "Allowlist API endpoint that returns the source IP addresses to allow for the grafana instance.",
+              "type": "string"
+            },
             "grafanasIPAllowListCname": {
               "description": "Comma-separated list of CNAMEs that can be whitelisted to access the grafana instance (Optional)",
+              "type": "string"
+            },
+            "graphiteAllowlistURL": {
+              "description": "Allowlist API endpoint that returns the source IP addresses to allow for the Graphite instance.",
               "type": "string"
             },
             "graphiteIPAllowListCname": {
@@ -239,6 +263,10 @@
               },
               "description": "A map of labels to assign to the stack. Label keys and values must match the following regexp: \"^[a-zA-Z0-9/\\\\-._]+$\" and stacks cannot have more than 10 labels.",
               "type": "object"
+            },
+            "logsAllowlistURL": {
+              "description": "Allowlist API endpoint that returns the source IP addresses to allow for the Logs instance.",
+              "type": "string"
             },
             "logsIPAllowListCname": {
               "description": "Comma-separated list of CNAMEs that can be whitelisted to access the Logs instance (Optional)",
@@ -398,6 +426,10 @@
               "description": "Service Name for PDC's Gateway when using AWS PrivateLink (only for AWS stacks)",
               "type": "string"
             },
+            "profilesAllowlistURL": {
+              "description": "Allowlist API endpoint that returns the source IP addresses to allow for the Profiles instance.",
+              "type": "string"
+            },
             "profilesIPAllowListCname": {
               "description": "Comma-separated list of CNAMEs that can be whitelisted to access the Profiles instance (Optional)",
               "type": "string"
@@ -443,6 +475,10 @@
             "profilesUserID": {
               "format": "int64",
               "type": "integer"
+            },
+            "prometheusAllowlistURL": {
+              "description": "Allowlist API endpoint that returns the source IP addresses to allow for the Prometheus instance.",
+              "type": "string"
             },
             "prometheusIPAllowListCname": {
               "description": "Comma-separated list of CNAMEs that can be whitelisted to access the Prometheus instance (Optional)",
@@ -506,8 +542,16 @@
               "description": "The region this stack is deployed to.",
               "type": "string"
             },
+            "smURL": {
+              "description": "Base URL of the Synthetic Monitoring API for this stack's region. This can be used with the `sm_url` provider config option. Note: Synthetic Monitoring requires activation either via the `grafana_synthetic_monitoring_installation` resource or manually in the Grafana Cloud UI before it can be used.",
+              "type": "string"
+            },
             "status": {
               "description": "Status of the stack.",
+              "type": "string"
+            },
+            "tracesAllowlistURL": {
+              "description": "Allowlist API endpoint that returns the source IP addresses to allow for the Traces instance.",
               "type": "string"
             },
             "tracesIPAllowListCname": {

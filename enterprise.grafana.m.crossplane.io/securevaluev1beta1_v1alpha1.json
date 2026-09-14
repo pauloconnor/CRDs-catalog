@@ -21,7 +21,7 @@
               "description": "The metadata of the resource.",
               "properties": {
                 "folderUid": {
-                  "description": "The UID of the folder to save the resource in.",
+                  "description": "The UID of the folder to save the resource in. For example, it's supported for dashboards and folders. To know if it's supported for the specific resource you're using check the documentation.",
                   "type": "string"
                 },
                 "uid": {
@@ -35,6 +35,10 @@
             "options": {
               "description": "Options for applying the resource.",
               "properties": {
+                "managerIdentity": {
+                  "description": "Override the identity stamped on this resource's manager metadata.",
+                  "type": "string"
+                },
                 "overwrite": {
                   "description": "Set to true if you want to overwrite existing resource with newer version, same resource title in folder or same resource uid.",
                   "type": "boolean"
@@ -94,7 +98,7 @@
               "description": "The metadata of the resource.",
               "properties": {
                 "folderUid": {
-                  "description": "The UID of the folder to save the resource in.",
+                  "description": "The UID of the folder to save the resource in. For example, it's supported for dashboards and folders. To know if it's supported for the specific resource you're using check the documentation.",
                   "type": "string"
                 },
                 "uid": {
@@ -108,6 +112,10 @@
             "options": {
               "description": "Options for applying the resource.",
               "properties": {
+                "managerIdentity": {
+                  "description": "Override the identity stamped on this resource's manager metadata.",
+                  "type": "string"
+                },
                 "overwrite": {
                   "description": "Set to true if you want to overwrite existing resource with newer version, same resource title in folder or same resource uid.",
                   "type": "boolean"
@@ -249,7 +257,7 @@
                   "x-kubernetes-map-type": "granular"
                 },
                 "folderUid": {
-                  "description": "The UID of the folder to save the resource in.",
+                  "description": "The UID of the folder to save the resource in. For example, it's supported for dashboards and folders. To know if it's supported for the specific resource you're using check the documentation.",
                   "type": "string"
                 },
                 "uid": {
@@ -275,6 +283,10 @@
             "options": {
               "description": "Options for applying the resource.",
               "properties": {
+                "managerIdentity": {
+                  "description": "Override the identity stamped on this resource's manager metadata.",
+                  "type": "string"
+                },
                 "overwrite": {
                   "description": "Set to true if you want to overwrite existing resource with newer version, same resource title in folder or same resource uid.",
                   "type": "boolean"

@@ -63,7 +63,7 @@
               "type": "boolean"
             },
             "waitForReadinessTimeout": {
-              "description": "(String) How long to wait for readiness (if enabled). Defaults to 5m0s.\nHow long to wait for readiness (if enabled). Defaults to `5m0s`.",
+              "description": "(String) How long to wait for readiness (if enabled). Defaults to 10m0s.\nHow long to wait for readiness (if enabled). Defaults to `10m0s`.",
               "type": "string"
             }
           },
@@ -110,7 +110,7 @@
               "type": "boolean"
             },
             "waitForReadinessTimeout": {
-              "description": "(String) How long to wait for readiness (if enabled). Defaults to 5m0s.\nHow long to wait for readiness (if enabled). Defaults to `5m0s`.",
+              "description": "(String) How long to wait for readiness (if enabled). Defaults to 10m0s.\nHow long to wait for readiness (if enabled). Defaults to `10m0s`.",
               "type": "string"
             }
           },
@@ -218,6 +218,10 @@
       "properties": {
         "atProvider": {
           "properties": {
+            "alertmanagerAllowlistUrl": {
+              "description": "(String) Allowlist API endpoint that returns the source IP addresses to allow for the Alertmanager instances.\nAllowlist API endpoint that returns the source IP addresses to allow for the Alertmanager instances.",
+              "type": "string"
+            },
             "alertmanagerIpAllowListCname": {
               "description": "separated list of CNAMEs that can be whitelisted to access the Alertmanager instances\nComma-separated list of CNAMEs that can be whitelisted to access the Alertmanager instances (Optional)",
               "type": "string"
@@ -238,6 +242,10 @@
               "description": "(Number) User ID of the Alertmanager instance configured for this stack.\nUser ID of the Alertmanager instance configured for this stack.",
               "type": "number"
             },
+            "cloudProviderUrl": {
+              "description": "(String) Base URL of the Cloud Provider API for this stack's cluster. This can be used with the cloud_provider_url provider config option to manage Cloud Provider resources for this stack.\nBase URL of the Cloud Provider API for this stack's cluster. This can be used with the `cloud_provider_url` provider config option to manage Cloud Provider resources for this stack.",
+              "type": "string"
+            },
             "clusterName": {
               "description": "(String) Name of the cluster where this stack resides.\nName of the cluster where this stack resides.",
               "type": "string"
@@ -246,12 +254,20 @@
               "description": "(String) Slug of the cluster where this stack resides.\nSlug of the cluster where this stack resides.",
               "type": "string"
             },
+            "connectionsApiUrl": {
+              "description": "(String) Base URL of the Connections API for this stack's cluster. This can be used with the connections_api_url provider config option to manage Connections resources for this stack.\nBase URL of the Connections API for this stack's cluster. This can be used with the `connections_api_url` provider config option to manage Connections resources for this stack.",
+              "type": "string"
+            },
             "deleteProtection": {
               "description": "(Boolean) Whether to enable delete protection for the stack, preventing accidental deletion. Defaults to true.\nWhether to enable delete protection for the stack, preventing accidental deletion. Defaults to `true`.",
               "type": "boolean"
             },
             "description": {
               "description": "(String) Description of stack.\nDescription of stack.",
+              "type": "string"
+            },
+            "fleetManagementAllowlistUrl": {
+              "description": "(String) Allowlist API endpoint that returns the source IP addresses to allow for the Fleet Management instance.\nAllowlist API endpoint that returns the source IP addresses to allow for the Fleet Management instance.",
               "type": "string"
             },
             "fleetManagementName": {
@@ -299,8 +315,16 @@
               "description": "(Number) User ID of the Fleet Management instance configured for this stack.\nUser ID of the Fleet Management instance configured for this stack.",
               "type": "number"
             },
+            "grafanasAllowlistUrl": {
+              "description": "(String) Allowlist API endpoint that returns the source IP addresses to allow for the grafana instance.\nAllowlist API endpoint that returns the source IP addresses to allow for the grafana instance.",
+              "type": "string"
+            },
             "grafanasIpAllowListCname": {
               "description": "separated list of CNAMEs that can be whitelisted to access the grafana instance\nComma-separated list of CNAMEs that can be whitelisted to access the grafana instance (Optional)",
+              "type": "string"
+            },
+            "graphiteAllowlistUrl": {
+              "description": "(String) Allowlist API endpoint that returns the source IP addresses to allow for the Graphite instance.\nAllowlist API endpoint that returns the source IP addresses to allow for the Graphite instance.",
               "type": "string"
             },
             "graphiteIpAllowListCname": {
@@ -367,6 +391,10 @@
               "description": "zA-Z0-9/\\-._]+$\" and stacks cannot have more than 10 labels.\nA map of labels to assign to the stack. Label keys and values must match the following regexp: \"^[a-zA-Z0-9/\\\\-._]+$\" and stacks cannot have more than 10 labels.",
               "type": "object",
               "x-kubernetes-map-type": "granular"
+            },
+            "logsAllowlistUrl": {
+              "description": "(String) Allowlist API endpoint that returns the source IP addresses to allow for the Logs instance.\nAllowlist API endpoint that returns the source IP addresses to allow for the Logs instance.",
+              "type": "string"
             },
             "logsIpAllowListCname": {
               "description": "separated list of CNAMEs that can be whitelisted to access the Logs instance\nComma-separated list of CNAMEs that can be whitelisted to access the Logs instance (Optional)",
@@ -528,6 +556,10 @@
               "description": "(String) Service Name for PDC's Gateway when using AWS PrivateLink (only for AWS stacks)\nService Name for PDC's Gateway when using AWS PrivateLink (only for AWS stacks)",
               "type": "string"
             },
+            "profilesAllowlistUrl": {
+              "description": "(String) Allowlist API endpoint that returns the source IP addresses to allow for the Profiles instance.\nAllowlist API endpoint that returns the source IP addresses to allow for the Profiles instance.",
+              "type": "string"
+            },
             "profilesIpAllowListCname": {
               "description": "separated list of CNAMEs that can be whitelisted to access the Profiles instance\nComma-separated list of CNAMEs that can be whitelisted to access the Profiles instance (Optional)",
               "type": "string"
@@ -576,6 +608,10 @@
             "profilesUserId": {
               "description": "(Number)",
               "type": "number"
+            },
+            "prometheusAllowlistUrl": {
+              "description": "(String) Allowlist API endpoint that returns the source IP addresses to allow for the Prometheus instance.\nAllowlist API endpoint that returns the source IP addresses to allow for the Prometheus instance.",
+              "type": "string"
             },
             "prometheusIpAllowListCname": {
               "description": "separated list of CNAMEs that can be whitelisted to access the Prometheus instance\nComma-separated list of CNAMEs that can be whitelisted to access the Prometheus instance (Optional)",
@@ -642,8 +678,16 @@
               "description": "(String) Subdomain that the Grafana instance will be available at. Setting slug to <stack_slug> will make the instance available at https://<stack_slug>.grafana.net.\nSubdomain that the Grafana instance will be available at. Setting slug to `<stack_slug>` will make the instance available at `https://<stack_slug>.grafana.net`.",
               "type": "string"
             },
+            "smUrl": {
+              "description": "(String) Base URL of the Synthetic Monitoring API for this stack's region. This can be used with the sm_url provider config option. Note: Synthetic Monitoring requires activation either via the grafana_synthetic_monitoring_installation resource or manually in the Grafana Cloud UI before it can be used.\nBase URL of the Synthetic Monitoring API for this stack's region. This can be used with the `sm_url` provider config option. Note: Synthetic Monitoring requires activation either via the `grafana_synthetic_monitoring_installation` resource or manually in the Grafana Cloud UI before it can be used.",
+              "type": "string"
+            },
             "status": {
               "description": "(String) Status of the stack.\nStatus of the stack.",
+              "type": "string"
+            },
+            "tracesAllowlistUrl": {
+              "description": "(String) Allowlist API endpoint that returns the source IP addresses to allow for the Traces instance.\nAllowlist API endpoint that returns the source IP addresses to allow for the Traces instance.",
               "type": "string"
             },
             "tracesIpAllowListCname": {
@@ -704,7 +748,7 @@
               "type": "boolean"
             },
             "waitForReadinessTimeout": {
-              "description": "(String) How long to wait for readiness (if enabled). Defaults to 5m0s.\nHow long to wait for readiness (if enabled). Defaults to `5m0s`.",
+              "description": "(String) How long to wait for readiness (if enabled). Defaults to 10m0s.\nHow long to wait for readiness (if enabled). Defaults to `10m0s`.",
               "type": "string"
             }
           },
