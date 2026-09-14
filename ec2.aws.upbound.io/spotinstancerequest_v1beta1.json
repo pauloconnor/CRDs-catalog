@@ -1,5 +1,5 @@
 {
-  "description": "SpotInstanceRequest is the Schema for the SpotInstanceRequests API. Provides a Spot Instance Request resource.",
+  "description": "SpotInstanceRequest is the Schema for the SpotInstanceRequests API. Provides a Spot Instance Request resource.\nDeprecated: This API version (v1beta1) has been deprecated in release v2.6.0.",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -71,6 +71,9 @@
                   },
                   "coreCount": {
                     "type": "number"
+                  },
+                  "nestedVirtualization": {
+                    "type": "string"
                   },
                   "threadsPerCore": {
                     "type": "number"
@@ -395,6 +398,34 @@
               },
               "type": "array"
             },
+            "secondaryNetworkInterface": {
+              "items": {
+                "properties": {
+                  "deleteOnTermination": {
+                    "type": "boolean"
+                  },
+                  "deviceIndex": {
+                    "type": "number"
+                  },
+                  "interfaceType": {
+                    "type": "string"
+                  },
+                  "networkCardIndex": {
+                    "type": "number"
+                  },
+                  "privateIpAddressCount": {
+                    "type": "number"
+                  },
+                  "secondarySubnetId": {
+                    "description": "The Spot Instance Request ID.",
+                    "type": "string"
+                  }
+                },
+                "type": "object",
+                "additionalProperties": false
+              },
+              "type": "array"
+            },
             "secondaryPrivateIps": {
               "items": {
                 "type": "string"
@@ -689,6 +720,9 @@
                   },
                   "coreCount": {
                     "type": "number"
+                  },
+                  "nestedVirtualization": {
+                    "type": "string"
                   },
                   "threadsPerCore": {
                     "type": "number"
@@ -1001,6 +1035,34 @@
                     "type": "number"
                   },
                   "volumeType": {
+                    "type": "string"
+                  }
+                },
+                "type": "object",
+                "additionalProperties": false
+              },
+              "type": "array"
+            },
+            "secondaryNetworkInterface": {
+              "items": {
+                "properties": {
+                  "deleteOnTermination": {
+                    "type": "boolean"
+                  },
+                  "deviceIndex": {
+                    "type": "number"
+                  },
+                  "interfaceType": {
+                    "type": "string"
+                  },
+                  "networkCardIndex": {
+                    "type": "number"
+                  },
+                  "privateIpAddressCount": {
+                    "type": "number"
+                  },
+                  "secondarySubnetId": {
+                    "description": "The Spot Instance Request ID.",
                     "type": "string"
                   }
                 },
@@ -1392,6 +1454,9 @@
                   "coreCount": {
                     "type": "number"
                   },
+                  "nestedVirtualization": {
+                    "type": "string"
+                  },
                   "threadsPerCore": {
                     "type": "number"
                   }
@@ -1774,6 +1839,57 @@
               },
               "type": "array"
             },
+            "secondaryNetworkInterface": {
+              "items": {
+                "properties": {
+                  "deleteOnTermination": {
+                    "type": "boolean"
+                  },
+                  "deviceIndex": {
+                    "type": "number"
+                  },
+                  "interfaceType": {
+                    "type": "string"
+                  },
+                  "macAddress": {
+                    "type": "string"
+                  },
+                  "networkCardIndex": {
+                    "type": "number"
+                  },
+                  "privateIpAddressCount": {
+                    "type": "number"
+                  },
+                  "privateIpAddresses": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "secondaryInterfaceId": {
+                    "description": "The Spot Instance Request ID.",
+                    "type": "string"
+                  },
+                  "secondaryNetworkId": {
+                    "description": "The Spot Instance Request ID.",
+                    "type": "string"
+                  },
+                  "secondarySubnetId": {
+                    "description": "The Spot Instance Request ID.",
+                    "type": "string"
+                  },
+                  "sourceDestCheck": {
+                    "type": "boolean"
+                  },
+                  "status": {
+                    "type": "string"
+                  }
+                },
+                "type": "object",
+                "additionalProperties": false
+              },
+              "type": "array"
+            },
             "secondaryPrivateIps": {
               "items": {
                 "type": "string"
@@ -1919,6 +2035,10 @@
             "type"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "lastHandledReconcileAt": {
+          "description": "LastHandledReconcileAt holds the value of the most recent\nreconcile-requested-at annotation token that the controller has\nprocessed. Users can compare this to the annotation to determine\nwhether a reconcile request has been handled.",
+          "type": "string"
         },
         "observedGeneration": {
           "description": "ObservedGeneration is the latest metadata.generation\nwhich resulted in either a ready state, or stalled due to error\nit can not recover from without human intervention.",
