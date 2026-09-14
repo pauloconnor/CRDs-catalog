@@ -82,7 +82,7 @@
           "type": "integer"
         },
         "helmRepoURLRegex": {
-          "description": "HelmRepoURLRegex Helm credentials will be used if the helm repo matches this regex\nCredentials will always be used if this is empty or not provided.",
+          "description": "HelmRepoURLRegex Helm credentials will be used if the helm repo matches this regex.\nCredentials will not be used if this is empty or not provided.",
           "nullable": true,
           "type": "string"
         },
@@ -117,7 +117,15 @@
         },
         "imageScanInterval": {
           "description": "ImageScanInterval is the interval of syncing scanned images and writing back to git repo.",
-          "type": "string"
+          "maxLength": 32,
+          "minLength": 1,
+          "type": "string",
+          "x-kubernetes-validations": [
+            {
+              "message": "must be a valid Go duration using units ns, us, \u00b5s, ms, s, m, h (e.g. 15s, 5m, 2h, 1h30m); units like d (days) or w (weeks) are not supported",
+              "rule": "self == '0' || (self.matches('^([0-9]+([.][0-9]+)?(ns|us|\u00b5s|ms|s|m|h))+$') && duration(self) <= duration('2562047h'))"
+            }
+          ]
         },
         "insecureSkipTLSVerify": {
           "description": "InsecureSkipTLSverify will use insecure HTTPS to clone the repo.",
@@ -145,8 +153,16 @@
         },
         "pollingInterval": {
           "description": "PollingInterval is how often to check git for new updates.",
+          "maxLength": 32,
+          "minLength": 1,
           "nullable": true,
-          "type": "string"
+          "type": "string",
+          "x-kubernetes-validations": [
+            {
+              "message": "must be a valid Go duration using units ns, us, \u00b5s, ms, s, m, h (e.g. 15s, 5m, 2h, 1h30m); units like d (days) or w (weeks) are not supported",
+              "rule": "self == '0' || (self.matches('^([0-9]+([.][0-9]+)?(ns|us|\u00b5s|ms|s|m|h))+$') && duration(self) <= duration('2562047h'))"
+            }
+          ]
         },
         "repo": {
           "description": "Repo is a URL to a git repo to clone and index.",
@@ -383,6 +399,11 @@
         },
         "lastSyncedImageScanTime": {
           "description": "LastSyncedImageScanTime is the time of the last image scan.",
+          "format": "date-time",
+          "type": "string"
+        },
+        "lastWebhookTime": {
+          "description": "LastWebhookTime is the time of the last received webhook notification",
           "format": "date-time",
           "type": "string"
         },
