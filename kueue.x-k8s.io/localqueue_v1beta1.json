@@ -215,7 +215,7 @@
                   "type": "object",
                   "additionalProperties": false
                 },
-                "maxItems": 16,
+                "maxItems": 64,
                 "type": "array",
                 "x-kubernetes-list-map-keys": [
                   "name"
@@ -230,7 +230,7 @@
             "type": "object",
             "additionalProperties": false
           },
-          "maxItems": 16,
+          "maxItems": 64,
           "type": "array",
           "x-kubernetes-list-map-keys": [
             "name"
@@ -297,7 +297,7 @@
                   "description": "ResourceName is the name identifying various resources in a ResourceList.",
                   "type": "string"
                 },
-                "maxItems": 16,
+                "maxItems": 64,
                 "type": "array",
                 "x-kubernetes-list-type": "set"
               },
@@ -335,7 +335,7 @@
             "type": "object",
             "additionalProperties": false
           },
-          "maxItems": 16,
+          "maxItems": 64,
           "type": "array",
           "x-kubernetes-list-map-keys": [
             "name"
@@ -380,7 +380,7 @@
                   "type": "object",
                   "additionalProperties": false
                 },
-                "maxItems": 16,
+                "maxItems": 64,
                 "type": "array",
                 "x-kubernetes-list-map-keys": [
                   "name"
@@ -395,7 +395,7 @@
             "type": "object",
             "additionalProperties": false
           },
-          "maxItems": 16,
+          "maxItems": 64,
           "type": "array",
           "x-kubernetes-list-map-keys": [
             "name"
