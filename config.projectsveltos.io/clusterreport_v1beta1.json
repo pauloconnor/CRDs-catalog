@@ -45,7 +45,8 @@
                   "Create",
                   "Update",
                   "Delete",
-                  "Conflict"
+                  "Conflict",
+                  "Error"
                 ],
                 "type": "string"
               },
@@ -119,7 +120,8 @@
                   "Create",
                   "Update",
                   "Delete",
-                  "Conflict"
+                  "Conflict",
+                  "Error"
                 ],
                 "type": "string"
               },
@@ -238,7 +240,8 @@
                   "Create",
                   "Update",
                   "Delete",
-                  "Conflict"
+                  "Conflict",
+                  "Error"
                 ],
                 "type": "string"
               },
