@@ -87,15 +87,15 @@
               "description": "CertManager references a cert-manager Issuer or ClusterIssuer.\nIf set, cert-manager.io/Certificate resources will be created, provisioning the secrets referenced in\n*SecretName using the issuer configured here.",
               "properties": {
                 "group": {
-                  "description": "Group of the resource being referred to.",
+                  "description": "Group of the issuer being referred to.\nDefaults to 'cert-manager.io'.",
                   "type": "string"
                 },
                 "kind": {
-                  "description": "Kind of the resource being referred to.",
+                  "description": "Kind of the issuer being referred to.\nDefaults to 'Issuer'.",
                   "type": "string"
                 },
                 "name": {
-                  "description": "Name of the resource being referred to.",
+                  "description": "Name of the issuer being referred to.",
                   "type": "string"
                 }
               },
@@ -258,15 +258,15 @@
               "description": "CertManager references a cert-manager Issuer or ClusterIssuer.\nIf set, a Certificate resource will be created, provisioning the secret references in SecretName using the\nissuer configured here.",
               "properties": {
                 "group": {
-                  "description": "Group of the resource being referred to.",
+                  "description": "Group of the issuer being referred to.\nDefaults to 'cert-manager.io'.",
                   "type": "string"
                 },
                 "kind": {
-                  "description": "Kind of the resource being referred to.",
+                  "description": "Kind of the issuer being referred to.\nDefaults to 'Issuer'.",
                   "type": "string"
                 },
                 "name": {
-                  "description": "Name of the resource being referred to.",
+                  "description": "Name of the issuer being referred to.",
                   "type": "string"
                 }
               },
@@ -287,6 +287,12 @@
         "linstorPassphraseSecret": {
           "description": "LinstorPassphraseSecret used to configure the LINSTOR master passphrase.\n\nThe referenced secret must contain a single key \"MASTER_PASSPHRASE\". The master passphrase is used to\n* Derive encryption keys for volumes using the LUKS layer.\n* Store credentials for accessing remotes for backups.\nSee https://linbit.com/drbd-user-guide/linstor-guide-1_0-en/#s-encrypt_commands for more information.",
           "type": "string"
+        },
+        "maxConcurrentEvacuations": {
+          "description": "MaxConcurrentEvacuations limits how many Satellites are evacuated at the same time when using the\n\"Evacuate\" deletion policy.\n\nThis applies both to Satellites removed because their node no longer matches the cluster, and to nodes\nremoved through ClusterAPI. While the limit is reached, additional Satellites wait for a free slot before\ntheir volumes are moved and, for ClusterAPI managed nodes, before the node is allowed to drain.\nA value of 0 (the default) places no limit on the number of concurrent evacuations.",
+          "format": "int32",
+          "minimum": 0,
+          "type": "integer"
         },
         "nfsServer": {
           "description": "NFSServer controls the deployment of the LINSTOR CSI NFS Server DaemonSet.",
