@@ -768,7 +768,7 @@ sources:
     changelog: "https://github.com/kedacore/http-add-on/releases"
 
   - url: "https://github.com/kedacore/keda"
-    tag: "v2.19.0"
+    tag: "v2.20.2"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/kedacore/keda/releases"
 
