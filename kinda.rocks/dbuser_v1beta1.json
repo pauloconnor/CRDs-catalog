@@ -123,6 +123,9 @@
         },
         "status": {
           "type": "boolean"
+        },
+        "user": {
+          "type": "string"
         }
       },
       "required": [
