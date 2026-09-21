@@ -1,5 +1,5 @@
 {
-  "description": "Console defines the CRD for Redpanda Console instances.",
+  "description": "Pipeline defines a Redpanda Connect pipeline managed by the operator.",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -13,9 +13,10 @@
       "type": "object"
     },
     "spec": {
+      "description": "Spec defines the desired state of the Pipeline.",
       "properties": {
         "affinity": {
-          "description": "Affinity is a group of affinity scheduling rules.",
+          "description": "Affinity sets pod affinity/anti-affinity for the pipeline pods. Use it for\nnode-pool scheduling that NodeSelector can't express \u2014 required-OR-of-pools\n(multiple acceptable node pools), preferred (soft) node-pool placement, or\npod anti-affinity to spread a pipeline across nodes. It is merged with any\nauto-generated zone affinity from Zones: the zone requirement is AND-ed\ninto the node affinity so both constraints apply.",
           "properties": {
             "nodeAffinity": {
               "description": "Describes node affinity scheduling rules for the pod.",
@@ -807,38 +808,27 @@
           "additionalProperties": {
             "type": "string"
           },
+          "description": "Annotations specifies additional annotations to apply to the pipeline pod\ntemplate. These are merged with any operator-level commonAnnotations, with\nper-pipeline annotations taking precedence. Useful for integrations like\nDatadog autodiscovery that rely on pod annotations.",
           "type": "object"
         },
-        "automountServiceAccountToken": {
-          "type": "boolean"
-        },
-        "autoscaling": {
+        "budget": {
+          "description": "Budget configures a PodDisruptionBudget for the pipeline Deployment,\nprotecting pipeline pods from voluntary disruptions such as node drains\nand cluster autoscaler evictions. When not set, no PDB is created.",
           "properties": {
-            "enabled": {
-              "type": "boolean"
-            },
-            "maxReplicas": {
-              "format": "int32",
-              "type": "integer"
-            },
-            "minReplicas": {
-              "format": "int32",
-              "type": "integer"
-            },
-            "targetCPUUtilizationPercentage": {
-              "format": "int32",
-              "type": "integer"
-            },
-            "targetMemoryUtilizationPercentage": {
-              "format": "int32",
+            "maxUnavailable": {
+              "default": 1,
+              "description": "MaxUnavailable defines the maximum number of pipeline pods that can be\nunavailable during a voluntary disruption. Defaults to 1 if not set.",
+              "minimum": 0,
               "type": "integer"
             }
           },
+          "required": [
+            "maxUnavailable"
+          ],
           "type": "object",
           "additionalProperties": false
         },
         "cluster": {
-          "description": "ClusterSource defines how to connect to a particular Redpanda cluster.",
+          "description": "ClusterSource declaratively binds the pipeline's redpanda input/output\nto a Redpanda cluster. Mirrors the ClusterSource pattern used by the\nUser/Topic CRDs:\n\n  - clusterRef: point at an existing Redpanda CR by name, in the same\n    namespace as the Pipeline (cross-namespace references are rejected \u2014\n    the resolved TLS/SASL Secrets must be mountable by the pipeline\n    pod). The operator resolves the internal broker addresses + TLS\n    material automatically; the SASL identity is taken from .userRef.\n    SECURITY: when .userRef is NOT set and the referenced cluster has\n    SASL enabled, the pipeline authenticates as the cluster's bootstrap\n    superuser \u2014 its credentials are projected into the pipeline pod's\n    environment. Set .userRef so each pipeline runs with an ACL-scoped\n    identity instead.\n  - staticConfiguration: hard-code brokers, TLS, and SASL. The password\n    is a ValueSource so it can come from inline / Secret / ConfigMap /\n    ExternalSecret.\n\nWhen unset, the pipeline runs against whatever brokers the user wires\ninline in configYaml (e.g. an external Kafka, Confluent Cloud, etc.).",
           "properties": {
             "clusterRef": {
               "description": "ClusterRef is a reference to the cluster where the object should be created.\nIt is used in constructing the client created to configure a cluster.\nThis takes precedence over StaticConfigurationSource.",
@@ -3181,71 +3171,27 @@
           ],
           "additionalProperties": false
         },
-        "commonLabels": {
+        "configFiles": {
           "additionalProperties": {
             "type": "string"
           },
+          "description": "ConfigFiles defines additional configuration files to mount alongside\nthe main pipeline configuration. Each entry maps a filename to its content.\nFiles are mounted in the /config directory alongside connect.yaml.\nThe key \"connect.yaml\" is reserved and cannot be used.\nMaps to pipeline config files when migrating to Redpanda Cloud.",
           "type": "object"
         },
-        "config": {
-          "type": "object",
-          "x-kubernetes-preserve-unknown-fields": true
+        "configYaml": {
+          "description": "ConfigYAML is the user-supplied Redpanda Connect pipeline YAML.\nReference cluster-bound or sensitive values from .valueSources via\n${NAME} interpolation; the operator resolves them at render time.\n\nWhen .cluster is set, the operator inline-merges connection fields\n(seed_brokers, tls, sasl) into any `input.redpanda` and\n`output.redpanda` blocks in this YAML, derived from the resolved\ncluster connection and .userRef. Users only need to write the\nper-plugin fields (topic, key, consumer_group, etc.); brokers, TLS,\nand SASL are filled in by the operator.\n\nUser-side keys win on conflict \u2014 set a key explicitly (for example,\nseed_brokers pointing at a different cluster) and the operator's\ngenerated value is skipped for that key.\n\nThe merge targets the `redpanda` input/output plugins specifically.\nAny `redpanda_common` blocks the user authors are passed through\nunchanged \u2014 the operator does not inject connection fields into\nthem.",
+          "type": "string"
         },
-        "deployment": {
-          "properties": {
-            "command": {
-              "items": {
-                "type": "string"
-              },
-              "type": "array"
-            },
-            "extraArgs": {
-              "items": {
-                "type": "string"
-              },
-              "type": "array"
-            }
-          },
-          "type": "object",
-          "additionalProperties": false
+        "description": {
+          "description": "Description is an optional description of what this pipeline does.\nMaps to the pipeline description when migrating to Redpanda Cloud.",
+          "type": "string"
         },
-        "extraContainerPorts": {
-          "items": {
-            "description": "ContainerPort represents a network port in a single container.",
-            "properties": {
-              "containerPort": {
-                "description": "Number of port to expose on the pod's IP address.\nThis must be a valid port number, 0 < x < 65536.",
-                "format": "int32",
-                "type": "integer"
-              },
-              "hostIP": {
-                "description": "What host IP to bind the external port to.",
-                "type": "string"
-              },
-              "hostPort": {
-                "description": "Number of port to expose on the host.\nIf specified, this must be a valid port number, 0 < x < 65536.\nIf HostNetwork is specified, this must match ContainerPort.\nMost containers do not need this.",
-                "format": "int32",
-                "type": "integer"
-              },
-              "name": {
-                "description": "If specified, this must be an IANA_SVC_NAME and unique within the pod. Each\nnamed port in a pod must have a unique name. Name for the port that can be\nreferred to by services.",
-                "type": "string"
-              },
-              "protocol": {
-                "default": "TCP",
-                "description": "Protocol for port. Must be UDP, TCP, or SCTP.\nDefaults to \"TCP\".",
-                "type": "string"
-              }
-            },
-            "required": [
-              "containerPort"
-            ],
-            "type": "object",
-            "additionalProperties": false
-          },
-          "type": "array"
+        "displayName": {
+          "description": "DisplayName is a human-readable name for the pipeline.\nMaps to the pipeline display name when migrating to Redpanda Cloud.",
+          "type": "string"
         },
-        "extraContainers": {
+        "extraInitContainers": {
+          "description": "ExtraInitContainers are additional init containers run to completion,\nin order, before the pipeline's lint and connect containers start. Use\nthem for setup steps the pipeline depends on \u2014 fetching certificate\nmaterial, warming a cache, or waiting on an external dependency. They run\nahead of the operator's built-in `lint` init container, so anything they\nwrite into a volume from .extraVolumes is visible to lint and to the\nconnect runtime (mount it into the pipeline via .extraVolumeMounts).\n\nThis is a raw container passthrough with no operator-applied policy; the\npod's service account and security posture apply. It is distinct from a\nlong-lived plugin sidecar (which would be an init container with\nrestartPolicy: Always and is not expressed here).\n\nExample (with the backing volume and the mount that exposes the staged\nfile to the pipeline containers):\n  spec:\n    extraVolumes:\n      - name: shared\n        emptyDir: {}\n    extraVolumeMounts:\n      - name: shared\n        mountPath: /shared\n        readOnly: true\n    extraInitContainers:\n      - name: fetch-certs\n        image: curlimages/curl:8.11.0\n        command: [\"sh\", \"-c\", \"curl -fsSL $CERT_URL -o /shared/ca.pem\"]\n        volumeMounts:\n          - name: shared\n            mountPath: /shared",
           "items": {
             "description": "A single application container that you want to run within a pod.",
             "properties": {
@@ -4638,212 +4584,8 @@
           },
           "type": "array"
         },
-        "extraEnv": {
-          "items": {
-            "description": "EnvVar represents an environment variable present in a Container.",
-            "properties": {
-              "name": {
-                "description": "Name of the environment variable.\nMay consist of any printable ASCII characters except '='.",
-                "type": "string"
-              },
-              "value": {
-                "description": "Variable references $(VAR_NAME) are expanded\nusing the previously defined environment variables in the container and\nany service environment variables. If a variable cannot be resolved,\nthe reference in the input string will be unchanged. Double $$ are reduced\nto a single $, which allows for escaping the $(VAR_NAME) syntax: i.e.\n\"$$(VAR_NAME)\" will produce the string literal \"$(VAR_NAME)\".\nEscaped references will never be expanded, regardless of whether the variable\nexists or not.\nDefaults to \"\".",
-                "type": "string"
-              },
-              "valueFrom": {
-                "description": "Source for the environment variable's value. Cannot be used if value is not empty.",
-                "properties": {
-                  "configMapKeyRef": {
-                    "description": "Selects a key of a ConfigMap.",
-                    "properties": {
-                      "key": {
-                        "description": "The key to select.",
-                        "type": "string"
-                      },
-                      "name": {
-                        "default": "",
-                        "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
-                        "type": "string"
-                      },
-                      "optional": {
-                        "description": "Specify whether the ConfigMap or its key must be defined",
-                        "type": "boolean"
-                      }
-                    },
-                    "required": [
-                      "key"
-                    ],
-                    "type": "object",
-                    "x-kubernetes-map-type": "atomic",
-                    "additionalProperties": false
-                  },
-                  "fieldRef": {
-                    "description": "Selects a field of the pod: supports metadata.name, metadata.namespace, `metadata.labels['<KEY>']`, `metadata.annotations['<KEY>']`,\nspec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.",
-                    "properties": {
-                      "apiVersion": {
-                        "description": "Version of the schema the FieldPath is written in terms of, defaults to \"v1\".",
-                        "type": "string"
-                      },
-                      "fieldPath": {
-                        "description": "Path of the field to select in the specified API version.",
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "fieldPath"
-                    ],
-                    "type": "object",
-                    "x-kubernetes-map-type": "atomic",
-                    "additionalProperties": false
-                  },
-                  "fileKeyRef": {
-                    "description": "FileKeyRef selects a key of the env file.\nRequires the EnvFiles feature gate to be enabled.",
-                    "properties": {
-                      "key": {
-                        "description": "The key within the env file. An invalid key will prevent the pod from starting.\nThe keys defined within a source may consist of any printable ASCII characters except '='.\nDuring Alpha stage of the EnvFiles feature gate, the key size is limited to 128 characters.",
-                        "type": "string"
-                      },
-                      "optional": {
-                        "default": false,
-                        "description": "Specify whether the file or its key must be defined. If the file or key\ndoes not exist, then the env var is not published.\nIf optional is set to true and the specified key does not exist,\nthe environment variable will not be set in the Pod's containers.\n\nIf optional is set to false and the specified key does not exist,\nan error will be returned during Pod creation.",
-                        "type": "boolean"
-                      },
-                      "path": {
-                        "description": "The path within the volume from which to select the file.\nMust be relative and may not contain the '..' path or start with '..'.",
-                        "type": "string"
-                      },
-                      "volumeName": {
-                        "description": "The name of the volume mount containing the env file.",
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "key",
-                      "path",
-                      "volumeName"
-                    ],
-                    "type": "object",
-                    "x-kubernetes-map-type": "atomic",
-                    "additionalProperties": false
-                  },
-                  "resourceFieldRef": {
-                    "description": "Selects a resource of the container: only resources limits and requests\n(limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.",
-                    "properties": {
-                      "containerName": {
-                        "description": "Container name: required for volumes, optional for env vars",
-                        "type": "string"
-                      },
-                      "divisor": {
-                        "anyOf": [
-                          {
-                            "type": "integer"
-                          },
-                          {
-                            "type": "string"
-                          }
-                        ],
-                        "description": "Specifies the output format of the exposed resources, defaults to \"1\"",
-                        "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
-                        "x-kubernetes-int-or-string": true
-                      },
-                      "resource": {
-                        "description": "Required: resource to select",
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "resource"
-                    ],
-                    "type": "object",
-                    "x-kubernetes-map-type": "atomic",
-                    "additionalProperties": false
-                  },
-                  "secretKeyRef": {
-                    "description": "Selects a key of a secret in the pod's namespace",
-                    "properties": {
-                      "key": {
-                        "description": "The key of the secret to select from.  Must be a valid secret key.",
-                        "type": "string"
-                      },
-                      "name": {
-                        "default": "",
-                        "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
-                        "type": "string"
-                      },
-                      "optional": {
-                        "description": "Specify whether the Secret or its key must be defined",
-                        "type": "boolean"
-                      }
-                    },
-                    "required": [
-                      "key"
-                    ],
-                    "type": "object",
-                    "x-kubernetes-map-type": "atomic",
-                    "additionalProperties": false
-                  }
-                },
-                "type": "object",
-                "additionalProperties": false
-              }
-            },
-            "required": [
-              "name"
-            ],
-            "type": "object",
-            "additionalProperties": false
-          },
-          "type": "array"
-        },
-        "extraEnvFrom": {
-          "items": {
-            "description": "EnvFromSource represents the source of a set of ConfigMaps or Secrets",
-            "properties": {
-              "configMapRef": {
-                "description": "The ConfigMap to select from",
-                "properties": {
-                  "name": {
-                    "default": "",
-                    "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
-                    "type": "string"
-                  },
-                  "optional": {
-                    "description": "Specify whether the ConfigMap must be defined",
-                    "type": "boolean"
-                  }
-                },
-                "type": "object",
-                "x-kubernetes-map-type": "atomic",
-                "additionalProperties": false
-              },
-              "prefix": {
-                "description": "Optional text to prepend to the name of each environment variable.\nMay consist of any printable ASCII characters except '='.",
-                "type": "string"
-              },
-              "secretRef": {
-                "description": "The Secret to select from",
-                "properties": {
-                  "name": {
-                    "default": "",
-                    "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
-                    "type": "string"
-                  },
-                  "optional": {
-                    "description": "Specify whether the Secret must be defined",
-                    "type": "boolean"
-                  }
-                },
-                "type": "object",
-                "x-kubernetes-map-type": "atomic",
-                "additionalProperties": false
-              }
-            },
-            "type": "object",
-            "additionalProperties": false
-          },
-          "type": "array"
-        },
         "extraVolumeMounts": {
+          "description": "ExtraVolumeMounts are additional volume mounts applied to the built-in\nlint init container and the connect container (both, so the linted view\nof the filesystem matches the runtime's). Mounts for\n.extraInitContainers are declared on those containers directly.",
           "items": {
             "description": "VolumeMount describes a mounting of a Volume within a container.",
             "properties": {
@@ -4886,6 +4628,7 @@
           "type": "array"
         },
         "extraVolumes": {
+          "description": "ExtraVolumes are additional volumes added to the pipeline pod, typically\nbacking an .extraInitContainers staging step or an .extraVolumeMounts\nentry. Raw passthrough: any Kubernetes volume source is accepted. The\nnames \"config\", \"cluster-tls-ca\", and \"cluster-tls-client\" are reserved\nby the operator.",
           "items": {
             "description": "Volume represents a named volume in a pod that may be accessed by any container in the pod.",
             "properties": {
@@ -6419,674 +6162,30 @@
           },
           "type": "array"
         },
-        "gateway": {
-          "description": "GatewayConfig configures a Gateway API HTTPRoute for Console.",
-          "properties": {
-            "annotations": {
-              "additionalProperties": {
-                "type": "string"
-              },
-              "type": "object"
-            },
-            "enabled": {
-              "type": "boolean"
-            },
-            "hostnames": {
-              "items": {
-                "type": "string"
-              },
-              "type": "array"
-            },
-            "parentRefs": {
-              "items": {
-                "description": "GatewayParentReference identifies a parent Gateway for the HTTPRoute.",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "namespace": {
-                    "type": "string"
-                  },
-                  "sectionName": {
-                    "description": "SectionName is the name of a section in a Kubernetes resource.\n\nIn the following resources, SectionName is interpreted as the following:\n\n* Gateway: Listener name\n* HTTPRoute: HTTPRouteRule name\n* Service: Port name\n\nSection names can have a variety of forms, including RFC 1123 subdomains,\nRFC 1123 labels, or RFC 1035 labels.\n\nThis validation is based off of the corresponding Kubernetes validation:\nhttps://github.com/kubernetes/apimachinery/blob/02cfb53916346d085a6c6c7c66f882e3c6b0eca6/pkg/util/validation/validation.go#L208\n\nValid values include:\n\n* \"example\"\n* \"foo-example\"\n* \"example.com\"\n* \"foo.example.com\"\n\nInvalid values include:\n\n* \"example.com/bar\" - \"/\" is an invalid character",
-                    "maxLength": 253,
-                    "minLength": 1,
-                    "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$",
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "name"
-                ],
-                "type": "object",
-                "additionalProperties": false
-              },
-              "type": "array"
-            },
-            "path": {
-              "type": "string"
-            },
-            "pathType": {
-              "description": "PathMatchType specifies the semantics of how HTTP paths should be compared.\nValid PathMatchType values, along with their support levels, are:\n\n* \"Exact\" - Core\n* \"PathPrefix\" - Core\n* \"RegularExpression\" - Implementation Specific\n\nPathPrefix and Exact paths must be syntactically valid:\n\n- Must begin with the `/` character\n- Must not contain consecutive `/` characters (e.g. `/foo///`, `//`).\n\nNote that values may be added to this enum, implementations\nmust ensure that unknown values will not cause a crash.\n\nUnknown values here must result in the implementation setting the\nAccepted Condition for the Route to `status: False`, with a\nReason of `UnsupportedValue`.",
-              "enum": [
-                "Exact",
-                "PathPrefix",
-                "RegularExpression"
-              ],
-              "type": "string"
-            }
-          },
-          "type": "object",
-          "additionalProperties": false
-        },
         "image": {
-          "properties": {
-            "pullPolicy": {
-              "description": "PullPolicy describes a policy for if/when to pull a container image",
-              "type": "string"
-            },
-            "registry": {
-              "type": "string"
-            },
-            "repository": {
-              "type": "string"
-            },
-            "tag": {
-              "type": "string"
-            }
-          },
-          "type": "object",
-          "additionalProperties": false
-        },
-        "imagePullSecrets": {
-          "items": {
-            "description": "LocalObjectReference contains enough information to let you locate the\nreferenced object inside the same namespace.",
-            "properties": {
-              "name": {
-                "default": "",
-                "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
-                "type": "string"
-              }
-            },
-            "type": "object",
-            "x-kubernetes-map-type": "atomic",
-            "additionalProperties": false
-          },
-          "type": "array"
-        },
-        "ingress": {
-          "properties": {
-            "annotations": {
-              "additionalProperties": {
-                "type": "string"
-              },
-              "type": "object"
-            },
-            "className": {
-              "type": "string"
-            },
-            "enabled": {
-              "type": "boolean"
-            },
-            "hosts": {
-              "items": {
-                "properties": {
-                  "host": {
-                    "type": "string"
-                  },
-                  "paths": {
-                    "items": {
-                      "properties": {
-                        "path": {
-                          "type": "string"
-                        },
-                        "pathType": {
-                          "description": "PathType represents the type of path referred to by a HTTPIngressPath.",
-                          "type": "string"
-                        }
-                      },
-                      "type": "object",
-                      "additionalProperties": false
-                    },
-                    "type": "array"
-                  }
-                },
-                "type": "object",
-                "additionalProperties": false
-              },
-              "type": "array"
-            },
-            "tls": {
-              "items": {
-                "description": "IngressTLS describes the transport layer security associated with an ingress.",
-                "properties": {
-                  "hosts": {
-                    "description": "hosts is a list of hosts included in the TLS certificate. The values in\nthis list must match the name/s used in the tlsSecret. Defaults to the\nwildcard host setting for the loadbalancer controller fulfilling this\nIngress, if left unspecified.",
-                    "items": {
-                      "type": "string"
-                    },
-                    "type": "array",
-                    "x-kubernetes-list-type": "atomic"
-                  },
-                  "secretName": {
-                    "description": "secretName is the name of the secret used to terminate TLS traffic on\nport 443. Field is left optional to allow TLS routing based on SNI\nhostname alone. If the SNI host in a listener conflicts with the \"Host\"\nheader field used by an IngressRule, the SNI host is used for termination\nand value of the \"Host\" header is used for routing.",
-                    "type": "string"
-                  }
-                },
-                "type": "object",
-                "additionalProperties": false
-              },
-              "type": "array"
-            }
-          },
-          "type": "object",
-          "additionalProperties": false
-        },
-        "licenseSecretRef": {
-          "description": "SecretKeySelector selects a key of a Secret.",
-          "properties": {
-            "key": {
-              "description": "The key of the secret to select from.  Must be a valid secret key.",
-              "type": "string"
-            },
-            "name": {
-              "default": "",
-              "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
-              "type": "string"
-            },
-            "optional": {
-              "description": "Specify whether the Secret or its key must be defined",
-              "type": "boolean"
-            }
-          },
-          "required": [
-            "key"
-          ],
-          "type": "object",
-          "x-kubernetes-map-type": "atomic",
-          "additionalProperties": false
-        },
-        "livenessProbe": {
-          "description": "LivenessProbe describes a health check to be performed against a container to determine whether it is\nalive.",
-          "properties": {
-            "exec": {
-              "description": "Exec specifies a command to execute in the container.",
-              "properties": {
-                "command": {
-                  "description": "Command is the command line to execute inside the container, the working directory for the\ncommand  is root ('/') in the container's filesystem. The command is simply exec'd, it is\nnot run inside a shell, so traditional shell instructions ('|', etc) won't work. To use\na shell, you need to explicitly call out to that shell.\nExit status of 0 is treated as live/healthy and non-zero is unhealthy.",
-                  "items": {
-                    "type": "string"
-                  },
-                  "type": "array"
-                }
-              },
-              "type": "object",
-              "additionalProperties": false
-            },
-            "failureThreshold": {
-              "description": "Minimum consecutive failures for the probe to be considered failed after having succeeded.\nDefaults to 3. Minimum value is 1.",
-              "format": "int32",
-              "type": "integer"
-            },
-            "grpc": {
-              "description": "GRPC specifies a GRPC HealthCheckRequest.",
-              "properties": {
-                "port": {
-                  "description": "Port number of the gRPC service. Number must be in the range 1 to 65535.",
-                  "format": "int32",
-                  "type": "integer"
-                },
-                "service": {
-                  "description": "Service is the name of the service to place in the gRPC HealthCheckRequest\n(see https://github.com/grpc/grpc/blob/master/doc/health-checking.md).\n\nIf this is not specified, the default behavior is defined by gRPC.",
-                  "type": "string"
-                }
-              },
-              "type": "object",
-              "additionalProperties": false
-            },
-            "httpGet": {
-              "description": "HTTPGet specifies an HTTP GET request to perform.",
-              "properties": {
-                "host": {
-                  "description": "Host name to connect to, defaults to the pod IP. You probably want to set\n\"Host\" in httpHeaders instead.",
-                  "type": "string"
-                },
-                "httpHeaders": {
-                  "description": "Custom headers to set in the request. HTTP allows repeated headers.",
-                  "items": {
-                    "description": "HTTPHeaderApplyConfiguration represents a declarative configuration of the HTTPHeader type for use\nwith apply.\n\nHTTPHeader describes a custom header to be used in HTTP probes",
-                    "properties": {
-                      "name": {
-                        "description": "The header field name.\nThis will be canonicalized upon output, so case-variant names will be understood as the same header.",
-                        "type": "string"
-                      },
-                      "value": {
-                        "description": "The header field value",
-                        "type": "string"
-                      }
-                    },
-                    "type": "object",
-                    "additionalProperties": false
-                  },
-                  "type": "array"
-                },
-                "path": {
-                  "description": "Path to access on the HTTP server.",
-                  "type": "string"
-                },
-                "port": {
-                  "anyOf": [
-                    {
-                      "type": "integer"
-                    },
-                    {
-                      "type": "string"
-                    }
-                  ],
-                  "description": "Name or number of the port to access on the container.\nNumber must be in the range 1 to 65535.\nName must be an IANA_SVC_NAME.",
-                  "x-kubernetes-int-or-string": true
-                },
-                "scheme": {
-                  "description": "Scheme to use for connecting to the host.\nDefaults to HTTP.",
-                  "type": "string"
-                }
-              },
-              "type": "object",
-              "additionalProperties": false
-            },
-            "initialDelaySeconds": {
-              "description": "Number of seconds after the container has started before liveness probes are initiated.\nMore info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes",
-              "format": "int32",
-              "type": "integer"
-            },
-            "periodSeconds": {
-              "description": "How often (in seconds) to perform the probe.\nDefault to 10 seconds. Minimum value is 1.",
-              "format": "int32",
-              "type": "integer"
-            },
-            "successThreshold": {
-              "description": "Minimum consecutive successes for the probe to be considered successful after having failed.\nDefaults to 1. Must be 1 for liveness and startup. Minimum value is 1.",
-              "format": "int32",
-              "type": "integer"
-            },
-            "tcpSocket": {
-              "description": "TCPSocket specifies a connection to a TCP port.",
-              "properties": {
-                "host": {
-                  "description": "Optional: Host name to connect to, defaults to the pod IP.",
-                  "type": "string"
-                },
-                "port": {
-                  "anyOf": [
-                    {
-                      "type": "integer"
-                    },
-                    {
-                      "type": "string"
-                    }
-                  ],
-                  "description": "Number or name of the port to access on the container.\nNumber must be in the range 1 to 65535.\nName must be an IANA_SVC_NAME.",
-                  "x-kubernetes-int-or-string": true
-                }
-              },
-              "type": "object",
-              "additionalProperties": false
-            },
-            "terminationGracePeriodSeconds": {
-              "description": "Optional duration in seconds the pod needs to terminate gracefully upon probe failure.\nThe grace period is the duration in seconds after the processes running in the pod are sent\na termination signal and the time when the processes are forcibly halted with a kill signal.\nSet this value longer than the expected cleanup time for your process.\nIf this value is nil, the pod's terminationGracePeriodSeconds will be used. Otherwise, this\nvalue overrides the value provided by the pod spec.\nValue must be non-negative integer. The value zero indicates stop immediately via\nthe kill signal (no opportunity to shut down).\nThis is a beta field and requires enabling ProbeTerminationGracePeriod feature gate.\nMinimum value is 1. spec.terminationGracePeriodSeconds is used if unset.",
-              "format": "int64",
-              "type": "integer"
-            },
-            "timeoutSeconds": {
-              "description": "Number of seconds after which the probe times out.\nDefaults to 1 second. Minimum value is 1.\nMore info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes",
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          "type": "object",
-          "additionalProperties": false
-        },
-        "monitoring": {
-          "properties": {
-            "enabled": {
-              "type": "boolean"
-            },
-            "labels": {
-              "additionalProperties": {
-                "type": "string"
-              },
-              "type": "object"
-            },
-            "scrapeInterval": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "labels"
-          ],
-          "type": "object",
-          "additionalProperties": false
+          "description": "Image is the container image for the Redpanda Connect deployment.",
+          "type": "string"
         },
         "nodeSelector": {
           "additionalProperties": {
             "type": "string"
           },
+          "description": "NodeSelector constrains pipeline pods to nodes with matching labels \u2014 the\nsimplest way to pin a pipeline to a specific Kubernetes node pool (match\nthe node pool's label, e.g. eks.amazonaws.com/nodegroup or a custom\nlabel). Combine with Tolerations if the node pool is tainted.",
           "type": "object"
         },
-        "podAnnotations": {
-          "additionalProperties": {
-            "type": "string"
-          },
-          "type": "object"
+        "paused": {
+          "description": "Paused stops the pipeline by scaling replicas to zero when set to true.\n\nPaused wins over .replicas, including values an autoscaler writes\nthrough the scale subresource: while paused the Deployment stays at\nzero (the pipeline reports Stopped) even if HPA/KEDA keep updating\n.replicas, and unpausing resumes at the current .replicas count.",
+          "type": "boolean"
         },
-        "podLabels": {
-          "additionalProperties": {
-            "type": "string"
-          },
-          "type": "object"
-        },
-        "podSecurityContext": {
-          "description": "PodSecurityContext holds pod-level security attributes and common container settings.\nSome fields are also present in container.securityContext.  Field values of\ncontainer.securityContext take precedence over field values of PodSecurityContext.",
-          "properties": {
-            "appArmorProfile": {
-              "description": "appArmorProfile is the AppArmor options to use by the containers in this pod.\nNote that this field cannot be set when spec.os.name is windows.",
-              "properties": {
-                "localhostProfile": {
-                  "description": "localhostProfile indicates a profile loaded on the node that should be used.\nThe profile must be preconfigured on the node to work.\nMust match the loaded name of the profile.\nMust be set if and only if type is \"Localhost\".",
-                  "type": "string"
-                },
-                "type": {
-                  "description": "type indicates which kind of AppArmor profile will be applied.\nValid options are:\n  Localhost - a profile pre-loaded on the node.\n  RuntimeDefault - the container runtime's default profile.\n  Unconfined - no AppArmor enforcement.",
-                  "type": "string"
-                }
-              },
-              "required": [
-                "type"
-              ],
-              "type": "object",
-              "additionalProperties": false
-            },
-            "fsGroup": {
-              "description": "A special supplemental group that applies to all containers in a pod.\nSome volume types allow the Kubelet to change the ownership of that volume\nto be owned by the pod:\n\n1. The owning GID will be the FSGroup\n2. The setgid bit is set (new files created in the volume will be owned by FSGroup)\n3. The permission bits are OR'd with rw-rw----\n\nIf unset, the Kubelet will not modify the ownership and permissions of any volume.\nNote that this field cannot be set when spec.os.name is windows.",
-              "format": "int64",
-              "type": "integer"
-            },
-            "fsGroupChangePolicy": {
-              "description": "fsGroupChangePolicy defines behavior of changing ownership and permission of the volume\nbefore being exposed inside Pod. This field will only apply to\nvolume types which support fsGroup based ownership(and permissions).\nIt will have no effect on ephemeral volume types such as: secret, configmaps\nand emptydir.\nValid values are \"OnRootMismatch\" and \"Always\". If not specified, \"Always\" is used.\nNote that this field cannot be set when spec.os.name is windows.",
-              "type": "string"
-            },
-            "runAsGroup": {
-              "description": "The GID to run the entrypoint of the container process.\nUses runtime default if unset.\nMay also be set in SecurityContext.  If set in both SecurityContext and\nPodSecurityContext, the value specified in SecurityContext takes precedence\nfor that container.\nNote that this field cannot be set when spec.os.name is windows.",
-              "format": "int64",
-              "type": "integer"
-            },
-            "runAsNonRoot": {
-              "description": "Indicates that the container must run as a non-root user.\nIf true, the Kubelet will validate the image at runtime to ensure that it\ndoes not run as UID 0 (root) and fail to start the container if it does.\nIf unset or false, no such validation will be performed.\nMay also be set in SecurityContext.  If set in both SecurityContext and\nPodSecurityContext, the value specified in SecurityContext takes precedence.",
-              "type": "boolean"
-            },
-            "runAsUser": {
-              "description": "The UID to run the entrypoint of the container process.\nDefaults to user specified in image metadata if unspecified.\nMay also be set in SecurityContext.  If set in both SecurityContext and\nPodSecurityContext, the value specified in SecurityContext takes precedence\nfor that container.\nNote that this field cannot be set when spec.os.name is windows.",
-              "format": "int64",
-              "type": "integer"
-            },
-            "seLinuxChangePolicy": {
-              "description": "seLinuxChangePolicy defines how the container's SELinux label is applied to all volumes used by the Pod.\nIt has no effect on nodes that do not support SELinux or to volumes does not support SELinux.\nValid values are \"MountOption\" and \"Recursive\".\n\n\"Recursive\" means relabeling of all files on all Pod volumes by the container runtime.\nThis may be slow for large volumes, but allows mixing privileged and unprivileged Pods sharing the same volume on the same node.\n\n\"MountOption\" mounts all eligible Pod volumes with `-o context` mount option.\nThis requires all Pods that share the same volume to use the same SELinux label.\nIt is not possible to share the same volume among privileged and unprivileged Pods.\nEligible volumes are in-tree FibreChannel and iSCSI volumes, and all CSI volumes\nwhose CSI driver announces SELinux support by setting spec.seLinuxMount: true in their\nCSIDriver instance. Other volumes are always re-labelled recursively.\n\"MountOption\" value is allowed only when SELinuxMount feature gate is enabled.\n\nIf not specified and SELinuxMount feature gate is enabled, \"MountOption\" is used.\nIf not specified and SELinuxMount feature gate is disabled, \"MountOption\" is used for ReadWriteOncePod volumes\nand \"Recursive\" for all other volumes.\n\nThis field affects only Pods that have SELinux label set, either in PodSecurityContext or in SecurityContext of all containers.\n\nAll Pods that use the same volume should use the same seLinuxChangePolicy, otherwise some pods can get stuck in ContainerCreating state.\nNote that this field cannot be set when spec.os.name is windows.",
-              "type": "string"
-            },
-            "seLinuxOptions": {
-              "description": "The SELinux context to be applied to all containers.\nIf unspecified, the container runtime will allocate a random SELinux context for each\ncontainer.  May also be set in SecurityContext.  If set in\nboth SecurityContext and PodSecurityContext, the value specified in SecurityContext\ntakes precedence for that container.\nNote that this field cannot be set when spec.os.name is windows.",
-              "properties": {
-                "level": {
-                  "description": "Level is SELinux level label that applies to the container.",
-                  "type": "string"
-                },
-                "role": {
-                  "description": "Role is a SELinux role label that applies to the container.",
-                  "type": "string"
-                },
-                "type": {
-                  "description": "Type is a SELinux type label that applies to the container.",
-                  "type": "string"
-                },
-                "user": {
-                  "description": "User is a SELinux user label that applies to the container.",
-                  "type": "string"
-                }
-              },
-              "type": "object",
-              "additionalProperties": false
-            },
-            "seccompProfile": {
-              "description": "The seccomp options to use by the containers in this pod.\nNote that this field cannot be set when spec.os.name is windows.",
-              "properties": {
-                "localhostProfile": {
-                  "description": "localhostProfile indicates a profile defined in a file on the node should be used.\nThe profile must be preconfigured on the node to work.\nMust be a descending path, relative to the kubelet's configured seccomp profile location.\nMust be set if type is \"Localhost\". Must NOT be set for any other type.",
-                  "type": "string"
-                },
-                "type": {
-                  "description": "type indicates which kind of seccomp profile will be applied.\nValid options are:\n\nLocalhost - a profile defined in a file on the node should be used.\nRuntimeDefault - the container runtime default profile should be used.\nUnconfined - no profile should be applied.",
-                  "type": "string"
-                }
-              },
-              "required": [
-                "type"
-              ],
-              "type": "object",
-              "additionalProperties": false
-            },
-            "supplementalGroups": {
-              "description": "A list of groups applied to the first process run in each container, in\naddition to the container's primary GID and fsGroup (if specified).  If\nthe SupplementalGroupsPolicy feature is enabled, the\nsupplementalGroupsPolicy field determines whether these are in addition\nto or instead of any group memberships defined in the container image.\nIf unspecified, no additional groups are added, though group memberships\ndefined in the container image may still be used, depending on the\nsupplementalGroupsPolicy field.\nNote that this field cannot be set when spec.os.name is windows.",
-              "items": {
-                "format": "int64",
-                "type": "integer"
-              },
-              "type": "array",
-              "x-kubernetes-list-type": "atomic"
-            },
-            "supplementalGroupsPolicy": {
-              "description": "Defines how supplemental groups of the first container processes are calculated.\nValid values are \"Merge\" and \"Strict\". If not specified, \"Merge\" is used.\n(Alpha) Using the field requires the SupplementalGroupsPolicy feature gate to be enabled\nand the container runtime must implement support for this feature.\nNote that this field cannot be set when spec.os.name is windows.",
-              "type": "string"
-            },
-            "sysctls": {
-              "description": "Sysctls hold a list of namespaced sysctls used for the pod. Pods with unsupported\nsysctls (by the container runtime) might fail to launch.\nNote that this field cannot be set when spec.os.name is windows.",
-              "items": {
-                "description": "Sysctl defines a kernel parameter to be set",
-                "properties": {
-                  "name": {
-                    "description": "Name of a property to set",
-                    "type": "string"
-                  },
-                  "value": {
-                    "description": "Value of a property to set",
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "name",
-                  "value"
-                ],
-                "type": "object",
-                "additionalProperties": false
-              },
-              "type": "array",
-              "x-kubernetes-list-type": "atomic"
-            },
-            "windowsOptions": {
-              "description": "The Windows specific settings applied to all containers.\nIf unspecified, the options within a container's SecurityContext will be used.\nIf set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.\nNote that this field cannot be set when spec.os.name is linux.",
-              "properties": {
-                "gmsaCredentialSpec": {
-                  "description": "GMSACredentialSpec is where the GMSA admission webhook\n(https://github.com/kubernetes-sigs/windows-gmsa) inlines the contents of the\nGMSA credential spec named by the GMSACredentialSpecName field.",
-                  "type": "string"
-                },
-                "gmsaCredentialSpecName": {
-                  "description": "GMSACredentialSpecName is the name of the GMSA credential spec to use.",
-                  "type": "string"
-                },
-                "hostProcess": {
-                  "description": "HostProcess determines if a container should be run as a 'Host Process' container.\nAll of a Pod's containers must have the same effective HostProcess value\n(it is not allowed to have a mix of HostProcess containers and non-HostProcess containers).\nIn addition, if HostProcess is true then HostNetwork must also be set to true.",
-                  "type": "boolean"
-                },
-                "runAsUserName": {
-                  "description": "The UserName in Windows to run the entrypoint of the container process.\nDefaults to the user specified in image metadata if unspecified.\nMay also be set in PodSecurityContext. If set in both SecurityContext and\nPodSecurityContext, the value specified in SecurityContext takes precedence.",
-                  "type": "string"
-                }
-              },
-              "type": "object",
-              "additionalProperties": false
-            }
-          },
-          "type": "object",
-          "additionalProperties": false
-        },
-        "priorityClassName": {
-          "type": "string"
-        },
-        "readinessProbe": {
-          "description": "ReadinessProbe describes a health check to be performed against a container to determine whether it is\nready to receive traffic.",
-          "properties": {
-            "exec": {
-              "description": "Exec specifies a command to execute in the container.",
-              "properties": {
-                "command": {
-                  "description": "Command is the command line to execute inside the container, the working directory for the\ncommand  is root ('/') in the container's filesystem. The command is simply exec'd, it is\nnot run inside a shell, so traditional shell instructions ('|', etc) won't work. To use\na shell, you need to explicitly call out to that shell.\nExit status of 0 is treated as live/healthy and non-zero is unhealthy.",
-                  "items": {
-                    "type": "string"
-                  },
-                  "type": "array"
-                }
-              },
-              "type": "object",
-              "additionalProperties": false
-            },
-            "failureThreshold": {
-              "description": "Minimum consecutive failures for the probe to be considered failed after having succeeded.\nDefaults to 3. Minimum value is 1.",
-              "format": "int32",
-              "type": "integer"
-            },
-            "grpc": {
-              "description": "GRPC specifies a GRPC HealthCheckRequest.",
-              "properties": {
-                "port": {
-                  "description": "Port number of the gRPC service. Number must be in the range 1 to 65535.",
-                  "format": "int32",
-                  "type": "integer"
-                },
-                "service": {
-                  "description": "Service is the name of the service to place in the gRPC HealthCheckRequest\n(see https://github.com/grpc/grpc/blob/master/doc/health-checking.md).\n\nIf this is not specified, the default behavior is defined by gRPC.",
-                  "type": "string"
-                }
-              },
-              "type": "object",
-              "additionalProperties": false
-            },
-            "httpGet": {
-              "description": "HTTPGet specifies an HTTP GET request to perform.",
-              "properties": {
-                "host": {
-                  "description": "Host name to connect to, defaults to the pod IP. You probably want to set\n\"Host\" in httpHeaders instead.",
-                  "type": "string"
-                },
-                "httpHeaders": {
-                  "description": "Custom headers to set in the request. HTTP allows repeated headers.",
-                  "items": {
-                    "description": "HTTPHeaderApplyConfiguration represents a declarative configuration of the HTTPHeader type for use\nwith apply.\n\nHTTPHeader describes a custom header to be used in HTTP probes",
-                    "properties": {
-                      "name": {
-                        "description": "The header field name.\nThis will be canonicalized upon output, so case-variant names will be understood as the same header.",
-                        "type": "string"
-                      },
-                      "value": {
-                        "description": "The header field value",
-                        "type": "string"
-                      }
-                    },
-                    "type": "object",
-                    "additionalProperties": false
-                  },
-                  "type": "array"
-                },
-                "path": {
-                  "description": "Path to access on the HTTP server.",
-                  "type": "string"
-                },
-                "port": {
-                  "anyOf": [
-                    {
-                      "type": "integer"
-                    },
-                    {
-                      "type": "string"
-                    }
-                  ],
-                  "description": "Name or number of the port to access on the container.\nNumber must be in the range 1 to 65535.\nName must be an IANA_SVC_NAME.",
-                  "x-kubernetes-int-or-string": true
-                },
-                "scheme": {
-                  "description": "Scheme to use for connecting to the host.\nDefaults to HTTP.",
-                  "type": "string"
-                }
-              },
-              "type": "object",
-              "additionalProperties": false
-            },
-            "initialDelaySeconds": {
-              "description": "Number of seconds after the container has started before liveness probes are initiated.\nMore info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes",
-              "format": "int32",
-              "type": "integer"
-            },
-            "periodSeconds": {
-              "description": "How often (in seconds) to perform the probe.\nDefault to 10 seconds. Minimum value is 1.",
-              "format": "int32",
-              "type": "integer"
-            },
-            "successThreshold": {
-              "description": "Minimum consecutive successes for the probe to be considered successful after having failed.\nDefaults to 1. Must be 1 for liveness and startup. Minimum value is 1.",
-              "format": "int32",
-              "type": "integer"
-            },
-            "tcpSocket": {
-              "description": "TCPSocket specifies a connection to a TCP port.",
-              "properties": {
-                "host": {
-                  "description": "Optional: Host name to connect to, defaults to the pod IP.",
-                  "type": "string"
-                },
-                "port": {
-                  "anyOf": [
-                    {
-                      "type": "integer"
-                    },
-                    {
-                      "type": "string"
-                    }
-                  ],
-                  "description": "Number or name of the port to access on the container.\nNumber must be in the range 1 to 65535.\nName must be an IANA_SVC_NAME.",
-                  "x-kubernetes-int-or-string": true
-                }
-              },
-              "type": "object",
-              "additionalProperties": false
-            },
-            "terminationGracePeriodSeconds": {
-              "description": "Optional duration in seconds the pod needs to terminate gracefully upon probe failure.\nThe grace period is the duration in seconds after the processes running in the pod are sent\na termination signal and the time when the processes are forcibly halted with a kill signal.\nSet this value longer than the expected cleanup time for your process.\nIf this value is nil, the pod's terminationGracePeriodSeconds will be used. Otherwise, this\nvalue overrides the value provided by the pod spec.\nValue must be non-negative integer. The value zero indicates stop immediately via\nthe kill signal (no opportunity to shut down).\nThis is a beta field and requires enabling ProbeTerminationGracePeriod feature gate.\nMinimum value is 1. spec.terminationGracePeriodSeconds is used if unset.",
-              "format": "int64",
-              "type": "integer"
-            },
-            "timeoutSeconds": {
-              "description": "Number of seconds after which the probe times out.\nDefaults to 1 second. Minimum value is 1.\nMore info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes",
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          "type": "object",
-          "additionalProperties": false
-        },
-        "replicaCount": {
+        "replicas": {
+          "default": 1,
+          "description": "Replicas is the number of pipeline replicas to run.\n\nThis field backs the Pipeline's scale subresource, so `kubectl scale\npipeline/<name>`, HorizontalPodAutoscaler, and KEDA ScaledObjects all\nread and write it through `/scale`. To autoscale a pipeline, point the\nautoscaler at the Pipeline itself \u2014 NOT at its Deployment, whose\nreplica count the operator continuously resets to this field:\n\n  scaleTargetRef:\n    apiVersion: cluster.redpanda.com/v1alpha2\n    kind: Pipeline\n    name: <pipeline-name>\n\nCPU and memory HPAs work out of the box: pipeline pods always carry\nresource requests (operator defaults apply when .resources is unset).\nTo scale on the metrics Redpanda Connect itself emits (input_received,\noutput_sent, processor_latency_ns, ...) feed them to the autoscaler \u2014\ne.g. scrape the pods' `http` port at /metrics (the operator's\nmonitoring PodMonitor does this) into Prometheus, then use\nprometheus-adapter for HPA custom metrics or a KEDA prometheus\ntrigger.\n\nWhen an autoscaler manages this field, omit it from applied manifests\n(or have your GitOps tool ignore it) so config syncs don't undo the\nautoscaler's writes.",
           "format": "int32",
+          "minimum": 0,
           "type": "integer"
         },
         "resources": {
-          "description": "ResourceRequirements describes the compute resource requirements.",
+          "description": "Resources defines the compute resource requirements for the pipeline pods.",
           "properties": {
             "claims": {
               "description": "Claims lists the names of resources, defined in spec.resourceClaims,\nthat are used by this container.\n\nThis field depends on the\nDynamicResourceAllocation feature gate.\n\nThis field is immutable. It can only be set for containers.",
@@ -7150,372 +6249,19 @@
           "type": "object",
           "additionalProperties": false
         },
-        "secret": {
-          "properties": {
-            "authentication": {
-              "properties": {
-                "jwtSigningKey": {
-                  "type": "string"
-                },
-                "oidc": {
-                  "properties": {
-                    "clientSecret": {
-                      "type": "string"
-                    }
-                  },
-                  "type": "object",
-                  "additionalProperties": false
-                }
-              },
-              "type": "object",
-              "additionalProperties": false
-            },
-            "create": {
-              "type": "boolean"
-            },
-            "kafka": {
-              "properties": {
-                "awsMskIamSecretKey": {
-                  "type": "string"
-                },
-                "saslPassword": {
-                  "type": "string"
-                },
-                "tlsCa": {
-                  "type": "string"
-                },
-                "tlsCert": {
-                  "type": "string"
-                },
-                "tlsKey": {
-                  "type": "string"
-                },
-                "tlsPassphrase": {
-                  "type": "string"
-                }
-              },
-              "type": "object",
-              "additionalProperties": false
-            },
-            "license": {
-              "type": "string"
-            },
-            "redpanda": {
-              "properties": {
-                "adminApi": {
-                  "properties": {
-                    "password": {
-                      "type": "string"
-                    },
-                    "tlsCa": {
-                      "type": "string"
-                    },
-                    "tlsCert": {
-                      "type": "string"
-                    },
-                    "tlsKey": {
-                      "type": "string"
-                    }
-                  },
-                  "type": "object",
-                  "additionalProperties": false
-                }
-              },
-              "type": "object",
-              "additionalProperties": false
-            },
-            "schemaRegistry": {
-              "properties": {
-                "bearerToken": {
-                  "type": "string"
-                },
-                "password": {
-                  "type": "string"
-                },
-                "tlsCa": {
-                  "type": "string"
-                },
-                "tlsCert": {
-                  "type": "string"
-                },
-                "tlsKey": {
-                  "type": "string"
-                }
-              },
-              "type": "object",
-              "additionalProperties": false
-            },
-            "serde": {
-              "properties": {
-                "protobufGitBasicAuthPassword": {
-                  "type": "string"
-                }
-              },
-              "type": "object",
-              "additionalProperties": false
-            }
-          },
-          "type": "object",
-          "additionalProperties": false
+        "serviceAccountName": {
+          "description": "ServiceAccountName is the ServiceAccount to bind to the pipeline pod.\nWhen unset, the namespace's default ServiceAccount is used.\n\nSetting this is the recommended way to scope per-pipeline cloud-IAM\ntrust (e.g. IRSA on EKS, Workload Identity on GKE, Pod Identity on\nAKS). Annotating the namespace's default SA works but grants every\npipeline in the namespace the same role \u2014 naming a Pipeline-specific\nSA here keeps the trust boundary per-pipeline.\n\nThe operator does NOT create the ServiceAccount; provision it\n(along with the appropriate cloud-IAM annotations) out-of-band.",
+          "type": "string"
         },
-        "secretMounts": {
-          "items": {
-            "properties": {
-              "defaultMode": {
-                "format": "int32",
-                "type": "integer"
-              },
-              "name": {
-                "type": "string"
-              },
-              "path": {
-                "type": "string"
-              },
-              "secretName": {
-                "type": "string"
-              },
-              "subPath": {
-                "type": "string"
-              }
-            },
-            "type": "object",
-            "additionalProperties": false
+        "tags": {
+          "additionalProperties": {
+            "type": "string"
           },
-          "type": "array"
-        },
-        "securityContext": {
-          "description": "SecurityContext holds security configuration that will be applied to a container.\nSome fields are present in both SecurityContext and PodSecurityContext.  When both\nare set, the values in SecurityContext take precedence.",
-          "properties": {
-            "allowPrivilegeEscalation": {
-              "description": "AllowPrivilegeEscalation controls whether a process can gain more\nprivileges than its parent process. This bool directly controls if\nthe no_new_privs flag will be set on the container process.\nAllowPrivilegeEscalation is true always when the container is:\n1) run as Privileged\n2) has CAP_SYS_ADMIN\nNote that this field cannot be set when spec.os.name is windows.",
-              "type": "boolean"
-            },
-            "appArmorProfile": {
-              "description": "appArmorProfile is the AppArmor options to use by this container. If set, this profile\noverrides the pod's appArmorProfile.\nNote that this field cannot be set when spec.os.name is windows.",
-              "properties": {
-                "localhostProfile": {
-                  "description": "localhostProfile indicates a profile loaded on the node that should be used.\nThe profile must be preconfigured on the node to work.\nMust match the loaded name of the profile.\nMust be set if and only if type is \"Localhost\".",
-                  "type": "string"
-                },
-                "type": {
-                  "description": "type indicates which kind of AppArmor profile will be applied.\nValid options are:\n  Localhost - a profile pre-loaded on the node.\n  RuntimeDefault - the container runtime's default profile.\n  Unconfined - no AppArmor enforcement.",
-                  "type": "string"
-                }
-              },
-              "required": [
-                "type"
-              ],
-              "type": "object",
-              "additionalProperties": false
-            },
-            "capabilities": {
-              "description": "The capabilities to add/drop when running containers.\nDefaults to the default set of capabilities granted by the container runtime.\nNote that this field cannot be set when spec.os.name is windows.",
-              "properties": {
-                "add": {
-                  "description": "Added capabilities",
-                  "items": {
-                    "description": "Capability represent POSIX capabilities type",
-                    "type": "string"
-                  },
-                  "type": "array",
-                  "x-kubernetes-list-type": "atomic"
-                },
-                "drop": {
-                  "description": "Removed capabilities",
-                  "items": {
-                    "description": "Capability represent POSIX capabilities type",
-                    "type": "string"
-                  },
-                  "type": "array",
-                  "x-kubernetes-list-type": "atomic"
-                }
-              },
-              "type": "object",
-              "additionalProperties": false
-            },
-            "privileged": {
-              "description": "Run container in privileged mode.\nProcesses in privileged containers are essentially equivalent to root on the host.\nDefaults to false.\nNote that this field cannot be set when spec.os.name is windows.",
-              "type": "boolean"
-            },
-            "procMount": {
-              "description": "procMount denotes the type of proc mount to use for the containers.\nThe default value is Default which uses the container runtime defaults for\nreadonly paths and masked paths.\nThis requires the ProcMountType feature flag to be enabled.\nNote that this field cannot be set when spec.os.name is windows.",
-              "type": "string"
-            },
-            "readOnlyRootFilesystem": {
-              "description": "Whether this container has a read-only root filesystem.\nDefault is false.\nNote that this field cannot be set when spec.os.name is windows.",
-              "type": "boolean"
-            },
-            "runAsGroup": {
-              "description": "The GID to run the entrypoint of the container process.\nUses runtime default if unset.\nMay also be set in PodSecurityContext.  If set in both SecurityContext and\nPodSecurityContext, the value specified in SecurityContext takes precedence.\nNote that this field cannot be set when spec.os.name is windows.",
-              "format": "int64",
-              "type": "integer"
-            },
-            "runAsNonRoot": {
-              "description": "Indicates that the container must run as a non-root user.\nIf true, the Kubelet will validate the image at runtime to ensure that it\ndoes not run as UID 0 (root) and fail to start the container if it does.\nIf unset or false, no such validation will be performed.\nMay also be set in PodSecurityContext.  If set in both SecurityContext and\nPodSecurityContext, the value specified in SecurityContext takes precedence.",
-              "type": "boolean"
-            },
-            "runAsUser": {
-              "description": "The UID to run the entrypoint of the container process.\nDefaults to user specified in image metadata if unspecified.\nMay also be set in PodSecurityContext.  If set in both SecurityContext and\nPodSecurityContext, the value specified in SecurityContext takes precedence.\nNote that this field cannot be set when spec.os.name is windows.",
-              "format": "int64",
-              "type": "integer"
-            },
-            "seLinuxOptions": {
-              "description": "The SELinux context to be applied to the container.\nIf unspecified, the container runtime will allocate a random SELinux context for each\ncontainer.  May also be set in PodSecurityContext.  If set in both SecurityContext and\nPodSecurityContext, the value specified in SecurityContext takes precedence.\nNote that this field cannot be set when spec.os.name is windows.",
-              "properties": {
-                "level": {
-                  "description": "Level is SELinux level label that applies to the container.",
-                  "type": "string"
-                },
-                "role": {
-                  "description": "Role is a SELinux role label that applies to the container.",
-                  "type": "string"
-                },
-                "type": {
-                  "description": "Type is a SELinux type label that applies to the container.",
-                  "type": "string"
-                },
-                "user": {
-                  "description": "User is a SELinux user label that applies to the container.",
-                  "type": "string"
-                }
-              },
-              "type": "object",
-              "additionalProperties": false
-            },
-            "seccompProfile": {
-              "description": "The seccomp options to use by this container. If seccomp options are\nprovided at both the pod & container level, the container options\noverride the pod options.\nNote that this field cannot be set when spec.os.name is windows.",
-              "properties": {
-                "localhostProfile": {
-                  "description": "localhostProfile indicates a profile defined in a file on the node should be used.\nThe profile must be preconfigured on the node to work.\nMust be a descending path, relative to the kubelet's configured seccomp profile location.\nMust be set if type is \"Localhost\". Must NOT be set for any other type.",
-                  "type": "string"
-                },
-                "type": {
-                  "description": "type indicates which kind of seccomp profile will be applied.\nValid options are:\n\nLocalhost - a profile defined in a file on the node should be used.\nRuntimeDefault - the container runtime default profile should be used.\nUnconfined - no profile should be applied.",
-                  "type": "string"
-                }
-              },
-              "required": [
-                "type"
-              ],
-              "type": "object",
-              "additionalProperties": false
-            },
-            "windowsOptions": {
-              "description": "The Windows specific settings applied to all containers.\nIf unspecified, the options from the PodSecurityContext will be used.\nIf set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.\nNote that this field cannot be set when spec.os.name is linux.",
-              "properties": {
-                "gmsaCredentialSpec": {
-                  "description": "GMSACredentialSpec is where the GMSA admission webhook\n(https://github.com/kubernetes-sigs/windows-gmsa) inlines the contents of the\nGMSA credential spec named by the GMSACredentialSpecName field.",
-                  "type": "string"
-                },
-                "gmsaCredentialSpecName": {
-                  "description": "GMSACredentialSpecName is the name of the GMSA credential spec to use.",
-                  "type": "string"
-                },
-                "hostProcess": {
-                  "description": "HostProcess determines if a container should be run as a 'Host Process' container.\nAll of a Pod's containers must have the same effective HostProcess value\n(it is not allowed to have a mix of HostProcess containers and non-HostProcess containers).\nIn addition, if HostProcess is true then HostNetwork must also be set to true.",
-                  "type": "boolean"
-                },
-                "runAsUserName": {
-                  "description": "The UserName in Windows to run the entrypoint of the container process.\nDefaults to the user specified in image metadata if unspecified.\nMay also be set in PodSecurityContext. If set in both SecurityContext and\nPodSecurityContext, the value specified in SecurityContext takes precedence.",
-                  "type": "string"
-                }
-              },
-              "type": "object",
-              "additionalProperties": false
-            }
-          },
-          "type": "object",
-          "additionalProperties": false
-        },
-        "service": {
-          "properties": {
-            "annotations": {
-              "additionalProperties": {
-                "type": "string"
-              },
-              "type": "object"
-            },
-            "nodePort": {
-              "format": "int32",
-              "type": "integer"
-            },
-            "port": {
-              "format": "int32",
-              "type": "integer"
-            },
-            "targetPort": {
-              "format": "int32",
-              "type": "integer"
-            },
-            "type": {
-              "description": "Service Type string describes ingress methods for a service",
-              "type": "string"
-            }
-          },
-          "type": "object",
-          "additionalProperties": false
-        },
-        "serviceAccount": {
-          "properties": {
-            "annotations": {
-              "additionalProperties": {
-                "type": "string"
-              },
-              "type": "object"
-            },
-            "automountServiceAccountToken": {
-              "type": "boolean"
-            },
-            "name": {
-              "type": "string"
-            }
-          },
-          "type": "object",
-          "additionalProperties": false
-        },
-        "strategy": {
-          "description": "DeploymentStrategy describes how to replace existing pods with new ones.",
-          "properties": {
-            "rollingUpdate": {
-              "description": "Rolling update config params. Present only if DeploymentStrategyType =\nRollingUpdate.",
-              "properties": {
-                "maxSurge": {
-                  "anyOf": [
-                    {
-                      "type": "integer"
-                    },
-                    {
-                      "type": "string"
-                    }
-                  ],
-                  "description": "The maximum number of pods that can be scheduled above the desired number of\npods.\nValue can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%).\nThis can not be 0 if MaxUnavailable is 0.\nAbsolute number is calculated from percentage by rounding up.\nDefaults to 25%.\nExample: when this is set to 30%, the new ReplicaSet can be scaled up immediately when\nthe rolling update starts, such that the total number of old and new pods do not exceed\n130% of desired pods. Once old pods have been killed,\nnew ReplicaSet can be scaled up further, ensuring that total number of pods running\nat any time during the update is at most 130% of desired pods.",
-                  "x-kubernetes-int-or-string": true
-                },
-                "maxUnavailable": {
-                  "anyOf": [
-                    {
-                      "type": "integer"
-                    },
-                    {
-                      "type": "string"
-                    }
-                  ],
-                  "description": "The maximum number of pods that can be unavailable during the update.\nValue can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%).\nAbsolute number is calculated from percentage by rounding down.\nThis can not be 0 if MaxSurge is 0.\nDefaults to 25%.\nExample: when this is set to 30%, the old ReplicaSet can be scaled down to 70% of desired pods\nimmediately when the rolling update starts. Once new pods are ready, old ReplicaSet\ncan be scaled down further, followed by scaling up the new ReplicaSet, ensuring\nthat the total number of pods available at all times during the update is at\nleast 70% of desired pods.",
-                  "x-kubernetes-int-or-string": true
-                }
-              },
-              "type": "object",
-              "additionalProperties": false
-            },
-            "type": {
-              "description": "Type of deployment. Can be \"Recreate\" or \"RollingUpdate\". Default is RollingUpdate.",
-              "type": "string"
-            }
-          },
-          "type": "object",
-          "additionalProperties": false
+          "description": "Tags are key-value pairs for organizing and filtering pipelines.\nMaps to pipeline tags when migrating to Redpanda Cloud.",
+          "type": "object"
         },
         "tolerations": {
+          "description": "Tolerations for the pipeline pods, allowing them to be scheduled on tainted nodes.",
           "items": {
             "description": "The pod this Toleration is attached to tolerates any taint that matches\nthe triple <key,value,effect> using the matching operator <operator>.",
             "properties": {
@@ -7547,6 +6293,7 @@
           "type": "array"
         },
         "topologySpreadConstraints": {
+          "description": "TopologySpreadConstraints controls how pipeline pods are spread across\ntopology domains such as availability zones. When Zones is specified,\na default topology spread constraint is generated automatically.\nAny constraints specified here are used in addition to (or instead of)\nthe auto-generated zone constraint.",
           "items": {
             "description": "TopologySpreadConstraint specifies how to spread matching pods among the given topology.",
             "properties": {
@@ -7642,48 +6389,265 @@
           },
           "type": "array"
         },
-        "warnings": {
-          "description": "Warnings is a slice of human readable warnings generated by the automatic\nmigration of a Console V2 config to a Console V3 config. If warnings are\npresent, they will describe which fields from the original config have\nbeen dropped and why.\nSetting this field has no effect.",
+        "userRef": {
+          "description": "UserRef binds the pipeline to a User CR. When set alongside\n.cluster.clusterRef, the operator reads the referenced User's\npassword Secret + SASL mechanism and uses the User's metadata.name\nas the SASL username, emitting REDPANDA_SASL_USERNAME / _PASSWORD /\n_MECHANISM env vars in the pipeline pod and a `sasl:` block in the\nauto-generated `redpanda` config.\n\nSet this when the cluster the pipeline talks to has SASL enabled.\nOn unauthenticated clusters (and in clusterRef-only modes that\nonly need broker discovery), leave it empty.\n\nCEL restrictions:\n  - userRef must NOT be set alongside .cluster.staticConfiguration \u2014\n    the static path carries its own inline SASL config.\n  - userRef must NOT be set without .cluster.clusterRef \u2014 there's no\n    cluster context to authenticate against otherwise.\n\nThe referenced User CR is expected to live in the same namespace as\nthe Pipeline and to declare ACLs scoped to the topics, schema\nsubjects, and consumer groups this pipeline reads/writes. The\noperator does NOT auto-create or modify the User CR \u2014 ACL scoping\nstays an explicit, auditable user-controlled action.",
+          "properties": {
+            "name": {
+              "description": "Name of the User CR (in the same namespace as the Pipeline).",
+              "type": "string"
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "type": "object",
+          "additionalProperties": false
+        },
+        "valueSources": {
+          "description": "ValueSources is a list of named values the pipeline YAML can reference\nvia ${NAME} interpolation. Each value is fetched at render time from\ninline / ConfigMap / Secret / ExternalSecret and projected into the\npipeline pod as an environment variable. One named pull per entry \u2014\navoids the bag-of-Secrets env-splat pattern.\n\nExample:\n  spec:\n    valueSources:\n      - name: S3_SECRET_KEY\n        source:\n          secretKeyRef:\n            name: s3-creds\n            key: secret_access_key\n    configYaml: |\n      output:\n        aws_s3:\n          bucket: my-bucket\n          credentials:\n            secret: ${S3_SECRET_KEY}\n\nSee: https://docs.redpanda.com/redpanda-connect/configuration/secrets/",
+          "items": {
+            "description": "NamedValueSource binds a name to a value provider so the pipeline YAML\ncan reference it via ${NAME} interpolation.",
+            "properties": {
+              "name": {
+                "description": "Name is the environment-variable name the pipeline YAML references.\nMust match standard env-var characters: [A-Z_][A-Z0-9_]*.",
+                "minLength": 1,
+                "pattern": "^[A-Z_][A-Z0-9_]*$",
+                "type": "string"
+              },
+              "source": {
+                "description": "Source is the value provider. Exactly one of inline / configMapKeyRef\n/ secretKeyRef / externalSecretRef must be set; the ValueSource\nXValidation rules enforce this.",
+                "properties": {
+                  "configMapKeyRef": {
+                    "description": "If the value is supplied by a kubernetes object reference, coordinates are embedded here.\nFor target values, the string value fetched from the source will be treated as\na raw string.",
+                    "properties": {
+                      "key": {
+                        "description": "The key to select.",
+                        "type": "string"
+                      },
+                      "name": {
+                        "default": "",
+                        "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+                        "type": "string"
+                      },
+                      "optional": {
+                        "description": "Specify whether the ConfigMap or its key must be defined",
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "key"
+                    ],
+                    "type": "object",
+                    "x-kubernetes-map-type": "atomic",
+                    "additionalProperties": false
+                  },
+                  "externalSecretRef": {
+                    "description": "If the value is supplied by an external source, coordinates are embedded here.\nNote: we interpret all fetched external secrets as raw string values",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "name"
+                    ],
+                    "type": "object",
+                    "x-kubernetes-map-type": "atomic",
+                    "additionalProperties": false
+                  },
+                  "inline": {
+                    "description": "Inline is the raw value specified inline.",
+                    "type": "string"
+                  },
+                  "secretKeyRef": {
+                    "description": "Should the value be contained in a k8s secret rather than configmap, we can refer\nto it here.",
+                    "properties": {
+                      "key": {
+                        "description": "The key of the secret to select from.  Must be a valid secret key.",
+                        "type": "string"
+                      },
+                      "name": {
+                        "default": "",
+                        "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+                        "type": "string"
+                      },
+                      "optional": {
+                        "description": "Specify whether the Secret or its key must be defined",
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "key"
+                    ],
+                    "type": "object",
+                    "x-kubernetes-map-type": "atomic",
+                    "additionalProperties": false
+                  }
+                },
+                "type": "object",
+                "x-kubernetes-map-type": "atomic",
+                "x-kubernetes-validations": [
+                  {
+                    "message": "one of inline, configMapKeyRef, secretKeyRef, or externalSecretRef must be set",
+                    "rule": "has(self.inline) || has(self.configMapKeyRef) || has(self.secretKeyRef) || has(self.externalSecretRef)"
+                  },
+                  {
+                    "message": "if inline is set no other field can be set",
+                    "rule": "!has(self.inline) || (has(self.inline) && !(has(self.configMapKeyRef) || has(self.secretKeyRef) || has(self.externalSecretRef)))"
+                  },
+                  {
+                    "message": "if configMapKeyRef is set no other field can be set",
+                    "rule": "!has(self.configMapKeyRef) || (has(self.configMapKeyRef) && !(has(self.inline) || has(self.secretKeyRef) || has(self.externalSecretRef)))"
+                  },
+                  {
+                    "message": "if secretKeyRef is set no other field can be set",
+                    "rule": "!has(self.secretKeyRef) || (has(self.secretKeyRef) && !(has(self.configMapKeyRef) || has(self.inline) || has(self.externalSecretRef)))"
+                  },
+                  {
+                    "message": "if externalSecretRef is set no other field can be set",
+                    "rule": "!has(self.externalSecretRef) || (has(self.externalSecretRef) && !(has(self.configMapKeyRef) || has(self.secretKeyRef) || has(self.inline)))"
+                  }
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "name",
+              "source"
+            ],
+            "type": "object",
+            "additionalProperties": false
+          },
+          "type": "array",
+          "x-kubernetes-list-map-keys": [
+            "name"
+          ],
+          "x-kubernetes-list-type": "map"
+        },
+        "zones": {
+          "description": "Zones specifies the availability zones across which pipeline pods should\nbe spread. When set, the controller configures:\n  - A node affinity to schedule pods only on nodes in these zones\n  - A topology spread constraint to distribute pods evenly across zones\nThe zone label used is \"topology.kubernetes.io/zone\".",
           "items": {
             "type": "string"
           },
           "type": "array"
         }
       },
+      "required": [
+        "configYaml"
+      ],
       "type": "object",
+      "x-kubernetes-validations": [
+        {
+          "message": "userRef must be empty when cluster.staticConfiguration is set",
+          "rule": "!has(self.cluster) || !has(self.cluster.staticConfiguration) || !has(self.userRef)"
+        },
+        {
+          "message": "userRef cannot be set without cluster.clusterRef",
+          "rule": "!has(self.userRef) || (has(self.cluster) && has(self.cluster.clusterRef))"
+        },
+        {
+          "message": "cluster.clusterRef.namespace is not supported for pipelines; the referenced Redpanda must live in the Pipeline's namespace",
+          "rule": "!has(self.cluster) || !has(self.cluster.clusterRef) || !has(self.cluster.clusterRef.__namespace__)"
+        },
+        {
+          "message": "cluster.clusterRef.group must be cluster.redpanda.com (or unset) for pipelines",
+          "rule": "!has(self.cluster) || !has(self.cluster.clusterRef) || !has(self.cluster.clusterRef.group) || self.cluster.clusterRef.group == 'cluster.redpanda.com'"
+        },
+        {
+          "message": "cluster.clusterRef.kind must be Redpanda (or unset) for pipelines",
+          "rule": "!has(self.cluster) || !has(self.cluster.clusterRef) || !has(self.cluster.clusterRef.kind) || self.cluster.clusterRef.kind == 'Redpanda'"
+        }
+      ],
       "additionalProperties": false
     },
     "status": {
+      "description": "Status represents the current observed state of the Pipeline.",
       "properties": {
-        "availableReplicas": {
-          "description": "Total number of available non-terminating pods (ready for at least minReadySeconds) targeted by this Console's Deployment.",
-          "format": "int32",
-          "type": "integer"
+        "conditions": {
+          "description": "Conditions holds the conditions for the Pipeline.",
+          "items": {
+            "description": "Condition contains details for one aspect of the current state of this API Resource.",
+            "properties": {
+              "lastTransitionTime": {
+                "description": "lastTransitionTime is the last time the condition transitioned from one status to another.\nThis should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.",
+                "format": "date-time",
+                "type": "string"
+              },
+              "message": {
+                "description": "message is a human readable message indicating details about the transition.\nThis may be an empty string.",
+                "maxLength": 32768,
+                "type": "string"
+              },
+              "observedGeneration": {
+                "description": "observedGeneration represents the .metadata.generation that the condition was set based upon.\nFor instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date\nwith respect to the current state of the instance.",
+                "format": "int64",
+                "minimum": 0,
+                "type": "integer"
+              },
+              "reason": {
+                "description": "reason contains a programmatic identifier indicating the reason for the condition's last transition.\nProducers of specific condition types may define expected values and meanings for this field,\nand whether the values are considered a guaranteed API.\nThe value should be a CamelCase string.\nThis field may not be empty.",
+                "maxLength": 1024,
+                "minLength": 1,
+                "pattern": "^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$",
+                "type": "string"
+              },
+              "status": {
+                "description": "status of the condition, one of True, False, Unknown.",
+                "enum": [
+                  "True",
+                  "False",
+                  "Unknown"
+                ],
+                "type": "string"
+              },
+              "type": {
+                "description": "type of condition in CamelCase or in foo.example.com/CamelCase.",
+                "maxLength": 316,
+                "pattern": "^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "lastTransitionTime",
+              "message",
+              "reason",
+              "status",
+              "type"
+            ],
+            "type": "object",
+            "additionalProperties": false
+          },
+          "type": "array"
         },
         "observedGeneration": {
-          "description": "The generation observed by the Console controller.",
+          "description": "ObservedGeneration is the last observed generation of the Pipeline.",
           "format": "int64",
           "type": "integer"
         },
+        "phase": {
+          "description": "Phase describes the current phase of the pipeline lifecycle.",
+          "enum": [
+            "Pending",
+            "Provisioning",
+            "Running",
+            "Stopped",
+            "Unknown"
+          ],
+          "type": "string"
+        },
         "readyReplicas": {
-          "description": "Total number of non-terminating pods targeted by this Console's Deployment with a Ready Condition.",
+          "description": "ReadyReplicas is the number of ready pipeline pods.",
           "format": "int32",
           "type": "integer"
         },
         "replicas": {
-          "description": "Total number of non-terminating Pods targeted by this Console's Deployment.",
+          "description": "Replicas is the number of pipeline pods observed on the underlying\nDeployment. The scale subresource reports it as status.replicas, which\nis how HPA and KEDA observe the pipeline's current scale.",
           "format": "int32",
           "type": "integer"
         },
-        "unavailableReplicas": {
-          "description": "Total number of unavailable pods targeted by this deployment. This is the total number of\npods that are still required for the deployment to have 100% available capacity. They may\neither be pods that are running but not yet available or pods that still have not been created.",
-          "format": "int32",
-          "type": "integer"
-        },
-        "updatedReplicas": {
-          "description": "Total number of non-terminating pods targeted by this Console's Deployment that have the desired template spec.",
-          "format": "int32",
-          "type": "integer"
+        "selector": {
+          "description": "Selector is the label selector for this pipeline's pods, in string\nform. The scale subresource reports it as status.selector, which is\nhow HPA and KEDA discover the pods backing this Pipeline when\ncomputing per-pod (cpu/memory/custom) metrics.",
+          "type": "string"
         }
       },
       "type": "object",
