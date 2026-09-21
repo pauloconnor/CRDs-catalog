@@ -67,7 +67,7 @@
                     "type": "string"
                   },
                   "values": {
-                    "description": "(List of String) Values to match against.\nValues to match against.",
+                    "description": "(List of String) Values to match against. Required for all operators except \"IS NULL\" and \"IS NOT NULL\", which must not have any values.\nValues to match against. Required for all operators except \"IS NULL\" and \"IS NOT NULL\", which must not have any values.",
                     "items": {
                       "type": "string"
                     },
@@ -135,7 +135,7 @@
                     "type": "string"
                   },
                   "values": {
-                    "description": "(List of String) Values to match against.\nValues to match against.",
+                    "description": "(List of String) Values to match against. Required for all operators except \"IS NULL\" and \"IS NOT NULL\", which must not have any values.\nValues to match against. Required for all operators except \"IS NULL\" and \"IS NOT NULL\", which must not have any values.",
                     "items": {
                       "type": "string"
                     },
@@ -313,7 +313,7 @@
                     "type": "string"
                   },
                   "values": {
-                    "description": "(List of String) Values to match against.\nValues to match against.",
+                    "description": "(List of String) Values to match against. Required for all operators except \"IS NULL\" and \"IS NOT NULL\", which must not have any values.\nValues to match against. Required for all operators except \"IS NULL\" and \"IS NOT NULL\", which must not have any values.",
                     "items": {
                       "type": "string"
                     },
@@ -383,6 +383,10 @@
             "type"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "lastHandledReconcileAt": {
+          "description": "LastHandledReconcileAt holds the value of the most recent\nreconcile-requested-at annotation token that the controller has\nprocessed. Users can compare this to the annotation to determine\nwhether a reconcile request has been handled.",
+          "type": "string"
         },
         "observedGeneration": {
           "description": "ObservedGeneration is the latest metadata.generation\nwhich resulted in either a ready state, or stalled due to error\nit can not recover from without human intervention.",
