@@ -221,7 +221,7 @@
           "type": "boolean"
         },
         "userConfig": {
-          "description": "Cassandra specific user configuration options",
+          "description": "Flink specific user configuration options",
           "properties": {
             "additional_backup_regions": {
               "description": "Deprecated. Additional Cloud Regions for Backup Replication",
@@ -407,6 +407,10 @@
         },
         "state": {
           "description": "Service state",
+          "type": "string"
+        },
+        "version": {
+          "description": "Version of the service currently running.\nMay be more specific than the version configured in userConfig, e.g. `8.1.2` vs `8.1`",
           "type": "string"
         }
       },
