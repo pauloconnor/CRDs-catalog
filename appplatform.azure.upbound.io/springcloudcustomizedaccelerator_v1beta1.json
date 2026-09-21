@@ -1,5 +1,5 @@
 {
-  "description": "SpringCloudCustomizedAccelerator is the Schema for the SpringCloudCustomizedAccelerators API. Manages a Spring Cloud Customized Accelerator.",
+  "description": "SpringCloudCustomizedAccelerator is the Schema for the SpringCloudCustomizedAccelerators API. Manages a Spring Cloud Customized Accelerator.\nDeprecated: This API version (v1beta1) has been deprecated in release v2.6.0.",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -311,11 +311,38 @@
                     "description": "A basic_auth block as defined below. Conflicts with git_repository[0].ssh_auth. Changing this forces a new Spring Cloud Customized Accelerator to be created.",
                     "items": {
                       "properties": {
+                        "passwordSecretRef": {
+                          "description": "Specifies the password of git repository basic auth.",
+                          "properties": {
+                            "key": {
+                              "description": "The key to select.",
+                              "type": "string"
+                            },
+                            "name": {
+                              "description": "Name of the secret.",
+                              "type": "string"
+                            },
+                            "namespace": {
+                              "description": "Namespace of the secret.",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "key",
+                            "name",
+                            "namespace"
+                          ],
+                          "type": "object",
+                          "additionalProperties": false
+                        },
                         "username": {
                           "description": "Specifies the username of git repository basic auth.",
                           "type": "string"
                         }
                       },
+                      "required": [
+                        "passwordSecretRef"
+                      ],
                       "type": "object",
                       "additionalProperties": false
                     },
@@ -352,8 +379,59 @@
                         "hostKeyAlgorithm": {
                           "description": "Specifies the SSH Key algorithm of git repository basic auth.",
                           "type": "string"
+                        },
+                        "hostKeySecretRef": {
+                          "description": "Specifies the Public SSH Key of git repository basic auth.",
+                          "properties": {
+                            "key": {
+                              "description": "The key to select.",
+                              "type": "string"
+                            },
+                            "name": {
+                              "description": "Name of the secret.",
+                              "type": "string"
+                            },
+                            "namespace": {
+                              "description": "Namespace of the secret.",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "key",
+                            "name",
+                            "namespace"
+                          ],
+                          "type": "object",
+                          "additionalProperties": false
+                        },
+                        "privateKeySecretRef": {
+                          "description": "Specifies the Private SSH Key of git repository basic auth.",
+                          "properties": {
+                            "key": {
+                              "description": "The key to select.",
+                              "type": "string"
+                            },
+                            "name": {
+                              "description": "Name of the secret.",
+                              "type": "string"
+                            },
+                            "namespace": {
+                              "description": "Namespace of the secret.",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "key",
+                            "name",
+                            "namespace"
+                          ],
+                          "type": "object",
+                          "additionalProperties": false
                         }
                       },
+                      "required": [
+                        "privateKeySecretRef"
+                      ],
                       "type": "object",
                       "additionalProperties": false
                     },
@@ -621,6 +699,10 @@
             "type"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "lastHandledReconcileAt": {
+          "description": "LastHandledReconcileAt holds the value of the most recent\nreconcile-requested-at annotation token that the controller has\nprocessed. Users can compare this to the annotation to determine\nwhether a reconcile request has been handled.",
+          "type": "string"
         },
         "observedGeneration": {
           "description": "ObservedGeneration is the latest metadata.generation\nwhich resulted in either a ready state, or stalled due to error\nit can not recover from without human intervention.",
