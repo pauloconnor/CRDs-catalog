@@ -2499,6 +2499,12 @@
                   "minimum": 1,
                   "type": "integer"
                 },
+                "labels": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "type": "object"
+                },
                 "metricsPort": {
                   "description": "MetricsPort is the port for metrics\nNote: This port is only applicable for NIMs that runs a separate metrics endpoint on Triton Inference Server.",
                   "format": "int32",
@@ -3065,12 +3071,36 @@
               },
               "type": "object",
               "additionalProperties": false
+            },
+            "ray": {
+              "description": "Ray config for NIMService using LeaderWorkerSet",
+              "properties": {
+                "rayPort": {
+                  "default": 6379,
+                  "description": "RayPort specifies the port for the Ray cluster.",
+                  "format": "int32",
+                  "maximum": 65535,
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "rayPort"
+              ],
+              "type": "object",
+              "additionalProperties": false
             }
           },
           "required": [
             "parallelism"
           ],
           "type": "object",
+          "x-kubernetes-validations": [
+            {
+              "message": "mpi and ray are mutually exclusive",
+              "rule": "!(has(self.mpi) && has(self.ray))"
+            }
+          ],
           "additionalProperties": false
         },
         "nodeSelector": {
@@ -3375,6 +3405,10 @@
           },
           "type": "object",
           "additionalProperties": false
+        },
+        "priorityClassName": {
+          "description": "PriorityClassName is the name of the PriorityClass to assign to pods created by this NIMService.\nIf set, the Kubernetes scheduler uses the priority for preemption decisions.",
+          "type": "string"
         },
         "proxy": {
           "description": "ProxySpec defines the proxy configuration for NIMService.",
