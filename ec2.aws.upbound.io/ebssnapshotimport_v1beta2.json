@@ -488,7 +488,7 @@
         "atProvider": {
           "properties": {
             "arn": {
-              "description": "Amazon Resource Name (ARN) of the EBS Snapshot.",
+              "description": "ARN of the EBS Snapshot.",
               "type": "string"
             },
             "clientData": {
@@ -569,7 +569,7 @@
               "type": "string"
             },
             "outpostArn": {
-              "description": "Amazon Resource Name (ARN) of the EBS Snapshot.",
+              "description": "ARN of the EBS Snapshot.",
               "type": "string"
             },
             "ownerAlias": {
@@ -674,6 +674,10 @@
             "type"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "lastHandledReconcileAt": {
+          "description": "LastHandledReconcileAt holds the value of the most recent\nreconcile-requested-at annotation token that the controller has\nprocessed. Users can compare this to the annotation to determine\nwhether a reconcile request has been handled.",
+          "type": "string"
         },
         "observedGeneration": {
           "description": "ObservedGeneration is the latest metadata.generation\nwhich resulted in either a ready state, or stalled due to error\nit can not recover from without human intervention.",
