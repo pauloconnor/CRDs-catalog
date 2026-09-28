@@ -1,5 +1,9 @@
 {
   "description": "GitCommitStatus is the Schema for the gitcommitstatuses API.\n\nIt validates commits from PromotionStrategy environments using configurable expressions\nand creates CommitStatus resources with the validation results.\n\nUse the Target field to control which commit is validated:\n- \"active\" (default): Validates the currently deployed commit\n- \"proposed\": Validates the incoming commit\n\nThe validation result is always reported on the PROPOSED commit to enable promotion gating,\nregardless of which commit was validated.\n\nWorkflow:\n 1. Controller reads PromotionStrategy to get ProposedHydratedSha and ActiveHydratedSha\n 2. Controller selects SHA to validate based on Target field\n 3. Controller fetches commit data (subject, body, author, trailers) for selected SHA\n 4. Controller evaluates expression against selected commit data\n 5. Controller creates/updates CommitStatus with result attached to PROPOSED SHA\n 6. PromotionStrategy checks CommitStatus on PROPOSED SHA before allowing promotion\n\nCommon use cases:\n  - \"Ensure active commit is not a revert before promoting\"",
+  "externalDocs": {
+    "description": "CRD reference (examples and behavior)",
+    "url": "https://gitops-promoter.readthedocs.io/en/stable/crd-specs/#gitcommitstatus"
+  },
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -184,6 +188,13 @@
             "branch"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "instanceID": {
+          "description": "InstanceID mirrors metadata.labels[promoter.argoproj.io/instance-id] stamped on each\nreconcile attempt by this install's controller, including when Ready=False; omitted\nwhen the resource has no instance-id label (default install).",
+          "maxLength": 63,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9]([a-zA-Z0-9._-]*[a-zA-Z0-9])?$",
+          "type": "string"
         },
         "observedGeneration": {
           "description": "ObservedGeneration is the .metadata.generation that this status was reconciled from.\nBecause status is written via Server-Side Apply with ForceOwnership (which has no\noptimistic-concurrency check), this field is the canonical way to detect stale\nstatus writes: compare status.observedGeneration with metadata.generation.",
