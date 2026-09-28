@@ -1265,6 +1265,22 @@
               "type": "object",
               "additionalProperties": false
             },
+            "encryptionKeySecret": {
+              "properties": {
+                "key": {
+                  "default": "encryptionKey",
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            },
             "gcs": {
               "properties": {
                 "bucket": {
