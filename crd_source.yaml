@@ -829,7 +829,7 @@ sources:
     changelog: "https://github.com/kubeflow/training-operator/releases"
 
   - url: "https://github.com/kubernetes-csi/external-snapshotter"
-    tag: "v8.5.0"
+    tag: "v8.6.0"
     repo_path: "client/config/crd"
     changelog: "https://github.com/kubernetes-csi/external-snapshotter/releases"
 
