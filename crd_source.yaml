@@ -490,7 +490,7 @@ sources:
 
   # Issue #597 - workspace.devfile.io CRDs
   - url: "https://github.com/devfile/api"
-    tag: ""
+    tag: "v2.3.0"
     repo_path: "crds"
     changelog: "https://github.com/devfile/api/releases"
 
