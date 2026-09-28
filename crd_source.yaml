@@ -819,7 +819,7 @@ sources:
     changelog: "https://github.com/kube-logging/logging-operator/releases"
 
   - url: "https://github.com/kubeflow/spark-operator"
-    tag: "v2.5.0"
+    tag: "v2.5.2"
     repo_path: "charts/spark-operator-chart/crds"
     changelog: "https://github.com/kubeflow/spark-operator/releases"
 
