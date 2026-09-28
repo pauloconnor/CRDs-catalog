@@ -706,6 +706,7 @@
             "properties": {
               "name": {
                 "default": "",
+                "description": "Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
                 "type": "string"
               }
             },
@@ -2001,12 +2002,6 @@
           "type": "object",
           "additionalProperties": false
         },
-        "toPgBackRestImage": {
-          "type": "string"
-        },
-        "toPgBouncerImage": {
-          "type": "string"
-        },
         "toPostgresImage": {
           "type": "string"
         },
@@ -2084,11 +2079,7 @@
       },
       "required": [
         "fromPostgresVersion",
-        "image",
         "postgresClusterName",
-        "toPgBackRestImage",
-        "toPgBouncerImage",
-        "toPostgresImage",
         "toPostgresVersion"
       ],
       "type": "object",
@@ -2158,9 +2149,5 @@
       "additionalProperties": false
     }
   },
-  "required": [
-    "metadata",
-    "spec"
-  ],
   "type": "object"
 }
