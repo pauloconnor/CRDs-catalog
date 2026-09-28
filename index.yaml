@@ -17712,6 +17712,10 @@ postgresql.cnpg.io:
     filename: postgresql.cnpg.io/failoverquorum_v1.json
     kind: FailoverQuorum
     name: failoverquorum_v1
+  - apiVersion: postgresql.cnpg.io/v1
+    filename: postgresql.cnpg.io/databaserole_v1.json
+    kind: DatabaseRole
+    name: databaserole_v1
 privateca.cnrm.cloud.google.com:
   - apiVersion: privateca.cnrm.cloud.google.com/v1beta1
     filename: privateca.cnrm.cloud.google.com/privatecacertificate_v1beta1.json
