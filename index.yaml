@@ -4050,6 +4050,14 @@ cloudfront.services.k8s.aws:
     filename: cloudfront.services.k8s.aws/function_v1alpha1.json
     kind: Function
     name: function_v1alpha1
+  - apiVersion: cloudfront.services.k8s.aws/v1alpha1
+    filename: cloudfront.services.k8s.aws/connectiongroup_v1alpha1.json
+    kind: ConnectionGroup
+    name: connectiongroup_v1alpha1
+  - apiVersion: cloudfront.services.k8s.aws/v1alpha1
+    filename: cloudfront.services.k8s.aws/distributiontenant_v1alpha1.json
+    kind: DistributionTenant
+    name: distributiontenant_v1alpha1
 cloudfunctions.cnrm.cloud.google.com:
   - apiVersion: cloudfunctions.cnrm.cloud.google.com/v1beta1
     filename: cloudfunctions.cnrm.cloud.google.com/cloudfunctionsfunction_v1beta1.json
