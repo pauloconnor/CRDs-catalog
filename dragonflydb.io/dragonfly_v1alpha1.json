@@ -3642,7 +3642,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "(Optional) Annotations to add to the Dragonfly pods.",
+          "description": "Deprecated: use spec.podMetadata.annotations instead.",
           "type": "object"
         },
         "args": {
@@ -3849,6 +3849,45 @@
             }
           },
           "type": "object",
+          "additionalProperties": false
+        },
+        "customLivenessProbeConfigMap": {
+          "description": "Custom ConfigMap providing key \"liveness-check.sh\" to override the default liveness probe.\nAn additionalVolumes entry named \"liveness-probe\" takes precedence.",
+          "properties": {
+            "name": {
+              "default": "",
+              "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+              "type": "string"
+            }
+          },
+          "type": "object",
+          "x-kubernetes-map-type": "atomic",
+          "additionalProperties": false
+        },
+        "customReadinessProbeConfigMap": {
+          "description": "Custom ConfigMap providing key \"readiness-check.sh\" to override the default readiness probe.\nAn additionalVolumes entry named \"readiness-probe\" takes precedence.",
+          "properties": {
+            "name": {
+              "default": "",
+              "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+              "type": "string"
+            }
+          },
+          "type": "object",
+          "x-kubernetes-map-type": "atomic",
+          "additionalProperties": false
+        },
+        "customStartupProbeConfigMap": {
+          "description": "Custom ConfigMap providing key \"startup-check.sh\" to override the default startup probe.\nAn additionalVolumes entry named \"startup-probe\" takes precedence.",
+          "properties": {
+            "name": {
+              "default": "",
+              "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+              "type": "string"
+            }
+          },
+          "type": "object",
+          "x-kubernetes-map-type": "atomic",
           "additionalProperties": false
         },
         "enableReplicationReadinessGate": {
@@ -5331,7 +5370,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "(Optional) Labels to add to the Dragonfly pods.",
+          "description": "Deprecated: use spec.podMetadata.labels instead.",
           "type": "object"
         },
         "memcachedPort": {
@@ -5352,7 +5391,7 @@
           "type": "object"
         },
         "ownedObjectsMetadata": {
-          "description": "(Optional) Dragonfly direct child resources additional annotations and labels",
+          "description": "(Optional) Labels and annotations to add to all owned resources (StatefulSet, Service, PDB, etc).",
           "properties": {
             "annotations": {
               "additionalProperties": {
@@ -5405,6 +5444,25 @@
               "rule": "!(has(self.minAvailable) && has(self.maxUnavailable))"
             }
           ],
+          "additionalProperties": false
+        },
+        "podMetadata": {
+          "description": "(Optional) Labels and annotations to add to the Dragonfly pods.",
+          "properties": {
+            "annotations": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
+            },
+            "labels": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
+            }
+          },
+          "type": "object",
           "additionalProperties": false
         },
         "podSecurityContext": {
