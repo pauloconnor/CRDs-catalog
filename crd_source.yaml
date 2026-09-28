@@ -1316,7 +1316,7 @@ sources:
     changelog: "https://github.com/upbound/provider-aws/releases"
 
   - url: "https://github.com/upbound/provider-azure"
-    tag: "v2.5.0"
+    tag: "v2.7.0"
     repo_path: "package/crds"
     changelog: "https://github.com/upbound/provider-azure/releases"
 
