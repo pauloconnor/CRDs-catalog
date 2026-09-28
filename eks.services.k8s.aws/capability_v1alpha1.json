@@ -25,6 +25,26 @@
             }
           ]
         },
+        "clusterRef": {
+          "description": "AWSResourceReferenceWrapper provides a wrapper around *AWSResourceReference\ntype to provide more user friendly syntax for references using 'from' field\nEx:\nAPIIDRef:\n\n\tfrom:\n\t  name: my-api",
+          "properties": {
+            "from": {
+              "description": "AWSResourceReference provides all the values necessary to reference another\nk8s resource for finding the identifier(Id/ARN/Name)",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "namespace": {
+                  "type": "string"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
         "configuration": {
           "description": "The configuration settings for the capability. The structure of this object\nvaries depending on the capability type. For Argo CD capabilities, you can\nconfigure IAM Identity CenterIAM; Identity Center integration, RBAC role\nmappings, and network access settings.",
           "properties": {
@@ -115,6 +135,26 @@
           "description": "The Amazon Resource Name (ARN) of the IAM role that the capability uses to\ninteract with Amazon Web Services services. This role must have a trust policy\nthat allows the EKS service principal to assume it, and it must have the\nnecessary permissions for the capability type you're creating.\n\nFor ACK capabilities, the role needs permissions to manage the resources\nyou want to control through Kubernetes. For Argo CD capabilities, the role\nneeds permissions to access Git repositories and Secrets Manager. For KRO\ncapabilities, the role needs permissions based on the resources you'll be\norchestrating.",
           "type": "string"
         },
+        "roleRef": {
+          "description": "AWSResourceReferenceWrapper provides a wrapper around *AWSResourceReference\ntype to provide more user friendly syntax for references using 'from' field\nEx:\nAPIIDRef:\n\n\tfrom:\n\t  name: my-api",
+          "properties": {
+            "from": {
+              "description": "AWSResourceReference provides all the values necessary to reference another\nk8s resource for finding the identifier(Id/ARN/Name)",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "namespace": {
+                  "type": "string"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
         "tags": {
           "additionalProperties": {
             "type": "string"
@@ -133,10 +173,8 @@
         }
       },
       "required": [
-        "clusterName",
         "deletePropagationPolicy",
         "name",
-        "roleARN",
         "type"
       ],
       "type": "object",
@@ -154,6 +192,10 @@
             },
             "ownerAccountID": {
               "description": "OwnerAccountID is the AWS Account ID of the account that owns the\nbackend AWS service API resource.",
+              "type": "string"
+            },
+            "partition": {
+              "description": "Partition is the AWS partition in which the resource exists or will exist",
               "type": "string"
             },
             "region": {
