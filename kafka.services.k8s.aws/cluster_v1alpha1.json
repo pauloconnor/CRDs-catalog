@@ -97,6 +97,57 @@
                   },
                   "type": "object",
                   "additionalProperties": false
+                },
+                "vpcConnectivity": {
+                  "description": "VPC connectivity access control for brokers.",
+                  "properties": {
+                    "clientAuthentication": {
+                      "description": "Includes all client authentication information for VPC connectivity.",
+                      "properties": {
+                        "sasl": {
+                          "description": "Details for SASL client authentication for VPC connectivity.",
+                          "properties": {
+                            "iam": {
+                              "description": "Details for IAM access control for VPC connectivity.",
+                              "properties": {
+                                "enabled": {
+                                  "type": "boolean"
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            },
+                            "scram": {
+                              "description": "Details for SASL/SCRAM client authentication for VPC connectivity.",
+                              "properties": {
+                                "enabled": {
+                                  "type": "boolean"
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        },
+                        "tls": {
+                          "description": "Details for TLS client authentication for VPC connectivity.",
+                          "properties": {
+                            "enabled": {
+                              "type": "boolean"
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
                 }
               },
               "type": "object",
@@ -104,6 +155,30 @@
             },
             "instanceType": {
               "type": "string"
+            },
+            "securityGroupRefs": {
+              "description": "Reference field for SecurityGroups",
+              "items": {
+                "description": "AWSResourceReferenceWrapper provides a wrapper around *AWSResourceReference\ntype to provide more user friendly syntax for references using 'from' field\nEx:\nAPIIDRef:\n\n\tfrom:\n\t  name: my-api",
+                "properties": {
+                  "from": {
+                    "description": "AWSResourceReference provides all the values necessary to reference another\nk8s resource for finding the identifier(Id/ARN/Name)",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "namespace": {
+                        "type": "string"
+                      }
+                    },
+                    "type": "object",
+                    "additionalProperties": false
+                  }
+                },
+                "type": "object",
+                "additionalProperties": false
+              },
+              "type": "array"
             },
             "securityGroups": {
               "items": {
@@ -353,6 +428,10 @@
           "type": "object",
           "additionalProperties": false
         },
+        "policy": {
+          "description": "The cluster policy.",
+          "type": "string"
+        },
         "rebalancing": {
           "description": "Specifies if intelligent rebalancing should be turned on for the new MSK\nProvisioned cluster with Express brokers. By default, intelligent rebalancing\nstatus is ACTIVE for all new clusters.",
           "properties": {
@@ -397,6 +476,10 @@
             },
             "ownerAccountID": {
               "description": "OwnerAccountID is the AWS Account ID of the account that owns the\nbackend AWS service API resource.",
+              "type": "string"
+            },
+            "partition": {
+              "description": "Partition is the AWS partition in which the resource exists or will exist",
               "type": "string"
             },
             "region": {
