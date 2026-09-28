@@ -1,5 +1,5 @@
 {
-  "description": "Activity is the Schema for the Activities API",
+  "description": "StateMachineAlias is the Schema for the StateMachineAliases API",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -13,10 +13,14 @@
       "type": "object"
     },
     "spec": {
-      "description": "ActivitySpec defines the desired state of Activity.",
+      "description": "StateMachineAliasSpec defines the desired state of StateMachineAlias.",
       "properties": {
+        "description": {
+          "description": "A description for the state machine alias.",
+          "type": "string"
+        },
         "name": {
-          "description": "The name of the activity to create. This name must be unique for your Amazon\nWeb Services account and region for 90 days. For more information, see Limits\nRelated to State Machine Executions (https://docs.aws.amazon.com/step-functions/latest/dg/limits.html#service-limits-state-machine-executions)\nin the Step Functions Developer Guide.\n\nA name must not contain:\n\n   * white space",
+          "description": "The name of the state machine alias.\n\nTo avoid conflict with version ARNs, don't use an integer in the name of\nthe alias.\n\nRegex Pattern: `^(?=.*[a-zA-Z_\\-\\.])[a-zA-Z0-9_\\-\\.]+$`",
           "type": "string",
           "x-kubernetes-validations": [
             {
@@ -25,16 +29,17 @@
             }
           ]
         },
-        "tags": {
-          "description": "The list of tags to add to a resource.\n\nAn array of key-value pairs. For more information, see Using Cost Allocation\nTags (https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html)\nin the Amazon Web Services Billing and Cost Management User Guide, and Controlling\nAccess Using IAM Tags (https://docs.aws.amazon.com/IAM/latest/UserGuide/access_iam-tags.html).\n\nTags may only contain Unicode letters, digits, white space, or these symbols:\n_ . : / = + - @.",
+        "routingConfiguration": {
+          "description": "The routing configuration of a state machine alias. The routing configuration\nshifts execution traffic between two state machine versions. routingConfiguration\ncontains an array of RoutingConfig objects that specify up to two state machine\nversions. Step Functions then randomly choses which version to run an execution\nwith based on the weight assigned to each RoutingConfig.",
           "items": {
-            "description": "Tags are key-value pairs that can be associated with Step Functions state\nmachines and activities.\n\nAn array of key-value pairs. For more information, see Using Cost Allocation\nTags (https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html)\nin the Amazon Web Services Billing and Cost Management User Guide, and Controlling\nAccess Using IAM Tags (https://docs.aws.amazon.com/IAM/latest/UserGuide/access_iam-tags.html).\n\nTags may only contain Unicode letters, digits, white space, or these symbols:\n_ . : / = + - @.",
+            "description": "Contains details about the routing configuration of a state machine alias.\nIn a routing configuration, you define an array of objects that specify up\nto two state machine versions. You also specify the percentage of traffic\nto be routed to each version.",
             "properties": {
-              "key": {
+              "stateMachineVersionARN": {
                 "type": "string"
               },
-              "value": {
-                "type": "string"
+              "weight": {
+                "format": "int64",
+                "type": "integer"
               }
             },
             "type": "object",
@@ -44,13 +49,14 @@
         }
       },
       "required": [
-        "name"
+        "name",
+        "routingConfiguration"
       ],
       "type": "object",
       "additionalProperties": false
     },
     "status": {
-      "description": "ActivityStatus defines the observed state of Activity",
+      "description": "StateMachineAliasStatus defines the observed state of StateMachineAlias",
       "properties": {
         "ackResourceMetadata": {
           "description": "All CRs managed by ACK have a common `Status.ACKResourceMetadata` member\nthat is used to contain resource sync state, account ownership,\nconstructed ARN for the resource",
@@ -116,7 +122,7 @@
           "type": "array"
         },
         "creationDate": {
-          "description": "The date the activity is created.",
+          "description": "The date the state machine alias was created.",
           "format": "date-time",
           "type": "string"
         }
