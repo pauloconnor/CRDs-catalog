@@ -72,7 +72,7 @@
                       "type": "array"
                     },
                     "featureID": {
-                      "description": "FeatureID is an indentifier of the feature whose status is reported",
+                      "description": "FeatureID is an identifier of the feature whose status is reported",
                       "enum": [
                         "Resources",
                         "Helm",
@@ -212,7 +212,7 @@
                       "type": "array"
                     },
                     "featureID": {
-                      "description": "FeatureID is an indentifier of the feature whose status is reported",
+                      "description": "FeatureID is an identifier of the feature whose status is reported",
                       "enum": [
                         "Resources",
                         "Helm",
