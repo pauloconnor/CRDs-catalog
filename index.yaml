@@ -7011,6 +7011,18 @@ db.atlasgo.io:
     filename: db.atlasgo.io/atlasmigration_v1alpha1.json
     kind: AtlasMigration
     name: atlasmigration_v1alpha1
+  - apiVersion: db.atlasgo.io/v1alpha1
+    filename: db.atlasgo.io/atlassecurityscan_v1alpha1.json
+    kind: AtlasSecurityScan
+    name: atlassecurityscan_v1alpha1
+  - apiVersion: db.atlasgo.io/v1alpha1
+    filename: db.atlasgo.io/atlasdriftcheck_v1alpha1.json
+    kind: AtlasDriftCheck
+    name: atlasdriftcheck_v1alpha1
+  - apiVersion: db.atlasgo.io/v1alpha1
+    filename: db.atlasgo.io/atlassecurityreport_v1alpha1.json
+    kind: AtlasSecurityReport
+    name: atlassecurityreport_v1alpha1
 dbaas.percona.com:
   - apiVersion: dbaas.percona.com/v1
     filename: dbaas.percona.com/databasecluster_v1.json
