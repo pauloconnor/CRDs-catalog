@@ -1,5 +1,5 @@
 {
-  "description": "LoadTest is the Schema for the LoadTests API. Manages a Load Test.",
+  "description": "LoadTest is the Schema for the LoadTests API. Manages a Load Test.\nDeprecated: This API version (v1beta1) has been deprecated in release v2.6.0.",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -32,29 +32,35 @@
             },
             "encryption": {
               "description": "An encryption block as defined below. Changing this forces a new Load Test to be created.",
-              "properties": {
-                "identity": {
-                  "description": "An identity block as defined below. Changing this forces a new Load Test to be created.",
-                  "properties": {
-                    "identityId": {
-                      "description": "The User Assigned Identity ID that should be assigned to this Load Test Encryption. Changing this forces a new Load Test to be created.",
-                      "type": "string"
+              "items": {
+                "properties": {
+                  "identity": {
+                    "description": "An identity block as defined below. Changing this forces a new Load Test to be created.",
+                    "items": {
+                      "properties": {
+                        "identityId": {
+                          "description": "The User Assigned Identity ID that should be assigned to this Load Test Encryption. Changing this forces a new Load Test to be created.",
+                          "type": "string"
+                        },
+                        "type": {
+                          "description": "Specifies the type of Managed Identity that should be assigned to this Load Test. Possible values are SystemAssigned, SystemAssigned, UserAssigned and UserAssigned.",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
                     },
-                    "type": {
-                      "description": "Specifies the type of Managed Identity that should be assigned to this Load Test. Possible values are SystemAssigned, SystemAssigned, UserAssigned and UserAssigned.",
-                      "type": "string"
-                    }
+                    "type": "array"
                   },
-                  "type": "object",
-                  "additionalProperties": false
+                  "keyUrl": {
+                    "description": "The URI specifying the Key vault and key to be used to encrypt data in this resource. The URI should include the key version. Changing this forces a new Load Test to be created.",
+                    "type": "string"
+                  }
                 },
-                "keyUrl": {
-                  "description": "The URI specifying the Key vault and key to be used to encrypt data in this resource. The URI should include the key version. Changing this forces a new Load Test to be created.",
-                  "type": "string"
-                }
+                "type": "object",
+                "additionalProperties": false
               },
-              "type": "object",
-              "additionalProperties": false
+              "type": "array"
             },
             "identity": {
               "description": "An identity block as defined below. Specifies the Managed Identity which should be assigned to this Load Test.",
@@ -362,29 +368,35 @@
             },
             "encryption": {
               "description": "An encryption block as defined below. Changing this forces a new Load Test to be created.",
-              "properties": {
-                "identity": {
-                  "description": "An identity block as defined below. Changing this forces a new Load Test to be created.",
-                  "properties": {
-                    "identityId": {
-                      "description": "The User Assigned Identity ID that should be assigned to this Load Test Encryption. Changing this forces a new Load Test to be created.",
-                      "type": "string"
+              "items": {
+                "properties": {
+                  "identity": {
+                    "description": "An identity block as defined below. Changing this forces a new Load Test to be created.",
+                    "items": {
+                      "properties": {
+                        "identityId": {
+                          "description": "The User Assigned Identity ID that should be assigned to this Load Test Encryption. Changing this forces a new Load Test to be created.",
+                          "type": "string"
+                        },
+                        "type": {
+                          "description": "Specifies the type of Managed Identity that should be assigned to this Load Test. Possible values are SystemAssigned, SystemAssigned, UserAssigned and UserAssigned.",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
                     },
-                    "type": {
-                      "description": "Specifies the type of Managed Identity that should be assigned to this Load Test. Possible values are SystemAssigned, SystemAssigned, UserAssigned and UserAssigned.",
-                      "type": "string"
-                    }
+                    "type": "array"
                   },
-                  "type": "object",
-                  "additionalProperties": false
+                  "keyUrl": {
+                    "description": "The URI specifying the Key vault and key to be used to encrypt data in this resource. The URI should include the key version. Changing this forces a new Load Test to be created.",
+                    "type": "string"
+                  }
                 },
-                "keyUrl": {
-                  "description": "The URI specifying the Key vault and key to be used to encrypt data in this resource. The URI should include the key version. Changing this forces a new Load Test to be created.",
-                  "type": "string"
-                }
+                "type": "object",
+                "additionalProperties": false
               },
-              "type": "object",
-              "additionalProperties": false
+              "type": "array"
             },
             "id": {
               "description": "The ID of the Load Test.",
@@ -486,6 +498,10 @@
             "type"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "lastHandledReconcileAt": {
+          "description": "LastHandledReconcileAt holds the value of the most recent\nreconcile-requested-at annotation token that the controller has\nprocessed. Users can compare this to the annotation to determine\nwhether a reconcile request has been handled.",
+          "type": "string"
         },
         "observedGeneration": {
           "description": "ObservedGeneration is the latest metadata.generation\nwhich resulted in either a ready state, or stalled due to error\nit can not recover from without human intervention.",
