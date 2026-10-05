@@ -500,7 +500,7 @@ sources:
     changelog: "https://github.com/dexidp/dex/releases"
 
   - url: "https://github.com/DopplerHQ/kubernetes-operator"
-    tag: "v1.7.1"
+    tag: "v1.7.2"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/DopplerHQ/kubernetes-operator/releases"
 
