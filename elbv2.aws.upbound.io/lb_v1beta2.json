@@ -176,6 +176,10 @@
               "description": "Whether HTTP/2 is enabled in application load balancers. Defaults to true.",
               "type": "boolean"
             },
+            "enablePrefixForIpv6SourceNat": {
+              "description": "Whether to use an IPv6 prefix from each subnet for source NAT. ip_address_type must be dualstack. Valid values: on, off.",
+              "type": "string"
+            },
             "enableTlsVersionAndCipherSuiteHeaders": {
               "description": "Whether the two headers (x-amzn-tls-version and x-amzn-tls-cipher-suite), which contain information about the negotiated TLS version and cipher suite, are added to the client request before sending it to the target. Only valid for Load Balancers of type application. Defaults to false",
               "type": "boolean"
@@ -195,6 +199,25 @@
             "enforceSecurityGroupInboundRulesOnPrivateLinkTraffic": {
               "description": "Whether inbound security group rules are enforced for traffic originating from a PrivateLink. Only valid for Load Balancers of type network. The possible values are on and off.",
               "type": "string"
+            },
+            "healthCheckLogs": {
+              "description": "Health Check Logs block. See below. Only valid for Load Balancers of type application.",
+              "properties": {
+                "bucket": {
+                  "description": "S3 bucket name to store the logs in.",
+                  "type": "string"
+                },
+                "enabled": {
+                  "description": "Boolean to enable / disable health_check_logs. Defaults to false, even when bucket is specified.",
+                  "type": "boolean"
+                },
+                "prefix": {
+                  "description": "S3 bucket prefix. Logs are stored in the root if not configured.",
+                  "type": "string"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
             },
             "idleTimeout": {
               "description": "Time in seconds that the connection is allowed to be idle. Only valid for Load Balancers of type application. Default: 60.",
@@ -712,6 +735,10 @@
               "description": "Whether HTTP/2 is enabled in application load balancers. Defaults to true.",
               "type": "boolean"
             },
+            "enablePrefixForIpv6SourceNat": {
+              "description": "Whether to use an IPv6 prefix from each subnet for source NAT. ip_address_type must be dualstack. Valid values: on, off.",
+              "type": "string"
+            },
             "enableTlsVersionAndCipherSuiteHeaders": {
               "description": "Whether the two headers (x-amzn-tls-version and x-amzn-tls-cipher-suite), which contain information about the negotiated TLS version and cipher suite, are added to the client request before sending it to the target. Only valid for Load Balancers of type application. Defaults to false",
               "type": "boolean"
@@ -731,6 +758,25 @@
             "enforceSecurityGroupInboundRulesOnPrivateLinkTraffic": {
               "description": "Whether inbound security group rules are enforced for traffic originating from a PrivateLink. Only valid for Load Balancers of type network. The possible values are on and off.",
               "type": "string"
+            },
+            "healthCheckLogs": {
+              "description": "Health Check Logs block. See below. Only valid for Load Balancers of type application.",
+              "properties": {
+                "bucket": {
+                  "description": "S3 bucket name to store the logs in.",
+                  "type": "string"
+                },
+                "enabled": {
+                  "description": "Boolean to enable / disable health_check_logs. Defaults to false, even when bucket is specified.",
+                  "type": "boolean"
+                },
+                "prefix": {
+                  "description": "S3 bucket prefix. Logs are stored in the root if not configured.",
+                  "type": "string"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
             },
             "idleTimeout": {
               "description": "Time in seconds that the connection is allowed to be idle. Only valid for Load Balancers of type application. Default: 60.",
@@ -1261,6 +1307,10 @@
               "description": "Whether HTTP/2 is enabled in application load balancers. Defaults to true.",
               "type": "boolean"
             },
+            "enablePrefixForIpv6SourceNat": {
+              "description": "Whether to use an IPv6 prefix from each subnet for source NAT. ip_address_type must be dualstack. Valid values: on, off.",
+              "type": "string"
+            },
             "enableTlsVersionAndCipherSuiteHeaders": {
               "description": "Whether the two headers (x-amzn-tls-version and x-amzn-tls-cipher-suite), which contain information about the negotiated TLS version and cipher suite, are added to the client request before sending it to the target. Only valid for Load Balancers of type application. Defaults to false",
               "type": "boolean"
@@ -1280,6 +1330,25 @@
             "enforceSecurityGroupInboundRulesOnPrivateLinkTraffic": {
               "description": "Whether inbound security group rules are enforced for traffic originating from a PrivateLink. Only valid for Load Balancers of type network. The possible values are on and off.",
               "type": "string"
+            },
+            "healthCheckLogs": {
+              "description": "Health Check Logs block. See below. Only valid for Load Balancers of type application.",
+              "properties": {
+                "bucket": {
+                  "description": "S3 bucket name to store the logs in.",
+                  "type": "string"
+                },
+                "enabled": {
+                  "description": "Boolean to enable / disable health_check_logs. Defaults to false, even when bucket is specified.",
+                  "type": "boolean"
+                },
+                "prefix": {
+                  "description": "S3 bucket prefix. Logs are stored in the root if not configured.",
+                  "type": "string"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
             },
             "id": {
               "type": "string"
@@ -1461,6 +1530,10 @@
             "type"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "lastHandledReconcileAt": {
+          "description": "LastHandledReconcileAt holds the value of the most recent\nreconcile-requested-at annotation token that the controller has\nprocessed. Users can compare this to the annotation to determine\nwhether a reconcile request has been handled.",
+          "type": "string"
         },
         "observedGeneration": {
           "description": "ObservedGeneration is the latest metadata.generation\nwhich resulted in either a ready state, or stalled due to error\nit can not recover from without human intervention.",
