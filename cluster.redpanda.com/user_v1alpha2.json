@@ -30,7 +30,7 @@
                   "type": "string"
                 },
                 "valueFrom": {
-                  "description": "ValueFrom specifies a source for a password to be fetched from when specifying or generating user credentials.",
+                  "description": "ValueFrom specifies a source for a password to be fetched from when specifying or generating user credentials.\nOptional when value is set: the type-level validation rule enforces\nthat at least one of the two is present. (This field being marked\nrequired in the schema used to make the documented value-only form\nimpossible to apply \u2014 https://github.com/redpanda-data/redpanda-operator/issues/1290.)",
                   "properties": {
                     "secretKeyRef": {
                       "description": "SecretKeyRef specifies the secret used in reading a User password.\nIf the Secret exists and has a value in it, then that value is used.\nIf the Secret does not exist, or is empty, a password is generated and\nstored based on this configuration.",
@@ -64,21 +64,22 @@
                   "additionalProperties": false
                 }
               },
-              "required": [
-                "valueFrom"
-              ],
               "type": "object",
               "x-kubernetes-validations": [
                 {
                   "message": "valueFrom must not be empty if no value supplied",
-                  "rule": "self.value != \"\" || has(self.valueFrom)"
+                  "rule": "(has(self.value) && self.value != \"\") || has(self.valueFrom)"
                 }
               ],
               "additionalProperties": false
             },
+            "syncCredentials": {
+              "description": "SyncCredentials when set to true causes the operator to re-read the\npassword from the referenced Secret on every reconciliation cycle\n(default: every 5 minutes) and upsert the credentials to Redpanda.\nThis enables password rotation via external systems like the External\nSecrets Operator (ESO) without requiring user recreation.",
+              "type": "boolean"
+            },
             "type": {
               "default": "scram-sha-512",
-              "description": "SASL mechanism to use for the user credentials. Valid values are:\n- scram-sha-512\n- scram-sha-256",
+              "description": "SASL mechanism to use for the user credentials. Valid values are:\n- scram-sha-512\n- scram-sha-256\n\nRedpanda stores a single credential per user, so changing this on an\nexisting user replaces that credential rather than adding one. The\nprevious mechanism stops working as soon as the change is reconciled,\nwhich may be at any point within the reconciliation interval. Move\nclients onto the new mechanism first, or they will fail to authenticate.",
               "enum": [
                 "scram-sha-256",
                 "scram-sha-512",
@@ -232,8 +233,14 @@
               "description": "ClusterRef is a reference to the cluster where the object should be created.\nIt is used in constructing the client created to configure a cluster.\nThis takes precedence over StaticConfigurationSource.",
               "properties": {
                 "group": {
-                  "description": "Group is used to override the object group that this reference points to.\nIf unspecified, defaults to \"cluster.redpanda.com\".",
-                  "type": "string"
+                  "description": "Group is used to override the object group that this reference points to.\nIf unspecified, defaults to \"cluster.redpanda.com\".\nA bare API group only \u2014 controllers match it by string comparison, so a\n\"group/version\" value (e.g. \"cluster.redpanda.com/v1alpha2\") would\nsilently match nothing and the referencing object would never bind.",
+                  "type": "string",
+                  "x-kubernetes-validations": [
+                    {
+                      "message": "group must be a bare API group without a version suffix (e.g. cluster.redpanda.com, not cluster.redpanda.com/v1alpha2)",
+                      "rule": "!self.contains('/')"
+                    }
+                  ]
                 },
                 "kind": {
                   "description": "Kind is used to override the object kind that this reference points to.\nIf unspecified, defaults to \"Redpanda\".",
@@ -241,6 +248,10 @@
                 },
                 "name": {
                   "description": "Name specifies the name of the cluster being referenced.",
+                  "type": "string"
+                },
+                "namespace": {
+                  "description": "Namespace specifies the namespace of the cluster being referenced.\nIf unspecified, defaults to the namespace of the referencing object.\nSetting this allows referencing a cluster that resides in a different\nnamespace, e.g. a ShadowLink whose source and shadow Redpanda clusters\nlive in separate namespaces on the same Kubernetes cluster.",
                   "type": "string"
                 }
               },
