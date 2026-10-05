@@ -14,6 +14,55 @@
     },
     "spec": {
       "properties": {
+        "clientOptions": {
+          "description": "Tuning knobs for the Kafka client the shadow cluster uses to fetch data\nfrom the source cluster. Connection details (bootstrap servers, TLS) are\nderived from sourceCluster and are not configurable here; only the mutable\nperformance/latency knobs are exposed.",
+          "properties": {
+            "connectionTimeoutMs": {
+              "description": "Connection timeout to the source cluster in milliseconds. If 0, defaults to 1000ms.",
+              "format": "int32",
+              "minimum": 0,
+              "type": "integer"
+            },
+            "fetchMaxBytes": {
+              "description": "Maximum bytes returned by a single fetch request. If 0, defaults to 20 MiB (20971520).",
+              "format": "int32",
+              "minimum": 0,
+              "type": "integer"
+            },
+            "fetchMinBytes": {
+              "description": "Minimum bytes the source broker accumulates before answering a fetch\nrequest. Lowering this reduces replication latency at low throughput, at\nthe cost of more, smaller fetches. If 0, defaults to 5 MiB (5242880).",
+              "format": "int32",
+              "minimum": 0,
+              "type": "integer"
+            },
+            "fetchPartitionMaxBytes": {
+              "description": "Maximum bytes returned per partition in a fetch request. If 0, defaults to 5 MiB (5242880).",
+              "format": "int32",
+              "minimum": 0,
+              "type": "integer"
+            },
+            "fetchWaitMaxMs": {
+              "description": "Maximum time in milliseconds the source broker waits to satisfy\nfetchMinBytes before answering a fetch request. Lowering this caps the\nworst-case replication latency when fetchMinBytes is not met. If 0,\ndefaults to 500ms.",
+              "format": "int32",
+              "minimum": 0,
+              "type": "integer"
+            },
+            "metadataMaxAgeMs": {
+              "description": "How often in milliseconds the client refreshes source cluster metadata. If 0, defaults to 10000ms.",
+              "format": "int32",
+              "minimum": 0,
+              "type": "integer"
+            },
+            "retryBackoffMs": {
+              "description": "Base backoff between connection retries in milliseconds. If 0, defaults to 100ms.",
+              "format": "int32",
+              "minimum": 0,
+              "type": "integer"
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
         "consumerOffsetSyncOptions": {
           "description": "Consumer offset sync options",
           "properties": {
@@ -66,14 +115,780 @@
           "type": "object",
           "additionalProperties": false
         },
-        "schemaRegistrySyncOptions": {
-          "description": "options for schema registry",
+        "roleSyncOptions": {
+          "default": {},
+          "description": "RBAC role sync options. Roles are replicated from the source cluster\nby default; set roleSyncOptions.enabled to false to turn role\nreplication off.",
           "properties": {
-            "schema_registry_shadowing_mode": {
+            "enabled": {
+              "default": true,
+              "description": "Enabled controls whether RBAC role definitions and role memberships\nare replicated from the source cluster. Defaults to true, which\nreplicates every role (subject to roleNameFilters). Set to false to\nturn role replication off.",
+              "type": "boolean"
+            },
+            "interval": {
+              "default": "30s",
+              "description": "How often to sync roles\nIf 0 provided, defaults to 30 seconds",
               "type": "string"
+            },
+            "paused": {
+              "description": "Allows user to pause the role sync task. If paused, then the task\nwill enter the 'paused' state and not sync roles from the source\ncluster",
+              "type": "boolean"
+            },
+            "roleNameFilters": {
+              "default": [
+                {
+                  "filterType": "include",
+                  "name": "*",
+                  "patternType": "literal"
+                }
+              ],
+              "description": "List of filters that select which roles are replicated. Defaults to\na single include-all filter so that every role is replicated.",
+              "items": {
+                "description": "A filter based on the name of a resource",
+                "properties": {
+                  "filterType": {
+                    "description": "Valid values:\n- include\n- exclude",
+                    "enum": [
+                      "include",
+                      "exclude"
+                    ],
+                    "type": "string"
+                  },
+                  "name": {
+                    "default": "*",
+                    "description": "The resource name, or \"*\"\nNote if the wildcar \"*\" is used it must be the _only_ character\nand `patternType` must be `literal`",
+                    "type": "string"
+                  },
+                  "patternType": {
+                    "default": "literal",
+                    "description": "Default value is literal. Valid values:\n- literal\n- prefixed",
+                    "enum": [
+                      "literal",
+                      "prefixed"
+                    ],
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "filterType"
+                ],
+                "type": "object",
+                "additionalProperties": false
+              },
+              "type": "array"
             }
           },
           "type": "object",
+          "additionalProperties": false
+        },
+        "schemaRegistrySyncOptions": {
+          "default": {},
+          "description": "Schema registry sync options. Schemas are replicated from the source\ncluster by default; set\nschemaRegistrySyncOptions.schema_registry_shadowing_mode to disabled\nto turn schema replication off.",
+          "properties": {
+            "enabled": {
+              "description": "Deprecated: use schema_registry_shadowing_mode instead. Enabled is\nretained for compatibility with objects created by an earlier build\nof this CRD, where a boolean toggled schema replication. It is\nhonored only when schema_registry_shadowing_mode is unset: false maps\nto disabled, and true maps to api when shadowSchemaRegistryAPI is\nconfigured or topic otherwise. When both are set,\nschema_registry_shadowing_mode takes precedence.",
+              "type": "boolean"
+            },
+            "schema_registry_shadowing_mode": {
+              "description": "Mode selects how schemas are replicated from the source cluster.\nDefaults to topic (shadow the source Redpanda cluster's internal\nschemas topic) when neither this nor the legacy enabled field is set.\nSet to api to replicate from the source schema registry over its REST\nAPI (configured via shadowSchemaRegistryAPI), or disabled to turn schema\nreplication off.",
+              "enum": [
+                "disabled",
+                "topic",
+                "api"
+              ],
+              "type": "string"
+            },
+            "shadowSchemaRegistryAPI": {
+              "description": "Configuration for replicating schemas from the source cluster's\nschema registry REST API (for example a Confluent Schema Registry)\ninstead of shadowing a source Redpanda cluster's internal schemas\ntopic. Required when mode is api and forbidden otherwise.",
+              "properties": {
+                "authentication": {
+                  "description": "Authentication options used to connect to the source schema\nregistry.",
+                  "properties": {
+                    "basic": {
+                      "description": "HTTP basic authentication credentials. For a Confluent Schema\nRegistry these are the schema registry API key (username) and API\nsecret (password).",
+                      "properties": {
+                        "password": {
+                          "description": "Password used for basic authentication, for example a Confluent\nSchema Registry API secret. May reference a Kubernetes Secret.",
+                          "properties": {
+                            "configMapKeyRef": {
+                              "description": "If the value is supplied by a kubernetes object reference, coordinates are embedded here.\nFor target values, the string value fetched from the source will be treated as\na raw string.",
+                              "properties": {
+                                "key": {
+                                  "description": "The key to select.",
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "default": "",
+                                  "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+                                  "type": "string"
+                                },
+                                "optional": {
+                                  "description": "Specify whether the ConfigMap or its key must be defined",
+                                  "type": "boolean"
+                                }
+                              },
+                              "required": [
+                                "key"
+                              ],
+                              "type": "object",
+                              "x-kubernetes-map-type": "atomic",
+                              "additionalProperties": false
+                            },
+                            "externalSecretRef": {
+                              "description": "If the value is supplied by an external source, coordinates are embedded here.\nNote: we interpret all fetched external secrets as raw string values",
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "name"
+                              ],
+                              "type": "object",
+                              "x-kubernetes-map-type": "atomic",
+                              "additionalProperties": false
+                            },
+                            "inline": {
+                              "description": "Inline is the raw value specified inline.",
+                              "type": "string"
+                            },
+                            "secretKeyRef": {
+                              "description": "Should the value be contained in a k8s secret rather than configmap, we can refer\nto it here.",
+                              "properties": {
+                                "key": {
+                                  "description": "The key of the secret to select from.  Must be a valid secret key.",
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "default": "",
+                                  "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+                                  "type": "string"
+                                },
+                                "optional": {
+                                  "description": "Specify whether the Secret or its key must be defined",
+                                  "type": "boolean"
+                                }
+                              },
+                              "required": [
+                                "key"
+                              ],
+                              "type": "object",
+                              "x-kubernetes-map-type": "atomic",
+                              "additionalProperties": false
+                            }
+                          },
+                          "type": "object",
+                          "x-kubernetes-map-type": "atomic",
+                          "x-kubernetes-validations": [
+                            {
+                              "message": "one of inline, configMapKeyRef, secretKeyRef, or externalSecretRef must be set",
+                              "rule": "has(self.inline) || has(self.configMapKeyRef) || has(self.secretKeyRef) || has(self.externalSecretRef)"
+                            },
+                            {
+                              "message": "if inline is set no other field can be set",
+                              "rule": "!has(self.inline) || (has(self.inline) && !(has(self.configMapKeyRef) || has(self.secretKeyRef) || has(self.externalSecretRef)))"
+                            },
+                            {
+                              "message": "if configMapKeyRef is set no other field can be set",
+                              "rule": "!has(self.configMapKeyRef) || (has(self.configMapKeyRef) && !(has(self.inline) || has(self.secretKeyRef) || has(self.externalSecretRef)))"
+                            },
+                            {
+                              "message": "if secretKeyRef is set no other field can be set",
+                              "rule": "!has(self.secretKeyRef) || (has(self.secretKeyRef) && !(has(self.configMapKeyRef) || has(self.inline) || has(self.externalSecretRef)))"
+                            },
+                            {
+                              "message": "if externalSecretRef is set no other field can be set",
+                              "rule": "!has(self.externalSecretRef) || (has(self.externalSecretRef) && !(has(self.configMapKeyRef) || has(self.secretKeyRef) || has(self.inline)))"
+                            }
+                          ],
+                          "additionalProperties": false
+                        },
+                        "username": {
+                          "description": "Username used for basic authentication, for example a Confluent\nSchema Registry API key. May reference a Kubernetes Secret.",
+                          "properties": {
+                            "configMapKeyRef": {
+                              "description": "If the value is supplied by a kubernetes object reference, coordinates are embedded here.\nFor target values, the string value fetched from the source will be treated as\na raw string.",
+                              "properties": {
+                                "key": {
+                                  "description": "The key to select.",
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "default": "",
+                                  "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+                                  "type": "string"
+                                },
+                                "optional": {
+                                  "description": "Specify whether the ConfigMap or its key must be defined",
+                                  "type": "boolean"
+                                }
+                              },
+                              "required": [
+                                "key"
+                              ],
+                              "type": "object",
+                              "x-kubernetes-map-type": "atomic",
+                              "additionalProperties": false
+                            },
+                            "externalSecretRef": {
+                              "description": "If the value is supplied by an external source, coordinates are embedded here.\nNote: we interpret all fetched external secrets as raw string values",
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "name"
+                              ],
+                              "type": "object",
+                              "x-kubernetes-map-type": "atomic",
+                              "additionalProperties": false
+                            },
+                            "inline": {
+                              "description": "Inline is the raw value specified inline.",
+                              "type": "string"
+                            },
+                            "secretKeyRef": {
+                              "description": "Should the value be contained in a k8s secret rather than configmap, we can refer\nto it here.",
+                              "properties": {
+                                "key": {
+                                  "description": "The key of the secret to select from.  Must be a valid secret key.",
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "default": "",
+                                  "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+                                  "type": "string"
+                                },
+                                "optional": {
+                                  "description": "Specify whether the Secret or its key must be defined",
+                                  "type": "boolean"
+                                }
+                              },
+                              "required": [
+                                "key"
+                              ],
+                              "type": "object",
+                              "x-kubernetes-map-type": "atomic",
+                              "additionalProperties": false
+                            }
+                          },
+                          "type": "object",
+                          "x-kubernetes-map-type": "atomic",
+                          "x-kubernetes-validations": [
+                            {
+                              "message": "one of inline, configMapKeyRef, secretKeyRef, or externalSecretRef must be set",
+                              "rule": "has(self.inline) || has(self.configMapKeyRef) || has(self.secretKeyRef) || has(self.externalSecretRef)"
+                            },
+                            {
+                              "message": "if inline is set no other field can be set",
+                              "rule": "!has(self.inline) || (has(self.inline) && !(has(self.configMapKeyRef) || has(self.secretKeyRef) || has(self.externalSecretRef)))"
+                            },
+                            {
+                              "message": "if configMapKeyRef is set no other field can be set",
+                              "rule": "!has(self.configMapKeyRef) || (has(self.configMapKeyRef) && !(has(self.inline) || has(self.secretKeyRef) || has(self.externalSecretRef)))"
+                            },
+                            {
+                              "message": "if secretKeyRef is set no other field can be set",
+                              "rule": "!has(self.secretKeyRef) || (has(self.secretKeyRef) && !(has(self.configMapKeyRef) || has(self.inline) || has(self.externalSecretRef)))"
+                            },
+                            {
+                              "message": "if externalSecretRef is set no other field can be set",
+                              "rule": "!has(self.externalSecretRef) || (has(self.externalSecretRef) && !(has(self.configMapKeyRef) || has(self.secretKeyRef) || has(self.inline)))"
+                            }
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "required": [
+                        "password",
+                        "username"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "destination": {
+                  "description": "Destination context mapping for source schema registry data. If not\nprovided, source context names are preserved on the shadow cluster.",
+                  "properties": {
+                    "exact": {
+                      "description": "Map selected source contexts to explicit destination contexts. Every\nsource context in the effective source scope must have exactly one\nmapping. Mutually exclusive with identity.",
+                      "items": {
+                        "description": "Maps a source schema registry context to a destination context on the\nshadow cluster.",
+                        "properties": {
+                          "destination": {
+                            "description": "The destination context name on the shadow cluster.",
+                            "type": "string"
+                          },
+                          "source": {
+                            "description": "The source context name.",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "destination",
+                          "source"
+                        ],
+                        "type": "object",
+                        "additionalProperties": false
+                      },
+                      "minItems": 1,
+                      "type": "array"
+                    },
+                    "identity": {
+                      "description": "Preserve source context names in the destination schema registry.\nMutually exclusive with exact.",
+                      "type": "object"
+                    }
+                  },
+                  "type": "object",
+                  "x-kubernetes-validations": [
+                    {
+                      "message": "exactly one of identity or exact must be set",
+                      "rule": "has(self.identity) != has(self.exact)"
+                    }
+                  ],
+                  "additionalProperties": false
+                },
+                "fullSyncInterval": {
+                  "description": "How often to run a full scan of the source registry.\nIf not provided, the cluster default (5m) is used.",
+                  "type": "string"
+                },
+                "maxSourceRequestsPerSecond": {
+                  "description": "Rate limit for requests against the source registry.\nIf not provided, the cluster default (30) is used.",
+                  "format": "int32",
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "paused": {
+                  "description": "Allows the user to pause the schema registry sync task. If paused,\nthe task enters the 'paused' state, stops replicating schemas from\nthe source, and the per-context client write protection on the\ncontexts this link owns is lifted.",
+                  "type": "boolean"
+                },
+                "sourceFilter": {
+                  "description": "Selects which schema registry contexts and subjects are replicated.\nIf not provided, the entire source registry is replicated.",
+                  "properties": {
+                    "contexts": {
+                      "description": "Schema registry contexts to replicate, for example \".\". If empty,\nall contexts are replicated.",
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "subjects": {
+                      "description": "Subjects to replicate within the selected contexts. If empty, all\nsubjects are replicated.",
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "sourceURL": {
+                  "description": "URL of the source schema registry, for example\nhttps://psrc-xxxxx.us-east-1.aws.confluent.cloud",
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "tailInterval": {
+                  "description": "How often to poll the source registry for incremental changes.\nIf not provided, the cluster default (10s) is used.",
+                  "type": "string"
+                },
+                "tls": {
+                  "description": "TLS settings used to connect to the source schema registry. Unlike\nKafka API connections, schema registry connection material is passed\nto the cluster as PEM data, so insecureSkipTlsVerify and the\ndeprecated secret-reference fields are not supported here.",
+                  "properties": {
+                    "caCert": {
+                      "description": "CaCert is the reference for certificate authority used to establish TLS connection to Redpanda",
+                      "properties": {
+                        "configMapKeyRef": {
+                          "description": "If the value is supplied by a kubernetes object reference, coordinates are embedded here.\nFor target values, the string value fetched from the source will be treated as\na raw string.",
+                          "properties": {
+                            "key": {
+                              "description": "The key to select.",
+                              "type": "string"
+                            },
+                            "name": {
+                              "default": "",
+                              "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+                              "type": "string"
+                            },
+                            "optional": {
+                              "description": "Specify whether the ConfigMap or its key must be defined",
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "key"
+                          ],
+                          "type": "object",
+                          "x-kubernetes-map-type": "atomic",
+                          "additionalProperties": false
+                        },
+                        "externalSecretRef": {
+                          "description": "If the value is supplied by an external source, coordinates are embedded here.\nNote: we interpret all fetched external secrets as raw string values",
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "name"
+                          ],
+                          "type": "object",
+                          "x-kubernetes-map-type": "atomic",
+                          "additionalProperties": false
+                        },
+                        "inline": {
+                          "description": "Inline is the raw value specified inline.",
+                          "type": "string"
+                        },
+                        "secretKeyRef": {
+                          "description": "Should the value be contained in a k8s secret rather than configmap, we can refer\nto it here.",
+                          "properties": {
+                            "key": {
+                              "description": "The key of the secret to select from.  Must be a valid secret key.",
+                              "type": "string"
+                            },
+                            "name": {
+                              "default": "",
+                              "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+                              "type": "string"
+                            },
+                            "optional": {
+                              "description": "Specify whether the Secret or its key must be defined",
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "key"
+                          ],
+                          "type": "object",
+                          "x-kubernetes-map-type": "atomic",
+                          "additionalProperties": false
+                        }
+                      },
+                      "type": "object",
+                      "x-kubernetes-map-type": "atomic",
+                      "x-kubernetes-validations": [
+                        {
+                          "message": "one of inline, configMapKeyRef, secretKeyRef, or externalSecretRef must be set",
+                          "rule": "has(self.inline) || has(self.configMapKeyRef) || has(self.secretKeyRef) || has(self.externalSecretRef)"
+                        },
+                        {
+                          "message": "if inline is set no other field can be set",
+                          "rule": "!has(self.inline) || (has(self.inline) && !(has(self.configMapKeyRef) || has(self.secretKeyRef) || has(self.externalSecretRef)))"
+                        },
+                        {
+                          "message": "if configMapKeyRef is set no other field can be set",
+                          "rule": "!has(self.configMapKeyRef) || (has(self.configMapKeyRef) && !(has(self.inline) || has(self.secretKeyRef) || has(self.externalSecretRef)))"
+                        },
+                        {
+                          "message": "if secretKeyRef is set no other field can be set",
+                          "rule": "!has(self.secretKeyRef) || (has(self.secretKeyRef) && !(has(self.configMapKeyRef) || has(self.inline) || has(self.externalSecretRef)))"
+                        },
+                        {
+                          "message": "if externalSecretRef is set no other field can be set",
+                          "rule": "!has(self.externalSecretRef) || (has(self.externalSecretRef) && !(has(self.configMapKeyRef) || has(self.secretKeyRef) || has(self.inline)))"
+                        }
+                      ],
+                      "additionalProperties": false
+                    },
+                    "caCertSecretRef": {
+                      "description": "Deprecated: replaced by \"caCert\".",
+                      "properties": {
+                        "key": {
+                          "description": "Key in Secret data to get value from",
+                          "type": "string"
+                        },
+                        "name": {
+                          "description": "Name of the referent.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "cert": {
+                      "description": "Cert is the reference for client public certificate to establish mTLS connection to Redpanda",
+                      "properties": {
+                        "configMapKeyRef": {
+                          "description": "If the value is supplied by a kubernetes object reference, coordinates are embedded here.\nFor target values, the string value fetched from the source will be treated as\na raw string.",
+                          "properties": {
+                            "key": {
+                              "description": "The key to select.",
+                              "type": "string"
+                            },
+                            "name": {
+                              "default": "",
+                              "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+                              "type": "string"
+                            },
+                            "optional": {
+                              "description": "Specify whether the ConfigMap or its key must be defined",
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "key"
+                          ],
+                          "type": "object",
+                          "x-kubernetes-map-type": "atomic",
+                          "additionalProperties": false
+                        },
+                        "externalSecretRef": {
+                          "description": "If the value is supplied by an external source, coordinates are embedded here.\nNote: we interpret all fetched external secrets as raw string values",
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "name"
+                          ],
+                          "type": "object",
+                          "x-kubernetes-map-type": "atomic",
+                          "additionalProperties": false
+                        },
+                        "inline": {
+                          "description": "Inline is the raw value specified inline.",
+                          "type": "string"
+                        },
+                        "secretKeyRef": {
+                          "description": "Should the value be contained in a k8s secret rather than configmap, we can refer\nto it here.",
+                          "properties": {
+                            "key": {
+                              "description": "The key of the secret to select from.  Must be a valid secret key.",
+                              "type": "string"
+                            },
+                            "name": {
+                              "default": "",
+                              "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+                              "type": "string"
+                            },
+                            "optional": {
+                              "description": "Specify whether the Secret or its key must be defined",
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "key"
+                          ],
+                          "type": "object",
+                          "x-kubernetes-map-type": "atomic",
+                          "additionalProperties": false
+                        }
+                      },
+                      "type": "object",
+                      "x-kubernetes-map-type": "atomic",
+                      "x-kubernetes-validations": [
+                        {
+                          "message": "one of inline, configMapKeyRef, secretKeyRef, or externalSecretRef must be set",
+                          "rule": "has(self.inline) || has(self.configMapKeyRef) || has(self.secretKeyRef) || has(self.externalSecretRef)"
+                        },
+                        {
+                          "message": "if inline is set no other field can be set",
+                          "rule": "!has(self.inline) || (has(self.inline) && !(has(self.configMapKeyRef) || has(self.secretKeyRef) || has(self.externalSecretRef)))"
+                        },
+                        {
+                          "message": "if configMapKeyRef is set no other field can be set",
+                          "rule": "!has(self.configMapKeyRef) || (has(self.configMapKeyRef) && !(has(self.inline) || has(self.secretKeyRef) || has(self.externalSecretRef)))"
+                        },
+                        {
+                          "message": "if secretKeyRef is set no other field can be set",
+                          "rule": "!has(self.secretKeyRef) || (has(self.secretKeyRef) && !(has(self.configMapKeyRef) || has(self.inline) || has(self.externalSecretRef)))"
+                        },
+                        {
+                          "message": "if externalSecretRef is set no other field can be set",
+                          "rule": "!has(self.externalSecretRef) || (has(self.externalSecretRef) && !(has(self.configMapKeyRef) || has(self.secretKeyRef) || has(self.inline)))"
+                        }
+                      ],
+                      "additionalProperties": false
+                    },
+                    "certSecretRef": {
+                      "description": "Deprecated: replaced by \"cert\".",
+                      "properties": {
+                        "key": {
+                          "description": "Key in Secret data to get value from",
+                          "type": "string"
+                        },
+                        "name": {
+                          "description": "Name of the referent.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "enabled": {
+                      "description": "Enabled tells any connections derived from this configuration to leverage TLS even if no\ncertificate configuration is specified. It *only* is relevant if no other field is specified\nin the TLS configuration block, as, for backwards compatibility reasons, any CA/Cert/Key-specification\nresults in attempting to create a connection using TLS - specifying \"false\" in such a case does\n*not* disable TLS from being used. Leveraging this option is to support the use-case where a\nconnection is served by publically issued TLS certificates that don't require any additional certificate\nspecification.",
+                      "type": "boolean"
+                    },
+                    "insecureSkipTlsVerify": {
+                      "description": "InsecureSkipTLSVerify can skip verifying Redpanda self-signed certificate when establish TLS connection to Redpanda",
+                      "type": "boolean"
+                    },
+                    "key": {
+                      "description": "Key is the reference for client private certificate to establish mTLS connection to Redpanda",
+                      "properties": {
+                        "configMapKeyRef": {
+                          "description": "If the value is supplied by a kubernetes object reference, coordinates are embedded here.\nFor target values, the string value fetched from the source will be treated as\na raw string.",
+                          "properties": {
+                            "key": {
+                              "description": "The key to select.",
+                              "type": "string"
+                            },
+                            "name": {
+                              "default": "",
+                              "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+                              "type": "string"
+                            },
+                            "optional": {
+                              "description": "Specify whether the ConfigMap or its key must be defined",
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "key"
+                          ],
+                          "type": "object",
+                          "x-kubernetes-map-type": "atomic",
+                          "additionalProperties": false
+                        },
+                        "externalSecretRef": {
+                          "description": "If the value is supplied by an external source, coordinates are embedded here.\nNote: we interpret all fetched external secrets as raw string values",
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "name"
+                          ],
+                          "type": "object",
+                          "x-kubernetes-map-type": "atomic",
+                          "additionalProperties": false
+                        },
+                        "inline": {
+                          "description": "Inline is the raw value specified inline.",
+                          "type": "string"
+                        },
+                        "secretKeyRef": {
+                          "description": "Should the value be contained in a k8s secret rather than configmap, we can refer\nto it here.",
+                          "properties": {
+                            "key": {
+                              "description": "The key of the secret to select from.  Must be a valid secret key.",
+                              "type": "string"
+                            },
+                            "name": {
+                              "default": "",
+                              "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+                              "type": "string"
+                            },
+                            "optional": {
+                              "description": "Specify whether the Secret or its key must be defined",
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "key"
+                          ],
+                          "type": "object",
+                          "x-kubernetes-map-type": "atomic",
+                          "additionalProperties": false
+                        }
+                      },
+                      "type": "object",
+                      "x-kubernetes-map-type": "atomic",
+                      "x-kubernetes-validations": [
+                        {
+                          "message": "one of inline, configMapKeyRef, secretKeyRef, or externalSecretRef must be set",
+                          "rule": "has(self.inline) || has(self.configMapKeyRef) || has(self.secretKeyRef) || has(self.externalSecretRef)"
+                        },
+                        {
+                          "message": "if inline is set no other field can be set",
+                          "rule": "!has(self.inline) || (has(self.inline) && !(has(self.configMapKeyRef) || has(self.secretKeyRef) || has(self.externalSecretRef)))"
+                        },
+                        {
+                          "message": "if configMapKeyRef is set no other field can be set",
+                          "rule": "!has(self.configMapKeyRef) || (has(self.configMapKeyRef) && !(has(self.inline) || has(self.secretKeyRef) || has(self.externalSecretRef)))"
+                        },
+                        {
+                          "message": "if secretKeyRef is set no other field can be set",
+                          "rule": "!has(self.secretKeyRef) || (has(self.secretKeyRef) && !(has(self.configMapKeyRef) || has(self.inline) || has(self.externalSecretRef)))"
+                        },
+                        {
+                          "message": "if externalSecretRef is set no other field can be set",
+                          "rule": "!has(self.externalSecretRef) || (has(self.externalSecretRef) && !(has(self.configMapKeyRef) || has(self.secretKeyRef) || has(self.inline)))"
+                        }
+                      ],
+                      "additionalProperties": false
+                    },
+                    "keySecretRef": {
+                      "description": "Deprecated: replaced by \"key\".",
+                      "properties": {
+                        "key": {
+                          "description": "Key in Secret data to get value from",
+                          "type": "string"
+                        },
+                        "name": {
+                          "description": "Name of the referent.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name"
+                      ],
+                      "type": "object",
+                      "additionalProperties": false
+                    }
+                  },
+                  "type": "object",
+                  "x-kubernetes-validations": [
+                    {
+                      "message": "insecureSkipTlsVerify is not supported for schema registry connections",
+                      "rule": "!has(self.insecureSkipTlsVerify) || !self.insecureSkipTlsVerify"
+                    },
+                    {
+                      "message": "use caCert, cert, and key rather than the deprecated secret-reference fields",
+                      "rule": "!has(self.caCertSecretRef) && !has(self.certSecretRef) && !has(self.keySecretRef)"
+                    }
+                  ],
+                  "additionalProperties": false
+                },
+                "unsupportedSchemaFeaturePolicy": {
+                  "description": "Policy applied when a source schema uses features that the Redpanda\nschema registry does not support. Defaults to fail.",
+                  "enum": [
+                    "fail",
+                    "remove"
+                  ],
+                  "type": "string"
+                }
+              },
+              "required": [
+                "sourceURL"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "type": "object",
+          "x-kubernetes-validations": [
+            {
+              "message": "shadowSchemaRegistryAPI is required when schema_registry_shadowing_mode is api",
+              "rule": "!has(self.schema_registry_shadowing_mode) || self.schema_registry_shadowing_mode != 'api' || has(self.shadowSchemaRegistryAPI)"
+            },
+            {
+              "message": "shadowSchemaRegistryAPI may only be set when schema_registry_shadowing_mode is api (or, via the deprecated enabled field, when enabled is true)",
+              "rule": "!has(self.shadowSchemaRegistryAPI) || (has(self.schema_registry_shadowing_mode) && self.schema_registry_shadowing_mode == 'api') || (!has(self.schema_registry_shadowing_mode) && has(self.enabled) && self.enabled)"
+            }
+          ],
           "additionalProperties": false
         },
         "securitySyncOptions": {
@@ -179,8 +994,14 @@
               "description": "ClusterRef is a reference to the cluster where the object should be created.\nIt is used in constructing the client created to configure a cluster.\nThis takes precedence over StaticConfigurationSource.",
               "properties": {
                 "group": {
-                  "description": "Group is used to override the object group that this reference points to.\nIf unspecified, defaults to \"cluster.redpanda.com\".",
-                  "type": "string"
+                  "description": "Group is used to override the object group that this reference points to.\nIf unspecified, defaults to \"cluster.redpanda.com\".\nA bare API group only \u2014 controllers match it by string comparison, so a\n\"group/version\" value (e.g. \"cluster.redpanda.com/v1alpha2\") would\nsilently match nothing and the referencing object would never bind.",
+                  "type": "string",
+                  "x-kubernetes-validations": [
+                    {
+                      "message": "group must be a bare API group without a version suffix (e.g. cluster.redpanda.com, not cluster.redpanda.com/v1alpha2)",
+                      "rule": "!self.contains('/')"
+                    }
+                  ]
                 },
                 "kind": {
                   "description": "Kind is used to override the object kind that this reference points to.\nIf unspecified, defaults to \"Redpanda\".",
@@ -188,6 +1009,10 @@
                 },
                 "name": {
                   "description": "Name specifies the name of the cluster being referenced.",
+                  "type": "string"
+                },
+                "namespace": {
+                  "description": "Namespace specifies the namespace of the cluster being referenced.\nIf unspecified, defaults to the namespace of the referencing object.\nSetting this allows referencing a cluster that resides in a different\nnamespace, e.g. a ShadowLink whose source and shadow Redpanda clusters\nlive in separate namespaces on the same Kubernetes cluster.",
                   "type": "string"
                 }
               },
@@ -2517,8 +3342,14 @@
               "description": "ClusterRef is a reference to the cluster where the object should be created.\nIt is used in constructing the client created to configure a cluster.\nThis takes precedence over StaticConfigurationSource.",
               "properties": {
                 "group": {
-                  "description": "Group is used to override the object group that this reference points to.\nIf unspecified, defaults to \"cluster.redpanda.com\".",
-                  "type": "string"
+                  "description": "Group is used to override the object group that this reference points to.\nIf unspecified, defaults to \"cluster.redpanda.com\".\nA bare API group only \u2014 controllers match it by string comparison, so a\n\"group/version\" value (e.g. \"cluster.redpanda.com/v1alpha2\") would\nsilently match nothing and the referencing object would never bind.",
+                  "type": "string",
+                  "x-kubernetes-validations": [
+                    {
+                      "message": "group must be a bare API group without a version suffix (e.g. cluster.redpanda.com, not cluster.redpanda.com/v1alpha2)",
+                      "rule": "!self.contains('/')"
+                    }
+                  ]
                 },
                 "kind": {
                   "description": "Kind is used to override the object kind that this reference points to.\nIf unspecified, defaults to \"Redpanda\".",
@@ -2526,6 +3357,10 @@
                 },
                 "name": {
                   "description": "Name specifies the name of the cluster being referenced.",
+                  "type": "string"
+                },
+                "namespace": {
+                  "description": "Namespace specifies the namespace of the cluster being referenced.\nIf unspecified, defaults to the namespace of the referencing object.\nSetting this allows referencing a cluster that resides in a different\nnamespace, e.g. a ShadowLink whose source and shadow Redpanda clusters\nlive in separate namespaces on the same Kubernetes cluster.",
                   "type": "string"
                 }
               },
