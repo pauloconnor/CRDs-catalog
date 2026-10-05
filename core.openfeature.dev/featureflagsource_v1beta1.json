@@ -30,6 +30,7 @@
           "type": "array"
         },
         "debugLogging": {
+          "default": false,
           "description": "DebugLogging defines whether to enable --debug flag of flagd sidecar. Default false (disabled).",
           "type": "boolean"
         },
@@ -182,6 +183,14 @@
           "description": "HeaderToContextMappings map HTTP header names to evaluation context keys",
           "type": "object"
         },
+        "keepAliveMinTime": {
+          "description": "KeepAliveMinTime sets the minimum interval the flagd sync server permits\nbetween client keepalive pings. When unset, flagd's own default applies.",
+          "type": "string"
+        },
+        "keepAlivePermitWithoutStream": {
+          "description": "KeepAlivePermitWithoutStream permits client keepalive pings even when there\nis no active stream. When unset, flagd's own default applies.",
+          "type": "boolean"
+        },
         "logFormat": {
           "default": "json",
           "description": "LogFormat allows for the sidecar log format to be overridden, defaults to 'json'",
@@ -210,6 +219,7 @@
           "type": "integer"
         },
         "probesEnabled": {
+          "default": true,
           "description": "ProbesEnabled defines whether to enable liveness and readiness probes of flagd sidecar. Default true (enabled).",
           "type": "boolean"
         },
@@ -279,6 +289,7 @@
           "additionalProperties": false
         },
         "rolloutOnChange": {
+          "default": false,
           "description": "RolloutOnChange dictates whether annotated deployments will be restarted when configuration changes are\ndetected in this CR, defaults to false",
           "type": "boolean"
         },
@@ -304,7 +315,7 @@
                 "type": "integer"
               },
               "provider": {
-                "description": "Provider type - kubernetes, http(s), grpc(s) or file",
+                "description": "Provider type - kubernetes, file, http(s), grpc(s), gcs, azblob, s3 or flagd-proxy",
                 "type": "string"
               },
               "providerID": {
