@@ -133,7 +133,7 @@
               "type": "boolean"
             },
             "grafanaMajorVersion": {
-              "description": "Which major version of Grafana to deploy. Possible values are 10, 11.",
+              "description": "Which major version of Grafana to deploy. Possible values are 11, 12.",
               "type": "string"
             },
             "identity": {
@@ -332,7 +332,11 @@
               "additionalProperties": false
             },
             "sku": {
-              "description": "The name of the SKU used for the Grafana instance. Possible values are Standard and Essential. Defaults to Standard. Changing this forces a new Dashboard Grafana to be created.",
+              "description": "The name of the SKU used for the Grafana instance. The only possible value is Standard. Defaults to Standard. Changing this forces a new Dashboard Grafana to be created.",
+              "type": "string"
+            },
+            "skuSize": {
+              "description": "The size of the SKU used for the Grafana instance. Possible values are X1 and X2. Defaults to X1. Changing this forces a new Dashboard Grafana to be created.",
               "type": "string"
             },
             "smtp": {
@@ -520,7 +524,7 @@
               "type": "boolean"
             },
             "grafanaMajorVersion": {
-              "description": "Which major version of Grafana to deploy. Possible values are 10, 11.",
+              "description": "Which major version of Grafana to deploy. Possible values are 11, 12.",
               "type": "string"
             },
             "identity": {
@@ -635,7 +639,11 @@
               "type": "boolean"
             },
             "sku": {
-              "description": "The name of the SKU used for the Grafana instance. Possible values are Standard and Essential. Defaults to Standard. Changing this forces a new Dashboard Grafana to be created.",
+              "description": "The name of the SKU used for the Grafana instance. The only possible value is Standard. Defaults to Standard. Changing this forces a new Dashboard Grafana to be created.",
+              "type": "string"
+            },
+            "skuSize": {
+              "description": "The size of the SKU used for the Grafana instance. Possible values are X1 and X2. Defaults to X1. Changing this forces a new Dashboard Grafana to be created.",
               "type": "string"
             },
             "smtp": {
@@ -848,7 +856,7 @@
               "type": "string"
             },
             "grafanaMajorVersion": {
-              "description": "Which major version of Grafana to deploy. Possible values are 10, 11.",
+              "description": "Which major version of Grafana to deploy. Possible values are 11, 12.",
               "type": "string"
             },
             "grafanaVersion": {
@@ -906,7 +914,11 @@
               "type": "string"
             },
             "sku": {
-              "description": "The name of the SKU used for the Grafana instance. Possible values are Standard and Essential. Defaults to Standard. Changing this forces a new Dashboard Grafana to be created.",
+              "description": "The name of the SKU used for the Grafana instance. The only possible value is Standard. Defaults to Standard. Changing this forces a new Dashboard Grafana to be created.",
+              "type": "string"
+            },
+            "skuSize": {
+              "description": "The size of the SKU used for the Grafana instance. Possible values are X1 and X2. Defaults to X1. Changing this forces a new Dashboard Grafana to be created.",
               "type": "string"
             },
             "smtp": {
@@ -1006,6 +1018,10 @@
             "type"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "lastHandledReconcileAt": {
+          "description": "LastHandledReconcileAt holds the value of the most recent\nreconcile-requested-at annotation token that the controller has\nprocessed. Users can compare this to the annotation to determine\nwhether a reconcile request has been handled.",
+          "type": "string"
         },
         "observedGeneration": {
           "description": "ObservedGeneration is the latest metadata.generation\nwhich resulted in either a ready state, or stalled due to error\nit can not recover from without human intervention.",
