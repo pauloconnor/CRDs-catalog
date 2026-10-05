@@ -1,5 +1,5 @@
 {
-  "description": "ConnectionPool is the Schema for the connectionpools API.\nInfo \"Exposes secret keys\": `CONNECTIONPOOL_NAME`, `CONNECTIONPOOL_HOST`, `CONNECTIONPOOL_PORT`, `CONNECTIONPOOL_DATABASE`, `CONNECTIONPOOL_USER`, `CONNECTIONPOOL_PASSWORD`, `CONNECTIONPOOL_SSLMODE`, `CONNECTIONPOOL_DATABASE_URI`, `CONNECTIONPOOL_CA_CERT`",
+  "description": "UpgradePipelineStep is the Schema for the upgradepipelinesteps API.",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -13,7 +13,7 @@
       "type": "object"
     },
     "spec": {
-      "description": "ConnectionPoolSpec defines the desired state of ConnectionPool",
+      "description": "UpgradePipelineStepSpec defines the desired state of UpgradePipelineStep.",
       "properties": {
         "authSecretRef": {
           "description": "Authentication reference to Aiven token in a secret",
@@ -34,83 +34,16 @@
           "type": "object",
           "additionalProperties": false
         },
-        "connInfoSecretTarget": {
-          "description": "Secret configuration.",
-          "properties": {
-            "annotations": {
-              "additionalProperties": {
-                "type": "string"
-              },
-              "description": "Annotations added to the secret",
-              "type": "object",
-              "x-kubernetes-preserve-unknown-fields": true
-            },
-            "labels": {
-              "additionalProperties": {
-                "type": "string"
-              },
-              "description": "Labels added to the secret",
-              "type": "object",
-              "x-kubernetes-preserve-unknown-fields": true
-            },
-            "name": {
-              "description": "Name of the secret resource to be created. By default, it is equal to the resource name",
-              "type": "string",
-              "x-kubernetes-validations": [
-                {
-                  "message": "Value is immutable",
-                  "rule": "self == oldSelf"
-                }
-              ]
-            },
-            "prefix": {
-              "description": "Prefix for the secret's keys.\nAdded \"as is\" without any transformations.\nBy default, is equal to the kind name in uppercase + underscore, e.g. `KAFKA_`, `REDIS_`, etc.",
-              "type": "string"
-            }
-          },
-          "required": [
-            "name"
-          ],
-          "type": "object",
-          "additionalProperties": false
-        },
-        "connInfoSecretTargetDisabled": {
-          "description": "When true, the secret containing connection information will not be created, defaults to false. This field cannot be changed after resource creation.",
-          "type": "boolean",
-          "x-kubernetes-validations": [
-            {
-              "message": "connInfoSecretTargetDisabled is immutable.",
-              "rule": "self == oldSelf"
-            }
-          ]
-        },
-        "databaseName": {
-          "description": "Name of the database the pool connects to",
-          "maxLength": 40,
-          "type": "string",
-          "x-kubernetes-validations": [
-            {
-              "message": "databaseName is immutable",
-              "rule": "self == oldSelf"
-            }
-          ]
-        },
-        "poolMode": {
-          "description": "Mode the pool operates in (session, transaction, statement)",
-          "enum": [
-            "session",
-            "transaction",
-            "statement"
-          ],
-          "type": "string"
-        },
-        "poolSize": {
-          "description": "Number of connections the pool may create towards the backend server",
+        "autoValidationDelayDays": {
+          "default": 7,
+          "description": "AutoValidationDelayDays is the number of days before Aiven can automatically validate the source service.",
+          "minimum": 0,
           "type": "integer"
         },
-        "project": {
-          "description": "Identifies the project this resource belongs to",
+        "destinationProjectName": {
+          "description": "DestinationProjectName is the project name of the service that waits for the source service.",
           "maxLength": 63,
+          "minLength": 1,
           "pattern": "^[a-zA-Z0-9_-]+$",
           "type": "string",
           "x-kubernetes-validations": [
@@ -120,9 +53,10 @@
             }
           ]
         },
-        "serviceName": {
-          "description": "Specifies the name of the service that this resource belongs to",
+        "destinationServiceName": {
+          "description": "DestinationServiceName is the service name that waits for the source service.",
           "maxLength": 63,
+          "minLength": 1,
           "pattern": "^[a-z][-a-z0-9]+$",
           "type": "string",
           "x-kubernetes-validations": [
@@ -132,41 +66,59 @@
             }
           ]
         },
-        "username": {
-          "description": "Name of the service user used to connect to the database",
-          "maxLength": 64,
+        "organizationId": {
+          "description": "OrganizationID is the Aiven organization ID that owns the upgrade pipeline step.",
+          "minLength": 1,
           "type": "string",
           "x-kubernetes-validations": [
             {
-              "message": "username is immutable",
+              "message": "Value is immutable",
+              "rule": "self == oldSelf"
+            }
+          ]
+        },
+        "sourceProjectName": {
+          "description": "SourceProjectName is the project name of the service that must be upgraded first.",
+          "maxLength": 63,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9_-]+$",
+          "type": "string",
+          "x-kubernetes-validations": [
+            {
+              "message": "Value is immutable",
+              "rule": "self == oldSelf"
+            }
+          ]
+        },
+        "sourceServiceName": {
+          "description": "SourceServiceName is the service name that must be upgraded first.",
+          "maxLength": 63,
+          "minLength": 1,
+          "pattern": "^[a-z][-a-z0-9]+$",
+          "type": "string",
+          "x-kubernetes-validations": [
+            {
+              "message": "Value is immutable",
               "rule": "self == oldSelf"
             }
           ]
         }
       },
       "required": [
-        "databaseName",
-        "project",
-        "serviceName"
+        "destinationProjectName",
+        "destinationServiceName",
+        "organizationId",
+        "sourceProjectName",
+        "sourceServiceName"
       ],
       "type": "object",
-      "x-kubernetes-validations": [
-        {
-          "message": "username is immutable",
-          "rule": "((!has(oldSelf.username) || size(oldSelf.username) == 0) && (!has(self.username) || size(self.username) == 0)) || (has(oldSelf.username) && size(oldSelf.username) > 0 && has(self.username) && self.username == oldSelf.username)"
-        },
-        {
-          "message": "connInfoSecretTargetDisabled can only be set during resource creation.",
-          "rule": "has(oldSelf.connInfoSecretTargetDisabled) == has(self.connInfoSecretTargetDisabled)"
-        }
-      ],
       "additionalProperties": false
     },
     "status": {
-      "description": "ConnectionPoolStatus defines the observed state of ConnectionPool",
+      "description": "UpgradePipelineStepStatus defines the observed state of UpgradePipelineStep.",
       "properties": {
         "conditions": {
-          "description": "Conditions represent the latest available observations of an ConnectionPool state",
+          "description": "Conditions represent the latest available observations of an UpgradePipelineStep state.",
           "items": {
             "description": "Condition contains details for one aspect of the current state of this API Resource.",
             "properties": {
@@ -220,6 +172,30 @@
             "additionalProperties": false
           },
           "type": "array"
+        },
+        "id": {
+          "description": "ID is the Aiven upgrade pipeline step ID.",
+          "type": "string"
+        },
+        "lastValidation": {
+          "description": "LastValidation contains the last validation information returned by the Aiven API.",
+          "properties": {
+            "comment": {
+              "description": "Comment is the validation comment.",
+              "type": "string"
+            },
+            "validatedAt": {
+              "description": "ValidatedAt is the time the validation was created.",
+              "format": "date-time",
+              "type": "string"
+            },
+            "validatedByUser": {
+              "description": "ValidatedByUser is the user who created the validation. It is empty for auto-validation.",
+              "type": "string"
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
         }
       },
       "required": [
