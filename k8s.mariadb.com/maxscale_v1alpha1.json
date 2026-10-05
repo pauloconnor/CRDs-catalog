@@ -39,18 +39,18 @@
               "type": "boolean"
             },
             "nodeAffinity": {
-              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#nodeaffinity-v1-core",
+              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#nodeaffinity-v1-core",
               "properties": {
                 "preferredDuringSchedulingIgnoredDuringExecution": {
                   "items": {
-                    "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#preferredschedulingterm-v1-core",
+                    "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#preferredschedulingterm-v1-core",
                     "properties": {
                       "preference": {
-                        "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#nodeselectorterm-v1-core",
+                        "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#nodeselectorterm-v1-core",
                         "properties": {
                           "matchExpressions": {
                             "items": {
-                              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#nodeselectorrequirement-v1-core",
+                              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#nodeselectorrequirement-v1-core",
                               "properties": {
                                 "key": {
                                   "type": "string"
@@ -79,7 +79,7 @@
                           },
                           "matchFields": {
                             "items": {
-                              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#nodeselectorrequirement-v1-core",
+                              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#nodeselectorrequirement-v1-core",
                               "properties": {
                                 "key": {
                                   "type": "string"
@@ -126,15 +126,15 @@
                   "x-kubernetes-list-type": "atomic"
                 },
                 "requiredDuringSchedulingIgnoredDuringExecution": {
-                  "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#nodeselector-v1-core",
+                  "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#nodeselector-v1-core",
                   "properties": {
                     "nodeSelectorTerms": {
                       "items": {
-                        "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#nodeselectorterm-v1-core",
+                        "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#nodeselectorterm-v1-core",
                         "properties": {
                           "matchExpressions": {
                             "items": {
-                              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#nodeselectorrequirement-v1-core",
+                              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#nodeselectorrequirement-v1-core",
                               "properties": {
                                 "key": {
                                   "type": "string"
@@ -163,7 +163,7 @@
                           },
                           "matchFields": {
                             "items": {
-                              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#nodeselectorrequirement-v1-core",
+                              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#nodeselectorrequirement-v1-core",
                               "properties": {
                                 "key": {
                                   "type": "string"
@@ -209,21 +209,21 @@
               "additionalProperties": false
             },
             "podAntiAffinity": {
-              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#podantiaffinity-v1-core.",
+              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#podantiaffinity-v1-core.",
               "properties": {
                 "preferredDuringSchedulingIgnoredDuringExecution": {
                   "items": {
-                    "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#weightedpodaffinityterm-v1-core.",
+                    "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#weightedpodaffinityterm-v1-core.",
                     "properties": {
                       "podAffinityTerm": {
-                        "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#podaffinityterm-v1-core.",
+                        "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#podaffinityterm-v1-core.",
                         "properties": {
                           "labelSelector": {
-                            "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#labelselector-v1-meta",
+                            "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#labelselector-v1-meta",
                             "properties": {
                               "matchExpressions": {
                                 "items": {
-                                  "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#labelselectorrequirement-v1-meta",
+                                  "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#labelselectorrequirement-v1-meta",
                                   "properties": {
                                     "key": {
                                       "type": "string"
@@ -287,14 +287,14 @@
                 },
                 "requiredDuringSchedulingIgnoredDuringExecution": {
                   "items": {
-                    "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#podaffinityterm-v1-core.",
+                    "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#podaffinityterm-v1-core.",
                     "properties": {
                       "labelSelector": {
-                        "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#labelselector-v1-meta",
+                        "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#labelselector-v1-meta",
                         "properties": {
                           "matchExpressions": {
                             "items": {
-                              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#labelselectorrequirement-v1-meta",
+                              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#labelselectorrequirement-v1-meta",
                               "properties": {
                                 "key": {
                                   "type": "string"
@@ -825,7 +825,7 @@
         "env": {
           "description": "Env represents the environment variables to be injected in a container.",
           "items": {
-            "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#envvarsource-v1-core.",
+            "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#envvarsource-v1-core.",
             "properties": {
               "name": {
                 "description": "Name of the environment variable. Must be a C_IDENTIFIER.",
@@ -835,10 +835,10 @@
                 "type": "string"
               },
               "valueFrom": {
-                "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#envvarsource-v1-core.",
+                "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#envvarsource-v1-core.",
                 "properties": {
                   "configMapKeyRef": {
-                    "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#configmapkeyselector-v1-core.",
+                    "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#configmapkeyselector-v1-core.",
                     "properties": {
                       "key": {
                         "type": "string"
@@ -856,7 +856,7 @@
                     "additionalProperties": false
                   },
                   "fieldRef": {
-                    "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#objectfieldselector-v1-core.",
+                    "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#objectfieldselector-v1-core.",
                     "properties": {
                       "apiVersion": {
                         "type": "string"
@@ -873,7 +873,7 @@
                     "additionalProperties": false
                   },
                   "secretKeyRef": {
-                    "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#secretkeyselector-v1-core.",
+                    "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#secretkeyselector-v1-core.",
                     "properties": {
                       "key": {
                         "type": "string"
@@ -906,10 +906,10 @@
         "envFrom": {
           "description": "EnvFrom represents the references (via ConfigMap and Secrets) to environment variables to be injected in the container.",
           "items": {
-            "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#envfromsource-v1-core.",
+            "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#envfromsource-v1-core.",
             "properties": {
               "configMapRef": {
-                "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#localobjectreference-v1-core.",
+                "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#localobjectreference-v1-core.",
                 "properties": {
                   "name": {
                     "default": "",
@@ -923,7 +923,7 @@
                 "type": "string"
               },
               "secretRef": {
-                "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#localobjectreference-v1-core.",
+                "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#localobjectreference-v1-core.",
                 "properties": {
                   "name": {
                     "default": "",
@@ -934,6 +934,36 @@
                 "additionalProperties": false
               }
             },
+            "type": "object",
+            "additionalProperties": false
+          },
+          "type": "array"
+        },
+        "filters": {
+          "description": "Filters are the filters to load into MaxScale. They are not applied automatically, they must be\nreferenced explicitly from 'spec.services[].filters'.",
+          "items": {
+            "description": "MaxScaleFilter defines a MaxScale filter to be applied to services.\nFilters must be referenced explicitly from 'spec.services[].filters'.",
+            "properties": {
+              "module": {
+                "description": "Module is the filter module to load.",
+                "type": "string"
+              },
+              "name": {
+                "description": "Name is the identifier of the MaxScale filter.",
+                "type": "string"
+              },
+              "params": {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "description": "Params defines extra parameters to pass to the filter.\nAny parameter supported by the filter module may be specified here. See reference:\nhttps://mariadb.com/docs/maxscale/reference/maxscale-filters",
+                "type": "object"
+              }
+            },
+            "required": [
+              "module",
+              "name"
+            ],
             "type": "object",
             "additionalProperties": false
           },
@@ -1020,7 +1050,7 @@
         "imagePullSecrets": {
           "description": "ImagePullSecrets is the list of pull Secrets to be used to pull the image.",
           "items": {
-            "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#localobjectreference-v1-core.",
+            "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#localobjectreference-v1-core.",
             "properties": {
               "name": {
                 "default": "",
@@ -1118,11 +1148,144 @@
           "type": "object",
           "additionalProperties": false
         },
+        "lifecycle": {
+          "description": "Lifecycle are actions that the management system should take in response to container lifecycle events.",
+          "properties": {
+            "postStart": {
+              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#lifecyclehandler-v1-core.",
+              "properties": {
+                "exec": {
+                  "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#execaction-v1-core.",
+                  "properties": {
+                    "command": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array",
+                      "x-kubernetes-list-type": "atomic"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "httpGet": {
+                  "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#httpgetaction-v1-core.",
+                  "properties": {
+                    "host": {
+                      "type": "string"
+                    },
+                    "path": {
+                      "type": "string"
+                    },
+                    "port": {
+                      "anyOf": [
+                        {
+                          "type": "integer"
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ],
+                      "x-kubernetes-int-or-string": true
+                    },
+                    "scheme": {
+                      "description": "URIScheme identifies the scheme used for connection to a host for Get actions",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "port"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "sleep": {
+                  "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#sleepaction-v1-core",
+                  "properties": {
+                    "seconds": {
+                      "format": "int64",
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
+            "preStop": {
+              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#lifecyclehandler-v1-core.",
+              "properties": {
+                "exec": {
+                  "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#execaction-v1-core.",
+                  "properties": {
+                    "command": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array",
+                      "x-kubernetes-list-type": "atomic"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "httpGet": {
+                  "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#httpgetaction-v1-core.",
+                  "properties": {
+                    "host": {
+                      "type": "string"
+                    },
+                    "path": {
+                      "type": "string"
+                    },
+                    "port": {
+                      "anyOf": [
+                        {
+                          "type": "integer"
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ],
+                      "x-kubernetes-int-or-string": true
+                    },
+                    "scheme": {
+                      "description": "URIScheme identifies the scheme used for connection to a host for Get actions",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "port"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "sleep": {
+                  "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#sleepaction-v1-core",
+                  "properties": {
+                    "seconds": {
+                      "format": "int64",
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
         "livenessProbe": {
           "description": "LivenessProbe to be used in the Container.",
           "properties": {
             "exec": {
-              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#execaction-v1-core.",
+              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#execaction-v1-core.",
               "properties": {
                 "command": {
                   "items": {
@@ -1140,7 +1303,7 @@
               "type": "integer"
             },
             "httpGet": {
-              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#httpgetaction-v1-core.",
+              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#httpgetaction-v1-core.",
               "properties": {
                 "host": {
                   "type": "string"
@@ -1183,7 +1346,7 @@
               "type": "integer"
             },
             "tcpSocket": {
-              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#tcpsocketaction-v1-core.",
+              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#tcpsocketaction-v1-core.",
               "properties": {
                 "host": {
                   "type": "string"
@@ -1209,6 +1372,21 @@
             "timeoutSeconds": {
               "format": "int32",
               "type": "integer"
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
+        "maintenance": {
+          "description": "Maintenance defines different capabilities of the operator to allow for maintenance to be performed on the DB.\nNot to be confused with `suspend`, maintenance does not interfere with the normal reconciliation of the operator.",
+          "properties": {
+            "cordon": {
+              "description": "Cordon blocks connections to the resource.",
+              "type": "boolean"
+            },
+            "enabled": {
+              "description": "Enabled turns on maintenance mode",
+              "type": "boolean"
             }
           },
           "type": "object",
@@ -1254,18 +1432,18 @@
                       "type": "boolean"
                     },
                     "nodeAffinity": {
-                      "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#nodeaffinity-v1-core",
+                      "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#nodeaffinity-v1-core",
                       "properties": {
                         "preferredDuringSchedulingIgnoredDuringExecution": {
                           "items": {
-                            "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#preferredschedulingterm-v1-core",
+                            "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#preferredschedulingterm-v1-core",
                             "properties": {
                               "preference": {
-                                "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#nodeselectorterm-v1-core",
+                                "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#nodeselectorterm-v1-core",
                                 "properties": {
                                   "matchExpressions": {
                                     "items": {
-                                      "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#nodeselectorrequirement-v1-core",
+                                      "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#nodeselectorrequirement-v1-core",
                                       "properties": {
                                         "key": {
                                           "type": "string"
@@ -1294,7 +1472,7 @@
                                   },
                                   "matchFields": {
                                     "items": {
-                                      "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#nodeselectorrequirement-v1-core",
+                                      "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#nodeselectorrequirement-v1-core",
                                       "properties": {
                                         "key": {
                                           "type": "string"
@@ -1341,15 +1519,15 @@
                           "x-kubernetes-list-type": "atomic"
                         },
                         "requiredDuringSchedulingIgnoredDuringExecution": {
-                          "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#nodeselector-v1-core",
+                          "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#nodeselector-v1-core",
                           "properties": {
                             "nodeSelectorTerms": {
                               "items": {
-                                "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#nodeselectorterm-v1-core",
+                                "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#nodeselectorterm-v1-core",
                                 "properties": {
                                   "matchExpressions": {
                                     "items": {
-                                      "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#nodeselectorrequirement-v1-core",
+                                      "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#nodeselectorrequirement-v1-core",
                                       "properties": {
                                         "key": {
                                           "type": "string"
@@ -1378,7 +1556,7 @@
                                   },
                                   "matchFields": {
                                     "items": {
-                                      "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#nodeselectorrequirement-v1-core",
+                                      "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#nodeselectorrequirement-v1-core",
                                       "properties": {
                                         "key": {
                                           "type": "string"
@@ -1424,21 +1602,21 @@
                       "additionalProperties": false
                     },
                     "podAntiAffinity": {
-                      "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#podantiaffinity-v1-core.",
+                      "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#podantiaffinity-v1-core.",
                       "properties": {
                         "preferredDuringSchedulingIgnoredDuringExecution": {
                           "items": {
-                            "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#weightedpodaffinityterm-v1-core.",
+                            "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#weightedpodaffinityterm-v1-core.",
                             "properties": {
                               "podAffinityTerm": {
-                                "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#podaffinityterm-v1-core.",
+                                "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#podaffinityterm-v1-core.",
                                 "properties": {
                                   "labelSelector": {
-                                    "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#labelselector-v1-meta",
+                                    "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#labelselector-v1-meta",
                                     "properties": {
                                       "matchExpressions": {
                                         "items": {
-                                          "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#labelselectorrequirement-v1-meta",
+                                          "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#labelselectorrequirement-v1-meta",
                                           "properties": {
                                             "key": {
                                               "type": "string"
@@ -1502,14 +1680,14 @@
                         },
                         "requiredDuringSchedulingIgnoredDuringExecution": {
                           "items": {
-                            "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#podaffinityterm-v1-core.",
+                            "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#podaffinityterm-v1-core.",
                             "properties": {
                               "labelSelector": {
-                                "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#labelselector-v1-meta",
+                                "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#labelselector-v1-meta",
                                 "properties": {
                                   "matchExpressions": {
                                     "items": {
-                                      "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#labelselectorrequirement-v1-meta",
+                                      "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#labelselectorrequirement-v1-meta",
                                       "properties": {
                                         "key": {
                                           "type": "string"
@@ -1590,7 +1768,7 @@
                 "imagePullSecrets": {
                   "description": "ImagePullSecrets is the list of pull Secrets to be used to pull the image.",
                   "items": {
-                    "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#localobjectreference-v1-core.",
+                    "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#localobjectreference-v1-core.",
                     "properties": {
                       "name": {
                         "default": "",
@@ -2089,7 +2267,7 @@
           "description": "ReadinessProbe to be used in the Container.",
           "properties": {
             "exec": {
-              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#execaction-v1-core.",
+              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#execaction-v1-core.",
               "properties": {
                 "command": {
                   "items": {
@@ -2107,7 +2285,7 @@
               "type": "integer"
             },
             "httpGet": {
-              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#httpgetaction-v1-core.",
+              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#httpgetaction-v1-core.",
               "properties": {
                 "host": {
                   "type": "string"
@@ -2150,7 +2328,7 @@
               "type": "integer"
             },
             "tcpSocket": {
-              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#tcpsocketaction-v1-core.",
+              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#tcpsocketaction-v1-core.",
               "properties": {
                 "host": {
                   "type": "string"
@@ -2334,6 +2512,13 @@
           "items": {
             "description": "Services define how the traffic is forwarded to the MariaDB servers.",
             "properties": {
+              "filters": {
+                "description": "Filters are the names of the filters defined in 'spec.filters' to apply to this service, in order.",
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
               "listener": {
                 "description": "MaxScaleListener defines how the MaxScale server will listen for connections.",
                 "properties": {
@@ -2408,7 +2593,7 @@
           "description": "StartupProbe to be used in the Container.",
           "properties": {
             "exec": {
-              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#execaction-v1-core.",
+              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#execaction-v1-core.",
               "properties": {
                 "command": {
                   "items": {
@@ -2426,7 +2611,7 @@
               "type": "integer"
             },
             "httpGet": {
-              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#httpgetaction-v1-core.",
+              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#httpgetaction-v1-core.",
               "properties": {
                 "host": {
                   "type": "string"
@@ -2469,7 +2654,7 @@
               "type": "integer"
             },
             "tcpSocket": {
-              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#tcpsocketaction-v1-core.",
+              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#tcpsocketaction-v1-core.",
               "properties": {
                 "host": {
                   "type": "string"
@@ -2673,7 +2858,7 @@
         "topologySpreadConstraints": {
           "description": "TopologySpreadConstraints to be used in the Pod.",
           "items": {
-            "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#topologyspreadconstraint-v1-core.",
+            "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#topologyspreadconstraint-v1-core.",
             "properties": {
               "labelSelector": {
                 "description": "A label selector is a label query over a set of resources. The result of matchLabels and\nmatchExpressions are ANDed. An empty label selector matches all objects. A null\nlabel selector matches no objects.",
@@ -2799,7 +2984,7 @@
         "volumeMounts": {
           "description": "VolumeMounts to be used in the Container.",
           "items": {
-            "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#volumemount-v1-core.",
+            "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#volumemount-v1-core.",
             "properties": {
               "mountPath": {
                 "type": "string"
@@ -2817,6 +3002,163 @@
             },
             "required": [
               "mountPath",
+              "name"
+            ],
+            "type": "object",
+            "additionalProperties": false
+          },
+          "type": "array"
+        },
+        "volumes": {
+          "description": "Volumes to be used in the Pod.",
+          "items": {
+            "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#volume-v1-core.",
+            "properties": {
+              "configMap": {
+                "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#configmapvolumesource-v1-core.",
+                "properties": {
+                  "defaultMode": {
+                    "format": "int32",
+                    "type": "integer"
+                  },
+                  "name": {
+                    "default": "",
+                    "type": "string"
+                  }
+                },
+                "type": "object",
+                "additionalProperties": false
+              },
+              "csi": {
+                "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#csivolumesource-v1-core.",
+                "properties": {
+                  "driver": {
+                    "type": "string"
+                  },
+                  "fsType": {
+                    "type": "string"
+                  },
+                  "nodePublishSecretRef": {
+                    "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#localobjectreference-v1-core.",
+                    "properties": {
+                      "name": {
+                        "default": "",
+                        "type": "string"
+                      }
+                    },
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "readOnly": {
+                    "type": "boolean"
+                  },
+                  "volumeAttributes": {
+                    "additionalProperties": {
+                      "type": "string"
+                    },
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "driver"
+                ],
+                "type": "object",
+                "additionalProperties": false
+              },
+              "emptyDir": {
+                "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#emptydirvolumesource-v1-core.",
+                "properties": {
+                  "medium": {
+                    "description": "StorageMedium defines ways that storage can be allocated to a volume.",
+                    "type": "string"
+                  },
+                  "sizeLimit": {
+                    "anyOf": [
+                      {
+                        "type": "integer"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ],
+                    "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                    "x-kubernetes-int-or-string": true
+                  }
+                },
+                "type": "object",
+                "additionalProperties": false
+              },
+              "hostPath": {
+                "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#hostpathvolumesource-v1-core",
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path"
+                ],
+                "type": "object",
+                "additionalProperties": false
+              },
+              "name": {
+                "type": "string"
+              },
+              "nfs": {
+                "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#nfsvolumesource-v1-core.",
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "readOnly": {
+                    "type": "boolean"
+                  },
+                  "server": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "server"
+                ],
+                "type": "object",
+                "additionalProperties": false
+              },
+              "persistentVolumeClaim": {
+                "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#persistentvolumeclaimvolumesource-v1-core.",
+                "properties": {
+                  "claimName": {
+                    "type": "string"
+                  },
+                  "readOnly": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "claimName"
+                ],
+                "type": "object",
+                "additionalProperties": false
+              },
+              "secret": {
+                "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.36/#secretvolumesource-v1-core.",
+                "properties": {
+                  "defaultMode": {
+                    "format": "int32",
+                    "type": "integer"
+                  },
+                  "secretName": {
+                    "type": "string"
+                  }
+                },
+                "type": "object",
+                "additionalProperties": false
+              }
+            },
+            "required": [
               "name"
             ],
             "type": "object",
@@ -2903,6 +3245,10 @@
           ],
           "type": "object",
           "additionalProperties": false
+        },
+        "filtersSpec": {
+          "description": "FiltersSpec is a hashed version of spec.filters to be able to track changes during reconciliation.",
+          "type": "string"
         },
         "listeners": {
           "description": "Listeners is the state of the listeners in the MaxScale API.",
