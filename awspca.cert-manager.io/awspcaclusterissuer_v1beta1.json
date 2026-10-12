@@ -19,6 +19,23 @@
           "description": "Specifies the ARN of the PCA resource",
           "type": "string"
         },
+        "notBeforeOffset": {
+          "description": "Specifies how far before the issuance time to set NotBefore on issued\ncertificates, up to a maximum of 24h. Defaults to 15m.",
+          "maxLength": 32,
+          "pattern": "^([0-9]{1,5}(s|m|h))+$",
+          "type": "string"
+        },
+        "pcaTemplate": {
+          "description": "Specifies PCA template configuration for this issuer.",
+          "properties": {
+            "defaultTemplateName": {
+              "description": "Specifies the default template name for all certificate requests made to this issuer.\nIf not specified, the template is determined from the usages on the certificate resource.",
+              "type": "string"
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
         "region": {
           "description": "Should contain the AWS region if it cannot be inferred",
           "type": "string"
