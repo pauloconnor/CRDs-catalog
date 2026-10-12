@@ -150,6 +150,7 @@
               "additionalProperties": false
             },
             "spec": {
+              "default": {},
               "description": "Specification of the desired state of a core node.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status",
               "properties": {
                 "affinity": {
@@ -957,9 +958,7 @@
                 },
                 "containerSecurityContext": {
                   "default": {
-                    "runAsGroup": 1000,
-                    "runAsNonRoot": true,
-                    "runAsUser": 1000
+                    "runAsNonRoot": true
                   },
                   "description": "Security options the container should be run with.\nIf set, the fields of SecurityContext override the equivalent fields of PodSecurityContext.\nMore info: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/",
                   "properties": {
@@ -8128,9 +8127,7 @@
                 },
                 "containerSecurityContext": {
                   "default": {
-                    "runAsGroup": 1000,
-                    "runAsNonRoot": true,
-                    "runAsUser": 1000
+                    "runAsNonRoot": true
                   },
                   "description": "Security options the container should be run with.\nIf set, the fields of SecurityContext override the equivalent fields of PodSecurityContext.\nMore info: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/",
                   "properties": {
