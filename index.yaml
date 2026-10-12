@@ -10043,6 +10043,10 @@ fleet.cattle.io:
     filename: fleet.cattle.io/helmop_v1alpha1.json
     kind: HelmOp
     name: helmop_v1alpha1
+  - apiVersion: fleet.cattle.io/v1alpha1
+    filename: fleet.cattle.io/policy_v1alpha1.json
+    kind: Policy
+    name: policy_v1alpha1
 fleetmanagement.grafana.crossplane.io:
   - apiVersion: fleetmanagement.grafana.crossplane.io/v1alpha1
     filename: fleetmanagement.grafana.crossplane.io/pipeline_v1alpha1.json
