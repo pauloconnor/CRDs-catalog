@@ -221,7 +221,7 @@
           "type": "boolean"
         },
         "userConfig": {
-          "description": "Cassandra specific user configuration options",
+          "description": "Grafana specific user configuration options",
           "properties": {
             "additional_backup_regions": {
               "description": "Additional Cloud Regions for Backup Replication",
@@ -693,6 +693,10 @@
               "pattern": "^(G|UA|YT|MO)-[a-zA-Z0-9-]+$",
               "type": "string"
             },
+            "grafana_version": {
+              "description": "Available versions: `11`. Newer versions may also be available.\nGrafana major version",
+              "type": "string"
+            },
             "ip_filter": {
               "description": "Allow incoming connections from CIDR address block, e.g. '10.20.0.0/16'",
               "items": {
@@ -960,6 +964,10 @@
         },
         "state": {
           "description": "Service state",
+          "type": "string"
+        },
+        "version": {
+          "description": "Version of the service currently running.\nMay be more specific than the version configured in userConfig, e.g. `8.1.2` vs `8.1`",
           "type": "string"
         }
       },
