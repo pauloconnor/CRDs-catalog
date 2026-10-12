@@ -8243,21 +8243,6 @@
                                                                   },
                                                                   "type": "object",
                                                                   "additionalProperties": false
-                                                                },
-                                                                "xsltTransformation": {
-                                                                  "properties": {
-                                                                    "nonXmlTransform": {
-                                                                      "type": "boolean"
-                                                                    },
-                                                                    "setContentType": {
-                                                                      "type": "string"
-                                                                    },
-                                                                    "xslt": {
-                                                                      "type": "string"
-                                                                    }
-                                                                  },
-                                                                  "type": "object",
-                                                                  "additionalProperties": false
                                                                 }
                                                               },
                                                               "type": "object",
@@ -8447,21 +8432,6 @@
                                                                       },
                                                                       "type": "object",
                                                                       "additionalProperties": false
-                                                                    }
-                                                                  },
-                                                                  "type": "object",
-                                                                  "additionalProperties": false
-                                                                },
-                                                                "xsltTransformation": {
-                                                                  "properties": {
-                                                                    "nonXmlTransform": {
-                                                                      "type": "boolean"
-                                                                    },
-                                                                    "setContentType": {
-                                                                      "type": "string"
-                                                                    },
-                                                                    "xslt": {
-                                                                      "type": "string"
                                                                     }
                                                                   },
                                                                   "type": "object",
@@ -8688,21 +8658,6 @@
                                                                       },
                                                                       "type": "object",
                                                                       "additionalProperties": false
-                                                                    }
-                                                                  },
-                                                                  "type": "object",
-                                                                  "additionalProperties": false
-                                                                },
-                                                                "xsltTransformation": {
-                                                                  "properties": {
-                                                                    "nonXmlTransform": {
-                                                                      "type": "boolean"
-                                                                    },
-                                                                    "setContentType": {
-                                                                      "type": "string"
-                                                                    },
-                                                                    "xslt": {
-                                                                      "type": "string"
                                                                     }
                                                                   },
                                                                   "type": "object",
@@ -8996,21 +8951,6 @@
                                                                   },
                                                                   "type": "object",
                                                                   "additionalProperties": false
-                                                                },
-                                                                "xsltTransformation": {
-                                                                  "properties": {
-                                                                    "nonXmlTransform": {
-                                                                      "type": "boolean"
-                                                                    },
-                                                                    "setContentType": {
-                                                                      "type": "string"
-                                                                    },
-                                                                    "xslt": {
-                                                                      "type": "string"
-                                                                    }
-                                                                  },
-                                                                  "type": "object",
-                                                                  "additionalProperties": false
                                                                 }
                                                               },
                                                               "type": "object",
@@ -9200,21 +9140,6 @@
                                                                       },
                                                                       "type": "object",
                                                                       "additionalProperties": false
-                                                                    }
-                                                                  },
-                                                                  "type": "object",
-                                                                  "additionalProperties": false
-                                                                },
-                                                                "xsltTransformation": {
-                                                                  "properties": {
-                                                                    "nonXmlTransform": {
-                                                                      "type": "boolean"
-                                                                    },
-                                                                    "setContentType": {
-                                                                      "type": "string"
-                                                                    },
-                                                                    "xslt": {
-                                                                      "type": "string"
                                                                     }
                                                                   },
                                                                   "type": "object",
@@ -9441,21 +9366,6 @@
                                                                       },
                                                                       "type": "object",
                                                                       "additionalProperties": false
-                                                                    }
-                                                                  },
-                                                                  "type": "object",
-                                                                  "additionalProperties": false
-                                                                },
-                                                                "xsltTransformation": {
-                                                                  "properties": {
-                                                                    "nonXmlTransform": {
-                                                                      "type": "boolean"
-                                                                    },
-                                                                    "setContentType": {
-                                                                      "type": "string"
-                                                                    },
-                                                                    "xslt": {
-                                                                      "type": "string"
                                                                     }
                                                                   },
                                                                   "type": "object",
@@ -9738,21 +9648,6 @@
                                                                   },
                                                                   "type": "object",
                                                                   "additionalProperties": false
-                                                                },
-                                                                "xsltTransformation": {
-                                                                  "properties": {
-                                                                    "nonXmlTransform": {
-                                                                      "type": "boolean"
-                                                                    },
-                                                                    "setContentType": {
-                                                                      "type": "string"
-                                                                    },
-                                                                    "xslt": {
-                                                                      "type": "string"
-                                                                    }
-                                                                  },
-                                                                  "type": "object",
-                                                                  "additionalProperties": false
                                                                 }
                                                               },
                                                               "type": "object",
@@ -9942,21 +9837,6 @@
                                                                       },
                                                                       "type": "object",
                                                                       "additionalProperties": false
-                                                                    }
-                                                                  },
-                                                                  "type": "object",
-                                                                  "additionalProperties": false
-                                                                },
-                                                                "xsltTransformation": {
-                                                                  "properties": {
-                                                                    "nonXmlTransform": {
-                                                                      "type": "boolean"
-                                                                    },
-                                                                    "setContentType": {
-                                                                      "type": "string"
-                                                                    },
-                                                                    "xslt": {
-                                                                      "type": "string"
                                                                     }
                                                                   },
                                                                   "type": "object",
@@ -10187,21 +10067,6 @@
                                                                   },
                                                                   "type": "object",
                                                                   "additionalProperties": false
-                                                                },
-                                                                "xsltTransformation": {
-                                                                  "properties": {
-                                                                    "nonXmlTransform": {
-                                                                      "type": "boolean"
-                                                                    },
-                                                                    "setContentType": {
-                                                                      "type": "string"
-                                                                    },
-                                                                    "xslt": {
-                                                                      "type": "string"
-                                                                    }
-                                                                  },
-                                                                  "type": "object",
-                                                                  "additionalProperties": false
                                                                 }
                                                               },
                                                               "type": "object",
@@ -10414,21 +10279,6 @@
                                                         },
                                                         "type": "object",
                                                         "additionalProperties": false
-                                                      },
-                                                      "xsltTransformation": {
-                                                        "properties": {
-                                                          "nonXmlTransform": {
-                                                            "type": "boolean"
-                                                          },
-                                                          "setContentType": {
-                                                            "type": "string"
-                                                          },
-                                                          "xslt": {
-                                                            "type": "string"
-                                                          }
-                                                        },
-                                                        "type": "object",
-                                                        "additionalProperties": false
                                                       }
                                                     },
                                                     "type": "object",
@@ -10618,21 +10468,6 @@
                                                             },
                                                             "type": "object",
                                                             "additionalProperties": false
-                                                          }
-                                                        },
-                                                        "type": "object",
-                                                        "additionalProperties": false
-                                                      },
-                                                      "xsltTransformation": {
-                                                        "properties": {
-                                                          "nonXmlTransform": {
-                                                            "type": "boolean"
-                                                          },
-                                                          "setContentType": {
-                                                            "type": "string"
-                                                          },
-                                                          "xslt": {
-                                                            "type": "string"
                                                           }
                                                         },
                                                         "type": "object",
@@ -13214,21 +13049,6 @@
                                                         },
                                                         "type": "object",
                                                         "additionalProperties": false
-                                                      },
-                                                      "xsltTransformation": {
-                                                        "properties": {
-                                                          "nonXmlTransform": {
-                                                            "type": "boolean"
-                                                          },
-                                                          "setContentType": {
-                                                            "type": "string"
-                                                          },
-                                                          "xslt": {
-                                                            "type": "string"
-                                                          }
-                                                        },
-                                                        "type": "object",
-                                                        "additionalProperties": false
                                                       }
                                                     },
                                                     "type": "object",
@@ -13418,21 +13238,6 @@
                                                             },
                                                             "type": "object",
                                                             "additionalProperties": false
-                                                          }
-                                                        },
-                                                        "type": "object",
-                                                        "additionalProperties": false
-                                                      },
-                                                      "xsltTransformation": {
-                                                        "properties": {
-                                                          "nonXmlTransform": {
-                                                            "type": "boolean"
-                                                          },
-                                                          "setContentType": {
-                                                            "type": "string"
-                                                          },
-                                                          "xslt": {
-                                                            "type": "string"
                                                           }
                                                         },
                                                         "type": "object",
@@ -13659,21 +13464,6 @@
                                                             },
                                                             "type": "object",
                                                             "additionalProperties": false
-                                                          }
-                                                        },
-                                                        "type": "object",
-                                                        "additionalProperties": false
-                                                      },
-                                                      "xsltTransformation": {
-                                                        "properties": {
-                                                          "nonXmlTransform": {
-                                                            "type": "boolean"
-                                                          },
-                                                          "setContentType": {
-                                                            "type": "string"
-                                                          },
-                                                          "xslt": {
-                                                            "type": "string"
                                                           }
                                                         },
                                                         "type": "object",
@@ -13967,21 +13757,6 @@
                                                         },
                                                         "type": "object",
                                                         "additionalProperties": false
-                                                      },
-                                                      "xsltTransformation": {
-                                                        "properties": {
-                                                          "nonXmlTransform": {
-                                                            "type": "boolean"
-                                                          },
-                                                          "setContentType": {
-                                                            "type": "string"
-                                                          },
-                                                          "xslt": {
-                                                            "type": "string"
-                                                          }
-                                                        },
-                                                        "type": "object",
-                                                        "additionalProperties": false
                                                       }
                                                     },
                                                     "type": "object",
@@ -14171,21 +13946,6 @@
                                                             },
                                                             "type": "object",
                                                             "additionalProperties": false
-                                                          }
-                                                        },
-                                                        "type": "object",
-                                                        "additionalProperties": false
-                                                      },
-                                                      "xsltTransformation": {
-                                                        "properties": {
-                                                          "nonXmlTransform": {
-                                                            "type": "boolean"
-                                                          },
-                                                          "setContentType": {
-                                                            "type": "string"
-                                                          },
-                                                          "xslt": {
-                                                            "type": "string"
                                                           }
                                                         },
                                                         "type": "object",
@@ -14412,21 +14172,6 @@
                                                             },
                                                             "type": "object",
                                                             "additionalProperties": false
-                                                          }
-                                                        },
-                                                        "type": "object",
-                                                        "additionalProperties": false
-                                                      },
-                                                      "xsltTransformation": {
-                                                        "properties": {
-                                                          "nonXmlTransform": {
-                                                            "type": "boolean"
-                                                          },
-                                                          "setContentType": {
-                                                            "type": "string"
-                                                          },
-                                                          "xslt": {
-                                                            "type": "string"
                                                           }
                                                         },
                                                         "type": "object",
@@ -14709,21 +14454,6 @@
                                                         },
                                                         "type": "object",
                                                         "additionalProperties": false
-                                                      },
-                                                      "xsltTransformation": {
-                                                        "properties": {
-                                                          "nonXmlTransform": {
-                                                            "type": "boolean"
-                                                          },
-                                                          "setContentType": {
-                                                            "type": "string"
-                                                          },
-                                                          "xslt": {
-                                                            "type": "string"
-                                                          }
-                                                        },
-                                                        "type": "object",
-                                                        "additionalProperties": false
                                                       }
                                                     },
                                                     "type": "object",
@@ -14913,21 +14643,6 @@
                                                             },
                                                             "type": "object",
                                                             "additionalProperties": false
-                                                          }
-                                                        },
-                                                        "type": "object",
-                                                        "additionalProperties": false
-                                                      },
-                                                      "xsltTransformation": {
-                                                        "properties": {
-                                                          "nonXmlTransform": {
-                                                            "type": "boolean"
-                                                          },
-                                                          "setContentType": {
-                                                            "type": "string"
-                                                          },
-                                                          "xslt": {
-                                                            "type": "string"
                                                           }
                                                         },
                                                         "type": "object",
@@ -15158,21 +14873,6 @@
                                                         },
                                                         "type": "object",
                                                         "additionalProperties": false
-                                                      },
-                                                      "xsltTransformation": {
-                                                        "properties": {
-                                                          "nonXmlTransform": {
-                                                            "type": "boolean"
-                                                          },
-                                                          "setContentType": {
-                                                            "type": "string"
-                                                          },
-                                                          "xslt": {
-                                                            "type": "string"
-                                                          }
-                                                        },
-                                                        "type": "object",
-                                                        "additionalProperties": false
                                                       }
                                                     },
                                                     "type": "object",
@@ -15385,21 +15085,6 @@
                                               },
                                               "type": "object",
                                               "additionalProperties": false
-                                            },
-                                            "xsltTransformation": {
-                                              "properties": {
-                                                "nonXmlTransform": {
-                                                  "type": "boolean"
-                                                },
-                                                "setContentType": {
-                                                  "type": "string"
-                                                },
-                                                "xslt": {
-                                                  "type": "string"
-                                                }
-                                              },
-                                              "type": "object",
-                                              "additionalProperties": false
                                             }
                                           },
                                           "type": "object",
@@ -15589,21 +15274,6 @@
                                                   },
                                                   "type": "object",
                                                   "additionalProperties": false
-                                                }
-                                              },
-                                              "type": "object",
-                                              "additionalProperties": false
-                                            },
-                                            "xsltTransformation": {
-                                              "properties": {
-                                                "nonXmlTransform": {
-                                                  "type": "boolean"
-                                                },
-                                                "setContentType": {
-                                                  "type": "string"
-                                                },
-                                                "xslt": {
-                                                  "type": "string"
                                                 }
                                               },
                                               "type": "object",
