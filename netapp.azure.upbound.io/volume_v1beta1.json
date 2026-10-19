@@ -1,5 +1,5 @@
 {
-  "description": "Volume is the Schema for the Volumes API. Manages a NetApp Volume.",
+  "description": "Volume is the Schema for the Volumes API. Manages a NetApp Volume.\nDeprecated: This API version (v1beta1) has been deprecated in release v2.6.0.",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -223,6 +223,20 @@
               },
               "type": "object",
               "additionalProperties": false
+            },
+            "dataProtectionAdvancedRansomware": {
+              "description": "A data_protection_advanced_ransomware block as defined below.",
+              "items": {
+                "properties": {
+                  "protectionEnabled": {
+                    "description": "Enable or disable the Advanced Ransomware Protection feature.\nEnable or disable the Advanced Ransomware Protection feature.",
+                    "type": "boolean"
+                  }
+                },
+                "type": "object",
+                "additionalProperties": false
+              },
+              "type": "array"
             },
             "dataProtectionBackupPolicy": {
               "description": "A data_protection_backup_policy block as defined below.",
@@ -974,6 +988,20 @@
               "type": "object",
               "additionalProperties": false
             },
+            "dataProtectionAdvancedRansomware": {
+              "description": "A data_protection_advanced_ransomware block as defined below.",
+              "items": {
+                "properties": {
+                  "protectionEnabled": {
+                    "description": "Enable or disable the Advanced Ransomware Protection feature.\nEnable or disable the Advanced Ransomware Protection feature.",
+                    "type": "boolean"
+                  }
+                },
+                "type": "object",
+                "additionalProperties": false
+              },
+              "type": "array"
+            },
             "dataProtectionBackupPolicy": {
               "description": "A data_protection_backup_policy block as defined below.",
               "items": {
@@ -1586,6 +1614,20 @@
               "description": "Creates volume from snapshot. Following properties must be the same as the original volume where the snapshot was taken from: protocols, subnet_id, location, service_level, resource_group_name and account_name. Changing this forces a new resource to be created.",
               "type": "string"
             },
+            "dataProtectionAdvancedRansomware": {
+              "description": "A data_protection_advanced_ransomware block as defined below.",
+              "items": {
+                "properties": {
+                  "protectionEnabled": {
+                    "description": "Enable or disable the Advanced Ransomware Protection feature.\nEnable or disable the Advanced Ransomware Protection feature.",
+                    "type": "boolean"
+                  }
+                },
+                "type": "object",
+                "additionalProperties": false
+              },
+              "type": "array"
+            },
             "dataProtectionBackupPolicy": {
               "description": "A data_protection_backup_policy block as defined below.",
               "items": {
@@ -1876,6 +1918,10 @@
             "type"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "lastHandledReconcileAt": {
+          "description": "LastHandledReconcileAt holds the value of the most recent\nreconcile-requested-at annotation token that the controller has\nprocessed. Users can compare this to the annotation to determine\nwhether a reconcile request has been handled.",
+          "type": "string"
         },
         "observedGeneration": {
           "description": "ObservedGeneration is the latest metadata.generation\nwhich resulted in either a ready state, or stalled due to error\nit can not recover from without human intervention.",
