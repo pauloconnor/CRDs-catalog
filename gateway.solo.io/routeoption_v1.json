@@ -1860,6 +1860,18 @@
                       "actions": {
                         "items": {
                           "properties": {
+                            "cel": {
+                              "properties": {
+                                "expression": {
+                                  "type": "string"
+                                },
+                                "key": {
+                                  "type": "string"
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            },
                             "destinationCluster": {
                               "type": "object"
                             },
@@ -2028,6 +2040,18 @@
                       "setActions": {
                         "items": {
                           "properties": {
+                            "cel": {
+                              "properties": {
+                                "expression": {
+                                  "type": "string"
+                                },
+                                "key": {
+                                  "type": "string"
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            },
                             "destinationCluster": {
                               "type": "object"
                             },
@@ -2159,6 +2183,10 @@
                           "additionalProperties": false
                         },
                         "type": "array"
+                      },
+                      "type": {
+                        "type": "string",
+                        "x-kubernetes-int-or-string": true
                       }
                     },
                     "type": "object",
@@ -2237,6 +2265,18 @@
                       "actions": {
                         "items": {
                           "properties": {
+                            "cel": {
+                              "properties": {
+                                "expression": {
+                                  "type": "string"
+                                },
+                                "key": {
+                                  "type": "string"
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            },
                             "destinationCluster": {
                               "type": "object"
                             },
@@ -2405,6 +2445,18 @@
                       "setActions": {
                         "items": {
                           "properties": {
+                            "cel": {
+                              "properties": {
+                                "expression": {
+                                  "type": "string"
+                                },
+                                "key": {
+                                  "type": "string"
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            },
                             "destinationCluster": {
                               "type": "object"
                             },
@@ -2536,6 +2588,10 @@
                           "additionalProperties": false
                         },
                         "type": "array"
+                      },
+                      "type": {
+                        "type": "string",
+                        "x-kubernetes-int-or-string": true
                       }
                     },
                     "type": "object",
@@ -2578,6 +2634,18 @@
                       "actions": {
                         "items": {
                           "properties": {
+                            "cel": {
+                              "properties": {
+                                "expression": {
+                                  "type": "string"
+                                },
+                                "key": {
+                                  "type": "string"
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            },
                             "destinationCluster": {
                               "type": "object"
                             },
@@ -2746,6 +2814,18 @@
                       "setActions": {
                         "items": {
                           "properties": {
+                            "cel": {
+                              "properties": {
+                                "expression": {
+                                  "type": "string"
+                                },
+                                "key": {
+                                  "type": "string"
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            },
                             "destinationCluster": {
                               "type": "object"
                             },
@@ -2877,6 +2957,10 @@
                           "additionalProperties": false
                         },
                         "type": "array"
+                      },
+                      "type": {
+                        "type": "string",
+                        "x-kubernetes-int-or-string": true
                       }
                     },
                     "type": "object",
@@ -3058,6 +3142,12 @@
             },
             "shadowing": {
               "properties": {
+                "disableShadowHostSuffixAppend": {
+                  "type": "boolean"
+                },
+                "hostRewriteLiteral": {
+                  "type": "string"
+                },
                 "percentage": {
                   "type": "number"
                 },
@@ -3342,21 +3432,6 @@
                                 },
                                 "type": "object",
                                 "additionalProperties": false
-                              },
-                              "xsltTransformation": {
-                                "properties": {
-                                  "nonXmlTransform": {
-                                    "type": "boolean"
-                                  },
-                                  "setContentType": {
-                                    "type": "string"
-                                  },
-                                  "xslt": {
-                                    "type": "string"
-                                  }
-                                },
-                                "type": "object",
-                                "additionalProperties": false
                               }
                             },
                             "type": "object",
@@ -3546,21 +3621,6 @@
                                     },
                                     "type": "object",
                                     "additionalProperties": false
-                                  }
-                                },
-                                "type": "object",
-                                "additionalProperties": false
-                              },
-                              "xsltTransformation": {
-                                "properties": {
-                                  "nonXmlTransform": {
-                                    "type": "boolean"
-                                  },
-                                  "setContentType": {
-                                    "type": "string"
-                                  },
-                                  "xslt": {
-                                    "type": "string"
                                   }
                                 },
                                 "type": "object",
@@ -3787,21 +3847,6 @@
                                     },
                                     "type": "object",
                                     "additionalProperties": false
-                                  }
-                                },
-                                "type": "object",
-                                "additionalProperties": false
-                              },
-                              "xsltTransformation": {
-                                "properties": {
-                                  "nonXmlTransform": {
-                                    "type": "boolean"
-                                  },
-                                  "setContentType": {
-                                    "type": "string"
-                                  },
-                                  "xslt": {
-                                    "type": "string"
                                   }
                                 },
                                 "type": "object",
@@ -4095,21 +4140,6 @@
                                 },
                                 "type": "object",
                                 "additionalProperties": false
-                              },
-                              "xsltTransformation": {
-                                "properties": {
-                                  "nonXmlTransform": {
-                                    "type": "boolean"
-                                  },
-                                  "setContentType": {
-                                    "type": "string"
-                                  },
-                                  "xslt": {
-                                    "type": "string"
-                                  }
-                                },
-                                "type": "object",
-                                "additionalProperties": false
                               }
                             },
                             "type": "object",
@@ -4299,21 +4329,6 @@
                                     },
                                     "type": "object",
                                     "additionalProperties": false
-                                  }
-                                },
-                                "type": "object",
-                                "additionalProperties": false
-                              },
-                              "xsltTransformation": {
-                                "properties": {
-                                  "nonXmlTransform": {
-                                    "type": "boolean"
-                                  },
-                                  "setContentType": {
-                                    "type": "string"
-                                  },
-                                  "xslt": {
-                                    "type": "string"
                                   }
                                 },
                                 "type": "object",
@@ -4540,21 +4555,6 @@
                                     },
                                     "type": "object",
                                     "additionalProperties": false
-                                  }
-                                },
-                                "type": "object",
-                                "additionalProperties": false
-                              },
-                              "xsltTransformation": {
-                                "properties": {
-                                  "nonXmlTransform": {
-                                    "type": "boolean"
-                                  },
-                                  "setContentType": {
-                                    "type": "string"
-                                  },
-                                  "xslt": {
-                                    "type": "string"
                                   }
                                 },
                                 "type": "object",
@@ -4837,21 +4837,6 @@
                                 },
                                 "type": "object",
                                 "additionalProperties": false
-                              },
-                              "xsltTransformation": {
-                                "properties": {
-                                  "nonXmlTransform": {
-                                    "type": "boolean"
-                                  },
-                                  "setContentType": {
-                                    "type": "string"
-                                  },
-                                  "xslt": {
-                                    "type": "string"
-                                  }
-                                },
-                                "type": "object",
-                                "additionalProperties": false
                               }
                             },
                             "type": "object",
@@ -5041,21 +5026,6 @@
                                     },
                                     "type": "object",
                                     "additionalProperties": false
-                                  }
-                                },
-                                "type": "object",
-                                "additionalProperties": false
-                              },
-                              "xsltTransformation": {
-                                "properties": {
-                                  "nonXmlTransform": {
-                                    "type": "boolean"
-                                  },
-                                  "setContentType": {
-                                    "type": "string"
-                                  },
-                                  "xslt": {
-                                    "type": "string"
                                   }
                                 },
                                 "type": "object",
@@ -5282,21 +5252,6 @@
                                     },
                                     "type": "object",
                                     "additionalProperties": false
-                                  }
-                                },
-                                "type": "object",
-                                "additionalProperties": false
-                              },
-                              "xsltTransformation": {
-                                "properties": {
-                                  "nonXmlTransform": {
-                                    "type": "boolean"
-                                  },
-                                  "setContentType": {
-                                    "type": "string"
-                                  },
-                                  "xslt": {
-                                    "type": "string"
                                   }
                                 },
                                 "type": "object",
@@ -5547,21 +5502,6 @@
                       },
                       "type": "object",
                       "additionalProperties": false
-                    },
-                    "xsltTransformation": {
-                      "properties": {
-                        "nonXmlTransform": {
-                          "type": "boolean"
-                        },
-                        "setContentType": {
-                          "type": "string"
-                        },
-                        "xslt": {
-                          "type": "string"
-                        }
-                      },
-                      "type": "object",
-                      "additionalProperties": false
                     }
                   },
                   "type": "object",
@@ -5751,21 +5691,6 @@
                           },
                           "type": "object",
                           "additionalProperties": false
-                        }
-                      },
-                      "type": "object",
-                      "additionalProperties": false
-                    },
-                    "xsltTransformation": {
-                      "properties": {
-                        "nonXmlTransform": {
-                          "type": "boolean"
-                        },
-                        "setContentType": {
-                          "type": "string"
-                        },
-                        "xslt": {
-                          "type": "string"
                         }
                       },
                       "type": "object",
