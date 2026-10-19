@@ -301,6 +301,10 @@
             "uploadProxyURLOverride": {
               "description": "Override the URL used when uploading to a DataVolume",
               "type": "string"
+            },
+            "webhookPvcRendering": {
+              "description": "WebhookPvcRendering controls whether the PVC mutating webhook that completes\nPVC specs from StorageProfiles is enabled or disabled\nAllowed values are \"Enabled\" (default) and \"Disabled\"",
+              "type": "string"
             }
           },
           "type": "object",
