@@ -1,5 +1,5 @@
 {
-  "description": "RuleGroup is the Schema for the RuleGroups API. Manages Grafana Alerting rule groups. Official documentation https://grafana.com/docs/grafana/latest/developers/http_api/alerting_provisioning/#alert-rules This resource requires Grafana 9.1.0 or later.",
+  "description": "RuleGroup is the Schema for the RuleGroups API. Manages Grafana Alerting rule groups. Official documentation https://grafana.com/docs/grafana/latest/developer-resources/api-reference/http-api/api-legacy/alerting_provisioning/#alert-rules This resource requires Grafana 9.1.0 or later.",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -314,7 +314,7 @@
                           "type": "array"
                         },
                         "contactPoint": {
-                          "description": "(String) The contact point to route notifications that match this rule to.\nThe contact point to route notifications that match this rule to.",
+                          "description": "(String) The contact point to route notifications that match this rule to. Exactly one of contact_point or policy must be set.\nThe contact point to route notifications that match this rule to. Exactly one of `contact_point` or `policy` must be set.",
                           "type": "string"
                         },
                         "contactPointRef": {
@@ -418,6 +418,10 @@
                             "type": "string"
                           },
                           "type": "array"
+                        },
+                        "policy": {
+                          "description": "(String) The name of the notification policy to route notifications that match this rule through. Mutually exclusive with contact_point and all other fields in this block. Exactly one of contact_point or policy must be set.\nThe name of the notification policy to route notifications that match this rule through. Mutually exclusive with `contact_point` and all other fields in this block. Exactly one of `contact_point` or `policy` must be set.",
+                          "type": "string"
                         },
                         "repeatInterval": {
                           "description": "sending a notification if an alert is still firing. Default is 4 hours.\nMinimum time interval for re-sending a notification if an alert is still firing. Default is 4 hours.",
@@ -756,7 +760,7 @@
                           "type": "array"
                         },
                         "contactPoint": {
-                          "description": "(String) The contact point to route notifications that match this rule to.\nThe contact point to route notifications that match this rule to.",
+                          "description": "(String) The contact point to route notifications that match this rule to. Exactly one of contact_point or policy must be set.\nThe contact point to route notifications that match this rule to. Exactly one of `contact_point` or `policy` must be set.",
                           "type": "string"
                         },
                         "contactPointRef": {
@@ -860,6 +864,10 @@
                             "type": "string"
                           },
                           "type": "array"
+                        },
+                        "policy": {
+                          "description": "(String) The name of the notification policy to route notifications that match this rule through. Mutually exclusive with contact_point and all other fields in this block. Exactly one of contact_point or policy must be set.\nThe name of the notification policy to route notifications that match this rule through. Mutually exclusive with `contact_point` and all other fields in this block. Exactly one of `contact_point` or `policy` must be set.",
+                          "type": "string"
                         },
                         "repeatInterval": {
                           "description": "sending a notification if an alert is still firing. Default is 4 hours.\nMinimum time interval for re-sending a notification if an alert is still firing. Default is 4 hours.",
@@ -1144,7 +1152,7 @@
                           "type": "array"
                         },
                         "contactPoint": {
-                          "description": "(String) The contact point to route notifications that match this rule to.\nThe contact point to route notifications that match this rule to.",
+                          "description": "(String) The contact point to route notifications that match this rule to. Exactly one of contact_point or policy must be set.\nThe contact point to route notifications that match this rule to. Exactly one of `contact_point` or `policy` must be set.",
                           "type": "string"
                         },
                         "groupBy": {
@@ -1168,6 +1176,10 @@
                             "type": "string"
                           },
                           "type": "array"
+                        },
+                        "policy": {
+                          "description": "(String) The name of the notification policy to route notifications that match this rule through. Mutually exclusive with contact_point and all other fields in this block. Exactly one of contact_point or policy must be set.\nThe name of the notification policy to route notifications that match this rule through. Mutually exclusive with `contact_point` and all other fields in this block. Exactly one of `contact_point` or `policy` must be set.",
+                          "type": "string"
                         },
                         "repeatInterval": {
                           "description": "sending a notification if an alert is still firing. Default is 4 hours.\nMinimum time interval for re-sending a notification if an alert is still firing. Default is 4 hours.",
@@ -1261,6 +1273,10 @@
             "type"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "lastHandledReconcileAt": {
+          "description": "LastHandledReconcileAt holds the value of the most recent\nreconcile-requested-at annotation token that the controller has\nprocessed. Users can compare this to the annotation to determine\nwhether a reconcile request has been handled.",
+          "type": "string"
         },
         "observedGeneration": {
           "description": "ObservedGeneration is the latest metadata.generation\nwhich resulted in either a ready state, or stalled due to error\nit can not recover from without human intervention.",
