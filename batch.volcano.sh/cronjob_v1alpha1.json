@@ -84,7 +84,6 @@
                     },
                     "highestTierName": {
                       "maxLength": 253,
-                      "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$",
                       "type": "string"
                     },
                     "mode": {
@@ -170,7 +169,7 @@
                 "queue": {
                   "default": "default",
                   "maxLength": 253,
-                  "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$",
+                  "pattern": "^(namespace/)?[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$",
                   "type": "string"
                 },
                 "runningEstimate": {
@@ -229,7 +228,6 @@
                               },
                               "highestTierName": {
                                 "maxLength": 253,
-                                "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$",
                                 "type": "string"
                               },
                               "mode": {
@@ -4845,6 +4843,15 @@
                                 ],
                                 "x-kubernetes-list-type": "map"
                               },
+                              "schedulingGroup": {
+                                "properties": {
+                                  "podGroupName": {
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              },
                               "securityContext": {
                                 "properties": {
                                   "appArmorProfile": {
@@ -6091,6 +6098,12 @@
                                                   },
                                                   "signerName": {
                                                     "type": "string"
+                                                  },
+                                                  "userAnnotations": {
+                                                    "additionalProperties": {
+                                                      "type": "string"
+                                                    },
+                                                    "type": "object"
                                                   }
                                                 },
                                                 "required": [
