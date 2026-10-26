@@ -404,7 +404,7 @@
         "atProvider": {
           "properties": {
             "arn": {
-              "description": "Amazon Resource Name (ARN) of the EKS Identity Provider Configuration.",
+              "description": "ARN of the EKS Identity Provider Configuration.",
               "type": "string"
             },
             "clusterName": {
@@ -413,6 +413,10 @@
             },
             "id": {
               "description": "EKS Cluster name and EKS Identity Provider Configuration name separated by a colon (:).",
+              "type": "string"
+            },
+            "identityProviderConfigName": {
+              "description": "(String) Name of the identity provider config.",
               "type": "string"
             },
             "oidc": {
@@ -528,6 +532,10 @@
             "type"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "lastHandledReconcileAt": {
+          "description": "LastHandledReconcileAt holds the value of the most recent\nreconcile-requested-at annotation token that the controller has\nprocessed. Users can compare this to the annotation to determine\nwhether a reconcile request has been handled.",
+          "type": "string"
         },
         "observedGeneration": {
           "description": "ObservedGeneration is the latest metadata.generation\nwhich resulted in either a ready state, or stalled due to error\nit can not recover from without human intervention.",
