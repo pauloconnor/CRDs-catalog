@@ -10554,6 +10554,14 @@ generators.external-secrets.io:
     filename: generators.external-secrets.io/cloudsmithaccesstoken_v1alpha1.json
     kind: CloudsmithAccessToken
     name: cloudsmithaccesstoken_v1alpha1
+  - apiVersion: generators.external-secrets.io/v1alpha1
+    filename: generators.external-secrets.io/gitlabdeploytoken_v1alpha1.json
+    kind: GitlabDeployToken
+    name: gitlabdeploytoken_v1alpha1
+  - apiVersion: generators.external-secrets.io/v1alpha1
+    filename: generators.external-secrets.io/beyondtrustworkloadcredentialsdynamicsecret_v1alpha1.json
+    kind: BeyondtrustWorkloadCredentialsDynamicSecret
+    name: beyondtrustworkloadcredentialsdynamicsecret_v1alpha1
 getambassador.io:
   - apiVersion: getambassador.io/v2
     filename: getambassador.io/host_v2.json
