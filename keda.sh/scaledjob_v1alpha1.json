@@ -20,6 +20,7 @@
         },
         "failedJobsHistoryLimit": {
           "format": "int32",
+          "minimum": 0,
           "type": "integer"
         },
         "jobTargetRef": {
@@ -50,7 +51,7 @@
               "type": "integer"
             },
             "managedBy": {
-              "description": "ManagedBy field indicates the controller that manages a Job. The k8s Job\ncontroller reconciles jobs which don't have this field at all or the field\nvalue is the reserved string `kubernetes.io/job-controller`, but skips\nreconciling Jobs with a custom value for this field.\nThe value must be a valid domain-prefixed path (e.g. acme.io/foo) -\nall characters before the first \"/\" must be a valid subdomain as defined\nby RFC 1123. All characters trailing the first \"/\" must be valid HTTP Path\ncharacters as defined by RFC 3986. The value cannot exceed 63 characters.\nThis field is immutable.\n\nThis field is beta-level. The job controller accepts setting the field\nwhen the feature gate JobManagedBy is enabled (enabled by default).",
+              "description": "ManagedBy field indicates the controller that manages a Job. The k8s Job\ncontroller reconciles jobs which don't have this field at all or the field\nvalue is the reserved string `kubernetes.io/job-controller`, but skips\nreconciling Jobs with a custom value for this field.\nThe value must be a valid domain-prefixed path (e.g. acme.io/foo) -\nall characters before the first \"/\" must be a valid subdomain as defined\nby RFC 1123. All characters trailing the first \"/\" must be valid HTTP Path\ncharacters as defined by RFC 3986. The value cannot exceed 63 characters.\nThis field is immutable.",
               "type": "string"
             },
             "manualSelector": {
@@ -122,7 +123,6 @@
                             }
                           },
                           "required": [
-                            "status",
                             "type"
                           ],
                           "type": "object",
@@ -1922,7 +1922,7 @@
                             "additionalProperties": false
                           },
                           "resizePolicy": {
-                            "description": "Resources resize policy for the container.",
+                            "description": "Resources resize policy for the container.\nThis field cannot be set on ephemeral containers.",
                             "items": {
                               "description": "ContainerResizePolicy represents resource resize policy for the container.",
                               "properties": {
@@ -2111,7 +2111,7 @@
                                 "type": "boolean"
                               },
                               "procMount": {
-                                "description": "procMount denotes the type of proc mount to use for the containers.\nThe default value is Default which uses the container runtime defaults for\nreadonly paths and masked paths.\nThis requires the ProcMountType feature flag to be enabled.\nNote that this field cannot be set when spec.os.name is windows.",
+                                "description": "procMount denotes the type of proc mount to use for the containers.\nThe default value is Default which uses the container runtime defaults for\nreadonly paths and masked paths.\nNote that this field cannot be set when spec.os.name is windows.",
                                 "type": "string"
                               },
                               "readOnlyRootFilesystem": {
@@ -3560,7 +3560,7 @@
                                 "type": "boolean"
                               },
                               "procMount": {
-                                "description": "procMount denotes the type of proc mount to use for the containers.\nThe default value is Default which uses the container runtime defaults for\nreadonly paths and masked paths.\nThis requires the ProcMountType feature flag to be enabled.\nNote that this field cannot be set when spec.os.name is windows.",
+                                "description": "procMount denotes the type of proc mount to use for the containers.\nThe default value is Default which uses the container runtime defaults for\nreadonly paths and masked paths.\nNote that this field cannot be set when spec.os.name is windows.",
                                 "type": "string"
                               },
                               "readOnlyRootFilesystem": {
@@ -3963,7 +3963,7 @@
                       "type": "boolean"
                     },
                     "hostUsers": {
-                      "description": "Use the host's user namespace.\nOptional: Default to true.\nIf set to true or not present, the pod will be run in the host user namespace, useful\nfor when the pod needs a feature only available to the host user namespace, such as\nloading a kernel module with CAP_SYS_MODULE.\nWhen set to false, a new userns is created for the pod. Setting false is useful for\nmitigating container breakout vulnerabilities even allowing users to run their\ncontainers as root without actually having root privileges on the host.\nThis field is alpha-level and is only honored by servers that enable the UserNamespacesSupport feature.",
+                      "description": "Use the host's user namespace.\nOptional: Default to true.\nIf set to true or not present, the pod will be run in the host user namespace, useful\nfor when the pod needs a feature only available to the host user namespace, such as\nloading a kernel module with CAP_SYS_MODULE.\nWhen set to false, a new userns is created for the pod. Setting false is useful for\nmitigating container breakout vulnerabilities even allowing users to run their\ncontainers as root without actually having root privileges on the host.",
                       "type": "boolean"
                     },
                     "hostname": {
@@ -4848,7 +4848,7 @@
                             "additionalProperties": false
                           },
                           "resizePolicy": {
-                            "description": "Resources resize policy for the container.",
+                            "description": "Resources resize policy for the container.\nThis field cannot be set on ephemeral containers.",
                             "items": {
                               "description": "ContainerResizePolicy represents resource resize policy for the container.",
                               "properties": {
@@ -5037,7 +5037,7 @@
                                 "type": "boolean"
                               },
                               "procMount": {
-                                "description": "procMount denotes the type of proc mount to use for the containers.\nThe default value is Default which uses the container runtime defaults for\nreadonly paths and masked paths.\nThis requires the ProcMountType feature flag to be enabled.\nNote that this field cannot be set when spec.os.name is windows.",
+                                "description": "procMount denotes the type of proc mount to use for the containers.\nThe default value is Default which uses the container runtime defaults for\nreadonly paths and masked paths.\nNote that this field cannot be set when spec.os.name is windows.",
                                 "type": "string"
                               },
                               "readOnlyRootFilesystem": {
@@ -5468,9 +5468,9 @@
                       "x-kubernetes-list-type": "atomic"
                     },
                     "resourceClaims": {
-                      "description": "ResourceClaims defines which ResourceClaims must be allocated\nand reserved before the Pod is allowed to start. The resources\nwill be made available to those containers which consume them\nby name.\n\nThis is an alpha field and requires enabling the\nDynamicResourceAllocation feature gate.\n\nThis field is immutable.",
+                      "description": "ResourceClaims defines which ResourceClaims must be allocated\nand reserved before the Pod is allowed to start. The resources\nwill be made available to those containers which consume them\nby name.\n\nThis is a stable field but requires that the\nDynamicResourceAllocation feature gate is enabled.\n\nThis field is immutable.",
                       "items": {
-                        "description": "PodResourceClaim references exactly one ResourceClaim, either directly\nor by naming a ResourceClaimTemplate which is then turned into a ResourceClaim\nfor the pod.\n\nIt adds a name to it that uniquely identifies the ResourceClaim inside the Pod.\nContainers that need access to the ResourceClaim reference it with this name.",
+                        "description": "PodResourceClaim references exactly one ResourceClaim, either directly\nor by naming a ResourceClaimTemplate which is then turned into a ResourceClaim\nfor the pod.\n\nIt adds a name to it that uniquely identifies the ResourceClaim inside the Pod.\nContainers that need access to the ResourceClaim reference it with this name.\n\nWhen the DRAWorkloadResourceClaims feature gate is enabled and this Pod\nbelongs to a PodGroup, a PodResourceClaim is matched to a\nPodGroupResourceClaim if all of their fields are equal (Name,\nResourceClaimName, and ResourceClaimTemplateName). A matched claim references\na single ResourceClaim shared across all Pods in the PodGroup, reserved for\nthe PodGroup in ResourceClaimStatus.ReservedFor rather than for individual\nPods.",
                         "properties": {
                           "name": {
                             "description": "Name uniquely identifies this resource claim inside the pod.\nThis must be a DNS_LABEL.",
@@ -5481,7 +5481,7 @@
                             "type": "string"
                           },
                           "resourceClaimTemplateName": {
-                            "description": "ResourceClaimTemplateName is the name of a ResourceClaimTemplate\nobject in the same namespace as this pod.\n\nThe template will be used to create a new ResourceClaim, which will\nbe bound to this pod. When this pod is deleted, the ResourceClaim\nwill also be deleted. The pod name and resource name, along with a\ngenerated component, will be used to form a unique name for the\nResourceClaim, which will be recorded in pod.status.resourceClaimStatuses.\n\nThis field is immutable and no changes will be made to the\ncorresponding ResourceClaim by the control plane after creating the\nResourceClaim.\n\nExactly one of ResourceClaimName and ResourceClaimTemplateName must\nbe set.",
+                            "description": "ResourceClaimTemplateName is the name of a ResourceClaimTemplate\nobject in the same namespace as this pod.\n\nThe template will be used to create a new ResourceClaim, which will\nbe bound to this pod. When this pod is deleted, the ResourceClaim\nwill also be deleted. The pod name and resource name, along with a\ngenerated component, will be used to form a unique name for the\nResourceClaim, which will be recorded in pod.status.resourceClaimStatuses.\n\nWhen the DRAWorkloadResourceClaims feature gate is enabled and the pod\nbelongs to a PodGroup that defines a PodGroupResourceClaim with the same\nName and ResourceClaimTemplateName, this PodResourceClaim resolves to the\nResourceClaim generated for the PodGroup. All pods in the group that\ndefine an equivalent PodResourceClaim matching the\nPodGroupResourceClaim's Name and ResourceClaimTemplateName share the same\ngenerated ResourceClaim. ResourceClaims generated for a PodGroup are\nowned by the PodGroup and their lifecycles are tied to the PodGroup\ninstead of any individual pod.\n\nThis field is immutable and no changes will be made to the\ncorresponding ResourceClaim by the control plane after creating the\nResourceClaim.\n\nExactly one of ResourceClaimName and ResourceClaimTemplateName must\nbe set.",
                             "type": "string"
                           }
                         },
@@ -5595,6 +5595,17 @@
                         "name"
                       ],
                       "x-kubernetes-list-type": "map"
+                    },
+                    "schedulingGroup": {
+                      "description": "SchedulingGroup provides a reference to the immediate scheduling runtime\ngrouping object that this Pod belongs to.\nThis field is used by the scheduler to identify the group and apply the\ncorrect group scheduling policies. The association with a group also\nimpacts other lifecycle aspects of a Pod that are relevant in a wider context\nof scheduling like preemption, resource attachment, etc. If not specified,\nthe Pod is treated as a single unit in all of these aspects.\nThe group object referenced by this field may not exist at the time the\nPod is created.\nThis field is immutable, but a group object with the same name may be\nrecreated with different policies. Doing this during pod scheduling\nmay result in the placement not conforming to the expected policies.",
+                      "properties": {
+                        "podGroupName": {
+                          "description": "PodGroupName specifies the name of the standalone PodGroup object\nthat represents the runtime instance of this group.\nMust be a DNS subdomain.",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
                     },
                     "securityContext": {
                       "description": "SecurityContext holds pod-level security attributes and common container settings.\nOptional: Defaults to empty.  See type description for default values of each field.",
@@ -5788,7 +5799,7 @@
                             "type": "string"
                           },
                           "operator": {
-                            "description": "Operator represents a key's relationship to the value.\nValid operators are Exists and Equal. Defaults to Equal.\nExists is equivalent to wildcard for value, so that a pod can\ntolerate all taints of a particular category.",
+                            "description": "Operator represents a key's relationship to the value.\nValid operators are Exists, Equal, Lt, and Gt. Defaults to Equal.\nExists is equivalent to wildcard for value, so that a pod can\ntolerate all taints of a particular category.\nLt and Gt perform numeric comparisons (requires feature gate TaintTolerationComparisonOperators).",
                             "type": "string"
                           },
                           "tolerationSeconds": {
@@ -6387,7 +6398,7 @@
                                         "additionalProperties": false
                                       },
                                       "resources": {
-                                        "description": "resources represents the minimum resources the volume should have.\nIf RecoverVolumeExpansionFailure feature is enabled users are allowed to specify resource requirements\nthat are lower than previous value but must still be higher than capacity recorded in the\nstatus field of the claim.\nMore info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources",
+                                        "description": "resources represents the minimum resources the volume should have.\nUsers are allowed to specify resource requirements\nthat are lower than previous value but must still be higher than capacity recorded in the\nstatus field of the claim.\nMore info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources",
                                         "properties": {
                                           "limits": {
                                             "additionalProperties": {
@@ -6687,7 +6698,7 @@
                             "additionalProperties": false
                           },
                           "image": {
-                            "description": "image represents an OCI object (a container image or artifact) pulled and mounted on the kubelet's host machine.\nThe volume is resolved at pod startup depending on which PullPolicy value is provided:\n\n- Always: the kubelet always attempts to pull the reference. Container creation will fail If the pull fails.\n- Never: the kubelet never pulls the reference and only uses a local image or artifact. Container creation will fail if the reference isn't present.\n- IfNotPresent: the kubelet pulls if the reference isn't already present on disk. Container creation will fail if the reference isn't present and the pull fails.\n\nThe volume gets re-resolved if the pod gets deleted and recreated, which means that new remote content will become available on pod recreation.\nA failure to resolve or pull the image during pod startup will block containers from starting and may add significant latency. Failures will be retried using normal volume backoff and will be reported on the pod reason and message.\nThe types of objects that may be mounted by this volume are defined by the container runtime implementation on a host machine and at minimum must include all valid types supported by the container image field.\nThe OCI object gets mounted in a single directory (spec.containers[*].volumeMounts.mountPath) by merging the manifest layers in the same way as for container images.\nThe volume will be mounted read-only (ro) and non-executable files (noexec).\nSub path mounts for containers are not supported (spec.containers[*].volumeMounts.subpath) before 1.33.\nThe field spec.securityContext.fsGroupChangePolicy has no effect on this volume type.",
+                            "description": "image represents an OCI object (a container image or artifact) pulled and mounted on the kubelet's host machine.\nThe volume is resolved at pod startup depending on which PullPolicy value is provided:\n\n- Always: the kubelet always attempts to pull the reference. Container creation will fail If the pull fails.\n- Never: the kubelet never pulls the reference and only uses a local image or artifact. Container creation will fail if the reference isn't present.\n- IfNotPresent: the kubelet pulls if the reference isn't already present on disk. Container creation will fail if the reference isn't present and the pull fails.\n\nThe volume gets re-resolved if the pod gets deleted and recreated, which means that new remote content will become available on pod recreation.\nA failure to resolve or pull the image during pod startup will block containers from starting and may add significant latency. Failures will be retried using normal volume backoff and will be reported on the pod reason and message.\nThe types of objects that may be mounted by this volume are defined by the container runtime implementation on a host machine and at minimum must include all valid types supported by the container image field.\nThe OCI object gets mounted in a single directory (spec.containers[*].volumeMounts.mountPath) by merging the manifest layers in the same way as for container images.\nThe volume will be mounted read-only (ro).\nSub path mounts for containers are not supported (spec.containers[*].volumeMounts.subpath) before 1.33.\nThe field spec.securityContext.fsGroupChangePolicy has no effect on this volume type.",
                             "properties": {
                               "pullPolicy": {
                                 "description": "Policy for pulling OCI objects. Possible values are:\nAlways: the kubelet always attempts to pull the reference. Container creation will fail If the pull fails.\nNever: the kubelet never pulls the reference and only uses a local image or artifact. Container creation will fail if the reference isn't present.\nIfNotPresent: the kubelet pulls if the reference isn't already present on disk. Container creation will fail if the reference isn't present and the pull fails.\nDefaults to Always if :latest tag is specified, or IfNotPresent otherwise.",
@@ -6836,7 +6847,7 @@
                             "additionalProperties": false
                           },
                           "portworxVolume": {
-                            "description": "portworxVolume represents a portworx volume attached and mounted on kubelets host machine.\nDeprecated: PortworxVolume is deprecated. All operations for the in-tree portworxVolume type\nare redirected to the pxd.portworx.com CSI driver when the CSIMigrationPortworx feature-gate\nis on.",
+                            "description": "portworxVolume represents a portworx volume attached and mounted on kubelets host machine.\nDeprecated: PortworxVolume is deprecated. All operations for the in-tree portworxVolume type\nare redirected to the pxd.portworx.com CSI driver.",
                             "properties": {
                               "fsType": {
                                 "description": "fSType represents the filesystem type to mount\nMust be a filesystem type supported by the host operating system.\nEx. \"ext4\", \"xfs\". Implicitly inferred to be \"ext4\" if unspecified.",
@@ -7098,6 +7109,13 @@
                                         "signerName": {
                                           "description": "Kubelet's generated CSRs will be addressed to this signer.",
                                           "type": "string"
+                                        },
+                                        "userAnnotations": {
+                                          "additionalProperties": {
+                                            "type": "string"
+                                          },
+                                          "description": "userAnnotations allow pod authors to pass additional information to\nthe signer implementation.  Kubernetes does not restrict or validate this\nmetadata in any way.\n\nThese values are copied verbatim into the `spec.unverifiedUserAnnotations` field of\nthe PodCertificateRequest objects that Kubelet creates.\n\nEntries are subject to the same validation as object metadata annotations,\nwith the addition that all keys must be domain-prefixed. No restrictions\nare placed on values, except an overall size limitation on the entire field.\n\nSigners should document the keys and values they support. Signers should\ndeny requests that contain keys they do not recognize.",
+                                          "type": "object"
                                         }
                                       },
                                       "required": [
@@ -7493,23 +7511,34 @@
         },
         "maxReplicaCount": {
           "format": "int32",
+          "minimum": 1,
           "type": "integer"
         },
         "minReplicaCount": {
           "format": "int32",
+          "minimum": 0,
           "type": "integer"
         },
         "pollingInterval": {
           "format": "int32",
+          "minimum": 1,
           "type": "integer"
         },
         "rollout": {
           "description": "Rollout defines the strategy for job rollouts",
           "properties": {
             "propagationPolicy": {
+              "enum": [
+                "foreground",
+                "background"
+              ],
               "type": "string"
             },
             "strategy": {
+              "enum": [
+                "gradual",
+                "immediate"
+              ],
               "type": "string"
             }
           },
@@ -7517,6 +7546,11 @@
           "additionalProperties": false
         },
         "rolloutStrategy": {
+          "description": "Deprecated: Use Rollout.Strategy instead (see https://github.com/kedacore/keda/issues/3596).",
+          "enum": [
+            "gradual",
+            "immediate"
+          ],
           "type": "string"
         },
         "scalingStrategy": {
@@ -7530,6 +7564,12 @@
               "type": "string"
             },
             "multipleScalersCalculation": {
+              "enum": [
+                "min",
+                "avg",
+                "sum",
+                "max"
+              ],
               "type": "string"
             },
             "pendingPodConditions": {
@@ -7539,6 +7579,12 @@
               "type": "array"
             },
             "strategy": {
+              "enum": [
+                "default",
+                "custom",
+                "accurate",
+                "eager"
+              ],
               "type": "string"
             }
           },
@@ -7547,6 +7593,7 @@
         },
         "successfulJobsHistoryLimit": {
           "format": "int32",
+          "minimum": 0,
           "type": "integer"
         },
         "triggers": {
@@ -7558,6 +7605,10 @@
                 "properties": {
                   "kind": {
                     "description": "Kind of the resource being referred to. Defaults to TriggerAuthentication.",
+                    "enum": [
+                      "TriggerAuthentication",
+                      "ClusterTriggerAuthentication"
+                    ],
                     "type": "string"
                   },
                   "name": {
@@ -7584,6 +7635,7 @@
                 "type": "string"
               },
               "type": {
+                "minLength": 1,
                 "type": "string"
               },
               "useCachedMetrics": {
@@ -7597,6 +7649,7 @@
             "type": "object",
             "additionalProperties": false
           },
+          "minItems": 1,
           "type": "array"
         }
       },
