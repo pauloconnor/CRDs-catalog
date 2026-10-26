@@ -8032,6 +8032,10 @@ dynatrace.com:
     filename: dynatrace.com/dynakube_v1beta6.json
     kind: dynakube
     name: dynakube_v1beta6
+  - apiVersion: dynatrace.com/v1alpha1
+    filename: dynatrace.com/prometheusmonitoring_v1alpha1.json
+    kind: PrometheusMonitoring
+    name: prometheusmonitoring_v1alpha1
 ec2.aws.m.upbound.io:
   - apiVersion: ec2.aws.m.upbound.io/v1beta1
     filename: ec2.aws.m.upbound.io/defaultroutetable_v1beta1.json
