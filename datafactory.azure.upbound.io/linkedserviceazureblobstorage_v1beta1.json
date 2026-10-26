@@ -1,5 +1,5 @@
 {
-  "description": "LinkedServiceAzureBlobStorage is the Schema for the LinkedServiceAzureBlobStorages API. Manages a Linked Service (connection) between an Azure Blob Storage Account and Azure Data Factory.",
+  "description": "LinkedServiceAzureBlobStorage is the Schema for the LinkedServiceAzureBlobStorages API. Manages a Linked Service (connection) between an Azure Blob Storage Account and Azure Data Factory.\nDeprecated: This API version (v1beta1) has been deprecated in release v2.6.0.",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -250,7 +250,7 @@
                     "additionalProperties": false
                   },
                   "secretName": {
-                    "description": "Specifies the secret name in Azure Key Vault that stores the SAS token.",
+                    "description": "Specifies the secret name in Azure Key Vault that stores the Service Principal key.",
                     "type": "string"
                   }
                 },
@@ -266,6 +266,24 @@
               "description": "A map of parameters to associate with the Data Factory Linked Service.",
               "type": "object",
               "x-kubernetes-map-type": "granular"
+            },
+            "sasTokenLinkedKeyVaultKey": {
+              "description": "A sas_token_linked_key_vault_key block as defined below. Use this argument to store SAS Token in an existing Key Vault. It needs an existing Key Vault Data Factory Linked Service. A sas_uri is required.",
+              "items": {
+                "properties": {
+                  "linkedServiceName": {
+                    "description": "Specifies the name of an existing Key Vault Data Factory Linked Service.",
+                    "type": "string"
+                  },
+                  "secretName": {
+                    "description": "Specifies the secret name in Azure Key Vault that stores the SAS token.",
+                    "type": "string"
+                  }
+                },
+                "type": "object",
+                "additionalProperties": false
+              },
+              "type": "array"
             },
             "sasuriSecretRef": {
               "description": "The SAS URI. Conflicts with connection_string_insecure, connection_string and service_endpoint.",
@@ -459,6 +477,30 @@
               "description": "The connection string sent insecurely. Conflicts with connection_string, sas_uri and service_endpoint.",
               "type": "string"
             },
+            "connectionStringSecretRef": {
+              "description": "The connection string. Conflicts with connection_string_insecure, sas_uri and service_endpoint.",
+              "properties": {
+                "key": {
+                  "description": "The key to select.",
+                  "type": "string"
+                },
+                "name": {
+                  "description": "Name of the secret.",
+                  "type": "string"
+                },
+                "namespace": {
+                  "description": "Namespace of the secret.",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "key",
+                "name",
+                "namespace"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            },
             "description": {
               "description": "The description for the Data Factory Linked Service.",
               "type": "string"
@@ -556,7 +598,7 @@
                     "additionalProperties": false
                   },
                   "secretName": {
-                    "description": "Specifies the secret name in Azure Key Vault that stores the SAS token.",
+                    "description": "Specifies the secret name in Azure Key Vault that stores the Service Principal key.",
                     "type": "string"
                   }
                 },
@@ -572,6 +614,72 @@
               "description": "A map of parameters to associate with the Data Factory Linked Service.",
               "type": "object",
               "x-kubernetes-map-type": "granular"
+            },
+            "sasTokenLinkedKeyVaultKey": {
+              "description": "A sas_token_linked_key_vault_key block as defined below. Use this argument to store SAS Token in an existing Key Vault. It needs an existing Key Vault Data Factory Linked Service. A sas_uri is required.",
+              "items": {
+                "properties": {
+                  "linkedServiceName": {
+                    "description": "Specifies the name of an existing Key Vault Data Factory Linked Service.",
+                    "type": "string"
+                  },
+                  "secretName": {
+                    "description": "Specifies the secret name in Azure Key Vault that stores the SAS token.",
+                    "type": "string"
+                  }
+                },
+                "type": "object",
+                "additionalProperties": false
+              },
+              "type": "array"
+            },
+            "sasuriSecretRef": {
+              "description": "The SAS URI. Conflicts with connection_string_insecure, connection_string and service_endpoint.",
+              "properties": {
+                "key": {
+                  "description": "The key to select.",
+                  "type": "string"
+                },
+                "name": {
+                  "description": "Name of the secret.",
+                  "type": "string"
+                },
+                "namespace": {
+                  "description": "Namespace of the secret.",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "key",
+                "name",
+                "namespace"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            },
+            "serviceEndpointSecretRef": {
+              "description": "The Service Endpoint. Conflicts with connection_string, connection_string_insecure and sas_uri.",
+              "properties": {
+                "key": {
+                  "description": "The key to select.",
+                  "type": "string"
+                },
+                "name": {
+                  "description": "Name of the secret.",
+                  "type": "string"
+                },
+                "namespace": {
+                  "description": "Namespace of the secret.",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "key",
+                "name",
+                "namespace"
+              ],
+              "type": "object",
+              "additionalProperties": false
             },
             "servicePrincipalId": {
               "description": "The service principal id in which to authenticate against the Azure Blob Storage account.",
@@ -830,7 +938,7 @@
                     "type": "string"
                   },
                   "secretName": {
-                    "description": "Specifies the secret name in Azure Key Vault that stores the SAS token.",
+                    "description": "Specifies the secret name in Azure Key Vault that stores the Service Principal key.",
                     "type": "string"
                   }
                 },
@@ -846,6 +954,24 @@
               "description": "A map of parameters to associate with the Data Factory Linked Service.",
               "type": "object",
               "x-kubernetes-map-type": "granular"
+            },
+            "sasTokenLinkedKeyVaultKey": {
+              "description": "A sas_token_linked_key_vault_key block as defined below. Use this argument to store SAS Token in an existing Key Vault. It needs an existing Key Vault Data Factory Linked Service. A sas_uri is required.",
+              "items": {
+                "properties": {
+                  "linkedServiceName": {
+                    "description": "Specifies the name of an existing Key Vault Data Factory Linked Service.",
+                    "type": "string"
+                  },
+                  "secretName": {
+                    "description": "Specifies the secret name in Azure Key Vault that stores the SAS token.",
+                    "type": "string"
+                  }
+                },
+                "type": "object",
+                "additionalProperties": false
+              },
+              "type": "array"
             },
             "servicePrincipalId": {
               "description": "The service principal id in which to authenticate against the Azure Blob Storage account.",
@@ -935,6 +1061,10 @@
             "type"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "lastHandledReconcileAt": {
+          "description": "LastHandledReconcileAt holds the value of the most recent\nreconcile-requested-at annotation token that the controller has\nprocessed. Users can compare this to the annotation to determine\nwhether a reconcile request has been handled.",
+          "type": "string"
         },
         "observedGeneration": {
           "description": "ObservedGeneration is the latest metadata.generation\nwhich resulted in either a ready state, or stalled due to error\nit can not recover from without human intervention.",
