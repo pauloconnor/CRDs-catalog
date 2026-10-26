@@ -17974,6 +17974,10 @@ psmdb.percona.com:
     filename: psmdb.percona.com/perconaservermongodbbackup_v1.json
     kind: perconaservermongodbbackup
     name: perconaservermongodbbackup_v1
+  - apiVersion: psmdb.percona.com/v1
+    filename: psmdb.percona.com/perconaservermongodbclustersync_v1.json
+    kind: perconaservermongodbclustersync
+    name: perconaservermongodbclustersync_v1
 pubsub.cnrm.cloud.google.com:
   - apiVersion: pubsub.cnrm.cloud.google.com/v1beta1
     filename: pubsub.cnrm.cloud.google.com/pubsubsubscription_v1beta1.json
