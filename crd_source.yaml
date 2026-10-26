@@ -1098,7 +1098,7 @@ sources:
     changelog: "https://github.com/percona/percona-server-mongodb-operator/releases"
 
   - url: "https://github.com/percona/percona-server-mysql-operator"
-    tag: "v1.1.0"
+    tag: "v1.2.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/percona/percona-server-mysql-operator/releases"
 
