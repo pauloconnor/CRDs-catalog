@@ -968,6 +968,24 @@
           "nullable": true,
           "type": "string"
         },
+        "agentPullSecrets": {
+          "description": "AgentPullSecrets references image pull secrets to be used by the Fleet agent deployment on this cluster.\nIf set, it overrides any global image pull secrets set as values in the Fleet chart, and Fleet will not\npropagate/copy them, as Rancher would then be expected to handle that propagation.",
+          "items": {
+            "description": "LocalObjectReference contains enough information to let you locate the\nreferenced object inside the same namespace.",
+            "properties": {
+              "name": {
+                "default": "",
+                "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+                "type": "string"
+              }
+            },
+            "type": "object",
+            "x-kubernetes-map-type": "atomic",
+            "additionalProperties": false
+          },
+          "nullable": true,
+          "type": "array"
+        },
         "agentResources": {
           "description": "AgentResources sets the resources for the cluster's agent deployment.",
           "nullable": true,
@@ -1115,7 +1133,7 @@
           "type": "string"
         },
         "kubeConfigSecretNamespace": {
-          "description": "KubeConfigSecretNamespace is the namespace of the secret containing the kubeconfig for the downstream cluster.\nIf unset, it will be assumed the secret can be found in the namespace that the Cluster object resides within.",
+          "description": "KubeConfigSecretNamespace is the namespace of the secret containing the kubeconfig for the downstream cluster.\nIf unset, it will be assumed the secret can be found in the namespace that the Cluster object resides within.\nA secret in a different namespace is only used if it carries the label\nfleet.cattle.io/kubeconfig-referenceable-from set to the Cluster's namespace,\nor, if the fleet-controller setting allowUnlabeledKubeConfigSecretNamespaces\nis enabled, if that label is missing or empty and the secret is in one of\nFleet's well-known namespaces.",
           "nullable": true,
           "type": "string"
         },
@@ -1201,6 +1219,11 @@
         },
         "agentPrivateRepoURL": {
           "description": "AgentPrivateRepoURL is the private repo URL for the agent that is currently used.",
+          "nullable": true,
+          "type": "string"
+        },
+        "agentPullSecretsHash": {
+          "description": "AgentPullSecretsHash is a hash of the agent's image pull secret\nconfiguration, used to detect changes.",
           "nullable": true,
           "type": "string"
         },
@@ -1512,6 +1535,10 @@
             },
             "waitApplied": {
               "description": "WaitApplied is the number of bundle deployments that have been\nsynced from Fleet controller and downstream cluster, but are waiting\nto be deployed.",
+              "type": "integer"
+            },
+            "waitingForDependency": {
+              "description": "WaitingForDependency is the number of bundle deployments which are\nnot deployed because at least one of the bundles they depend on has\nnot reached an accepted state.",
               "type": "integer"
             }
           },
