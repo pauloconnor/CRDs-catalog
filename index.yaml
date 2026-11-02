@@ -16327,6 +16327,10 @@ nvidia.com:
     filename: nvidia.com/nvidiadriver_v1alpha1.json
     kind: NVIDIADriver
     name: nvidiadriver_v1alpha1
+  - apiVersion: nvidia.com/v1alpha1
+    filename: nvidia.com/gpucluster_v1alpha1.json
+    kind: GPUCluster
+    name: gpucluster_v1alpha1
 objectbucket.io:
   - apiVersion: objectbucket.io/v1alpha1
     filename: objectbucket.io/objectbucketclaim_v1alpha1.json
@@ -18409,6 +18413,15 @@ reports.kyverno.io:
     filename: reports.kyverno.io/ephemeralreport_v1.json
     kind: EphemeralReport
     name: ephemeralreport_v1
+resource.nvidia.com:
+  - apiVersion: resource.nvidia.com/v1beta1
+    filename: resource.nvidia.com/computedomain_v1beta1.json
+    kind: ComputeDomain
+    name: computedomain_v1beta1
+  - apiVersion: resource.nvidia.com/v1beta1
+    filename: resource.nvidia.com/computedomainclique_v1beta1.json
+    kind: ComputeDomainClique
+    name: computedomainclique_v1beta1
 resource.streamnative.io:
   - apiVersion: resource.streamnative.io/v1alpha1
     filename: resource.streamnative.io/pulsarnamespace_v1alpha1.json
