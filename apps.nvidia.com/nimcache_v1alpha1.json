@@ -603,7 +603,7 @@
               "description": "NGCSource represents models stored in NGC",
               "properties": {
                 "authSecret": {
-                  "description": "The name of an existing pull secret containing the NGC_API_KEY",
+                  "description": "AuthSecret is the name of an existing secret containing the NGC_API_KEY.\nOptional for certain NIMs.",
                   "type": "string"
                 },
                 "model": {
@@ -686,7 +686,6 @@
                 }
               },
               "required": [
-                "authSecret",
                 "modelPuller"
               ],
               "type": "object",
@@ -889,6 +888,9 @@
           "type": "string"
         },
         "state": {
+          "type": "string"
+        },
+        "type": {
           "type": "string"
         }
       },
