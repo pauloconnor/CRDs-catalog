@@ -393,6 +393,24 @@
                 "additionalProperties": false
               },
               "type": "array"
+            },
+            "workflow": {
+              "description": "Workflow holds metrics options specific to workflow and activity metrics.",
+              "properties": {
+                "latencyDistributionBuckets": {
+                  "description": "LatencyDistributionBuckets specifies the latency distribution buckets used for the\nworkflow and activity execution latency histograms. Units are defined by\nLatencyDistributionUnits (defaults to milliseconds). If not set or left empty,\nthose histograms fall back to the shared MetricSpec.LatencyDistributionBuckets.",
+                  "items": {
+                    "type": "integer"
+                  },
+                  "type": "array"
+                },
+                "latencyDistributionUnits": {
+                  "description": "LatencyDistributionUnits is the unit the LatencyDistributionBuckets values are\nexpressed in (for example \"1ms\" or \"1s\"). It scales the configured buckets into\nthe milliseconds the histograms are recorded in.",
+                  "type": "string"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
             }
           },
           "required": [
@@ -480,6 +498,24 @@
                 "additionalProperties": false
               },
               "type": "array"
+            },
+            "workflow": {
+              "description": "Workflow holds metrics options specific to workflow and activity metrics.",
+              "properties": {
+                "latencyDistributionBuckets": {
+                  "description": "LatencyDistributionBuckets specifies the latency distribution buckets used for the\nworkflow and activity execution latency histograms. Units are defined by\nLatencyDistributionUnits (defaults to milliseconds). If not set or left empty,\nthose histograms fall back to the shared MetricSpec.LatencyDistributionBuckets.",
+                  "items": {
+                    "type": "integer"
+                  },
+                  "type": "array"
+                },
+                "latencyDistributionUnits": {
+                  "description": "LatencyDistributionUnits is the unit the LatencyDistributionBuckets values are\nexpressed in (for example \"1ms\" or \"1s\"). It scales the configured buckets into\nthe milliseconds the histograms are recorded in.",
+                  "type": "string"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
             }
           },
           "required": [
@@ -717,6 +753,36 @@
         "workflow": {
           "description": "WorkflowSpec defines the configuration for Dapr workflows.",
           "properties": {
+            "activityConcurrencyLimits": {
+              "description": "activityConcurrencyLimits defines per-activity-name concurrency limits\nenforced globally across all replicas by the scheduler.",
+              "items": {
+                "description": "NamedConcurrencyLimit defines a per-name concurrency limit for a specific\nworkflow or activity name.",
+                "properties": {
+                  "maxConcurrent": {
+                    "description": "MaxConcurrent is the maximum number of concurrent invocations across all\nreplicas.",
+                    "format": "int32",
+                    "type": "integer"
+                  },
+                  "name": {
+                    "description": "Name is the workflow or activity name to limit.",
+                    "type": "string"
+                  }
+                },
+                "type": "object",
+                "additionalProperties": false
+              },
+              "type": "array"
+            },
+            "globalMaxConcurrentActivityInvocations": {
+              "description": "globalMaxConcurrentActivityInvocations is the maximum number of concurrent\nactivity invocations across all replicas, enforced by the scheduler.\nIf omitted, no global maximum will be enforced.",
+              "format": "int32",
+              "type": "integer"
+            },
+            "globalMaxConcurrentWorkflowInvocations": {
+              "description": "globalMaxConcurrentWorkflowInvocations is the maximum number of concurrent\nworkflow invocations across all replicas, enforced by the scheduler.\nIf omitted, no global maximum will be enforced.",
+              "format": "int32",
+              "type": "integer"
+            },
             "maxConcurrentActivityInvocations": {
               "description": "maxConcurrentActivityInvocations is the maximum number of concurrent activities that can be processed by a single Dapr instance.\nAttempted invocations beyond this will be queued until the number of concurrent invocations drops below this value.\nIf omitted, no maximum will be enforced.",
               "format": "int32",
@@ -749,6 +815,26 @@
               },
               "type": "object",
               "additionalProperties": false
+            },
+            "workflowConcurrencyLimits": {
+              "description": "workflowConcurrencyLimits defines per-workflow-name concurrency limits\nenforced globally across all replicas by the scheduler.",
+              "items": {
+                "description": "NamedConcurrencyLimit defines a per-name concurrency limit for a specific\nworkflow or activity name.",
+                "properties": {
+                  "maxConcurrent": {
+                    "description": "MaxConcurrent is the maximum number of concurrent invocations across all\nreplicas.",
+                    "format": "int32",
+                    "type": "integer"
+                  },
+                  "name": {
+                    "description": "Name is the workflow or activity name to limit.",
+                    "type": "string"
+                  }
+                },
+                "type": "object",
+                "additionalProperties": false
+              },
+              "type": "array"
             }
           },
           "type": "object",
