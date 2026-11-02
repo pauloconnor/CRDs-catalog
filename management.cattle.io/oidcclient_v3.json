@@ -26,6 +26,7 @@
           "type": "array"
         },
         "refreshTokenExpirationSeconds": {
+          "default": 86400,
           "description": "RefreshTokenExpirationSeconds defines how long (in seconds)\na refresh token remains valid before expiration.",
           "format": "int64",
           "minimum": 1,
@@ -39,6 +40,7 @@
           "type": "array"
         },
         "tokenExpirationSeconds": {
+          "default": 3600,
           "description": "TokenExpirationSeconds specifies the duration (in seconds) before\nan access token and ID token expire.",
           "format": "int64",
           "minimum": 1,
