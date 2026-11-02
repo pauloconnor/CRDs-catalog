@@ -1,5 +1,5 @@
 {
-  "description": "Registry is the Schema for the Registrys API. Manages an Azure Container Registry.",
+  "description": "Registry is the Schema for the Registrys API. Manages an Azure Container Registry.\nDeprecated: This API version (v1beta1) has been deprecated in release v2.6.0.",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -32,6 +32,10 @@
             },
             "anonymousPullEnabled": {
               "description": "Whether to allow anonymous (unauthenticated) pull access to this Container Registry. This is only supported on resources with the Standard or Premium SKU.",
+              "type": "boolean"
+            },
+            "azureadAuthenticationAsArmPolicyEnabled": {
+              "description": "Whether to use Azure Resource Manager audience token for this Container Registry? Defaults to true.",
               "type": "boolean"
             },
             "dataEndpointEnabled": {
@@ -279,6 +283,10 @@
             "location": {
               "description": "Specifies the supported Azure location where the resource exists. Changing this forces a new resource to be created.",
               "type": "string"
+            },
+            "networkRuleBypassForTasksEnabled": {
+              "description": "Whether to allow Container Registry Tasks to access a network-restricted Container Registry? Defaults to false.",
+              "type": "boolean"
             },
             "networkRuleBypassOption": {
               "description": "Whether to allow trusted Azure services to access a network-restricted Container Registry? Possible values are None and AzureServices. Defaults to AzureServices.",
@@ -412,6 +420,10 @@
               "description": "The number of days to retain and untagged manifest after which it gets purged.",
               "type": "number"
             },
+            "roleAssignmentMode": {
+              "description": "The role assignment mode of this Container Registry. Possible values are AbacRepositoryPermissions and LegacyRegistryPermissions. Defaults to LegacyRegistryPermissions.",
+              "type": "string"
+            },
             "sku": {
               "description": "The SKU name of the container registry. Possible values are Basic, Standard and Premium.",
               "type": "string"
@@ -445,6 +457,10 @@
             },
             "anonymousPullEnabled": {
               "description": "Whether to allow anonymous (unauthenticated) pull access to this Container Registry. This is only supported on resources with the Standard or Premium SKU.",
+              "type": "boolean"
+            },
+            "azureadAuthenticationAsArmPolicyEnabled": {
+              "description": "Whether to use Azure Resource Manager audience token for this Container Registry? Defaults to true.",
               "type": "boolean"
             },
             "dataEndpointEnabled": {
@@ -693,6 +709,10 @@
               "description": "Specifies the supported Azure location where the resource exists. Changing this forces a new resource to be created.",
               "type": "string"
             },
+            "networkRuleBypassForTasksEnabled": {
+              "description": "Whether to allow Container Registry Tasks to access a network-restricted Container Registry? Defaults to false.",
+              "type": "boolean"
+            },
             "networkRuleBypassOption": {
               "description": "Whether to allow trusted Azure services to access a network-restricted Container Registry? Possible values are None and AzureServices. Defaults to AzureServices.",
               "type": "string"
@@ -740,6 +760,10 @@
             "retentionPolicyInDays": {
               "description": "The number of days to retain and untagged manifest after which it gets purged.",
               "type": "number"
+            },
+            "roleAssignmentMode": {
+              "description": "The role assignment mode of this Container Registry. Possible values are AbacRepositoryPermissions and LegacyRegistryPermissions. Defaults to LegacyRegistryPermissions.",
+              "type": "string"
             },
             "sku": {
               "description": "The SKU name of the container registry. Possible values are Basic, Standard and Premium.",
@@ -878,6 +902,10 @@
               "description": "Whether to allow anonymous (unauthenticated) pull access to this Container Registry. This is only supported on resources with the Standard or Premium SKU.",
               "type": "boolean"
             },
+            "azureadAuthenticationAsArmPolicyEnabled": {
+              "description": "Whether to use Azure Resource Manager audience token for this Container Registry? Defaults to true.",
+              "type": "boolean"
+            },
             "dataEndpointEnabled": {
               "description": "Whether to enable dedicated data endpoints for this Container Registry? This is only supported on resources with the Premium SKU.",
               "type": "boolean"
@@ -984,6 +1012,10 @@
               "description": "The URL that can be used to log into the container registry.",
               "type": "string"
             },
+            "networkRuleBypassForTasksEnabled": {
+              "description": "Whether to allow Container Registry Tasks to access a network-restricted Container Registry? Defaults to false.",
+              "type": "boolean"
+            },
             "networkRuleBypassOption": {
               "description": "Whether to allow trusted Azure services to access a network-restricted Container Registry? Possible values are None and AzureServices. Defaults to AzureServices.",
               "type": "string"
@@ -1035,6 +1067,10 @@
             "retentionPolicyInDays": {
               "description": "The number of days to retain and untagged manifest after which it gets purged.",
               "type": "number"
+            },
+            "roleAssignmentMode": {
+              "description": "The role assignment mode of this Container Registry. Possible values are AbacRepositoryPermissions and LegacyRegistryPermissions. Defaults to LegacyRegistryPermissions.",
+              "type": "string"
             },
             "sku": {
               "description": "The SKU name of the container registry. Possible values are Basic, Standard and Premium.",
@@ -1106,6 +1142,10 @@
             "type"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "lastHandledReconcileAt": {
+          "description": "LastHandledReconcileAt holds the value of the most recent\nreconcile-requested-at annotation token that the controller has\nprocessed. Users can compare this to the annotation to determine\nwhether a reconcile request has been handled.",
+          "type": "string"
         },
         "observedGeneration": {
           "description": "ObservedGeneration is the latest metadata.generation\nwhich resulted in either a ready state, or stalled due to error\nit can not recover from without human intervention.",
