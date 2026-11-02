@@ -168,12 +168,253 @@
         "clusterCredentialSecretName": {
           "type": "string"
         },
+        "apiCertificateBasedAuthActive": {
+          "type": "boolean"
+        },
+        "gateway": {
+          "properties": {
+            "api": {
+              "properties": {
+                "conditions": {
+                  "items": {
+                    "properties": {
+                      "lastTransitionTime": {
+                        "format": "date-time",
+                        "type": "string"
+                      },
+                      "message": {
+                        "maxLength": 32768,
+                        "type": "string"
+                      },
+                      "observedGeneration": {
+                        "format": "int64",
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "reason": {
+                        "maxLength": 1024,
+                        "minLength": 1,
+                        "pattern": "^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$",
+                        "type": "string"
+                      },
+                      "status": {
+                        "enum": [
+                          "True",
+                          "False",
+                          "Unknown"
+                        ],
+                        "type": "string"
+                      },
+                      "type": {
+                        "maxLength": 316,
+                        "pattern": "^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "lastTransitionTime",
+                      "message",
+                      "reason",
+                      "status",
+                      "type"
+                    ],
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "type": "array"
+                },
+                "fqdn": {
+                  "type": "string"
+                },
+                "routeName": {
+                  "type": "string"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
+            "metrics": {
+              "properties": {
+                "conditions": {
+                  "items": {
+                    "properties": {
+                      "lastTransitionTime": {
+                        "format": "date-time",
+                        "type": "string"
+                      },
+                      "message": {
+                        "maxLength": 32768,
+                        "type": "string"
+                      },
+                      "observedGeneration": {
+                        "format": "int64",
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "reason": {
+                        "maxLength": 1024,
+                        "minLength": 1,
+                        "pattern": "^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$",
+                        "type": "string"
+                      },
+                      "status": {
+                        "enum": [
+                          "True",
+                          "False",
+                          "Unknown"
+                        ],
+                        "type": "string"
+                      },
+                      "type": {
+                        "maxLength": 316,
+                        "pattern": "^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "lastTransitionTime",
+                      "message",
+                      "reason",
+                      "status",
+                      "type"
+                    ],
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "type": "array"
+                },
+                "fqdn": {
+                  "type": "string"
+                },
+                "routeName": {
+                  "type": "string"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
+            "ui": {
+              "properties": {
+                "conditions": {
+                  "items": {
+                    "properties": {
+                      "lastTransitionTime": {
+                        "format": "date-time",
+                        "type": "string"
+                      },
+                      "message": {
+                        "maxLength": 32768,
+                        "type": "string"
+                      },
+                      "observedGeneration": {
+                        "format": "int64",
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "reason": {
+                        "maxLength": 1024,
+                        "minLength": 1,
+                        "pattern": "^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$",
+                        "type": "string"
+                      },
+                      "status": {
+                        "enum": [
+                          "True",
+                          "False",
+                          "Unknown"
+                        ],
+                        "type": "string"
+                      },
+                      "type": {
+                        "maxLength": 316,
+                        "pattern": "^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "lastTransitionTime",
+                      "message",
+                      "reason",
+                      "status",
+                      "type"
+                    ],
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "type": "array"
+                },
+                "fqdn": {
+                  "type": "string"
+                },
+                "routeName": {
+                  "type": "string"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
         "ingressOrRouteMethodStatus": {
           "type": "string"
+        },
+        "initContainerFailures": {
+          "items": {
+            "properties": {
+              "containerName": {
+                "type": "string"
+              },
+              "exitCode": {
+                "format": "int32",
+                "type": "integer"
+              },
+              "message": {
+                "type": "string"
+              },
+              "podName": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string"
+              }
+            },
+            "type": "object",
+            "additionalProperties": false
+          },
+          "type": "array"
+        },
+        "operatorClientCertStatus": {
+          "properties": {
+            "state": {
+              "type": "string"
+            },
+            "expirationDate": {
+              "type": "string"
+            },
+            "secretName": {
+              "type": "string"
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
         },
         "managedAPIs": {
           "properties": {
             "ldap": {
+              "type": "boolean"
+            },
+            "disconnectClientsOnPasswordRemoval": {
+              "type": "boolean"
+            },
+            "apiCertificateBasedAuth": {
+              "type": "boolean"
+            },
+            "clientMaintenanceNotificationsProxyMode": {
+              "type": "boolean"
+            },
+            "clientMaintenanceNotificationsOssMode": {
               "type": "boolean"
             }
           },
@@ -270,6 +511,45 @@
             },
             "dbConnsAuditing": {
               "type": "boolean"
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
+        "accessControl": {
+          "properties": {
+            "policy": {
+              "properties": {
+                "allowREDBRolesPermissions": {
+                  "type": "boolean"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
+        "clientMaintenanceNotifications": {
+          "properties": {
+            "ossMode": {
+              "properties": {
+                "enabled": {
+                  "type": "boolean"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
+            "proxyMode": {
+              "properties": {
+                "enabled": {
+                  "type": "boolean"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
             }
           },
           "type": "object",
@@ -381,6 +661,87 @@
           "type": "object",
           "additionalProperties": false
         },
+        "apiCertificateBasedAuth": {
+          "properties": {
+            "authorizedSubjects": {
+              "items": {
+                "properties": {
+                  "C": {
+                    "type": "string"
+                  },
+                  "CN": {
+                    "type": "string"
+                  },
+                  "L": {
+                    "type": "string"
+                  },
+                  "O": {
+                    "type": "string"
+                  },
+                  "OU": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "ST": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "CN"
+                ],
+                "type": "object",
+                "additionalProperties": false
+              },
+              "type": "array"
+            },
+            "clientCertSubjectValidationType": {
+              "enum": [
+                "Disabled",
+                "SanCn",
+                "FullSubject"
+              ],
+              "type": "string"
+            },
+            "enabled": {
+              "type": "boolean"
+            },
+            "trustedCASecretName": {
+              "type": "string"
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
+        "apiBasicAuth": {
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
+        "operatorClientAuth": {
+          "properties": {
+            "certificateSubjectLine": {
+              "type": "string"
+            },
+            "clientCertificateSecretName": {
+              "type": "string"
+            },
+            "method": {
+              "enum": [
+                "Basic",
+                "Certificate"
+              ],
+              "type": "string"
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
         "createServiceAccount": {
           "type": "boolean"
         },
@@ -389,6 +750,16 @@
         },
         "encryptPkeys": {
           "type": "boolean"
+        },
+        "dmcExternalCBAAuthentication": {
+          "type": "boolean"
+        },
+        "usageReportFields": {
+          "enum": [
+            "all",
+            "restricted"
+          ],
+          "type": "string"
         },
         "certificates": {
           "properties": {
@@ -556,6 +927,335 @@
             "additionalProperties": false
           },
           "type": "array"
+        },
+        "gateway": {
+          "properties": {
+            "activeActiveDatabases": {
+              "description": "Exposes Active-Active databases via Gateway. REC-scoped only; per-database\noverrides are not supported for Active-Active databases.",
+              "properties": {
+                "autoEnable": {
+                  "description": "Controls which Active-Active databases are Gateway-enabled by default:\nNone (default), All, or Selector (only those matching selector).",
+                  "enum": [
+                    "None",
+                    "All",
+                    "Selector"
+                  ],
+                  "type": "string"
+                },
+                "fqdnSuffix": {
+                  "description": "FQDN suffix for Active-Active endpoints; the per-database FQDN defaults to\n<db-name>.<fqdnSuffix>.",
+                  "type": "string"
+                },
+                "gatewayRef": {
+                  "description": "Overrides default.gatewayRef for this endpoint.",
+                  "properties": {
+                    "name": {
+                      "description": "Name of the Gateway.",
+                      "type": "string"
+                    },
+                    "namespace": {
+                      "description": "Namespace of the Gateway. Defaults to the resource's namespace if omitted.",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "listenerName": {
+                  "description": "Gateway listener name; maps to the Route's parentRef.sectionName. If omitted,\nthe Gateway implementation selects a compatible listener.",
+                  "type": "string"
+                },
+                "listenerPort": {
+                  "description": "Gateway listener port; maps to the Route's parentRef.port.",
+                  "maximum": 65535,
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "routeAnnotations": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "description": "Annotations for this endpoint's TLSRoute (e.g. for external-dns), merged over\ngateway.default.routeAnnotations (these win on key conflicts).",
+                  "type": "object"
+                },
+                "routeLabels": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "description": "Labels for this endpoint's TLSRoute, merged over gateway.default.routeLabels\n(these win on key conflicts). Operator-managed labels always take precedence.",
+                  "type": "object"
+                },
+                "selector": {
+                  "description": "Label selector over Active-Active databases. Used only when autoEnable=Selector.",
+                  "properties": {
+                    "matchExpressions": {
+                      "description": "matchExpressions is a list of label selector requirements. The requirements are ANDed.",
+                      "items": {
+                        "description": "A label selector requirement is a selector that contains values, a key, and an operator that\nrelates the key and values.",
+                        "properties": {
+                          "key": {
+                            "description": "key is the label key that the selector applies to.",
+                            "type": "string"
+                          },
+                          "operator": {
+                            "description": "operator represents a key's relationship to a set of values.\nValid operators are In, NotIn, Exists and DoesNotExist.",
+                            "type": "string"
+                          },
+                          "values": {
+                            "description": "values is an array of string values. If the operator is In or NotIn,\nthe values array must be non-empty. If the operator is Exists or DoesNotExist,\nthe values array must be empty. This array is replaced during a strategic\nmerge patch.",
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array",
+                            "x-kubernetes-list-type": "atomic"
+                          }
+                        },
+                        "required": [
+                          "key",
+                          "operator"
+                        ],
+                        "type": "object",
+                        "additionalProperties": false
+                      },
+                      "type": "array",
+                      "x-kubernetes-list-type": "atomic"
+                    },
+                    "matchLabels": {
+                      "additionalProperties": {
+                        "type": "string"
+                      },
+                      "description": "matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels\nmap is equivalent to an element of matchExpressions, whose key field is \"key\", the\noperator is \"In\", and the values array contains only \"value\". The requirements are ANDed.",
+                      "type": "object"
+                    }
+                  },
+                  "type": "object",
+                  "x-kubernetes-map-type": "atomic",
+                  "additionalProperties": false
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
+            "api": {
+              "description": "Exposes the RS API endpoint via Gateway.",
+              "properties": {
+                "enabled": {
+                  "description": "Whether this endpoint is exposed via Gateway. Defaults to false.",
+                  "type": "boolean"
+                },
+                "fqdn": {
+                  "description": "Explicit FQDN for this endpoint. Defaults to <prefix>.<default.fqdnSuffix>.",
+                  "type": "string"
+                },
+                "gatewayRef": {
+                  "description": "Overrides default.gatewayRef for this endpoint.",
+                  "properties": {
+                    "name": {
+                      "description": "Name of the Gateway.",
+                      "type": "string"
+                    },
+                    "namespace": {
+                      "description": "Namespace of the Gateway. Defaults to the resource's namespace if omitted.",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "listenerName": {
+                  "description": "Gateway listener name; maps to the Route's parentRef.sectionName. If omitted,\nthe Gateway implementation selects a compatible listener.",
+                  "type": "string"
+                },
+                "listenerPort": {
+                  "description": "Gateway listener port; maps to the Route's parentRef.port.",
+                  "maximum": 65535,
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "routeAnnotations": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "description": "Annotations for this endpoint's TLSRoute (e.g. for external-dns), merged over\ngateway.default.routeAnnotations (these win on key conflicts).",
+                  "type": "object"
+                },
+                "routeLabels": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "description": "Labels for this endpoint's TLSRoute, merged over gateway.default.routeLabels\n(these win on key conflicts). Operator-managed labels always take precedence.",
+                  "type": "object"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
+            "default": {
+              "description": "Shared fallbacks (gatewayRef, fqdnSuffix) used by endpoints that do not set\ntheir own.",
+              "properties": {
+                "fqdnSuffix": {
+                  "description": "Base FQDN suffix used to derive endpoint hostnames when an explicit FQDN is not\nset. Defaults: api.<fqdnSuffix>, ui.<fqdnSuffix>, metrics.<fqdnSuffix>,\n<db-name>.db.<fqdnSuffix> (database), <db-name>.crdb.<fqdnSuffix> (Active-Active).",
+                  "type": "string"
+                },
+                "gatewayRef": {
+                  "description": "Default Gateway referenced by endpoints that do not specify their own gatewayRef.",
+                  "properties": {
+                    "name": {
+                      "description": "Name of the Gateway.",
+                      "type": "string"
+                    },
+                    "namespace": {
+                      "description": "Namespace of the Gateway. Defaults to the resource's namespace if omitted.",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "routeAnnotations": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "description": "Default annotations applied to the TLSRoutes the operator creates (e.g. for\nexternal-dns). A per-endpoint routeAnnotations entry overrides the matching\ndefault key.",
+                  "type": "object"
+                },
+                "routeLabels": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "description": "Default labels applied to the TLSRoutes the operator creates. A per-endpoint\nrouteLabels entry overrides the matching default key; operator-managed labels\nalways take precedence.",
+                  "type": "object"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
+            "metrics": {
+              "description": "Exposes the metrics exporter endpoint via Gateway.",
+              "properties": {
+                "enabled": {
+                  "description": "Whether this endpoint is exposed via Gateway. Defaults to false.",
+                  "type": "boolean"
+                },
+                "fqdn": {
+                  "description": "Explicit FQDN for this endpoint. Defaults to <prefix>.<default.fqdnSuffix>.",
+                  "type": "string"
+                },
+                "gatewayRef": {
+                  "description": "Overrides default.gatewayRef for this endpoint.",
+                  "properties": {
+                    "name": {
+                      "description": "Name of the Gateway.",
+                      "type": "string"
+                    },
+                    "namespace": {
+                      "description": "Namespace of the Gateway. Defaults to the resource's namespace if omitted.",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "listenerName": {
+                  "description": "Gateway listener name; maps to the Route's parentRef.sectionName. If omitted,\nthe Gateway implementation selects a compatible listener.",
+                  "type": "string"
+                },
+                "listenerPort": {
+                  "description": "Gateway listener port; maps to the Route's parentRef.port.",
+                  "maximum": 65535,
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "routeAnnotations": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "description": "Annotations for this endpoint's TLSRoute (e.g. for external-dns), merged over\ngateway.default.routeAnnotations (these win on key conflicts).",
+                  "type": "object"
+                },
+                "routeLabels": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "description": "Labels for this endpoint's TLSRoute, merged over gateway.default.routeLabels\n(these win on key conflicts). Operator-managed labels always take precedence.",
+                  "type": "object"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
+            "ui": {
+              "description": "Exposes the CM UI endpoint via Gateway.",
+              "properties": {
+                "enabled": {
+                  "description": "Whether this endpoint is exposed via Gateway. Defaults to false.",
+                  "type": "boolean"
+                },
+                "fqdn": {
+                  "description": "Explicit FQDN for this endpoint. Defaults to <prefix>.<default.fqdnSuffix>.",
+                  "type": "string"
+                },
+                "gatewayRef": {
+                  "description": "Overrides default.gatewayRef for this endpoint.",
+                  "properties": {
+                    "name": {
+                      "description": "Name of the Gateway.",
+                      "type": "string"
+                    },
+                    "namespace": {
+                      "description": "Namespace of the Gateway. Defaults to the resource's namespace if omitted.",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false
+                },
+                "listenerName": {
+                  "description": "Gateway listener name; maps to the Route's parentRef.sectionName. If omitted,\nthe Gateway implementation selects a compatible listener.",
+                  "type": "string"
+                },
+                "listenerPort": {
+                  "description": "Gateway listener port; maps to the Route's parentRef.port.",
+                  "maximum": 65535,
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "routeAnnotations": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "description": "Annotations for this endpoint's TLSRoute (e.g. for external-dns), merged over\ngateway.default.routeAnnotations (these win on key conflicts).",
+                  "type": "object"
+                },
+                "routeLabels": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "description": "Labels for this endpoint's TLSRoute, merged over gateway.default.routeLabels\n(these win on key conflicts). Operator-managed labels always take precedence.",
+                  "type": "object"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
         },
         "ingressOrRouteSpec": {
           "properties": {
@@ -851,6 +1551,39 @@
         },
         "licenseSecretName": {
           "type": "string"
+        },
+        "metricsConfig": {
+          "properties": {
+            "exposeDatabaseTags": {
+              "type": "boolean"
+            },
+            "metricsTagKeysExposed": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "maxRequestsInFlight": {
+              "type": "integer"
+            },
+            "keyDistributionEnabled": {
+              "type": "boolean"
+            },
+            "keySizeBuckets": {
+              "type": "string"
+            },
+            "keyItemsBuckets": {
+              "type": "string"
+            },
+            "localStorageMaxSizeMb": {
+              "type": "integer"
+            },
+            "localStorageRetentionDays": {
+              "type": "integer"
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
         },
         "nodeSelector": {
           "additionalProperties": {
@@ -1503,14 +2236,19 @@
         "resp3Default": {
           "type": "boolean"
         },
+        "disconnectClientsOnPasswordRemoval": {
+          "enum": [
+            "Enabled",
+            "Disabled",
+            "Auto"
+          ],
+          "type": "string"
+        },
         "securityContext": {
-          "description": "The security configuration that will be applied to RS pods.",
           "properties": {
             "readOnlyRootFilesystemPolicy": {
-              "description": "Policy controlling whether to enable read-only root filesystem for the Redis Enterprise software containers. Note that certain filesystem paths remain writable through mounted volumes to ensure proper functionality.",
               "properties": {
                 "enabled": {
-                  "description": "Whether to enable read-only root filesystem for the Redis Enterprise software containers. Default is false.",
                   "type": "boolean"
                 }
               },
@@ -1521,10 +2259,17 @@
               "additionalProperties": false
             },
             "resourceLimits": {
-              "description": "Settings pertaining to resource limits management by the Redis Enterprise node container.",
               "properties": {
                 "allowAutoAdjustment": {
-                  "description": "Allow Redis Enterprise to adjust resource limits, like max open file descriptors, of its data plane processes. When this option is enabled, the SYS_RESOURCE capability is added to the Redis Enterprise pods, and their allowPrivilegeEscalation field is set. Turned off by default.",
+                  "type": "boolean"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
+            "fips": {
+              "properties": {
+                "enabled": {
                   "type": "boolean"
                 }
               },
