@@ -24,7 +24,7 @@
 sources:
 
   - url: "https://github.com/1Password/onepassword-operator"
-    tag: "v1.12.0"
+    tag: "v1.12.1"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/1Password/onepassword-operator/releases"
 
