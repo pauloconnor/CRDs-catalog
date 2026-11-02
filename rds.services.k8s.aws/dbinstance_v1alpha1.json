@@ -60,12 +60,32 @@
           "type": "string"
         },
         "databaseInsightsMode": {
-          "description": "Specifies the mode of Database Insights to enable for the instance.",
+          "description": "The mode of Database Insights to enable for the DB instance.\n\nThis setting only applies to Amazon Aurora DB instances.\n\nCurrently, this value is inherited from the DB cluster and can't be changed.",
           "type": "string"
         },
         "dbClusterIdentifier": {
           "description": "The identifier of the DB cluster that this DB instance will belong to.\n\nThis setting doesn't apply to RDS Custom DB instances.",
           "type": "string"
+        },
+        "dbClusterIdentifierRef": {
+          "description": "AWSResourceReferenceWrapper provides a wrapper around *AWSResourceReference\ntype to provide more user friendly syntax for references using 'from' field\nEx:\nAPIIDRef:\n\n\tfrom:\n\t  name: my-api",
+          "properties": {
+            "from": {
+              "description": "AWSResourceReference provides all the values necessary to reference another\nk8s resource for finding the identifier(Id/ARN/Name)",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "namespace": {
+                  "type": "string"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
         },
         "dbClusterSnapshotIdentifier": {
           "description": "The identifier for the Multi-AZ DB cluster snapshot to restore from.\n\nFor more information on Multi-AZ DB clusters, see Multi-AZ DB cluster deployments\n(https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/multi-az-db-clusters-concepts.html)\nin the Amazon RDS User Guide.\n\nConstraints:\n\n   * Must match the identifier of an existing Multi-AZ DB cluster snapshot.\n\n   * Can't be specified when DBSnapshotIdentifier is specified.\n\n   * Must be specified when DBSnapshotIdentifier isn't specified.\n\n   * If you are restoring from a shared manual Multi-AZ DB cluster snapshot,\n   the DBClusterSnapshotIdentifier must be the ARN of the shared snapshot.\n\n   * Can't be the identifier of an Aurora DB cluster snapshot.",
@@ -110,6 +130,26 @@
         "dbSnapshotIdentifier": {
           "description": "The identifier for the DB snapshot to restore from.\n\nConstraints:\n\n   * Must match the identifier of an existing DB snapshot.\n\n   * Can't be specified when DBClusterSnapshotIdentifier is specified.\n\n   * Must be specified when DBClusterSnapshotIdentifier isn't specified.\n\n   * If you are restoring from a shared manual DB snapshot, the DBSnapshotIdentifier\n   must be the ARN of the shared DB snapshot.",
           "type": "string"
+        },
+        "dbSnapshotIdentifierRef": {
+          "description": "AWSResourceReferenceWrapper provides a wrapper around *AWSResourceReference\ntype to provide more user friendly syntax for references using 'from' field\nEx:\nAPIIDRef:\n\n\tfrom:\n\t  name: my-api",
+          "properties": {
+            "from": {
+              "description": "AWSResourceReference provides all the values necessary to reference another\nk8s resource for finding the identifier(Id/ARN/Name)",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "namespace": {
+                  "type": "string"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
         },
         "dbSubnetGroupName": {
           "description": "A DB subnet group to associate with this DB instance.\n\nConstraints:\n\n   * Must match the name of an existing DB subnet group.\n\nExample: mydbsubnetgroup",
@@ -276,6 +316,26 @@
           "description": "The ARN for the IAM role that permits RDS to send enhanced monitoring metrics\nto Amazon CloudWatch Logs. For example, arn:aws:iam:123456789012:role/emaccess.\nFor information on creating a monitoring role, see Setting Up and Enabling\nEnhanced Monitoring (https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Monitoring.OS.html#USER_Monitoring.OS.Enabling)\nin the Amazon RDS User Guide.\n\nIf MonitoringInterval is set to a value other than 0, then you must supply\na MonitoringRoleArn value.\n\nThis setting doesn't apply to RDS Custom DB instances.",
           "type": "string"
         },
+        "monitoringRoleRef": {
+          "description": "AWSResourceReferenceWrapper provides a wrapper around *AWSResourceReference\ntype to provide more user friendly syntax for references using 'from' field\nEx:\nAPIIDRef:\n\n\tfrom:\n\t  name: my-api",
+          "properties": {
+            "from": {
+              "description": "AWSResourceReference provides all the values necessary to reference another\nk8s resource for finding the identifier(Id/ARN/Name)",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "namespace": {
+                  "type": "string"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
         "multiAZ": {
           "description": "Specifies whether the DB instance is a Multi-AZ deployment. You can't set\nthe AvailabilityZone parameter if the DB instance is a Multi-AZ deployment.\n\nThis setting doesn't apply to the following DB instances:\n\n   * Amazon Aurora (DB instance Availability Zones (AZs) are managed by the\n   DB cluster.)\n\n   * RDS Custom",
           "type": "boolean"
@@ -299,6 +359,26 @@
         "performanceInsightsKMSKeyID": {
           "description": "The Amazon Web Services KMS key identifier for encryption of Performance\nInsights data.\n\nThe Amazon Web Services KMS key identifier is the key ARN, key ID, alias\nARN, or alias name for the KMS key.\n\nIf you don't specify a value for PerformanceInsightsKMSKeyId, then Amazon\nRDS uses your default KMS key. There is a default KMS key for your Amazon\nWeb Services account. Your Amazon Web Services account has a different default\nKMS key for each Amazon Web Services Region.\n\nThis setting doesn't apply to RDS Custom DB instances.",
           "type": "string"
+        },
+        "performanceInsightsKMSKeyRef": {
+          "description": "AWSResourceReferenceWrapper provides a wrapper around *AWSResourceReference\ntype to provide more user friendly syntax for references using 'from' field\nEx:\nAPIIDRef:\n\n\tfrom:\n\t  name: my-api",
+          "properties": {
+            "from": {
+              "description": "AWSResourceReference provides all the values necessary to reference another\nk8s resource for finding the identifier(Id/ARN/Name)",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "namespace": {
+                  "type": "string"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
         },
         "performanceInsightsRetentionPeriod": {
           "description": "The number of days to retain Performance Insights data.\n\nThis setting doesn't apply to RDS Custom DB instances.\n\nValid Values:\n\n   * 7\n\n   * month * 31, where month is a number of months from 1-23. Examples: 93\n   (3 months * 31), 341 (11 months * 31), 589 (19 months * 31)\n\n   * 731\n\nDefault: 7 days\n\nIf you specify a retention period that isn't valid, such as 94, Amazon RDS\nreturns an error.",
@@ -355,6 +435,26 @@
         "sourceDBInstanceIdentifier": {
           "description": "The identifier of the DB instance that will act as the source for the read\nreplica. Each DB instance can have up to 15 read replicas, with the exception\nof Oracle and SQL Server, which can have up to five.\n\nConstraints:\n\n   * Must be the identifier of an existing Db2, MariaDB, MySQL, Oracle, PostgreSQL,\n   or SQL Server DB instance.\n\n   * Can't be specified if the SourceDBClusterIdentifier parameter is also\n   specified.\n\n   * For the limitations of Oracle read replicas, see Version and licensing\n   considerations for RDS for Oracle replicas (https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/oracle-read-replicas.limitations.html#oracle-read-replicas.limitations.versions-and-licenses)\n   in the Amazon RDS User Guide.\n\n   * For the limitations of SQL Server read replicas, see Read replica limitations\n   with SQL Server (https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/SQLServer.ReadReplicas.html#SQLServer.ReadReplicas.Limitations)\n   in the Amazon RDS User Guide.\n\n   * The specified DB instance must have automatic backups enabled, that\n   is, its backup retention period must be greater than 0.\n\n   * If the source DB instance is in the same Amazon Web Services Region\n   as the read replica, specify a valid DB instance identifier.\n\n   * If the source DB instance is in a different Amazon Web Services Region\n   from the read replica, specify a valid DB instance ARN. For more information,\n   see Constructing an ARN for Amazon RDS (https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Tagging.ARN.html#USER_Tagging.ARN.Constructing)\n   in the Amazon RDS User Guide. This doesn't apply to SQL Server or RDS\n   Custom, which don't support cross-Region replicas.",
           "type": "string"
+        },
+        "sourceDBInstanceIdentifierRef": {
+          "description": "AWSResourceReferenceWrapper provides a wrapper around *AWSResourceReference\ntype to provide more user friendly syntax for references using 'from' field\nEx:\nAPIIDRef:\n\n\tfrom:\n\t  name: my-api",
+          "properties": {
+            "from": {
+              "description": "AWSResourceReference provides all the values necessary to reference another\nk8s resource for finding the identifier(Id/ARN/Name)",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "namespace": {
+                  "type": "string"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
         },
         "sourceRegion": {
           "description": "SourceRegion is the source region where the resource exists. This is not\nsent over the wire and is only used for presigning. This value should always\nhave the same region as the source ARN.",
@@ -457,6 +557,10 @@
             },
             "ownerAccountID": {
               "description": "OwnerAccountID is the AWS Account ID of the account that owns the\nbackend AWS service API resource.",
+              "type": "string"
+            },
+            "partition": {
+              "description": "Partition is the AWS partition in which the resource exists or will exist",
               "type": "string"
             },
             "region": {
