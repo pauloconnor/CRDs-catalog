@@ -21,7 +21,7 @@
         },
         "replicas": {
           "type": "integer",
-          "description": "The number of pods in the Kafka Connect group. Required in the `v1` version of the Strimzi API. Defaults to `3` in the `v1beta2` version of the Strimzi API."
+          "description": "The number of pods in the Kafka Connect group. Required in the `v1` version of the Strimzi API."
         },
         "image": {
           "type": "string",
@@ -161,7 +161,7 @@
                 "plain",
                 "custom"
               ],
-              "description": "Specifies the authentication type. Supported types are `tls`, `scram-sha-256`, `scram-sha-512`, `plain`, 'oauth', and `custom`. `tls` uses TLS client authentication and is supported only over TLS connections. `scram-sha-256` and `scram-sha-512` use SASL SCRAM-SHA-256 and SASL SCRAM-SHA-512 authentication, respectively. `plain` uses SASL PLAIN authentication. `oauth` uses SASL OAUTHBEARER authentication. `custom` allows you to configure a custom authentication mechanism. As of Strimzi 0.49.0, `oauth` type is deprecated and will be removed in the `v1` API version. Please use `custom` type instead."
+              "description": "Specifies the authentication type. Supported types are `tls`, `scram-sha-256`, `scram-sha-512`, `plain`, and `custom`. `tls` uses TLS client authentication and is supported only over TLS connections. `scram-sha-256` and `scram-sha-512` use SASL SCRAM-SHA-256 and SASL SCRAM-SHA-512 authentication, respectively. `plain` uses SASL PLAIN authentication. `custom` allows you to configure a custom authentication mechanism."
             },
             "username": {
               "type": "string",
@@ -177,7 +177,7 @@
         "config": {
           "x-kubernetes-preserve-unknown-fields": true,
           "type": "object",
-          "description": "The Kafka Connect configuration. Properties with the following prefixes cannot be set: group.id, config.storage.topic, offset.storage.topic, status.storage.topic, ssl., sasl., security., listeners, plugin.path, rest., bootstrap.servers, consumer.interceptor.classes, producer.interceptor.classes, prometheus.metrics.reporter. (with the exception of: ssl.endpoint.identification.algorithm, ssl.cipher.suites, ssl.protocol, ssl.enabled.protocols)."
+          "description": "The Kafka Connect configuration. Properties with the following prefixes cannot be set: group.id, config.storage.topic, offset.storage.topic, status.storage.topic, ssl., sasl., security., listeners, plugin.path, rest., bootstrap.servers, consumer.interceptor.classes, producer.interceptor.classes, prometheus.metrics.reporter. (with the exception of: ssl.endpoint.identification.algorithm, ssl.cipher.suites, ssl.protocol, ssl.enabled.protocols, rest.extension.classes)."
         },
         "resources": {
           "type": "object",
@@ -520,7 +520,7 @@
               "enum": [
                 "opentelemetry"
               ],
-              "description": "Type of the tracing used. Currently the only supported type is `opentelemetry` for OpenTelemetry tracing. As of Strimzi 0.37.0, `jaeger` type is not supported anymore and this option is ignored."
+              "description": "Type of the tracing used. Currently the only supported type is `opentelemetry` for OpenTelemetry tracing."
             }
           },
           "required": [
@@ -1442,6 +1442,9 @@
                           "defaultMode": {
                             "type": "integer"
                           },
+                          "defaultUser": {
+                            "type": "integer"
+                          },
                           "items": {
                             "type": "array",
                             "items": {
@@ -1455,6 +1458,9 @@
                                 },
                                 "path": {
                                   "type": "string"
+                                },
+                                "user": {
+                                  "type": "integer"
                                 }
                               },
                               "additionalProperties": false
@@ -1476,6 +1482,9 @@
                           "defaultMode": {
                             "type": "integer"
                           },
+                          "defaultUser": {
+                            "type": "integer"
+                          },
                           "items": {
                             "type": "array",
                             "items": {
@@ -1489,6 +1498,9 @@
                                 },
                                 "path": {
                                   "type": "string"
+                                },
+                                "user": {
+                                  "type": "integer"
                                 }
                               },
                               "additionalProperties": false
@@ -1579,6 +1591,49 @@
                         },
                         "description": "`ImageVolumeSource` object to use to populate the volume.",
                         "additionalProperties": false
+                      },
+                      "projected": {
+                        "type": "object",
+                        "properties": {
+                          "sources": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "serviceAccountToken": {
+                                  "type": "object",
+                                  "properties": {
+                                    "audience": {
+                                      "type": "string"
+                                    },
+                                    "expirationSeconds": {
+                                      "type": "integer"
+                                    },
+                                    "path": {
+                                      "type": "string"
+                                    },
+                                    "user": {
+                                      "type": "integer"
+                                    }
+                                  },
+                                  "description": "Information about the serviceAccountToken data to project.",
+                                  "additionalProperties": false
+                                }
+                              },
+                              "oneOf": [
+                                {
+                                  "properties": {
+                                    "serviceAccountToken": {}
+                                  }
+                                }
+                              ],
+                              "additionalProperties": false
+                            },
+                            "description": "List of projections that are part of this projected volumes. Currently, only Service Account projection is supported."
+                          }
+                        },
+                        "description": "`ProjectedVolume` object to use volume projection.",
+                        "additionalProperties": false
                       }
                     },
                     "oneOf": [
@@ -1589,13 +1644,130 @@
                           "emptyDir": {},
                           "persistentVolumeClaim": {},
                           "csi": {},
-                          "image": {}
+                          "image": {},
+                          "projected": {}
                         }
                       }
                     ],
                     "additionalProperties": false
                   },
                   "description": "Additional volumes that can be mounted to the pod."
+                },
+                "templatedVolumes": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "Name to use for the volume. Required."
+                      },
+                      "secret": {
+                        "type": "object",
+                        "properties": {
+                          "defaultMode": {
+                            "type": "integer"
+                          },
+                          "defaultUser": {
+                            "type": "integer"
+                          },
+                          "items": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "key": {
+                                  "type": "string"
+                                },
+                                "mode": {
+                                  "type": "integer"
+                                },
+                                "path": {
+                                  "type": "string"
+                                },
+                                "user": {
+                                  "type": "integer"
+                                }
+                              },
+                              "additionalProperties": false
+                            }
+                          },
+                          "optional": {
+                            "type": "boolean"
+                          },
+                          "secretName": {
+                            "type": "string"
+                          }
+                        },
+                        "description": "`Secret` to use to populate the volume. The name of the Secret and the items key and path fields can use placeholders that would be replaced for every individual node. Valid placeholders that you can use in the template are `{nodeId}` and `{nodePodName}`.",
+                        "additionalProperties": false
+                      },
+                      "configMap": {
+                        "type": "object",
+                        "properties": {
+                          "defaultMode": {
+                            "type": "integer"
+                          },
+                          "defaultUser": {
+                            "type": "integer"
+                          },
+                          "items": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "key": {
+                                  "type": "string"
+                                },
+                                "mode": {
+                                  "type": "integer"
+                                },
+                                "path": {
+                                  "type": "string"
+                                },
+                                "user": {
+                                  "type": "integer"
+                                }
+                              },
+                              "additionalProperties": false
+                            }
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "optional": {
+                            "type": "boolean"
+                          }
+                        },
+                        "description": "`ConfigMap` to use to populate the volume. The name of the ConfigMap and the items key and path fields can use placeholders that would be replaced for every individual node. Valid placeholders that you can use in the template are `{nodeId}` and `{nodePodName}`.",
+                        "additionalProperties": false
+                      },
+                      "persistentVolumeClaim": {
+                        "type": "object",
+                        "properties": {
+                          "claimName": {
+                            "type": "string"
+                          },
+                          "readOnly": {
+                            "type": "boolean"
+                          }
+                        },
+                        "description": "`PersistentVolumeClaim` object to use to populate the volume. The name of the Persistent Volume Claim can use placeholders that would be replaced for every individual node. Valid placeholders that you can use in the template are `{nodeId}` and `{nodePodName}`.",
+                        "additionalProperties": false
+                      }
+                    },
+                    "oneOf": [
+                      {
+                        "properties": {
+                          "secret": {},
+                          "configMap": {},
+                          "persistentVolumeClaim": {}
+                        }
+                      }
+                    ],
+                    "additionalProperties": false
+                  },
+                  "description": "Additional volumes that can be mounted to the pod. These volumes can use templates to mount different volumes into individual Pods."
                 },
                 "hostUsers": {
                   "type": "boolean",
@@ -1908,6 +2080,12 @@
                   "items": {
                     "type": "object",
                     "properties": {
+                      "bindMountOptions": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
                       "mountPath": {
                         "type": "string"
                       },
@@ -2145,6 +2323,12 @@
                   "items": {
                     "type": "object",
                     "properties": {
+                      "bindMountOptions": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
                       "mountPath": {
                         "type": "string"
                       },
@@ -3146,6 +3330,9 @@
                           "defaultMode": {
                             "type": "integer"
                           },
+                          "defaultUser": {
+                            "type": "integer"
+                          },
                           "items": {
                             "type": "array",
                             "items": {
@@ -3159,6 +3346,9 @@
                                 },
                                 "path": {
                                   "type": "string"
+                                },
+                                "user": {
+                                  "type": "integer"
                                 }
                               },
                               "additionalProperties": false
@@ -3180,6 +3370,9 @@
                           "defaultMode": {
                             "type": "integer"
                           },
+                          "defaultUser": {
+                            "type": "integer"
+                          },
                           "items": {
                             "type": "array",
                             "items": {
@@ -3193,6 +3386,9 @@
                                 },
                                 "path": {
                                   "type": "string"
+                                },
+                                "user": {
+                                  "type": "integer"
                                 }
                               },
                               "additionalProperties": false
@@ -3283,6 +3479,49 @@
                         },
                         "description": "`ImageVolumeSource` object to use to populate the volume.",
                         "additionalProperties": false
+                      },
+                      "projected": {
+                        "type": "object",
+                        "properties": {
+                          "sources": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "serviceAccountToken": {
+                                  "type": "object",
+                                  "properties": {
+                                    "audience": {
+                                      "type": "string"
+                                    },
+                                    "expirationSeconds": {
+                                      "type": "integer"
+                                    },
+                                    "path": {
+                                      "type": "string"
+                                    },
+                                    "user": {
+                                      "type": "integer"
+                                    }
+                                  },
+                                  "description": "Information about the serviceAccountToken data to project.",
+                                  "additionalProperties": false
+                                }
+                              },
+                              "oneOf": [
+                                {
+                                  "properties": {
+                                    "serviceAccountToken": {}
+                                  }
+                                }
+                              ],
+                              "additionalProperties": false
+                            },
+                            "description": "List of projections that are part of this projected volumes. Currently, only Service Account projection is supported."
+                          }
+                        },
+                        "description": "`ProjectedVolume` object to use volume projection.",
+                        "additionalProperties": false
                       }
                     },
                     "oneOf": [
@@ -3293,7 +3532,8 @@
                           "emptyDir": {},
                           "persistentVolumeClaim": {},
                           "csi": {},
-                          "image": {}
+                          "image": {},
+                          "projected": {}
                         }
                       }
                     ],
@@ -3516,6 +3756,12 @@
                   "items": {
                     "type": "object",
                     "properties": {
+                      "bindMountOptions": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
                       "mountPath": {
                         "type": "string"
                       },
@@ -3649,7 +3895,7 @@
                   "items": {
                     "type": "string"
                   },
-                  "description": "Configures additional options to pass to the `build` command of either Kaniko or Buildah (depending on the feature gate setting) when building a new Kafka Connect image. Allowed Kaniko options: --customPlatform, --custom-platform, --insecure, --insecure-pull, --insecure-registry, --log-format, --log-timestamp, --registry-mirror, --reproducible, --single-snapshot, --skip-tls-verify, --skip-tls-verify-pull, --skip-tls-verify-registry, --verbosity, --snapshotMode, --use-new-run, --registry-certificate, --registry-client-cert, --ignore-path. Allowed Buildah `build` options: --authfile, --cert-dir, --creds, --decryption-key, --retry, --retry-delay, --tls-verify. Those options are used only on Kubernetes, where Kaniko and Buildah are available. They are ignored on OpenShift. For more information, see the link:https://github.com/GoogleContainerTools/kaniko[Kaniko GitHub repository^] or the link:https://github.com/containers/buildah/blob/main/docs/buildah-build.1.md[Buildah build document^]. Changing this field does not trigger a rebuild of the Kafka Connect image."
+                  "description": "Configures additional options to pass to the `build` command of Buildah when building a new Kafka Connect image. Allowed Buildah `build` options: --authfile, --cert-dir, --creds, --decryption-key, --retry, --retry-delay, --tls-verify. Those options are used only on Kubernetes, where Buildah is available. They are ignored on OpenShift. For more information, see the link:https://github.com/containers/buildah/blob/main/docs/buildah-build.1.md[Buildah build document^]. Changing this field does not trigger a rebuild of the Kafka Connect image."
                 },
                 "additionalPushOptions": {
                   "type": "array",
@@ -3709,9 +3955,37 @@
                           "type": "string",
                           "description": "Maven group id. Applicable to the `maven` artifact type only."
                         },
+                        "includeScope": {
+                          "type": "string",
+                          "enum": [
+                            "compile",
+                            "provided",
+                            "runtime",
+                            "test",
+                            "system"
+                          ],
+                          "description": "Maven scope for including dependencies for the artifact. Valid values are `compile`, `provided`, `runtime`, `test`, and `system`. When not configured, no scope is set, and all dependencies are included. Applicable to the `maven` artifact type only."
+                        },
                         "insecure": {
                           "type": "boolean",
                           "description": "By default, connections using TLS are verified to check they are secure. The server certificate used must be valid, trusted, and contain the server name. By setting this option to `true`, all TLS verification is disabled and the artifact will be downloaded, even when the server is considered insecure."
+                        },
+                        "mirrors": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "url": {
+                                "type": "string",
+                                "description": "The URL of the Maven mirror. All repository requests during the build, including plugin repositories and Maven Central, are redirected to this mirror. Applicable to the `maven` artifact type only."
+                              }
+                            },
+                            "required": [
+                              "url"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "description": "List of Maven mirrors used to download the artifact and its dependencies. All repository requests during the build, including plugin repositories and Maven Central, are redirected to the configured mirror(s). Applicable to the `maven` artifact type only."
                         },
                         "repository": {
                           "type": "string",
