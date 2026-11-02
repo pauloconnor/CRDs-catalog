@@ -76,7 +76,7 @@
           "additionalProperties": false
         },
         "serverlessCacheSnapshotName": {
-          "description": "The name for the snapshot being created. Must be unique for the customer\naccount. Available for Valkey, Redis OSS and Serverless Memcached only. Must\nbe between 1 and 255 characters.",
+          "description": "The name for the snapshot being created. Must be unique for the customer\naccount. Available for Valkey, Redis OSS and Serverless Memcached only. Must\nbe between 1 and 255 characters. This value is stored as a lowercase string.",
           "type": "string",
           "x-kubernetes-validations": [
             {
@@ -88,7 +88,7 @@
         "tags": {
           "description": "A list of tags to be added to the snapshot resource. A tag is a key-value\npair. Available for Valkey, Redis OSS and Serverless Memcached only.",
           "items": {
-            "description": "A tag that can be added to an ElastiCache cluster or replication group. Tags\nare composed of a Key/Value pair. You can use tags to categorize and track\nall your ElastiCache resources, with the exception of global replication\ngroup. When you add or remove tags on replication groups, those actions will\nbe replicated to all nodes in the replication group. A tag with a null Value\nis permitted.",
+            "description": "A tag that can be added to an ElastiCache cluster or replication group. Tags\nare composed of a Key/Value pair. You can use tags to categorize and track\nall your ElastiCache resources. When you add or remove tags on replication\ngroups, those actions will be replicated to all nodes in the replication\ngroup. A tag with a null Value is permitted.",
             "properties": {
               "key": {
                 "type": "string"
@@ -121,6 +121,10 @@
             },
             "ownerAccountID": {
               "description": "OwnerAccountID is the AWS Account ID of the account that owns the\nbackend AWS service API resource.",
+              "type": "string"
+            },
+            "partition": {
+              "description": "Partition is the AWS partition in which the resource exists or will exist",
               "type": "string"
             },
             "region": {
