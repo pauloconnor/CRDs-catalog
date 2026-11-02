@@ -17,7 +17,13 @@
       "properties": {
         "addressFamily": {
           "description": "The IP address type.\n\nValid Values: IPv4 | IPv6",
-          "type": "string"
+          "type": "string",
+          "x-kubernetes-validations": [
+            {
+              "message": "Value is immutable once set",
+              "rule": "self == oldSelf"
+            }
+          ]
         },
         "entries": {
           "items": {
@@ -82,6 +88,10 @@
             },
             "ownerAccountID": {
               "description": "OwnerAccountID is the AWS Account ID of the account that owns the\nbackend AWS service API resource.",
+              "type": "string"
+            },
+            "partition": {
+              "description": "Partition is the AWS partition in which the resource exists or will exist",
               "type": "string"
             },
             "region": {
