@@ -21,7 +21,7 @@
         "tags": {
           "description": "A list of tags to be added to this resource. A tag is a key-value pair. A\ntag key must be accompanied by a tag value, although null is accepted. Available\nfor Valkey and Redis OSS only.",
           "items": {
-            "description": "A tag that can be added to an ElastiCache cluster or replication group. Tags\nare composed of a Key/Value pair. You can use tags to categorize and track\nall your ElastiCache resources, with the exception of global replication\ngroup. When you add or remove tags on replication groups, those actions will\nbe replicated to all nodes in the replication group. A tag with a null Value\nis permitted.",
+            "description": "A tag that can be added to an ElastiCache cluster or replication group. Tags\nare composed of a Key/Value pair. You can use tags to categorize and track\nall your ElastiCache resources. When you add or remove tags on replication\ngroups, those actions will be replicated to all nodes in the replication\ngroup. A tag with a null Value is permitted.",
             "properties": {
               "key": {
                 "type": "string"
@@ -36,13 +36,36 @@
           "type": "array"
         },
         "userGroupID": {
-          "description": "The ID of the user group.",
+          "description": "The ID of the user group. This value is stored as a lowercase string.",
           "type": "string"
         },
         "userIDs": {
           "description": "The list of user IDs that belong to the user group.",
           "items": {
             "type": "string"
+          },
+          "type": "array"
+        },
+        "userRefs": {
+          "items": {
+            "description": "AWSResourceReferenceWrapper provides a wrapper around *AWSResourceReference\ntype to provide more user friendly syntax for references using 'from' field\nEx:\nAPIIDRef:\n\n\tfrom:\n\t  name: my-api",
+            "properties": {
+              "from": {
+                "description": "AWSResourceReference provides all the values necessary to reference another\nk8s resource for finding the identifier(Id/ARN/Name)",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "namespace": {
+                    "type": "string"
+                  }
+                },
+                "type": "object",
+                "additionalProperties": false
+              }
+            },
+            "type": "object",
+            "additionalProperties": false
           },
           "type": "array"
         }
@@ -66,6 +89,10 @@
             },
             "ownerAccountID": {
               "description": "OwnerAccountID is the AWS Account ID of the account that owns the\nbackend AWS service API resource.",
+              "type": "string"
+            },
+            "partition": {
+              "description": "Partition is the AWS partition in which the resource exists or will exist",
               "type": "string"
             },
             "region": {
