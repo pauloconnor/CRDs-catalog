@@ -13433,6 +13433,10 @@ kinda.rocks:
     filename: kinda.rocks/database_v1alpha1.json
     kind: Database
     name: database_v1alpha1
+  - apiVersion: kinda.rocks/v1
+    filename: kinda.rocks/dbinstance_v1.json
+    kind: DbInstance
+    name: dbinstance_v1
 kinesis.services.k8s.aws:
   - apiVersion: kinesis.services.k8s.aws/v1alpha1
     filename: kinesis.services.k8s.aws/stream_v1alpha1.json
