@@ -4271,6 +4271,18 @@ cluster.redpanda.com:
     filename: cluster.redpanda.com/shadowlink_v1alpha2.json
     kind: ShadowLink
     name: shadowlink_v1alpha2
+  - apiVersion: cluster.redpanda.com/v1alpha2
+    filename: cluster.redpanda.com/pipeline_v1alpha2.json
+    kind: Pipeline
+    name: pipeline_v1alpha2
+  - apiVersion: cluster.redpanda.com/v1alpha2
+    filename: cluster.redpanda.com/redpandabrokerpool_v1alpha2.json
+    kind: redpandabrokerpool
+    name: redpandabrokerpool_v1alpha2
+  - apiVersion: cluster.redpanda.com/v1alpha2
+    filename: cluster.redpanda.com/broker_v1alpha2.json
+    kind: broker
+    name: broker_v1alpha2
 cluster.weave.works:
   - apiVersion: cluster.weave.works/v1alpha3
     filename: cluster.weave.works/existinginframachine_v1alpha3.json
