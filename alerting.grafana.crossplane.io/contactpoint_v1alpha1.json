@@ -1,5 +1,5 @@
 {
-  "description": "ContactPoint is the Schema for the ContactPoints API. Manages Grafana Alerting contact points. Official documentation https://grafana.com/docs/grafana/latest/developers/http_api/alerting_provisioning/#contact-points This resource requires Grafana 9.1.0 or later.",
+  "description": "ContactPoint is the Schema for the ContactPoints API. Manages Grafana Alerting contact points. Official documentation https://grafana.com/docs/grafana/latest/developer-resources/api-reference/http-api/api-legacy/alerting_provisioning/#contact-points This resource requires Grafana 9.1.0 or later.",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -169,7 +169,7 @@
               "items": {
                 "properties": {
                   "avatarUrl": {
-                    "description": "(String) The URL of a custom avatar image to use. Defaults to \u201c.\nThe URL of a custom avatar image to use. Defaults to \u201c.",
+                    "description": "(String) The URL of a custom avatar image to use. Defaults to ``.\nThe URL of a custom avatar image to use. Defaults to ``.",
                     "type": "string"
                   },
                   "disableResolveMessage": {
@@ -177,7 +177,7 @@
                     "type": "boolean"
                   },
                   "message": {
-                    "description": "(String) The templated content of the message.\nThe templated content of the message. Defaults to \u201c.",
+                    "description": "(String) The templated content of the message.\nThe templated content of the message. Defaults to ``.",
                     "type": "string"
                   },
                   "settingsSecretRef": {
@@ -253,7 +253,7 @@
                     "type": "boolean"
                   },
                   "message": {
-                    "description": "(String) The templated content of the message.\nThe templated content of the email. Defaults to \u201c.",
+                    "description": "(String) The templated content of the message.\nThe templated content of the email. Defaults to ``.",
                     "type": "string"
                   },
                   "settingsSecretRef": {
@@ -280,7 +280,7 @@
                     "type": "boolean"
                   },
                   "subject": {
-                    "description": "(String) The templated subject line of the email. Defaults to \u201c.\nThe templated subject line of the email. Defaults to \u201c.",
+                    "description": "(String) The templated subject line of the email. Defaults to ``.\nThe templated subject line of the email. Defaults to ``.",
                     "type": "string"
                   }
                 },
@@ -295,6 +295,14 @@
                 "properties": {
                   "disableResolveMessage": {
                     "description": "(Boolean) Whether to disable sending resolve messages. Defaults to false.\nWhether to disable sending resolve messages. Defaults to `false`.",
+                    "type": "boolean"
+                  },
+                  "hideOpenButton": {
+                    "description": "(Boolean) Whether to hide the Open URL button in the message. This feature requires Grafana 12.4.0 or later.\nWhether to hide the Open URL button in the message. This feature requires Grafana 12.4.0 or later.",
+                    "type": "boolean"
+                  },
+                  "hideVersionInfo": {
+                    "description": "(Boolean) Whether to hide the version info in the message. This feature requires Grafana 12.4.0 or later. Defaults to false.\nWhether to hide the version info in the message. This feature requires Grafana 12.4.0 or later. Defaults to `false`.",
                     "type": "boolean"
                   },
                   "message": {
@@ -1620,7 +1628,7 @@
                     "additionalProperties": false
                   },
                   "subject": {
-                    "description": "(String) The templated subject line of the email. Defaults to \u201c.",
+                    "description": "(String) The templated subject line of the email. Defaults to ``.",
                     "type": "string"
                   },
                   "topic": {
@@ -2613,7 +2621,7 @@
               "items": {
                 "properties": {
                   "avatarUrl": {
-                    "description": "(String) The URL of a custom avatar image to use. Defaults to \u201c.\nThe URL of a custom avatar image to use. Defaults to \u201c.",
+                    "description": "(String) The URL of a custom avatar image to use. Defaults to ``.\nThe URL of a custom avatar image to use. Defaults to ``.",
                     "type": "string"
                   },
                   "disableResolveMessage": {
@@ -2621,7 +2629,7 @@
                     "type": "boolean"
                   },
                   "message": {
-                    "description": "(String) The templated content of the message.\nThe templated content of the message. Defaults to \u201c.",
+                    "description": "(String) The templated content of the message.\nThe templated content of the message. Defaults to ``.",
                     "type": "string"
                   },
                   "settingsSecretRef": {
@@ -2687,7 +2695,7 @@
                     "type": "boolean"
                   },
                   "message": {
-                    "description": "(String) The templated content of the message.\nThe templated content of the email. Defaults to \u201c.",
+                    "description": "(String) The templated content of the message.\nThe templated content of the email. Defaults to ``.",
                     "type": "string"
                   },
                   "settingsSecretRef": {
@@ -2701,7 +2709,7 @@
                     "type": "boolean"
                   },
                   "subject": {
-                    "description": "(String) The templated subject line of the email. Defaults to \u201c.\nThe templated subject line of the email. Defaults to \u201c.",
+                    "description": "(String) The templated subject line of the email. Defaults to ``.\nThe templated subject line of the email. Defaults to ``.",
                     "type": "string"
                   }
                 },
@@ -2716,6 +2724,14 @@
                 "properties": {
                   "disableResolveMessage": {
                     "description": "(Boolean) Whether to disable sending resolve messages. Defaults to false.\nWhether to disable sending resolve messages. Defaults to `false`.",
+                    "type": "boolean"
+                  },
+                  "hideOpenButton": {
+                    "description": "(Boolean) Whether to hide the Open URL button in the message. This feature requires Grafana 12.4.0 or later.\nWhether to hide the Open URL button in the message. This feature requires Grafana 12.4.0 or later.",
+                    "type": "boolean"
+                  },
+                  "hideVersionInfo": {
+                    "description": "(Boolean) Whether to hide the version info in the message. This feature requires Grafana 12.4.0 or later. Defaults to false.\nWhether to hide the version info in the message. This feature requires Grafana 12.4.0 or later. Defaults to `false`.",
                     "type": "boolean"
                   },
                   "message": {
@@ -3920,7 +3936,7 @@
                     "type": "object"
                   },
                   "subject": {
-                    "description": "(String) The templated subject line of the email. Defaults to \u201c.",
+                    "description": "(String) The templated subject line of the email. Defaults to ``.",
                     "type": "string"
                   },
                   "topic": {
@@ -4869,7 +4885,7 @@
               "items": {
                 "properties": {
                   "avatarUrl": {
-                    "description": "(String) The URL of a custom avatar image to use. Defaults to \u201c.\nThe URL of a custom avatar image to use. Defaults to \u201c.",
+                    "description": "(String) The URL of a custom avatar image to use. Defaults to ``.\nThe URL of a custom avatar image to use. Defaults to ``.",
                     "type": "string"
                   },
                   "disableResolveMessage": {
@@ -4877,7 +4893,7 @@
                     "type": "boolean"
                   },
                   "message": {
-                    "description": "(String) The templated content of the message.\nThe templated content of the message. Defaults to \u201c.",
+                    "description": "(String) The templated content of the message.\nThe templated content of the message. Defaults to ``.",
                     "type": "string"
                   },
                   "title": {
@@ -4914,7 +4930,7 @@
                     "type": "boolean"
                   },
                   "message": {
-                    "description": "(String) The templated content of the message.\nThe templated content of the email. Defaults to \u201c.",
+                    "description": "(String) The templated content of the message.\nThe templated content of the email. Defaults to ``.",
                     "type": "string"
                   },
                   "singleEmail": {
@@ -4922,7 +4938,7 @@
                     "type": "boolean"
                   },
                   "subject": {
-                    "description": "(String) The templated subject line of the email. Defaults to \u201c.\nThe templated subject line of the email. Defaults to \u201c.",
+                    "description": "(String) The templated subject line of the email. Defaults to ``.\nThe templated subject line of the email. Defaults to ``.",
                     "type": "string"
                   },
                   "uid": {
@@ -4941,6 +4957,14 @@
                 "properties": {
                   "disableResolveMessage": {
                     "description": "(Boolean) Whether to disable sending resolve messages. Defaults to false.\nWhether to disable sending resolve messages. Defaults to `false`.",
+                    "type": "boolean"
+                  },
+                  "hideOpenButton": {
+                    "description": "(Boolean) Whether to hide the Open URL button in the message. This feature requires Grafana 12.4.0 or later.\nWhether to hide the Open URL button in the message. This feature requires Grafana 12.4.0 or later.",
+                    "type": "boolean"
+                  },
+                  "hideVersionInfo": {
+                    "description": "(Boolean) Whether to hide the version info in the message. This feature requires Grafana 12.4.0 or later. Defaults to false.\nWhether to hide the version info in the message. This feature requires Grafana 12.4.0 or later. Defaults to `false`.",
                     "type": "boolean"
                   },
                   "message": {
@@ -5485,7 +5509,7 @@
                     "type": "string"
                   },
                   "subject": {
-                    "description": "(String) The templated subject line of the email. Defaults to \u201c.",
+                    "description": "(String) The templated subject line of the email. Defaults to ``.",
                     "type": "string"
                   },
                   "topic": {
@@ -5945,6 +5969,10 @@
             "type"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "lastHandledReconcileAt": {
+          "description": "LastHandledReconcileAt holds the value of the most recent\nreconcile-requested-at annotation token that the controller has\nprocessed. Users can compare this to the annotation to determine\nwhether a reconcile request has been handled.",
+          "type": "string"
         },
         "observedGeneration": {
           "description": "ObservedGeneration is the latest metadata.generation\nwhich resulted in either a ready state, or stalled due to error\nit can not recover from without human intervention.",
