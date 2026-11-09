@@ -1,5 +1,5 @@
 {
-  "description": "SpringCloudService is the Schema for the SpringCloudServices API. Manages an Azure Spring Cloud Service.",
+  "description": "SpringCloudService is the Schema for the SpringCloudServices API. Manages an Azure Spring Cloud Service.\nDeprecated: This API version (v1beta1) has been deprecated in release v2.6.0.",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -834,11 +834,38 @@
                     "description": "A http_basic_auth block as defined below.",
                     "items": {
                       "properties": {
+                        "passwordSecretRef": {
+                          "description": "The password used to access the Git repository server, required when the Git repository server supports HTTP Basic Authentication.",
+                          "properties": {
+                            "key": {
+                              "description": "The key to select.",
+                              "type": "string"
+                            },
+                            "name": {
+                              "description": "Name of the secret.",
+                              "type": "string"
+                            },
+                            "namespace": {
+                              "description": "Namespace of the secret.",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "key",
+                            "name",
+                            "namespace"
+                          ],
+                          "type": "object",
+                          "additionalProperties": false
+                        },
                         "username": {
                           "description": "The username that's used to access the Git repository server, required when the Git repository server supports HTTP Basic Authentication.",
                           "type": "string"
                         }
                       },
+                      "required": [
+                        "passwordSecretRef"
+                      ],
                       "type": "object",
                       "additionalProperties": false
                     },
@@ -856,11 +883,38 @@
                           "description": "A http_basic_auth block as defined below.",
                           "items": {
                             "properties": {
+                              "passwordSecretRef": {
+                                "description": "The password used to access the Git repository server, required when the Git repository server supports HTTP Basic Authentication.",
+                                "properties": {
+                                  "key": {
+                                    "description": "The key to select.",
+                                    "type": "string"
+                                  },
+                                  "name": {
+                                    "description": "Name of the secret.",
+                                    "type": "string"
+                                  },
+                                  "namespace": {
+                                    "description": "Namespace of the secret.",
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "key",
+                                  "name",
+                                  "namespace"
+                                ],
+                                "type": "object",
+                                "additionalProperties": false
+                              },
                               "username": {
                                 "description": "The username that's used to access the Git repository server, required when the Git repository server supports HTTP Basic Authentication.",
                                 "type": "string"
                               }
                             },
+                            "required": [
+                              "passwordSecretRef"
+                            ],
                             "type": "object",
                             "additionalProperties": false
                           },
@@ -896,11 +950,62 @@
                                 "description": "The host key algorithm, should be ssh-dss, ssh-rsa, ecdsa-sha2-nistp256, ecdsa-sha2-nistp384, or ecdsa-sha2-nistp521. Required only if host-key exists.",
                                 "type": "string"
                               },
+                              "hostKeySecretRef": {
+                                "description": "The host key of the Git repository server, should not include the algorithm prefix as covered by host-key-algorithm.",
+                                "properties": {
+                                  "key": {
+                                    "description": "The key to select.",
+                                    "type": "string"
+                                  },
+                                  "name": {
+                                    "description": "Name of the secret.",
+                                    "type": "string"
+                                  },
+                                  "namespace": {
+                                    "description": "Namespace of the secret.",
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "key",
+                                  "name",
+                                  "namespace"
+                                ],
+                                "type": "object",
+                                "additionalProperties": false
+                              },
+                              "privateKeySecretRef": {
+                                "description": "The SSH private key to access the Git repository, required when the URI starts with git@ or ssh://.",
+                                "properties": {
+                                  "key": {
+                                    "description": "The key to select.",
+                                    "type": "string"
+                                  },
+                                  "name": {
+                                    "description": "Name of the secret.",
+                                    "type": "string"
+                                  },
+                                  "namespace": {
+                                    "description": "Namespace of the secret.",
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "key",
+                                  "name",
+                                  "namespace"
+                                ],
+                                "type": "object",
+                                "additionalProperties": false
+                              },
                               "strictHostKeyCheckingEnabled": {
                                 "description": "Indicates whether the Config Server instance will fail to start if the host_key does not match. Defaults to true.",
                                 "type": "boolean"
                               }
                             },
+                            "required": [
+                              "privateKeySecretRef"
+                            ],
                             "type": "object",
                             "additionalProperties": false
                           },
@@ -931,11 +1036,62 @@
                           "description": "The host key algorithm, should be ssh-dss, ssh-rsa, ecdsa-sha2-nistp256, ecdsa-sha2-nistp384, or ecdsa-sha2-nistp521. Required only if host-key exists.",
                           "type": "string"
                         },
+                        "hostKeySecretRef": {
+                          "description": "The host key of the Git repository server, should not include the algorithm prefix as covered by host-key-algorithm.",
+                          "properties": {
+                            "key": {
+                              "description": "The key to select.",
+                              "type": "string"
+                            },
+                            "name": {
+                              "description": "Name of the secret.",
+                              "type": "string"
+                            },
+                            "namespace": {
+                              "description": "Namespace of the secret.",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "key",
+                            "name",
+                            "namespace"
+                          ],
+                          "type": "object",
+                          "additionalProperties": false
+                        },
+                        "privateKeySecretRef": {
+                          "description": "The SSH private key to access the Git repository, required when the URI starts with git@ or ssh://.",
+                          "properties": {
+                            "key": {
+                              "description": "The key to select.",
+                              "type": "string"
+                            },
+                            "name": {
+                              "description": "Name of the secret.",
+                              "type": "string"
+                            },
+                            "namespace": {
+                              "description": "Namespace of the secret.",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "key",
+                            "name",
+                            "namespace"
+                          ],
+                          "type": "object",
+                          "additionalProperties": false
+                        },
                         "strictHostKeyCheckingEnabled": {
                           "description": "Indicates whether the Config Server instance will fail to start if the host_key does not match. Defaults to true.",
                           "type": "boolean"
                         }
                       },
+                      "required": [
+                        "privateKeySecretRef"
+                      ],
                       "type": "object",
                       "additionalProperties": false
                     },
@@ -959,6 +1115,30 @@
                     "description": "Specifies the name of the container registry.",
                     "type": "string"
                   },
+                  "passwordSecretRef": {
+                    "description": "Specifies the password of the container registry.",
+                    "properties": {
+                      "key": {
+                        "description": "The key to select.",
+                        "type": "string"
+                      },
+                      "name": {
+                        "description": "Name of the secret.",
+                        "type": "string"
+                      },
+                      "namespace": {
+                        "description": "Namespace of the secret.",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "key",
+                      "name",
+                      "namespace"
+                    ],
+                    "type": "object",
+                    "additionalProperties": false
+                  },
                   "server": {
                     "description": "Specifies the login server of the container registry.",
                     "type": "string"
@@ -968,6 +1148,9 @@
                     "type": "string"
                   }
                 },
+                "required": [
+                  "passwordSecretRef"
+                ],
                 "type": "object",
                 "additionalProperties": false
               },
@@ -1832,6 +2015,10 @@
             "type"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "lastHandledReconcileAt": {
+          "description": "LastHandledReconcileAt holds the value of the most recent\nreconcile-requested-at annotation token that the controller has\nprocessed. Users can compare this to the annotation to determine\nwhether a reconcile request has been handled.",
+          "type": "string"
         },
         "observedGeneration": {
           "description": "ObservedGeneration is the latest metadata.generation\nwhich resulted in either a ready state, or stalled due to error\nit can not recover from without human intervention.",

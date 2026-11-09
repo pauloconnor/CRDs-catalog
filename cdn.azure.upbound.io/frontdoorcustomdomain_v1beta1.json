@@ -1,5 +1,5 @@
 {
-  "description": "FrontdoorCustomDomain is the Schema for the FrontdoorCustomDomains API. Manages a Front Door (standard/premium) Custom Domain.",
+  "description": "FrontdoorCustomDomain is the Schema for the FrontdoorCustomDomains API. Manages a Front Door (standard/premium) Custom Domain.\nDeprecated: This API version (v1beta1) has been deprecated in release v2.6.0.",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -27,7 +27,7 @@
         "forProvider": {
           "properties": {
             "cdnFrontdoorProfileId": {
-              "description": "The ID of the Front Door Profile. Changing this forces a new Front Door Custom Domain to be created.",
+              "description": "The ID of the Front Door Profile. Changing this forces a new resource to be created.",
               "type": "string"
             },
             "cdnFrontdoorProfileIdRef": {
@@ -111,7 +111,7 @@
               "additionalProperties": false
             },
             "dnsZoneId": {
-              "description": "The ID of the Azure DNS Zone which should be used for this Front Door Custom Domain. If you are using Azure to host your DNS domains, you must delegate the domain provider's domain name system (DNS) to an Azure DNS Zone. For more information, see Delegate a domain to Azure DNS. Otherwise, if you're using your own domain provider to handle your DNS, you must validate the Front Door Custom Domain by creating the DNS TXT records manually.",
+              "description": "The ID of the Azure DNS Zone which should be used for this Front Door Custom Domain.",
               "type": "string"
             },
             "dnsZoneIdRef": {
@@ -195,8 +195,88 @@
               "additionalProperties": false
             },
             "hostName": {
-              "description": "The host name of the domain. The host_name field must be the FQDN of your domain(e.g. contoso.fabrikam.com). Changing this forces a new Front Door Custom Domain to be created.",
+              "description": "The host name of the domain. Changing this forces a new resource to be created.",
               "type": "string"
+            },
+            "hostNameRef": {
+              "description": "Reference to a FrontdoorOrigin in cdn to populate hostName.",
+              "properties": {
+                "name": {
+                  "description": "Name of the referenced object.",
+                  "type": "string"
+                },
+                "policy": {
+                  "description": "Policies for referencing.",
+                  "properties": {
+                    "resolution": {
+                      "default": "Required",
+                      "description": "Resolution specifies whether resolution of this reference is required.\nThe default is 'Required', which means the reconcile will fail if the\nreference cannot be resolved. 'Optional' means this reference will be\na no-op if it cannot be resolved.",
+                      "enum": [
+                        "Required",
+                        "Optional"
+                      ],
+                      "type": "string"
+                    },
+                    "resolve": {
+                      "description": "Resolve specifies when this reference should be resolved. The default\nis 'IfNotPresent', which will attempt to resolve the reference only when\nthe corresponding field is not present. Use 'Always' to resolve the\nreference on every reconcile.",
+                      "enum": [
+                        "Always",
+                        "IfNotPresent"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "name"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            },
+            "hostNameSelector": {
+              "description": "Selector for a FrontdoorOrigin in cdn to populate hostName.",
+              "properties": {
+                "matchControllerRef": {
+                  "description": "MatchControllerRef ensures an object with the same controller reference\nas the selecting object is selected.",
+                  "type": "boolean"
+                },
+                "matchLabels": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "description": "MatchLabels ensures an object with matching labels is selected.",
+                  "type": "object"
+                },
+                "policy": {
+                  "description": "Policies for selection.",
+                  "properties": {
+                    "resolution": {
+                      "default": "Required",
+                      "description": "Resolution specifies whether resolution of this reference is required.\nThe default is 'Required', which means the reconcile will fail if the\nreference cannot be resolved. 'Optional' means this reference will be\na no-op if it cannot be resolved.",
+                      "enum": [
+                        "Required",
+                        "Optional"
+                      ],
+                      "type": "string"
+                    },
+                    "resolve": {
+                      "description": "Resolve specifies when this reference should be resolved. The default\nis 'IfNotPresent', which will attempt to resolve the reference only when\nthe corresponding field is not present. Use 'Always' to resolve the\nreference on every reconcile.",
+                      "enum": [
+                        "Always",
+                        "IfNotPresent"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
             },
             "tls": {
               "description": "A tls block as defined below.",
@@ -207,11 +287,55 @@
                     "type": "string"
                   },
                   "certificateType": {
-                    "description": "Defines the source of the SSL certificate. Possible values include CustomerCertificate and ManagedCertificate. Defaults to ManagedCertificate.",
+                    "description": "Defines the source of the SSL certificate. Possible values are CustomerCertificate and ManagedCertificate. Defaults to ManagedCertificate.",
                     "type": "string"
+                  },
+                  "cipherSuite": {
+                    "description": "A cipher_suite block as defined below.",
+                    "items": {
+                      "properties": {
+                        "customCiphers": {
+                          "description": "A custom_ciphers block as defined below.",
+                          "items": {
+                            "properties": {
+                              "tls12": {
+                                "description": "A set of TLS 1.2 cipher suites. Possible values are ECDHE_RSA_AES128_GCM_SHA256, ECDHE_RSA_AES128_SHA256, ECDHE_RSA_AES256_GCM_SHA384, and ECDHE_RSA_AES256_SHA384.",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "type": "array",
+                                "x-kubernetes-list-type": "set"
+                              },
+                              "tls13": {
+                                "description": "A set of TLS 1.3 cipher suites. Possible values are TLS_AES_128_GCM_SHA256 and TLS_AES_256_GCM_SHA384.",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "type": "array",
+                                "x-kubernetes-list-type": "set"
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "type": "array"
+                        },
+                        "type": {
+                          "description": "The cipher suite set type. Possible values are Customized, TLS12_2022, and TLS12_2023.",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "type": "array"
                   },
                   "minimumTlsVersion": {
                     "description": "TLS protocol version that will be used for Https. Possible values include TLS10 and TLS12. Defaults to TLS12.",
+                    "type": "string"
+                  },
+                  "minimumVersion": {
+                    "description": "TLS protocol version that will be used for HTTPS. The only possible value is TLS12. Defaults to TLS12.",
                     "type": "string"
                   }
                 },
@@ -228,7 +352,7 @@
           "description": "THIS IS A BETA FIELD. It will be honored\nunless the Management Policies feature flag is disabled.\nInitProvider holds the same fields as ForProvider, with the exception\nof Identifier and other resource reference fields. The fields that are\nin InitProvider are merged into ForProvider when the resource is created.\nThe same fields are also added to the terraform ignore_changes hook, to\navoid updating them after creation. This is useful for fields that are\nrequired on creation, but we do not desire to update them after creation,\nfor example because of an external controller is managing them, like an\nautoscaler.",
           "properties": {
             "dnsZoneId": {
-              "description": "The ID of the Azure DNS Zone which should be used for this Front Door Custom Domain. If you are using Azure to host your DNS domains, you must delegate the domain provider's domain name system (DNS) to an Azure DNS Zone. For more information, see Delegate a domain to Azure DNS. Otherwise, if you're using your own domain provider to handle your DNS, you must validate the Front Door Custom Domain by creating the DNS TXT records manually.",
+              "description": "The ID of the Azure DNS Zone which should be used for this Front Door Custom Domain.",
               "type": "string"
             },
             "dnsZoneIdRef": {
@@ -312,8 +436,88 @@
               "additionalProperties": false
             },
             "hostName": {
-              "description": "The host name of the domain. The host_name field must be the FQDN of your domain(e.g. contoso.fabrikam.com). Changing this forces a new Front Door Custom Domain to be created.",
+              "description": "The host name of the domain. Changing this forces a new resource to be created.",
               "type": "string"
+            },
+            "hostNameRef": {
+              "description": "Reference to a FrontdoorOrigin in cdn to populate hostName.",
+              "properties": {
+                "name": {
+                  "description": "Name of the referenced object.",
+                  "type": "string"
+                },
+                "policy": {
+                  "description": "Policies for referencing.",
+                  "properties": {
+                    "resolution": {
+                      "default": "Required",
+                      "description": "Resolution specifies whether resolution of this reference is required.\nThe default is 'Required', which means the reconcile will fail if the\nreference cannot be resolved. 'Optional' means this reference will be\na no-op if it cannot be resolved.",
+                      "enum": [
+                        "Required",
+                        "Optional"
+                      ],
+                      "type": "string"
+                    },
+                    "resolve": {
+                      "description": "Resolve specifies when this reference should be resolved. The default\nis 'IfNotPresent', which will attempt to resolve the reference only when\nthe corresponding field is not present. Use 'Always' to resolve the\nreference on every reconcile.",
+                      "enum": [
+                        "Always",
+                        "IfNotPresent"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "name"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            },
+            "hostNameSelector": {
+              "description": "Selector for a FrontdoorOrigin in cdn to populate hostName.",
+              "properties": {
+                "matchControllerRef": {
+                  "description": "MatchControllerRef ensures an object with the same controller reference\nas the selecting object is selected.",
+                  "type": "boolean"
+                },
+                "matchLabels": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "description": "MatchLabels ensures an object with matching labels is selected.",
+                  "type": "object"
+                },
+                "policy": {
+                  "description": "Policies for selection.",
+                  "properties": {
+                    "resolution": {
+                      "default": "Required",
+                      "description": "Resolution specifies whether resolution of this reference is required.\nThe default is 'Required', which means the reconcile will fail if the\nreference cannot be resolved. 'Optional' means this reference will be\na no-op if it cannot be resolved.",
+                      "enum": [
+                        "Required",
+                        "Optional"
+                      ],
+                      "type": "string"
+                    },
+                    "resolve": {
+                      "description": "Resolve specifies when this reference should be resolved. The default\nis 'IfNotPresent', which will attempt to resolve the reference only when\nthe corresponding field is not present. Use 'Always' to resolve the\nreference on every reconcile.",
+                      "enum": [
+                        "Always",
+                        "IfNotPresent"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
             },
             "tls": {
               "description": "A tls block as defined below.",
@@ -324,11 +528,55 @@
                     "type": "string"
                   },
                   "certificateType": {
-                    "description": "Defines the source of the SSL certificate. Possible values include CustomerCertificate and ManagedCertificate. Defaults to ManagedCertificate.",
+                    "description": "Defines the source of the SSL certificate. Possible values are CustomerCertificate and ManagedCertificate. Defaults to ManagedCertificate.",
                     "type": "string"
+                  },
+                  "cipherSuite": {
+                    "description": "A cipher_suite block as defined below.",
+                    "items": {
+                      "properties": {
+                        "customCiphers": {
+                          "description": "A custom_ciphers block as defined below.",
+                          "items": {
+                            "properties": {
+                              "tls12": {
+                                "description": "A set of TLS 1.2 cipher suites. Possible values are ECDHE_RSA_AES128_GCM_SHA256, ECDHE_RSA_AES128_SHA256, ECDHE_RSA_AES256_GCM_SHA384, and ECDHE_RSA_AES256_SHA384.",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "type": "array",
+                                "x-kubernetes-list-type": "set"
+                              },
+                              "tls13": {
+                                "description": "A set of TLS 1.3 cipher suites. Possible values are TLS_AES_128_GCM_SHA256 and TLS_AES_256_GCM_SHA384.",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "type": "array",
+                                "x-kubernetes-list-type": "set"
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "type": "array"
+                        },
+                        "type": {
+                          "description": "The cipher suite set type. Possible values are Customized, TLS12_2022, and TLS12_2023.",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "type": "array"
                   },
                   "minimumTlsVersion": {
                     "description": "TLS protocol version that will be used for Https. Possible values include TLS10 and TLS12. Defaults to TLS12.",
+                    "type": "string"
+                  },
+                  "minimumVersion": {
+                    "description": "TLS protocol version that will be used for HTTPS. The only possible value is TLS12. Defaults to TLS12.",
                     "type": "string"
                   }
                 },
@@ -443,19 +691,19 @@
         "atProvider": {
           "properties": {
             "cdnFrontdoorProfileId": {
-              "description": "The ID of the Front Door Profile. Changing this forces a new Front Door Custom Domain to be created.",
+              "description": "The ID of the Front Door Profile. Changing this forces a new resource to be created.",
               "type": "string"
             },
             "dnsZoneId": {
-              "description": "The ID of the Azure DNS Zone which should be used for this Front Door Custom Domain. If you are using Azure to host your DNS domains, you must delegate the domain provider's domain name system (DNS) to an Azure DNS Zone. For more information, see Delegate a domain to Azure DNS. Otherwise, if you're using your own domain provider to handle your DNS, you must validate the Front Door Custom Domain by creating the DNS TXT records manually.",
+              "description": "The ID of the Azure DNS Zone which should be used for this Front Door Custom Domain.",
               "type": "string"
             },
             "expirationDate": {
-              "description": "The date time that the token expires.",
+              "description": "The date and time that the token expires.",
               "type": "string"
             },
             "hostName": {
-              "description": "The host name of the domain. The host_name field must be the FQDN of your domain(e.g. contoso.fabrikam.com). Changing this forces a new Front Door Custom Domain to be created.",
+              "description": "The host name of the domain. Changing this forces a new resource to be created.",
               "type": "string"
             },
             "id": {
@@ -471,11 +719,55 @@
                     "type": "string"
                   },
                   "certificateType": {
-                    "description": "Defines the source of the SSL certificate. Possible values include CustomerCertificate and ManagedCertificate. Defaults to ManagedCertificate.",
+                    "description": "Defines the source of the SSL certificate. Possible values are CustomerCertificate and ManagedCertificate. Defaults to ManagedCertificate.",
                     "type": "string"
+                  },
+                  "cipherSuite": {
+                    "description": "A cipher_suite block as defined below.",
+                    "items": {
+                      "properties": {
+                        "customCiphers": {
+                          "description": "A custom_ciphers block as defined below.",
+                          "items": {
+                            "properties": {
+                              "tls12": {
+                                "description": "A set of TLS 1.2 cipher suites. Possible values are ECDHE_RSA_AES128_GCM_SHA256, ECDHE_RSA_AES128_SHA256, ECDHE_RSA_AES256_GCM_SHA384, and ECDHE_RSA_AES256_SHA384.",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "type": "array",
+                                "x-kubernetes-list-type": "set"
+                              },
+                              "tls13": {
+                                "description": "A set of TLS 1.3 cipher suites. Possible values are TLS_AES_128_GCM_SHA256 and TLS_AES_256_GCM_SHA384.",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "type": "array",
+                                "x-kubernetes-list-type": "set"
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "type": "array"
+                        },
+                        "type": {
+                          "description": "The cipher suite set type. Possible values are Customized, TLS12_2022, and TLS12_2023.",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "type": "array"
                   },
                   "minimumTlsVersion": {
                     "description": "TLS protocol version that will be used for Https. Possible values include TLS10 and TLS12. Defaults to TLS12.",
+                    "type": "string"
+                  },
+                  "minimumVersion": {
+                    "description": "TLS protocol version that will be used for HTTPS. The only possible value is TLS12. Defaults to TLS12.",
                     "type": "string"
                   }
                 },
@@ -538,6 +830,10 @@
             "type"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "lastHandledReconcileAt": {
+          "description": "LastHandledReconcileAt holds the value of the most recent\nreconcile-requested-at annotation token that the controller has\nprocessed. Users can compare this to the annotation to determine\nwhether a reconcile request has been handled.",
+          "type": "string"
         },
         "observedGeneration": {
           "description": "ObservedGeneration is the latest metadata.generation\nwhich resulted in either a ready state, or stalled due to error\nit can not recover from without human intervention.",
