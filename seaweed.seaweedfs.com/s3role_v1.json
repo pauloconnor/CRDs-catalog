@@ -1,0 +1,221 @@
+{
+  "properties": {
+    "apiVersion": {
+      "type": "string"
+    },
+    "kind": {
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object"
+    },
+    "spec": {
+      "properties": {
+        "description": {
+          "maxLength": 1000,
+          "type": "string"
+        },
+        "maxSessionDuration": {
+          "format": "int64",
+          "maximum": 43200,
+          "minimum": 3600,
+          "type": "integer"
+        },
+        "name": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[\\w+=,.@-]+$",
+          "type": "string",
+          "x-kubernetes-validations": [
+            {
+              "message": "role name is immutable once set",
+              "rule": "oldSelf == '' || self == oldSelf"
+            }
+          ]
+        },
+        "policyRefs": {
+          "items": {
+            "properties": {
+              "name": {
+                "maxLength": 128,
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "type": "object",
+            "additionalProperties": false
+          },
+          "maxItems": 10,
+          "type": "array",
+          "x-kubernetes-list-map-keys": [
+            "name"
+          ],
+          "x-kubernetes-list-type": "map"
+        },
+        "reclaimPolicy": {
+          "default": "Delete",
+          "enum": [
+            "Delete",
+            "Retain"
+          ],
+          "type": "string"
+        },
+        "seaweedRef": {
+          "properties": {
+            "name": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "namespace": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "type": "object",
+          "x-kubernetes-validations": [
+            {
+              "message": "seaweedRef is immutable",
+              "rule": "self == oldSelf"
+            }
+          ],
+          "additionalProperties": false
+        },
+        "webIdentity": {
+          "properties": {
+            "providerRef": {
+              "properties": {
+                "name": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            },
+            "subjects": {
+              "items": {
+                "maxLength": 1024,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 100,
+              "minItems": 1,
+              "type": "array",
+              "x-kubernetes-list-type": "set",
+              "x-kubernetes-validations": [
+                {
+                  "message": "a subject must not contain a variable reference (a dollar sign followed by an opening brace): the policy engine expands it",
+                  "rule": "self.all(s, !s.contains('$' + '{'))"
+                }
+              ]
+            }
+          },
+          "required": [
+            "providerRef",
+            "subjects"
+          ],
+          "type": "object",
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "seaweedRef",
+        "webIdentity"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    },
+    "status": {
+      "properties": {
+        "attachedPolicies": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "conditions": {
+          "items": {
+            "properties": {
+              "lastTransitionTime": {
+                "format": "date-time",
+                "type": "string"
+              },
+              "message": {
+                "maxLength": 32768,
+                "type": "string"
+              },
+              "observedGeneration": {
+                "format": "int64",
+                "minimum": 0,
+                "type": "integer"
+              },
+              "reason": {
+                "maxLength": 1024,
+                "minLength": 1,
+                "pattern": "^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$",
+                "type": "string"
+              },
+              "status": {
+                "enum": [
+                  "True",
+                  "False",
+                  "Unknown"
+                ],
+                "type": "string"
+              },
+              "type": {
+                "maxLength": 316,
+                "pattern": "^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "lastTransitionTime",
+              "message",
+              "reason",
+              "status",
+              "type"
+            ],
+            "type": "object",
+            "additionalProperties": false
+          },
+          "type": "array",
+          "x-kubernetes-list-map-keys": [
+            "type"
+          ],
+          "x-kubernetes-list-type": "map"
+        },
+        "observedGeneration": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "phase": {
+          "enum": [
+            "Pending",
+            "Ready",
+            "Failed",
+            "Terminating"
+          ],
+          "type": "string"
+        },
+        "roleArn": {
+          "type": "string"
+        },
+        "roleName": {
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  "type": "object"
+}
