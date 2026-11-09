@@ -65,31 +65,6 @@
                             "x-kubernetes-map-type": "atomic",
                             "additionalProperties": false
                           },
-                          "fileKeyRef": {
-                            "properties": {
-                              "key": {
-                                "type": "string"
-                              },
-                              "optional": {
-                                "default": false,
-                                "type": "boolean"
-                              },
-                              "path": {
-                                "type": "string"
-                              },
-                              "volumeName": {
-                                "type": "string"
-                              }
-                            },
-                            "required": [
-                              "key",
-                              "path",
-                              "volumeName"
-                            ],
-                            "type": "object",
-                            "x-kubernetes-map-type": "atomic",
-                            "additionalProperties": false
-                          },
                           "resourceFieldRef": {
                             "properties": {
                               "containerName": {
@@ -734,31 +709,6 @@
                                   },
                                   "required": [
                                     "fieldPath"
-                                  ],
-                                  "type": "object",
-                                  "x-kubernetes-map-type": "atomic",
-                                  "additionalProperties": false
-                                },
-                                "fileKeyRef": {
-                                  "properties": {
-                                    "key": {
-                                      "type": "string"
-                                    },
-                                    "optional": {
-                                      "default": false,
-                                      "type": "boolean"
-                                    },
-                                    "path": {
-                                      "type": "string"
-                                    },
-                                    "volumeName": {
-                                      "type": "string"
-                                    }
-                                  },
-                                  "required": [
-                                    "key",
-                                    "path",
-                                    "volumeName"
                                   ],
                                   "type": "object",
                                   "x-kubernetes-map-type": "atomic",
@@ -1475,42 +1425,6 @@
                       },
                       "restartPolicy": {
                         "type": "string"
-                      },
-                      "restartPolicyRules": {
-                        "items": {
-                          "properties": {
-                            "action": {
-                              "type": "string"
-                            },
-                            "exitCodes": {
-                              "properties": {
-                                "operator": {
-                                  "type": "string"
-                                },
-                                "values": {
-                                  "items": {
-                                    "format": "int32",
-                                    "type": "integer"
-                                  },
-                                  "type": "array",
-                                  "x-kubernetes-list-type": "set"
-                                }
-                              },
-                              "required": [
-                                "operator"
-                              ],
-                              "type": "object",
-                              "additionalProperties": false
-                            }
-                          },
-                          "required": [
-                            "action"
-                          ],
-                          "type": "object",
-                          "additionalProperties": false
-                        },
-                        "type": "array",
-                        "x-kubernetes-list-type": "atomic"
                       },
                       "securityContext": {
                         "properties": {

@@ -58,6 +58,9 @@
                               "spanName": {
                                 "type": "string"
                               },
+                              "timeout": {
+                                "type": "string"
+                              },
                               "upstreamRef": {
                                 "properties": {
                                   "name": {
@@ -137,6 +140,9 @@
                                 "additionalProperties": false
                               },
                               "spanName": {
+                                "type": "string"
+                              },
+                              "timeout": {
                                 "type": "string"
                               },
                               "upstreamRef": {
@@ -272,7 +278,8 @@
         "persistedQueryCacheConfig": {
           "properties": {
             "cacheSize": {
-              "format": "int32",
+              "maximum": 4294967295,
+              "minimum": 0,
               "type": "integer"
             }
           },
