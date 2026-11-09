@@ -47,6 +47,10 @@
             "timeKey": {
               "description": "Time_Key",
               "type": "string"
+            },
+            "timeStrict": {
+              "description": "Time_Strict",
+              "type": "boolean"
             }
           },
           "type": "object",
@@ -66,6 +70,10 @@
             "timeKey": {
               "description": "Time_Key",
               "type": "string"
+            },
+            "timeStrict": {
+              "description": "Time_Strict",
+              "type": "boolean"
             }
           },
           "type": "object",
@@ -91,6 +99,10 @@
             "timeKey": {
               "description": "Time_Key",
               "type": "string"
+            },
+            "timeStrict": {
+              "description": "Time_Strict",
+              "type": "boolean"
             },
             "types": {
               "type": "string"
@@ -120,6 +132,10 @@
             "timeOffset": {
               "description": "Time_Offset, eg. +0200",
               "type": "string"
+            },
+            "timeStrict": {
+              "description": "Time_Strict",
+              "type": "boolean"
             },
             "types": {
               "type": "string"
