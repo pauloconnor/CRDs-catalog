@@ -16504,6 +16504,19 @@ opentelemetry.io:
     filename: opentelemetry.io/clusterobservability_v1alpha1.json
     kind: clusterobservability
     name: clusterobservability_v1alpha1
+operation.cattle.io:
+  - apiVersion: operation.cattle.io/v1alpha1
+    filename: operation.cattle.io/etcdsnapshotsave_v1alpha1.json
+    kind: ETCDSnapshotSave
+    name: etcdsnapshotsave_v1alpha1
+  - apiVersion: operation.cattle.io/v1alpha1
+    filename: operation.cattle.io/encryptionkeyrotation_v1alpha1.json
+    kind: EncryptionKeyRotation
+    name: encryptionkeyrotation_v1alpha1
+  - apiVersion: operation.cattle.io/v1alpha1
+    filename: operation.cattle.io/etcdsnapshotrestore_v1alpha1.json
+    kind: ETCDSnapshotRestore
+    name: etcdsnapshotrestore_v1alpha1
 operationalinsights.azure.com:
   - apiVersion: operationalinsights.azure.com/v1api20210601
     filename: operationalinsights.azure.com/workspace_v1api20210601.json
@@ -17339,6 +17352,11 @@ pkg.crossplane.io:
     filename: pkg.crossplane.io/functionrevision_v1beta1.json
     kind: FunctionRevision
     name: functionrevision_v1beta1
+plan.cattle.io:
+  - apiVersion: plan.cattle.io/v1alpha1
+    filename: plan.cattle.io/beacon_v1alpha1.json
+    kind: Beacon
+    name: beacon_v1alpha1
 platform.confluent.io:
   - apiVersion: platform.confluent.io/v1beta1
     filename: platform.confluent.io/schemaexporter_v1beta1.json
