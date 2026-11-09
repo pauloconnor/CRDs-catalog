@@ -20574,6 +20574,10 @@ trainer.kubeflow.org:
     filename: trainer.kubeflow.org/clustertrainingruntime_v1alpha1.json
     kind: ClusterTrainingRuntime
     name: clustertrainingruntime_v1alpha1
+  - apiVersion: trainer.kubeflow.org/v1alpha1
+    filename: trainer.kubeflow.org/optimizationjob_v1alpha1.json
+    kind: OptimizationJob
+    name: optimizationjob_v1alpha1
 trident.netapp.io:
   - apiVersion: trident.netapp.io/v1
     filename: trident.netapp.io/tridentconfigurator_v1.json
