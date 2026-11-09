@@ -19135,6 +19135,10 @@ scheduling.volcano.sh:
     filename: scheduling.volcano.sh/queue_v1beta1.json
     kind: Queue
     name: queue_v1beta1
+  - apiVersion: scheduling.volcano.sh/v1beta1
+    filename: scheduling.volcano.sh/namespacequeue_v1beta1.json
+    kind: NamespaceQueue
+    name: namespacequeue_v1beta1
 scylla.scylladb.com:
   - apiVersion: scylla.scylladb.com/v1alpha1
     filename: scylla.scylladb.com/scyllaoperatorconfig_v1alpha1.json
