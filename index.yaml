@@ -9914,6 +9914,10 @@ externaldns.k8s.io:
     filename: externaldns.k8s.io/dnsendpoint_v1alpha1.json
     kind: dnsendpoint
     name: dnsendpoint_v1alpha1
+  - apiVersion: externaldns.k8s.io/v1alpha1
+    filename: externaldns.k8s.io/dnsrecord_v1alpha1.json
+    kind: dnsrecord
+    name: dnsrecord_v1alpha1
 externaldns.nginx.org:
   - apiVersion: externaldns.nginx.org/v1
     filename: externaldns.nginx.org/dnsendpoint_v1.json
