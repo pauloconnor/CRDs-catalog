@@ -10292,6 +10292,18 @@ gateway.k8s.aws:
     filename: gateway.k8s.aws/listenerruleconfiguration_v1beta1.json
     kind: ListenerRuleConfiguration
     name: listenerruleconfiguration_v1beta1
+  - apiVersion: gateway.k8s.aws/v1
+    filename: gateway.k8s.aws/targetgroupconfiguration_v1.json
+    kind: TargetGroupConfiguration
+    name: targetgroupconfiguration_v1
+  - apiVersion: gateway.k8s.aws/v1
+    filename: gateway.k8s.aws/listenerruleconfiguration_v1.json
+    kind: ListenerRuleConfiguration
+    name: listenerruleconfiguration_v1
+  - apiVersion: gateway.k8s.aws/v1
+    filename: gateway.k8s.aws/loadbalancerconfiguration_v1.json
+    kind: LoadBalancerConfiguration
+    name: loadbalancerconfiguration_v1
 gateway.kgateway.dev:
   - apiVersion: gateway.kgateway.dev/v1alpha1
     filename: gateway.kgateway.dev/listenerpolicy_v1alpha1.json
