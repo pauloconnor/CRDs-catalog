@@ -1,5 +1,9 @@
 {
   "description": "CommitStatus is the Schema for the commitstatuses API",
+  "externalDocs": {
+    "description": "CRD reference (examples and behavior)",
+    "url": "https://gitops-promoter.readthedocs.io/en/stable/crd-specs/#commitstatus"
+  },
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -50,6 +54,21 @@
             "failure"
           ],
           "type": "string"
+        },
+        "publishTo": {
+          "default": [
+            "scm"
+          ],
+          "description": "PublishTo is the set of destinations for this commit status.\n- \"scm\": post the status to the SCM provider\nThe default is [\"scm\"]. An empty list keeps the status in Kubernetes and does not post it to the SCM.\nOmitting the field uses the default. The controller posts to the SCM when \"scm\" is present.\nPromotion gates use the phase in every case.",
+          "items": {
+            "description": "CommitStatusPublishTo is one destination a commit status can be published to.",
+            "enum": [
+              "scm"
+            ],
+            "type": "string"
+          },
+          "type": "array",
+          "x-kubernetes-list-type": "set"
         },
         "sha": {
           "description": "SHA is the commit SHA to set the status on.\nSupports both SHA-1 (40 chars) and SHA-256 (64 chars) Git hash formats.",
@@ -145,6 +164,13 @@
         },
         "id": {
           "description": "Id is the unique identifier of the commit status, set by the SCM",
+          "type": "string"
+        },
+        "instanceID": {
+          "description": "InstanceID mirrors metadata.labels[promoter.argoproj.io/instance-id] stamped on each\nreconcile attempt by this install's controller, including when Ready=False; omitted\nwhen the resource has no instance-id label (default install).",
+          "maxLength": 63,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9]([a-zA-Z0-9._-]*[a-zA-Z0-9])?$",
           "type": "string"
         },
         "observedGeneration": {
