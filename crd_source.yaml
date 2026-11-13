@@ -34,7 +34,7 @@ sources:
     changelog: "https://github.com/actions/actions-runner-controller/releases"
 
   - url: "https://github.com/adyanth/cloudflare-operator"
-    tag: "v0.13.1"
+    tag: "v0.14.0"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/adyanth/cloudflare-operator/releases"
 
