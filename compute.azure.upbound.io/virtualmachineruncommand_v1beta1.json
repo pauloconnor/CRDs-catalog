@@ -1,5 +1,5 @@
 {
-  "description": "VirtualMachineRunCommand is the Schema for the VirtualMachineRunCommands API. Manages a Virtual Machine Run Command.",
+  "description": "VirtualMachineRunCommand is the Schema for the VirtualMachineRunCommands API. Manages a Virtual Machine Run Command.\nDeprecated: This API version (v1beta1) has been deprecated in release v2.6.0.",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -681,7 +681,58 @@
             "errorBlobManagedIdentity": {
               "description": "An error_blob_managed_identity block as defined below. User-assigned managed Identity that has access to errorBlobUri storage blob.",
               "items": {
-                "type": "object"
+                "properties": {
+                  "clientIdSecretRef": {
+                    "description": "The client ID of the managed identity.",
+                    "properties": {
+                      "key": {
+                        "description": "The key to select.",
+                        "type": "string"
+                      },
+                      "name": {
+                        "description": "Name of the secret.",
+                        "type": "string"
+                      },
+                      "namespace": {
+                        "description": "Namespace of the secret.",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "key",
+                      "name",
+                      "namespace"
+                    ],
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "objectIdSecretRef": {
+                    "description": "The object ID of the managed identity.",
+                    "properties": {
+                      "key": {
+                        "description": "The key to select.",
+                        "type": "string"
+                      },
+                      "name": {
+                        "description": "Name of the secret.",
+                        "type": "string"
+                      },
+                      "namespace": {
+                        "description": "Namespace of the secret.",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "key",
+                      "name",
+                      "namespace"
+                    ],
+                    "type": "object",
+                    "additionalProperties": false
+                  }
+                },
+                "type": "object",
+                "additionalProperties": false
               },
               "type": "array"
             },
@@ -776,7 +827,58 @@
             "outputBlobManagedIdentity": {
               "description": "An output_blob_managed_identity block as defined below. User-assigned managed Identity that has access to outputBlobUri storage blob.",
               "items": {
-                "type": "object"
+                "properties": {
+                  "clientIdSecretRef": {
+                    "description": "The client ID of the managed identity.",
+                    "properties": {
+                      "key": {
+                        "description": "The key to select.",
+                        "type": "string"
+                      },
+                      "name": {
+                        "description": "Name of the secret.",
+                        "type": "string"
+                      },
+                      "namespace": {
+                        "description": "Namespace of the secret.",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "key",
+                      "name",
+                      "namespace"
+                    ],
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "objectIdSecretRef": {
+                    "description": "The object ID of the managed identity.",
+                    "properties": {
+                      "key": {
+                        "description": "The key to select.",
+                        "type": "string"
+                      },
+                      "name": {
+                        "description": "Name of the secret.",
+                        "type": "string"
+                      },
+                      "namespace": {
+                        "description": "Namespace of the secret.",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "key",
+                      "name",
+                      "namespace"
+                    ],
+                    "type": "object",
+                    "additionalProperties": false
+                  }
+                },
+                "type": "object",
+                "additionalProperties": false
               },
               "type": "array"
             },
@@ -885,9 +987,88 @@
             "protectedParameter": {
               "description": "A list of protected_parameter blocks as defined below. The protected parameters used by the script.",
               "items": {
-                "type": "object"
+                "properties": {
+                  "nameSecretRef": {
+                    "description": "The run parameter name.",
+                    "properties": {
+                      "key": {
+                        "description": "The key to select.",
+                        "type": "string"
+                      },
+                      "name": {
+                        "description": "Name of the secret.",
+                        "type": "string"
+                      },
+                      "namespace": {
+                        "description": "Namespace of the secret.",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "key",
+                      "name",
+                      "namespace"
+                    ],
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "valueSecretRef": {
+                    "description": "The run parameter value.",
+                    "properties": {
+                      "key": {
+                        "description": "The key to select.",
+                        "type": "string"
+                      },
+                      "name": {
+                        "description": "Name of the secret.",
+                        "type": "string"
+                      },
+                      "namespace": {
+                        "description": "Namespace of the secret.",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "key",
+                      "name",
+                      "namespace"
+                    ],
+                    "type": "object",
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "nameSecretRef",
+                  "valueSecretRef"
+                ],
+                "type": "object",
+                "additionalProperties": false
               },
               "type": "array"
+            },
+            "runAsPasswordSecretRef": {
+              "description": "Specifies the user account password on the VM when executing the Virtual Machine Run Command.",
+              "properties": {
+                "key": {
+                  "description": "The key to select.",
+                  "type": "string"
+                },
+                "name": {
+                  "description": "Name of the secret.",
+                  "type": "string"
+                },
+                "namespace": {
+                  "description": "Namespace of the secret.",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "key",
+                "name",
+                "namespace"
+              ],
+              "type": "object",
+              "additionalProperties": false
             },
             "runAsUser": {
               "description": "Specifies the user account on the VM when executing the Virtual Machine Run Command.",
@@ -909,7 +1090,58 @@
                   "scriptUriManagedIdentity": {
                     "description": "A script_uri_managed_identity block as defined above.",
                     "items": {
-                      "type": "object"
+                      "properties": {
+                        "clientIdSecretRef": {
+                          "description": "The client ID of the managed identity.",
+                          "properties": {
+                            "key": {
+                              "description": "The key to select.",
+                              "type": "string"
+                            },
+                            "name": {
+                              "description": "Name of the secret.",
+                              "type": "string"
+                            },
+                            "namespace": {
+                              "description": "Namespace of the secret.",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "key",
+                            "name",
+                            "namespace"
+                          ],
+                          "type": "object",
+                          "additionalProperties": false
+                        },
+                        "objectIdSecretRef": {
+                          "description": "The object ID of the managed identity.",
+                          "properties": {
+                            "key": {
+                              "description": "The key to select.",
+                              "type": "string"
+                            },
+                            "name": {
+                              "description": "Name of the secret.",
+                              "type": "string"
+                            },
+                            "namespace": {
+                              "description": "Namespace of the secret.",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "key",
+                            "name",
+                            "namespace"
+                          ],
+                          "type": "object",
+                          "additionalProperties": false
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
                     },
                     "type": "array"
                   },
@@ -1497,6 +1729,10 @@
             "type"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "lastHandledReconcileAt": {
+          "description": "LastHandledReconcileAt holds the value of the most recent\nreconcile-requested-at annotation token that the controller has\nprocessed. Users can compare this to the annotation to determine\nwhether a reconcile request has been handled.",
+          "type": "string"
         },
         "observedGeneration": {
           "description": "ObservedGeneration is the latest metadata.generation\nwhich resulted in either a ready state, or stalled due to error\nit can not recover from without human intervention.",
