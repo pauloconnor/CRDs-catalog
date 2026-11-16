@@ -86,6 +86,11 @@
           "type": "object",
           "additionalProperties": false
         },
+        "createNamespace": {
+          "description": "CreateNamespace controls whether Fleet creates the target namespace on\ndownstream clusters during Helm installs. When nil, the default behavior\nis to create the namespace (backward-compatible). Set to false by the\ncontroller when Policy requires a ServiceAccount and does not explicitly\nallow namespace creation. This does not affect namespaceLabels/\nnamespaceAnnotations patching, which is always attempted (when set) as\nthe deployment's ServiceAccount and gated by downstream RBAC.",
+          "nullable": true,
+          "type": "boolean"
+        },
         "defaultNamespace": {
           "description": "DefaultNamespace is the namespace to use for resources that do not\nspecify a namespace. This field is not used to enforce or lock down\nthe deployment to a specific namespace.",
           "nullable": true,
@@ -104,7 +109,7 @@
           "items": {
             "properties": {
               "acceptedStates": {
-                "description": "AcceptedStates is a list of BundleDeployment state that are considered acceptable for this dependency.\nIf the dependency is in one of these states, it will not block the deployment of the dependent bundle.\nValid Values should match the StateRank keys.\nIf not specified, default to [\"Ready\"]: only fully ready dependencies are accepted\nExample: [\"Ready\", \"Modified\"] will accept dependencies that are either ready or have drifted from their desired state.",
+                "description": "AcceptedStates is a list of BundleDeployment state that are considered acceptable for this dependency.\nIf the dependency is in one of these states, it will not block the deployment of the dependent bundle.\nValid Values should match the StateRank keys, except for WaitingForDependency, which is rejected:\nit would unblock this bundle exactly when its dependency became blocked on a dependency of its own.\nIf not specified, default to [\"Ready\"]: only fully ready dependencies are accepted\nExample: [\"Ready\", \"Modified\"] will accept dependencies that are either ready or have drifted from their desired state.",
                 "items": {
                   "type": "string"
                 },
@@ -417,6 +422,12 @@
           "description": "HelmOpOptions stores the options relative to HelmOp resources\nNon-nil HelmOpOptions indicate that the source of resources is a Helm chart,\nnot a git repository.",
           "nullable": true,
           "properties": {
+            "helmOpCABundle": {
+              "description": "CABundle is a PEM encoded CA bundle used to validate TLS connections to\nthe Helm registry. It is resolved by the controller (which has access to\nRancher's cattle-system CA secrets, if any) and stored here so the agent can use\nit without requiring access to those secrets.",
+              "format": "byte",
+              "nullable": true,
+              "type": "string"
+            },
             "helmOpInsecureSkipTLSVerify": {
               "description": "InsecureSkipTLSverify will use insecure HTTPS to clone the helm app resource.",
               "type": "boolean"
@@ -555,6 +566,11 @@
             },
             "autoPartitionThreshold": {
               "description": "AutoPartitionThreshold is the minimum number of clusters that need to be\npresent before auto-partitioning is enabled. If the number of target\nclusters is less than this value, all clusters will be placed in a single\npartition.\ndefault: 200",
+              "nullable": true,
+              "type": "integer"
+            },
+            "maxNew": {
+              "description": "MaxNew is the maximum number of new BundleDeployments that can be created\nin a single reconciliation. This limits the rate at which new deployments\nare staged when a bundle is first applied to many clusters.\ndefault: 50",
               "nullable": true,
               "type": "integer"
             },
@@ -725,10 +741,19 @@
           "nullable": true,
           "type": "string"
         },
+        "targetCustomizationMode": {
+          "default": "FirstMatch",
+          "description": "TargetCustomizationMode controls how targetCustomizations from fleet.yaml\nare evaluated. \"FirstMatch\" (default) stops at the first matching entry.\n\"AllMatches\" applies all matching entries in order, merging them.",
+          "enum": [
+            "FirstMatch",
+            "AllMatches"
+          ],
+          "type": "string"
+        },
         "targetRestrictions": {
           "description": "TargetRestrictions is an allow list, which controls if a bundledeployment is created for a target.",
           "items": {
-            "description": "BundleTargetRestriction is used internally by Fleet and should not be modified.\nIt acts as an allow list, to prevent the creation of BundleDeployments from\nTargets created by TargetCustomizations in fleet.yaml.",
+            "description": "BundleTargetRestriction is used internally by Fleet and should not be modified.\nIt acts as an allow list, restricting BundleDeployment creation to only those clusters\nthat are explicitly listed in the GitRepo targets.",
             "properties": {
               "clusterGroup": {
                 "nullable": true,
@@ -1021,6 +1046,11 @@
                 },
                 "type": "object",
                 "additionalProperties": false
+              },
+              "createNamespace": {
+                "description": "CreateNamespace controls whether Fleet creates the target namespace on\ndownstream clusters during Helm installs. When nil, the default behavior\nis to create the namespace (backward-compatible). Set to false by the\ncontroller when Policy requires a ServiceAccount and does not explicitly\nallow namespace creation. This does not affect namespaceLabels/\nnamespaceAnnotations patching, which is always attempted (when set) as\nthe deployment's ServiceAccount and gated by downstream RBAC.",
+                "nullable": true,
+                "type": "boolean"
               },
               "defaultNamespace": {
                 "description": "DefaultNamespace is the namespace to use for resources that do not\nspecify a namespace. This field is not used to enforce or lock down\nthe deployment to a specific namespace.",
@@ -1469,10 +1499,6 @@
           "type": "object",
           "additionalProperties": false
         },
-        "maxNew": {
-          "description": "MaxNew is always 50. A bundle change can only stage 50\nbundledeployments at a time.",
-          "type": "integer"
-        },
         "maxUnavailable": {
           "description": "MaxUnavailable is the maximum number of unavailable deployments. See\nrollout configuration.",
           "type": "integer"
@@ -1668,6 +1694,10 @@
                   },
                   "waitApplied": {
                     "description": "WaitApplied is the number of bundle deployments that have been\nsynced from Fleet controller and downstream cluster, but are waiting\nto be deployed.",
+                    "type": "integer"
+                  },
+                  "waitingForDependency": {
+                    "description": "WaitingForDependency is the number of bundle deployments which are\nnot deployed because at least one of the bundles they depend on has\nnot reached an accepted state.",
                     "type": "integer"
                   }
                 },
@@ -1876,6 +1906,10 @@
             },
             "waitApplied": {
               "description": "WaitApplied is the number of bundle deployments that have been\nsynced from Fleet controller and downstream cluster, but are waiting\nto be deployed.",
+              "type": "integer"
+            },
+            "waitingForDependency": {
+              "description": "WaitingForDependency is the number of bundle deployments which are\nnot deployed because at least one of the bundles they depend on has\nnot reached an accepted state.",
               "type": "integer"
             }
           },
