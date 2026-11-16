@@ -98,6 +98,24 @@
           "description": "The Cloud Environment which should be used. Possible values are \"public\",\n\"usgovernment\", \"german\", and \"china\". Defaults to \"public\".",
           "type": "string"
         },
+        "features": {
+          "description": "Features configures optional behaviors of the underlying Terraform\nAzureRM provider, mirroring its `features` block.",
+          "properties": {
+            "postgreSQLFlexibleServer": {
+              "description": "PostgreSQLFlexibleServer configures behaviors specific to Azure PostgreSQL Flexible Servers",
+              "properties": {
+                "restartServerOnConfigurationValueChange": {
+                  "description": "Should the PostgreSQL Flexible Server restart after static server parameter change or removal?",
+                  "type": "boolean"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
         "msiEndpoint": {
           "description": "MSIEndpoint is the optional path to a custom endpoint for\nManaged Service Identity.",
           "type": "string"
@@ -105,6 +123,52 @@
         "oidcTokenFilePath": {
           "description": "OIDCTokenFilePath is the optional path to a token file\nthat allows to access a managed identity.",
           "type": "string"
+        },
+        "reconciliationPolicy": {
+          "description": "ReconciliationPolicy configures how a managed resource is reconciled.\nIt currently allows overriding the controller's failure rate limiter\nparameters on a per-resource basis via ExponentialFailureRateLimiter.",
+          "properties": {
+            "exponentialFailureRateLimiter": {
+              "description": "ExponentialFailureRateLimiter, when set, overrides the parameters of the\nexponential failure rate limiter used to schedule retries for the\nmanaged resource that this policy applies to.",
+              "properties": {
+                "baseDelay": {
+                  "description": "BaseDelay is the initial delay between retries.",
+                  "type": "string",
+                  "x-kubernetes-validations": [
+                    {
+                      "message": "baseDelay must be at least 1s",
+                      "rule": "duration(self) >= duration('1s')"
+                    }
+                  ]
+                },
+                "maxDelay": {
+                  "description": "MaxDelay is the maximum delay between retries.",
+                  "type": "string",
+                  "x-kubernetes-validations": [
+                    {
+                      "message": "maxDelay must be at least 60s",
+                      "rule": "duration(self) >= duration('60s')"
+                    }
+                  ]
+                }
+              },
+              "type": "object",
+              "x-kubernetes-validations": [
+                {
+                  "message": "maxDelay must be greater than or equal to baseDelay",
+                  "rule": "!has(self.maxDelay) || !has(self.baseDelay) || duration(self.maxDelay) >= duration(self.baseDelay)"
+                }
+              ],
+              "additionalProperties": false
+            }
+          },
+          "type": "object",
+          "x-kubernetes-validations": [
+            {
+              "message": "when maxDelay is omitted it defaults to 60s; baseDelay must be <= 60s",
+              "rule": "!has(self.exponentialFailureRateLimiter) || !has(self.exponentialFailureRateLimiter.baseDelay) || has(self.exponentialFailureRateLimiter.maxDelay) || duration(self.exponentialFailureRateLimiter.baseDelay) <= duration('60s')"
+            }
+          ],
+          "additionalProperties": false
         },
         "storageUseAzureAD": {
           "description": "StorageUseAzureAD configures Provider to use AzureAD\nto connect to the Storage Blob & Queue APIs,\nrather than the SharedKey from the Storage Account.",
