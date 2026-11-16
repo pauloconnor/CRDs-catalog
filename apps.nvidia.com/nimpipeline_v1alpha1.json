@@ -862,7 +862,7 @@
                     "type": "array"
                   },
                   "authSecret": {
-                    "description": "The name of an existing pull secret containing the NGC_API_KEY",
+                    "description": "AuthSecret is the name of an existing secret containing the NGC_API_KEY (and optionally HF_TOKEN).\nOptional for certain NIMs.",
                     "type": "string"
                   },
                   "command": {
@@ -934,7 +934,8 @@
                                       },
                                       "required": [
                                         "key",
-                                        "op"
+                                        "op",
+                                        "value"
                                       ],
                                       "type": "object",
                                       "additionalProperties": false
@@ -2471,7 +2472,7 @@
                               },
                               "httpRoutesEnabled": {
                                 "default": true,
-                                "description": "HTTPRoutesEnabled is a flag to enable HTTPRoutes for the created gateway.",
+                                "description": "HTTPRoutesEnabled is a flag to enable HTTPRoutes for the created gateway.\nExplicit false disables HTTPRoutes; omitting the field defaults to true.",
                                 "type": "boolean"
                               },
                               "name": {
@@ -2543,6 +2544,12 @@
                             "maximum": 65535,
                             "minimum": 1,
                             "type": "integer"
+                          },
+                          "labels": {
+                            "additionalProperties": {
+                              "type": "string"
+                            },
+                            "type": "object"
                           },
                           "metricsPort": {
                             "description": "MetricsPort is the port for metrics\nNote: This port is only applicable for NIMs that runs a separate metrics endpoint on Triton Inference Server.",
@@ -3110,12 +3117,36 @@
                         },
                         "type": "object",
                         "additionalProperties": false
+                      },
+                      "ray": {
+                        "description": "Ray config for NIMService using LeaderWorkerSet",
+                        "properties": {
+                          "rayPort": {
+                            "default": 6379,
+                            "description": "RayPort specifies the port for the Ray cluster.",
+                            "format": "int32",
+                            "maximum": 65535,
+                            "minimum": 1,
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "rayPort"
+                        ],
+                        "type": "object",
+                        "additionalProperties": false
                       }
                     },
                     "required": [
                       "parallelism"
                     ],
                     "type": "object",
+                    "x-kubernetes-validations": [
+                      {
+                        "message": "mpi and ray are mutually exclusive",
+                        "rule": "!(has(self.mpi) && has(self.ray))"
+                      }
+                    ],
                     "additionalProperties": false
                   },
                   "nodeSelector": {
@@ -3420,6 +3451,10 @@
                     },
                     "type": "object",
                     "additionalProperties": false
+                  },
+                  "priorityClassName": {
+                    "description": "PriorityClassName is the name of the PriorityClass to assign to pods created by this NIMService.\nIf set, the Kubernetes scheduler uses the priority for preemption decisions.",
+                    "type": "string"
                   },
                   "proxy": {
                     "description": "ProxySpec defines the proxy configuration for NIMService.",
@@ -4340,12 +4375,13 @@
                               "type": "object",
                               "additionalProperties": false
                             },
+                            "maxItems": 5,
                             "type": "array"
                           },
                           "minReplicas": {
                             "default": 1,
                             "format": "int32",
-                            "minimum": 1,
+                            "minimum": 0,
                             "type": "integer"
                           }
                         },
@@ -4353,6 +4389,12 @@
                           "maxReplicas"
                         ],
                         "type": "object",
+                        "x-kubernetes-validations": [
+                          {
+                            "message": "minReplicas must be greater than 0 unless at least one External or Object metric is configured",
+                            "rule": "!has(self.minReplicas) || self.minReplicas > 0 || (has(self.metrics) && self.metrics.exists(m, m.type == 'External' || m.type == 'Object'))"
+                          }
+                        ],
                         "additionalProperties": false
                       }
                     },
@@ -4884,7 +4926,6 @@
                   }
                 },
                 "required": [
-                  "authSecret",
                   "image"
                 ],
                 "type": "object",
