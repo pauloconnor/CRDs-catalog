@@ -10856,6 +10856,10 @@ grafana.integreatly.org:
     filename: grafana.integreatly.org/grafanaserviceaccount_v1beta1.json
     kind: GrafanaServiceAccount
     name: grafanaserviceaccount_v1beta1
+  - apiVersion: grafana.integreatly.org/v1beta1
+    filename: grafana.integreatly.org/grafanasilence_v1beta1.json
+    kind: GrafanaSilence
+    name: grafanasilence_v1beta1
 grafana.m.crossplane.io:
   - apiVersion: grafana.m.crossplane.io/v1beta1
     filename: grafana.m.crossplane.io/clusterproviderconfig_v1beta1.json
