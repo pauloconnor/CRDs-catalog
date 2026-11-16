@@ -102,6 +102,9 @@
               "format": "int64",
               "type": "integer"
             },
+            "nestedVirtualization": {
+              "type": "string"
+            },
             "threadsPerCore": {
               "format": "int64",
               "type": "integer"
@@ -550,12 +553,38 @@
           },
           "type": "array"
         },
+        "securityGroupRefs": {
+          "items": {
+            "description": "AWSResourceReferenceWrapper provides a wrapper around *AWSResourceReference\ntype to provide more user friendly syntax for references using 'from' field\nEx:\nAPIIDRef:\n\n\tfrom:\n\t  name: my-api",
+            "properties": {
+              "from": {
+                "description": "AWSResourceReference provides all the values necessary to reference another\nk8s resource for finding the identifier(Id/ARN/Name)",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "namespace": {
+                    "type": "string"
+                  }
+                },
+                "type": "object",
+                "additionalProperties": false
+              }
+            },
+            "type": "object",
+            "additionalProperties": false
+          },
+          "type": "array"
+        },
         "securityGroups": {
           "description": "[Default VPC] The names of the security groups.\n\nIf you specify a network interface, you must specify any security groups\nas part of the network interface instead of using this parameter.\n\nDefault: Amazon EC2 uses the default security group.",
           "items": {
             "type": "string"
           },
           "type": "array"
+        },
+        "sourceDestCheckEnabled": {
+          "type": "boolean"
         },
         "subnetID": {
           "description": "The ID of the subnet to launch the instance into.\n\nIf you specify a network interface, you must specify any subnets as part\nof the network interface instead of using this parameter.",
@@ -620,6 +649,10 @@
               "description": "OwnerAccountID is the AWS Account ID of the account that owns the\nbackend AWS service API resource.",
               "type": "string"
             },
+            "partition": {
+              "description": "Partition is the AWS partition in which the resource exists or will exist",
+              "type": "string"
+            },
             "region": {
               "description": "Region is the AWS region in which the resource exists or will exist.",
               "type": "string"
@@ -662,6 +695,11 @@
               "message": {
                 "description": "A human readable message indicating details about the transition.",
                 "type": "string"
+              },
+              "observedGeneration": {
+                "description": "observedGeneration represents the .metadata.generation that the condition was set based upon.\nFor instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration\nis 9, the condition is out of date with respect to the current state of the instance.",
+                "format": "int64",
+                "type": "integer"
               },
               "reason": {
                 "description": "The reason for the condition's last transition.",
