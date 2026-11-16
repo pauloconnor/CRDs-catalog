@@ -1,5 +1,5 @@
 {
-  "description": "User is the Schema for the Users API. Provides an ElastiCache user.",
+  "description": "User is the Schema for the Users API. Provides an ElastiCache user.\nDeprecated: This API version (v1beta1) has been deprecated in release v2.6.0.",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -108,6 +108,34 @@
               },
               "type": "array"
             },
+            "passwordsWoSecretRef": {
+              "description": "Write-only password for this user. This argument is not stored in state. Conflicts with passwords and authentication_mode. See Write-Only Arguments for more information.11+.",
+              "properties": {
+                "key": {
+                  "description": "The key to select.",
+                  "type": "string"
+                },
+                "name": {
+                  "description": "Name of the secret.",
+                  "type": "string"
+                },
+                "namespace": {
+                  "description": "Namespace of the secret.",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "key",
+                "name",
+                "namespace"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            },
+            "passwordsWoVersion": {
+              "description": "Version number for passwords_wo. Increment this value to trigger a password update. Required when using passwords_wo.",
+              "type": "number"
+            },
             "region": {
               "description": "Region where this resource will be managed. Defaults to the Region set in the provider configuration.\nRegion is the region you'd like your resource to be created in.",
               "type": "string"
@@ -171,6 +199,34 @@
                 "type": "string"
               },
               "type": "array"
+            },
+            "passwordsWoSecretRef": {
+              "description": "Write-only password for this user. This argument is not stored in state. Conflicts with passwords and authentication_mode. See Write-Only Arguments for more information.11+.",
+              "properties": {
+                "key": {
+                  "description": "The key to select.",
+                  "type": "string"
+                },
+                "name": {
+                  "description": "Name of the secret.",
+                  "type": "string"
+                },
+                "namespace": {
+                  "description": "Namespace of the secret.",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "key",
+                "name",
+                "namespace"
+              ],
+              "type": "object",
+              "additionalProperties": false
+            },
+            "passwordsWoVersion": {
+              "description": "Version number for passwords_wo. Increment this value to trigger a password update. Required when using passwords_wo.",
+              "type": "number"
             },
             "tags": {
               "additionalProperties": {
@@ -329,6 +385,10 @@
               "description": "Indicates a password is not required for this user.",
               "type": "boolean"
             },
+            "passwordsWoVersion": {
+              "description": "Version number for passwords_wo. Increment this value to trigger a password update. Required when using passwords_wo.",
+              "type": "number"
+            },
             "region": {
               "description": "Region where this resource will be managed. Defaults to the Region set in the provider configuration.\nRegion is the region you'd like your resource to be created in.",
               "type": "string"
@@ -402,6 +462,10 @@
             "type"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "lastHandledReconcileAt": {
+          "description": "LastHandledReconcileAt holds the value of the most recent\nreconcile-requested-at annotation token that the controller has\nprocessed. Users can compare this to the annotation to determine\nwhether a reconcile request has been handled.",
+          "type": "string"
         },
         "observedGeneration": {
           "description": "ObservedGeneration is the latest metadata.generation\nwhich resulted in either a ready state, or stalled due to error\nit can not recover from without human intervention.",
