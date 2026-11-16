@@ -1162,6 +1162,9 @@
                           "defaultMode": {
                             "type": "integer"
                           },
+                          "defaultUser": {
+                            "type": "integer"
+                          },
                           "items": {
                             "type": "array",
                             "items": {
@@ -1175,6 +1178,9 @@
                                 },
                                 "path": {
                                   "type": "string"
+                                },
+                                "user": {
+                                  "type": "integer"
                                 }
                               },
                               "additionalProperties": false
@@ -1196,6 +1202,9 @@
                           "defaultMode": {
                             "type": "integer"
                           },
+                          "defaultUser": {
+                            "type": "integer"
+                          },
                           "items": {
                             "type": "array",
                             "items": {
@@ -1209,6 +1218,9 @@
                                 },
                                 "path": {
                                   "type": "string"
+                                },
+                                "user": {
+                                  "type": "integer"
                                 }
                               },
                               "additionalProperties": false
@@ -1299,6 +1311,49 @@
                         },
                         "description": "`ImageVolumeSource` object to use to populate the volume.",
                         "additionalProperties": false
+                      },
+                      "projected": {
+                        "type": "object",
+                        "properties": {
+                          "sources": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "serviceAccountToken": {
+                                  "type": "object",
+                                  "properties": {
+                                    "audience": {
+                                      "type": "string"
+                                    },
+                                    "expirationSeconds": {
+                                      "type": "integer"
+                                    },
+                                    "path": {
+                                      "type": "string"
+                                    },
+                                    "user": {
+                                      "type": "integer"
+                                    }
+                                  },
+                                  "description": "Information about the serviceAccountToken data to project.",
+                                  "additionalProperties": false
+                                }
+                              },
+                              "oneOf": [
+                                {
+                                  "properties": {
+                                    "serviceAccountToken": {}
+                                  }
+                                }
+                              ],
+                              "additionalProperties": false
+                            },
+                            "description": "List of projections that are part of this projected volumes. Currently, only Service Account projection is supported."
+                          }
+                        },
+                        "description": "`ProjectedVolume` object to use volume projection.",
+                        "additionalProperties": false
                       }
                     },
                     "oneOf": [
@@ -1309,13 +1364,130 @@
                           "emptyDir": {},
                           "persistentVolumeClaim": {},
                           "csi": {},
-                          "image": {}
+                          "image": {},
+                          "projected": {}
                         }
                       }
                     ],
                     "additionalProperties": false
                   },
                   "description": "Additional volumes that can be mounted to the pod."
+                },
+                "templatedVolumes": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "Name to use for the volume. Required."
+                      },
+                      "secret": {
+                        "type": "object",
+                        "properties": {
+                          "defaultMode": {
+                            "type": "integer"
+                          },
+                          "defaultUser": {
+                            "type": "integer"
+                          },
+                          "items": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "key": {
+                                  "type": "string"
+                                },
+                                "mode": {
+                                  "type": "integer"
+                                },
+                                "path": {
+                                  "type": "string"
+                                },
+                                "user": {
+                                  "type": "integer"
+                                }
+                              },
+                              "additionalProperties": false
+                            }
+                          },
+                          "optional": {
+                            "type": "boolean"
+                          },
+                          "secretName": {
+                            "type": "string"
+                          }
+                        },
+                        "description": "`Secret` to use to populate the volume. The name of the Secret and the items key and path fields can use placeholders that would be replaced for every individual node. Valid placeholders that you can use in the template are `{nodeId}` and `{nodePodName}`.",
+                        "additionalProperties": false
+                      },
+                      "configMap": {
+                        "type": "object",
+                        "properties": {
+                          "defaultMode": {
+                            "type": "integer"
+                          },
+                          "defaultUser": {
+                            "type": "integer"
+                          },
+                          "items": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "key": {
+                                  "type": "string"
+                                },
+                                "mode": {
+                                  "type": "integer"
+                                },
+                                "path": {
+                                  "type": "string"
+                                },
+                                "user": {
+                                  "type": "integer"
+                                }
+                              },
+                              "additionalProperties": false
+                            }
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "optional": {
+                            "type": "boolean"
+                          }
+                        },
+                        "description": "`ConfigMap` to use to populate the volume. The name of the ConfigMap and the items key and path fields can use placeholders that would be replaced for every individual node. Valid placeholders that you can use in the template are `{nodeId}` and `{nodePodName}`.",
+                        "additionalProperties": false
+                      },
+                      "persistentVolumeClaim": {
+                        "type": "object",
+                        "properties": {
+                          "claimName": {
+                            "type": "string"
+                          },
+                          "readOnly": {
+                            "type": "boolean"
+                          }
+                        },
+                        "description": "`PersistentVolumeClaim` object to use to populate the volume. The name of the Persistent Volume Claim can use placeholders that would be replaced for every individual node. Valid placeholders that you can use in the template are `{nodeId}` and `{nodePodName}`.",
+                        "additionalProperties": false
+                      }
+                    },
+                    "oneOf": [
+                      {
+                        "properties": {
+                          "secret": {},
+                          "configMap": {},
+                          "persistentVolumeClaim": {}
+                        }
+                      }
+                    ],
+                    "additionalProperties": false
+                  },
+                  "description": "Additional volumes that can be mounted to the pod. These volumes can use templates to mount different volumes into individual Pods."
                 },
                 "hostUsers": {
                   "type": "boolean",
@@ -1644,6 +1816,12 @@
                   "items": {
                     "type": "object",
                     "properties": {
+                      "bindMountOptions": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
                       "mountPath": {
                         "type": "string"
                       },
@@ -1881,6 +2059,12 @@
                   "items": {
                     "type": "object",
                     "properties": {
+                      "bindMountOptions": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
                       "mountPath": {
                         "type": "string"
                       },
