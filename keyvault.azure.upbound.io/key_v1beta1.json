@@ -1,5 +1,5 @@
 {
-  "description": "Key is the Schema for the Keys API. Manages a Key Vault Key.",
+  "description": "Key is the Schema for the Keys API. Manages a Key Vault Key.\nDeprecated: This API version (v1beta1) has been deprecated in release v2.6.0.",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -31,11 +31,11 @@
               "type": "string"
             },
             "expirationDate": {
-              "description": "Expiration UTC datetime (Y-m-d'T'H:M:S'Z'). When this parameter gets changed on reruns, if newer date is ahead of current date, an update is performed. If the newer date is before the current date, resource will be force created.",
+              "description": "Expiration UTC datetime (Y-m-d'T'H:M:S'Z').",
               "type": "string"
             },
             "keyOpts": {
-              "description": "A list of JSON web key operations. Possible values include: decrypt, encrypt, sign, unwrapKey, verify and wrapKey. Please note these values are case sensitive.",
+              "description": "A list of JSON web key operations. Possible values include: decrypt, encrypt, sign, unwrapKey, verify and wrapKey. Please note these values are case-sensitive.",
               "items": {
                 "type": "string"
               },
@@ -140,6 +140,24 @@
             "notBeforeDate": {
               "description": "Key not usable before the provided UTC datetime (Y-m-d'T'H:M:S'Z').",
               "type": "string"
+            },
+            "releasePolicy": {
+              "description": "A release_policy block as defined below. Changing this forces a new resource to be created.",
+              "items": {
+                "properties": {
+                  "immutable": {
+                    "description": "Whether this policy is immutable. Defaults to false.",
+                    "type": "boolean"
+                  },
+                  "json": {
+                    "description": "The policy contents in JSON format.",
+                    "type": "string"
+                  }
+                },
+                "type": "object",
+                "additionalProperties": false
+              },
+              "type": "array"
             },
             "rotationPolicy": {
               "description": "A rotation_policy block as defined below.",
@@ -197,11 +215,11 @@
               "type": "string"
             },
             "expirationDate": {
-              "description": "Expiration UTC datetime (Y-m-d'T'H:M:S'Z'). When this parameter gets changed on reruns, if newer date is ahead of current date, an update is performed. If the newer date is before the current date, resource will be force created.",
+              "description": "Expiration UTC datetime (Y-m-d'T'H:M:S'Z').",
               "type": "string"
             },
             "keyOpts": {
-              "description": "A list of JSON web key operations. Possible values include: decrypt, encrypt, sign, unwrapKey, verify and wrapKey. Please note these values are case sensitive.",
+              "description": "A list of JSON web key operations. Possible values include: decrypt, encrypt, sign, unwrapKey, verify and wrapKey. Please note these values are case-sensitive.",
               "items": {
                 "type": "string"
               },
@@ -306,6 +324,24 @@
             "notBeforeDate": {
               "description": "Key not usable before the provided UTC datetime (Y-m-d'T'H:M:S'Z').",
               "type": "string"
+            },
+            "releasePolicy": {
+              "description": "A release_policy block as defined below. Changing this forces a new resource to be created.",
+              "items": {
+                "properties": {
+                  "immutable": {
+                    "description": "Whether this policy is immutable. Defaults to false.",
+                    "type": "boolean"
+                  },
+                  "json": {
+                    "description": "The policy contents in JSON format.",
+                    "type": "string"
+                  }
+                },
+                "type": "object",
+                "additionalProperties": false
+              },
+              "type": "array"
             },
             "rotationPolicy": {
               "description": "A rotation_policy block as defined below.",
@@ -469,7 +505,7 @@
               "type": "string"
             },
             "expirationDate": {
-              "description": "Expiration UTC datetime (Y-m-d'T'H:M:S'Z'). When this parameter gets changed on reruns, if newer date is ahead of current date, an update is performed. If the newer date is before the current date, resource will be force created.",
+              "description": "Expiration UTC datetime (Y-m-d'T'H:M:S'Z').",
               "type": "string"
             },
             "id": {
@@ -477,7 +513,7 @@
               "type": "string"
             },
             "keyOpts": {
-              "description": "A list of JSON web key operations. Possible values include: decrypt, encrypt, sign, unwrapKey, verify and wrapKey. Please note these values are case sensitive.",
+              "description": "A list of JSON web key operations. Possible values include: decrypt, encrypt, sign, unwrapKey, verify and wrapKey. Please note these values are case-sensitive.",
               "items": {
                 "type": "string"
               },
@@ -514,6 +550,24 @@
             "publicKeyPem": {
               "description": "The PEM encoded public key of this Key Vault Key.",
               "type": "string"
+            },
+            "releasePolicy": {
+              "description": "A release_policy block as defined below. Changing this forces a new resource to be created.",
+              "items": {
+                "properties": {
+                  "immutable": {
+                    "description": "Whether this policy is immutable. Defaults to false.",
+                    "type": "boolean"
+                  },
+                  "json": {
+                    "description": "The policy contents in JSON format.",
+                    "type": "string"
+                  }
+                },
+                "type": "object",
+                "additionalProperties": false
+              },
+              "type": "array"
             },
             "resourceId": {
               "description": "The (Versioned) ID for this Key Vault Key. This property points to a specific version of a Key Vault Key, as such using this won't auto-rotate values if used in other Azure Services.",
@@ -633,6 +687,10 @@
             "type"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "lastHandledReconcileAt": {
+          "description": "LastHandledReconcileAt holds the value of the most recent\nreconcile-requested-at annotation token that the controller has\nprocessed. Users can compare this to the annotation to determine\nwhether a reconcile request has been handled.",
+          "type": "string"
         },
         "observedGeneration": {
           "description": "ObservedGeneration is the latest metadata.generation\nwhich resulted in either a ready state, or stalled due to error\nit can not recover from without human intervention.",
