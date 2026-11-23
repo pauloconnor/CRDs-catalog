@@ -78,13 +78,11 @@
                     },
                     "oneOf": [
                       {
-                        "properties": null,
                         "required": [
                           "secretKeyRef"
                         ]
                       },
                       {
-                        "properties": null,
                         "required": [
                           "configMapKeyRef"
                         ]
@@ -95,13 +93,11 @@
                 },
                 "oneOf": [
                   {
-                    "properties": null,
                     "required": [
                       "value"
                     ]
                   },
                   {
-                    "properties": null,
                     "required": [
                       "valueFrom"
                     ]
