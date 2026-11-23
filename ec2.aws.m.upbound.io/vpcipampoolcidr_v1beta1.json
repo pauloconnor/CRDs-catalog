@@ -18,18 +18,18 @@
         "forProvider": {
           "properties": {
             "cidr": {
-              "description": "The CIDR you want to assign to the pool. Conflicts with netmask_length.",
+              "description": "CIDR you want to assign to the pool. Conflicts with netmask_length.",
               "type": "string"
             },
             "cidrAuthorizationContext": {
-              "description": "A signed document that proves that you are authorized to bring the specified IP address range to Amazon using BYOIP. This is not stored in the state file. See cidr_authorization_context for more information.",
+              "description": "Signed document that proves that you are authorized to bring the specified IP address range to Amazon using BYOIP. This is not stored in the state file. See cidr_authorization_context for more information.",
               "properties": {
                 "message": {
-                  "description": "The plain-text authorization message for the prefix and account.",
+                  "description": "Plain-text authorization message for the prefix and account.",
                   "type": "string"
                 },
                 "signature": {
-                  "description": "The signed authorization message for the prefix and account.",
+                  "description": "Signed authorization message for the prefix and account.",
                   "type": "string"
                 }
               },
@@ -37,7 +37,7 @@
               "additionalProperties": false
             },
             "ipamPoolId": {
-              "description": "The ID of the pool to which you want to assign a CIDR.",
+              "description": "ID of the pool to which you want to assign a CIDR.",
               "type": "string"
             },
             "ipamPoolIdRef": {
@@ -129,7 +129,7 @@
               "additionalProperties": false
             },
             "netmaskLength": {
-              "description": "If provided, the cidr provisioned into the specified pool will be the next available cidr given this declared netmask length. Conflicts with cidr.",
+              "description": "If provided, the CIDR provisioned into the specified pool will be the next available CIDR given this declared netmask length. Conflicts with cidr.",
               "type": "number"
             },
             "region": {
@@ -147,18 +147,18 @@
           "description": "THIS IS A BETA FIELD. It will be honored\nunless the Management Policies feature flag is disabled.\nInitProvider holds the same fields as ForProvider, with the exception\nof Identifier and other resource reference fields. The fields that are\nin InitProvider are merged into ForProvider when the resource is created.\nThe same fields are also added to the terraform ignore_changes hook, to\navoid updating them after creation. This is useful for fields that are\nrequired on creation, but we do not desire to update them after creation,\nfor example because of an external controller is managing them, like an\nautoscaler.",
           "properties": {
             "cidr": {
-              "description": "The CIDR you want to assign to the pool. Conflicts with netmask_length.",
+              "description": "CIDR you want to assign to the pool. Conflicts with netmask_length.",
               "type": "string"
             },
             "cidrAuthorizationContext": {
-              "description": "A signed document that proves that you are authorized to bring the specified IP address range to Amazon using BYOIP. This is not stored in the state file. See cidr_authorization_context for more information.",
+              "description": "Signed document that proves that you are authorized to bring the specified IP address range to Amazon using BYOIP. This is not stored in the state file. See cidr_authorization_context for more information.",
               "properties": {
                 "message": {
-                  "description": "The plain-text authorization message for the prefix and account.",
+                  "description": "Plain-text authorization message for the prefix and account.",
                   "type": "string"
                 },
                 "signature": {
-                  "description": "The signed authorization message for the prefix and account.",
+                  "description": "Signed authorization message for the prefix and account.",
                   "type": "string"
                 }
               },
@@ -166,7 +166,7 @@
               "additionalProperties": false
             },
             "ipamPoolId": {
-              "description": "The ID of the pool to which you want to assign a CIDR.",
+              "description": "ID of the pool to which you want to assign a CIDR.",
               "type": "string"
             },
             "ipamPoolIdRef": {
@@ -258,7 +258,7 @@
               "additionalProperties": false
             },
             "netmaskLength": {
-              "description": "If provided, the cidr provisioned into the specified pool will be the next available cidr given this declared netmask length. Conflicts with cidr.",
+              "description": "If provided, the CIDR provisioned into the specified pool will be the next available CIDR given this declared netmask length. Conflicts with cidr.",
               "type": "number"
             }
           },
@@ -334,18 +334,18 @@
         "atProvider": {
           "properties": {
             "cidr": {
-              "description": "The CIDR you want to assign to the pool. Conflicts with netmask_length.",
+              "description": "CIDR you want to assign to the pool. Conflicts with netmask_length.",
               "type": "string"
             },
             "cidrAuthorizationContext": {
-              "description": "A signed document that proves that you are authorized to bring the specified IP address range to Amazon using BYOIP. This is not stored in the state file. See cidr_authorization_context for more information.",
+              "description": "Signed document that proves that you are authorized to bring the specified IP address range to Amazon using BYOIP. This is not stored in the state file. See cidr_authorization_context for more information.",
               "properties": {
                 "message": {
-                  "description": "The plain-text authorization message for the prefix and account.",
+                  "description": "Plain-text authorization message for the prefix and account.",
                   "type": "string"
                 },
                 "signature": {
-                  "description": "The signed authorization message for the prefix and account.",
+                  "description": "Signed authorization message for the prefix and account.",
                   "type": "string"
                 }
               },
@@ -353,19 +353,19 @@
               "additionalProperties": false
             },
             "id": {
-              "description": "The ID of the IPAM Pool Cidr concatenated with the IPAM Pool ID.",
+              "description": "ID of the IPAM Pool CIDR concatenated with the IPAM Pool ID.",
               "type": "string"
             },
             "ipamPoolCidrId": {
-              "description": "The unique ID generated by AWS for the pool cidr.",
+              "description": "Unique ID generated by AWS for the pool CIDR.",
               "type": "string"
             },
             "ipamPoolId": {
-              "description": "The ID of the pool to which you want to assign a CIDR.",
+              "description": "ID of the pool to which you want to assign a CIDR.",
               "type": "string"
             },
             "netmaskLength": {
-              "description": "If provided, the cidr provisioned into the specified pool will be the next available cidr given this declared netmask length. Conflicts with cidr.",
+              "description": "If provided, the CIDR provisioned into the specified pool will be the next available CIDR given this declared netmask length. Conflicts with cidr.",
               "type": "number"
             },
             "region": {
@@ -422,6 +422,10 @@
             "type"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "lastHandledReconcileAt": {
+          "description": "LastHandledReconcileAt holds the value of the most recent\nreconcile-requested-at annotation token that the controller has\nprocessed. Users can compare this to the annotation to determine\nwhether a reconcile request has been handled.",
+          "type": "string"
         },
         "observedGeneration": {
           "description": "ObservedGeneration is the latest metadata.generation\nwhich resulted in either a ready state, or stalled due to error\nit can not recover from without human intervention.",

@@ -22,7 +22,7 @@
               "type": "string"
             },
             "routeTableId": {
-              "description": "The ID of the Route Table to set as the new\nmain route table for the target VPC",
+              "description": "ID of the Route Table to set as the new main route table for the target VPC",
               "type": "string"
             },
             "routeTableIdRef": {
@@ -114,7 +114,7 @@
               "additionalProperties": false
             },
             "vpcId": {
-              "description": "The ID of the VPC whose main route table should be set",
+              "description": "ID of the VPC whose main route table should be set",
               "type": "string"
             },
             "vpcIdRef": {
@@ -216,7 +216,7 @@
           "description": "THIS IS A BETA FIELD. It will be honored\nunless the Management Policies feature flag is disabled.\nInitProvider holds the same fields as ForProvider, with the exception\nof Identifier and other resource reference fields. The fields that are\nin InitProvider are merged into ForProvider when the resource is created.\nThe same fields are also added to the terraform ignore_changes hook, to\navoid updating them after creation. This is useful for fields that are\nrequired on creation, but we do not desire to update them after creation,\nfor example because of an external controller is managing them, like an\nautoscaler.",
           "properties": {
             "routeTableId": {
-              "description": "The ID of the Route Table to set as the new\nmain route table for the target VPC",
+              "description": "ID of the Route Table to set as the new main route table for the target VPC",
               "type": "string"
             },
             "routeTableIdRef": {
@@ -308,7 +308,7 @@
               "additionalProperties": false
             },
             "vpcId": {
-              "description": "The ID of the VPC whose main route table should be set",
+              "description": "ID of the VPC whose main route table should be set",
               "type": "string"
             },
             "vpcIdRef": {
@@ -472,11 +472,11 @@
         "atProvider": {
           "properties": {
             "id": {
-              "description": "The ID of the Route Table Association",
+              "description": "ID of the Route Table Association",
               "type": "string"
             },
             "originalRouteTableId": {
-              "description": "Used internally, see Notes below",
+              "description": "Original route table ID, used internally; see Notes below",
               "type": "string"
             },
             "region": {
@@ -484,11 +484,11 @@
               "type": "string"
             },
             "routeTableId": {
-              "description": "The ID of the Route Table to set as the new\nmain route table for the target VPC",
+              "description": "ID of the Route Table to set as the new main route table for the target VPC",
               "type": "string"
             },
             "vpcId": {
-              "description": "The ID of the VPC whose main route table should be set",
+              "description": "ID of the VPC whose main route table should be set",
               "type": "string"
             }
           },
@@ -541,6 +541,10 @@
             "type"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "lastHandledReconcileAt": {
+          "description": "LastHandledReconcileAt holds the value of the most recent\nreconcile-requested-at annotation token that the controller has\nprocessed. Users can compare this to the annotation to determine\nwhether a reconcile request has been handled.",
+          "type": "string"
         },
         "observedGeneration": {
           "description": "ObservedGeneration is the latest metadata.generation\nwhich resulted in either a ready state, or stalled due to error\nit can not recover from without human intervention.",

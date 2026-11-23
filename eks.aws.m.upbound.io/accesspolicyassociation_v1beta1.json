@@ -1,5 +1,5 @@
 {
-  "description": "AccessPolicyAssociation is the Schema for the AccessPolicyAssociations API. <no value>",
+  "description": "AccessPolicyAssociation is the Schema for the AccessPolicyAssociations API. Access Entry Policy Association for an EKS Cluster.",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -18,8 +18,10 @@
         "forProvider": {
           "properties": {
             "accessScope": {
+              "description": "The configuration block to determine the scope of the access. See access_scope Block below.",
               "properties": {
                 "namespaces": {
+                  "description": "The namespaces to which the access scope applies when type is namespace.",
                   "items": {
                     "type": "string"
                   },
@@ -27,6 +29,7 @@
                   "x-kubernetes-list-type": "set"
                 },
                 "type": {
+                  "description": "Valid values are namespace or cluster.",
                   "type": "string"
                 }
               },
@@ -34,6 +37,7 @@
               "additionalProperties": false
             },
             "clusterName": {
+              "description": "Name of the EKS Cluster.",
               "type": "string"
             },
             "clusterNameRef": {
@@ -125,9 +129,11 @@
               "additionalProperties": false
             },
             "policyArn": {
+              "description": "The ARN of the access policy that you're associating.",
               "type": "string"
             },
             "principalArn": {
+              "description": "The IAM Principal ARN which requires Authentication access to the EKS cluster.",
               "type": "string"
             },
             "principalArnRef": {
@@ -219,7 +225,7 @@
               "additionalProperties": false
             },
             "region": {
-              "description": "Region is the region you'd like your resource to be created in.",
+              "description": "Region where this resource will be managed. Defaults to the Region set in the provider configuration.\nRegion is the region you'd like your resource to be created in.",
               "type": "string"
             }
           },
@@ -234,8 +240,10 @@
           "description": "THIS IS A BETA FIELD. It will be honored\nunless the Management Policies feature flag is disabled.\nInitProvider holds the same fields as ForProvider, with the exception\nof Identifier and other resource reference fields. The fields that are\nin InitProvider are merged into ForProvider when the resource is created.\nThe same fields are also added to the terraform ignore_changes hook, to\navoid updating them after creation. This is useful for fields that are\nrequired on creation, but we do not desire to update them after creation,\nfor example because of an external controller is managing them, like an\nautoscaler.",
           "properties": {
             "accessScope": {
+              "description": "The configuration block to determine the scope of the access. See access_scope Block below.",
               "properties": {
                 "namespaces": {
+                  "description": "The namespaces to which the access scope applies when type is namespace.",
                   "items": {
                     "type": "string"
                   },
@@ -243,6 +251,7 @@
                   "x-kubernetes-list-type": "set"
                 },
                 "type": {
+                  "description": "Valid values are namespace or cluster.",
                   "type": "string"
                 }
               },
@@ -328,8 +337,10 @@
         "atProvider": {
           "properties": {
             "accessScope": {
+              "description": "The configuration block to determine the scope of the access. See access_scope Block below.",
               "properties": {
                 "namespaces": {
+                  "description": "The namespaces to which the access scope applies when type is namespace.",
                   "items": {
                     "type": "string"
                   },
@@ -337,6 +348,7 @@
                   "x-kubernetes-list-type": "set"
                 },
                 "type": {
+                  "description": "Valid values are namespace or cluster.",
                   "type": "string"
                 }
               },
@@ -344,25 +356,30 @@
               "additionalProperties": false
             },
             "associatedAt": {
+              "description": "Date and time in RFC3339 format that the policy was associated.",
               "type": "string"
             },
             "clusterName": {
+              "description": "Name of the EKS Cluster.",
               "type": "string"
             },
             "id": {
               "type": "string"
             },
             "modifiedAt": {
+              "description": "Date and time in RFC3339 format that the policy was updated.",
               "type": "string"
             },
             "policyArn": {
+              "description": "The ARN of the access policy that you're associating.",
               "type": "string"
             },
             "principalArn": {
+              "description": "The IAM Principal ARN which requires Authentication access to the EKS cluster.",
               "type": "string"
             },
             "region": {
-              "description": "Region is the region you'd like your resource to be created in.",
+              "description": "Region where this resource will be managed. Defaults to the Region set in the provider configuration.\nRegion is the region you'd like your resource to be created in.",
               "type": "string"
             }
           },
@@ -415,6 +432,10 @@
             "type"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "lastHandledReconcileAt": {
+          "description": "LastHandledReconcileAt holds the value of the most recent\nreconcile-requested-at annotation token that the controller has\nprocessed. Users can compare this to the annotation to determine\nwhether a reconcile request has been handled.",
+          "type": "string"
         },
         "observedGeneration": {
           "description": "ObservedGeneration is the latest metadata.generation\nwhich resulted in either a ready state, or stalled due to error\nit can not recover from without human intervention.",
