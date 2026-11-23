@@ -459,7 +459,7 @@ sources:
     changelog: "https://github.com/crossplane/crossplane/releases"
 
   - url: "https://github.com/CrunchyData/postgres-operator"
-    tag: "v6.0.1"
+    tag: "v6.0.2"
     repo_path: "config/crd/bases"
     changelog: "https://github.com/CrunchyData/postgres-operator/releases"
 
