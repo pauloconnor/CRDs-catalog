@@ -147,6 +147,7 @@
         },
         "clusterVersion": {
           "default": "v7",
+          "description": "ClusterVersion is the major version of the Redis image in use, written as\n`v6`, `v7`, `v8` and so on. It must match the major version of the image\nconfigured for the cluster: Redis 7+ features such as hostname based\ncluster announcements and CLUSTER ADDSLOTSRANGE are enabled for `v7` and\nevery later major version, and disabled for `v6` and older.",
           "type": "string"
         },
         "env": {
@@ -876,6 +877,14 @@
         "persistenceEnabled": {
           "type": "boolean"
         },
+        "podManagementPolicy": {
+          "description": "PodManagementPolicy controls how pods are created during initial scale up,\nwhen replacing pods on nodes, or when scaling down. This field is immutable\non an existing StatefulSet; changing it for a running cluster requires\nrecreating the StatefulSet (e.g. via the\nredis.opstreelabs.in/recreate-statefulset annotation), otherwise the change\nis ignored.",
+          "enum": [
+            "OrderedReady",
+            "Parallel"
+          ],
+          "type": "string"
+        },
         "podSecurityContext": {
           "description": "PodSecurityContext holds pod-level security attributes and common container settings.\nSome fields are also present in container.securityContext.  Field values of\ncontainer.securityContext take precedence over field values of PodSecurityContext.",
           "properties": {
@@ -1021,7 +1030,7 @@
               "type": "array"
             },
             "maxMemoryPercentOfLimit": {
-              "description": "MaxMemoryPercentOfLimit is the percentage of the Redis container memory limit to be used as maxmemory.\nWhen set with a memory limit, the operator also exports the computed value via the REDIS_MAX_MEMORY environment variable.",
+              "description": "MaxMemoryPercentOfLimit is the percentage of the Redis container memory limit to be used as maxmemory.\nWhen set with a memory limit, the operator also exports the computed value via the REDIS_MAX_MEMORY environment variable.\nThis feature requires the GenerateConfigInInitContainer feature gate to be enabled on the operator;\nwithout it the REDIS_MAX_MEMORY value is exported but never applied to the Redis configuration.",
               "maximum": 100,
               "minimum": 1,
               "type": "integer"
@@ -2467,7 +2476,7 @@
                   "type": "array"
                 },
                 "maxMemoryPercentOfLimit": {
-                  "description": "MaxMemoryPercentOfLimit is the percentage of the Redis container memory limit to be used as maxmemory.\nWhen set with a memory limit, the operator also exports the computed value via the REDIS_MAX_MEMORY environment variable.",
+                  "description": "MaxMemoryPercentOfLimit is the percentage of the Redis container memory limit to be used as maxmemory.\nWhen set with a memory limit, the operator also exports the computed value via the REDIS_MAX_MEMORY environment variable.\nThis feature requires the GenerateConfigInInitContainer feature gate to be enabled on the operator;\nwithout it the REDIS_MAX_MEMORY value is exported but never applied to the Redis configuration.",
                   "maximum": 100,
                   "minimum": 1,
                   "type": "integer"
@@ -3902,7 +3911,7 @@
                   "type": "array"
                 },
                 "maxMemoryPercentOfLimit": {
-                  "description": "MaxMemoryPercentOfLimit is the percentage of the Redis container memory limit to be used as maxmemory.\nWhen set with a memory limit, the operator also exports the computed value via the REDIS_MAX_MEMORY environment variable.",
+                  "description": "MaxMemoryPercentOfLimit is the percentage of the Redis container memory limit to be used as maxmemory.\nWhen set with a memory limit, the operator also exports the computed value via the REDIS_MAX_MEMORY environment variable.\nThis feature requires the GenerateConfigInInitContainer feature gate to be enabled on the operator;\nwithout it the REDIS_MAX_MEMORY value is exported but never applied to the Redis configuration.",
                   "maximum": 100,
                   "minimum": 1,
                   "type": "integer"
