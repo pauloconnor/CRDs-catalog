@@ -1,5 +1,5 @@
 {
-  "description": "LinkedServiceOdbc is the Schema for the LinkedServiceOdbcs API. Manages a Linked Service (connection) between a Database and Azure Data Factory through ODBC protocol.",
+  "description": "LinkedServiceOdbc is the Schema for the LinkedServiceOdbcs API. Manages a Linked Service (connection) between a Database and Azure Data Factory through ODBC protocol.\nDeprecated: This API version (v1beta1) has been deprecated in release v2.6.0.",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -212,11 +212,38 @@
               "description": "A basic_authentication block as defined below.",
               "items": {
                 "properties": {
+                  "passwordSecretRef": {
+                    "description": "The password associated with the username, which can be used to authenticate to the ODBC endpoint.",
+                    "properties": {
+                      "key": {
+                        "description": "The key to select.",
+                        "type": "string"
+                      },
+                      "name": {
+                        "description": "Name of the secret.",
+                        "type": "string"
+                      },
+                      "namespace": {
+                        "description": "Namespace of the secret.",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "key",
+                      "name",
+                      "namespace"
+                    ],
+                    "type": "object",
+                    "additionalProperties": false
+                  },
                   "username": {
                     "description": "The username which can be used to authenticate to the ODBC endpoint.",
                     "type": "string"
                   }
                 },
+                "required": [
+                  "passwordSecretRef"
+                ],
                 "type": "object",
                 "additionalProperties": false
               },
@@ -450,6 +477,10 @@
             "type"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "lastHandledReconcileAt": {
+          "description": "LastHandledReconcileAt holds the value of the most recent\nreconcile-requested-at annotation token that the controller has\nprocessed. Users can compare this to the annotation to determine\nwhether a reconcile request has been handled.",
+          "type": "string"
         },
         "observedGeneration": {
           "description": "ObservedGeneration is the latest metadata.generation\nwhich resulted in either a ready state, or stalled due to error\nit can not recover from without human intervention.",

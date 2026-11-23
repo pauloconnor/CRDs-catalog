@@ -1,5 +1,5 @@
 {
-  "description": "NATGateway is the Schema for the NATGateways API. Manages a Azure NAT Gateway.",
+  "description": "NATGateway is the Schema for the NATGateways API. Manages an Azure NAT Gateway.",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -118,7 +118,7 @@
               "additionalProperties": false
             },
             "skuName": {
-              "description": "The SKU which should be used. At this time the only supported value is Standard. Defaults to Standard.",
+              "description": "The SKU which should be used. Possible values are Standard and StandardV2. Defaults to Standard. Changing this forces a new resource to be created.",
               "type": "string"
             },
             "tags": {
@@ -130,7 +130,7 @@
               "x-kubernetes-map-type": "granular"
             },
             "zones": {
-              "description": "A list of Availability Zones in which this NAT Gateway should be located. Changing this forces a new NAT Gateway to be created.",
+              "description": "A list of Availability Zones in which this NAT Gateway should be located. Changing this forces a new resource to be created.",
               "items": {
                 "type": "string"
               },
@@ -153,7 +153,7 @@
               "type": "string"
             },
             "skuName": {
-              "description": "The SKU which should be used. At this time the only supported value is Standard. Defaults to Standard.",
+              "description": "The SKU which should be used. Possible values are Standard and StandardV2. Defaults to Standard. Changing this forces a new resource to be created.",
               "type": "string"
             },
             "tags": {
@@ -165,7 +165,7 @@
               "x-kubernetes-map-type": "granular"
             },
             "zones": {
-              "description": "A list of Availability Zones in which this NAT Gateway should be located. Changing this forces a new NAT Gateway to be created.",
+              "description": "A list of Availability Zones in which this NAT Gateway should be located. Changing this forces a new resource to be created.",
               "items": {
                 "type": "string"
               },
@@ -271,7 +271,7 @@
               "type": "string"
             },
             "skuName": {
-              "description": "The SKU which should be used. At this time the only supported value is Standard. Defaults to Standard.",
+              "description": "The SKU which should be used. Possible values are Standard and StandardV2. Defaults to Standard. Changing this forces a new resource to be created.",
               "type": "string"
             },
             "tags": {
@@ -283,7 +283,7 @@
               "x-kubernetes-map-type": "granular"
             },
             "zones": {
-              "description": "A list of Availability Zones in which this NAT Gateway should be located. Changing this forces a new NAT Gateway to be created.",
+              "description": "A list of Availability Zones in which this NAT Gateway should be located. Changing this forces a new resource to be created.",
               "items": {
                 "type": "string"
               },
@@ -340,6 +340,10 @@
             "type"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "lastHandledReconcileAt": {
+          "description": "LastHandledReconcileAt holds the value of the most recent\nreconcile-requested-at annotation token that the controller has\nprocessed. Users can compare this to the annotation to determine\nwhether a reconcile request has been handled.",
+          "type": "string"
         },
         "observedGeneration": {
           "description": "ObservedGeneration is the latest metadata.generation\nwhich resulted in either a ready state, or stalled due to error\nit can not recover from without human intervention.",
