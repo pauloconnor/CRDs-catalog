@@ -17,7 +17,9 @@
             "v1_20",
             "v2_0",
             "v2_1",
-            "v2_2"
+            "v2_2",
+            "v2_3",
+            "v2_4"
           ],
           "type": "string"
         },
@@ -848,6 +850,24 @@
                                       "type": "object",
                                       "additionalProperties": false
                                     },
+                                    "fileKeyRef": {
+                                      "properties": {
+                                        "key": {
+                                          "type": "string"
+                                        },
+                                        "optional": {
+                                          "type": "boolean"
+                                        },
+                                        "path": {
+                                          "type": "string"
+                                        },
+                                        "volumeName": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    },
                                     "resourceFieldRef": {
                                       "properties": {
                                         "containerName": {
@@ -1434,6 +1454,33 @@
                           },
                           "restartPolicy": {
                             "type": "string"
+                          },
+                          "restartPolicyRules": {
+                            "items": {
+                              "properties": {
+                                "action": {
+                                  "type": "string"
+                                },
+                                "exitCodes": {
+                                  "properties": {
+                                    "operator": {
+                                      "type": "string"
+                                    },
+                                    "values": {
+                                      "items": {
+                                        "type": "integer"
+                                      },
+                                      "type": "array"
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            },
+                            "type": "array"
                           },
                           "securityContext": {
                             "properties": {
@@ -1810,6 +1857,24 @@
                                       "type": "object",
                                       "additionalProperties": false
                                     },
+                                    "fileKeyRef": {
+                                      "properties": {
+                                        "key": {
+                                          "type": "string"
+                                        },
+                                        "optional": {
+                                          "type": "boolean"
+                                        },
+                                        "path": {
+                                          "type": "string"
+                                        },
+                                        "volumeName": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    },
                                     "resourceFieldRef": {
                                       "properties": {
                                         "containerName": {
@@ -2396,6 +2461,33 @@
                           },
                           "restartPolicy": {
                             "type": "string"
+                          },
+                          "restartPolicyRules": {
+                            "items": {
+                              "properties": {
+                                "action": {
+                                  "type": "string"
+                                },
+                                "exitCodes": {
+                                  "properties": {
+                                    "operator": {
+                                      "type": "string"
+                                    },
+                                    "values": {
+                                      "items": {
+                                        "type": "integer"
+                                      },
+                                      "type": "array"
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            },
+                            "type": "array"
                           },
                           "securityContext": {
                             "properties": {
@@ -2716,6 +2808,9 @@
                     "hostname": {
                       "type": "string"
                     },
+                    "hostnameOverride": {
+                      "type": "string"
+                    },
                     "imagePullSecrets": {
                       "items": {
                         "properties": {
@@ -2775,6 +2870,24 @@
                                           "type": "string"
                                         },
                                         "fieldPath": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    },
+                                    "fileKeyRef": {
+                                      "properties": {
+                                        "key": {
+                                          "type": "string"
+                                        },
+                                        "optional": {
+                                          "type": "boolean"
+                                        },
+                                        "path": {
+                                          "type": "string"
+                                        },
+                                        "volumeName": {
                                           "type": "string"
                                         }
                                       },
@@ -3367,6 +3480,33 @@
                           },
                           "restartPolicy": {
                             "type": "string"
+                          },
+                          "restartPolicyRules": {
+                            "items": {
+                              "properties": {
+                                "action": {
+                                  "type": "string"
+                                },
+                                "exitCodes": {
+                                  "properties": {
+                                    "operator": {
+                                      "type": "string"
+                                    },
+                                    "values": {
+                                      "items": {
+                                        "type": "integer"
+                                      },
+                                      "type": "array"
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            },
+                            "type": "array"
                           },
                           "securityContext": {
                             "properties": {
@@ -3791,6 +3931,15 @@
                         "additionalProperties": false
                       },
                       "type": "array"
+                    },
+                    "schedulingGroup": {
+                      "properties": {
+                        "podGroupName": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
                     },
                     "securityContext": {
                       "properties": {
@@ -4905,6 +5054,36 @@
                                       "type": "object",
                                       "additionalProperties": false
                                     },
+                                    "podCertificate": {
+                                      "properties": {
+                                        "certificateChainPath": {
+                                          "type": "string"
+                                        },
+                                        "credentialBundlePath": {
+                                          "type": "string"
+                                        },
+                                        "keyPath": {
+                                          "type": "string"
+                                        },
+                                        "keyType": {
+                                          "type": "string"
+                                        },
+                                        "maxExpirationSeconds": {
+                                          "type": "integer"
+                                        },
+                                        "signerName": {
+                                          "type": "string"
+                                        },
+                                        "userAnnotations": {
+                                          "additionalProperties": {
+                                            "type": "string"
+                                          },
+                                          "type": "object"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    },
                                     "secret": {
                                       "properties": {
                                         "items": {
@@ -5155,6 +5334,20 @@
                 },
                 "status": {
                   "properties": {
+                    "allocatedResources": {
+                      "additionalProperties": {
+                        "anyOf": [
+                          {
+                            "type": "integer"
+                          },
+                          {
+                            "type": "string"
+                          }
+                        ],
+                        "x-kubernetes-int-or-string": true
+                      },
+                      "type": "object"
+                    },
                     "conditions": {
                       "items": {
                         "properties": {
@@ -5214,280 +5407,7 @@
                                       "health": {
                                         "type": "string"
                                       },
-                                      "resourceID": {
-                                        "type": "string"
-                                      }
-                                    },
-                                    "type": "object",
-                                    "additionalProperties": false
-                                  },
-                                  "type": "array"
-                                }
-                              },
-                              "type": "object",
-                              "additionalProperties": false
-                            },
-                            "type": "array"
-                          },
-                          "containerID": {
-                            "type": "string"
-                          },
-                          "image": {
-                            "type": "string"
-                          },
-                          "imageID": {
-                            "type": "string"
-                          },
-                          "lastState": {
-                            "properties": {
-                              "running": {
-                                "properties": {
-                                  "startedAt": {
-                                    "type": "string"
-                                  }
-                                },
-                                "type": "object",
-                                "additionalProperties": false
-                              },
-                              "terminated": {
-                                "properties": {
-                                  "containerID": {
-                                    "type": "string"
-                                  },
-                                  "exitCode": {
-                                    "type": "integer"
-                                  },
-                                  "finishedAt": {
-                                    "type": "string"
-                                  },
-                                  "message": {
-                                    "type": "string"
-                                  },
-                                  "reason": {
-                                    "type": "string"
-                                  },
-                                  "signal": {
-                                    "type": "integer"
-                                  },
-                                  "startedAt": {
-                                    "type": "string"
-                                  }
-                                },
-                                "type": "object",
-                                "additionalProperties": false
-                              },
-                              "waiting": {
-                                "properties": {
-                                  "message": {
-                                    "type": "string"
-                                  },
-                                  "reason": {
-                                    "type": "string"
-                                  }
-                                },
-                                "type": "object",
-                                "additionalProperties": false
-                              }
-                            },
-                            "type": "object",
-                            "additionalProperties": false
-                          },
-                          "name": {
-                            "type": "string"
-                          },
-                          "ready": {
-                            "type": "boolean"
-                          },
-                          "resources": {
-                            "properties": {
-                              "claims": {
-                                "items": {
-                                  "properties": {
-                                    "name": {
-                                      "type": "string"
-                                    },
-                                    "request": {
-                                      "type": "string"
-                                    }
-                                  },
-                                  "type": "object",
-                                  "additionalProperties": false
-                                },
-                                "type": "array"
-                              },
-                              "limits": {
-                                "additionalProperties": {
-                                  "anyOf": [
-                                    {
-                                      "type": "integer"
-                                    },
-                                    {
-                                      "type": "string"
-                                    }
-                                  ],
-                                  "x-kubernetes-int-or-string": true
-                                },
-                                "type": "object"
-                              },
-                              "requests": {
-                                "additionalProperties": {
-                                  "anyOf": [
-                                    {
-                                      "type": "integer"
-                                    },
-                                    {
-                                      "type": "string"
-                                    }
-                                  ],
-                                  "x-kubernetes-int-or-string": true
-                                },
-                                "type": "object"
-                              }
-                            },
-                            "type": "object",
-                            "additionalProperties": false
-                          },
-                          "restartCount": {
-                            "type": "integer"
-                          },
-                          "started": {
-                            "type": "boolean"
-                          },
-                          "state": {
-                            "properties": {
-                              "running": {
-                                "properties": {
-                                  "startedAt": {
-                                    "type": "string"
-                                  }
-                                },
-                                "type": "object",
-                                "additionalProperties": false
-                              },
-                              "terminated": {
-                                "properties": {
-                                  "containerID": {
-                                    "type": "string"
-                                  },
-                                  "exitCode": {
-                                    "type": "integer"
-                                  },
-                                  "finishedAt": {
-                                    "type": "string"
-                                  },
-                                  "message": {
-                                    "type": "string"
-                                  },
-                                  "reason": {
-                                    "type": "string"
-                                  },
-                                  "signal": {
-                                    "type": "integer"
-                                  },
-                                  "startedAt": {
-                                    "type": "string"
-                                  }
-                                },
-                                "type": "object",
-                                "additionalProperties": false
-                              },
-                              "waiting": {
-                                "properties": {
-                                  "message": {
-                                    "type": "string"
-                                  },
-                                  "reason": {
-                                    "type": "string"
-                                  }
-                                },
-                                "type": "object",
-                                "additionalProperties": false
-                              }
-                            },
-                            "type": "object",
-                            "additionalProperties": false
-                          },
-                          "stopSignal": {
-                            "type": "string"
-                          },
-                          "user": {
-                            "properties": {
-                              "linux": {
-                                "properties": {
-                                  "gid": {
-                                    "type": "integer"
-                                  },
-                                  "supplementalGroups": {
-                                    "items": {
-                                      "type": "integer"
-                                    },
-                                    "type": "array"
-                                  },
-                                  "uid": {
-                                    "type": "integer"
-                                  }
-                                },
-                                "type": "object",
-                                "additionalProperties": false
-                              }
-                            },
-                            "type": "object",
-                            "additionalProperties": false
-                          },
-                          "volumeMounts": {
-                            "items": {
-                              "properties": {
-                                "mountPath": {
-                                  "type": "string"
-                                },
-                                "name": {
-                                  "type": "string"
-                                },
-                                "readOnly": {
-                                  "type": "boolean"
-                                },
-                                "recursiveReadOnly": {
-                                  "type": "string"
-                                }
-                              },
-                              "type": "object",
-                              "additionalProperties": false
-                            },
-                            "type": "array"
-                          }
-                        },
-                        "type": "object",
-                        "additionalProperties": false
-                      },
-                      "type": "array"
-                    },
-                    "ephemeralContainerStatuses": {
-                      "items": {
-                        "properties": {
-                          "allocatedResources": {
-                            "additionalProperties": {
-                              "anyOf": [
-                                {
-                                  "type": "integer"
-                                },
-                                {
-                                  "type": "string"
-                                }
-                              ],
-                              "x-kubernetes-int-or-string": true
-                            },
-                            "type": "object"
-                          },
-                          "allocatedResourcesStatus": {
-                            "items": {
-                              "properties": {
-                                "name": {
-                                  "type": "string"
-                                },
-                                "resources": {
-                                  "items": {
-                                    "properties": {
-                                      "health": {
+                                      "message": {
                                         "type": "string"
                                       },
                                       "resourceID": {
@@ -5724,6 +5644,21 @@
                                 },
                                 "recursiveReadOnly": {
                                   "type": "string"
+                                },
+                                "volumeStatus": {
+                                  "properties": {
+                                    "image": {
+                                      "properties": {
+                                        "imageRef": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
                                 }
                               },
                               "type": "object",
@@ -5736,6 +5671,327 @@
                         "additionalProperties": false
                       },
                       "type": "array"
+                    },
+                    "ephemeralContainerStatuses": {
+                      "items": {
+                        "properties": {
+                          "allocatedResources": {
+                            "additionalProperties": {
+                              "anyOf": [
+                                {
+                                  "type": "integer"
+                                },
+                                {
+                                  "type": "string"
+                                }
+                              ],
+                              "x-kubernetes-int-or-string": true
+                            },
+                            "type": "object"
+                          },
+                          "allocatedResourcesStatus": {
+                            "items": {
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                },
+                                "resources": {
+                                  "items": {
+                                    "properties": {
+                                      "health": {
+                                        "type": "string"
+                                      },
+                                      "message": {
+                                        "type": "string"
+                                      },
+                                      "resourceID": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "type": "object",
+                                    "additionalProperties": false
+                                  },
+                                  "type": "array"
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            },
+                            "type": "array"
+                          },
+                          "containerID": {
+                            "type": "string"
+                          },
+                          "image": {
+                            "type": "string"
+                          },
+                          "imageID": {
+                            "type": "string"
+                          },
+                          "lastState": {
+                            "properties": {
+                              "running": {
+                                "properties": {
+                                  "startedAt": {
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              },
+                              "terminated": {
+                                "properties": {
+                                  "containerID": {
+                                    "type": "string"
+                                  },
+                                  "exitCode": {
+                                    "type": "integer"
+                                  },
+                                  "finishedAt": {
+                                    "type": "string"
+                                  },
+                                  "message": {
+                                    "type": "string"
+                                  },
+                                  "reason": {
+                                    "type": "string"
+                                  },
+                                  "signal": {
+                                    "type": "integer"
+                                  },
+                                  "startedAt": {
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              },
+                              "waiting": {
+                                "properties": {
+                                  "message": {
+                                    "type": "string"
+                                  },
+                                  "reason": {
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "ready": {
+                            "type": "boolean"
+                          },
+                          "resources": {
+                            "properties": {
+                              "claims": {
+                                "items": {
+                                  "properties": {
+                                    "name": {
+                                      "type": "string"
+                                    },
+                                    "request": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                },
+                                "type": "array"
+                              },
+                              "limits": {
+                                "additionalProperties": {
+                                  "anyOf": [
+                                    {
+                                      "type": "integer"
+                                    },
+                                    {
+                                      "type": "string"
+                                    }
+                                  ],
+                                  "x-kubernetes-int-or-string": true
+                                },
+                                "type": "object"
+                              },
+                              "requests": {
+                                "additionalProperties": {
+                                  "anyOf": [
+                                    {
+                                      "type": "integer"
+                                    },
+                                    {
+                                      "type": "string"
+                                    }
+                                  ],
+                                  "x-kubernetes-int-or-string": true
+                                },
+                                "type": "object"
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "restartCount": {
+                            "type": "integer"
+                          },
+                          "started": {
+                            "type": "boolean"
+                          },
+                          "state": {
+                            "properties": {
+                              "running": {
+                                "properties": {
+                                  "startedAt": {
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              },
+                              "terminated": {
+                                "properties": {
+                                  "containerID": {
+                                    "type": "string"
+                                  },
+                                  "exitCode": {
+                                    "type": "integer"
+                                  },
+                                  "finishedAt": {
+                                    "type": "string"
+                                  },
+                                  "message": {
+                                    "type": "string"
+                                  },
+                                  "reason": {
+                                    "type": "string"
+                                  },
+                                  "signal": {
+                                    "type": "integer"
+                                  },
+                                  "startedAt": {
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              },
+                              "waiting": {
+                                "properties": {
+                                  "message": {
+                                    "type": "string"
+                                  },
+                                  "reason": {
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "stopSignal": {
+                            "type": "string"
+                          },
+                          "user": {
+                            "properties": {
+                              "linux": {
+                                "properties": {
+                                  "gid": {
+                                    "type": "integer"
+                                  },
+                                  "supplementalGroups": {
+                                    "items": {
+                                      "type": "integer"
+                                    },
+                                    "type": "array"
+                                  },
+                                  "uid": {
+                                    "type": "integer"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "volumeMounts": {
+                            "items": {
+                              "properties": {
+                                "mountPath": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "readOnly": {
+                                  "type": "boolean"
+                                },
+                                "recursiveReadOnly": {
+                                  "type": "string"
+                                },
+                                "volumeStatus": {
+                                  "properties": {
+                                    "image": {
+                                      "properties": {
+                                        "imageRef": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object",
+                        "additionalProperties": false
+                      },
+                      "type": "array"
+                    },
+                    "extendedResourceClaimStatus": {
+                      "properties": {
+                        "requestMappings": {
+                          "items": {
+                            "properties": {
+                              "containerName": {
+                                "type": "string"
+                              },
+                              "requestName": {
+                                "type": "string"
+                              },
+                              "resourceName": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "type": "array"
+                        },
+                        "resourceClaimName": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
                     },
                     "hostIP": {
                       "type": "string"
@@ -5781,6 +6037,9 @@
                                       "health": {
                                         "type": "string"
                                       },
+                                      "message": {
+                                        "type": "string"
+                                      },
                                       "resourceID": {
                                         "type": "string"
                                       }
@@ -6015,6 +6274,21 @@
                                 },
                                 "recursiveReadOnly": {
                                   "type": "string"
+                                },
+                                "volumeStatus": {
+                                  "properties": {
+                                    "image": {
+                                      "properties": {
+                                        "imageRef": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
                                 }
                               },
                               "type": "object",
@@ -6030,6 +6304,38 @@
                     },
                     "message": {
                       "type": "string"
+                    },
+                    "nodeAllocatableResourceClaimStatuses": {
+                      "items": {
+                        "properties": {
+                          "containers": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          },
+                          "resourceClaimName": {
+                            "type": "string"
+                          },
+                          "resources": {
+                            "additionalProperties": {
+                              "anyOf": [
+                                {
+                                  "type": "integer"
+                                },
+                                {
+                                  "type": "string"
+                                }
+                              ],
+                              "x-kubernetes-int-or-string": true
+                            },
+                            "type": "object"
+                          }
+                        },
+                        "type": "object",
+                        "additionalProperties": false
+                      },
+                      "type": "array"
                     },
                     "nominatedNodeName": {
                       "type": "string"
@@ -6079,6 +6385,55 @@
                       },
                       "type": "array"
                     },
+                    "resources": {
+                      "properties": {
+                        "claims": {
+                          "items": {
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "request": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "type": "array"
+                        },
+                        "limits": {
+                          "additionalProperties": {
+                            "anyOf": [
+                              {
+                                "type": "integer"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ],
+                            "x-kubernetes-int-or-string": true
+                          },
+                          "type": "object"
+                        },
+                        "requests": {
+                          "additionalProperties": {
+                            "anyOf": [
+                              {
+                                "type": "integer"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ],
+                            "x-kubernetes-int-or-string": true
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    },
                     "startTime": {
                       "type": "string"
                     }
@@ -6103,6 +6458,55 @@
                 },
                 "memory": {
                   "type": "string"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
+            "resources": {
+              "properties": {
+                "claims": {
+                  "items": {
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "request": {
+                        "type": "string"
+                      }
+                    },
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "type": "array"
+                },
+                "limits": {
+                  "additionalProperties": {
+                    "anyOf": [
+                      {
+                        "type": "integer"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ],
+                    "x-kubernetes-int-or-string": true
+                  },
+                  "type": "object"
+                },
+                "requests": {
+                  "additionalProperties": {
+                    "anyOf": [
+                      {
+                        "type": "integer"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ],
+                    "x-kubernetes-int-or-string": true
+                  },
+                  "type": "object"
                 }
               },
               "type": "object",
@@ -6848,6 +7252,24 @@
                                   "type": "object",
                                   "additionalProperties": false
                                 },
+                                "fileKeyRef": {
+                                  "properties": {
+                                    "key": {
+                                      "type": "string"
+                                    },
+                                    "optional": {
+                                      "type": "boolean"
+                                    },
+                                    "path": {
+                                      "type": "string"
+                                    },
+                                    "volumeName": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                },
                                 "resourceFieldRef": {
                                   "properties": {
                                     "containerName": {
@@ -7434,6 +7856,33 @@
                       },
                       "restartPolicy": {
                         "type": "string"
+                      },
+                      "restartPolicyRules": {
+                        "items": {
+                          "properties": {
+                            "action": {
+                              "type": "string"
+                            },
+                            "exitCodes": {
+                              "properties": {
+                                "operator": {
+                                  "type": "string"
+                                },
+                                "values": {
+                                  "items": {
+                                    "type": "integer"
+                                  },
+                                  "type": "array"
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        },
+                        "type": "array"
                       },
                       "securityContext": {
                         "properties": {
@@ -7810,6 +8259,24 @@
                                   "type": "object",
                                   "additionalProperties": false
                                 },
+                                "fileKeyRef": {
+                                  "properties": {
+                                    "key": {
+                                      "type": "string"
+                                    },
+                                    "optional": {
+                                      "type": "boolean"
+                                    },
+                                    "path": {
+                                      "type": "string"
+                                    },
+                                    "volumeName": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                },
                                 "resourceFieldRef": {
                                   "properties": {
                                     "containerName": {
@@ -8396,6 +8863,33 @@
                       },
                       "restartPolicy": {
                         "type": "string"
+                      },
+                      "restartPolicyRules": {
+                        "items": {
+                          "properties": {
+                            "action": {
+                              "type": "string"
+                            },
+                            "exitCodes": {
+                              "properties": {
+                                "operator": {
+                                  "type": "string"
+                                },
+                                "values": {
+                                  "items": {
+                                    "type": "integer"
+                                  },
+                                  "type": "array"
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        },
+                        "type": "array"
                       },
                       "securityContext": {
                         "properties": {
@@ -8716,6 +9210,9 @@
                 "hostname": {
                   "type": "string"
                 },
+                "hostnameOverride": {
+                  "type": "string"
+                },
                 "imagePullSecrets": {
                   "items": {
                     "properties": {
@@ -8775,6 +9272,24 @@
                                       "type": "string"
                                     },
                                     "fieldPath": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                },
+                                "fileKeyRef": {
+                                  "properties": {
+                                    "key": {
+                                      "type": "string"
+                                    },
+                                    "optional": {
+                                      "type": "boolean"
+                                    },
+                                    "path": {
+                                      "type": "string"
+                                    },
+                                    "volumeName": {
                                       "type": "string"
                                     }
                                   },
@@ -9367,6 +9882,33 @@
                       },
                       "restartPolicy": {
                         "type": "string"
+                      },
+                      "restartPolicyRules": {
+                        "items": {
+                          "properties": {
+                            "action": {
+                              "type": "string"
+                            },
+                            "exitCodes": {
+                              "properties": {
+                                "operator": {
+                                  "type": "string"
+                                },
+                                "values": {
+                                  "items": {
+                                    "type": "integer"
+                                  },
+                                  "type": "array"
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        },
+                        "type": "array"
                       },
                       "securityContext": {
                         "properties": {
@@ -9791,6 +10333,15 @@
                     "additionalProperties": false
                   },
                   "type": "array"
+                },
+                "schedulingGroup": {
+                  "properties": {
+                    "podGroupName": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
                 },
                 "securityContext": {
                   "properties": {
@@ -10905,6 +11456,36 @@
                                   "type": "object",
                                   "additionalProperties": false
                                 },
+                                "podCertificate": {
+                                  "properties": {
+                                    "certificateChainPath": {
+                                      "type": "string"
+                                    },
+                                    "credentialBundlePath": {
+                                      "type": "string"
+                                    },
+                                    "keyPath": {
+                                      "type": "string"
+                                    },
+                                    "keyType": {
+                                      "type": "string"
+                                    },
+                                    "maxExpirationSeconds": {
+                                      "type": "integer"
+                                    },
+                                    "signerName": {
+                                      "type": "string"
+                                    },
+                                    "userAnnotations": {
+                                      "additionalProperties": {
+                                        "type": "string"
+                                      },
+                                      "type": "object"
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                },
                                 "secret": {
                                   "properties": {
                                     "items": {
@@ -11155,6 +11736,20 @@
             },
             "status": {
               "properties": {
+                "allocatedResources": {
+                  "additionalProperties": {
+                    "anyOf": [
+                      {
+                        "type": "integer"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ],
+                    "x-kubernetes-int-or-string": true
+                  },
+                  "type": "object"
+                },
                 "conditions": {
                   "items": {
                     "properties": {
@@ -11214,280 +11809,7 @@
                                   "health": {
                                     "type": "string"
                                   },
-                                  "resourceID": {
-                                    "type": "string"
-                                  }
-                                },
-                                "type": "object",
-                                "additionalProperties": false
-                              },
-                              "type": "array"
-                            }
-                          },
-                          "type": "object",
-                          "additionalProperties": false
-                        },
-                        "type": "array"
-                      },
-                      "containerID": {
-                        "type": "string"
-                      },
-                      "image": {
-                        "type": "string"
-                      },
-                      "imageID": {
-                        "type": "string"
-                      },
-                      "lastState": {
-                        "properties": {
-                          "running": {
-                            "properties": {
-                              "startedAt": {
-                                "type": "string"
-                              }
-                            },
-                            "type": "object",
-                            "additionalProperties": false
-                          },
-                          "terminated": {
-                            "properties": {
-                              "containerID": {
-                                "type": "string"
-                              },
-                              "exitCode": {
-                                "type": "integer"
-                              },
-                              "finishedAt": {
-                                "type": "string"
-                              },
-                              "message": {
-                                "type": "string"
-                              },
-                              "reason": {
-                                "type": "string"
-                              },
-                              "signal": {
-                                "type": "integer"
-                              },
-                              "startedAt": {
-                                "type": "string"
-                              }
-                            },
-                            "type": "object",
-                            "additionalProperties": false
-                          },
-                          "waiting": {
-                            "properties": {
-                              "message": {
-                                "type": "string"
-                              },
-                              "reason": {
-                                "type": "string"
-                              }
-                            },
-                            "type": "object",
-                            "additionalProperties": false
-                          }
-                        },
-                        "type": "object",
-                        "additionalProperties": false
-                      },
-                      "name": {
-                        "type": "string"
-                      },
-                      "ready": {
-                        "type": "boolean"
-                      },
-                      "resources": {
-                        "properties": {
-                          "claims": {
-                            "items": {
-                              "properties": {
-                                "name": {
-                                  "type": "string"
-                                },
-                                "request": {
-                                  "type": "string"
-                                }
-                              },
-                              "type": "object",
-                              "additionalProperties": false
-                            },
-                            "type": "array"
-                          },
-                          "limits": {
-                            "additionalProperties": {
-                              "anyOf": [
-                                {
-                                  "type": "integer"
-                                },
-                                {
-                                  "type": "string"
-                                }
-                              ],
-                              "x-kubernetes-int-or-string": true
-                            },
-                            "type": "object"
-                          },
-                          "requests": {
-                            "additionalProperties": {
-                              "anyOf": [
-                                {
-                                  "type": "integer"
-                                },
-                                {
-                                  "type": "string"
-                                }
-                              ],
-                              "x-kubernetes-int-or-string": true
-                            },
-                            "type": "object"
-                          }
-                        },
-                        "type": "object",
-                        "additionalProperties": false
-                      },
-                      "restartCount": {
-                        "type": "integer"
-                      },
-                      "started": {
-                        "type": "boolean"
-                      },
-                      "state": {
-                        "properties": {
-                          "running": {
-                            "properties": {
-                              "startedAt": {
-                                "type": "string"
-                              }
-                            },
-                            "type": "object",
-                            "additionalProperties": false
-                          },
-                          "terminated": {
-                            "properties": {
-                              "containerID": {
-                                "type": "string"
-                              },
-                              "exitCode": {
-                                "type": "integer"
-                              },
-                              "finishedAt": {
-                                "type": "string"
-                              },
-                              "message": {
-                                "type": "string"
-                              },
-                              "reason": {
-                                "type": "string"
-                              },
-                              "signal": {
-                                "type": "integer"
-                              },
-                              "startedAt": {
-                                "type": "string"
-                              }
-                            },
-                            "type": "object",
-                            "additionalProperties": false
-                          },
-                          "waiting": {
-                            "properties": {
-                              "message": {
-                                "type": "string"
-                              },
-                              "reason": {
-                                "type": "string"
-                              }
-                            },
-                            "type": "object",
-                            "additionalProperties": false
-                          }
-                        },
-                        "type": "object",
-                        "additionalProperties": false
-                      },
-                      "stopSignal": {
-                        "type": "string"
-                      },
-                      "user": {
-                        "properties": {
-                          "linux": {
-                            "properties": {
-                              "gid": {
-                                "type": "integer"
-                              },
-                              "supplementalGroups": {
-                                "items": {
-                                  "type": "integer"
-                                },
-                                "type": "array"
-                              },
-                              "uid": {
-                                "type": "integer"
-                              }
-                            },
-                            "type": "object",
-                            "additionalProperties": false
-                          }
-                        },
-                        "type": "object",
-                        "additionalProperties": false
-                      },
-                      "volumeMounts": {
-                        "items": {
-                          "properties": {
-                            "mountPath": {
-                              "type": "string"
-                            },
-                            "name": {
-                              "type": "string"
-                            },
-                            "readOnly": {
-                              "type": "boolean"
-                            },
-                            "recursiveReadOnly": {
-                              "type": "string"
-                            }
-                          },
-                          "type": "object",
-                          "additionalProperties": false
-                        },
-                        "type": "array"
-                      }
-                    },
-                    "type": "object",
-                    "additionalProperties": false
-                  },
-                  "type": "array"
-                },
-                "ephemeralContainerStatuses": {
-                  "items": {
-                    "properties": {
-                      "allocatedResources": {
-                        "additionalProperties": {
-                          "anyOf": [
-                            {
-                              "type": "integer"
-                            },
-                            {
-                              "type": "string"
-                            }
-                          ],
-                          "x-kubernetes-int-or-string": true
-                        },
-                        "type": "object"
-                      },
-                      "allocatedResourcesStatus": {
-                        "items": {
-                          "properties": {
-                            "name": {
-                              "type": "string"
-                            },
-                            "resources": {
-                              "items": {
-                                "properties": {
-                                  "health": {
+                                  "message": {
                                     "type": "string"
                                   },
                                   "resourceID": {
@@ -11724,6 +12046,21 @@
                             },
                             "recursiveReadOnly": {
                               "type": "string"
+                            },
+                            "volumeStatus": {
+                              "properties": {
+                                "image": {
+                                  "properties": {
+                                    "imageRef": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
                             }
                           },
                           "type": "object",
@@ -11736,6 +12073,327 @@
                     "additionalProperties": false
                   },
                   "type": "array"
+                },
+                "ephemeralContainerStatuses": {
+                  "items": {
+                    "properties": {
+                      "allocatedResources": {
+                        "additionalProperties": {
+                          "anyOf": [
+                            {
+                              "type": "integer"
+                            },
+                            {
+                              "type": "string"
+                            }
+                          ],
+                          "x-kubernetes-int-or-string": true
+                        },
+                        "type": "object"
+                      },
+                      "allocatedResourcesStatus": {
+                        "items": {
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            },
+                            "resources": {
+                              "items": {
+                                "properties": {
+                                  "health": {
+                                    "type": "string"
+                                  },
+                                  "message": {
+                                    "type": "string"
+                                  },
+                                  "resourceID": {
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              },
+                              "type": "array"
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        },
+                        "type": "array"
+                      },
+                      "containerID": {
+                        "type": "string"
+                      },
+                      "image": {
+                        "type": "string"
+                      },
+                      "imageID": {
+                        "type": "string"
+                      },
+                      "lastState": {
+                        "properties": {
+                          "running": {
+                            "properties": {
+                              "startedAt": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "terminated": {
+                            "properties": {
+                              "containerID": {
+                                "type": "string"
+                              },
+                              "exitCode": {
+                                "type": "integer"
+                              },
+                              "finishedAt": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              },
+                              "reason": {
+                                "type": "string"
+                              },
+                              "signal": {
+                                "type": "integer"
+                              },
+                              "startedAt": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "waiting": {
+                            "properties": {
+                              "message": {
+                                "type": "string"
+                              },
+                              "reason": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          }
+                        },
+                        "type": "object",
+                        "additionalProperties": false
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "ready": {
+                        "type": "boolean"
+                      },
+                      "resources": {
+                        "properties": {
+                          "claims": {
+                            "items": {
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                },
+                                "request": {
+                                  "type": "string"
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            },
+                            "type": "array"
+                          },
+                          "limits": {
+                            "additionalProperties": {
+                              "anyOf": [
+                                {
+                                  "type": "integer"
+                                },
+                                {
+                                  "type": "string"
+                                }
+                              ],
+                              "x-kubernetes-int-or-string": true
+                            },
+                            "type": "object"
+                          },
+                          "requests": {
+                            "additionalProperties": {
+                              "anyOf": [
+                                {
+                                  "type": "integer"
+                                },
+                                {
+                                  "type": "string"
+                                }
+                              ],
+                              "x-kubernetes-int-or-string": true
+                            },
+                            "type": "object"
+                          }
+                        },
+                        "type": "object",
+                        "additionalProperties": false
+                      },
+                      "restartCount": {
+                        "type": "integer"
+                      },
+                      "started": {
+                        "type": "boolean"
+                      },
+                      "state": {
+                        "properties": {
+                          "running": {
+                            "properties": {
+                              "startedAt": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "terminated": {
+                            "properties": {
+                              "containerID": {
+                                "type": "string"
+                              },
+                              "exitCode": {
+                                "type": "integer"
+                              },
+                              "finishedAt": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              },
+                              "reason": {
+                                "type": "string"
+                              },
+                              "signal": {
+                                "type": "integer"
+                              },
+                              "startedAt": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "waiting": {
+                            "properties": {
+                              "message": {
+                                "type": "string"
+                              },
+                              "reason": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          }
+                        },
+                        "type": "object",
+                        "additionalProperties": false
+                      },
+                      "stopSignal": {
+                        "type": "string"
+                      },
+                      "user": {
+                        "properties": {
+                          "linux": {
+                            "properties": {
+                              "gid": {
+                                "type": "integer"
+                              },
+                              "supplementalGroups": {
+                                "items": {
+                                  "type": "integer"
+                                },
+                                "type": "array"
+                              },
+                              "uid": {
+                                "type": "integer"
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          }
+                        },
+                        "type": "object",
+                        "additionalProperties": false
+                      },
+                      "volumeMounts": {
+                        "items": {
+                          "properties": {
+                            "mountPath": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "readOnly": {
+                              "type": "boolean"
+                            },
+                            "recursiveReadOnly": {
+                              "type": "string"
+                            },
+                            "volumeStatus": {
+                              "properties": {
+                                "image": {
+                                  "properties": {
+                                    "imageRef": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        },
+                        "type": "array"
+                      }
+                    },
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "type": "array"
+                },
+                "extendedResourceClaimStatus": {
+                  "properties": {
+                    "requestMappings": {
+                      "items": {
+                        "properties": {
+                          "containerName": {
+                            "type": "string"
+                          },
+                          "requestName": {
+                            "type": "string"
+                          },
+                          "resourceName": {
+                            "type": "string"
+                          }
+                        },
+                        "type": "object",
+                        "additionalProperties": false
+                      },
+                      "type": "array"
+                    },
+                    "resourceClaimName": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
                 },
                 "hostIP": {
                   "type": "string"
@@ -11781,6 +12439,9 @@
                                   "health": {
                                     "type": "string"
                                   },
+                                  "message": {
+                                    "type": "string"
+                                  },
                                   "resourceID": {
                                     "type": "string"
                                   }
@@ -12015,6 +12676,21 @@
                             },
                             "recursiveReadOnly": {
                               "type": "string"
+                            },
+                            "volumeStatus": {
+                              "properties": {
+                                "image": {
+                                  "properties": {
+                                    "imageRef": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
                             }
                           },
                           "type": "object",
@@ -12030,6 +12706,38 @@
                 },
                 "message": {
                   "type": "string"
+                },
+                "nodeAllocatableResourceClaimStatuses": {
+                  "items": {
+                    "properties": {
+                      "containers": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      "resourceClaimName": {
+                        "type": "string"
+                      },
+                      "resources": {
+                        "additionalProperties": {
+                          "anyOf": [
+                            {
+                              "type": "integer"
+                            },
+                            {
+                              "type": "string"
+                            }
+                          ],
+                          "x-kubernetes-int-or-string": true
+                        },
+                        "type": "object"
+                      }
+                    },
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "type": "array"
                 },
                 "nominatedNodeName": {
                   "type": "string"
@@ -12078,6 +12786,55 @@
                     "additionalProperties": false
                   },
                   "type": "array"
+                },
+                "resources": {
+                  "properties": {
+                    "claims": {
+                      "items": {
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "request": {
+                            "type": "string"
+                          }
+                        },
+                        "type": "object",
+                        "additionalProperties": false
+                      },
+                      "type": "array"
+                    },
+                    "limits": {
+                      "additionalProperties": {
+                        "anyOf": [
+                          {
+                            "type": "integer"
+                          },
+                          {
+                            "type": "string"
+                          }
+                        ],
+                        "x-kubernetes-int-or-string": true
+                      },
+                      "type": "object"
+                    },
+                    "requests": {
+                      "additionalProperties": {
+                        "anyOf": [
+                          {
+                            "type": "integer"
+                          },
+                          {
+                            "type": "string"
+                          }
+                        ],
+                        "x-kubernetes-int-or-string": true
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object",
+                  "additionalProperties": false
                 },
                 "startTime": {
                   "type": "string"
@@ -12821,6 +13578,24 @@
                                       "type": "object",
                                       "additionalProperties": false
                                     },
+                                    "fileKeyRef": {
+                                      "properties": {
+                                        "key": {
+                                          "type": "string"
+                                        },
+                                        "optional": {
+                                          "type": "boolean"
+                                        },
+                                        "path": {
+                                          "type": "string"
+                                        },
+                                        "volumeName": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    },
                                     "resourceFieldRef": {
                                       "properties": {
                                         "containerName": {
@@ -13407,6 +14182,33 @@
                           },
                           "restartPolicy": {
                             "type": "string"
+                          },
+                          "restartPolicyRules": {
+                            "items": {
+                              "properties": {
+                                "action": {
+                                  "type": "string"
+                                },
+                                "exitCodes": {
+                                  "properties": {
+                                    "operator": {
+                                      "type": "string"
+                                    },
+                                    "values": {
+                                      "items": {
+                                        "type": "integer"
+                                      },
+                                      "type": "array"
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            },
+                            "type": "array"
                           },
                           "securityContext": {
                             "properties": {
@@ -13783,6 +14585,24 @@
                                       "type": "object",
                                       "additionalProperties": false
                                     },
+                                    "fileKeyRef": {
+                                      "properties": {
+                                        "key": {
+                                          "type": "string"
+                                        },
+                                        "optional": {
+                                          "type": "boolean"
+                                        },
+                                        "path": {
+                                          "type": "string"
+                                        },
+                                        "volumeName": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    },
                                     "resourceFieldRef": {
                                       "properties": {
                                         "containerName": {
@@ -14369,6 +15189,33 @@
                           },
                           "restartPolicy": {
                             "type": "string"
+                          },
+                          "restartPolicyRules": {
+                            "items": {
+                              "properties": {
+                                "action": {
+                                  "type": "string"
+                                },
+                                "exitCodes": {
+                                  "properties": {
+                                    "operator": {
+                                      "type": "string"
+                                    },
+                                    "values": {
+                                      "items": {
+                                        "type": "integer"
+                                      },
+                                      "type": "array"
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            },
+                            "type": "array"
                           },
                           "securityContext": {
                             "properties": {
@@ -14689,6 +15536,9 @@
                     "hostname": {
                       "type": "string"
                     },
+                    "hostnameOverride": {
+                      "type": "string"
+                    },
                     "imagePullSecrets": {
                       "items": {
                         "properties": {
@@ -14748,6 +15598,24 @@
                                           "type": "string"
                                         },
                                         "fieldPath": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    },
+                                    "fileKeyRef": {
+                                      "properties": {
+                                        "key": {
+                                          "type": "string"
+                                        },
+                                        "optional": {
+                                          "type": "boolean"
+                                        },
+                                        "path": {
+                                          "type": "string"
+                                        },
+                                        "volumeName": {
                                           "type": "string"
                                         }
                                       },
@@ -15340,6 +16208,33 @@
                           },
                           "restartPolicy": {
                             "type": "string"
+                          },
+                          "restartPolicyRules": {
+                            "items": {
+                              "properties": {
+                                "action": {
+                                  "type": "string"
+                                },
+                                "exitCodes": {
+                                  "properties": {
+                                    "operator": {
+                                      "type": "string"
+                                    },
+                                    "values": {
+                                      "items": {
+                                        "type": "integer"
+                                      },
+                                      "type": "array"
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            },
+                            "type": "array"
                           },
                           "securityContext": {
                             "properties": {
@@ -15764,6 +16659,15 @@
                         "additionalProperties": false
                       },
                       "type": "array"
+                    },
+                    "schedulingGroup": {
+                      "properties": {
+                        "podGroupName": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
                     },
                     "securityContext": {
                       "properties": {
@@ -16878,6 +17782,36 @@
                                       "type": "object",
                                       "additionalProperties": false
                                     },
+                                    "podCertificate": {
+                                      "properties": {
+                                        "certificateChainPath": {
+                                          "type": "string"
+                                        },
+                                        "credentialBundlePath": {
+                                          "type": "string"
+                                        },
+                                        "keyPath": {
+                                          "type": "string"
+                                        },
+                                        "keyType": {
+                                          "type": "string"
+                                        },
+                                        "maxExpirationSeconds": {
+                                          "type": "integer"
+                                        },
+                                        "signerName": {
+                                          "type": "string"
+                                        },
+                                        "userAnnotations": {
+                                          "additionalProperties": {
+                                            "type": "string"
+                                          },
+                                          "type": "object"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    },
                                     "secret": {
                                       "properties": {
                                         "items": {
@@ -17128,6 +18062,20 @@
                 },
                 "status": {
                   "properties": {
+                    "allocatedResources": {
+                      "additionalProperties": {
+                        "anyOf": [
+                          {
+                            "type": "integer"
+                          },
+                          {
+                            "type": "string"
+                          }
+                        ],
+                        "x-kubernetes-int-or-string": true
+                      },
+                      "type": "object"
+                    },
                     "conditions": {
                       "items": {
                         "properties": {
@@ -17187,280 +18135,7 @@
                                       "health": {
                                         "type": "string"
                                       },
-                                      "resourceID": {
-                                        "type": "string"
-                                      }
-                                    },
-                                    "type": "object",
-                                    "additionalProperties": false
-                                  },
-                                  "type": "array"
-                                }
-                              },
-                              "type": "object",
-                              "additionalProperties": false
-                            },
-                            "type": "array"
-                          },
-                          "containerID": {
-                            "type": "string"
-                          },
-                          "image": {
-                            "type": "string"
-                          },
-                          "imageID": {
-                            "type": "string"
-                          },
-                          "lastState": {
-                            "properties": {
-                              "running": {
-                                "properties": {
-                                  "startedAt": {
-                                    "type": "string"
-                                  }
-                                },
-                                "type": "object",
-                                "additionalProperties": false
-                              },
-                              "terminated": {
-                                "properties": {
-                                  "containerID": {
-                                    "type": "string"
-                                  },
-                                  "exitCode": {
-                                    "type": "integer"
-                                  },
-                                  "finishedAt": {
-                                    "type": "string"
-                                  },
-                                  "message": {
-                                    "type": "string"
-                                  },
-                                  "reason": {
-                                    "type": "string"
-                                  },
-                                  "signal": {
-                                    "type": "integer"
-                                  },
-                                  "startedAt": {
-                                    "type": "string"
-                                  }
-                                },
-                                "type": "object",
-                                "additionalProperties": false
-                              },
-                              "waiting": {
-                                "properties": {
-                                  "message": {
-                                    "type": "string"
-                                  },
-                                  "reason": {
-                                    "type": "string"
-                                  }
-                                },
-                                "type": "object",
-                                "additionalProperties": false
-                              }
-                            },
-                            "type": "object",
-                            "additionalProperties": false
-                          },
-                          "name": {
-                            "type": "string"
-                          },
-                          "ready": {
-                            "type": "boolean"
-                          },
-                          "resources": {
-                            "properties": {
-                              "claims": {
-                                "items": {
-                                  "properties": {
-                                    "name": {
-                                      "type": "string"
-                                    },
-                                    "request": {
-                                      "type": "string"
-                                    }
-                                  },
-                                  "type": "object",
-                                  "additionalProperties": false
-                                },
-                                "type": "array"
-                              },
-                              "limits": {
-                                "additionalProperties": {
-                                  "anyOf": [
-                                    {
-                                      "type": "integer"
-                                    },
-                                    {
-                                      "type": "string"
-                                    }
-                                  ],
-                                  "x-kubernetes-int-or-string": true
-                                },
-                                "type": "object"
-                              },
-                              "requests": {
-                                "additionalProperties": {
-                                  "anyOf": [
-                                    {
-                                      "type": "integer"
-                                    },
-                                    {
-                                      "type": "string"
-                                    }
-                                  ],
-                                  "x-kubernetes-int-or-string": true
-                                },
-                                "type": "object"
-                              }
-                            },
-                            "type": "object",
-                            "additionalProperties": false
-                          },
-                          "restartCount": {
-                            "type": "integer"
-                          },
-                          "started": {
-                            "type": "boolean"
-                          },
-                          "state": {
-                            "properties": {
-                              "running": {
-                                "properties": {
-                                  "startedAt": {
-                                    "type": "string"
-                                  }
-                                },
-                                "type": "object",
-                                "additionalProperties": false
-                              },
-                              "terminated": {
-                                "properties": {
-                                  "containerID": {
-                                    "type": "string"
-                                  },
-                                  "exitCode": {
-                                    "type": "integer"
-                                  },
-                                  "finishedAt": {
-                                    "type": "string"
-                                  },
-                                  "message": {
-                                    "type": "string"
-                                  },
-                                  "reason": {
-                                    "type": "string"
-                                  },
-                                  "signal": {
-                                    "type": "integer"
-                                  },
-                                  "startedAt": {
-                                    "type": "string"
-                                  }
-                                },
-                                "type": "object",
-                                "additionalProperties": false
-                              },
-                              "waiting": {
-                                "properties": {
-                                  "message": {
-                                    "type": "string"
-                                  },
-                                  "reason": {
-                                    "type": "string"
-                                  }
-                                },
-                                "type": "object",
-                                "additionalProperties": false
-                              }
-                            },
-                            "type": "object",
-                            "additionalProperties": false
-                          },
-                          "stopSignal": {
-                            "type": "string"
-                          },
-                          "user": {
-                            "properties": {
-                              "linux": {
-                                "properties": {
-                                  "gid": {
-                                    "type": "integer"
-                                  },
-                                  "supplementalGroups": {
-                                    "items": {
-                                      "type": "integer"
-                                    },
-                                    "type": "array"
-                                  },
-                                  "uid": {
-                                    "type": "integer"
-                                  }
-                                },
-                                "type": "object",
-                                "additionalProperties": false
-                              }
-                            },
-                            "type": "object",
-                            "additionalProperties": false
-                          },
-                          "volumeMounts": {
-                            "items": {
-                              "properties": {
-                                "mountPath": {
-                                  "type": "string"
-                                },
-                                "name": {
-                                  "type": "string"
-                                },
-                                "readOnly": {
-                                  "type": "boolean"
-                                },
-                                "recursiveReadOnly": {
-                                  "type": "string"
-                                }
-                              },
-                              "type": "object",
-                              "additionalProperties": false
-                            },
-                            "type": "array"
-                          }
-                        },
-                        "type": "object",
-                        "additionalProperties": false
-                      },
-                      "type": "array"
-                    },
-                    "ephemeralContainerStatuses": {
-                      "items": {
-                        "properties": {
-                          "allocatedResources": {
-                            "additionalProperties": {
-                              "anyOf": [
-                                {
-                                  "type": "integer"
-                                },
-                                {
-                                  "type": "string"
-                                }
-                              ],
-                              "x-kubernetes-int-or-string": true
-                            },
-                            "type": "object"
-                          },
-                          "allocatedResourcesStatus": {
-                            "items": {
-                              "properties": {
-                                "name": {
-                                  "type": "string"
-                                },
-                                "resources": {
-                                  "items": {
-                                    "properties": {
-                                      "health": {
+                                      "message": {
                                         "type": "string"
                                       },
                                       "resourceID": {
@@ -17697,6 +18372,21 @@
                                 },
                                 "recursiveReadOnly": {
                                   "type": "string"
+                                },
+                                "volumeStatus": {
+                                  "properties": {
+                                    "image": {
+                                      "properties": {
+                                        "imageRef": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
                                 }
                               },
                               "type": "object",
@@ -17709,6 +18399,327 @@
                         "additionalProperties": false
                       },
                       "type": "array"
+                    },
+                    "ephemeralContainerStatuses": {
+                      "items": {
+                        "properties": {
+                          "allocatedResources": {
+                            "additionalProperties": {
+                              "anyOf": [
+                                {
+                                  "type": "integer"
+                                },
+                                {
+                                  "type": "string"
+                                }
+                              ],
+                              "x-kubernetes-int-or-string": true
+                            },
+                            "type": "object"
+                          },
+                          "allocatedResourcesStatus": {
+                            "items": {
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                },
+                                "resources": {
+                                  "items": {
+                                    "properties": {
+                                      "health": {
+                                        "type": "string"
+                                      },
+                                      "message": {
+                                        "type": "string"
+                                      },
+                                      "resourceID": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "type": "object",
+                                    "additionalProperties": false
+                                  },
+                                  "type": "array"
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            },
+                            "type": "array"
+                          },
+                          "containerID": {
+                            "type": "string"
+                          },
+                          "image": {
+                            "type": "string"
+                          },
+                          "imageID": {
+                            "type": "string"
+                          },
+                          "lastState": {
+                            "properties": {
+                              "running": {
+                                "properties": {
+                                  "startedAt": {
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              },
+                              "terminated": {
+                                "properties": {
+                                  "containerID": {
+                                    "type": "string"
+                                  },
+                                  "exitCode": {
+                                    "type": "integer"
+                                  },
+                                  "finishedAt": {
+                                    "type": "string"
+                                  },
+                                  "message": {
+                                    "type": "string"
+                                  },
+                                  "reason": {
+                                    "type": "string"
+                                  },
+                                  "signal": {
+                                    "type": "integer"
+                                  },
+                                  "startedAt": {
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              },
+                              "waiting": {
+                                "properties": {
+                                  "message": {
+                                    "type": "string"
+                                  },
+                                  "reason": {
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "ready": {
+                            "type": "boolean"
+                          },
+                          "resources": {
+                            "properties": {
+                              "claims": {
+                                "items": {
+                                  "properties": {
+                                    "name": {
+                                      "type": "string"
+                                    },
+                                    "request": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                },
+                                "type": "array"
+                              },
+                              "limits": {
+                                "additionalProperties": {
+                                  "anyOf": [
+                                    {
+                                      "type": "integer"
+                                    },
+                                    {
+                                      "type": "string"
+                                    }
+                                  ],
+                                  "x-kubernetes-int-or-string": true
+                                },
+                                "type": "object"
+                              },
+                              "requests": {
+                                "additionalProperties": {
+                                  "anyOf": [
+                                    {
+                                      "type": "integer"
+                                    },
+                                    {
+                                      "type": "string"
+                                    }
+                                  ],
+                                  "x-kubernetes-int-or-string": true
+                                },
+                                "type": "object"
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "restartCount": {
+                            "type": "integer"
+                          },
+                          "started": {
+                            "type": "boolean"
+                          },
+                          "state": {
+                            "properties": {
+                              "running": {
+                                "properties": {
+                                  "startedAt": {
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              },
+                              "terminated": {
+                                "properties": {
+                                  "containerID": {
+                                    "type": "string"
+                                  },
+                                  "exitCode": {
+                                    "type": "integer"
+                                  },
+                                  "finishedAt": {
+                                    "type": "string"
+                                  },
+                                  "message": {
+                                    "type": "string"
+                                  },
+                                  "reason": {
+                                    "type": "string"
+                                  },
+                                  "signal": {
+                                    "type": "integer"
+                                  },
+                                  "startedAt": {
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              },
+                              "waiting": {
+                                "properties": {
+                                  "message": {
+                                    "type": "string"
+                                  },
+                                  "reason": {
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "stopSignal": {
+                            "type": "string"
+                          },
+                          "user": {
+                            "properties": {
+                              "linux": {
+                                "properties": {
+                                  "gid": {
+                                    "type": "integer"
+                                  },
+                                  "supplementalGroups": {
+                                    "items": {
+                                      "type": "integer"
+                                    },
+                                    "type": "array"
+                                  },
+                                  "uid": {
+                                    "type": "integer"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "volumeMounts": {
+                            "items": {
+                              "properties": {
+                                "mountPath": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "readOnly": {
+                                  "type": "boolean"
+                                },
+                                "recursiveReadOnly": {
+                                  "type": "string"
+                                },
+                                "volumeStatus": {
+                                  "properties": {
+                                    "image": {
+                                      "properties": {
+                                        "imageRef": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object",
+                        "additionalProperties": false
+                      },
+                      "type": "array"
+                    },
+                    "extendedResourceClaimStatus": {
+                      "properties": {
+                        "requestMappings": {
+                          "items": {
+                            "properties": {
+                              "containerName": {
+                                "type": "string"
+                              },
+                              "requestName": {
+                                "type": "string"
+                              },
+                              "resourceName": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "type": "array"
+                        },
+                        "resourceClaimName": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
                     },
                     "hostIP": {
                       "type": "string"
@@ -17754,6 +18765,9 @@
                                       "health": {
                                         "type": "string"
                                       },
+                                      "message": {
+                                        "type": "string"
+                                      },
                                       "resourceID": {
                                         "type": "string"
                                       }
@@ -17988,6 +19002,21 @@
                                 },
                                 "recursiveReadOnly": {
                                   "type": "string"
+                                },
+                                "volumeStatus": {
+                                  "properties": {
+                                    "image": {
+                                      "properties": {
+                                        "imageRef": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
                                 }
                               },
                               "type": "object",
@@ -18003,6 +19032,38 @@
                     },
                     "message": {
                       "type": "string"
+                    },
+                    "nodeAllocatableResourceClaimStatuses": {
+                      "items": {
+                        "properties": {
+                          "containers": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          },
+                          "resourceClaimName": {
+                            "type": "string"
+                          },
+                          "resources": {
+                            "additionalProperties": {
+                              "anyOf": [
+                                {
+                                  "type": "integer"
+                                },
+                                {
+                                  "type": "string"
+                                }
+                              ],
+                              "x-kubernetes-int-or-string": true
+                            },
+                            "type": "object"
+                          }
+                        },
+                        "type": "object",
+                        "additionalProperties": false
+                      },
+                      "type": "array"
                     },
                     "nominatedNodeName": {
                       "type": "string"
@@ -18052,6 +19113,55 @@
                       },
                       "type": "array"
                     },
+                    "resources": {
+                      "properties": {
+                        "claims": {
+                          "items": {
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "request": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "type": "array"
+                        },
+                        "limits": {
+                          "additionalProperties": {
+                            "anyOf": [
+                              {
+                                "type": "integer"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ],
+                            "x-kubernetes-int-or-string": true
+                          },
+                          "type": "object"
+                        },
+                        "requests": {
+                          "additionalProperties": {
+                            "anyOf": [
+                              {
+                                "type": "integer"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ],
+                            "x-kubernetes-int-or-string": true
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    },
                     "startTime": {
                       "type": "string"
                     }
@@ -18080,6 +19190,55 @@
               },
               "type": "object",
               "additionalProperties": false
+            },
+            "resources": {
+              "properties": {
+                "claims": {
+                  "items": {
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "request": {
+                        "type": "string"
+                      }
+                    },
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "type": "array"
+                },
+                "limits": {
+                  "additionalProperties": {
+                    "anyOf": [
+                      {
+                        "type": "integer"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ],
+                    "x-kubernetes-int-or-string": true
+                  },
+                  "type": "object"
+                },
+                "requests": {
+                  "additionalProperties": {
+                    "anyOf": [
+                      {
+                        "type": "integer"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ],
+                    "x-kubernetes-int-or-string": true
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
             }
           },
           "type": "object",
@@ -18096,6 +19255,33 @@
             "type": "string"
           },
           "type": "object"
+        },
+        "conditions": {
+          "items": {
+            "properties": {
+              "lastTransitionTime": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "observedGeneration": {
+                "type": "integer"
+              },
+              "reason": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              }
+            },
+            "type": "object",
+            "additionalProperties": false
+          },
+          "type": "array"
         },
         "error": {
           "type": "string"
