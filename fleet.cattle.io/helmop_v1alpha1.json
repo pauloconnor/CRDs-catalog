@@ -86,6 +86,11 @@
           "type": "object",
           "additionalProperties": false
         },
+        "createNamespace": {
+          "description": "CreateNamespace controls whether Fleet creates the target namespace on\ndownstream clusters during Helm installs. When nil, the default behavior\nis to create the namespace (backward-compatible). Set to false by the\ncontroller when Policy requires a ServiceAccount and does not explicitly\nallow namespace creation. This does not affect namespaceLabels/\nnamespaceAnnotations patching, which is always attempted (when set) as\nthe deployment's ServiceAccount and gated by downstream RBAC.",
+          "nullable": true,
+          "type": "boolean"
+        },
         "defaultNamespace": {
           "description": "DefaultNamespace is the namespace to use for resources that do not\nspecify a namespace. This field is not used to enforce or lock down\nthe deployment to a specific namespace.",
           "nullable": true,
@@ -104,7 +109,7 @@
           "items": {
             "properties": {
               "acceptedStates": {
-                "description": "AcceptedStates is a list of BundleDeployment state that are considered acceptable for this dependency.\nIf the dependency is in one of these states, it will not block the deployment of the dependent bundle.\nValid Values should match the StateRank keys.\nIf not specified, default to [\"Ready\"]: only fully ready dependencies are accepted\nExample: [\"Ready\", \"Modified\"] will accept dependencies that are either ready or have drifted from their desired state.",
+                "description": "AcceptedStates is a list of BundleDeployment state that are considered acceptable for this dependency.\nIf the dependency is in one of these states, it will not block the deployment of the dependent bundle.\nValid Values should match the StateRank keys, except for WaitingForDependency, which is rejected:\nit would unblock this bundle exactly when its dependency became blocked on a dependency of its own.\nIf not specified, default to [\"Ready\"]: only fully ready dependencies are accepted\nExample: [\"Ready\", \"Modified\"] will accept dependencies that are either ready or have drifted from their desired state.",
                 "items": {
                   "type": "string"
                 },
@@ -186,7 +191,7 @@
                     "type": "string"
                   },
                   "jsonPointers": {
-                    "description": "JSONPointers ignore diffs at a certain JSON path.",
+                    "description": "JSONPointers ignore diffs at the given JSON pointers, e.g. /spec/replicas.\nEach entry must be a non-empty pointer starting with a slash; a\nKubernetes-style field path such as spec.replicas addresses nothing and is\nrejected. Escaping is the one the JSON patch library applies, which is\nlaxer than RFC 6901: \"~0\" and \"~1\" are read as \"~\" and \"/\", respectively, and any other\n\"~\" sequence is left as written.",
                     "items": {
                       "type": "string"
                     },
@@ -199,7 +204,7 @@
                     "type": "string"
                   },
                   "name": {
-                    "description": "Name is the name of the resource to match.",
+                    "description": "Name is the name of the resource to match. Resources are matched by exact\nname first and, when the name does not match exactly, by matching it as a\nregular expression, so it must always be a valid Go regular expression.",
                     "nullable": true,
                     "type": "string"
                   },
@@ -214,12 +219,12 @@
                       "description": "Operation of a ComparePatch, usually:\n* \"remove\" to remove a specific path in a resource\n* \"ignore\" to remove the entire resource from checks for modifications.",
                       "properties": {
                         "op": {
-                          "description": "Op is usually \"remove\" or \"ignore\"",
+                          "description": "Op is the operation to perform on the matched resource. It must be one of\nthe JSON Patch operations \"add\", \"remove\", \"replace\" and \"test\", or\nFleet's own \"ignore\", which removes the entire resource from checks for\nmodifications. The JSON Patch operations \"copy\" and \"move\" are not\nsupported, because an Operation has no \"from\" field to encode them with.\nAny other value, including an empty one, makes the whole patch fail to\napply.",
                           "nullable": true,
                           "type": "string"
                         },
                         "path": {
-                          "description": "Path is the JSON path to remove. Not needed if Op is \"ignore\".",
+                          "description": "Path is the JSON pointer the operation applies to, e.g. /spec/replicas.\nIt must be a non-empty pointer starting with a slash; a Kubernetes-style\nfield path such as spec.replicas addresses nothing and is rejected. It is\nescaped like a JSONPointers entry, which is laxer than RFC 6901. Required\nunless Op is \"ignore\", which drops the whole resource from the comparison\nand never reads the path.",
                           "nullable": true,
                           "type": "string"
                         },
@@ -417,6 +422,12 @@
           "description": "HelmOpOptions stores the options relative to HelmOp resources\nNon-nil HelmOpOptions indicate that the source of resources is a Helm chart,\nnot a git repository.",
           "nullable": true,
           "properties": {
+            "helmOpCABundle": {
+              "description": "CABundle is a PEM encoded CA bundle used to validate TLS connections to\nthe Helm registry. It is resolved by the controller (which has access to\nRancher's cattle-system CA secrets, if any) and stored here so the agent can use\nit without requiring access to those secrets.",
+              "format": "byte",
+              "nullable": true,
+              "type": "string"
+            },
             "helmOpInsecureSkipTLSVerify": {
               "description": "InsecureSkipTLSverify will use insecure HTTPS to clone the helm app resource.",
               "type": "boolean"
@@ -527,8 +538,16 @@
         },
         "pollingInterval": {
           "description": "PollingInterval is how often to check the Helm repository for new updates.",
+          "maxLength": 32,
+          "minLength": 1,
           "nullable": true,
-          "type": "string"
+          "type": "string",
+          "x-kubernetes-validations": [
+            {
+              "message": "must be a valid Go duration using units ns, us, \u00b5s, ms, s, m, h (e.g. 15s, 5m, 2h, 1h30m); units like d (days) or w (weeks) are not supported",
+              "rule": "self == '0' || (self.matches('^([0-9]+([.][0-9]+)?(ns|us|\u00b5s|ms|s|m|h))+$') && duration(self) <= duration('2562047h'))"
+            }
+          ]
         },
         "resources": {
           "description": "Resources contains the resources that were read from the bundle's\npath. This includes the content of downloaded helm charts.",
@@ -576,6 +595,11 @@
             },
             "autoPartitionThreshold": {
               "description": "AutoPartitionThreshold is the minimum number of clusters that need to be\npresent before auto-partitioning is enabled. If the number of target\nclusters is less than this value, all clusters will be placed in a single\npartition.\ndefault: 200",
+              "nullable": true,
+              "type": "integer"
+            },
+            "maxNew": {
+              "description": "MaxNew is the maximum number of new BundleDeployments that can be created\nin a single reconciliation. This limits the rate at which new deployments\nare staged when a bundle is first applied to many clusters.\ndefault: 50",
               "nullable": true,
               "type": "integer"
             },
@@ -746,10 +770,19 @@
           "nullable": true,
           "type": "string"
         },
+        "targetCustomizationMode": {
+          "default": "FirstMatch",
+          "description": "TargetCustomizationMode controls how targetCustomizations from fleet.yaml\nare evaluated. \"FirstMatch\" (default) stops at the first matching entry.\n\"AllMatches\" applies all matching entries in order, merging them.",
+          "enum": [
+            "FirstMatch",
+            "AllMatches"
+          ],
+          "type": "string"
+        },
         "targetRestrictions": {
           "description": "TargetRestrictions is an allow list, which controls if a bundledeployment is created for a target.",
           "items": {
-            "description": "BundleTargetRestriction is used internally by Fleet and should not be modified.\nIt acts as an allow list, to prevent the creation of BundleDeployments from\nTargets created by TargetCustomizations in fleet.yaml.",
+            "description": "BundleTargetRestriction is used internally by Fleet and should not be modified.\nIt acts as an allow list, restricting BundleDeployment creation to only those clusters\nthat are explicitly listed in the GitRepo targets.",
             "properties": {
               "clusterGroup": {
                 "nullable": true,
@@ -1043,6 +1076,11 @@
                 "type": "object",
                 "additionalProperties": false
               },
+              "createNamespace": {
+                "description": "CreateNamespace controls whether Fleet creates the target namespace on\ndownstream clusters during Helm installs. When nil, the default behavior\nis to create the namespace (backward-compatible). Set to false by the\ncontroller when Policy requires a ServiceAccount and does not explicitly\nallow namespace creation. This does not affect namespaceLabels/\nnamespaceAnnotations patching, which is always attempted (when set) as\nthe deployment's ServiceAccount and gated by downstream RBAC.",
+                "nullable": true,
+                "type": "boolean"
+              },
               "defaultNamespace": {
                 "description": "DefaultNamespace is the namespace to use for resources that do not\nspecify a namespace. This field is not used to enforce or lock down\nthe deployment to a specific namespace.",
                 "nullable": true,
@@ -1071,7 +1109,7 @@
                           "type": "string"
                         },
                         "jsonPointers": {
-                          "description": "JSONPointers ignore diffs at a certain JSON path.",
+                          "description": "JSONPointers ignore diffs at the given JSON pointers, e.g. /spec/replicas.\nEach entry must be a non-empty pointer starting with a slash; a\nKubernetes-style field path such as spec.replicas addresses nothing and is\nrejected. Escaping is the one the JSON patch library applies, which is\nlaxer than RFC 6901: \"~0\" and \"~1\" are read as \"~\" and \"/\", respectively, and any other\n\"~\" sequence is left as written.",
                           "items": {
                             "type": "string"
                           },
@@ -1084,7 +1122,7 @@
                           "type": "string"
                         },
                         "name": {
-                          "description": "Name is the name of the resource to match.",
+                          "description": "Name is the name of the resource to match. Resources are matched by exact\nname first and, when the name does not match exactly, by matching it as a\nregular expression, so it must always be a valid Go regular expression.",
                           "nullable": true,
                           "type": "string"
                         },
@@ -1099,12 +1137,12 @@
                             "description": "Operation of a ComparePatch, usually:\n* \"remove\" to remove a specific path in a resource\n* \"ignore\" to remove the entire resource from checks for modifications.",
                             "properties": {
                               "op": {
-                                "description": "Op is usually \"remove\" or \"ignore\"",
+                                "description": "Op is the operation to perform on the matched resource. It must be one of\nthe JSON Patch operations \"add\", \"remove\", \"replace\" and \"test\", or\nFleet's own \"ignore\", which removes the entire resource from checks for\nmodifications. The JSON Patch operations \"copy\" and \"move\" are not\nsupported, because an Operation has no \"from\" field to encode them with.\nAny other value, including an empty one, makes the whole patch fail to\napply.",
                                 "nullable": true,
                                 "type": "string"
                               },
                               "path": {
-                                "description": "Path is the JSON path to remove. Not needed if Op is \"ignore\".",
+                                "description": "Path is the JSON pointer the operation applies to, e.g. /spec/replicas.\nIt must be a non-empty pointer starting with a slash; a Kubernetes-style\nfield path such as spec.replicas addresses nothing and is rejected. It is\nescaped like a JSONPointers entry, which is laxer than RFC 6901. Required\nunless Op is \"ignore\", which drops the whole resource from the comparison\nand never reads the path.",
                                 "nullable": true,
                                 "type": "string"
                               },
@@ -1875,6 +1913,10 @@
             },
             "waitApplied": {
               "description": "WaitApplied is the number of bundle deployments that have been\nsynced from Fleet controller and downstream cluster, but are waiting\nto be deployed.",
+              "type": "integer"
+            },
+            "waitingForDependency": {
+              "description": "WaitingForDependency is the number of bundle deployments which are\nnot deployed because at least one of the bundles they depend on has\nnot reached an accepted state.",
               "type": "integer"
             }
           },
