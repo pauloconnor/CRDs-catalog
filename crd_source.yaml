@@ -1215,7 +1215,7 @@ sources:
     changelog: "https://github.com/seaweedfs/seaweedfs-operator/releases"
 
   - url: "https://github.com/senthilrch/kube-fledged"
-    tag: "v0.10.0"
+    tag: "v0.11.0"
     repo_path: "deploy/kubefledged-operator/deploy/crds"
     changelog: "https://github.com/senthilrch/kube-fledged/releases"
 
