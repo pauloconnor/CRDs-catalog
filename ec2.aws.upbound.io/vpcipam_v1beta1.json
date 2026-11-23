@@ -27,15 +27,15 @@
         "forProvider": {
           "properties": {
             "cascade": {
-              "description": "Enables you to quickly delete an IPAM, private scopes, pools in private scopes, and any allocations in the pools in private scopes.",
+              "description": "Whether to quickly delete an IPAM, private scopes, pools in private scopes, and any allocations in the pools in private scopes.",
               "type": "boolean"
             },
             "description": {
-              "description": "A description for the IPAM.",
+              "description": "Description for the IPAM.",
               "type": "string"
             },
             "enablePrivateGua": {
-              "description": "Enable this option to use your own GUA ranges as private IPv6 addresses. Default: false.",
+              "description": "Whether to use your own GUA ranges as private IPv6 addresses. Default: false.",
               "type": "boolean"
             },
             "meteredAccount": {
@@ -43,11 +43,11 @@
               "type": "string"
             },
             "operatingRegions": {
-              "description": "Determines which locales can be chosen when you create pools. Locale is the Region where you want to make an IPAM pool available for allocations. You can only create pools with locales that match the operating Regions of the IPAM. You can only create VPCs from a pool whose locale matches the VPC's Region. You specify a region using the region_name parameter. You must set your provider block region as an operating_region.",
+              "description": "Locales that can be chosen when you create pools. Locale is the Region where you want to make an IPAM pool available for allocations. You can only create pools with locales that match the operating Regions of the IPAM. You can only create VPCs from a pool whose locale matches the VPC's Region. You specify a region using the region_name parameter. You must set your provider block region as an operating_region.",
               "items": {
                 "properties": {
                   "regionName": {
-                    "description": "The name of the Region you want to add to the IPAM.",
+                    "description": "Name of the Region you want to add to the IPAM.",
                     "type": "string"
                   }
                 },
@@ -83,15 +83,15 @@
           "description": "THIS IS A BETA FIELD. It will be honored\nunless the Management Policies feature flag is disabled.\nInitProvider holds the same fields as ForProvider, with the exception\nof Identifier and other resource reference fields. The fields that are\nin InitProvider are merged into ForProvider when the resource is created.\nThe same fields are also added to the terraform ignore_changes hook, to\navoid updating them after creation. This is useful for fields that are\nrequired on creation, but we do not desire to update them after creation,\nfor example because of an external controller is managing them, like an\nautoscaler.",
           "properties": {
             "cascade": {
-              "description": "Enables you to quickly delete an IPAM, private scopes, pools in private scopes, and any allocations in the pools in private scopes.",
+              "description": "Whether to quickly delete an IPAM, private scopes, pools in private scopes, and any allocations in the pools in private scopes.",
               "type": "boolean"
             },
             "description": {
-              "description": "A description for the IPAM.",
+              "description": "Description for the IPAM.",
               "type": "string"
             },
             "enablePrivateGua": {
-              "description": "Enable this option to use your own GUA ranges as private IPv6 addresses. Default: false.",
+              "description": "Whether to use your own GUA ranges as private IPv6 addresses. Default: false.",
               "type": "boolean"
             },
             "meteredAccount": {
@@ -99,11 +99,11 @@
               "type": "string"
             },
             "operatingRegions": {
-              "description": "Determines which locales can be chosen when you create pools. Locale is the Region where you want to make an IPAM pool available for allocations. You can only create pools with locales that match the operating Regions of the IPAM. You can only create VPCs from a pool whose locale matches the VPC's Region. You specify a region using the region_name parameter. You must set your provider block region as an operating_region.",
+              "description": "Locales that can be chosen when you create pools. Locale is the Region where you want to make an IPAM pool available for allocations. You can only create pools with locales that match the operating Regions of the IPAM. You can only create VPCs from a pool whose locale matches the VPC's Region. You specify a region using the region_name parameter. You must set your provider block region as an operating_region.",
               "items": {
                 "properties": {
                   "regionName": {
-                    "description": "The name of the Region you want to add to the IPAM.",
+                    "description": "Name of the Region you want to add to the IPAM.",
                     "type": "string"
                   }
                 },
@@ -226,31 +226,31 @@
         "atProvider": {
           "properties": {
             "arn": {
-              "description": "Amazon Resource Name (ARN) of IPAM",
+              "description": "ARN of IPAM",
               "type": "string"
             },
             "cascade": {
-              "description": "Enables you to quickly delete an IPAM, private scopes, pools in private scopes, and any allocations in the pools in private scopes.",
+              "description": "Whether to quickly delete an IPAM, private scopes, pools in private scopes, and any allocations in the pools in private scopes.",
               "type": "boolean"
             },
             "defaultResourceDiscoveryAssociationId": {
-              "description": "The IPAM's default resource discovery association ID.",
+              "description": "IPAM's default resource discovery association ID.",
               "type": "string"
             },
             "defaultResourceDiscoveryId": {
-              "description": "The IPAM's default resource discovery ID.",
+              "description": "IPAM's default resource discovery ID.",
               "type": "string"
             },
             "description": {
-              "description": "A description for the IPAM.",
+              "description": "Description for the IPAM.",
               "type": "string"
             },
             "enablePrivateGua": {
-              "description": "Enable this option to use your own GUA ranges as private IPv6 addresses. Default: false.",
+              "description": "Whether to use your own GUA ranges as private IPv6 addresses. Default: false.",
               "type": "boolean"
             },
             "id": {
-              "description": "The ID of the IPAM",
+              "description": "ID of the IPAM",
               "type": "string"
             },
             "meteredAccount": {
@@ -258,11 +258,11 @@
               "type": "string"
             },
             "operatingRegions": {
-              "description": "Determines which locales can be chosen when you create pools. Locale is the Region where you want to make an IPAM pool available for allocations. You can only create pools with locales that match the operating Regions of the IPAM. You can only create VPCs from a pool whose locale matches the VPC's Region. You specify a region using the region_name parameter. You must set your provider block region as an operating_region.",
+              "description": "Locales that can be chosen when you create pools. Locale is the Region where you want to make an IPAM pool available for allocations. You can only create pools with locales that match the operating Regions of the IPAM. You can only create VPCs from a pool whose locale matches the VPC's Region. You specify a region using the region_name parameter. You must set your provider block region as an operating_region.",
               "items": {
                 "properties": {
                   "regionName": {
-                    "description": "The name of the Region you want to add to the IPAM.",
+                    "description": "Name of the Region you want to add to the IPAM.",
                     "type": "string"
                   }
                 },
@@ -272,11 +272,11 @@
               "type": "array"
             },
             "privateDefaultScopeId": {
-              "description": "The ID of the IPAM's private scope. A scope is a top-level container in IPAM. Each scope represents an IP-independent network. Scopes enable you to represent networks where you have overlapping IP space. When you create an IPAM, IPAM automatically creates two scopes: public and private. The private scope is intended for private IP space. The public scope is intended for all internet-routable IP space.",
+              "description": "ID of the IPAM's private scope. A scope is a top-level container in IPAM. Each scope represents an IP-independent network. Scopes enable you to represent networks where you have overlapping IP space. When you create an IPAM, IPAM automatically creates two scopes: public and private. The private scope is intended for private IP space. The public scope is intended for all internet-routable IP space.",
               "type": "string"
             },
             "publicDefaultScopeId": {
-              "description": "The ID of the IPAM's public scope. A scope is a top-level container in IPAM. Each scope represents an IP-independent network. Scopes enable you to represent networks where you have overlapping IP space. When you create an IPAM, IPAM automatically creates two scopes: public and private. The private scope is intended for private\nIP space. The public scope is intended for all internet-routable IP space.",
+              "description": "ID of the IPAM's public scope. A scope is a top-level container in IPAM. Each scope represents an IP-independent network. Scopes enable you to represent networks where you have overlapping IP space. When you create an IPAM, IPAM automatically creates two scopes: public and private. The private scope is intended for private IP space. The public scope is intended for all internet-routable IP space.",
               "type": "string"
             },
             "region": {
@@ -284,7 +284,7 @@
               "type": "string"
             },
             "scopeCount": {
-              "description": "The number of scopes in the IPAM.",
+              "description": "Number of scopes in the IPAM.",
               "type": "number"
             },
             "tags": {
@@ -299,7 +299,7 @@
               "additionalProperties": {
                 "type": "string"
               },
-              "description": "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.",
+              "description": "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.",
               "type": "object",
               "x-kubernetes-map-type": "granular"
             },
@@ -357,6 +357,10 @@
             "type"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "lastHandledReconcileAt": {
+          "description": "LastHandledReconcileAt holds the value of the most recent\nreconcile-requested-at annotation token that the controller has\nprocessed. Users can compare this to the annotation to determine\nwhether a reconcile request has been handled.",
+          "type": "string"
         },
         "observedGeneration": {
           "description": "ObservedGeneration is the latest metadata.generation\nwhich resulted in either a ready state, or stalled due to error\nit can not recover from without human intervention.",

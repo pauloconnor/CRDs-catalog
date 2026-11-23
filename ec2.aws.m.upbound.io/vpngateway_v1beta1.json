@@ -18,11 +18,11 @@
         "forProvider": {
           "properties": {
             "amazonSideAsn": {
-              "description": "The Autonomous System Number (ASN) for the Amazon side of the gateway. If you don't specify an ASN, the virtual private gateway is created with the default ASN.",
+              "description": "Autonomous System Number (ASN) for the Amazon side of the gateway. If you don't specify an ASN, the virtual private gateway is created with the default ASN.",
               "type": "string"
             },
             "availabilityZone": {
-              "description": "The Availability Zone for the virtual private gateway.",
+              "description": "Availability Zone for the virtual private gateway.",
               "type": "string"
             },
             "region": {
@@ -38,7 +38,7 @@
               "x-kubernetes-map-type": "granular"
             },
             "vpcId": {
-              "description": "The VPC ID to create in.",
+              "description": "VPC ID to create in.",
               "type": "string"
             },
             "vpcIdRef": {
@@ -140,11 +140,11 @@
           "description": "THIS IS A BETA FIELD. It will be honored\nunless the Management Policies feature flag is disabled.\nInitProvider holds the same fields as ForProvider, with the exception\nof Identifier and other resource reference fields. The fields that are\nin InitProvider are merged into ForProvider when the resource is created.\nThe same fields are also added to the terraform ignore_changes hook, to\navoid updating them after creation. This is useful for fields that are\nrequired on creation, but we do not desire to update them after creation,\nfor example because of an external controller is managing them, like an\nautoscaler.",
           "properties": {
             "amazonSideAsn": {
-              "description": "The Autonomous System Number (ASN) for the Amazon side of the gateway. If you don't specify an ASN, the virtual private gateway is created with the default ASN.",
+              "description": "Autonomous System Number (ASN) for the Amazon side of the gateway. If you don't specify an ASN, the virtual private gateway is created with the default ASN.",
               "type": "string"
             },
             "availabilityZone": {
-              "description": "The Availability Zone for the virtual private gateway.",
+              "description": "Availability Zone for the virtual private gateway.",
               "type": "string"
             },
             "tags": {
@@ -156,7 +156,7 @@
               "x-kubernetes-map-type": "granular"
             },
             "vpcId": {
-              "description": "The VPC ID to create in.",
+              "description": "VPC ID to create in.",
               "type": "string"
             },
             "vpcIdRef": {
@@ -320,19 +320,19 @@
         "atProvider": {
           "properties": {
             "amazonSideAsn": {
-              "description": "The Autonomous System Number (ASN) for the Amazon side of the gateway. If you don't specify an ASN, the virtual private gateway is created with the default ASN.",
+              "description": "Autonomous System Number (ASN) for the Amazon side of the gateway. If you don't specify an ASN, the virtual private gateway is created with the default ASN.",
               "type": "string"
             },
             "arn": {
-              "description": "Amazon Resource Name (ARN) of the VPN Gateway.",
+              "description": "ARN of the VPN Gateway.",
               "type": "string"
             },
             "availabilityZone": {
-              "description": "The Availability Zone for the virtual private gateway.",
+              "description": "Availability Zone for the virtual private gateway.",
               "type": "string"
             },
             "id": {
-              "description": "The ID of the VPN Gateway.",
+              "description": "ID of the VPN Gateway.",
               "type": "string"
             },
             "region": {
@@ -351,12 +351,12 @@
               "additionalProperties": {
                 "type": "string"
               },
-              "description": "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.",
+              "description": "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.",
               "type": "object",
               "x-kubernetes-map-type": "granular"
             },
             "vpcId": {
-              "description": "The VPC ID to create in.",
+              "description": "VPC ID to create in.",
               "type": "string"
             }
           },
@@ -409,6 +409,10 @@
             "type"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "lastHandledReconcileAt": {
+          "description": "LastHandledReconcileAt holds the value of the most recent\nreconcile-requested-at annotation token that the controller has\nprocessed. Users can compare this to the annotation to determine\nwhether a reconcile request has been handled.",
+          "type": "string"
         },
         "observedGeneration": {
           "description": "ObservedGeneration is the latest metadata.generation\nwhich resulted in either a ready state, or stalled due to error\nit can not recover from without human intervention.",
