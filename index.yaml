@@ -1894,6 +1894,10 @@ apps.emqx.io:
     filename: apps.emqx.io/emqx_v2.json
     kind: EMQX
     name: emqx_v2
+  - apiVersion: apps.emqx.io/v3beta1
+    filename: apps.emqx.io/emqx_v3beta1.json
+    kind: EMQX
+    name: emqx_v3beta1
 apps.gitlab.com:
   - apiVersion: apps.gitlab.com/v1beta1
     filename: apps.gitlab.com/gitlab_v1beta1.json
