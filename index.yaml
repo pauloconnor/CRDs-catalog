@@ -12377,6 +12377,10 @@ infrastructure.cluster.x-k8s.io:
     filename: infrastructure.cluster.x-k8s.io/azureasomanagedcontrolplanetemplate_v1beta1.json
     kind: AzureASOManagedControlPlaneTemplate
     name: azureasomanagedcontrolplanetemplate_v1beta1
+  - apiVersion: infrastructure.cluster.x-k8s.io/v1beta2
+    filename: infrastructure.cluster.x-k8s.io/rosaocmroleconfig_v1beta2.json
+    kind: ROSAOCMRoleConfig
+    name: rosaocmroleconfig_v1beta2
 ingress.oraclecloud.com:
   - apiVersion: ingress.oraclecloud.com/v1beta1
     filename: ingress.oraclecloud.com/ingressclassparameters_v1beta1.json
